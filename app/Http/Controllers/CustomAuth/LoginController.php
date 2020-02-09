@@ -45,4 +45,18 @@ class LoginController extends Controller
         }
         return back()->with(['success' => false, 'message' => 'Invalid Credential'])->withInput();
     }
+
+    /**
+     * Feb. 09, 2020
+     * @author john kevin paunel
+     * @param Request $request
+     * @return mixed
+     * */
+    public function logout(Request $request)
+    {
+        activity()->causedBy(auth()->user()->id)->withProperties(['username' => auth()->user()->username])->log('user logged out');
+        Auth::logout();
+
+        return redirect(route('login'));
+    }
 }

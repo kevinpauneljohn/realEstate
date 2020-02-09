@@ -24,4 +24,5 @@ Route::post('/login','CustomAuth\LoginController@authenticate')->name('authentic
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
+    Route::post('/logout','CustomAuth\LoginController@logout')->name('logout');
 });
