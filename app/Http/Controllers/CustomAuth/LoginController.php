@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\CustomAuth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
+
+    /**
+     * Feb. 09, 2020
+     * @author john kevin paunel
+     * login form view
+     * */
     public function login_form()
     {
         if(Auth::check())
@@ -15,5 +23,26 @@ class LoginController extends Controller
             return redirect(route('dashboard'));
         }
         return view('vendor.adminlte.login');
+    }
+
+    /**
+     * Feb. 09, 2020
+     * @author john kevin paunel
+     * login validation
+     * @param Request $request
+     * @return mixed
+     * */
+    public function authenticate(Request $request)
+    {
+        $request->validate([
+            'username'      => 'required',
+            'password'      => 'required'
+        ]);
+        $credential = $request->only('username','password');
+        if(Auth::attempt($credential))
+        {
+            return redirect(route('dashboard'));
+        }
+        return back()->with(['success' => false, 'message' => 'Invalid Credential'])->withInput();
     }
 }
