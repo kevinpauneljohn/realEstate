@@ -26,3 +26,5 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
     Route::post('/logout','CustomAuth\LoginController@logout')->name('logout');
 });
+
+Route::get('/roles','RolesController@index')->name('roles.index')->middleware(['auth','view role']);
