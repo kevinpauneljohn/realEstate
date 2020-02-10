@@ -11,12 +11,10 @@ class Role extends Model
     use LogsActivity, SoftDeletes;
 
     protected $fillable = [
-        'firstname',
-        'middlename',
-        'lastname',
-        'mobileNo',
-        'date_of_birth',
-        'email',
-        'username',
+        'name','guard_name'
+    ];
+
+    protected static $logAttributes = [
+        'name','guard_name'
     ];
 }
