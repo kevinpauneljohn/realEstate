@@ -23,6 +23,13 @@ class RolesController extends Controller
     {
         $roles = Role::all();
         return DataTables::of($roles)
+            ->addColumn('action', function ($role)
+            {
+                $action = "";
+
+                return $action;
+            })
+            ->rawColumns(['action'])
             ->make(true);
     }
 

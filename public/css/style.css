@@ -1,0 +1,23 @@
+.form-inline{
+    display:inline;
+}
+table{
+    width:100%!important;
+}
+
+@media only screen and (min-width: 10px){
+    .form-inline label{
+        display:inline;
+    }
+}
+.required{
+    color:red;
+}
+.roles-cell .badge{
+    margin-right:3px;
+}
+
+/*Jan. 04, 2020*/
+.btn-xs{
+    margin-left:2px;
+}
