@@ -102,6 +102,31 @@
         </div>
         <!--end add terminal modal-->
     @endcan
+
+    @can('delete role')
+        <!--delete terminal-->
+        <div class="modal fade" id="delete-role-modal">
+            <form role="form" id="delete-role-form">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="deleteRoleId" id="deleteRoleId">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-danger">
+                        <div class="modal-body">
+                            <p class="delete_role">Delete Role: <span class="delete-role-name"></span></p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-light">Delete</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end delete terminal modal-->
+    @endcan
 @stop
 
 @section('css')

@@ -64,7 +64,7 @@ $(document).on('submit','#role-form', function(form){
         '',
         false
     );
-    clear_errors('role')
+    clear_errors('role');
 });
 
 /*edit role*/
@@ -81,9 +81,24 @@ $(document).on('submit','#edit-role-form', function(form){
         '',
         false
     );
-    clear_errors('edit_role')
+    clear_errors('edit_role');
 });
 
+/*Delete Role*/
+$(document).on('submit','#delete-role-form', function(form){
+    form.preventDefault();
+    let id = $('#deleteRoleId').val();
+    let data = $('#delete-role-form').serialize();
+    submitform(
+        '/roles/'+id,
+        'DELETE',
+        data,
+        'Role Successfully Removed!',
+        true,
+        '',
+        false
+    );
+});
 
 $(document).on('click','.edit-role-btn',function () {
     $tr = $(this).closest('tr');
@@ -94,4 +109,15 @@ $(document).on('click','.edit-role-btn',function () {
 
     $('#updateRoleId').val(id);
     $('#edit_role').val(data[0]);
+});
+
+$(document).on('click','.delete-role-btn',function () {
+    $tr = $(this).closest('tr');
+    id = this.id;
+    let data = $tr.children('td').map(function () {
+        return $(this).text();
+    }).get();
+
+    $('.delete-role-name').text(data[0]);
+    $('#deleteRoleId').val(id);
 });
