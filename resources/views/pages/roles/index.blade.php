@@ -34,6 +34,74 @@
             </div>
         </div>
     </div>
+
+    @can('add role')
+        <!--add new roles modal-->
+        <div class="modal fade" id="add-new-role-modal">
+            <form role="form" id="role-form">
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add New Role</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group role">
+                                <label for="role">Role Name</label><span class="required">*</span>
+                                <input type="text" name="role" class="form-control" id="role">
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new roles modal-->
+    @endcan
+
+    @can('edit role')
+        <!--edit role modal-->
+        <div class="modal fade" id="edit-role-modal">
+            <form role="form" id="edit-role-form">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="id" id="updateRoleId">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Role Name</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-body">
+                                <div class="form-group edit_role">
+                                    <label for="edit_role">Role Name</label><span class="required">*</span>
+                                    <input type="text" name="edit_role" class="form-control" id="edit_role">
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add terminal modal-->
+    @endcan
 @stop
 
 @section('css')
@@ -50,6 +118,7 @@
 @section('js')
     @can('view role')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+        <script src="{{asset('js/role.js')}}"></script>
         <script>
             $(function() {
                 $('#roles-list').DataTable({

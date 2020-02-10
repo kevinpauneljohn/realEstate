@@ -318,6 +318,22 @@ return [
             ],
         ],
         [
+            'name' => 'Toastr',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/toastr/toastr.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/toastr/toastr.min.css',
+                ],
+            ],
+        ],
+        [
             'name' => 'Pace',
             'active' => false,
             'files' => [

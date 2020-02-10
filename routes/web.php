@@ -30,3 +30,5 @@ Route::group(['middleware' => ['auth']], function(){
 /*Roles*/
 Route::get('/roles-list','RolesController@roles_list')->name('roles.list')->middleware(['auth']);
 Route::get('/roles','RolesController@index')->name('roles.index')->middleware(['auth']);
+Route::post('/roles','RolesController@store')->name('roles.store')->middleware(['auth']);
+Route::put('/roles/{role}','RolesController@update')->name('roles.update')->middleware(['auth']);

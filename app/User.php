@@ -6,11 +6,12 @@ use App\Traits\UsesUuid;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, UsesUuid, HasRoles;
+    use Notifiable, UsesUuid, HasRoles, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +19,23 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstname',
+        'middlename',
+        'lastname',
+        'mobileNo',
+        'date_of_birth',
+        'email',
+        'username',
+    ];
+
+    protected static $logAttributes = [
+        'firstname',
+        'middlename',
+        'lastname',
+        'mobileNo',
+        'date_of_birth',
+        'email',
+        'username',
     ];
 
     /**
