@@ -27,4 +27,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/logout','CustomAuth\LoginController@logout')->name('logout');
 });
 
+/*Roles*/
+Route::get('/roles-list','RolesController@roles_list')->name('roles.list')->middleware(['auth']);
 Route::get('/roles','RolesController@index')->name('roles.index')->middleware(['auth']);

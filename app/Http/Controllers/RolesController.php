@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class RolesController extends Controller
 {
@@ -14,6 +17,13 @@ class RolesController extends Controller
     public function index()
     {
         return view('pages.roles.index');
+    }
+
+    public function roles_list()
+    {
+        $roles = Role::all();
+        return DataTables::of($roles)
+            ->make(true);
     }
 
     /**
