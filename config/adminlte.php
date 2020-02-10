@@ -179,9 +179,8 @@ return [
             'topnav' => true,
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text' => 'Dashboard',
+            'route'  => 'dashboard',
         ],
         ['header' => 'account_settings'],
         [
@@ -197,15 +196,13 @@ return [
         [
             'text'    => 'Roles and Permissions',
             'icon'    => 'fas fa-users',
-            'can'  => 'add role',
             'submenu' => [
                 [
                     'text' => 'roles',
                     'route'  => 'roles.index',
-                    'can'  => 'view role'
                 ],
                 [
-                    'text' => 'level_one',
+                    'text' => 'permissions',
                     'url'  => '#',
                 ],
             ],
