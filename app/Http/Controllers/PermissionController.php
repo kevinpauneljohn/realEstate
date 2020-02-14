@@ -6,6 +6,7 @@ use App\Permissions;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
 class PermissionController extends Controller
@@ -33,19 +34,27 @@ class PermissionController extends Controller
 
         return DataTables::of($permissions)
             ->addColumn('role',function($permission){
-                return "";
+
+                $role_permissions = Permission::whereName($permission->name)->first()->roles;
+                $role = "";
+                foreach ($role_permissions as $roles)
+                {
+                    $role .= '<span class="badge badge-info right role-badge">'.$roles->name.'</span>';
+                }
+
+                return $role;
             })
             ->addColumn('action', function ($permission)
             {
                 $action = "";
-//                if(auth()->user()->hasPermissionTo('edit role'))
-//                {
+                if(auth()->user()->can('edit permission'))
+                {
                 $action .= '<a href="#" class="btn btn-xs btn-primary edit-permission-btn" id="'.$permission->id.'" data-toggle="modal" data-target="#edit-permission-modal"><i class="fa fa-edit"></i> Edit</a>';
-//                }
-//                if(auth()->user()->hasPermissionTo('delete role'))
-//                {
+                }
+                if(auth()->user()->can('delete permission'))
+                {
                 $action .= '<a href="#" class="btn btn-xs btn-danger delete-permission-btn" id="'.$permission->id.'" data-toggle="modal" data-target="#delete-permission-modal"><i class="fa fa-trash"></i> Delete</a>';
-//                }
+                }
                 return $action;
             })
             ->rawColumns(['role','action'])
@@ -76,6 +85,15 @@ class PermissionController extends Controller
 
         if($validator->passes())
         {
+            $permission = Permission::create(['name' => $request->permission]);
+//            $permission->assignRole('super admin');
+            if($request->roles !== null)
+            {
+                foreach ($request->roles as $role)
+                {
+                    $permission->assignRole($role);
+                }
+            }
 
             return response()->json(['success' => true]);
         }

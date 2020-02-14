@@ -60,9 +60,9 @@ $(document).ready(function(){
             'POST',
             data,
             'New Permission Successfully Added!',
-            false,
-            '',
             true,
+            '',
+            false,
         );
         clear_errors('permission');
     });

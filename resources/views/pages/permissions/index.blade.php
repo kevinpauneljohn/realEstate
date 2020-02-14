@@ -20,7 +20,7 @@
                     <thead>
                     <tr role="row">
                         <th>Permission</th>
-                        <th>Role</th>
+                        <th>Roles</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -28,7 +28,7 @@
                     <tfoot>
                     <tr>
                         <th>Permission</th>
-                        <th>Role</th>
+                        <th>Roles</th>
                         <th width="20%">Action</th>
                     </tr>
                     </tfoot>
@@ -78,13 +78,13 @@
         <!--end add new permission modal-->
     @endcan
 
-    @can('edit role')
+    @can('edit permission')
         <!--edit role modal-->
-        <div class="modal fade" id="edit-role-modal">
-            <form role="form" id="edit-role-form">
+        <div class="modal fade" id="edit-permission-modal">
+            <form role="form" id="edit-permission-form">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" id="updateRoleId">
+                <input type="hidden" name="id" id="updatePermissionId">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
