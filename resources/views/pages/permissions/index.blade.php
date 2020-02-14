@@ -88,7 +88,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update Role Name</h4>
+                            <h4 class="modal-title">Update Permission</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -96,7 +96,7 @@
                         <div class="modal-body">
                             <div class="modal-body">
                                 <div class="form-group edit_role">
-                                    <label for="edit_permission">Role Name</label><span class="required">*</span>
+                                    <label for="edit_permission">Permission</label><span class="required">*</span>
                                     <input type="text" name="edit_permission" class="form-control" id="edit_permission">
                                 </div>
 
@@ -120,20 +120,20 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end add terminal modal-->
+        <!--end add permission modal-->
     @endcan
 
-    @can('delete role')
-        <!--delete terminal-->
-        <div class="modal fade" id="delete-role-modal">
+    @can('delete permission')
+        <!--delete permission-->
+        <div class="modal fade" id="delete-permission-modal">
             <form role="form" id="delete-role-form">
                 @csrf
                 @method('DELETE')
-                <input type="hidden" name="deleteRoleId" id="deleteRoleId">
+                <input type="hidden" name="deletePermissionId" id="deletePermissionId">
                 <div class="modal-dialog">
                     <div class="modal-content bg-danger">
                         <div class="modal-body">
-                            <p class="delete_role">Delete Role: <span class="delete-role-name"></span></p>
+                            <p class="delete_permission">Delete Permission: <span class="delete-permission-name"></span></p>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
@@ -145,7 +145,7 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end delete terminal modal-->
+        <!--end delete permission modal-->
     @endcan
 @stop
 
@@ -161,7 +161,7 @@
 @stop
 
 @section('js')
-    @can('view role')
+    @can('view permission')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/permission.js')}}"></script>
         <script>

@@ -79,14 +79,31 @@ $(document).ready(function(){
             'PUT',
             data,
             'New Permission Successfully Updated!',
-            false,
-            '',
             true,
+            '',
+            false,
         );
         clear_errors('edit_permission');
     });
+
+    /*delete permission*/
+    $('#delete-role-form').submit(function(form){
+        form.preventDefault();
+        let id = $('#deletePermissionId').val();
+        let data = $('#delete-permission-form').serialize();
+        submitform(
+            '/permissions/'+id,
+            'DELETE',
+            data,
+            'Permisssion Successfully Removed!',
+            false,
+            '',
+            true
+        );
+    });
 });
 
+/*edit trigger popup*/
 $(document).on('click','.edit-permission-btn',function () {
     $tr = $(this).closest('tr');
     id = this.id;
@@ -106,4 +123,16 @@ $(document).on('click','.edit-permission-btn',function () {
             $('#edit_roles').val(result).change();
         }
     });
+});
+
+/*delete trigger popup*/
+$(document).on('click','.delete-permission-btn',function () {
+    $tr = $(this).closest('tr');
+    id = this.id;
+    let data = $tr.children('td').map(function () {
+        return $(this).text();
+    }).get();
+
+    $('.delete-permission-name').html('<strong style="color:yellow;">'+data[0]+'</strong>');
+    $('#deletePermissionId').val(id);
 });

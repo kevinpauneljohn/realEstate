@@ -61,6 +61,13 @@ class PermissionController extends Controller
             ->make(true);
     }
 
+    /**
+     * 02/15/2020
+     * @author john kevin paunel
+     * fetch all permission's roles
+     * @param Request $request
+     * @return object
+     * */
     public function getPermissionRoles(Request $request)
     {
         $roles = Permission::whereName($request->name)->first()->roles->pluck('name');
@@ -142,13 +149,13 @@ class PermissionController extends Controller
 
         if($validator->passes())
         {
-            $roles = Permission::whereName($request->edit_permission)->first()->roles->pluck('name');
+
 
             $permission = Permission::findById($id);
             $permission->name = $request->edit_permission;
             $permission->save();
 
-
+            $roles = Permission::whereName($permission->name)->first()->roles->pluck('name');
             foreach ($roles as $role)
             {
                 $permission->removeRole($role);
@@ -170,6 +177,6 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $id;
     }
 }
