@@ -10,15 +10,16 @@
     <div class="card">
         <div class="card-header">
             @can('add permission')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-role-modal"><i class="fa fa-plus-circle"></i> Add New</button>
+                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-permission-modal"><i class="fa fa-plus-circle"></i> Add New</button>
             @endcan
 
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="roles-list" class="table table-bordered table-striped" role="grid">
+                <table id="permissions-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
+                        <th>Permission</th>
                         <th>Role</th>
                         <th>Action</th>
                     </tr>
@@ -26,6 +27,7 @@
 
                     <tfoot>
                     <tr>
+                        <th>Permission</th>
                         <th>Role</th>
                         <th width="20%">Action</th>
                     </tr>
@@ -52,6 +54,15 @@
                             <div class="form-group permission">
                                 <label for="permission">Permission</label><span class="required">*</span>
                                 <input type="text" name="permission" class="form-control" id="permission">
+                            </div>
+
+                            <div class="form-group roles">
+                                <label>Assign Role</label>
+                                <select class="select2" name="roles[]" multiple="multiple" data-placeholder="Select a role" style="width: 100%;">
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->name}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -143,21 +154,25 @@
 @section('js')
     @can('view role')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('js/role.js')}}"></script>
+        <script src="{{asset('js/permission.js')}}"></script>
         <script>
             $(function() {
-                $('#roles-list').DataTable({
+                $('#permissions-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('roles.list') !!}',
+                    ajax: '{!! route('permission.list') !!}',
                     columns: [
                         { data: 'name', name: 'name'},
+                        { data: 'role', name: 'role'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
                     order:[0,'desc']
                 });
             });
+
+            //Initialize Select2 Elements
+            $('.select2').select2();
         </script>
     @endcan
 @stop

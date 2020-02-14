@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Permissions;
+use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class PermissionController extends Controller
 {
@@ -13,7 +17,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('pages.permissions.index');
+        return view('pages.permissions.index')->with([
+            'roles'     => Role::where('name','!=','super admin')->get()
+        ]);
     }
 
     /**
@@ -23,7 +29,27 @@ class PermissionController extends Controller
      * */
     public function permissions_list()
     {
-//        $permissions = Permission::
+        $permissions = Permissions::all();
+
+        return DataTables::of($permissions)
+            ->addColumn('role',function($permission){
+                return "";
+            })
+            ->addColumn('action', function ($permission)
+            {
+                $action = "";
+//                if(auth()->user()->hasPermissionTo('edit role'))
+//                {
+                $action .= '<a href="#" class="btn btn-xs btn-primary edit-permission-btn" id="'.$permission->id.'" data-toggle="modal" data-target="#edit-permission-modal"><i class="fa fa-edit"></i> Edit</a>';
+//                }
+//                if(auth()->user()->hasPermissionTo('delete role'))
+//                {
+                $action .= '<a href="#" class="btn btn-xs btn-danger delete-permission-btn" id="'.$permission->id.'" data-toggle="modal" data-target="#delete-permission-modal"><i class="fa fa-trash"></i> Delete</a>';
+//                }
+                return $action;
+            })
+            ->rawColumns(['role','action'])
+            ->make(true);
     }
 
     /**
@@ -44,7 +70,16 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'permission'    => 'required|unique:permissions,name',
+        ]);
+
+        if($validator->passes())
+        {
+
+            return response()->json(['success' => true]);
+        }
+        return response()->json($validator->errors());
     }
 
     /**

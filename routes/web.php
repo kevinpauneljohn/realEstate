@@ -36,3 +36,5 @@ Route::delete('/roles/{role}','RolesController@destroy')->name('roles.destroy')-
 
 /*Permissions*/
 Route::get('/permissions','PermissionController@index')->name('permissions.index')->middleware(['auth']);
+Route::get('/permission-list','PermissionController@permissions_list')->name('permission.list')->middleware(['auth']);
+Route::post('/permissions','PermissionController@store')->name('permissions.store')->middleware(['auth']);
