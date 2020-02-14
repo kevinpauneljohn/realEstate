@@ -33,3 +33,6 @@ Route::get('/roles','RolesController@index')->name('roles.index')->middleware(['
 Route::post('/roles','RolesController@store')->name('roles.store')->middleware(['auth']);
 Route::put('/roles/{role}','RolesController@update')->name('roles.update')->middleware(['auth']);
 Route::delete('/roles/{role}','RolesController@destroy')->name('roles.destroy')->middleware(['auth']);
+
+/*Permissions*/
+Route::get('/permissions','PermissionController@index')->name('permissions.index')->middleware(['auth']);

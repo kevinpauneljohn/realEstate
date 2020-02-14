@@ -9,7 +9,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            @can('add role')
+            @can('add permission')
                 <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-role-modal"><i class="fa fa-plus-circle"></i> Add New</button>
             @endcan
 
@@ -35,23 +35,23 @@
         </div>
     </div>
 
-    @can('add role')
+    @can('add permission')
         <!--add new roles modal-->
-        <div class="modal fade" id="add-new-role-modal">
-            <form role="form" id="role-form">
+        <div class="modal fade" id="add-new-permission-modal">
+            <form role="form" id="permission-form">
                 @csrf
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New Role</h4>
+                            <h4 class="modal-title">Add New Permission</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group role">
-                                <label for="role">Role Name</label><span class="required">*</span>
-                                <input type="text" name="role" class="form-control" id="role">
+                            <div class="form-group permission">
+                                <label for="permission">Permission</label><span class="required">*</span>
+                                <input type="text" name="permission" class="form-control" id="permission">
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -64,7 +64,7 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end add new roles modal-->
+        <!--end add new permission modal-->
     @endcan
 
     @can('edit role')

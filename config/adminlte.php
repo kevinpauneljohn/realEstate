@@ -203,7 +203,7 @@ return [
                 ],
                 [
                     'text' => 'permissions',
-                    'url'  => '#',
+                    'route'  => 'permissions.index',
                 ],
             ],
         ],

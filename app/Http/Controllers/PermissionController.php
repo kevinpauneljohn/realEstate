@@ -13,7 +13,17 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.permissions.index');
+    }
+
+    /**
+     * Feb. 14, 2020
+     * @author john kevin paunel
+     * display all the permissions
+     * */
+    public function permissions_list()
+    {
+//        $permissions = Permission::
     }
 
     /**
