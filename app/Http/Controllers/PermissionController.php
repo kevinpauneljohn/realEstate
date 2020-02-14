@@ -61,6 +61,12 @@ class PermissionController extends Controller
             ->make(true);
     }
 
+    public function getPermissionRoles(Request $request)
+    {
+        $roles = Permission::whereName($request->name)->first()->roles->pluck('name');
+        return $roles;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -89,10 +95,7 @@ class PermissionController extends Controller
 //            $permission->assignRole('super admin');
             if($request->roles !== null)
             {
-                foreach ($request->roles as $role)
-                {
-                    $permission->assignRole($role);
-                }
+                $permission->assignRole($request->roles);
             }
 
             return response()->json(['success' => true]);
@@ -131,7 +134,32 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'edit_permission'   => 'required'
+        ],[
+            'edit_permission.required'  => 'Permission name is required'
+        ]);
+
+        if($validator->passes())
+        {
+            $roles = Permission::whereName($request->edit_permission)->first()->roles->pluck('name');
+
+            $permission = Permission::findById($id);
+            $permission->name = $request->edit_permission;
+            $permission->save();
+
+
+            foreach ($roles as $role)
+            {
+                $permission->removeRole($role);
+            }
+
+            $permission->assignRole($request->edit_roles);
+
+            return response()->json(['success' => true]);
+        }
+        return response()->json($validator->errors());
+
     }
 
     /**

@@ -96,8 +96,17 @@
                         <div class="modal-body">
                             <div class="modal-body">
                                 <div class="form-group edit_role">
-                                    <label for="edit_role">Role Name</label><span class="required">*</span>
-                                    <input type="text" name="edit_role" class="form-control" id="edit_role">
+                                    <label for="edit_permission">Role Name</label><span class="required">*</span>
+                                    <input type="text" name="edit_permission" class="form-control" id="edit_permission">
+                                </div>
+
+                                <div class="form-group edit_roles">
+                                    <label>Assign Role</label>
+                                    <select class="select2" name="edit_roles[]" multiple="multiple" id="edit_roles" data-placeholder="Select a role" style="width: 100%;">
+                                        @foreach($roles as $role)
+                                            <option value="{{$role->name}}">{{$role->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">

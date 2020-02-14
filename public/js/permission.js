@@ -51,6 +51,7 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 
 $(document).ready(function(){
 
+    /*add permission*/
     $('#permission-form').submit(function(form){
         form.preventDefault();
         let data = $('#permission-form').serialize();
@@ -65,5 +66,44 @@ $(document).ready(function(){
             false,
         );
         clear_errors('permission');
+    });
+
+    /*edit permission*/
+    $('#edit-permission-form').submit(function(form){
+        form.preventDefault();
+        let data = $('#edit-permission-form').serialize();
+        let id = $('#updatePermissionId').val();
+
+        submitform(
+            '/permissions/'+id,
+            'PUT',
+            data,
+            'New Permission Successfully Updated!',
+            false,
+            '',
+            true,
+        );
+        clear_errors('edit_permission');
+    });
+});
+
+$(document).on('click','.edit-permission-btn',function () {
+    $tr = $(this).closest('tr');
+    id = this.id;
+    let data = $tr.children('td').map(function () {
+        return $(this).text();
+    }).get();
+
+    $('#edit_permission').val(data[0]);
+    $('#updatePermissionId').val(id);
+
+    $.ajax({
+        'url' : '/permission-roles',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'type' : 'POST',
+        'data' : {'name':data[0]},
+        success: function(result){
+            $('#edit_roles').val(result).change();
+        }
     });
 });
