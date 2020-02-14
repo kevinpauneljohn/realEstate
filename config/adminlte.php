@@ -182,28 +182,26 @@ return [
             'text' => 'Dashboard',
             'route'  => 'dashboard',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'User Management'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text'    => 'Users',
+            'icon'    => 'fas fa-users',
+            'can'     => 'view user',
         ],
         [
             'text'    => 'Roles and Permissions',
             'icon'    => 'fas fa-users',
+            'can'     => 'view role',
             'submenu' => [
                 [
                     'text' => 'roles',
                     'route'  => 'roles.index',
+                    'can'  => 'view role',
                 ],
                 [
                     'text' => 'permissions',
                     'route'  => 'permissions.index',
+                    'can'  => 'view permission',
                 ],
             ],
         ],

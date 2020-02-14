@@ -126,7 +126,7 @@
     @can('delete permission')
         <!--delete permission-->
         <div class="modal fade" id="delete-permission-modal">
-            <form role="form" id="delete-role-form">
+            <form role="form" id="delete-permission-form">
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="deletePermissionId" id="deletePermissionId">

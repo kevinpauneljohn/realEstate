@@ -87,15 +87,17 @@ $(document).ready(function(){
     });
 
     /*delete permission*/
-    $('#delete-role-form').submit(function(form){
+    $('#delete-permission-form').submit(function(form){
         form.preventDefault();
         let id = $('#deletePermissionId').val();
         let data = $('#delete-permission-form').serialize();
+
+        //console.log(data);
         submitform(
             '/permissions/'+id,
             'DELETE',
             data,
-            'Permisssion Successfully Removed!',
+            'Permission Successfully Removed!',
             false,
             '',
             true

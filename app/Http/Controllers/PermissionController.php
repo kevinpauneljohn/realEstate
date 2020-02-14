@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Permissions;
+use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
 class PermissionController extends Controller
@@ -30,12 +29,12 @@ class PermissionController extends Controller
      * */
     public function permissions_list()
     {
-        $permissions = Permissions::all();
+        $permissions = Permission::all();
 
         return DataTables::of($permissions)
             ->addColumn('role',function($permission){
 
-                $role_permissions = Permission::whereName($permission->name)->first()->roles;
+                $role_permissions = \Spatie\Permission\Models\Permission::whereName($permission->name)->first()->roles;
                 $role = "";
                 foreach ($role_permissions as $roles)
                 {
@@ -70,7 +69,7 @@ class PermissionController extends Controller
      * */
     public function getPermissionRoles(Request $request)
     {
-        $roles = Permission::whereName($request->name)->first()->roles->pluck('name');
+        $roles = \Spatie\Permission\Models\Permission::whereName($request->name)->first()->roles->pluck('name');
         return $roles;
     }
 
@@ -98,7 +97,7 @@ class PermissionController extends Controller
 
         if($validator->passes())
         {
-            $permission = Permission::create(['name' => $request->permission]);
+            $permission = \Spatie\Permission\Models\Permission::create(['name' => $request->permission]);
 //            $permission->assignRole('super admin');
             if($request->roles !== null)
             {
@@ -151,11 +150,11 @@ class PermissionController extends Controller
         {
 
 
-            $permission = Permission::findById($id);
+            $permission = \Spatie\Permission\Models\Permission::findById($id);
             $permission->name = $request->edit_permission;
             $permission->save();
 
-            $roles = Permission::whereName($permission->name)->first()->roles->pluck('name');
+            $roles = \Spatie\Permission\Models\Permission::whereName($permission->name)->first()->roles->pluck('name');
             foreach ($roles as $role)
             {
                 $permission->removeRole($role);
@@ -177,6 +176,8 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        return $id;
+        $permission = Permission::findOrFail($id);
+        $permission->delete();
+        return response()->json(['success' => true]);
     }
 }
