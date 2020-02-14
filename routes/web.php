@@ -44,4 +44,5 @@ Route::delete('/permissions/{permission}','PermissionController@destroy')->name(
 
 /*users*/
 Route::get('/users','UserController@index')->name('users.index')->middleware(['auth','permission:view user']);
+Route::post('/users','UserController@store')->name('users.store')->middleware(['auth','permission:add user']);
 

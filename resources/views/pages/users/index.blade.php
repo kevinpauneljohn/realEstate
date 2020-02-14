@@ -85,6 +85,34 @@
                                 <label for="mobileNo">Address</label>
                                 <textarea class="form-control" name="address" id="address"></textarea>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-6 email">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" id="email" class="form-control">
+                                </div>
+                                <div class="col-lg-6 username">
+                                    <label for="username">Username</label><span class="required">*</span>
+                                    <input type="text" name="username" id="username" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 password">
+                                    <label for="password">Password</label><span class="required">*</span>
+                                    <input type="password" name="password" id="password" class="form-control">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="password_confirmation">Confirm Password</label>
+                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group role">
+                                <label>Assign Role</label>
+                                <select class="select2" name="role[]" id="role" multiple="multiple" data-placeholder="Select a role" style="width: 100%;">
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->name}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -175,7 +203,7 @@
 @section('js')
     @can('view role')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('js/role.js')}}"></script>
+        <script src="{{asset('js/user.js')}}"></script>
         <script>
             $(function() {
                 $('#roles-list').DataTable({
@@ -190,6 +218,8 @@
                     order:[0,'desc']
                 });
             });
+            //Initialize Select2 Elements
+            $('.select2').select2();
         </script>
     @endcan
 @stop

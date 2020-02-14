@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -13,7 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('pages.users.index');
+        return view('pages.users.index')->with([
+            'roles' => Role::where('name','!=','super admin')->get()
+        ]);
     }
 
     /**
@@ -34,7 +39,56 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'firstname'     => 'required',
+            'lastname'     => 'required',
+            'username'     => 'required|unique:users,username',
+            'password'      => 'required|confirmed',
+            'role'          => 'required'
+        ]);
+
+        if($validator->passes())
+        {
+            $user = new User();
+
+            $user->firstname = $request->firstname;
+            $user->middlename = $request->middlename;
+            $user->lastname = $request->lastname;
+            $user->mobileNo = $request->mobileNo;
+            $user->address = $request->address;
+            $user->date_of_birth = $request->date_of_birth;
+            $user->email = $request->email;
+            $user->username = $request->username;
+            $user->password = bcrypt($request->password);
+            $user->save();
+
+            $this->setRole($user,$request);
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json($validator->errors());
+    }
+
+    /**
+     * Feb 15, 2020
+     * @author john kevin paunel
+     * set role
+     * @param object $user
+     * @param object $request
+     * @return mixed
+     * */
+    protected function setRole($user, $request)
+    {
+        if($request->role !== null)
+        {
+            foreach ($request->role as $role)
+            {
+                $user->assignRole($role);
+            }
+        }
+
+        return $this;
     }
 
     /**
