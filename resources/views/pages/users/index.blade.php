@@ -16,7 +16,7 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="roles-list" class="table table-bordered table-striped" role="grid">
+                <table id="users-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
                         <th>Full Name</th>
@@ -206,12 +206,16 @@
         <script src="{{asset('js/user.js')}}"></script>
         <script>
             $(function() {
-                $('#roles-list').DataTable({
+                $('#users-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('roles.list') !!}',
+                    ajax: '{!! route('users.list') !!}',
                     columns: [
-                        { data: 'name', name: 'name'},
+                        { data: 'fullname', name: 'fullname'},
+                        { data: 'username', name: 'username'},
+                        { data: 'email', name: 'email'},
+                        { data: 'mobileNo', name: 'mobileNo'},
+                        { data: 'roles', name: 'roles'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

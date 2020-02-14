@@ -27,14 +27,14 @@ class RolesController extends Controller
             ->addColumn('action', function ($role)
             {
                 $action = "";
-//                if(auth()->user()->hasPermissionTo('edit role'))
-//                {
+                if(auth()->user()->can('edit role'))
+                {
                     $action .= '<a href="#" class="btn btn-xs btn-primary edit-role-btn" id="'.$role->id.'" data-toggle="modal" data-target="#edit-role-modal"><i class="fa fa-edit"></i> Edit</a>';
-//                }
-//                if(auth()->user()->hasPermissionTo('delete role'))
-//                {
+                }
+                if(auth()->user()->can('delete role'))
+                {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-role-btn" id="'.$role->id.'" data-toggle="modal" data-target="#delete-role-modal"><i class="fa fa-trash"></i> Delete</a>';
-//                }
+                }
                 return $action;
             })
             ->rawColumns(['action'])
