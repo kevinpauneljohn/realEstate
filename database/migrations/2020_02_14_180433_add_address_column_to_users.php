@@ -14,7 +14,7 @@ class AddAddressColumnToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('address')->after('mobileNo');
+            $table->text('address')->after('mobileNo')->nullable();
         });
     }
 

@@ -48,7 +48,7 @@
         <div class="modal fade" id="add-new-user-modal">
             <form role="form" id="user-form">
                 @csrf
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Add New User</h4>
@@ -57,9 +57,33 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group role">
-                                <label for="role">Role Name</label><span class="required">*</span>
-                                <input type="text" name="role" class="form-control" id="role">
+                            <div class="row">
+                               <div class="col-lg-4 firstname">
+                                   <label for="firstname">First Name</label><span class="required">*</span>
+                                   <input type="text" name="firstname" id="firstname" class="form-control">
+                               </div>
+                                <div class="col-lg-4 middlename">
+                                    <label for="middlename">Middle Name</label>
+                                    <input type="text" name="middlename" id="middlename" class="form-control">
+                                </div>
+                                <div class="col-lg-4 lastname">
+                                    <label for="lastname">Last Name</label><span class="required">*</span>
+                                    <input type="text" name="lastname" id="lastname" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 mobileNo">
+                                    <label for="mobileNo">Mobile No.</label><span class="required">*</span>
+                                    <input type="text" name="mobileNo" id="mobileNo" class="form-control">
+                                </div>
+                                <div class="col-lg-6 date_of_birth">
+                                    <label for="date_of_birth">Date of Birth</label>
+                                    <input type="date" name="date_of_birth" id="date_of_birth" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group address">
+                                <label for="mobileNo">Address</label>
+                                <textarea class="form-control" name="address" id="address"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
