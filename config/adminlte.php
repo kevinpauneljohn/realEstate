@@ -186,6 +186,7 @@ return [
         [
             'text'    => 'Users',
             'icon'    => 'fas fa-users',
+            'route'    => 'users.index',
             'can'     => 'view user',
         ],
         [

@@ -41,3 +41,7 @@ Route::post('/permissions','PermissionController@store')->name('permissions.stor
 Route::post('/permission-roles','PermissionController@getPermissionRoles')->name('permissions.roles')->middleware(['auth','permission:view role|view permission']);
 Route::put('/permissions/{permission}','PermissionController@update')->name('permissions.update')->middleware(['auth','permission:edit permission']);
 Route::delete('/permissions/{permission}','PermissionController@destroy')->name('permissions.destroy')->middleware('auth','permission:delete permission');
+
+/*users*/
+Route::get('/users','UserController@index')->name('users.index')->middleware(['auth','permission:view user']);
+
