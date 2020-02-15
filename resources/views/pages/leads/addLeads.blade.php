@@ -8,37 +8,16 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
-            @can('add lead')
-                <a><button type="button" class="btn bg-gradient-primary btn-sm"><i class="fa fa-plus-circle"></i> Add New</button></a>
-            @endcan
-
-        </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="users-list" class="table table-bordered table-striped" role="grid">
-                    <thead>
-                    <tr role="row">
-                        <th>Full Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Contact Number</th>
-                        <th>Role</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
+                <div class="row">
+                   <div class="col-lg-6">
 
-                    <tfoot>
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Contact Number</th>
-                        <th>Role</th>
-                        <th width="20%">Action</th>
-                    </tr>
-                    </tfoot>
-                </table>
+                   </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
