@@ -23,7 +23,7 @@ class LeadController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.leads.addLeads');
     }
 
     /**
@@ -45,7 +45,7 @@ class LeadController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

@@ -50,3 +50,7 @@ Route::get('/users/{user}','UserController@show')->name('users.show')->middlewar
 Route::put('/users/{user}','UserController@update')->name('users.update')->middleware(['auth','permission:edit user']);
 Route::delete('/users/{user}','UserController@destroy')->name('users.destroy')->middleware('auth','permission:delete user');
 
+/*leads*/
+Route::get('/leads','LeadController@index')->name('leads.index')->middleware(['auth','permission:view lead']);
+Route::get('/leads/create','LeadController@create')->name('leads.create')->middleware(['auth','permission:add lead']);
+

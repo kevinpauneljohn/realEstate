@@ -215,8 +215,14 @@ return [
             'can'     => 'view lead',
             'submenu' => [
                 [
+                    'text' => 'View Leads',
+                    'route'  => 'leads.index',
+                    'icon_color'  => 'blue',
+                    'can'  => 'view lead',
+                ],
+                [
                     'text' => 'Add Leads',
-                    'route'  => 'roles.index',
+                    'route'  => 'leads.create',
                     'icon_color'  => 'red',
                     'can'  => 'view lead',
                 ],
