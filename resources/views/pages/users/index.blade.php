@@ -124,30 +124,66 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end add new roles modal-->
+        <!--end add new user modal-->
     @endcan
 
-    @can('edit role')
+    @can('edit user')
         <!--edit role modal-->
-        <div class="modal fade" id="edit-role-modal">
-            <form role="form" id="edit-role-form">
+        <div class="modal fade" id="edit-user-modal">
+            <form role="form" id="edit-user-form">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" id="updateRoleId">
-                <div class="modal-dialog">
+                <input type="hidden" name="id" id="updateUserId">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update Role Name</h4>
+                            <h4 class="modal-title">Update User</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="modal-body">
-                                <div class="form-group edit_role">
-                                    <label for="edit_role">Role Name</label><span class="required">*</span>
-                                    <input type="text" name="edit_role" class="form-control" id="edit_role">
+                            <div class="row">
+                                <div class="col-lg-4 edit_firstname">
+                                    <label for="edit_firstname">First Name</label><span class="required">*</span>
+                                    <input type="text" name="edit_firstname" id="edit_firstname" class="form-control">
                                 </div>
+                                <div class="col-lg-4 edit_middlename">
+                                    <label for="edit_middlename">Middle Name</label>
+                                    <input type="text" name="edit_middlename" id="edit_middlename" class="form-control">
+                                </div>
+                                <div class="col-lg-4 edit_lastname">
+                                    <label for="edit_lastname">Last Name</label><span class="required">*</span>
+                                    <input type="text" name="edit_lastname" id="edit_lastname" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 edit_mobileNo">
+                                    <label for="edit_mobileNo">Mobile No.</label><span class="required">*</span>
+                                    <input type="text" name="edit_mobileNo" id="edit_mobileNo" class="form-control">
+                                </div>
+                                <div class="col-lg-6 edit_date_of_birth">
+                                    <label for="edit_date_of_birth">Date of Birth</label>
+                                    <input type="date" name="edit_date_of_birth" id="edit_date_of_birth" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group edit_address">
+                                <label for="edit_address">Address</label>
+                                <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 edit_email">
+                                    <label for="edit_email">Email</label>
+                                    <input type="email" name="edit_email" id="edit_email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group edit_role">
+                                <label>Assign Role</label>
+                                <select class="select2" name="edit_role[]" id="edit_role" multiple="multiple" data-placeholder="Select a role" style="width: 100%;">
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->name}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -160,7 +196,7 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end add terminal modal-->
+        <!--end add user modal-->
     @endcan
 
     @can('delete role')

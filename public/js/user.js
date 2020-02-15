@@ -51,6 +51,7 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 
 $(document).ready(function(){
 
+    /*add user*/
     $('#user-form').submit(function(form){
         form.preventDefault();
 
@@ -66,5 +67,24 @@ $(document).ready(function(){
             false,
         );
         clear_errors('firstname','lastname','username','password','role');
+    });
+});
+
+$(document).on('click','.edit-user-btn',function(){
+    let id = this.id;
+
+    $.ajax({
+        'url' : '/users/'+id,
+        'type' : 'GET',
+        success: function(result){
+            $('#updateUserId').val(result.user.id);
+            $('#edit_firstname').val(result.user.firstname);
+            $('#edit_middlename').val(result.user.middlename);
+            $('#edit_mobileNo').val(result.user.mobileNo);
+            $('#edit_date_of_birth').val(result.user.date_of_birth);
+            $('#edit_address').val(result.user.address);
+            $('#edit_email').val(result.user.email);
+            $('#edit_role').val(result.roles).change();
+        }
     });
 });

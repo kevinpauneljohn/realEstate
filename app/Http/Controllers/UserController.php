@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -39,7 +40,7 @@ class UserController extends Controller
      * */
     public function userList()
     {
-        $users = User::all();
+        $users = User::where('username','!=','kevinpauneljohn')->get();
         return DataTables::of($users)
             ->addColumn('fullname', function ($user){
                 $fullname = ucfirst($user->firstname).' '.ucfirst($user->lastname);
@@ -57,11 +58,11 @@ class UserController extends Controller
             ->addColumn('action', function ($user)
             {
                 $action = "";
-                if(auth()->user()->can('edit role'))
+                if(auth()->user()->can('edit user'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-primary edit-user-btn" id="'.$user->id.'" data-toggle="modal" data-target="#edit-user-modal"><i class="fa fa-edit"></i> Edit</a>';
                 }
-                if(auth()->user()->can('delete role'))
+                if(auth()->user()->can('delete user'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-user-btn" id="'.$user->id.'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i> Delete</a>';
                 }
@@ -139,7 +140,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return response()->json(['user' => $user, 'roles' => $user->getRoleNames()]);
     }
 
     /**
