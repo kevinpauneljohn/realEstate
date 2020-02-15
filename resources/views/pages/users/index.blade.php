@@ -199,17 +199,17 @@
         <!--end add user modal-->
     @endcan
 
-    @can('delete role')
-        <!--delete terminal-->
-        <div class="modal fade" id="delete-role-modal">
-            <form role="form" id="delete-role-form">
+    @can('delete user')
+        <!--delete user-->
+        <div class="modal fade" id="delete-user-modal">
+            <form role="form" id="delete-user-form">
                 @csrf
                 @method('DELETE')
-                <input type="hidden" name="deleteRoleId" id="deleteRoleId">
+                <input type="hidden" name="deleteUserId" id="deleteUserId">
                 <div class="modal-dialog">
                     <div class="modal-content bg-danger">
                         <div class="modal-body">
-                            <p class="delete_role">Delete Role: <span class="delete-role-name"></span></p>
+                            <p class="delete_user">Delete User: <span class="delete-user-name"></span></p>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
@@ -221,7 +221,7 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end delete terminal modal-->
+        <!--end delete user modal-->
     @endcan
 @stop
 
@@ -237,7 +237,7 @@
 @stop
 
 @section('js')
-    @can('view role')
+    @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/user.js')}}"></script>
         <script>

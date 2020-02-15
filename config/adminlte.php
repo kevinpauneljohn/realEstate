@@ -185,7 +185,7 @@ return [
         ['header' => 'User Management'],
         [
             'text'    => 'Users',
-            'icon'    => 'fas fa-users',
+            'icon'    => 'fas fa-user',
             'route'    => 'users.index',
             'can'     => 'view user',
         ],
@@ -198,26 +198,29 @@ return [
                     'text' => 'roles',
                     'route'  => 'roles.index',
                     'can'  => 'view role',
+                    'icon_color' => 'blue',
                 ],
                 [
                     'text' => 'permissions',
                     'route'  => 'permissions.index',
                     'can'  => 'view permission',
+                    'icon_color' => 'red',
                 ],
             ],
         ],
-        ['header' => 'labels'],
+        ['header' => 'LEAD MANAGEMENT'],
         [
-            'text'       => 'important',
-            'icon_color' => 'red',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'aqua',
+            'text'    => 'Leads',
+            'icon'    => 'fas fa-user-times',
+            'can'     => 'view lead',
+            'submenu' => [
+                [
+                    'text' => 'Add Leads',
+                    'route'  => 'roles.index',
+                    'icon_color'  => 'red',
+                    'can'  => 'view lead',
+                ],
+            ],
         ],
     ],
 

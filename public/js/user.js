@@ -87,6 +87,24 @@ $(document).ready(function(){
         );
         clear_errors('edit_firstname','edit_lastname','edit_role');
     });
+
+    /*delete user*/
+    $('#delete-user-form').submit(function(form){
+        form.preventDefault();
+
+        let id = $('#deleteUserId').val();
+        let data = $('#delete-user-form').serialize();
+
+        submitform(
+            '/users/'+id,
+            'DELETE',
+            data,
+            'New Permission Successfully Deleted!',
+            true,
+            '',
+            false,
+        );
+    });
 });
 
 $(document).on('click','.edit-user-btn',function(){
@@ -107,4 +125,16 @@ $(document).on('click','.edit-user-btn',function(){
             $('#edit_role').val(result.roles).change();
         }
     });
+});
+
+/*delete trigger popup*/
+$(document).on('click','.delete-user-btn',function () {
+    $tr = $(this).closest('tr');
+    id = this.id;
+    let data = $tr.children('td').map(function () {
+        return $(this).text();
+    }).get();
+
+    $('.delete-user-name').html('<strong style="color:yellow;">'+data[0]+'</strong>?');
+    $('#deleteUserId').val(id);
 });
