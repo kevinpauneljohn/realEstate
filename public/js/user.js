@@ -68,6 +68,25 @@ $(document).ready(function(){
         );
         clear_errors('firstname','lastname','username','password','role');
     });
+
+    /*edit user*/
+    $('#edit-user-form').submit(function(form){
+        form.preventDefault();
+
+        let id = $('#updateUserId').val();
+        let data = $('#edit-user-form').serialize();
+
+        submitform(
+            '/users/'+id,
+            'PUT',
+            data,
+            'New Permission Successfully Updated!',
+            true,
+            '',
+            false,
+        );
+        clear_errors('edit_firstname','edit_lastname','edit_role');
+    });
 });
 
 $(document).on('click','.edit-user-btn',function(){
@@ -80,6 +99,7 @@ $(document).on('click','.edit-user-btn',function(){
             $('#updateUserId').val(result.user.id);
             $('#edit_firstname').val(result.user.firstname);
             $('#edit_middlename').val(result.user.middlename);
+            $('#edit_lastname').val(result.user.lastname);
             $('#edit_mobileNo').val(result.user.mobileNo);
             $('#edit_date_of_birth').val(result.user.date_of_birth);
             $('#edit_address').val(result.user.address);

@@ -47,4 +47,5 @@ Route::get('/users','UserController@index')->name('users.index')->middleware(['a
 Route::post('/users','UserController@store')->name('users.store')->middleware(['auth','permission:add user']);
 Route::get('/users-list','UserController@userList')->name('users.list')->middleware(['auth','permission:view user']);
 Route::get('/users/{user}','UserController@show')->name('users.show')->middleware(['auth','permission:view user']);
+Route::put('/users/{user}','UserController@update')->name('users.update')->middleware(['auth','permission:edit user']);
 

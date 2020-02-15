@@ -164,7 +164,35 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'edit_firstname'    => 'required',
+            'edit_lastname'     => 'required',
+            'edit_role'         => 'required'
+        ],[
+            'edit_firstname.required'   => 'First Name is required',
+            'edit_lastname.required'   => 'Last Name is required',
+            'edit_role.required'   => 'Role is required',
+        ]);
+
+        if($validator->passes())
+        {
+            $user = User::findOrFail($id);
+            $user->firstname = $request->edit_firstname;
+            $user->middlename = $request->edit_middlename;
+            $user->lastname = $request->edit_lastname;
+            $user->mobileNo = $request->edit_mobileNo;
+            $user->address = $request->edit_address;
+            $user->date_of_birth = $request->edit_date_of_birth;
+            $user->email = $request->edit_email;
+            $user->save();
+
+            if($request->edit_role !== null)
+            {
+                $user->syncRoles($request->edit_role);
+            }
+            return response()->json(['success' => true]);
+        }
+        return response()->json($validator->errors());
     }
 
     /**
