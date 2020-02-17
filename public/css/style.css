@@ -25,3 +25,6 @@ table{
 .role-badge{
     margin:1px;
 }
+.invalid-feedback{
+    display:block;
+}

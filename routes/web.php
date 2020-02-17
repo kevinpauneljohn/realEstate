@@ -53,4 +53,5 @@ Route::delete('/users/{user}','UserController@destroy')->name('users.destroy')->
 /*leads*/
 Route::get('/leads','LeadController@index')->name('leads.index')->middleware(['auth','permission:view lead']);
 Route::get('/leads/create','LeadController@create')->name('leads.create')->middleware(['auth','permission:add lead']);
+Route::post('/leads/save','LeadController@store')->name('leads.store')->middleware(['auth','permission:add lead']);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Lead;
 use Illuminate\Http\Request;
 
 class LeadController extends Controller
@@ -34,43 +35,32 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-
-    }
-
-    /**
-     * feb 17, 2020
-     * @author john kevin paunel
-     * validated submitted fields
-     * @param object $request
-     * @return mixed
-     * */
-    protected function validate_leads($request)
-    {
         $request->validate([
             'date_inquired' => ['date','required'],
             'firstname'     => ['required'],
             'lastname'     => ['required'],
-            'email'     => ['email'],
-        ],[
-            'date_inquired'     => [
-                'date'  => 'Must be a valid date',
-                'required'  => 'Date inquiry is required'
-            ]
         ]);
 
-        return $this;
-    }
+        $lead = new Lead();
+        $lead->user_id = auth()->user()->id;
+        $lead->date_inquired = $request->date_inquired;
+        $lead->firstname = $request->firstname;
+        $lead->middlename = $request->middlename;
+        $lead->lastname = $request->lastname;
+        $lead->address = $request->address;
+        $lead->landline = $request->landline;
+        $lead->mobileNo = $request->mobileNo;
+        $lead->email = $request->email;
+        $lead->status = $request->status;
+        $lead->income_range = $request->income_range;
+        $lead->point_of_contact = $request->point_of_contact;
+        $lead->remarks = $request->remarks;
 
-    /**
-     * feb 17, 2020
-     * @author john kevin paunel
-     * save leads
-     * @param object $request
-     * @return mixed
-     * */
-    protected function save_leads($request)
-    {
-
+        if($lead->save())
+        {
+            return back()->with(['success' => true]);
+        }
+        return back()->withErrors()->withInput();
     }
 
     /**

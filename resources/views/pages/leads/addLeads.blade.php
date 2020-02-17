@@ -7,15 +7,21 @@
 @stop
 
 @section('content')
+
     <div class="card">
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <form method="POST">
+                @if(session('success') === true)
+                    <div class="alert alert-success">
+                        Successfully Submitted!
+                    </div>
+                    @endif
+                <form method="POST" action="{{route('leads.store')}}">
                     @csrf
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- Date range -->
-                            <div class="form-group {{$errors->has('date_inquired') ? 'has-error' : ''}}">
+                            <div class="form-group">
                                 <label>Date Inquired</label><span class="required">*</span>
 
                                 <div class="input-group">
@@ -35,9 +41,9 @@
                                     <label for="firstname">First Name</label><span class="required">*</span>
                                     <input type="text" name="firstname" value="{{old('firstname')}}" class="form-control">
                                     @error('firstname')
-                                    <span class="invalid-feedback" role="alert">
-                                   <strong>{{ $message }}</strong>
-                               </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="col-lg-4">
@@ -49,8 +55,8 @@
                                     <input type="text" name="lastname" value="{{old('lastname')}}" class="form-control">
                                     @error('lastname')
                                     <span class="invalid-feedback" role="alert">
-                                   <strong>{{ $message }}</strong>
-                               </span>
+                                       <strong>{{ $message }}</strong>
+                                   </span>
                                     @enderror
                                 </div>
                             </div>
@@ -81,7 +87,7 @@
                                 </div>
                                 <!-- /.input group -->
                             </div>
-                            <div class="form-group">
+                            <div class="form-group {{$errors->has('lastname') ? 'has-error' : ''}}">
                                 <label for="email">Email</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -89,6 +95,11 @@
                                     </div>
                                     <input type="email" name="email" class="form-control" value="{{old('email')}}">
                                 </div>
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                       <strong>{{ $message }}</strong>
+                                   </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="status">Civil Status</label>
@@ -114,8 +125,8 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="point_of_contact">Point Of Contact</label>
+                            <div class="form-group {{$errors->has('firstname') ? 'has-error' : ''}}">
+                                <label for="point_of_contact">Point Of Contact</label><span class="required">*</span>
                                 <select name="point_of_contact" class="form-control" id="point_of_contact">
                                     <option value=""> -- Select -- </option>
                                     <option value="Booth" @if(old('point_of_contact') == "Mall Booth") selected="selected" @endif>Mall Booth</option>

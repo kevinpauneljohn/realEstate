@@ -14,8 +14,22 @@ class CreateLeadsTable extends Migration
     public function up()
     {
         Schema::create('leads', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
+            $table->uuid('user_id');
+            $table->string('date_inquired');
+            $table->string('firstname');
+            $table->string('middlename')->nullable();
+            $table->string('lastname');
+            $table->text('address')->nullable();
+            $table->string('landline')->nullable();
+            $table->string('mobileNo')->nullable();
+            $table->string('email')->nullable();
+            $table->string('status')->nullable();
+            $table->string('income_range')->nullable();
+            $table->string('point_of_contact');
+            $table->text('remarks')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
