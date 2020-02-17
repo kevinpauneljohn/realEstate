@@ -16,8 +16,9 @@
                         Successfully Updated!
                     </div>
                 @endif
-                <form method="POST">
+                <form method="POST" action="{{route('leads.update',['lead' => $lead->id])}}">
                     @csrf
+                    @method('PUT')
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- Date range -->

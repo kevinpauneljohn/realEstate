@@ -18,6 +18,16 @@ class LeadController extends Controller
     }
 
     /**
+     * Feb. 18, 2020
+     * @author john kevin paunel
+     * display all leads
+     * */
+    public function lead_list()
+    {
+
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -110,7 +120,28 @@ class LeadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate_field($request);
+
+        $lead = Lead::findOrFail($id);
+        $lead->user_id = auth()->user()->id;
+        $lead->date_inquired = $request->date_inquired;
+        $lead->firstname = $request->firstname;
+        $lead->middlename = $request->middlename;
+        $lead->lastname = $request->lastname;
+        $lead->address = $request->address;
+        $lead->landline = $request->landline;
+        $lead->mobileNo = $request->mobileNo;
+        $lead->email = $request->email;
+        $lead->status = $request->status;
+        $lead->income_range = $request->income_range;
+        $lead->point_of_contact = $request->point_of_contact;
+        $lead->remarks = $request->remarks;
+
+        if($lead->save())
+        {
+            return back()->withInput()->with(['success' => true]);
+        }
+        return back()->withErrors()->withInput();
     }
 
     /**
