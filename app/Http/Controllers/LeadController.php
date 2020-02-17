@@ -35,12 +35,8 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'date_inquired' => ['date','required'],
-            'firstname'     => ['required'],
-            'lastname'     => ['required'],
-        ]);
 
+        $this->validate_field($request);
         $lead = new Lead();
         $lead->user_id = auth()->user()->id;
         $lead->date_inquired = $request->date_inquired;
@@ -58,9 +54,27 @@ class LeadController extends Controller
 
         if($lead->save())
         {
-            return redirect();
+            return redirect(route('leads.edit',['lead'  => $lead->id]));
         }
         return back()->withErrors()->withInput();
+    }
+
+    /**
+     * Feb. 17, 2020
+     * @author john kevin paunel
+     * Validate submitted field
+     * @param object $request
+     * @return mixed
+     * */
+    private function validate_field($request)
+    {
+        $request->validate([
+            'date_inquired' => ['date','required'],
+            'firstname'     => ['required'],
+            'lastname'     => ['required'],
+        ]);
+
+        return $this;
     }
 
     /**

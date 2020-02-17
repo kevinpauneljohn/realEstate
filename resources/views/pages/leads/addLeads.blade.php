@@ -87,7 +87,7 @@
                                 </div>
                                 <!-- /.input group -->
                             </div>
-                            <div class="form-group {{$errors->has('lastname') ? 'has-error' : ''}}">
+                            <div class="form-group {{$errors->has('email') ? 'has-error' : ''}}">
                                 <label for="email">Email</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group {{$errors->has('firstname') ? 'has-error' : ''}}">
+                            <div class="form-group {{$errors->has('point_of_contact') ? 'has-error' : ''}}">
                                 <label for="point_of_contact">Point Of Contact</label><span class="required">*</span>
                                 <select name="point_of_contact" class="form-control" id="point_of_contact">
                                     <option value=""> -- Select -- </option>

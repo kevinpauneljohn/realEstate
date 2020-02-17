@@ -28,7 +28,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                     </div>
-                                    <input type="text" name="date_inquired" class="form-control datemask" id="datepicker" value="{{old('date_inquired')}}" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                    <input type="text" name="date_inquired" class="form-control datemask" id="datepicker" value="{{$lead->date_inquired}}" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
                                 </div>
                                 @error('date_inquired')
                                 <span class="invalid-feedback" role="alert">
@@ -39,7 +39,7 @@
                             <div class="row">
                                 <div class="col-lg-4 {{$errors->has('firstname') ? 'has-error' : ''}}">
                                     <label for="firstname">First Name</label><span class="required">*</span>
-                                    <input type="text" name="firstname" value="{{old('firstname')}}" class="form-control">
+                                    <input type="text" name="firstname" value="{{$lead->firstname}}" class="form-control">
                                     @error('firstname')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -48,11 +48,11 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="middlename">Middle Name</label>
-                                    <input type="text" name="middlename" value="{{old('middlename')}}" class="form-control">
+                                    <input type="text" name="middlename" value="{{$lead->middlename}}" class="form-control">
                                 </div>
                                 <div class="col-lg-4 {{$errors->has('lastname') ? 'has-error' : ''}}" class="form-control">
                                     <label for="lastname">Last Name</label><span class="required">*</span>
-                                    <input type="text" name="lastname" value="{{old('lastname')}}" class="form-control">
+                                    <input type="text" name="lastname" value="{{$lead->lastname}}" class="form-control">
                                     @error('lastname')
                                     <span class="invalid-feedback" role="alert">
                                        <strong>{{ $message }}</strong>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="address">Address</label>
-                                <textarea class="form-control" name="address">{{old('address')}}</textarea>
+                                <textarea class="form-control" name="address">{{$lead->address}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label>Landline</label>
@@ -71,7 +71,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                    <input type="text" name="landline" value="{{old('landline')}}" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="" im-insert="true">
+                                    <input type="text" name="landline" value="{{$lead->landline}}" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="" im-insert="true">
                                 </div>
                                 <!-- /.input group -->
                             </div>
@@ -83,17 +83,17 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-mobile"></i></span>
                                     </div>
-                                    <input type="text" name="mobileNo" value="{{old('mobileNo')}}" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(9999) 999-9999&quot;" data-mask="" im-insert="true">
+                                    <input type="text" name="mobileNo" value="{{$lead->mobileNo}}" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(9999) 999-9999&quot;" data-mask="" im-insert="true">
                                 </div>
                                 <!-- /.input group -->
                             </div>
-                            <div class="form-group {{$errors->has('lastname') ? 'has-error' : ''}}">
+                            <div class="form-group {{$errors->has('email') ? 'has-error' : ''}}">
                                 <label for="email">Email</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     </div>
-                                    <input type="email" name="email" class="form-control" value="{{old('email')}}">
+                                    <input type="email" name="email" class="form-control" value="{{$lead->email}}">
                                 </div>
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -105,41 +105,41 @@
                                 <label for="status">Civil Status</label>
                                 <select class="form-control" name="status">
                                     <option value="">-- Select --</option>
-                                    <option value="Single" @if(old('status') == "Single") selected="selected" @endif>Single</option>
-                                    <option value="Married" @if(old('status') == "Married") selected="selected" @endif>Married</option>
+                                    <option value="Single" @if($lead->status == "Single") selected="selected" @endif>Single</option>
+                                    <option value="Married" @if($lead->status == "Married") selected="selected" @endif>Married</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="income">Income Range</label>
                                 <select name="income_range" class="form-control" id="income_range">
                                     <option value=""> -- Select -- </option>
-                                    <option value="Below 10K" @if(old('income_range') == "Below 10K") selected="selected" @endif>Below 10K</option>
-                                    <option value="10K - 20K" @if(old('income_range') == "10K - 20K") selected="selected" @endif>10K - 20K</option>
-                                    <option value="21K - 30K" @if(old('income_range') == "21K - 30K") selected="selected" @endif>21K - 30K</option>
-                                    <option value="31K - 40K" @if(old('income_range') == "31K - 40K") selected="selected" @endif>31K - 40K</option>
-                                    <option value="41K - 50K" @if(old('income_range') == "41K - 50K") selected="selected" @endif>41K - 50K</option>
-                                    <option value="51K - 60K" @if(old('income_range') == "51K - 60K") selected="selected" @endif>51K - 60K</option>
-                                    <option value="61K - 70K" @if(old('income_range') == "61K - 70K") selected="selected" @endif>61K - 70K</option>
-                                    <option value="70K+" @if(old('income_range') == "70K+") selected="selected" @endif>70K+</option>
+                                    <option value="Below 10K" @if($lead->income_range == "Below 10K") selected="selected" @endif>Below 10K</option>
+                                    <option value="10K - 20K" @if($lead->income_range == "10K - 20K") selected="selected" @endif>10K - 20K</option>
+                                    <option value="21K - 30K" @if($lead->income_range == "21K - 30K") selected="selected" @endif>21K - 30K</option>
+                                    <option value="31K - 40K" @if($lead->income_range == "31K - 40K") selected="selected" @endif>31K - 40K</option>
+                                    <option value="41K - 50K" @if($lead->income_range == "41K - 50K") selected="selected" @endif>41K - 50K</option>
+                                    <option value="51K - 60K" @if($lead->income_range == "51K - 60K") selected="selected" @endif>51K - 60K</option>
+                                    <option value="61K - 70K" @if($lead->income_range == "61K - 70K") selected="selected" @endif>61K - 70K</option>
+                                    <option value="70K+" @if($lead->income_range == "70K+") selected="selected" @endif>70K+</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group {{$errors->has('firstname') ? 'has-error' : ''}}">
+                            <div class="form-group {{$errors->has('point_of_contact') ? 'has-error' : ''}}">
                                 <label for="point_of_contact">Point Of Contact</label><span class="required">*</span>
                                 <select name="point_of_contact" class="form-control" id="point_of_contact">
                                     <option value=""> -- Select -- </option>
-                                    <option value="Booth" @if(old('point_of_contact') == "Mall Booth") selected="selected" @endif>Mall Booth</option>
-                                    <option value="Site" @if(old('point_of_contact') == "Site") selected="selected" @endif>Site</option>
-                                    <option value="Online" @if(old('point_of_contact') == "Online") selected="selected" @endif>Online</option>
-                                    <option value="Saturation" @if(old('point_of_contact') == "Saturation") selected="selected" @endif>Saturation</option>
-                                    <option value="Referral" @if(old('point_of_contact') == "Referral") selected="selected" @endif>Referral</option>
+                                    <option value="Booth" @if($lead->point_of_contact == "Mall Booth") selected="selected" @endif>Mall Booth</option>
+                                    <option value="Site" @if($lead->point_of_contact == "Site") selected="selected" @endif>Site</option>
+                                    <option value="Online" @if($lead->point_of_contact == "Online") selected="selected" @endif>Online</option>
+                                    <option value="Saturation" @if($lead->point_of_contact == "Saturation") selected="selected" @endif>Saturation</option>
+                                    <option value="Referral" @if($lead->point_of_contact == "Referral") selected="selected" @endif>Referral</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="remarks">Remarks</label>
-                                <textarea name="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                <textarea name="remarks" class="textarea" data-min-height="150" placeholder="Place some text here">{!! $lead->remarks !!}</textarea>
                             </div>
 
                             <div>
@@ -227,7 +227,7 @@
             });
             //Money Euro
             $('[data-mask]').inputmask()
-            $('.textarea').html({{old('remarks')}});
+            //$('.textarea').html('hello');
         </script>
     @endcan
 @stop
