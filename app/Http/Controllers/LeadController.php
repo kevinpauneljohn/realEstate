@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lead;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class LeadController extends Controller
 {
@@ -24,7 +25,23 @@ class LeadController extends Controller
      * */
     public function lead_list()
     {
-
+        $leads = Lead::all();
+        return DataTables::of($leads)
+            ->addColumn('action', function ($lead)
+            {
+                $action = "";
+                if(auth()->user()->can('edit lead'))
+                {
+                    $action .= '<a href="'.route("leads.edit",["lead" => $lead->id]).'" class="btn btn-xs btn-primary edit-role-btn" id="'.$lead->id.'"><i class="fa fa-edit"></i> Edit</a>';
+                }
+                if(auth()->user()->can('delete lead'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$lead->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
+                }
+                return $action;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**

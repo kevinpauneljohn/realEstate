@@ -16,32 +16,59 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="users-list" class="table table-bordered table-striped" role="grid">
+                <table id="leads-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
-                        <th>Full Name</th>
-                        <th>Username</th>
+                        <th>Date Inquired</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Mobile No.</th>
                         <th>Email</th>
-                        <th>Contact Number</th>
-                        <th>Role</th>
+                        <th>Point Of Contact</th>
                         <th>Action</th>
                     </tr>
                     </thead>
 
                     <tfoot>
                     <tr>
-                        <th>Full Name</th>
-                        <th>Username</th>
+                        <th>Date Inquired</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Mobile No.</th>
                         <th>Email</th>
-                        <th>Contact Number</th>
-                        <th>Role</th>
-                        <th width="20%">Action</th>
+                        <th>Point Of Contact</th>
+                        <th>Action</th>
                     </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
     </div>
+
+    @can('delete lead')
+        <!--delete permission-->
+        <div class="modal fade" id="delete-lead-modal">
+            <form role="form" id="delete-lead-form">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="deleteLeadId" id="deleteLeadId">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-danger">
+                        <div class="modal-body">
+                            <p class="delete_leadn">Delete Lead: <span class="delete-lead-name"></span></p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-light">Delete</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end delete permission modal-->
+    @endcan
 @stop
 
 @section('css')
@@ -61,16 +88,17 @@
         <script src="{{asset('js/user.js')}}"></script>
         <script>
             $(function() {
-                $('#users-list').DataTable({
+                $('#leads-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('users.list') !!}',
+                    ajax: '{!! route('leads.list') !!}',
                     columns: [
-                        { data: 'fullname', name: 'fullname'},
-                        { data: 'username', name: 'username'},
-                        { data: 'email', name: 'email'},
+                        { data: 'date_inquired', name: 'date_inquired'},
+                        { data: 'firstname', name: 'firstname'},
+                        { data: 'lastname', name: 'lastname'},
                         { data: 'mobileNo', name: 'mobileNo'},
-                        { data: 'roles', name: 'roles'},
+                        { data: 'email', name: 'email'},
+                        { data: 'point_of_contact', name: 'point_of_contact'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
