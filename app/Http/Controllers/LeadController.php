@@ -34,7 +34,43 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+    }
+
+    /**
+     * feb 17, 2020
+     * @author john kevin paunel
+     * validated submitted fields
+     * @param object $request
+     * @return mixed
+     * */
+    protected function validate_leads($request)
+    {
+        $request->validate([
+            'date_inquired' => ['date','required'],
+            'firstname'     => ['required'],
+            'lastname'     => ['required'],
+            'email'     => ['email'],
+        ],[
+            'date_inquired'     => [
+                'date'  => 'Must be a valid date',
+                'required'  => 'Date inquiry is required'
+            ]
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * feb 17, 2020
+     * @author john kevin paunel
+     * save leads
+     * @param object $request
+     * @return mixed
+     * */
+    protected function save_leads($request)
+    {
+
     }
 
     /**
