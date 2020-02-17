@@ -211,7 +211,7 @@ return [
         ['header' => 'LEAD MANAGEMENT'],
         [
             'text'    => 'Leads',
-            'icon'    => 'fas fa-user-times',
+            'icon'    => 'fas fa-filter',
             'can'     => 'view lead',
             'submenu' => [
                 [

@@ -58,7 +58,7 @@ class LeadController extends Controller
 
         if($lead->save())
         {
-            return back()->with(['success' => true]);
+            return redirect();
         }
         return back()->withErrors()->withInput();
     }
@@ -82,7 +82,9 @@ class LeadController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('pages.leads.edit')->with([
+            'lead'  => Lead::findOrFail($id)
+        ]);
     }
 
     /**
