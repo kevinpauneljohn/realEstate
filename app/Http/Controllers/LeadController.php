@@ -169,6 +169,10 @@ class LeadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $lead = Lead::findOrFail($id);
+        if($lead->delete())
+        {
+            return response()->json(['success' => true]);
+        }
     }
 }

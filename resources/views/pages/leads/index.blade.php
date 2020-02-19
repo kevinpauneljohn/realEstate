@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-header">
             @can('add lead')
-                <a><button type="button" class="btn bg-gradient-primary btn-sm"><i class="fa fa-plus-circle"></i> Add New</button></a>
+                <a href="{{route('leads.create')}}"><button type="button" class="btn bg-gradient-primary btn-sm"><i class="fa fa-plus-circle"></i> Add New</button></a>
             @endcan
 
         </div>
@@ -55,7 +55,8 @@
                 <div class="modal-dialog">
                     <div class="modal-content bg-danger">
                         <div class="modal-body">
-                            <p class="delete_leadn">Delete Lead: <span class="delete-lead-name"></span></p>
+                            <p class="delete_lead">Delete Lead: <span class="delete-lead-name"></span></p>
+                            <p class="lead-details"></p>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>

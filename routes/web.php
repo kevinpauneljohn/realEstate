@@ -57,4 +57,5 @@ Route::get('/leads/create','LeadController@create')->name('leads.create')->middl
 Route::post('/leads/save','LeadController@store')->name('leads.store')->middleware(['auth','permission:add lead']);
 Route::get('/leads/{lead}/edit','LeadController@edit')->name('leads.edit')->middleware(['auth','permission:edit lead']);
 Route::put('/leads/{lead}','LeadController@update')->name('leads.update')->middleware(['auth','permission:edit lead']);
+Route::delete('/leads/{lead}','LeadController@destroy')->name('leads.destroy')->middleware(['auth','permission:delete lead']);
 

@@ -89,20 +89,20 @@ $(document).ready(function(){
     });
 
     /*delete user*/
-    $('#delete-user-form').submit(function(form){
+    $('#delete-lead-form').submit(function(form){
         form.preventDefault();
 
-        let id = $('#deleteUserId').val();
-        let data = $('#delete-user-form').serialize();
+        let id = $('#deleteLeadId').val();
+        let data = $('#delete-lead-form').serialize();
 
         submitform(
-            '/users/'+id,
+            '/leads/'+id,
             'DELETE',
             data,
             'New Permission Successfully Deleted!',
-            true,
-            '',
             false,
+            '',
+            true,
         );
     });
 });
@@ -128,13 +128,18 @@ $(document).on('click','.edit-user-btn',function(){
 });
 
 /*delete trigger popup*/
-$(document).on('click','.delete-user-btn',function () {
+$(document).on('click','.delete-lead-btn',function () {
     $tr = $(this).closest('tr');
     id = this.id;
     let data = $tr.children('td').map(function () {
         return $(this).text();
     }).get();
 
-    $('.delete-user-name').html('<strong style="color:yellow;">'+data[0]+'</strong>?');
-    $('#deleteUserId').val(id);
+
+    $('.delete-lead-name').html('<strong style="color:yellow;">'+data[1]+' '+data[2]+'</strong>?');
+    $('.lead-details').html('<table>' +
+        '<tr><td>Mobile No.</td><td>'+data[3]+'</td></tr>' +
+        '<tr><td>Email</td><td>'+data[4]+'</td></tr>' +
+        '<tr><td>Point Of Contact</td><td>'+data[5]+'</td></tr></table>');
+    $('#deleteLeadId').val(id);
 });
