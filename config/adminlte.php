@@ -208,6 +208,13 @@ return [
                 ],
             ],
         ],
+        ['header' => 'PROJECT MANAGEMENT'],
+        [
+            'text'    => 'Projects',
+            'icon'    => 'fas fa-home',
+            'route'    => 'projects.index',
+            'can'     => 'view project',
+        ],
         ['header' => 'LEAD MANAGEMENT'],
         [
             'text'    => 'Leads',

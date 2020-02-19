@@ -52,11 +52,19 @@ Route::delete('/users/{user}','UserController@destroy')->name('users.destroy')->
 
 /*leads*/
 Route::get('/leads','LeadController@index')->name('leads.index')->middleware(['auth','permission:view lead']);
-Route::get('/leads/{lead}','LeadController@show')->name('leads.show')->middleware(['auth','permission:view lead']);
 Route::get('/leads-list','LeadController@lead_list')->name('leads.list')->middleware(['auth','permission:view lead']);
 Route::get('/leads/create','LeadController@create')->name('leads.create')->middleware(['auth','permission:add lead']);
 Route::post('/leads/save','LeadController@store')->name('leads.store')->middleware(['auth','permission:add lead']);
+Route::get('/leads/{lead}','LeadController@show')->name('leads.show')->middleware(['auth','permission:view lead']);
 Route::get('/leads/{lead}/edit','LeadController@edit')->name('leads.edit')->middleware(['auth','permission:edit lead']);
 Route::put('/leads/{lead}','LeadController@update')->name('leads.update')->middleware(['auth','permission:edit lead']);
 Route::delete('/leads/{lead}','LeadController@destroy')->name('leads.destroy')->middleware(['auth','permission:delete lead']);
+
+/*projects*/
+Route::get('/projects','ProjectController@index')->name('projects.index')->middleware(['auth','permission:view project']);
+Route::post('/projects','ProjectController@store')->name('projects.store')->middleware(['auth','permission:add project']);
+Route::get('/projects-list','ProjectController@userList')->name('projects.list')->middleware(['auth','permission:view project']);
+Route::get('/projects/{project}','ProjectController@show')->name('projects.show')->middleware(['auth','permission:view project']);
+Route::put('/projects/{project}','ProjectController@update')->name('projects.update')->middleware(['auth','permission:edit project']);
+Route::delete('/projects/{project}','ProjectController@destroy')->name('projects.destroy')->middleware('auth','permission:delete project');
 
