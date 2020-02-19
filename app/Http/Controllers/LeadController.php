@@ -32,7 +32,7 @@ class LeadController extends Controller
                 $action = "";
                 if(auth()->user()->can('edit lead'))
                 {
-                    $action .= '<a href="'.route("leads.edit",["lead" => $lead->id]).'" class="btn btn-xs btn-primary edit-role-btn" id="'.$lead->id.'"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="'.route("leads.show",["lead" => $lead->id]).'" class="btn btn-xs btn-success view-btn" id="'.$lead->id.'"><i class="fa fa-eye"></i> View</a>';
                 }
                 if(auth()->user()->can('delete lead'))
                 {
@@ -112,7 +112,9 @@ class LeadController extends Controller
      */
     public function show($id)
     {
-
+        return view('pages.leads.view')->with([
+            'lead'  => Lead::findOrFail($id)
+        ]);
     }
 
     /**
