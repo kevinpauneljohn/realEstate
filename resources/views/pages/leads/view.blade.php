@@ -115,6 +115,7 @@
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="activity">
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-schedule-modal"><i class="fa fa-calendar-alt"></i> Create Schedule</button>
                                 <table id="activity-list" class="table table-bordered table-striped" role="grid">
                                     <thead>
                                     <tr role="row">
@@ -293,6 +294,37 @@
         </div>
         <!-- /.row -->
     </div>
+
+
+    <!--add new schedul modal-->
+    <div class="modal fade" id="add-schedule-modal">
+        <form role="form" id="add-schedule-form">
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Create Schedule</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group role">
+                            <label for="role">Role Name</label><span class="required">*</span>
+                            <input type="text" name="role" class="form-control" id="role">
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </form>
+    </div>
+    <!--end add new schedule modal-->
 @stop
 
 @section('css')
@@ -311,6 +343,24 @@
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/user.js')}}"></script>
         <script>
+            $(function() {
+                $('#activity-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('leads.activity.list') !!}',
+                    columns: [
+                        { data: 'schedule', name: 'schedule'},
+                        { data: 'details', name: 'details'},
+                        { data: 'lastname', name: 'lastname'},
+                        { data: 'mobileNo', name: 'mobileNo'},
+                        { data: 'email', name: 'email'},
+                        { data: 'point_of_contact', name: 'point_of_contact'},
+                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'desc']
+                });
+            });
             //Initialize Select2 Elements
             $('.select2').select2();
         </script>

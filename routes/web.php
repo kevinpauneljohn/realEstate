@@ -68,3 +68,6 @@ Route::get('/projects/{project}','ProjectController@show')->name('projects.show'
 Route::put('/projects/{project}','ProjectController@update')->name('projects.update')->middleware(['auth','permission:edit project']);
 Route::delete('/projects/{project}','ProjectController@destroy')->name('projects.destroy')->middleware('auth','permission:delete project');
 
+/*lead activity schedule*/
+Route::get('/leads-activity-schedule','LeadActivityController@lead_activity_list')->name('leads.activity.list')->middleware(['auth','permission:view lead']);
+
