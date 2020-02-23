@@ -26,6 +26,7 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-schedule-modal">Create Schedule</button>
                 <table id="leads-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
