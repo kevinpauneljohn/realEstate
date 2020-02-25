@@ -25,7 +25,7 @@ class LeadController extends Controller
      * */
     public function lead_list()
     {
-        $leads = Lead::all();
+        $leads = Lead::where('user_id',auth()->user()->id)->get();
         return DataTables::of($leads)
             ->addColumn('action', function ($lead)
             {

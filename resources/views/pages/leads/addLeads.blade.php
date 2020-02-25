@@ -178,9 +178,6 @@
         .delete_role{
             font-size: 20px;
         }
-        .note-editable{
-            min-height:200px;
-        }
     </style>
 @stop
 

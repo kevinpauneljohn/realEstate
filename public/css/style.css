@@ -28,3 +28,17 @@ table{
 .invalid-feedback{
     display:block;
 }
+.create-schedule{
+    margin: 5px;
+}
+.note-editable{
+    min-height:200px;
+}
+.details{
+    background:#eaecee;
+    padding:10px;
+}
+.bootstrap-timepicker-widget table td a{
+    background:#d5d7d8;
+    border-radius:2px;
+}

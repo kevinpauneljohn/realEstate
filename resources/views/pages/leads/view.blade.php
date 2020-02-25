@@ -115,7 +115,7 @@
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="activity">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-schedule-modal"><i class="fa fa-calendar-alt"></i> Create Schedule</button>
+                                <button type="button" class="btn btn-success create-schedule" data-toggle="modal" data-target="#add-schedule-modal"><i class="fa fa-calendar-alt"></i> Create Schedule</button>
                                 <table id="activity-list" class="table table-bordered table-striped" role="grid">
                                     <thead>
                                     <tr role="row">
@@ -296,11 +296,12 @@
     </div>
 
 
-    <!--add new schedul modal-->
+    <!--add new schedule modal-->
     <div class="modal fade" id="add-schedule-modal">
         <form role="form" id="add-schedule-form">
             @csrf
-            <div class="modal-dialog">
+            <input type="hidden" name="leadId" value="{{$lead->id}}">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Create Schedule</h4>
@@ -309,9 +310,39 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group role">
-                            <label for="role">Role Name</label><span class="required">*</span>
-                            <input type="text" name="role" class="form-control" id="role">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group schedule">
+                                    <label for="schedule">Date</label><span class="required">*</span>
+                                    <input type="text" name="schedule" class="form-control datemask" id="schedule" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 start_time">
+                                        <label for="start_time">Start Time</label>
+                                        <input type="text" name="start_time" class="form-control timepicker" id="start_time">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="end_time">End Time</label>
+                                        <input type="text" name="end_time" class="form-control timepicker" id="end_time">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="remarks">Remarks</label>
+                                    <textarea name="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                </div>
+                                <div class="form-group category">
+                                    <label for="category">Category</label>
+                                    <select name="category" class="form-control" id="category">
+                                        <option value=""> -- Select -- </option>
+                                        <option value="Tripping"> Tripping</option>
+                                        <option value="Assist"> Assist</option>
+                                        <option value="Follow-up"> Follow-up</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul id="schedules"></ul>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
@@ -325,12 +356,82 @@
         </form>
     </div>
     <!--end add new schedule modal-->
+
+
+    @can('edit lead')
+        <!--add new schedule modal-->
+        <div class="modal fade" id="edit-schedule-modal">
+            <form role="form" id="edit-schedule-form">
+                @csrf
+                <input type="hidden" name="editLeadId" value="{{$lead->id}}">
+                <input type="hidden" name="schduleId" id="schduleId">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Create Schedule</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group edit_schedule">
+                                        <label for="edit_schedule">Date</label><span class="required">*</span>
+                                        <input type="text" name="schedule" class="form-control datemask" id="edit_schedule" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 edit_start_time">
+                                            <label for="edit_start_time">Start Time</label>
+                                            <input type="text" name="edit_start_time" class="form-control timepicker" id="edit_start_time">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="edit_end_time">End Time</label>
+                                            <input type="text" name="edit_end_time" class="form-control timepicker" id="edit_end_time">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_remarks">Remarks</label>
+                                        <textarea name="edit_remarks" class="textarea" id="edit_remarks" data-min-height="150" placeholder="Place some text here"></textarea>
+                                    </div>
+                                    <div class="form-group edit_category">
+                                        <label for="edit_category">Category</label>
+                                        <select name="edit_category" class="form-control" id="edit_category">
+                                            <option value=""> -- Select -- </option>
+                                            <option value="Tripping"> Tripping</option>
+                                            <option value="Assist"> Assist</option>
+                                            <option value="Follow-up"> Follow-up</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul id="schedules"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
 @stop
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="{{asset('/vendor/timepicker/bootstrap-timepicker.min.css')}}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
         .delete_role{
             font-size: 20px;
@@ -341,7 +442,32 @@
 @section('js')
     @can('view lead')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('js/user.js')}}"></script>
+        <!-- bootstrap datepicker -->
+        <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+        <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
+        <script src="{{asset('/vendor/timepicker/bootstrap-timepicker.min.js')}}"></script>
+        <!-- Summernote -->
+        <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
+        <script src="{{asset('js/leadActivity.js')}}"></script>
+        <script>
+
+            $(function () {
+                // Summernote
+                $('.textarea').summernote({
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['insert', ['link']],
+                        ['height', ['height']],
+                        ['view', ['fullscreen']],
+                    ],
+                    lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
+                });
+            })
+        </script>
         <script>
             $(function() {
                 $('#activity-list').DataTable({
@@ -351,18 +477,25 @@
                     columns: [
                         { data: 'schedule', name: 'schedule'},
                         { data: 'details', name: 'details'},
-                        { data: 'lastname', name: 'lastname'},
-                        { data: 'mobileNo', name: 'mobileNo'},
-                        { data: 'email', name: 'email'},
-                        { data: 'point_of_contact', name: 'point_of_contact'},
+                        { data: 'category', name: 'category'},
+                        { data: 'status', name: 'status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
                     order:[0,'desc']
                 });
             });
+            $('#schedule').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
             //Initialize Select2 Elements
             $('.select2').select2();
+            //Timepicker
+            $('.timepicker').timepicker({
+                showInputs: false,
+                defaultTime: false,
+            });
         </script>
     @endcan
 @stop

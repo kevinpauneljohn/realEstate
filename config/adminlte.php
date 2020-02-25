@@ -180,9 +180,9 @@ return [
         ],
         [
             'text' => 'Dashboard',
+            'icon' => 'fa fa-tachometer',
             'route'  => 'dashboard',
         ],
-        ['header' => 'User Management'],
         [
             'text'    => 'Users',
             'icon'    => 'fas fa-user',
@@ -208,7 +208,6 @@ return [
                 ],
             ],
         ],
-        ['header' => 'PROJECT MANAGEMENT'],
         [
             'text'    => 'Projects',
             'icon'    => 'fas fa-home',
