@@ -363,8 +363,9 @@
         <div class="modal fade" id="edit-schedule-modal">
             <form role="form" id="edit-schedule-form">
                 @csrf
+                @method('PUT')
                 <input type="hidden" name="editLeadId" value="{{$lead->id}}">
-                <input type="hidden" name="schduleId" id="schduleId">
+                <input type="hidden" name="scheduleId" id="scheduleId">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -378,7 +379,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group edit_schedule">
                                         <label for="edit_schedule">Date</label><span class="required">*</span>
-                                        <input type="text" name="schedule" class="form-control datemask" id="edit_schedule" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                        <input type="text" name="edit_schedule" class="form-control datemask" id="edit_schedule" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6 edit_start_time">
@@ -405,7 +406,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <ul id="schedules"></ul>
+                                    <ul id="edit_schedules"></ul>
                                 </div>
                             </div>
                         </div>
@@ -485,7 +486,7 @@
                     order:[0,'desc']
                 });
             });
-            $('#schedule').datepicker({
+            $('#schedule, #edit_schedule').datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             });
@@ -496,6 +497,7 @@
                 showInputs: false,
                 defaultTime: false,
             });
+
         </script>
     @endcan
 @stop

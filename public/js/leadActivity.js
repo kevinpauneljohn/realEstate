@@ -60,12 +60,30 @@ $(document).ready(function () {
             '/leads-activities',
             'POST',
             data,
-            'New Permission Successfully Added!',
+            'New Schedule Successfully Added!',
             true,
             '',
             false,
         );
         clear_errors('schedule','category');
+    });
+
+    $('#edit-schedule-form').submit(function (form) {
+        form.preventDefault();
+
+        let data = $('#edit-schedule-form').serialize();
+        let id = $('#scheduleId').val();
+
+        submitform(
+            '/leads-activity/'+id,
+            'PUT',
+            data,
+            'Schedule Successfully Updated!',
+            true,
+            '',
+            false,
+        );
+        clear_errors('edit_schedule','edit_category');
     });
 });
 
@@ -95,6 +113,31 @@ $(document).on('change','#schedule',function () {
     });
 });
 
+$(document).on('change','#edit_schedule',function () {
+    let date = $('#edit_schedule').val();
+
+    $('#edit_schedule').html("");
+    $.ajax({
+        'url' : '/leads-schedule/'+date,
+        'type' : 'GET',
+        success: function (result) {
+
+            $.each(result, function (key, value) {
+                $('#edit_schedules').append('<div class="timeline timeline-inverse">' +
+                    '<div class="time-label"><span class="bg-primary">'+value.schedule+'</span></div>' +
+                    '<div>' +
+                    '<i class="fas fa-calendar-alt bg-primary"></i>' +
+                    '<div class="timeline-item">' +
+                    '<span class="time"><i class="far fa-clock"></i>'+value.start_time+'</span>' +
+                    '<h3 class="timeline-header"><a href="#">'+value.category+'</a></h3>' +
+                    '<div class="timeline-body">'+value.details+'</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>');
+            });
+        }
+    });
+});
 
 $(document).on('click','.edit-schedule-btn',function () {
     let id = this.id;
@@ -103,12 +146,12 @@ $(document).on('click','.edit-schedule-btn',function () {
         'url' : '/leads-activity/'+id+'/edit',
         'type' : 'GET',
         success: function (result) {
-            $('#schduleId').val(result.id);
+            $('#scheduleId').val(result.id);
             $('#edit_schedule').val(result.schedule);
             $('#edit_start_time').val(result.start_date);
             $('#edit_end_time').val(result.end_date);
-            $('#edit_remarks').val(result.details);
-            $('#edit_category').val(result.details).change();
+            $('#edit_remarks').summernote("code", result.details);
+            $('#edit_category').val(result.category).change();
         }
     });
 });

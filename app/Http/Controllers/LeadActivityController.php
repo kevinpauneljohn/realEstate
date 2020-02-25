@@ -32,10 +32,10 @@ class LeadActivityController extends Controller
             ->addColumn('action', function ($leadActivity)
             {
                 $action = "";
-                if(auth()->user()->can('view lead'))
-                {
-                    $action .= '<a href="'.route("leads.show",["lead" => $leadActivity->id]).'" class="btn btn-xs btn-success view-btn" id="'.$leadActivity->id.'"><i class="fa fa-eye"></i> View</a>';
-                }
+//                if(auth()->user()->can('view lead'))
+//                {
+//                    $action .= '<a href="'.route("leads.show",["lead" => $leadActivity->id]).'" class="btn btn-xs btn-success view-btn" id="'.$leadActivity->id.'"><i class="fa fa-eye"></i> View</a>';
+//                }
                 if(auth()->user()->can('edit lead'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-primary edit-schedule-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#edit-schedule-modal"><i class="fa fa-edit"></i> Edit</a>';
@@ -171,7 +171,27 @@ class LeadActivityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'edit_schedule'      => 'required',
+            'edit_category'      => 'required',
+        ]);
+
+        if($validator->passes())
+        {
+            $leadActivity = LeadActivity::findOrFail($id);
+            $leadActivity->details = $request->edit_remarks;
+            $leadActivity->schedule = $request->edit_schedule;
+            $leadActivity->start_date = $request->edit_start_time;
+            $leadActivity->end_date = $request->edit_end_time;
+            $leadActivity->category = $request->edit_category;
+
+            if($leadActivity->save())
+            {
+                return response()->json(['success' => true]);
+            }
+        }
+
+        return response()->json($validator->errors());
     }
 
     /**
