@@ -63,7 +63,7 @@ Route::delete('/leads/{lead}','LeadController@destroy')->name('leads.destroy')->
 /*projects*/
 Route::get('/projects','ProjectController@index')->name('projects.index')->middleware(['auth','permission:view project']);
 Route::post('/projects','ProjectController@store')->name('projects.store')->middleware(['auth','permission:add project']);
-Route::get('/projects-list','ProjectController@userList')->name('projects.list')->middleware(['auth','permission:view project']);
+Route::get('/projects-list','ProjectController@project_list')->name('projects.list')->middleware(['auth','permission:view project']);
 Route::get('/projects/{project}','ProjectController@show')->name('projects.show')->middleware(['auth','permission:view project']);
 Route::put('/projects/{project}','ProjectController@update')->name('projects.update')->middleware(['auth','permission:edit project']);
 Route::delete('/projects/{project}','ProjectController@destroy')->name('projects.destroy')->middleware('auth','permission:delete project');

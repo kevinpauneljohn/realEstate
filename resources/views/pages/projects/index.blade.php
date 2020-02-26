@@ -21,13 +21,13 @@
     <div class="card">
         <div class="card-header">
             @can('add project')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-user-modal"><i class="fa fa-plus-circle"></i> Add New</button>
+                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-project-modal"><i class="fa fa-plus-circle"></i> Add Project</button>
             @endcan
 
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="users-list" class="table table-bordered table-striped" role="grid">
+                <table id="projects-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
                         <th>Project Name</th>
@@ -52,13 +52,13 @@
 
     @can('add project')
         <!--add new users modal-->
-        <div class="modal fade" id="add-new-user-modal">
-            <form role="form" id="user-form">
+        <div class="modal fade" id="add-new-project-modal">
+            <form role="form" id="project-form">
                 @csrf
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New User</h4>
+                            <h4 class="modal-title">Add New Project</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -151,10 +151,10 @@
         <script src="{{asset('js/user.js')}}"></script>
         <script>
             $(function() {
-                $('#users-list').DataTable({
+                $('#projects-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('users.list') !!}',
+                    ajax: '{!! route('projects.list') !!}',
                     columns: [
                         { data: 'fullname', name: 'fullname'},
                         { data: 'username', name: 'username'},
