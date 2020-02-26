@@ -10,8 +10,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('leads.index')}}">Projects</a> </li>
-                <li class="breadcrumb-item active">Lead Details</li>
+                <li class="breadcrumb-item active">Projects</li>
             </ol>
         </div><!-- /.col -->
     </div>
@@ -39,8 +38,8 @@
 
                     <tfoot>
                     <tr>
-                        <th width="30%">Project Name</th>
-                        <th width="40%">Address</th>
+                        <th width="20%">Project Name</th>
+                        <th width="50%">Address</th>
                         <th width="15%">Model Units</th>
                         <th width="15%">Action</th>
                     </tr>
@@ -55,7 +54,7 @@
         <div class="modal fade" id="add-new-project-modal">
             <form role="form" id="project-form">
                 @csrf
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Add New Project</h4>
@@ -64,6 +63,18 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group name">
+                                <label for="name">Project Name</label>
+                                <input type="text" name="name" class="form-control" id="name">
+                            </div>
+                            <div class="form-group address">
+                                <label for="address">Address</label>
+                                <textarea class="form-control" name="address" id="address"></textarea>
+                            </div>
+                            <div class="form-group remarks">
+                                <label for="remarks">Remarks</label>
+                                <textarea name="remarks" id="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -138,6 +149,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
         .delete_role{
             font-size: 20px;
@@ -148,7 +161,28 @@
 @section('js')
     @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('js/user.js')}}"></script>
+        <script src="{{asset('js/project.js')}}"></script>
+        <!-- Summernote -->
+        <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
+        <script>
+
+            $(function () {
+                // Summernote
+                $('.textarea').summernote({
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['insert', ['link']],
+                        ['height', ['height']],
+                        ['view', ['fullscreen']],
+                    ],
+                    lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
+                });
+            })
+        </script>
         <script>
             $(function() {
                 $('#projects-list').DataTable({
@@ -156,11 +190,9 @@
                     serverSide: true,
                     ajax: '{!! route('projects.list') !!}',
                     columns: [
-                        { data: 'fullname', name: 'fullname'},
-                        { data: 'username', name: 'username'},
-                        { data: 'email', name: 'email'},
-                        { data: 'mobileNo', name: 'mobileNo'},
-                        { data: 'roles', name: 'roles'},
+                        { data: 'name', name: 'name'},
+                        { data: 'address', name: 'address'},
+                        { data: 'model_units', name: 'model_units'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

@@ -27,6 +27,9 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
         return DataTables::of($projects)
+            ->addColumn('model_units', function (){
+                return 'model units';
+            })
             ->addColumn('action', function ($project)
             {
                 $action = "";
@@ -40,7 +43,7 @@ class ProjectController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['model_units','action'])
             ->make(true);
     }
 
