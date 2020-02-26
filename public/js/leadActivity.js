@@ -96,10 +96,10 @@ $(document).ready(function () {
             '/leads-activity/'+id,
             'DELETE',
             data,
-            'Schedule Successfully Updated!',
-            false,
-            '',
+            'Schedule Successfully Deleted!',
             true,
+            '',
+            false,
         );
     });
 });
