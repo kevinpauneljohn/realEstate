@@ -61,7 +61,7 @@ $(document).ready(function(){
             '/users',
             'POST',
             data,
-            'New Permission Successfully Added!',
+            'New User Successfully Added!',
             true,
             '',
             false,
@@ -80,7 +80,7 @@ $(document).ready(function(){
             '/users/'+id,
             'PUT',
             data,
-            'New Permission Successfully Updated!',
+            'User Successfully Updated!',
             true,
             '',
             false,
@@ -89,20 +89,20 @@ $(document).ready(function(){
     });
 
     /*delete user*/
-    $('#delete-lead-form').submit(function(form){
+    $('#delete-user-form').submit(function(form){
         form.preventDefault();
 
-        let id = $('#deleteLeadId').val();
-        let data = $('#delete-lead-form').serialize();
+        let id = $('#deleteUserId').val();
+        let data = $('#delete-user-form').serialize();
 
         submitform(
-            '/leads/'+id,
+            '/users/'+id,
             'DELETE',
             data,
-            'New Permission Successfully Deleted!',
-            false,
-            '',
+            'User Successfully Deleted!',
             true,
+            '',
+            false,
         );
     });
 });
@@ -128,18 +128,15 @@ $(document).on('click','.edit-user-btn',function(){
 });
 
 /*delete trigger popup*/
-$(document).on('click','.delete-lead-btn',function () {
+$(document).on('click','.delete-user-btn',function () {
     $tr = $(this).closest('tr');
     id = this.id;
     let data = $tr.children('td').map(function () {
         return $(this).text();
     }).get();
 
+    console.log(data);
 
-    $('.delete-lead-name').html('<strong style="color:yellow;">'+data[1]+' '+data[2]+'</strong>?');
-    $('.lead-details').html('<table>' +
-        '<tr><td>Mobile No.</td><td>'+data[3]+'</td></tr>' +
-        '<tr><td>Email</td><td>'+data[4]+'</td></tr>' +
-        '<tr><td>Point Of Contact</td><td>'+data[5]+'</td></tr></table>');
-    $('#deleteLeadId').val(id);
+    $('#deleteUserId').val(id);
+    $('.delete-user-name').html('<strong style="color:yellow;">'+data[0]+'</strong>?');
 });

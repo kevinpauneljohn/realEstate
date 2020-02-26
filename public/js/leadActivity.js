@@ -85,6 +85,23 @@ $(document).ready(function () {
         );
         clear_errors('edit_schedule','edit_category');
     });
+
+    $('#delete-schedule-form').submit(function (form) {
+        form.preventDefault();
+
+        let data = $('#delete-schedule-form').serialize();
+        let id = $('#deleteScheduleId').val();
+
+        submitform(
+            '/leads-activity/'+id,
+            'DELETE',
+            data,
+            'Schedule Successfully Updated!',
+            false,
+            '',
+            true,
+        );
+    });
 });
 
 $(document).on('change','#schedule',function () {
@@ -154,4 +171,9 @@ $(document).on('click','.edit-schedule-btn',function () {
             $('#edit_category').val(result.category).change();
         }
     });
+});
+
+$(document).on('click','.delete-schedule-btn',function () {
+    let id = this.id;
+    $('#deleteScheduleId').val(id);
 });

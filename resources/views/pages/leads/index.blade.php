@@ -97,7 +97,7 @@
 @section('js')
     @can('view lead')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('js/user.js')}}"></script>
+        <script src="{{asset('js/lead.js')}}"></script>
         <script>
             $(function() {
                 $('#leads-list').DataTable({

@@ -422,6 +422,31 @@
         </div>
         <!--end add new schedule modal-->
     @endcan
+
+    @can('delete lead')
+        <!--delete schedule-->
+        <div class="modal fade" id="delete-schedule-modal">
+            <form role="form" id="delete-schedule-form">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="deleteScheduleId" id="deleteScheduleId">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-danger">
+                        <div class="modal-body">
+                            <p class="delete_schedule">Are you sure you want to delete schedule?</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-light">Delete</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end delete user modal-->
+    @endcan
 @stop
 
 @section('css')

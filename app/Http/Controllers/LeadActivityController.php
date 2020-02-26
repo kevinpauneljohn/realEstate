@@ -42,7 +42,7 @@ class LeadActivityController extends Controller
                 }
                 if(auth()->user()->can('delete lead'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-schedule-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#delete-schedule-modal"><i class="fa fa-trash"></i> Delete</a>';
                 }
                 return $action;
             })
@@ -202,6 +202,10 @@ class LeadActivityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $leadActivity = LeadActivity::findOrFail($id);
+        if($leadActivity->delete())
+        {
+            return response()->json(['success' => true]);
+        }
     }
 }
