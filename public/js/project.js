@@ -60,9 +60,9 @@ $(document).ready(function () {
             'POST',
             data,
             'New Project Successfully Added!',
-            false,
-            '',
             true,
+            '',
+            false,
         );
     });
 });

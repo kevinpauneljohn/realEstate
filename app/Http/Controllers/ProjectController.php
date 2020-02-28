@@ -75,7 +75,15 @@ class ProjectController extends Controller
 
         if($validator->passes())
         {
+            $project = new Project();
+            $project->name = $request->name;
+            $project->address = $request->address;
+            $project->remarks = $request->remarks;
 
+            if($project->save())
+            {
+                return response()->json(['success' => true]);
+            }
         }
         return response()->json($validator->errors());
     }
