@@ -91,20 +91,32 @@
 
     @can('edit user')
         <!--edit role modal-->
-        <div class="modal fade" id="edit-user-modal">
-            <form role="form" id="edit-user-form">
+        <div class="modal fade" id="edit-project-modal">
+            <form role="form" id="edit-project-form">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" id="updateUserId">
-                <div class="modal-dialog modal-lg">
+                <input type="hidden" name="updateProjectId" id="updateProjectId">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update User</h4>
+                            <h4 class="modal-title">Update Project</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group edit_name">
+                                <label for="edit_name">Project Name</label>
+                                <input type="text" name="edit_name" class="form-control" id="edit_name">
+                            </div>
+                            <div class="form-group edit_address">
+                                <label for="edit_address">Address</label>
+                                <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
+                            </div>
+                            <div class="form-group edit_remarks">
+                                <label for="edit_remarks">Remarks</label>
+                                <textarea name="edit_remarks" id="edit_remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                            </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Save</button>

@@ -66,3 +66,16 @@ $(document).ready(function () {
         );
     });
 });
+
+$(document).on('click','.edit-project-btn',function(){
+    let id = this.id;
+
+    $('#updateProjectId').val(id);
+    $.ajax({
+        'url'   : '/projects/'+id,
+        'type'  : 'GET',
+        success: function(result){
+            console.log(result);
+        }
+    });
+});
