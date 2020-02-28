@@ -50,5 +50,19 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 }
 
 $(document).ready(function () {
-    
+
+    $('#add-project-form').submit(function (form) {
+        form.preventDefault();
+
+        let data = $('#add-project-form').serialize();
+        submitform(
+            '/projects',
+            'POST',
+            data,
+            'New Project Successfully Added!',
+            false,
+            '',
+            true,
+        );
+    });
 });

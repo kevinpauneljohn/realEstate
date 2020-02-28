@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class ProjectController extends Controller
@@ -65,7 +66,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name'      => 'required',
+            'address'   => 'required'
+        ],[
+            'name.required' => 'Project name is required'
+        ]);
+
+        if($validator->passes())
+        {
+
+        }
+        return response()->json($validator->errors());
     }
 
     /**

@@ -52,7 +52,7 @@
     @can('add project')
         <!--add new users modal-->
         <div class="modal fade" id="add-new-project-modal">
-            <form role="form" id="project-form">
+            <form role="form" id="add-project-form">
                 @csrf
                 <div class="modal-dialog">
                     <div class="modal-content">
