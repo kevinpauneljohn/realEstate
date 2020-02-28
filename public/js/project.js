@@ -75,7 +75,9 @@ $(document).on('click','.edit-project-btn',function(){
         'url'   : '/projects/'+id,
         'type'  : 'GET',
         success: function(result){
-            console.log(result);
+            $('#edit_name').val(result.name);
+            $('#edit_address').val(result.address);
+            $('#edit_remarks').summernote("code", result.remarks);
         }
     });
 });
