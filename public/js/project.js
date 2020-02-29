@@ -83,6 +83,23 @@ $(document).ready(function () {
             false,
         );
     });
+
+    /*delete project*/
+    $('#delete-project-form').submit(function (form) {
+        form.preventDefault();
+
+        let data = $('#delete-project-form').serialize();
+        let id = $('#deleteProjectId').val();
+        submitform(
+            '/projects/'+id,
+            'DELETE',
+            data,
+            'Project Successfully Deleted!',
+            true,
+            '',
+            false,
+        );
+    });
 });
 
 $(document).on('click','.edit-project-btn',function(){
@@ -98,4 +115,17 @@ $(document).on('click','.edit-project-btn',function(){
             $('#edit_remarks').summernote("code", result.remarks);
         }
     });
+});
+
+/*delete trigger popup*/
+$(document).on('click','.delete-project-btn',function () {
+    $tr = $(this).closest('tr');
+    id = this.id;
+    let data = $tr.children('td').map(function () {
+        return $(this).text();
+    }).get();
+
+
+    $('.delete-project-name').html('<strong style="color:yellow;">'+data[0]+'</strong>?');
+    $('#deleteProjectId').val(id);
 });

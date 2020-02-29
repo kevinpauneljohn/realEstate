@@ -39,9 +39,9 @@
                     <tfoot>
                     <tr>
                         <th width="20%">Project Name</th>
-                        <th width="50%">Address</th>
+                        <th width="40%">Address</th>
                         <th width="15%">Model Units</th>
-                        <th width="15%">Action</th>
+                        <th width="25%">Action</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -89,7 +89,7 @@
         <!--end add new user modal-->
     @endcan
 
-    @can('edit user')
+    @can('edit project')
         <!--edit role modal-->
         <div class="modal fade" id="edit-project-modal">
             <form role="form" id="edit-project-form">
@@ -131,17 +131,17 @@
         <!--end add user modal-->
     @endcan
 
-    @can('delete user')
+    @can('delete project')
         <!--delete user-->
-        <div class="modal fade" id="delete-user-modal">
-            <form role="form" id="delete-user-form">
+        <div class="modal fade" id="delete-project-modal">
+            <form role="form" id="delete-project-form">
                 @csrf
                 @method('DELETE')
-                <input type="hidden" name="deleteUserId" id="deleteUserId">
+                <input type="hidden" name="deleteProjectId" id="deleteProjectId">
                 <div class="modal-dialog">
                     <div class="modal-content bg-danger">
                         <div class="modal-body">
-                            <p class="delete_user">Delete User: <span class="delete-user-name"></span></p>
+                            <p class="delete_project">Delete Project: <span class="delete-project-name"></span></p>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>

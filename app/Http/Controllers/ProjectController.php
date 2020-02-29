@@ -34,6 +34,10 @@ class ProjectController extends Controller
             ->addColumn('action', function ($project)
             {
                 $action = "";
+                if(auth()->user()->can('view project'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs btn-success view-project-btn" id="'.$project->id.'"><i class="fa fa-eye"></i> View</a>';
+                }
                 if(auth()->user()->can('edit project'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-primary edit-project-btn" id="'.$project->id.'" data-toggle="modal" data-target="#edit-project-modal"><i class="fa fa-edit"></i> Edit</a>';
@@ -150,6 +154,11 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        if($project->delete())
+        {
+            return response()->json(['success' => true]);
+        }
     }
 }
