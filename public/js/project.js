@@ -51,6 +51,7 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 
 $(document).ready(function () {
 
+    /*add project*/
     $('#add-project-form').submit(function (form) {
         form.preventDefault();
 
@@ -60,6 +61,23 @@ $(document).ready(function () {
             'POST',
             data,
             'New Project Successfully Added!',
+            true,
+            '',
+            false,
+        );
+    });
+
+    /*edit project*/
+    $('#edit-project-form').submit(function (form) {
+        form.preventDefault();
+
+        let data = $('#edit-project-form').serialize();
+        let id = $('#updateProjectId').val();
+        submitform(
+            '/projects/'+id,
+            'PUT',
+            data,
+            'Project Successfully Edited!',
             true,
             '',
             false,

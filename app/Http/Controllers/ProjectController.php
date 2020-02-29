@@ -120,7 +120,26 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'edit_name'      => 'required',
+            'edit_address'   => 'required'
+        ],[
+            'edit_name.required' => 'Project name is required'
+        ]);
+
+        if($validator->passes())
+        {
+            $project = Project::findOrFail($id);
+            $project->name = $request->edit_name;
+            $project->address = $request->edit_address;
+            $project->remarks = $request->edit_remarks;
+
+            if($project->save())
+            {
+                return response()->json(['success' => true]);
+            }
+        }
+        return response()->json($validator->errors());
     }
 
     /**
