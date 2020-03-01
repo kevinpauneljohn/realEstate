@@ -483,6 +483,7 @@
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
         <script src="{{asset('js/leadActivity.js')}}"></script>
+        <script src="{{asset('js/schedule.js')}}"></script>
         <script>
 
             $(function () {

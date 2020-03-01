@@ -50,7 +50,15 @@ class LeadActivityController extends Controller
                 return $action;
             })
             ->editColumn('status',function($leadActivity){
-                return $this->status_label($leadActivity->status);
+                $checked = "";
+                if($leadActivity->status !== 'pending')
+                {
+                    $checked = "checked";
+                }
+                return '<div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch'.$leadActivity->id.'" value="'.$leadActivity->id.'" '.$checked.'>
+                      <label class="custom-control-label" for="customSwitch'.$leadActivity->id.'"></label>
+                    </div>';
             })
             ->rawColumns(['action','details','status'])
             ->make(true);
