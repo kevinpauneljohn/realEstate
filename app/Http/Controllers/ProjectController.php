@@ -36,7 +36,7 @@ class ProjectController extends Controller
                 $action = "";
                 if(auth()->user()->can('view project'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-success view-project-btn" id="'.$project->id.'"><i class="fa fa-eye"></i> View</a>';
+                    $action .= '<a href="'.route('projects.profile',['project' => $project->id]).'" class="btn btn-xs btn-success view-project-btn" id="'.$project->id.'"><i class="fa fa-eye"></i> View</a>';
                 }
                 if(auth()->user()->can('edit project'))
                 {
@@ -90,6 +90,20 @@ class ProjectController extends Controller
             }
         }
         return response()->json($validator->errors());
+    }
+
+    /**
+     * March 01, 2020
+     * @author john kevin paunel
+     * view project profile
+     * @param string $id
+     * @return mixed
+     * */
+    public function profile($id)
+    {
+        return view('pages.projects.profile')->with([
+            'project'  => Project::findOrFail($id)
+        ]);
     }
 
     /**

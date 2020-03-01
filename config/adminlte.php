@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>Dream Home</b>Seller',
+    'logo' => '<b>Dream Home</b> Seller',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image-xl',
     'logo_img_xl' => null,
