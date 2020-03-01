@@ -148,6 +148,14 @@
                                 </select>
                             </div>
 
+                            <div class="form-group project">
+                                <label for="project">Project Interested</label>
+                                <select class="select2" name="project[]" id="project" multiple="multiple" data-placeholder="Select a project" style="width: 100%;">
+                                    @foreach($projects as $project)
+                                        <option value="{{$project->name}}">{{$project->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="remarks">Remarks</label>
                                 <textarea name="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>

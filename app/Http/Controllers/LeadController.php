@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lead;
+use App\Project;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -51,7 +52,9 @@ class LeadController extends Controller
      */
     public function create()
     {
-        return view('pages.leads.addLeads');
+        return view('pages.leads.addLeads')->with([
+            'projects'   => Project::all()
+        ]);
     }
 
     /**
