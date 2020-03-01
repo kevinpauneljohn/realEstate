@@ -507,7 +507,7 @@
                 $('#activity-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('leads.activity.list') !!}',
+                    ajax: '{!! route('leads.activity.list',['lead' => $lead->id]) !!}',
                     columns: [
                         { data: 'schedule', name: 'schedule'},
                         { data: 'details', name: 'details'},

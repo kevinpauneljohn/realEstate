@@ -25,9 +25,12 @@ class LeadActivityController extends Controller
      * @author john kevin paunel
      * fetch all lead activity details
      * */
-    public function lead_activity_list()
+    public function lead_activity_list($id)
     {
-        $leadActivities = LeadActivity::where('user_id',auth()->user()->id)->get();
+        $leadActivities = LeadActivity::where([
+            ['user_id','=',auth()->user()->id],
+            ['lead_id','=',$id],
+        ])->get();
         return DataTables::of($leadActivities)
             ->addColumn('action', function ($leadActivity)
             {
@@ -60,7 +63,7 @@ class LeadActivityController extends Controller
      * @param string $status
      * @return mixed
      * */
-    public function status_label($status)
+    public static function status_label($status)
     {
         switch ($status) {
             case 'pending':

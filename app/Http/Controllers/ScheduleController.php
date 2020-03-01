@@ -30,26 +30,21 @@ class ScheduleController extends Controller
         return DataTables::of($schedules)
             ->addColumn('full_name', function ($schedule){
                 $lead = Lead::findOrFail($schedule->lead_id);
-                return $lead->firstname;
+                return ucfirst($lead->firstname).' '.ucfirst($lead->lastname);
             })
             ->addColumn('action', function ($schedule)
             {
                 $action = "";
                 if(auth()->user()->can('view project'))
                 {
-                    $action .= '<a href="'.route('projects.profile',['project' => $schedule->id]).'" class="btn btn-xs btn-success view-project-btn" id="'.$schedule->id.'"><i class="fa fa-eye"></i> View</a>';
-                }
-                if(auth()->user()->can('edit project'))
-                {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-project-btn" id="'.$schedule->id.'" data-toggle="modal" data-target="#edit-project-modal"><i class="fa fa-edit"></i> Edit</a>';
-                }
-                if(auth()->user()->can('delete project'))
-                {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-project-btn" id="'.$schedule->id.'" data-toggle="modal" data-target="#delete-project-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="'.route('leads.show',['lead' => $schedule->lead_id]).'" class="btn btn-xs btn-success view-project-btn" id="'.$schedule->id.'"><i class="fa fa-eye"></i> View</a>';
                 }
                 return $action;
             })
-            ->rawColumns(['details','action'])
+            ->editColumn('status',function($schedule){
+                return LeadActivityController::status_label($schedule->status);
+            })
+            ->rawColumns(['status','details','action'])
             ->make(true);
     }
 
