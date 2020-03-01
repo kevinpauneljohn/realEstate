@@ -58,6 +58,23 @@ class ScheduleController extends Controller
     }
 
     /**
+     * Mar. 02, 2020
+     * @author john kevin paunel
+     * update schedule status
+     * */
+    public function updateStatus(Request $request)
+    {
+        $schedule = LeadActivity::findOrFail($request->id);
+        $schedule->status = $request->status == "true" ? 'completed' : 'pending';
+
+        if($schedule->save())
+        {
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
