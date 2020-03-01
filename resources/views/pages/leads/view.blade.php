@@ -84,13 +84,18 @@
                             {{$lead->income_range}}
                         </p>
 
+                        <hr>
                         <strong><i class="fas fa-phone mr-1"></i> Point Of Contact</strong>
 
                         <p class="text-muted">
                             {{$lead->point_of_contact}}
                         </p>
-
                         <hr>
+                        <strong><i class="fas fa-home mr-1"></i> Project Interested</strong>
+
+                        <p class="text-muted">
+                            {!! \App\Http\Controllers\LeadController::labeler($lead->project) !!}
+                        </p>
 
                         <hr>
 
@@ -461,6 +466,9 @@
     <style type="text/css">
         .delete_role{
             font-size: 20px;
+        }
+        small{
+            margin: 2px;
         }
     </style>
 @stop

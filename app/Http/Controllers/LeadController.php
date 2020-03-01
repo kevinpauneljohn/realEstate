@@ -163,6 +163,17 @@ class LeadController extends Controller
         }
     }
 
+    public static function labeler($project)
+    {
+        $interest = explode(',',$project);
+        $label = "";
+        foreach ($interest as $projectSelected)
+        {
+            $label .= '<small class="badge badge-success">'.$projectSelected.'</small>';
+        }
+        return $label;
+    }
+
     /**
      * Update the specified resource in storage.
      *
