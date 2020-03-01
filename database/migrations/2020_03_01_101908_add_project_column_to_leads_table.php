@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLeadProjectsTable extends Migration
+class AddProjectColumnToLeadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateLeadProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lead_projects', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+        Schema::table('leads', function (Blueprint $table) {
+            $table->text('project')->after('point_of_contact')->nullable();
         });
     }
 
@@ -26,6 +25,9 @@ class CreateLeadProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lead_projects');
+        Schema::table('leads', function (Blueprint $table) {
+            //
+            $table->dropColumn('project');
+        });
     }
 }
