@@ -1,16 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Projects')
+@section('title', 'Schedules')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Projects</h1>
+            <h1 class="m-0 text-dark">Schedules</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Projects</li>
+                <li class="breadcrumb-item active">Schedules</li>
             </ol>
         </div><!-- /.col -->
     </div>
@@ -26,22 +26,26 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="projects-list" class="table table-bordered table-striped" role="grid">
+                <table id="schedules-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
-                        <th>Project Name</th>
-                        <th>Address</th>
-                        <th>Model Units</th>
+                        <th>Date Scheduled</th>
+                        <th>Full Name</th>
+                        <th>Details</th>
+                        <th>Category</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
 
                     <tfoot>
                     <tr>
-                        <th width="20%">Project Name</th>
-                        <th width="40%">Address</th>
-                        <th width="15%">Model Units</th>
-                        <th width="25%">Action</th>
+                        <th width="10%">Date Scheduled</th>
+                        <th width="12%">Full Name</th>
+                        <th width="50%">Details</th>
+                        <th width="9%">Category</th>
+                        <th width="9%">Status</th>
+                        <th>Action</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -197,14 +201,16 @@
         </script>
         <script>
             $(function() {
-                $('#projects-list').DataTable({
+                $('#schedules-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('projects.list') !!}',
+                    ajax: '{!! route('schedules.list') !!}',
                     columns: [
-                        { data: 'name', name: 'name'},
-                        { data: 'address', name: 'address'},
-                        { data: 'model_units', name: 'model_units'},
+                        { data: 'schedule', name: 'schedule'},
+                        { data: 'full_name', name: 'full_name'},
+                        { data: 'details', name: 'details'},
+                        { data: 'category', name: 'category'},
+                        { data: 'status', name: 'status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
