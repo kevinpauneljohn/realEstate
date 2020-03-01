@@ -18,12 +18,6 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
-            @can('add project')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-project-modal"><i class="fa fa-plus-circle"></i> Add Project</button>
-            @endcan
-
-        </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <table id="schedules-list" class="table table-bordered table-striped" role="grid">
@@ -178,6 +172,7 @@
     @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/project.js')}}"></script>
+        <script src="{{asset('js/schedule.js')}}"></script>
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
         <script>

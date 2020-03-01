@@ -42,7 +42,16 @@ class ScheduleController extends Controller
                 return $action;
             })
             ->editColumn('status',function($schedule){
-                return LeadActivityController::status_label($schedule->status);
+                $checked = "";
+                if($schedule->status !== 'pending')
+                {
+                    $checked = "checked";
+                }
+                return '<div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch'.$schedule->id.'" value="'.$schedule->id.'" '.$checked.'>
+                      <label class="custom-control-label" for="customSwitch'.$schedule->id.'"></label>
+                    </div>';
+                //return LeadActivityController::status_label($schedule->status);
             })
             ->rawColumns(['status','details','action'])
             ->make(true);
