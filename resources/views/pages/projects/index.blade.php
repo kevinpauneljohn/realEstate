@@ -208,7 +208,7 @@
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[0,'desc']
+                    order:[0,'asc']
                 });
             });
             //Initialize Select2 Elements
