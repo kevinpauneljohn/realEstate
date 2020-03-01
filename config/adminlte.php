@@ -234,6 +234,11 @@ return [
                 ],
             ],
         ],
+        [
+            'text'    => 'Schedules',
+            'icon'    => 'fas fa-calendar-alt',
+            'can'     => 'view schedule',
+        ],
     ],
 
     /*
