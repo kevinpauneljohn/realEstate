@@ -140,7 +140,7 @@
                                 <label for="point_of_contact">Point Of Contact</label><span class="required">*</span>
                                 <select name="point_of_contact" class="form-control" id="point_of_contact">
                                     <option value=""> -- Select -- </option>
-                                    <option value="Booth" @if(old('point_of_contact') == "Mall Booth") selected="selected" @endif>Mall Booth</option>
+                                    <option value="Booth" @if(old('point_of_contact') == "Booth") selected="selected" @endif>Booth</option>
                                     <option value="Site" @if(old('point_of_contact') == "Site") selected="selected" @endif>Site</option>
                                     <option value="Online" @if(old('point_of_contact') == "Online") selected="selected" @endif>Online</option>
                                     <option value="Saturation" @if(old('point_of_contact') == "Saturation") selected="selected" @endif>Saturation</option>

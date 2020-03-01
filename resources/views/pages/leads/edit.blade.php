@@ -147,11 +147,20 @@
                                 <label for="point_of_contact">Point Of Contact</label><span class="required">*</span>
                                 <select name="point_of_contact" class="form-control" id="point_of_contact">
                                     <option value=""> -- Select -- </option>
-                                    <option value="Booth" @if($lead->point_of_contact == "Mall Booth") selected="selected" @endif>Mall Booth</option>
+                                    <option value="Booth" @if($lead->point_of_contact == "Booth") selected="selected" @endif>Booth</option>
                                     <option value="Site" @if($lead->point_of_contact == "Site") selected="selected" @endif>Site</option>
                                     <option value="Online" @if($lead->point_of_contact == "Online") selected="selected" @endif>Online</option>
                                     <option value="Saturation" @if($lead->point_of_contact == "Saturation") selected="selected" @endif>Saturation</option>
                                     <option value="Referral" @if($lead->point_of_contact == "Referral") selected="selected" @endif>Referral</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group project">
+                                <label for="project">Project Interested</label>
+                                <select class="select2" name="project[]" id="project" multiple="multiple" data-placeholder="Select a project" style="width: 100%;">
+                                    @foreach($projects as $project)
+                                        <option value="{{$project->name}}"{{\App\Http\Controllers\LeadController::selectedProject($lead->project,$project->name)}}>{{$project->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

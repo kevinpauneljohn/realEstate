@@ -65,6 +65,11 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
+        $interest = "";
+        foreach ($request->project as $project){
+            $interest .= $project.",";
+        }
+
 
         $this->validate_field($request);
         $lead = new Lead();
@@ -80,6 +85,7 @@ class LeadController extends Controller
         $lead->status = $request->status;
         $lead->income_range = $request->income_range;
         $lead->point_of_contact = $request->point_of_contact;
+        $lead->project = $interest;
         $lead->remarks = $request->remarks;
 
         if($lead->save())
@@ -129,8 +135,32 @@ class LeadController extends Controller
     public function edit($id)
     {
         return view('pages.leads.edit')->with([
-            'lead'  => Lead::findOrFail($id)
+            'lead'  => Lead::findOrFail($id),
+            'projects'   => Project::all(),
         ]);
+    }
+
+    /**
+     * Mar. 01, 2020
+     * @author john kevin paunel
+     * @param array $projectSelected
+     * @param string $projects
+     * add selected value to project interested
+     * @return mixed
+     * */
+    public static function selectedProject($projectSelected, $projects)
+    {
+        #$projectSelected - this is the selected project from the leads
+        #$projects - are available projects saved in the system
+
+        $projectSelected = explode(',',$projectSelected);
+        foreach ($projectSelected as $selected)
+        {
+            if($projects == $selected)
+            {
+                return 'selected="selected"';
+            }
+        }
     }
 
     /**
@@ -143,6 +173,11 @@ class LeadController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate_field($request);
+
+        $interest = "";
+        foreach ($request->project as $project){
+            $interest .= $project.",";
+        }
 
         $lead = Lead::findOrFail($id);
         $lead->user_id = auth()->user()->id;
@@ -157,6 +192,7 @@ class LeadController extends Controller
         $lead->status = $request->status;
         $lead->income_range = $request->income_range;
         $lead->point_of_contact = $request->point_of_contact;
+        $lead->project = $interest;
         $lead->remarks = $request->remarks;
 
         if($lead->save())
