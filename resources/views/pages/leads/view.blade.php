@@ -407,6 +407,7 @@
                                             <option value="Tripping"> Tripping</option>
                                             <option value="Assist"> Assist</option>
                                             <option value="Follow-up"> Follow-up</option>
+                                            <option value="Send Details"> Send Details</option>
                                         </select>
                                     </div>
                                 </div>
