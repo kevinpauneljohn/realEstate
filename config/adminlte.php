@@ -184,6 +184,11 @@ return [
             'route'  => 'dashboard',
         ],
         [
+            'text' => 'Announcement',
+            'icon' => 'fa fa-bullhorn',
+            'route'  => 'dashboard',
+        ],
+        [
             'text'    => 'Users',
             'icon'    => 'fas fa-user',
             'route'    => 'users.index',
