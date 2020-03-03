@@ -169,7 +169,6 @@
 @stop
 
 @section('js')
-    @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/project.js')}}"></script>
         <script src="{{asset('js/schedule.js')}}"></script>
@@ -215,5 +214,4 @@
             //Initialize Select2 Elements
             $('.select2').select2();
         </script>
-    @endcan
 @stop
