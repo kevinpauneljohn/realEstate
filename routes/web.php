@@ -78,7 +78,7 @@ Route::put('/leads-activity/{id}','LeadActivityController@update')->name('leads.
 Route::delete('/leads-activity/{id}','LeadActivityController@destroy')->name('leads.activity.destroy')->middleware('auth','permission:delete lead');
 
 /*schedule*/
-Route::get('/schedule','ScheduleController@index')->name('schedules.index')->middleware(['auth','permission:view schedule']);
-Route::get('/schedules-list','ScheduleController@schedule_list')->name('schedules.list')->middleware(['auth','permission:view schedule']);
-Route::post('/update-schedule-status','ScheduleController@updateStatus')->name('schedule.status.update')->middleware(['auth','permission:edit schedule']);
+Route::get('/schedule','ScheduleController@index')->name('schedules.index')->middleware(['auth']);
+Route::get('/schedules-list','ScheduleController@schedule_list')->name('schedules.list')->middleware(['auth']);
+Route::post('/update-schedule-status','ScheduleController@updateStatus')->name('schedule.status.update')->middleware(['auth']);
 
