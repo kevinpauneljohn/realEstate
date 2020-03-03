@@ -173,11 +173,11 @@ return [
     */
 
     'menu' => [
-        [
-            'text' => 'search',
-            'search' => false,
-            'topnav' => true,
-        ],
+//        [
+//            'text' => 'search',
+//            'search' => false,
+//            'topnav' => true,
+//        ],
         [
             'text' => 'Dashboard',
             'icon' => 'fa fa-tachometer',
