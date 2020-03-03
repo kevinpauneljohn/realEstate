@@ -18,7 +18,7 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.1902687">
+    <splitter split-orientation="horizontal" split-proportion="0.1332745">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
@@ -88,8 +88,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/config/adminlte.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="233">
-                  <caret line="175" column="10" selection-start-line="175" selection-start-column="10" selection-end-line="179" selection-end-column="12" />
+                <state relative-caret-position="46">
+                  <caret line="182" column="33" selection-start-line="182" selection-start-column="33" selection-end-line="182" selection-end-column="33" />
                 </state>
               </provider>
             </entry>
@@ -398,21 +398,7 @@
       <workItem from="1583087047548" duration="12758000" />
       <workItem from="1583155398919" duration="715000" />
       <workItem from="1583206209112" duration="537000" />
-      <workItem from="1583256610213" duration="3621000" />
-    </task>
-    <task id="LOCAL-00031" summary="spatie activity log installation">
-      <created>1581786950335</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1581786950335</updated>
-    </task>
-    <task id="LOCAL-00032" summary="spatie activity log installation">
-      <created>1581951632966</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1581951632966</updated>
+      <workItem from="1583256610213" duration="4537000" />
     </task>
     <task id="LOCAL-00033" summary="spatie activity log installation">
       <created>1581952626402</created>
@@ -743,11 +729,25 @@
       <option name="project" value="LOCAL" />
       <updated>1583260813845</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="spatie activity log installation">
+      <created>1583260857914</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1583260857914</updated>
+    </task>
+    <task id="LOCAL-00081" summary="spatie activity log installation">
+      <created>1583262098598</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1583262098598</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170357000" />
+    <option name="totallyTimeSpent" value="171273000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1138,8 +1138,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/adminlte.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="175" column="10" selection-start-line="175" selection-start-column="10" selection-end-line="179" selection-end-column="12" />
+        <state relative-caret-position="46">
+          <caret line="182" column="33" selection-start-line="182" selection-start-column="33" selection-end-line="182" selection-end-column="33" />
         </state>
       </provider>
     </entry>

@@ -180,7 +180,7 @@ return [
 //        ],
         [
             'text' => 'Dashboard',
-            'icon' => 'fa fa-tachometer',
+            'icon' => 'fa fa-home',
             'route'  => 'dashboard',
         ],
         [
