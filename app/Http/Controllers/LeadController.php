@@ -66,8 +66,11 @@ class LeadController extends Controller
     public function store(Request $request)
     {
         $interest = "";
-        foreach ($request->project as $project){
-            $interest .= $project.",";
+        if($request->project != null)
+        {
+            foreach ($request->project as $project){
+                $interest .= $project.",";
+            }
         }
 
 
