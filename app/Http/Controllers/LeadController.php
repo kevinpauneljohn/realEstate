@@ -129,7 +129,10 @@ class LeadController extends Controller
     public function show($id)
     {
         return view('pages.leads.view')->with([
-            'lead'  => Lead::findOrFail($id)
+            'lead'  => Lead::where([
+                ['id','=',$id],
+                ['user_id','=',auth()->user()->id],
+            ])->first()
         ]);
     }
 
