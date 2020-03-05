@@ -316,7 +316,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group schedule">
                                     <label for="schedule">Date</label><span class="required">*</span>
                                     <input type="text" name="schedule" class="form-control datemask" id="schedule" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
@@ -342,10 +342,11 @@
                                         <option value="Tripping"> Tripping</option>
                                         <option value="Assist"> Assist</option>
                                         <option value="Follow-up"> Follow-up</option>
+                                        <option value="Send Details"> Send Details</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-8">
+                            <div class="col-lg-6">
                                 <ul id="schedules"></ul>
                             </div>
                         </div>
@@ -371,7 +372,7 @@
                 @method('PUT')
                 <input type="hidden" name="editLeadId" value="{{$lead->id}}">
                 <input type="hidden" name="scheduleId" id="scheduleId">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Create Schedule</h4>

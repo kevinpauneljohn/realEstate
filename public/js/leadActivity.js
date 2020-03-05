@@ -112,16 +112,17 @@ $(document).on('change','#schedule',function () {
         'url' : '/leads-schedule/'+date,
         'type' : 'GET',
         success: function (result) {
-
+            console.log(result);
             $.each(result, function (key, value) {
                 $('#schedules').append('<div class="timeline timeline-inverse">' +
-                    '<div class="time-label"><span class="bg-primary">'+value.schedule+'</span></div>' +
+                    '<div class="time-label"><span class="bg-primary"> '+value.schedule+'</span></div>' +
                     '<div>' +
                     '<i class="fas fa-calendar-alt bg-primary"></i>' +
                     '<div class="timeline-item">' +
-                    '<span class="time"><i class="far fa-clock"></i>'+value.start_time+'</span>' +
+                    '<span class="time"><i class="far fa-clock"></i>'+value.start_date+'</span>' +
                     '<h3 class="timeline-header"><a href="#">'+value.category+'</a></h3>' +
-                    '<div class="timeline-body">'+value.details+'</div>' +
+                    '<div class="timeline-body"><a href="/leads/'+value.lead_id+'"><button type="button" class="btn btn-success">View Details</button></a><br/>' +
+                    ''+value.details+'</div>' +
                     '</div>' +
                     '</div>' +
                     '</div>');
@@ -133,12 +134,11 @@ $(document).on('change','#schedule',function () {
 $(document).on('change','#edit_schedule',function () {
     let date = $('#edit_schedule').val();
 
-    $('#edit_schedule').html("");
+    $('#edit_schedules').html("");
     $.ajax({
         'url' : '/leads-schedule/'+date,
         'type' : 'GET',
         success: function (result) {
-            console.log(result);
 
             $.each(result, function (key, value) {
                 $('#edit_schedules').append('<div class="timeline timeline-inverse">' +
@@ -146,9 +146,10 @@ $(document).on('change','#edit_schedule',function () {
                     '<div>' +
                     '<i class="fas fa-calendar-alt bg-primary"></i>' +
                     '<div class="timeline-item">' +
-                    '<span class="time"><i class="far fa-clock"></i>'+value.start_time+'</span>' +
+                    '<span class="time"><i class="far fa-clock"></i>'+value.start_date+'</span>' +
                     '<h3 class="timeline-header"><a href="#">'+value.category+'</a></h3>' +
-                    '<div class="timeline-body">'+value.details+'</div>' +
+                    '<div class="timeline-body"><a href="/leads/'+value.lead_id+'"><button type="button" class="btn btn-success">View Details</button></a><br/>' +
+                    ''+value.details+'</div>' +
                     '</div>' +
                     '</div>' +
                     '</div>');
@@ -157,7 +158,7 @@ $(document).on('change','#edit_schedule',function () {
     });
 });
 
-$(document).on('click','.edit-schedule-btn',function () {
+$(document).on('click','.edit-schedule-btn',function (schedule) {
     let id = this.id;
 
     $.ajax({
