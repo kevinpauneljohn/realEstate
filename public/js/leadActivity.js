@@ -138,6 +138,7 @@ $(document).on('change','#edit_schedule',function () {
         'url' : '/leads-schedule/'+date,
         'type' : 'GET',
         success: function (result) {
+            console.log(result);
 
             $.each(result, function (key, value) {
                 $('#edit_schedules').append('<div class="timeline timeline-inverse">' +
