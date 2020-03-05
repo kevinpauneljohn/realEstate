@@ -186,7 +186,7 @@ return [
         [
             'text' => 'Announcement',
             'icon' => 'fa fa-bullhorn',
-            'route'  => 'dashboard',
+            'url'  => '#',
         ],
         [
             'text'    => 'Users',
