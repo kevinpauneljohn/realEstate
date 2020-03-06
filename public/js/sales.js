@@ -60,9 +60,9 @@ $(document).ready(function () {
             'POST',
             data,
             'New sales Successfully Added!',
-            false,
-            '',
             true,
+            '',
+            false,
         );
         clear_errors('reservation_date','buyer');
     })
