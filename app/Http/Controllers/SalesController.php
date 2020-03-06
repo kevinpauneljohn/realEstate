@@ -6,6 +6,7 @@ use App\Lead;
 use App\Sales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
 {
@@ -68,6 +69,36 @@ class SalesController extends Controller
             }
         }
         return response()->json($validator->errors());
+    }
+
+    /**
+     * March 06, 2020
+     * @author john kevin paunel
+     * fetch all sales
+     * */
+    public function sales_list()
+    {
+        $sales = Sales::where('user_id',auth()->user()->id)->get();
+        return DataTables::of($sales)
+            ->addColumn('action', function ($sale)
+            {
+                $action = "";
+                if(auth()->user()->can('view lead'))
+                {
+                    $action .= '<a href="'.route("leads.show",["lead" => $sale->id]).'" class="btn btn-xs btn-success view-btn" id="'.$sale->id.'"><i class="fa fa-eye"></i> View</a>';
+                }
+                if(auth()->user()->can('edit lead'))
+                {
+                    $action .= '<a href="'.route("leads.edit",["lead" => $sale->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$sale->id.'"><i class="fa fa-edit"></i> Edit</a>';
+                }
+                if(auth()->user()->can('delete lead'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
+                }
+                return $action;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**

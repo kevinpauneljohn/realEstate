@@ -17,6 +17,8 @@ class CreateSalesTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('user_id');
             $table->uuid('lead_id');
+            $table->unsignedBigInteger('project_id')->nullable();
+            $table->unsignedBigInteger('model_unit_id')->nullable();
             $table->string('total_contract_price');
             $table->string('discount')->nullable();
             $table->string('reservation_fee')->nullable();
@@ -31,6 +33,8 @@ class CreateSalesTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('lead_id')->references('id')->on('leads');
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('model_unit_id')->references('id')->on('model_units');
         });
     }
 
