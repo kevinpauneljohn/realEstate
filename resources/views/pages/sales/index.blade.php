@@ -1,16 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Schedules')
+@section('title', 'Sales')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Schedules</h1>
+            <h1 class="m-0 text-dark">Sales</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Schedules</li>
+                <li class="breadcrumb-item active">Sales</li>
             </ol>
         </div><!-- /.col -->
     </div>
@@ -18,15 +18,22 @@
 
 @section('content')
     <div class="card">
+        <div class="card-header">
+            @can('add sales')
+                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-sales-modal"><i class="fa fa-plus-circle"></i> Add Sales</button>
+            @endcan
+
+        </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="schedules-list" class="table table-bordered table-striped" role="grid">
+                <table id="sales-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
-                        <th>Date Scheduled</th>
+                        <th>Date Reserved</th>
                         <th>Full Name</th>
-                        <th>Details</th>
-                        <th>Category</th>
+                        <th>Project</th>
+                        <th>Model Unit</th>
+                        <th>Total Contract Price</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -34,11 +41,12 @@
 
                     <tfoot>
                     <tr>
-                        <th width="10%">Date Scheduled</th>
-                        <th width="12%">Full Name</th>
-                        <th width="50%">Details</th>
-                        <th width="9%">Category</th>
-                        <th width="9%">Status</th>
+                        <th>Date Reserved</th>
+                        <th>Full Name</th>
+                        <th>Project</th>
+                        <th>Model Unit</th>
+                        <th>Total Contract Price</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -47,32 +55,21 @@
         </div>
     </div>
 
-    @can('add project')
-        <!--add new users modal-->
-        <div class="modal fade" id="add-new-project-modal">
-            <form role="form" id="add-project-form">
+    @can('add sales')
+        <!--add new sales modal-->
+        <div class="modal fade" id="add-new-sales-modal">
+            <form role="form" id="add-sales-form">
                 @csrf
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New Project</h4>
+                            <h4 class="modal-title">Add New Sales</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group name">
-                                <label for="name">Project Name</label>
-                                <input type="text" name="name" class="form-control" id="name">
-                            </div>
-                            <div class="form-group address">
-                                <label for="address">Address</label>
-                                <textarea class="form-control" name="address" id="address"></textarea>
-                            </div>
-                            <div class="form-group remarks">
-                                <label for="remarks">Remarks</label>
-                                <textarea name="remarks" id="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
-                            </div>
+
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

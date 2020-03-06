@@ -216,7 +216,7 @@ return [
         [
             'text' => 'Sales',
             'icon' => 'fas fa-chart-bar',
-            'url'  => '#',
+            'route'  => 'sales.index',
         ],
         [
             'text'    => 'Projects',

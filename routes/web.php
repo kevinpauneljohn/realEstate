@@ -82,3 +82,6 @@ Route::get('/schedule','ScheduleController@index')->name('schedules.index')->mid
 Route::get('/schedules-list','ScheduleController@schedule_list')->name('schedules.list')->middleware(['auth','permission:view schedule']);
 Route::post('/update-schedule-status','ScheduleController@updateStatus')->name('schedule.status.update')->middleware(['auth','permission:edit schedule']);
 
+/*sales*/
+Route::get('/sales','SalesController@index')->name('sales.index')->middleware(['auth','permission:view sales']);
+
