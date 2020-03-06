@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Lead;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -13,7 +14,9 @@ class SalesController extends Controller
      */
     public function index()
     {
-        return view('pages.sales.index');
+        return view('pages.sales.index')->with([
+            'leads' => Lead::where('user_id',auth()->user()->id)->get()
+        ]);
     }
 
     /**

@@ -69,7 +69,20 @@
                             </button>
                         </div>
                         <div class="modal-body">
-
+                            <!-- Date range -->
+                            <div class="form-group reservation_date">
+                                <label>Reservation Date</label><span class="required">*</span>
+                                <input type="text" name="reservation_date" id="reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                            </div>
+                            <div class="form-group buyer">
+                                <label>Buyer's Name</label><span class="required">*</span>
+                                <select name="buyer" id="buyer" class="form-control select2" style="width: 100%;">
+                                    <option value=""> -- Select -- </option>
+                                    @foreach($leads as $lead)
+                                        <option value="{{$lead->id}}">{{ucfirst($lead->firstname)}} {{ucfirst($lead->lastname)}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -155,6 +168,8 @@
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
@@ -166,7 +181,10 @@
 @stop
 
 @section('js')
+    <!-- bootstrap datepicker -->
+    <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
     <script src="{{asset('js/project.js')}}"></script>
     <script src="{{asset('js/schedule.js')}}"></script>
     <!-- Summernote -->
@@ -210,5 +228,9 @@
         });
         //Initialize Select2 Elements
         $('.select2').select2();
+        $('#reservation_date').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+        });
     </script>
 @stop
