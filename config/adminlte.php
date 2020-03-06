@@ -214,12 +214,16 @@ return [
             ],
         ],
         [
+            'text' => 'Sales',
+            'icon' => 'fas fa-chart-bar',
+            'url'  => '#',
+        ],
+        [
             'text'    => 'Projects',
             'icon'    => 'fas fa-home',
             'route'    => 'projects.index',
             'can'     => 'view project',
         ],
-        ['header' => 'LEAD MANAGEMENT'],
         [
             'text'    => 'Leads',
             'icon'    => 'fas fa-filter',
