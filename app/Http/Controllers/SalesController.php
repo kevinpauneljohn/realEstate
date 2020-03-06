@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Lead;
+use App\Sales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SalesController extends Controller
 {
@@ -37,7 +39,35 @@ class SalesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'reservation_date'  => 'required',
+            'buyer'  => 'required',
+        ],[
+            'reservation_date.required' => 'Reservation Date is required'
+        ]);
+
+        if($validator->passes())
+        {
+            $sales = new Sales();
+            $sales->reservation_date = $request->reservation_date;
+            $sales->user_id = auth()->user()->id;
+            $sales->lead_id = $request->buyer;
+            $sales->total_contract_price = $request->total_contract_price;
+            $sales->discount = $request->discount;
+            $sales->reservation_fee = $request->reservation_fee;
+            $sales->equity = $request->equity;
+            $sales->loanable_amount = $request->loanable_amount;
+            $sales->financing = $request->financing;
+            $sales->terms = $request->terms;
+            $sales->details = $request->terms;
+            $sales->commission_rate = $request->commission_rate;
+
+            if($sales->save())
+            {
+                return response()->json(['success' => true]);
+            }
+        }
+        return response()->json($validator->errors());
     }
 
     /**

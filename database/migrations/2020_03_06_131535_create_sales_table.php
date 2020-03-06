@@ -25,7 +25,7 @@ class CreateSalesTable extends Migration
             $table->string('financing')->nullable();
             $table->string('terms')->nullable();
             $table->text('details')->nullable();
-            $table->string('commission_rate');
+            $table->string('commission_rate')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

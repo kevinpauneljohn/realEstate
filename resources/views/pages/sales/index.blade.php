@@ -77,7 +77,7 @@
                                         <input type="text" name="reservation_date" id="reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
                                     </div>
                                     <div class="form-group buyer">
-                                        <label>Buyer's Name</label><span class="required">*</span>
+                                        <label for="buyer">Buyer's Name</label><span class="required">*</span>
                                         <select name="buyer" id="buyer" class="form-control select2" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
                                             @foreach($leads as $lead)
@@ -104,9 +104,9 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <div class="form-group loanable">
+                                    <div class="form-group loanable_amount">
                                         <label>Loanable Amount</label>
-                                        <input type="text" name="loanable" id="loanable" class="form-control">
+                                        <input type="text" name="loanable_amount" id="loanable_amount" class="form-control">
                                     </div>
                                     <div class="form-group financing">
                                         <label>Financing</label>
@@ -122,8 +122,8 @@
                                         <input type="text" name="terms" id="terms" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="remarks">Remarks</label>
-                                        <textarea name="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                        <label for="details">Details</label>
+                                        <textarea name="details" id="details" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -229,8 +229,7 @@
     <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
-    <script src="{{asset('js/project.js')}}"></script>
-    <script src="{{asset('js/schedule.js')}}"></script>
+    <script src="{{asset('js/sales.js')}}"></script>
     <!-- Summernote -->
     <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
     <script>

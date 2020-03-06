@@ -84,4 +84,5 @@ Route::post('/update-schedule-status','ScheduleController@updateStatus')->name('
 
 /*sales*/
 Route::get('/sales','SalesController@index')->name('sales.index')->middleware(['auth','permission:view sales']);
+Route::post('/sales','SalesController@store')->name('sales.store')->middleware(['auth','permission:add sales']);
 
