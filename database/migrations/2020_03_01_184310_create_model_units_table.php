@@ -15,7 +15,19 @@ class CreateModelUnitsTable extends Migration
     {
         Schema::create('model_units', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('project_id');
+            $table->uuid('user_id');
+            $table->string('name');
+            $table->string('house_type')->nullable();
+            $table->string('floor_level')->nullable();
+            $table->string('lot_area')->nullable();
+            $table->string('floor_area')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
