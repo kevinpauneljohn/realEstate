@@ -60,7 +60,7 @@
         <div class="modal fade" id="add-new-sales-modal">
             <form role="form" id="add-sales-form">
                 @csrf
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Add New Sales</h4>
@@ -69,19 +69,63 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <!-- Date range -->
-                            <div class="form-group reservation_date">
-                                <label>Reservation Date</label><span class="required">*</span>
-                                <input type="text" name="reservation_date" id="reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
-                            </div>
-                            <div class="form-group buyer">
-                                <label>Buyer's Name</label><span class="required">*</span>
-                                <select name="buyer" id="buyer" class="form-control select2" style="width: 100%;">
-                                    <option value=""> -- Select -- </option>
-                                    @foreach($leads as $lead)
-                                        <option value="{{$lead->id}}">{{ucfirst($lead->firstname)}} {{ucfirst($lead->lastname)}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- Date range -->
+                                    <div class="form-group reservation_date">
+                                        <label>Reservation Date</label><span class="required">*</span>
+                                        <input type="text" name="reservation_date" id="reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                    </div>
+                                    <div class="form-group buyer">
+                                        <label>Buyer's Name</label><span class="required">*</span>
+                                        <select name="buyer" id="buyer" class="form-control select2" style="width: 100%;">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($leads as $lead)
+                                                <option value="{{$lead->id}}">{{ucfirst($lead->firstname)}} {{ucfirst($lead->lastname)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group total_contract_price">
+                                        <label>Total Contract Price</label>
+                                        <input type="text" name="total_contract_price" id="total_contract_price" class="form-control">
+                                    </div>
+                                    <div class="form-group discount">
+                                        <label>Discount</label>
+                                        <input type="text" name="discount" id="discount" class="form-control">
+                                    </div>
+                                    <div class="form-group reservation_fee">
+                                        <label>Reservation Fee</label>
+                                        <input type="text" name="reservation_fee" id="reservation_fee" class="form-control">
+                                    </div>
+                                    <div class="form-group equity">
+                                        <label>Equity</label>
+                                        <input type="text" name="equity" id="equity" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group loanable">
+                                        <label>Loanable Amount</label>
+                                        <input type="text" name="loanable" id="loanable" class="form-control">
+                                    </div>
+                                    <div class="form-group financing">
+                                        <label>Financing</label>
+                                        <select name="financing" id="financing" class="form-control select2" style="width: 100%;">
+                                            <option value=""> -- Select -- </option>
+                                            <option value="INHOUSE">INHOUSE</option>
+                                            <option value="HDMF">HDMF</option>
+                                            <option value="Bank">Bank</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group terms">
+                                        <label>Terms</label>
+                                        <input type="text" name="terms" id="terms" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="remarks">Remarks</label>
+                                        <textarea name="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">

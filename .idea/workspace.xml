@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="spatie activity log installation">
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,7 +18,7 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.24322344">
+    <splitter split-orientation="horizontal" split-proportion="0.13929619">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -89,10 +88,11 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="440">
-                  <caret line="81" column="125" selection-start-line="81" selection-start-column="125" selection-end-line="81" selection-end-column="125" />
+                <state relative-caret-position="250">
+                  <caret line="109" column="42" selection-start-line="109" selection-start-column="42" selection-end-line="109" selection-end-column="42" />
                   <folding>
-                    <element signature="e#3378#3398#0#HTML" expanded="true" />
+                    <element signature="e#3493#3513#0#HTML" expanded="true" />
+                    <element signature="e#5849#5869#0#HTML" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -101,8 +101,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/addLeads.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="369">
-                  <caret line="193" column="8" lean-forward="true" selection-start-line="193" selection-start-column="8" selection-end-line="194" selection-end-column="109" />
+                <state relative-caret-position="-580">
+                  <caret line="183" column="84" lean-forward="true" selection-start-line="182" selection-start-column="3" selection-end-line="183" selection-end-column="84" />
                 </state>
               </provider>
             </entry>
@@ -484,14 +484,7 @@
       <workItem from="1583256610213" duration="4800000" />
       <workItem from="1583322688179" duration="2456000" />
       <workItem from="1583407348370" duration="5406000" />
-      <workItem from="1583498019692" duration="6843000" />
-    </task>
-    <task id="LOCAL-00047" summary="spatie activity log installation">
-      <created>1582734457922</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1582734457922</updated>
+      <workItem from="1583498019692" duration="7620000" />
     </task>
     <task id="LOCAL-00048" summary="spatie activity log installation">
       <created>1582735589139</created>
@@ -829,11 +822,18 @@
       <option name="project" value="LOCAL" />
       <updated>1583502903568</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="spatie activity log installation">
+      <created>1583504959169</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1583504959169</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="186241000" />
+    <option name="totallyTimeSpent" value="187018000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1169,13 +1169,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/addLeads.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="193" column="8" lean-forward="true" selection-start-line="193" selection-start-column="8" selection-end-line="194" selection-end-column="109" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2020_03_01_184310_create_model_units_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -1207,12 +1200,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/addLeads.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-580">
+          <caret line="183" column="84" lean-forward="true" selection-start-line="182" selection-start-column="3" selection-end-line="183" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="81" column="125" selection-start-line="81" selection-start-column="125" selection-end-line="81" selection-end-column="125" />
+        <state relative-caret-position="250">
+          <caret line="109" column="42" selection-start-line="109" selection-start-column="42" selection-end-line="109" selection-end-column="42" />
           <folding>
-            <element signature="e#3378#3398#0#HTML" expanded="true" />
+            <element signature="e#3493#3513#0#HTML" expanded="true" />
+            <element signature="e#5849#5869#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
