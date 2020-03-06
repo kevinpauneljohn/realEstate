@@ -217,6 +217,7 @@ return [
             'text' => 'Sales',
             'icon' => 'fas fa-chart-bar',
             'route'  => 'sales.index',
+            'can'   => 'view sales',
         ],
         [
             'text'    => 'Projects',
