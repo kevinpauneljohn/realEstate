@@ -13,7 +13,7 @@ class ModelUnitController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.modelUnits.index');
     }
 
     /**

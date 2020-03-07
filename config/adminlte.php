@@ -221,9 +221,15 @@ return [
         ],
         [
             'text'    => 'Projects',
-            'icon'    => 'fas fa-home',
+            'icon'    => 'fas fa-building',
             'route'    => 'projects.index',
             'can'     => 'view project',
+        ],
+        [
+            'text'    => 'Model Units',
+            'icon'    => 'fas fa-home',
+            'route'    => 'model.units.index',
+            'can'     => 'view model unit',
         ],
         [
             'text'    => 'Leads',

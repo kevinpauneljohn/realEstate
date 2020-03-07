@@ -1,16 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Sales')
+@section('title', 'Model Units')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Sales</h1>
+            <h1 class="m-0 text-dark">Model Units</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Sales</li>
+                <li class="breadcrumb-item active">Model Units</li>
             </ol>
         </div><!-- /.col -->
     </div>
@@ -19,7 +19,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            @can('add sales')
+            @can('add model unit')
                 <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-sales-modal"><i class="fa fa-plus-circle"></i> Add Sales</button>
             @endcan
 
@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    @can('add sales')
+    @can('add model unit')
         <!--add new sales modal-->
         <div class="modal fade" id="add-new-sales-modal">
             <form role="form" id="add-sales-form">
@@ -75,33 +75,6 @@
                                     <div class="form-group reservation_date">
                                         <label>Reservation Date</label><span class="required">*</span>
                                         <input type="text" name="reservation_date" id="reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
-                                    </div>
-                                    <div class="form-group buyer">
-                                        <label for="buyer">Buyer's Name</label><span class="required">*</span>
-                                        <select name="buyer" id="buyer" class="form-control select2" style="width: 100%;">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($leads as $lead)
-                                                <option value="{{$lead->id}}">{{ucfirst($lead->firstname)}} {{ucfirst($lead->lastname)}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group project">
-                                        <label for="project">Project</label><span class="required">*</span>
-                                        <select name="project" id="project" class="form-control select2" style="width: 100%;">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($projects as $project)
-                                                <option value="{{$project->id}}">{{$project->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group model_unit">
-                                        <label for="model_unit">Model Unit</label><span class="required">*</span>
-                                        <select name="model_unit" id="model_unit" class="form-control select2" style="width: 100%;">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($projects as $project)
-                                                <option value="{{$project->id}}">{{$project->name}}</option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                     <div class="form-group total_contract_price">
                                         <label>Total Contract Price</label>

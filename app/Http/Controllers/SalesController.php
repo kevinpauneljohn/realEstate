@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lead;
+use App\Project;
 use App\Sales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,8 @@ class SalesController extends Controller
     public function index()
     {
         return view('pages.sales.index')->with([
-            'leads' => Lead::where('user_id',auth()->user()->id)->get()
+            'leads' => Lead::where('user_id',auth()->user()->id)->get(),
+            'projects'   => Project::all(),
         ]);
     }
 
