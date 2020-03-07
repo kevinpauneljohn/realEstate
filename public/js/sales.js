@@ -70,12 +70,16 @@ $(document).ready(function () {
 
 $(document).on('change','#project',function(){
     let value = this.value;
-
+    $('#model_unit').html('<option value=""> -- Select -- </option>');
     $.ajax({
         'url' : '/project-model-units/'+value,
         'type' : 'GET',
         success: function(result){
-            console.log(result);
+            $.each(result, function (key, value) {
+                //console.log(value.name);
+
+                $('#model_unit').append('<option value="'+value.id+'">'+value.name+'</option>');
+            });
         }
     });
 });

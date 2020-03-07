@@ -98,9 +98,7 @@
                                         <label for="model_unit">Model Unit</label><span class="required">*</span>
                                         <select name="model_unit" id="model_unit" class="form-control select2" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
-                                            @foreach($projects as $project)
-                                                <option value="{{$project->id}}">{{$project->name}}</option>
-                                            @endforeach
+
                                         </select>
                                     </div>
                                     <div class="form-group total_contract_price">
