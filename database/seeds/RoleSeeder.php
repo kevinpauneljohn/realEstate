@@ -18,5 +18,50 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'agent']);
         Role::create(['name' => 'manager']);
         Role::create(['name' => 'referral']);
+
+        Permission::create(['name' => 'add role']);
+        Permission::create(['name' => 'view role']);
+        Permission::create(['name' => 'edit role']);
+        Permission::create(['name' => 'delete role']);
+
+        Permission::create(['name' => 'add permission']);
+        Permission::create(['name' => 'view permission']);
+        Permission::create(['name' => 'edit permission']);
+        Permission::create(['name' => 'delete permission']);
+
+        Permission::create(['name' => 'add user']);
+        Permission::create(['name' => 'view user']);
+        Permission::create(['name' => 'edit user']);
+        Permission::create(['name' => 'delete user']);
+
+        Permission::create(['name' => 'add sales']);
+        Permission::create(['name' => 'view sales']);
+        Permission::create(['name' => 'edit sales']);
+        Permission::create(['name' => 'delete sales']);
+
+        Permission::create(['name' => 'add lead']);
+        Permission::create(['name' => 'view lead']);
+        Permission::create(['name' => 'edit lead']);
+        Permission::create(['name' => 'delete lead']);
+
+        Permission::create(['name' => 'add project']);
+        Permission::create(['name' => 'view project']);
+        Permission::create(['name' => 'edit project']);
+        Permission::create(['name' => 'delete project']);
+
+        Permission::create(['name' => 'add schedule']);
+        Permission::create(['name' => 'view schedule']);
+        Permission::create(['name' => 'edit schedule']);
+        Permission::create(['name' => 'delete schedule']);
+
+        Permission::create(['name' => 'add announcement']);
+        Permission::create(['name' => 'view announcement']);
+        Permission::create(['name' => 'edit announcement']);
+        Permission::create(['name' => 'delete announcement']);
+
+        Permission::create(['name' => 'add model unit']);
+        Permission::create(['name' => 'view model unit']);
+        Permission::create(['name' => 'edit model unit']);
+        Permission::create(['name' => 'delete model unit']);
     }
 }
