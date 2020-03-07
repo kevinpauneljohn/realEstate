@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-header">
             @can('add model unit')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-sales-modal"><i class="fa fa-plus-circle"></i> Add Sales</button>
+                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-unit-modal"><i class="fa fa-plus-circle"></i> Add Model Unit</button>
             @endcan
 
         </div>
@@ -29,24 +29,26 @@
                 <table id="sales-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
-                        <th>Date Reserved</th>
-                        <th>Full Name</th>
                         <th>Project</th>
-                        <th>Model Unit</th>
-                        <th>Total Contract Price</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>House Type</th>
+                        <th>Floor Level</th>
+                        <th>Lot Area</th>
+                        <th>Floor Area</th>
+                        <th>Description</th>
                         <th>Action</th>
                     </tr>
                     </thead>
 
                     <tfoot>
                     <tr>
-                        <th>Date Reserved</th>
-                        <th>Full Name</th>
                         <th>Project</th>
-                        <th>Model Unit</th>
-                        <th>Total Contract Price</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>House Type</th>
+                        <th>Floor Level</th>
+                        <th>Lot Area</th>
+                        <th>Floor Area</th>
+                        <th>Description</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -57,13 +59,13 @@
 
     @can('add model unit')
         <!--add new sales modal-->
-        <div class="modal fade" id="add-new-sales-modal">
-            <form role="form" id="add-sales-form">
+        <div class="modal fade" id="add-new-unit-modal">
+            <form role="form" id="add-unit-form">
                 @csrf
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New Sales</h4>
+                            <h4 class="modal-title">Add New Model Unit</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -71,50 +73,49 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <!-- Date range -->
-                                    <div class="form-group reservation_date">
-                                        <label>Reservation Date</label><span class="required">*</span>
-                                        <input type="text" name="reservation_date" id="reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
-                                    </div>
-                                    <div class="form-group total_contract_price">
-                                        <label>Total Contract Price</label>
-                                        <input type="text" name="total_contract_price" id="total_contract_price" class="form-control">
-                                    </div>
-                                    <div class="form-group discount">
-                                        <label>Discount</label>
-                                        <input type="text" name="discount" id="discount" class="form-control">
-                                    </div>
-                                    <div class="form-group reservation_fee">
-                                        <label>Reservation Fee</label>
-                                        <input type="text" name="reservation_fee" id="reservation_fee" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="form-group equity">
-                                        <label>Equity</label>
-                                        <input type="text" name="equity" id="equity" class="form-control">
-                                    </div>
-                                    <div class="form-group loanable_amount">
-                                        <label>Loanable Amount</label>
-                                        <input type="text" name="loanable_amount" id="loanable_amount" class="form-control">
-                                    </div>
-                                    <div class="form-group financing">
-                                        <label>Financing</label>
-                                        <select name="financing" id="financing" class="form-control select2" style="width: 100%;">
+                                    <div class="form-group project">
+                                        <label for="project">Project</label><span class="required">*</span>
+                                        <select name="project" id="project" class="form-control select2" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
-                                            <option value="INHOUSE">INHOUSE</option>
-                                            <option value="HDMF">HDMF</option>
-                                            <option value="Bank">Bank</option>
+                                            @foreach($projects as $project)
+                                                <option value="{{$project->id}}">{{$project->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group terms">
-                                        <label>Terms</label>
-                                        <input type="text" name="terms" id="terms" class="form-control">
+                                    <div class="form-group name">
+                                        <label for="name">Name</label><span class="required">*</span>
+                                        <input type="text" name="name" id="name" class="form-control">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="details">Details</label>
-                                        <textarea name="details" id="details" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                    <div class="form-group house_type">
+                                        <label for="house_type">House Type</label><span class="required">*</span>
+                                        <select name="house_type" id="house_type" class="form-control select2" style="width: 100%;">
+                                            <option value=""> -- Select -- </option>
+                                            <option value="Single-attached">Single-attached</option>
+                                            <option value="Single-detached">Single-detached</option>
+                                            <option value="Bungalow">Bungalow</option>
+                                            <option value="Duplex">Duplex</option>
+                                            <option value="Townhouse">Townhouse</option>
+                                            <option value="Rowhouse">Rowhouse</option>
+                                            <option value="Condominium">Condominium</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group floor_level">
+                                        <label for="floor_level">Floor Level</label><span class="required">*</span>
+                                        <input type="text" name="floor_level" id="floor_level" class="form-control">
+                                    </div>
+                                    <div class="form-group lot_area">
+                                        <label for="lot_area">Lot Area</label><span class="required">*</span>
+                                        <input type="text" name="floor_level" id="floor_level" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group floor_area">
+                                        <label for="floor_area">Floor Area</label><span class="required">*</span>
+                                        <input type="text" name="floor_area" id="floor_area" class="form-control">
+                                    </div>
+                                    <div class="form-group description">
+                                        <label for="description">Description</label>
+                                        <textarea name="description" id="description" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -220,7 +221,7 @@
     <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
-    <script src="{{asset('js/sales.js')}}"></script>
+    <script src="{{asset('js/model_unit.js')}}"></script>
     <!-- Summernote -->
     <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
     <script>
