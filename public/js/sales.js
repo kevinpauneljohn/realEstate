@@ -67,3 +67,15 @@ $(document).ready(function () {
         clear_errors('reservation_date','buyer');
     })
 });
+
+$(document).on('change','#project',function(){
+    let value = this.value;
+
+    $.ajax({
+        'url' : '/project-model-units/'+value,
+        'type' : 'GET',
+        success: function(result){
+            console.log(result);
+        }
+    });
+});

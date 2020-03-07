@@ -111,6 +111,18 @@ class ModelUnitController extends Controller
     }
 
     /**
+     * March 08, 2020
+     * @author john kevin paunel
+     * fetch all model units by project
+     * @param string $project_id
+     * @return object
+     * */
+    public function project_model_unit($project_id)
+    {
+        return ModelUnit::where('project_id',$project_id)->get();
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
