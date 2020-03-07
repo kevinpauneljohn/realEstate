@@ -75,24 +75,27 @@ class ModelUnitController extends Controller
     {
         $model_units = ModelUnit::all();
         return DataTables::of($model_units)
+            ->addColumn('project_name',function($model_unit){
+                return Project::find($model_unit->project_id)->name;
+            })
             ->addColumn('action', function ($model_unit)
             {
                 $action = "";
-                if(auth()->user()->can('view lead'))
+                if(auth()->user()->can('view model unit'))
                 {
                     $action .= '<a href="'.route("leads.show",["lead" => $model_unit->id]).'" class="btn btn-xs btn-success view-btn" id="'.$model_unit->id.'"><i class="fa fa-eye"></i> View</a>';
                 }
-                if(auth()->user()->can('edit lead'))
+                if(auth()->user()->can('edit model unit'))
                 {
                     $action .= '<a href="'.route("leads.edit",["lead" => $model_unit->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$model_unit->id.'"><i class="fa fa-edit"></i> Edit</a>';
                 }
-                if(auth()->user()->can('delete lead'))
+                if(auth()->user()->can('delete model unit'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$model_unit->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
                 }
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','description'])
             ->make(true);
     }
 

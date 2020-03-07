@@ -26,7 +26,7 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="sales-list" class="table table-bordered table-striped" role="grid">
+                <table id="model-unit-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
                         <th>Project</th>
@@ -105,7 +105,7 @@
                                     </div>
                                     <div class="form-group lot_area">
                                         <label for="lot_area">Lot Area</label><span class="required">*</span>
-                                        <input type="text" name="floor_level" id="floor_level" class="form-control">
+                                        <input type="text" name="lot_area" id="lot_area" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -245,16 +245,18 @@
     </script>
     <script>
         $(function() {
-            $('#schedules-list').DataTable({
+            $('#model-unit-list').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('schedules.list') !!}',
+                ajax: '{!! route('model.units.list') !!}',
                 columns: [
-                    { data: 'schedule', name: 'schedule'},
-                    { data: 'full_name', name: 'full_name'},
-                    { data: 'details', name: 'details'},
-                    { data: 'category', name: 'category'},
-                    { data: 'status', name: 'status'},
+                    { data: 'project_name', name: 'project_name'},
+                    { data: 'name', name: 'name'},
+                    { data: 'house_type', name: 'house_type'},
+                    { data: 'floor_level', name: 'floor_level'},
+                    { data: 'lot_area', name: 'lot_area'},
+                    { data: 'floor_area', name: 'floor_area'},
+                    { data: 'description', name: 'description'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 responsive:true,
