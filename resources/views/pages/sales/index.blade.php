@@ -34,6 +34,7 @@
                         <th>Project</th>
                         <th>Model Unit</th>
                         <th>Total Contract Price</th>
+                        <th>Discount</th>
                         <th>Financing</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -47,6 +48,7 @@
                         <th>Project</th>
                         <th>Model Unit</th>
                         <th>Total Contract Price</th>
+                        <th>Discount</th>
                         <th>Financing</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -281,6 +283,7 @@
                     { data: 'project', name: 'project'},
                     { data: 'model_unit', name: 'model_unit'},
                     { data: 'total_contract_price', name: 'total_contract_price'},
+                    { data: 'discount', name: 'discount'},
                     { data: 'financing', name: 'financing'},
                     { data: 'status', name: 'status'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}

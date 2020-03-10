@@ -85,6 +85,12 @@ class SalesController extends Controller
     {
         $sales = Sales::where('user_id',auth()->user()->id)->get();
         return DataTables::of($sales)
+            ->editColumn('total_contract_price',function($sale){
+                return number_format($sale->total_contract_price);
+            })
+            ->editColumn('discount',function($sale){
+                return number_format($sale->discount);
+            })
             ->addColumn('full_name',function($sale){
                 $lead = Lead::find($sale->lead_id);
                 $firstname = $lead->firstname;
