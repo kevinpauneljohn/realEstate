@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ModelUnit;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -28,8 +29,8 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
         return DataTables::of($projects)
-            ->addColumn('model_units', function (){
-                return 'model units';
+            ->addColumn('model_units', function ($project){
+                return ModelUnit::where('project_id',$project->id)->count();
             })
             ->addColumn('action', function ($project)
             {
@@ -71,10 +72,13 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'      => 'required|unique:projects,name',
-            'address'   => 'required'
+            'name'              => 'required|unique:projects,name',
+            'address'           => 'required',
+            'commission_rate'   => 'required|numeric',
         ],[
-            'name.required' => 'Project name is required'
+            'name.required' => 'Project name is required',
+            'commission_rate.required' => 'Commission rate is required',
+            'commission_rate.numeric' => 'Commission rate must be a number',
         ]);
 
         if($validator->passes())
@@ -83,6 +87,7 @@ class ProjectController extends Controller
             $project->name = $request->name;
             $project->address = $request->address;
             $project->remarks = $request->remarks;
+            $project->commission_rate = $request->commission_rate;
 
             if($project->save())
             {
@@ -140,9 +145,12 @@ class ProjectController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'edit_name'      => 'required',
-            'edit_address'   => 'required'
+            'edit_address'   => 'required',
+            'edit_commission_rate'   => 'required|numeric',
         ],[
-            'edit_name.required' => 'Project name is required'
+            'edit_name.required' => 'Project name is required',
+            'edit_commission_rate.required' => 'Commission rate is required',
+            'edit_commission_rate.numeric' => 'Commission rate must be a number',
         ]);
 
         if($validator->passes())
@@ -151,6 +159,7 @@ class ProjectController extends Controller
             $project->name = $request->edit_name;
             $project->address = $request->edit_address;
             $project->remarks = $request->edit_remarks;
+            $project->commission_rate = $request->edit_commission_rate;
 
             if($project->save())
             {

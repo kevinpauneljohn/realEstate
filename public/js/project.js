@@ -112,6 +112,7 @@ $(document).on('click','.edit-project-btn',function(){
         success: function(result){
             $('#edit_name').val(result.name);
             $('#edit_address').val(result.address);
+            $('#edit_commission_rate').val(result.commission_rate);
             $('#edit_remarks').summernote("code", result.remarks);
         }
     });

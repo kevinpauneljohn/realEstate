@@ -32,16 +32,18 @@
                         <th>Project Name</th>
                         <th>Address</th>
                         <th>Model Units</th>
+                        <th>Commission Rate</th>
                         <th>Action</th>
                     </tr>
                     </thead>
 
                     <tfoot>
                     <tr>
-                        <th width="20%">Project Name</th>
+                        <th>Project Name</th>
                         <th width="40%">Address</th>
-                        <th width="15%">Model Units</th>
-                        <th width="25%">Action</th>
+                        <th>Model Units</th>
+                        <th>Commission Rate</th>
+                        <th>Action</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -74,6 +76,10 @@
                             <div class="form-group remarks">
                                 <label for="remarks">Remarks</label>
                                 <textarea name="remarks" id="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                            </div>
+                            <div class="form-group commission_rate">
+                                <label for="commission_rate">Commission Rate</label>
+                                <input type="number" name="commission_rate" class="form-control" id="commission_rate" min="1">
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -116,6 +122,10 @@
                             <div class="form-group edit_remarks">
                                 <label for="edit_remarks">Remarks</label>
                                 <textarea name="edit_remarks" id="edit_remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                            </div>
+                            <div class="form-group edit_commission_rate">
+                                <label for="edit_commission_rate">Commission Rate</label>
+                                <input type="number" name="edit_commission_rate" class="form-control" id="edit_commission_rate" min="1">
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -205,6 +215,7 @@
                         { data: 'name', name: 'name'},
                         { data: 'address', name: 'address'},
                         { data: 'model_units', name: 'model_units'},
+                        { data: 'commission_rate', name: 'commission_rate'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
