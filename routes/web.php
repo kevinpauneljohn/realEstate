@@ -94,3 +94,6 @@ Route::get('/sales','SalesController@index')->name('sales.index')->middleware(['
 Route::post('/sales','SalesController@store')->name('sales.store')->middleware(['auth','permission:add sales']);
 Route::get('/sales-list','SalesController@sales_list')->name('sales.list')->middleware(['auth','permission:view sales']);
 
+/*commissions*/
+Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commission']);
+
