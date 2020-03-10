@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lead;
+use App\ModelUnit;
 use App\Project;
 use App\Sales;
 use Illuminate\Http\Request;
@@ -55,6 +56,8 @@ class SalesController extends Controller
             $sales->reservation_date = $request->reservation_date;
             $sales->user_id = auth()->user()->id;
             $sales->lead_id = $request->buyer;
+            $sales->project_id = $request->project;
+            $sales->model_unit_id = $request->model_unit;
             $sales->total_contract_price = $request->total_contract_price;
             $sales->discount = $request->discount;
             $sales->reservation_fee = $request->reservation_fee;
@@ -82,6 +85,27 @@ class SalesController extends Controller
     {
         $sales = Sales::where('user_id',auth()->user()->id)->get();
         return DataTables::of($sales)
+            ->addColumn('full_name',function($sale){
+                $lead = Lead::find($sale->lead_id);
+                $firstname = $lead->firstname;
+                $lastname = $lead->lastname;
+
+                return ucfirst($firstname).' '.ucfirst($lastname);
+            })
+            ->addColumn('project',function($sale){
+                $project = Project::find($sale->project_id);
+
+                return $project->name;
+            })
+            ->addColumn('model_unit',function($sale){
+                $modelUnit = ModelUnit::find($sale->model_unit_id);
+
+                return $modelUnit->name;
+            })
+            ->addColumn('status',function($sale){
+
+                return '';
+            })
             ->addColumn('action', function ($sale)
             {
                 $action = "";

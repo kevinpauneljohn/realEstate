@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Lead;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -58,6 +59,10 @@ class UserController extends Controller
             ->addColumn('action', function ($user)
             {
                 $action = "";
+                if(auth()->user()->can('view user'))
+                {
+                    $action .= '<a href="'.route('users.profile',['user' => $user->id]).'" class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i> View</a>';
+                }
                 if(auth()->user()->can('edit user'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-primary edit-user-btn" id="'.$user->id.'" data-toggle="modal" data-target="#edit-user-modal"><i class="fa fa-edit"></i> Edit</a>';
@@ -130,6 +135,20 @@ class UserController extends Controller
         }
 
         return $this;
+    }
+
+    /**
+     * March 09, 2020
+     * @author john kevin paunel
+     * view user profile
+     * @param string $id
+     * @return mixed
+     * */
+    public function profile($id)
+    {
+        return view('pages.users.profile')->with([
+            'user'  => User::findOrFail($id)
+        ]);
     }
 
     /**

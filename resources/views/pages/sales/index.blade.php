@@ -34,6 +34,7 @@
                         <th>Project</th>
                         <th>Model Unit</th>
                         <th>Total Contract Price</th>
+                        <th>Financing</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -46,6 +47,7 @@
                         <th>Project</th>
                         <th>Model Unit</th>
                         <th>Total Contract Price</th>
+                        <th>Financing</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -269,15 +271,17 @@
     </script>
     <script>
         $(function() {
-            $('#schedules-list').DataTable({
+            $('#sales-list').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('schedules.list') !!}',
+                ajax: '{!! route('sales.list') !!}',
                 columns: [
-                    { data: 'schedule', name: 'schedule'},
+                    { data: 'reservation_date', name: 'reservation_date'},
                     { data: 'full_name', name: 'full_name'},
-                    { data: 'details', name: 'details'},
-                    { data: 'category', name: 'category'},
+                    { data: 'project', name: 'project'},
+                    { data: 'model_unit', name: 'model_unit'},
+                    { data: 'total_contract_price', name: 'total_contract_price'},
+                    { data: 'financing', name: 'financing'},
                     { data: 'status', name: 'status'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
