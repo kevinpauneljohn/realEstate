@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'User Profile')
+@section('title', 'User Profile | Agents')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">User Profile</h1>
+            <h1 class="m-0 text-dark">User Profile | Agents</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{route('users.index')}}">Users</a> </li>
-                <li class="breadcrumb-item active">User Profile</li>
+                <li class="breadcrumb-item active">User Profile | Agents</li>
             </ol>
         </div><!-- /.col -->
     </div>
@@ -68,9 +68,9 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header p-2">
-                        <button type="button" class="btn @if(request()->segment(3) == 'profile')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-money-bill"></i> Sales</button>
+                        <a href="{{route('users.profile',['user' => $user->id])}}"><button type="button" class="btn @if(request()->segment(3) == 'profile')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-money-bill"></i> Sales</button></a>
                         <a href="{{route('users.agents',['user' => $user->id])}}"><button type="button" class="btn @if(request()->segment(3) == 'agents')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-calendar-alt"></i> Agents</button></a>
-                        <a href="{{route('users.agents',['user' => $user->id])}}"><button type="button" class="btn @if(request()->segment(3) == 'commissions')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-calendar-alt"></i> Commission</button></a>
+                        <a href="{{route('users.commissions',['user' => $user->id])}}"><button type="button" class="btn @if(request()->segment(3) == 'commissions')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-calendar-alt"></i> Commission</button></a>
                     </div><!-- /.card-header -->
                     <div class="card-body">
                         <div class="tab-content">

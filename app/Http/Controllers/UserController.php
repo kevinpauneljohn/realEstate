@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Lead;
+use App\ModelUnit;
+use App\Project;
 use App\Role;
+use App\Sales;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -32,6 +35,63 @@ class UserController extends Controller
     public function create()
     {
         //
+    }
+
+    /**
+     * March 11, 2020
+     * @author john kevin paunel
+     * fetch all user sales
+     * */
+    public function user_sales_list($id)
+    {
+        $sales = Sales::where('user_id',$id)->get();
+        return DataTables::of($sales)
+            ->editColumn('total_contract_price',function($sale){
+                return number_format($sale->total_contract_price);
+            })
+            ->editColumn('discount',function($sale){
+                return number_format($sale->discount);
+            })
+            ->addColumn('full_name',function($sale){
+                $lead = Lead::find($sale->lead_id);
+                $firstname = $lead->firstname;
+                $lastname = $lead->lastname;
+
+                return ucfirst($firstname).' '.ucfirst($lastname);
+            })
+            ->addColumn('project',function($sale){
+                $project = Project::find($sale->project_id);
+
+                return $project->name;
+            })
+            ->addColumn('model_unit',function($sale){
+                $modelUnit = ModelUnit::find($sale->model_unit_id);
+
+                return $modelUnit->name;
+            })
+            ->addColumn('status',function($sale){
+
+                return '';
+            })
+            ->addColumn('action', function ($sale)
+            {
+                $action = "";
+                if(auth()->user()->can('view lead'))
+                {
+                    $action .= '<a href="'.route("leads.show",["lead" => $sale->id]).'" class="btn btn-xs btn-success view-btn" id="'.$sale->id.'"><i class="fa fa-eye"></i> View</a>';
+                }
+                if(auth()->user()->can('edit lead'))
+                {
+                    $action .= '<a href="'.route("leads.edit",["lead" => $sale->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$sale->id.'"><i class="fa fa-edit"></i> Edit</a>';
+                }
+                if(auth()->user()->can('delete lead'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
+                }
+                return $action;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
@@ -154,7 +214,32 @@ class UserController extends Controller
             'user'  => User::findOrFail($id)
         ]);
     }
-
+    /**
+     * March 11, 2020
+     * @author john kevin paunel
+     * get all user agents
+     * @param string $id
+     * @return mixed
+     * */
+    public function agents($id)
+    {
+        return view('pages.users.agents')->with([
+            'user'  => User::findOrFail($id)
+        ]);
+    }
+    /**
+     * March 11, 2020
+     * @author john kevin paunel
+     * view user commission rate
+     * @param string $id
+     * @return mixed
+     * */
+    public function commissions($id)
+    {
+        return view('pages.users.commissions')->with([
+            'user'  => User::findOrFail($id)
+        ]);
+    }
     /**
      * Display the specified resource.
      *

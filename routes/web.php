@@ -48,6 +48,8 @@ Route::post('/users','UserController@store')->name('users.store')->middleware(['
 Route::get('/users-list','UserController@userList')->name('users.list')->middleware(['auth','permission:view user']);
 Route::get('/users/{user}','UserController@show')->name('users.show')->middleware(['auth','permission:view user']);
 Route::get('/users/{user}/profile','UserController@profile')->name('users.profile')->middleware(['auth','permission:view user']);
+Route::get('/users/{user}/agents','UserController@agents')->name('users.agents')->middleware(['auth','permission:view user']);
+Route::get('/users/{user}/commissions','UserController@commissions')->name('users.commissions')->middleware(['auth','permission:view user']);
 Route::put('/users/{user}','UserController@update')->name('users.update')->middleware(['auth','permission:edit user']);
 Route::delete('/users/{user}','UserController@destroy')->name('users.destroy')->middleware('auth','permission:delete user');
 
@@ -93,6 +95,7 @@ Route::post('/update-schedule-status','ScheduleController@updateStatus')->name('
 Route::get('/sales','SalesController@index')->name('sales.index')->middleware(['auth','permission:view sales']);
 Route::post('/sales','SalesController@store')->name('sales.store')->middleware(['auth','permission:add sales']);
 Route::get('/sales-list','SalesController@sales_list')->name('sales.list')->middleware(['auth','permission:view sales']);
+Route::get('/user-sales-list/{id}','UserController@user_sales_list')->name('users.sales.list')->middleware(['auth','permission:view sales']);
 
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commission']);
