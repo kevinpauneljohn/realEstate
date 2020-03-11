@@ -176,14 +176,14 @@
                                     <label for="edit_email">Email</label>
                                     <input type="email" name="edit_email" id="edit_email" class="form-control">
                                 </div>
-                            </div>
-                            <div class="form-group edit_role">
-                                <label>Assign Role</label>
-                                <select class="select2" name="edit_role[]" id="edit_role" multiple="multiple" data-placeholder="Select a role" style="width: 100%;">
-                                    @foreach($roles as $role)
-                                        <option value="{{$role->name}}">{{$role->name}}</option>
-                                    @endforeach
-                                </select>
+                                <div class="col-lg-6 edit_role">
+                                    <label>Assign Role</label>
+                                    <select class="select2" name="edit_role[]" id="edit_role" multiple="multiple" data-placeholder="Select a role" style="width: 100%;">
+                                        @foreach($roles as $role)
+                                            <option value="{{$role->name}}">{{$role->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
