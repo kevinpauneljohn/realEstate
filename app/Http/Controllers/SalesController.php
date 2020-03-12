@@ -68,6 +68,7 @@ class SalesController extends Controller
             $sales->terms = $request->terms;
             $sales->details = $request->terms;
             $sales->commission_rate = $this->setCommissionRate($request->project);
+            $sales->status = 'reserved';
 
             if($sales->save())
             {
