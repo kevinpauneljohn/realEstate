@@ -75,32 +75,21 @@
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="activity">
+                                <button type="button" class="btn btn-primary" style="margin:3px;" data-target="#add-commission-modal" data-toggle="modal">Add Commission</button>
 
-                                <table id="sales-list" class="table table-bordered table-striped" role="grid">
+                                <table id="commission-list" class="table table-bordered table-striped" role="grid">
                                     <thead>
                                     <tr role="row">
-                                        <th>Date Reserved</th>
-                                        <th>Full Name</th>
-                                        <th>Project</th>
-                                        <th>Model Unit</th>
-                                        <th>Total Contract Price</th>
-                                        <th>Discount</th>
-                                        <th>Financing</th>
-                                        <th>Status</th>
+                                        <th>Date Assigned</th>
+                                        <th>Commission Rate</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
 
                                     <tfoot>
                                     <tr>
-                                        <th>Date Reserved</th>
-                                        <th>Full Name</th>
-                                        <th>Project</th>
-                                        <th>Model Unit</th>
-                                        <th>Total Contract Price</th>
-                                        <th>Discount</th>
-                                        <th>Financing</th>
-                                        <th>Status</th>
+                                        <th>Date Assigned</th>
+                                        <th>Commission Rate</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>
@@ -116,6 +105,33 @@
         </div>
         <!-- /.row -->
     </div>
+
+    @can('add commission')
+        <!--edit role modal-->
+        <div class="modal fade" id="add-commission-modal">
+            <form role="form" id="add-commission-form">
+                @csrf
+                <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="form-group commission_rate">
+                                <label for="commission_rate">Commission Rate</label>
+                                <input type="number" name="commission_rate" class="form-control" id="commission_rate" step="any">
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add user modal-->
+    @endcan
 @stop
 
 @section('css')
@@ -146,7 +162,7 @@
         <script src="{{asset('/vendor/timepicker/bootstrap-timepicker.min.js')}}"></script>
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
-        <script src="{{asset('js/sales.js')}}"></script>
+        <script src="{{asset('js/commission.js')}}"></script>
         <script>
 
             $(function () {

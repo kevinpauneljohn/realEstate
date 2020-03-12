@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Commission;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CommissionController extends Controller
 {
@@ -37,7 +39,24 @@ class CommissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'commission_rate'   => 'required',
+        ],[
+            'commission_rate.required'  => 'Commission Rate is required'
+        ]);
+
+        if($validator->passes())
+        {
+            $commission = new Commission();
+            $commission->user_id = $request->user_id;
+            $commission->commission_rate = $request->commission_rate;
+
+            if($commission->save())
+            {
+                return response()->json(['success' => true]);
+            }
+        }
+        return response()->json($validator->errors());
     }
 
     /**
