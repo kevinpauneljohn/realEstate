@@ -59,10 +59,10 @@ $(document).ready(function () {
             '/commissions',
             'POST',
             data,
-            'New Permission Successfully Deleted!',
-            false,
-            '',
+            'Commission Successfully Deleted!',
             true,
+            '',
+            false,
         );
     });
 });

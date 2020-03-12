@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Commission;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
@@ -66,7 +67,7 @@ class SalesController extends Controller
             $sales->financing = $request->financing;
             $sales->terms = $request->terms;
             $sales->details = $request->terms;
-            $sales->commission_rate = $request->commission_rate;
+            $sales->commission_rate = $this->setCommissionRate($request->project);
 
             if($sales->save())
             {
@@ -75,6 +76,24 @@ class SalesController extends Controller
         }
         return response()->json($validator->errors());
     }
+
+    /**
+     * @author john kevin paunel
+     * set the agents commission rate
+     * @param int $project_id
+     * @return mixed
+     * */
+    public function setCommissionRate($project_id)
+    {
+        $commission_rate = Commission::where('user_id',auth()->user()->id)->pluck('commission_rate')->first();
+        if($commission_rate == 'override 1')
+        {
+            $commission = Project::where('id',$project_id)->first();
+            $rate = $commission->commission_rate - 1;
+            return $rate;
+        }
+    }
+
 
     /**
      * March 06, 2020

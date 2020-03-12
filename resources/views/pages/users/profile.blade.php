@@ -70,7 +70,7 @@
                     <div class="card-header p-2">
                         <button type="button" class="btn @if(request()->segment(3) == 'profile')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-money-bill"></i> Sales</button>
                         <a href="{{route('users.agents',['user' => $user->id])}}"><button type="button" class="btn @if(request()->segment(3) == 'agents')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-calendar-alt"></i> Agents</button></a>
-                        <a href="{{route('users.agents',['user' => $user->id])}}"><button type="button" class="btn @if(request()->segment(3) == 'commissions')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-calendar-alt"></i> Commission</button></a>
+                        <a href="{{route('users.commissions',['user' => $user->id])}}"><button type="button" class="btn @if(request()->segment(3) == 'commissions')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-calendar-alt"></i> Commission</button></a>
                     </div><!-- /.card-header -->
                     <div class="card-body">
                         <div class="tab-content">

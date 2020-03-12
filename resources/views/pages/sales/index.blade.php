@@ -36,6 +36,7 @@
                         <th>Total Contract Price</th>
                         <th>Discount</th>
                         <th>Financing</th>
+                        <th>Rate</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -50,6 +51,7 @@
                         <th>Total Contract Price</th>
                         <th>Discount</th>
                         <th>Financing</th>
+                        <th>Rate</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -285,6 +287,7 @@
                     { data: 'total_contract_price', name: 'total_contract_price'},
                     { data: 'discount', name: 'discount'},
                     { data: 'financing', name: 'financing'},
+                    { data: 'commission_rate', name: 'commission_rate'},
                     { data: 'status', name: 'status'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],

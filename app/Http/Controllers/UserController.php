@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Commission;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
@@ -233,7 +234,9 @@ class UserController extends Controller
     public function commissions($id)
     {
         return view('pages.users.commissions')->with([
-            'user'  => User::findOrFail($id)
+            'user'  => User::findOrFail($id),
+            'rate_limit' => Project::all()->max('commission_rate'),
+            'commission' => Commission::where('user_id','d5c691b0-6df3-47dc-826f-ff8dc2b3db3c')->pluck('commission_rate')->first()
         ]);
     }
     /**

@@ -74,6 +74,7 @@
                     </div><!-- /.card-header -->
                     <div class="card-body">
                         <div class="tab-content">
+                            {{$commission}}
                             <div class="active tab-pane" id="activity">
                                 <button type="button" class="btn btn-primary" style="margin:3px;" data-target="#add-commission-modal" data-toggle="modal">Add Commission</button>
 
@@ -117,7 +118,13 @@
                         <div class="modal-body">
                             <div class="form-group commission_rate">
                                 <label for="commission_rate">Commission Rate</label>
-                                <input type="number" name="commission_rate" class="form-control" id="commission_rate" step="any">
+                                <select class="form-control" name="commission_rate" id="commission_rate">
+                                    <option value=""> -- Select -- </option>
+                                    <option value="override 1"> Override 1 </option>
+                                        @for($ctr = 1; $ctr < $rate_limit; $ctr++)
+                                            <option value="{{$ctr}}">{{$ctr}}</option>
+                                        @endfor
+                                </select>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
