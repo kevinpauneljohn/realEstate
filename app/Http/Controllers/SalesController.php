@@ -128,22 +128,18 @@ class SalesController extends Controller
 
                 return $modelUnit->name;
             })
-            ->addColumn('status',function($sale){
-
-                return '';
-            })
             ->addColumn('action', function ($sale)
             {
                 $action = "";
-                if(auth()->user()->can('view lead'))
+                if(auth()->user()->can('view sales'))
                 {
                     $action .= '<a href="'.route("leads.show",["lead" => $sale->id]).'" class="btn btn-xs btn-success view-btn" id="'.$sale->id.'"><i class="fa fa-eye"></i> View</a>';
                 }
-                if(auth()->user()->can('edit lead'))
+                if(auth()->user()->can('edit sales'))
                 {
                     $action .= '<a href="'.route("leads.edit",["lead" => $sale->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$sale->id.'"><i class="fa fa-edit"></i> Edit</a>';
                 }
-                if(auth()->user()->can('delete lead'))
+                if(auth()->user()->can('delete sales'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
                 }
