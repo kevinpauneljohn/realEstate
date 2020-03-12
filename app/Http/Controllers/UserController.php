@@ -131,10 +131,6 @@ class UserController extends Controller
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-user-btn" id="'.$user->id.'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i> Delete</a>';
                 }
-                if(auth()->user()->can('add commission'))
-                {
-                    $action .= '<a href="'.route('commissions.index',['user' => $user->id]).'" class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i> Commission</a>';
-                }
                 return $action;
             })
             ->rawColumns(['fullname','roles','action'])
