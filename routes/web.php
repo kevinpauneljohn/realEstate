@@ -100,4 +100,5 @@ Route::get('/user-sales-list/{id}','UserController@user_sales_list')->name('user
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commission']);
 Route::post('/commissions','CommissionController@store')->name('commissions.store')->middleware(['auth','permission:add commission']);
+Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 

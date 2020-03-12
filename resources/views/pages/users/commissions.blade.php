@@ -198,19 +198,13 @@
         </script>
         <script>
             $(function() {
-                $('#sales-list').DataTable({
+                $('#commission-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('users.sales.list',['id' => $user->id]) !!}',
+                    ajax: '{!! route('commissions.list',['user' => $user->id]) !!}',
                     columns: [
-                        { data: 'reservation_date', name: 'reservation_date'},
-                        { data: 'full_name', name: 'full_name'},
-                        { data: 'project', name: 'project'},
-                        { data: 'model_unit', name: 'model_unit'},
-                        { data: 'total_contract_price', name: 'total_contract_price'},
-                        { data: 'discount', name: 'discount'},
-                        { data: 'financing', name: 'financing'},
-                        { data: 'status', name: 'status'},
+                        { data: 'created_at', name: 'created_at'},
+                        { data: 'commission_rate', name: 'commission_rate'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
