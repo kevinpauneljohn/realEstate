@@ -27,6 +27,7 @@ class CreateNetworkListeners
      */
     public function handle(CreateNetworkEvent $event)
     {
+        /*create user network*/
         $network = DB::table('networks')->insert([
             [
                 'user_id'   => $event->user,
