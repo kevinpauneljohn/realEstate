@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\Events\CreateNetworkEvent;
 
 class UserSeeder extends Seeder
 {
@@ -23,5 +24,7 @@ class UserSeeder extends Seeder
         $user->password = bcrypt("123");
         $user->assignRole('super admin');
         $user->save();
+
+        event(new CreateNetworkEvent($user->id));
     }
 }

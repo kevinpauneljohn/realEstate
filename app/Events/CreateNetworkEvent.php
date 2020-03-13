@@ -23,7 +23,7 @@ class CreateNetworkEvent
     public function __construct($user)
     {
         $this->user = $user;
-        $this->upline = auth()->user()->id;
+        $this->upline = (auth()->check()) ? auth()->user()->id : null;
     }
 
     /**
