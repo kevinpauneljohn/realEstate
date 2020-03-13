@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commission;
+use App\Events\CreateNetworkEvent;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
@@ -170,6 +171,8 @@ class UserController extends Controller
             $user->save();
 
             $this->setRole($user,$request);
+
+            event(new CreateNetworkEvent($user->id));
 
             return response()->json(['success' => true]);
         }
