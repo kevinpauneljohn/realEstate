@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Commission;
 use App\Lead;
 use App\ModelUnit;
+use App\Network;
 use App\Project;
 use App\Sales;
 use Illuminate\Http\Request;
@@ -78,6 +79,32 @@ class SalesController extends Controller
         return response()->json($validator->errors());
     }
 
+//    public function get_upline_rate($project_id)
+//    {
+//        $network = Network::where('user_id',auth()->user()->id)->first();
+//        $commission = Project::where('id',$project_id)->first();
+//
+//        /*this will check id the user upline ID is null meaning he is the super admin*/
+//        $upline_rate = $commission->commission_rate;
+//
+//        if($network->upline_id == null)
+//        {
+//            return $upline_rate;
+//        }
+//        else{
+//            /*this will get the upline commission rate*/
+//            $commission_rate = Commission::where('user_id',$network->upline_id)->pluck('commission_rate')->first();
+//            if($commission_rate == 'override 1')
+//            {
+//                /*this will deduct 1 from the */
+//                $rate = $upline_rate - 1;
+//                return $rate;
+//            }else{
+//                return $commission_rate;
+//            }
+//        }
+//    }
+
     /**
      * @author john kevin paunel
      * set the agents commission rate
@@ -86,13 +113,9 @@ class SalesController extends Controller
      * */
     public function setCommissionRate($project_id)
     {
-        $commission_rate = Commission::where('user_id',auth()->user()->id)->pluck('commission_rate')->first();
-        if($commission_rate == 'override 1')
-        {
-            $commission = Project::where('id',$project_id)->first();
-            $rate = $commission->commission_rate - 1;
-            return $rate;
-        }
+        $upline = Commission::where('user_id',auth()->user()->id)->first();
+        $upline_id = $upline->upline_id;
+        
     }
 
 
