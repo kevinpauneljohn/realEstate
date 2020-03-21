@@ -79,31 +79,12 @@ class SalesController extends Controller
         return response()->json($validator->errors());
     }
 
-//    public function get_upline_rate($project_id)
-//    {
-//        $network = Network::where('user_id',auth()->user()->id)->first();
-//        $commission = Project::where('id',$project_id)->first();
-//
-//        /*this will check id the user upline ID is null meaning he is the super admin*/
-//        $upline_rate = $commission->commission_rate;
-//
-//        if($network->upline_id == null)
-//        {
-//            return $upline_rate;
-//        }
-//        else{
-//            /*this will get the upline commission rate*/
-//            $commission_rate = Commission::where('user_id',$network->upline_id)->pluck('commission_rate')->first();
-//            if($commission_rate == 'override 1')
-//            {
-//                /*this will deduct 1 from the */
-//                $rate = $upline_rate - 1;
-//                return $rate;
-//            }else{
-//                return $commission_rate;
-//            }
-//        }
-//    }
+
+    public function get_upline_rate($project_id)
+    {
+        //we need to get all upline IDs
+    }
+
 
     /**
      * @author john kevin paunel

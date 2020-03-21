@@ -11,7 +11,6 @@ use App\Role;
 use App\Sales;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 

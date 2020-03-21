@@ -30,7 +30,7 @@
                         </div>
 
                         <h3 class="profile-username text-center">
-                            test
+                            {{ucfirst($user->firstname)}} {{ucfirst($user->lastname)}}
                         </h3>
 
                         <a href="" class="btn btn-info btn-block"><b>Edit</b></a>
@@ -48,14 +48,14 @@
                     <div class="card-body">
                         <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
 
-                        <p class="text-muted">asdf</p>
+                        <p class="text-muted">{{$user->address}}</p>
 
                         <hr>
 
-                        <strong><i class="fas fa-phone mr-1"></i> Landline</strong>
+                        <strong><i class="fas fa-phone mr-1"></i> Contact Number</strong>
 
                         <p class="text-muted">
-                            asdf
+                            {{$user->mobileNo}}
                         </p>
 
 
