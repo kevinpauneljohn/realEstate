@@ -102,7 +102,13 @@ class UserController extends Controller
      * */
     public function userList()
     {
-        $users = User::where('username','!=','kevinpauneljohn')->get();
+        if(auth()->user()->hasAnyRole(['super admin','admin']))
+        {
+            $users = User::where('username','!=','kevinpauneljohn')->get();
+        }else{
+
+        }
+
         return DataTables::of($users)
             ->addColumn('fullname', function ($user){
                 $fullname = ucfirst($user->firstname).' '.ucfirst($user->lastname);
