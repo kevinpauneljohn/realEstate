@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commission;
+use App\Downline;
 use App\Events\CreateNetworkEvent;
 use App\Lead;
 use App\ModelUnit;
@@ -175,7 +176,7 @@ class UserController extends Controller
             $user->password = bcrypt($request->password);
             $user->save();
 
-            $this->setRole($user,$request);
+            $this->setRole($user,$request)->setDownline($user);
 
             event(new CreateNetworkEvent($user->id));
 
@@ -202,6 +203,23 @@ class UserController extends Controller
                 $user->assignRole($role);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * March 21, 2020
+     * @author john kevin paunel
+     * set user to downlines table
+     * @param string $user
+     * @return mixed
+     * */
+    public function setDownline($user)
+    {
+        $downline = new Downline();
+        $downline->user_id = auth()->user()->id;
+        $downline->downline_id = $user->id;
+        $downline->save();
 
         return $this;
     }
