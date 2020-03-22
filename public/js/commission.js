@@ -59,7 +59,7 @@ $(document).ready(function () {
             '/commissions',
             'POST',
             data,
-            'Commission Successfully Deleted!',
+            'Commission Successfully Added!',
             true,
             '',
             false,
