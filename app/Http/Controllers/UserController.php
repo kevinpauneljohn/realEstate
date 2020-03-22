@@ -24,8 +24,26 @@ class UserController extends Controller
      */
     public function index()
     {
+        /*this will set the allowed role depending on the position the user has*/
+        if(auth()->user()->hasRole('super admin'))
+        {
+            $roles = Role::where('name','!=','super admin')->get();
+        }elseif (auth()->user()->hasRole('manager')){
+            $roles = Role::where([
+                ['name','!=','super admin'],
+                ['name','!=','admin'],
+                ['name','!=','manager'],
+            ])->get();
+        }elseif (auth()->user()->hasRole('agent')){
+            $roles = Role::where([
+                ['name','!=','super admin'],
+                ['name','!=','admin'],
+                ['name','!=','manager'],
+                ['name','!=','agent'],
+            ])->get();
+        }
         return view('pages.users.index')->with([
-            'roles' => Role::where('name','!=','super admin')->get()
+            'roles' => $roles,
         ]);
     }
 
@@ -107,7 +125,7 @@ class UserController extends Controller
         {
             $users = User::where('username','!=','kevinpauneljohn')->get();
         }else{
-
+            $users = User::where('upline_id',auth()->user()->id)->get();
         }
 
         return DataTables::of($users)
@@ -165,6 +183,7 @@ class UserController extends Controller
         {
             $user = new User();
 
+            $user->upline_id = auth()->user()->id;
             $user->firstname = $request->firstname;
             $user->middlename = $request->middlename;
             $user->lastname = $request->lastname;
