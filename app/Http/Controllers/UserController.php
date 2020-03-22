@@ -103,7 +103,7 @@ class UserController extends Controller
      * */
     public function userList()
     {
-        if(auth()->user()->hasAnyRole(['super admin','admin']))
+        if(auth()->user()->hasRole('super admin'))
         {
             $users = User::where('username','!=','kevinpauneljohn')->get();
         }else{
