@@ -24,6 +24,7 @@
                         <th>Email</th>
                         <th>Contact Number</th>
                         <th>Role</th>
+                        <th>Up line</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -35,6 +36,7 @@
                         <th>Email</th>
                         <th>Contact Number</th>
                         <th>Role</th>
+                        <th>Up line</th>
                         <th width="20%">Action</th>
                     </tr>
                     </tfoot>
@@ -252,6 +254,7 @@
                         { data: 'email', name: 'email'},
                         { data: 'mobileNo', name: 'mobileNo'},
                         { data: 'roles', name: 'roles'},
+                        { data: 'upline', name: 'upline'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

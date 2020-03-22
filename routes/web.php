@@ -98,8 +98,8 @@ Route::get('/sales-list','SalesController@sales_list')->name('sales.list')->midd
 Route::get('/user-sales-list/{id}','UserController@user_sales_list')->name('users.sales.list')->middleware(['auth','permission:view sales']);
 
 /*commissions*/
-Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commission']);
-Route::post('/commissions','CommissionController@store')->name('commissions.store')->middleware(['auth','permission:add commission']);
+Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commissions']);
+Route::post('/commissions','CommissionController@store')->name('commissions.store')->middleware(['auth','permission:add commissions']);
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){

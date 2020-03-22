@@ -133,6 +133,10 @@ class UserController extends Controller
                 $fullname = ucfirst($user->firstname).' '.ucfirst($user->lastname);
                 return $fullname;
             })
+            ->addColumn('upline', function ($user){
+                $upline = User::find($user->upline_id);
+                return ucfirst($upline->firstname).' '.ucfirst($upline->lastname);
+            })
             ->addColumn('roles', function ($user){
 
                 $roles = "";
