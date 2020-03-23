@@ -127,8 +127,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1093">
-                  <caret line="115" column="106" selection-start-line="115" selection-start-column="106" selection-end-line="115" selection-end-column="106" />
+                <state relative-caret-position="294">
+                  <caret line="100" column="55" selection-start-line="100" selection-start-column="55" selection-end-line="100" selection-end-column="55" />
                   <folding>
                     <element signature="e#40#59#0#PHP" expanded="true" />
                   </folding>
@@ -168,7 +168,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>logout</find>
       <find>role</find>
       <find>select2</find>
       <find>multipl</find>
@@ -198,6 +197,7 @@
       <find>commission_list</find>
       <find>getUpLineIds</find>
       <find>get_upline_rate</find>
+      <find>this-&gt;rate</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -492,21 +492,7 @@
       <workItem from="1584717200777" duration="1218000" />
       <workItem from="1584767599654" duration="5691000" />
       <workItem from="1584891405988" duration="9807000" />
-      <workItem from="1584944525280" duration="12984000" />
-    </task>
-    <task id="LOCAL-00086" summary="spatie activity log installation">
-      <created>1583323915885</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1583323915886</updated>
-    </task>
-    <task id="LOCAL-00087" summary="spatie activity log installation">
-      <created>1583324333725</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1583324333725</updated>
+      <workItem from="1584944525280" duration="13381000" />
     </task>
     <task id="LOCAL-00088" summary="spatie activity log installation">
       <created>1583407778127</created>
@@ -837,11 +823,25 @@
       <option name="project" value="LOCAL" />
       <updated>1584971586670</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="solved the commission rate algorithm">
+      <created>1584993571693</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1584993571693</updated>
+    </task>
+    <task id="LOCAL-00136" summary="solved the commission rate algorithm">
+      <created>1584993905232</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1584993905232</updated>
+    </task>
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="271728000" />
+    <option name="totallyTimeSpent" value="272125000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -876,7 +876,8 @@
     <MESSAGE value="spatie installation" />
     <MESSAGE value="spatie activity log installation" />
     <MESSAGE value="Sales module" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sales module" />
+    <MESSAGE value="solved the commission rate algorithm" />
+    <option name="LAST_COMMIT_MESSAGE" value="solved the commission rate algorithm" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadController.php">
@@ -1221,8 +1222,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1093">
-          <caret line="115" column="106" selection-start-line="115" selection-start-column="106" selection-end-line="115" selection-end-column="106" />
+        <state relative-caret-position="294">
+          <caret line="100" column="55" selection-start-line="100" selection-start-column="55" selection-end-line="100" selection-end-column="55" />
           <folding>
             <element signature="e#40#59#0#PHP" expanded="true" />
           </folding>

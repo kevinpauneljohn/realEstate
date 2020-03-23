@@ -98,6 +98,7 @@ class SalesController extends Controller
      * @author john kevin paunel
      * set the agents commission rate
      * algorithm for getting the commission rate
+     * returns the user's current sales commission rate
      * @param int $project_id
      * @return mixed
      * */
