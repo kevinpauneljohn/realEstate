@@ -145,15 +145,6 @@ class SalesController extends Controller
 
     }
 
-    public function rate($user_rate, $rate)
-    {
-        if($user_rate == 'override 1')
-        {
-            $rate = $rate - 1;
-        }
-        return $this->rate;
-    }
-
 
 
     /**
