@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Downline::class);
     }
+
+    public function commissions()
+    {
+        return $this->hasMany(Commission::class);
+    }
 }
