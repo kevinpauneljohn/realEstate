@@ -80,34 +80,13 @@ class SalesController extends Controller
         return response()->json($validator->errors());
     }
 
-
-    public function get_upline_rate($project_id)
-    {
-        //we need to get all upline IDs
-    }
-
-
     /**
+     * March 24, 2020
      * @author john kevin paunel
-     * set the agents commission rate
-     * @param int $project_id
-     * @return mixed
+     * get the upline IDs
+     * @param string $user_id
+     * @return string
      * */
-    public function setCommissionRate($project_id)
-    {
-        /*get the user's commission rate*/
-        $commission = Commission::where('user_id',auth()->user()->id)->first();
-        $rate = $commission->commission_rate; //this sets the commission rate of users
-
-        /*get the up line IDs*/
-        $user = auth()->user()->id;
-        if($this->getUpLineIds($user) != null)
-        {
-
-        }
-        
-    }
-
     public function getUpLineIds($user_id)
     {
         $user_id = $user_id;
@@ -115,7 +94,14 @@ class SalesController extends Controller
         return $user->upline_id;
     }
 
-    public function test()
+    /**
+     * @author john kevin paunel
+     * set the agents commission rate
+     * algorithm for getting the commission rate
+     * @param int $project_id
+     * @return mixed
+     * */
+    public function setCommissionRate($project_id)
     {
         $user = auth()->user()->id;/*set the id of the current user*/
         $upLines = array(); /*instantiate the up line ids */
@@ -123,21 +109,49 @@ class SalesController extends Controller
 
         #this will until it gets all the user's upline IDs
 
-        $upLines[$user] = 0;
+        $upLines[$user] = 0;/*initialize the up line value to 0*/
         while($this->getUpLineIds($user) != null)
         {
             $user = $this->getUpLineIds($user);/*set the new user id*/
-            $upLines[$user] = $ctr;
+            $upLines[$user] = $ctr;/*set the user key value use for arranging the user by position or rank*/
             $ctr++;
         }
 
-        /*this will arrange the Ids in descending order*/
-        arsort($upLines);
+
+        $project_rate = Project::find($project_id); /*get the project rate*/
+        $rate = $project_rate->commission_rate; /*instantiate the project rate*/
+
+        arsort($upLines);/*this will arrange the Ids in descending order*/
         foreach ($upLines as $key => $value)
         {
-            echo $key." value = ".$value."<br/>";
-        }
+            $user = User::find($key);
 
+            if(!$user->hasRole('super admin'))
+            {
+                $user_rate =  $user->commissions()->first()->commission_rate;/*get the user commission rate*/
+
+                if($user_rate === 'override 1')
+                {
+                    $rate = $rate - 1;
+                    //echo $user->firstname." - ".$rate."<br/>";
+                }else{
+                    $rate = $user_rate;
+                    //echo $user->firstname." - ".$rate."<br/>";
+                }
+
+            }
+        }
+        return $rate;
+
+    }
+
+    public function rate($user_rate, $rate)
+    {
+        if($user_rate == 'override 1')
+        {
+            $rate = $rate - 1;
+        }
+        return $this->rate;
     }
 
 
