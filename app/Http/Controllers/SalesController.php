@@ -8,6 +8,7 @@ use App\ModelUnit;
 use App\Network;
 use App\Project;
 use App\Sales;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -94,10 +95,51 @@ class SalesController extends Controller
      * */
     public function setCommissionRate($project_id)
     {
-        $upline = Commission::where('user_id',auth()->user()->id)->first();
-        $upline_id = $upline->upline_id;
+        /*get the user's commission rate*/
+        $commission = Commission::where('user_id',auth()->user()->id)->first();
+        $rate = $commission->commission_rate; //this sets the commission rate of users
+
+        /*get the up line IDs*/
+        $user = auth()->user()->id;
+        if($this->getUpLineIds($user) != null)
+        {
+
+        }
         
     }
+
+    public function getUpLineIds($user_id)
+    {
+        $user_id = $user_id;
+        $user = User::find($user_id);
+        return $user->upline_id;
+    }
+
+    public function test()
+    {
+        $user = auth()->user()->id;/*set the id of the current user*/
+        $upLines = array(); /*instantiate the up line ids */
+        $ctr = 1; /*array counter*/
+
+        #this will until it gets all the user's upline IDs
+
+        $upLines[$user] = 0;
+        while($this->getUpLineIds($user) != null)
+        {
+            $user = $this->getUpLineIds($user);/*set the new user id*/
+            $upLines[$user] = $ctr;
+            $ctr++;
+        }
+
+        /*this will arrange the Ids in descending order*/
+        arsort($upLines);
+        foreach ($upLines as $key => $value)
+        {
+            echo $key." value = ".$value."<br/>";
+        }
+
+    }
+
 
 
     /**

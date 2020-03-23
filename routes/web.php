@@ -102,12 +102,5 @@ Route::get('/commissions/{user}','CommissionController@index')->name('commission
 Route::post('/commissions','CommissionController@store')->name('commissions.store')->middleware(['auth','permission:add commissions']);
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 
-Route::get('/test',function(){
-    if(auth()->user()->hasRole('admin'))
-    {
-        return 1;
-    }else{
-        return 0;
-    }
-});
+Route::get('/test','SalesController@test');
 
