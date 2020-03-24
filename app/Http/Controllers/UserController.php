@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Commission;
 use App\Downline;
 use App\Events\CreateNetworkEvent;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
 use App\Role;
+use App\Rules\checkIfPasswordMatch;
 use App\Sales;
 use App\User;
 use Illuminate\Http\Request;
@@ -377,5 +377,31 @@ class UserController extends Controller
     public function changePassword()
     {
         return view('pages.users.password');
+    }
+
+    /**
+     * March 25, 2020
+     * @author john kevin paunel
+     * Update the user password
+     * @param Request $request
+     * @return mixed
+     * */
+    public function changePasswordValidate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'current_password'  => ['required',new checkIfPasswordMatch()],
+            'password'  => ['required','confirmed']
+        ]);
+
+        if($validator->passes())
+        {
+            $user = User::find($request->user_id);
+            $user->password = bcrypt($request->password);
+            if($user->save())
+            {
+                return response()->json(['success' => true]);
+            }
+        }
+        return response()->json($validator->errors());
     }
 }

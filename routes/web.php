@@ -102,7 +102,18 @@ Route::get('/commissions/{user}','CommissionController@index')->name('commission
 Route::post('/commissions','CommissionController@store')->name('commissions.store')->middleware(['auth','permission:add commissions']);
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 
-Route::get('/test','SalesController@test');
+Route::get('/test',function(){
+    $password = auth()->user()->password."<br/>";
+    $password .= bcrypt(123);
+
+    if(password_verify(1234,auth()->user()->password))
+    {
+        return 'true';
+    }else{
+        return 'false';
+    }
+
+});
 
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);

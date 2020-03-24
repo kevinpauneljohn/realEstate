@@ -262,7 +262,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Change Password',
-                    'route'  => 'leads.index',
+                    'route'  => 'users.change.password',
                     'icon_color'  => 'blue',
                 ],
             ],
