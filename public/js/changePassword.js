@@ -53,20 +53,20 @@ $(document).ready(function(){
 
 
     /*delete user*/
-    $('#delete-lead-form').submit(function(form){
+    $('#change-password').submit(function(form){
         form.preventDefault();
 
-        let id = $('#deleteLeadId').val();
-        let data = $('#delete-lead-form').serialize();
+        let data = $('#change-password').serialize();
 
         submitform(
-            '/leads/'+id,
-            'DELETE',
+            '/change-password',
+            'PUT',
             data,
-            'New Permission Successfully Deleted!',
-            true,
-            '',
+            'Password Successfully Updated!',
             false,
+            '',
+            true,
         );
+        clear_errors('current_password','password');
     });
 });

@@ -12,6 +12,7 @@ use App\Rules\checkIfPasswordMatch;
 use App\Sales;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -395,13 +396,16 @@ class UserController extends Controller
 
         if($validator->passes())
         {
-            $user = User::find($request->user_id);
+            $user = User::find(auth()->user()->id);
             $user->password = bcrypt($request->password);
             if($user->save())
             {
                 return response()->json(['success' => true]);
             }
+//            DB::table('users')->where('id',auth()->user()->id)->update(['password' => bcrypt($request->current_password)]);
+//            return response()->json(['success' => true]);
         }
         return response()->json($validator->errors());
+        //return $request->all();
     }
 }

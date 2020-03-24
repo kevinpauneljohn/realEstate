@@ -22,15 +22,14 @@
             <div class="col-lg-6">
                 <div class="card card-default">
                     <div class="card-body">
-                        <form>
+                        <form id="change-password">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-                            <div class="form-group">
+                            <div class="form-group current_password">
                                 <label for="current_password">Current Password</label><span class="required">*</span>
                                 <input type="password" name="current_password" class="form-control" id="current_password">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group password">
                                 <label for="password">New Password</label><span class="required">*</span>
                                 <input type="password" name="password" class="form-control" id="password">
                             </div>
