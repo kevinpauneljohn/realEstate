@@ -257,7 +257,7 @@ return [
             'route'   => 'schedules.index',
         ],
         [
-            'text'    => 'Profile',
+            'text'    => 'My Profile',
             'icon'    => 'fas fa-id-card',
             'submenu' => [
                 [
