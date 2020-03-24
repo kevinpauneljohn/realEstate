@@ -42,7 +42,7 @@ class ModelUnitController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'project'   => 'required',
-            'name'      => 'required',
+            'name'      => 'required|unique:model_units,name',
         ]);
 
         if($validator->passes())

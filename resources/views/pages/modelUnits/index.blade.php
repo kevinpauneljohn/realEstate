@@ -30,7 +30,7 @@
                     <thead>
                     <tr role="row">
                         <th>Project</th>
-                        <th>Name</th>
+                        <th>Model Unit</th>
                         <th>House Type</th>
                         <th>Floor Level</th>
                         <th>Lot Area</th>
@@ -43,7 +43,7 @@
                     <tfoot>
                     <tr>
                         <th>Project</th>
-                        <th>Name</th>
+                        <th>Model Unit</th>
                         <th>House Type</th>
                         <th>Floor Level</th>
                         <th>Lot Area</th>
@@ -83,7 +83,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group name">
-                                        <label for="name">Name</label><span class="required">*</span>
+                                        <label for="name">Model Unit</label><span class="required">*</span>
                                         <input type="text" name="name" id="name" class="form-control">
                                     </div>
                                     <div class="form-group house_type">
