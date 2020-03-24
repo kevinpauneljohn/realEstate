@@ -63,9 +63,9 @@ $(document).ready(function(){
             'PUT',
             data,
             'Password Successfully Updated!',
-            false,
-            '',
             true,
+            '',
+            false,
         );
         clear_errors('current_password','password');
     });
