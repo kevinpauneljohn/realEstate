@@ -104,3 +104,6 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 
 Route::get('/test','SalesController@test');
 
+/*change password*/
+Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
+

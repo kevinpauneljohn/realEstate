@@ -368,4 +368,14 @@ class UserController extends Controller
         $user->delete();
         return response()->json(['success' => true]);
     }
+
+    /**
+     * March 25, 2020
+     * @author john kevin paunel
+     * Change current user password
+     * */
+    public function changePassword()
+    {
+        return view('pages.users.password');
+    }
 }

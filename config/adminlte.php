@@ -256,6 +256,17 @@ return [
             'can'     => 'view schedule',
             'route'   => 'schedules.index',
         ],
+        [
+            'text'    => 'Profile',
+            'icon'    => 'fas fa-id-card',
+            'submenu' => [
+                [
+                    'text' => 'Change Password',
+                    'route'  => 'leads.index',
+                    'icon_color'  => 'blue',
+                ],
+            ],
+        ],
     ],
 
     /*
