@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/changePassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/changePassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,14 +18,14 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.11223022">
+    <splitter split-orientation="horizontal" split-proportion="0.37095615">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/config/adminlte.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="522">
-                  <caret line="264" column="54" selection-start-line="264" selection-start-column="54" selection-end-line="264" selection-end-column="54" />
+                <state relative-caret-position="216">
+                  <caret line="246" column="6" selection-start-line="246" selection-start-column="6" selection-end-line="246" selection-end-column="6" />
                 </state>
               </provider>
             </entry>
@@ -48,7 +48,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/users/password.blade.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="97">
@@ -61,7 +61,7 @@
             <entry file="file://$PROJECT_DIR$/public/js/leadActivity.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="153">
-                  <caret line="78" column="18" lean-forward="true" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
+                  <caret line="78" column="18" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
                 </state>
               </provider>
             </entry>
@@ -79,7 +79,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/js/changePassword.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="471">
@@ -97,11 +97,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="369">
-                  <caret line="397" column="9" lean-forward="true" selection-start-line="397" selection-start-column="9" selection-end-line="397" selection-end-column="9" />
+                <state relative-caret-position="505">
+                  <caret line="405" column="54" selection-start-line="405" selection-start-column="54" selection-end-line="405" selection-end-column="54" />
                   <folding>
                     <element signature="e#41#58#0#PHP" expanded="true" />
                   </folding>
@@ -230,12 +230,12 @@
         <option value="$PROJECT_DIR$/resources/views/pages/users/commissions.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/users/agents.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" />
-        <option value="$PROJECT_DIR$/config/adminlte.php" />
         <option value="$PROJECT_DIR$/app/Rules/checkIfPasswordMatch.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/users/password.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/public/js/changePassword.js" />
+        <option value="$PROJECT_DIR$/config/adminlte.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
       </list>
     </option>
   </component>
@@ -480,21 +480,7 @@
       <workItem from="1584767599654" duration="5691000" />
       <workItem from="1584891405988" duration="9807000" />
       <workItem from="1584944525280" duration="14018000" />
-      <workItem from="1585043979027" duration="6778000" />
-    </task>
-    <task id="LOCAL-00094" summary="spatie activity log installation">
-      <created>1583502096170</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1583502096170</updated>
-    </task>
-    <task id="LOCAL-00095" summary="spatie activity log installation">
-      <created>1583502903568</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1583502903568</updated>
+      <workItem from="1585043979027" duration="7346000" />
     </task>
     <task id="LOCAL-00096" summary="spatie activity log installation">
       <created>1583504959169</created>
@@ -825,11 +811,25 @@
       <option name="project" value="LOCAL" />
       <updated>1585074939435</updated>
     </task>
-    <option name="localTasksCounter" value="143" />
+    <task id="LOCAL-00143" summary="change password">
+      <created>1585075006396</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1585075006396</updated>
+    </task>
+    <task id="LOCAL-00144" summary="change password">
+      <created>1585075052439</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1585075052439</updated>
+    </task>
+    <option name="localTasksCounter" value="145" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="279540000" />
+    <option name="totallyTimeSpent" value="280108000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1140,13 +1140,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="264" column="54" selection-start-line="264" selection-start-column="54" selection-end-line="264" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CustomAuth/LoginController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-102">
@@ -1185,7 +1178,7 @@
     <entry file="file://$PROJECT_DIR$/public/js/leadActivity.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
-          <caret line="78" column="18" lean-forward="true" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
+          <caret line="78" column="18" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -1196,20 +1189,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="397" column="9" lean-forward="true" selection-start-line="397" selection-start-column="9" selection-end-line="397" selection-end-column="9" />
-          <folding>
-            <element signature="e#41#58#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/changePassword.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="471">
           <caret line="67" column="17" selection-start-line="67" selection-start-column="17" selection-end-line="67" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="246" column="6" selection-start-line="246" selection-start-column="6" selection-end-line="246" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="505">
+          <caret line="405" column="54" selection-start-line="405" selection-start-column="54" selection-end-line="405" selection-end-column="54" />
+          <folding>
+            <element signature="e#41#58#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

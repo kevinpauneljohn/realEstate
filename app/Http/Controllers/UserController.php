@@ -402,10 +402,7 @@ class UserController extends Controller
             {
                 return response()->json(['success' => true]);
             }
-//            DB::table('users')->where('id',auth()->user()->id)->update(['password' => bcrypt($request->current_password)]);
-//            return response()->json(['success' => true]);
         }
         return response()->json($validator->errors());
-        //return $request->all();
     }
 }
