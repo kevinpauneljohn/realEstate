@@ -61,4 +61,5 @@
 @stop
 
 @section('js')
+    <script src="{{asset('js/changePassword.js')}}"></script>
 @stop
