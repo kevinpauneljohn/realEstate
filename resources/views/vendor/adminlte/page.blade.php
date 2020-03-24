@@ -89,6 +89,7 @@
                             <span class="sr-only">{{ __('adminlte::adminlte.toggle_navigation') }}</span>
                         </a>
                     </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Welcome <strong><i>{{auth()->user()->username}}</i></strong></a></li>
                     @each('adminlte::partials.menu-item-top-nav', $adminlte->menu(), 'item')
                     @yield('content_top_nav_left')
                 </ul>

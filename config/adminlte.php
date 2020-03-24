@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -174,7 +173,7 @@ return [
 
     'menu' => [
 //        [
-//            'text' => 'search',
+//            'text' => 'Welcome ',
 //            'search' => false,
 //            'topnav' => true,
 //        ],
