@@ -46,6 +46,11 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                        <strong><i class="fas fa-plus mr-1"></i> Added By</strong>
+
+                        <p class="text-muted">{{ucfirst($upline->firstname)}} {{ucfirst($upline->lastname)}}</p>
+
+                        <hr>
                         <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
 
                         <p class="text-muted">{{$user->address}}</p>

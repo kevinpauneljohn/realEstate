@@ -256,8 +256,10 @@ class UserController extends Controller
      * */
     public function profile($id)
     {
+        $user = User::findOrFail($id);
         return view('pages.users.profile')->with([
-            'user'  => User::findOrFail($id)
+            'user'  => $user,
+            'upline' => User::findOrFail($user->upline_id)
         ]);
     }
     /**
@@ -269,8 +271,10 @@ class UserController extends Controller
      * */
     public function agents($id)
     {
+        $user = User::findOrFail($id);
         return view('pages.users.agents')->with([
-            'user'  => User::findOrFail($id)
+            'user'  => $user,
+            'upline' => User::findOrFail($user->upline_id)
         ]);
     }
     /**
@@ -282,10 +286,11 @@ class UserController extends Controller
      * */
     public function commissions($id)
     {
+        $user = User::findOrFail($id);
         return view('pages.users.commissions')->with([
-            'user'  => User::findOrFail($id),
+            'user'  => $user,
             'rate_limit' => Project::all()->max('commission_rate'),
-            'commission' => Commission::where('user_id','d5c691b0-6df3-47dc-826f-ff8dc2b3db3c')->pluck('commission_rate')->first()
+            'upline' => User::findOrFail($user->upline_id)
         ]);
     }
     /**
