@@ -2,6 +2,7 @@
 
 @section('adminlte_css_pre')
     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{asset('/css/style.css')}}">
 @stop
 
 @section('adminlte_css')
@@ -41,7 +42,7 @@
                 </div>
                 @endif
                 <p class="login-box-msg">{{ __('adminlte::adminlte.login_message') }}</p>
-                <form action="{{ route('authenticate') }}" method="post">
+                <form action="{{ route('authenticate') }}" method="post" class="form-submit">
                     {{ csrf_field() }}
                     <div class="input-group mb-3">
                         <input type="text" name="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" value="{{ old('username') }}" placeholder="Username" autofocus>
@@ -70,9 +71,9 @@
                         @endif
                     </div>
                     <div class="row">
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">
-                                {{ __('adminlte::adminlte.sign_in') }}
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat submit-form-btn">
+                                <i class="spinner fa fa-spinner fa-spin"></i> {{ __('adminlte::adminlte.sign_in') }}
                             </button>
                         </div>
                     </div>
@@ -84,6 +85,7 @@
 
 @section('adminlte_js')
     <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    <script src="{{asset('js/formSubmit.js')}}"></script>
     @stack('js')
     @yield('js')
 @stop

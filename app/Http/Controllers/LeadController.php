@@ -115,6 +115,8 @@ class LeadController extends Controller
             'date_inquired' => ['date','required'],
             'firstname'     => ['required'],
             'lastname'     => ['required'],
+            'point_of_contact'     => ['required'],
+            'project'     => ['required'],
         ]);
 
         return $this;

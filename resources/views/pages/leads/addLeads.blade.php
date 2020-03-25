@@ -27,7 +27,7 @@
                         Successfully Submitted!
                     </div>
                     @endif
-                <form method="POST" action="{{route('leads.store')}}">
+                <form method="POST" action="{{route('leads.store')}}" class="form-submit">
                     @csrf
                     <div class="row">
                         <div class="col-lg-6">
@@ -146,15 +146,25 @@
                                     <option value="Saturation" @if(old('point_of_contact') == "Saturation") selected="selected" @endif>Saturation</option>
                                     <option value="Referral" @if(old('point_of_contact') == "Referral") selected="selected" @endif>Referral</option>
                                 </select>
+                                @error('point_of_contact')
+                                <span class="invalid-feedback" role="alert">
+                                       <strong>{{ $message }}</strong>
+                                   </span>
+                                @enderror
                             </div>
 
                             <div class="form-group project">
-                                <label for="project">Project Interested</label>
+                                <label for="project">Project Interested</label><span class="required">*</span>
                                 <select class="select2" name="project[]" id="project" multiple="multiple" data-placeholder="Select a project" style="width: 100%;">
                                     @foreach($projects as $project)
                                         <option value="{{$project->name}}">{{$project->name}}</option>
                                     @endforeach
                                 </select>
+                                @error('project')
+                                <span class="invalid-feedback" role="alert">
+                                       <strong>{{ $message }}</strong>
+                                   </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="remarks">Remarks</label>
@@ -162,7 +172,9 @@
                             </div>
 
                             <div>
-                                <button type="submit" class="btn btn-primary" style="width: 100%">Save</button>
+                                <button type="submit" class="btn btn-primary submit-form-btn" style="width: 100%">
+                                    <i class="spinner fa fa-spinner fa-spin"></i> Save
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -195,6 +207,7 @@
         <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
         <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
         <script src="{{asset('js/user.js')}}"></script>
+        <script src="{{asset('js/formSubmit.js')}}"></script>
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
         <script>
