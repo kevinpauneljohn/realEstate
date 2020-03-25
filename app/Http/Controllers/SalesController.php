@@ -49,6 +49,9 @@ class SalesController extends Controller
         $validator = Validator::make($request->all(), [
             'reservation_date'  => 'required',
             'buyer'  => 'required',
+            'project'  => 'required',
+            'model_unit'  => 'required',
+            'total_contract_price'  => 'required',
         ],[
             'reservation_date.required' => 'Reservation Date is required'
         ]);

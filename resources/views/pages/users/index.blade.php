@@ -242,7 +242,6 @@
     @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/user.js')}}"></script>
-        <script src="{{asset('js/formSubmit.js')}}"></script>
         <script>
             $(function() {
                 $('#users-list').DataTable({
