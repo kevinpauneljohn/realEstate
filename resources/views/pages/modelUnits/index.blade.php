@@ -60,7 +60,7 @@
     @can('add model unit')
         <!--add new sales modal-->
         <div class="modal fade" id="add-new-unit-modal">
-            <form role="form" id="add-unit-form">
+            <form role="form" id="add-unit-form" class="form-submit">
                 @csrf
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -122,7 +122,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -136,7 +136,7 @@
     @can('edit project')
         <!--edit role modal-->
         <div class="modal fade" id="edit-project-modal">
-            <form role="form" id="edit-project-form">
+            <form role="form" id="edit-project-form" class="form-submit">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="updateProjectId" id="updateProjectId">
@@ -163,7 +163,7 @@
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                             </div>
                         </div>
                     </div>
@@ -178,7 +178,7 @@
     @can('delete project')
         <!--delete user-->
         <div class="modal fade" id="delete-project-modal">
-            <form role="form" id="delete-project-form">
+            <form role="form" id="delete-project-form" class="form-submit">
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="deleteProjectId" id="deleteProjectId">
@@ -189,7 +189,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light">Delete</button>
+                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->

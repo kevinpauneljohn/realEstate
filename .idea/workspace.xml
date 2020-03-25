@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/permission.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/permissions/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/permissions/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/model_unit.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/model_unit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/modelUnits/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/modelUnits/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +25,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/js/user.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
+                <state relative-caret-position="85">
                   <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="57" selection-end-column="1" />
                   <folding>
                     <element signature="n#style#0;n#strong#0;n#!!top" expanded="true" />
@@ -44,22 +44,19 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/resources/views/pages/permissions/index.blade.php">
+            <entry file="file://$PROJECT_DIR$/resources/views/pages/modelUnits/index.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="97" column="70" selection-start-line="97" selection-start-column="70" selection-end-line="97" selection-end-column="70" />
+                <state relative-caret-position="1139">
+                  <caret line="124" column="88" selection-start-line="124" selection-start-column="88" selection-end-line="124" selection-end-column="88" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/js/permission.js">
+            <entry file="file://$PROJECT_DIR$/public/js/model_unit.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="624">
                   <caret line="57" column="1" selection-start-line="57" selection-start-column="1" selection-end-line="57" selection-end-column="1" />
-                  <folding>
-                    <element signature="n#style#0;n#strong#0;n#!!top" expanded="true" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -148,11 +145,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/ModelUnit.php" />
-        <option value="$PROJECT_DIR$/public/js/model_unit.js" />
         <option value="$PROJECT_DIR$/database/migrations/2020_03_08_170055_create_commissions_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_03_10_135934_add_commission_rate_column_to_projects.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/projects/index.blade.php" />
-        <option value="$PROJECT_DIR$/public/js/project.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ProjectController.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/commissions/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/projects/profile.blade.php" />
@@ -181,7 +175,6 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/config/adminlte.php" />
         <option value="$PROJECT_DIR$/resources/views/vendor/adminlte/page.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/modelUnits/index.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ModelUnitController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/leads/addLeads.blade.php" />
@@ -198,6 +191,10 @@
         <option value="$PROJECT_DIR$/public/js/role.js" />
         <option value="$PROJECT_DIR$/public/js/permission.js" />
         <option value="$PROJECT_DIR$/resources/views/pages/permissions/index.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/project.js" />
+        <option value="$PROJECT_DIR$/resources/views/pages/projects/index.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/model_unit.js" />
+        <option value="$PROJECT_DIR$/resources/views/pages/modelUnits/index.blade.php" />
       </list>
     </option>
   </component>
@@ -382,23 +379,7 @@
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="permissions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="sales" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="users" type="462c0819:PsiDirectoryNode" />
+              <item name="modelUnits" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -485,21 +466,7 @@
       <workItem from="1584891405988" duration="9807000" />
       <workItem from="1584944525280" duration="14018000" />
       <workItem from="1585043979027" duration="10490000" />
-      <workItem from="1585158606010" duration="5279000" />
-    </task>
-    <task id="LOCAL-00103" summary="Sales module">
-      <created>1583604755318</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1583604755318</updated>
-    </task>
-    <task id="LOCAL-00104" summary="Sales module">
-      <created>1583607301171</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1583607301171</updated>
+      <workItem from="1585158606010" duration="5656000" />
     </task>
     <task id="LOCAL-00105" summary="Sales module">
       <created>1583607882155</created>
@@ -830,17 +797,31 @@
       <option name="project" value="LOCAL" />
       <updated>1585164679433</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="change password">
+      <created>1585164990929</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1585164990929</updated>
+    </task>
+    <task id="LOCAL-00153" summary="change password">
+      <created>1585165149577</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1585165149577</updated>
+    </task>
+    <option name="localTasksCounter" value="154" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="288531000" />
+    <option name="totallyTimeSpent" value="288908000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13624161" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12483221" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -874,24 +855,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="change password" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../localDoctor/app/Listeners/CreateMedicalStaffListener.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-765" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Network.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#23#62#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../localDoctor/app/Http/Controllers/LandingPageController.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/../localDoctor/routes/web.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1079,13 +1042,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/modelUnits/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="85" column="68" selection-start-line="85" selection-start-column="68" selection-end-line="85" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/vendor/adminlte/page.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -1199,16 +1155,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="57" selection-end-column="1" />
-          <folding>
-            <element signature="n#style#0;n#strong#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/permission.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="624">
@@ -1219,6 +1165,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/permissions/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="97" column="70" selection-start-line="97" selection-start-column="70" selection-end-line="97" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/projects/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="157" column="94" selection-start-line="157" selection-start-column="94" selection-end-line="157" selection-end-column="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/project.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="57" column="1" selection-start-line="57" selection-start-column="1" selection-end-line="57" selection-end-column="1" />
+          <folding>
+            <element signature="n#style#0;n#strong#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="57" selection-end-column="1" />
+          <folding>
+            <element signature="n#style#0;n#strong#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/model_unit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="57" column="1" selection-start-line="57" selection-start-column="1" selection-end-line="57" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -1226,10 +1213,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/permissions/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/modelUnits/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="97" column="70" selection-start-line="97" selection-start-column="70" selection-end-line="97" selection-end-column="70" />
+        <state relative-caret-position="1139">
+          <caret line="124" column="88" selection-start-line="124" selection-start-column="88" selection-end-line="124" selection-end-column="88" />
         </state>
       </provider>
     </entry>
