@@ -40,7 +40,7 @@
     @can('add permission')
         <!--add new roles modal-->
         <div class="modal fade" id="add-new-permission-modal">
-            <form role="form" id="permission-form">
+            <form role="form" id="permission-form" class="form-submit">
                 @csrf
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -67,7 +67,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -81,7 +81,7 @@
     @can('edit permission')
         <!--edit role modal-->
         <div class="modal fade" id="edit-permission-modal">
-            <form role="form" id="edit-permission-form">
+            <form role="form" id="edit-permission-form" class="form-submit">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="updatePermissionId">
@@ -95,7 +95,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="modal-body">
-                                <div class="form-group edit_role">
+                                <div class="form-group edit_permission">
                                     <label for="edit_permission">Permission</label><span class="required">*</span>
                                     <input type="text" name="edit_permission" class="form-control" id="edit_permission">
                                 </div>
@@ -111,7 +111,7 @@
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
     @can('delete permission')
         <!--delete permission-->
         <div class="modal fade" id="delete-permission-modal">
-            <form role="form" id="delete-permission-form">
+            <form role="form" id="delete-permission-form" class="form-submit">
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="deletePermissionId" id="deletePermissionId">
@@ -137,7 +137,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light">Delete</button>
+                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
