@@ -48,7 +48,7 @@
     @can('add user')
         <!--add new users modal-->
         <div class="modal fade" id="add-new-user-modal">
-            <form role="form" id="user-form">
+            <form role="form" id="user-form" class="form-submit">
                 @csrf
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -118,7 +118,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -132,7 +132,7 @@
     @can('edit user')
         <!--edit role modal-->
         <div class="modal fade" id="edit-user-modal">
-            <form role="form" id="edit-user-form">
+            <form role="form" id="edit-user-form" class="form-submit">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="updateUserId">
@@ -189,7 +189,7 @@
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                             </div>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
     @can('delete user')
         <!--delete user-->
         <div class="modal fade" id="delete-user-modal">
-            <form role="form" id="delete-user-form">
+            <form role="form" id="delete-user-form" class="form-submit">
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="deleteUserId" id="deleteUserId">
@@ -215,7 +215,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light">Delete</button>
+                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -242,6 +242,7 @@
     @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/user.js')}}"></script>
+        <script src="{{asset('js/formSubmit.js')}}"></script>
         <script>
             $(function() {
                 $('#users-list').DataTable({
