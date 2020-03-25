@@ -153,7 +153,7 @@
 
     <!--add new schedule modal-->
     <div class="modal fade" id="add-schedule-modal">
-        <form role="form" id="add-schedule-form">
+        <form role="form" id="add-schedule-form" class="form-submit">
             @csrf
             <input type="hidden" name="leadId" value="{{$lead->id}}">
             <div class="modal-dialog modal-xl">
@@ -203,7 +203,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -217,7 +217,7 @@
     @can('edit lead')
         <!--add new schedule modal-->
         <div class="modal fade" id="edit-schedule-modal">
-            <form role="form" id="edit-schedule-form">
+            <form role="form" id="edit-schedule-form" class="form-submit">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="editLeadId" value="{{$lead->id}}">
@@ -269,7 +269,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -283,7 +283,7 @@
     @can('delete lead')
         <!--delete schedule-->
         <div class="modal fade" id="delete-schedule-modal">
-            <form role="form" id="delete-schedule-form">
+            <form role="form" id="delete-schedule-form" class="form-submit">
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="deleteScheduleId" id="deleteScheduleId">
@@ -294,7 +294,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light">Delete</button>
+                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
