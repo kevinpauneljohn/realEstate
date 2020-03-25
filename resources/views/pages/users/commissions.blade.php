@@ -114,7 +114,7 @@
     @can('add commissions')
         <!--edit role modal-->
         <div class="modal fade" id="add-commission-modal">
-            <form role="form" id="add-commission-form">
+            <form role="form" id="add-commission-form" class="form-submit">
                 @csrf
                 <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
                 <div class="modal-dialog modal-sm">
@@ -132,7 +132,7 @@
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                             </div>
                         </div>
                     </div>
