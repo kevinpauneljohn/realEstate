@@ -22,7 +22,7 @@
             <div class="col-lg-6">
                 <div class="card card-default">
                     <div class="card-body">
-                        <form id="change-password">
+                        <form id="change-password" class="form-submit">
                             @csrf
                             @method('PUT')
                             <div class="form-group current_password">
@@ -37,7 +37,7 @@
                                 <label for="password_confirmation">Confirm Password</label><span class="required">*</span>
                                 <input type="password" name="password_confirmation" class="form-control" id="password_confirmation">
                             </div>
-                            <input type="submit" class="btn btn-primary" value="Submit">
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Update</button>
                         </form>
                     </div>
                 </div>
