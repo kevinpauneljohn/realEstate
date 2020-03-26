@@ -148,3 +148,4 @@ $(document).on('click','.delete-user-btn',function () {
     $('#deleteUserId').val(id);
     $('.delete-user-name').html('<strong style="color:yellow;">'+data[0]+'</strong>?');
 });
+
