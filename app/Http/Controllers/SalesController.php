@@ -136,11 +136,9 @@ class SalesController extends Controller
 
                 if($user_rate === 'override 1')
                 {
-                    $rate = $rate - 1;
-                    //echo $user->firstname." - ".$rate."<br/>";
+                    $rate = $rate - 1; /*it will deduct 1% if the assigned rate is overriding*/
                 }else{
-                    $rate = $user_rate;
-                    //echo $user->firstname." - ".$rate."<br/>";
+                    $rate = $user_rate; /*this will set the exact commission rate if it's not overriding*/
                 }
 
             }
