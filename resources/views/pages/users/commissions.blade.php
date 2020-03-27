@@ -124,9 +124,10 @@
                                 <label for="commission_rate">Commission Rate</label>
                                 <select class="form-control" name="commission_rate" id="commission_rate">
                                     <option value=""> -- Select -- </option>
-                                    <option value="override 1"> Override 1 </option>
+                                    <option value="override 1"> Override 1% </option>
                                         @for($ctr = 1; $ctr < $rate_limit; $ctr++)
-                                            <option value="{{$ctr}}">{{$ctr}}</option>
+                                            <option value="{{$ctr-0.5}}">{{$ctr-0.5}}%</option>
+                                            <option value="{{$ctr}}">{{$ctr}}%</option>
                                         @endfor
                                 </select>
                             </div>

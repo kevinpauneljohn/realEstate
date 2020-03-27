@@ -288,9 +288,20 @@ class UserController extends Controller
     public function commissions($id)
     {
         $user = User::findOrFail($id);
+
+        $rate_limit = 0;
+        if($user->hasRole('manager'))
+        {
+            $rate_limit = 4;
+        }elseif ($user->hasRole('agent')){
+            $rate_limit = 3;
+        }elseif ($user->hasRole('referral')){
+            $rate_limit = 2;
+        }
+
         return view('pages.users.commissions')->with([
             'user'  => $user,
-            'rate_limit' => Project::all()->max('commission_rate'),
+            'rate_limit' => $rate_limit,
             'upline' => User::findOrFail($user->upline_id)
         ]);
     }
