@@ -111,7 +111,7 @@ class SalesController extends Controller
         $upLines = array(); /*instantiate the up line ids */
         $ctr = 1; /*array counter*/
 
-        #this will until it gets all the user's upline IDs
+        #this will loop until it gets all the user's up line IDs
 
         $upLines[$user] = 0;/*initialize the up line value to 0*/
         while($this->getUpLineIds($user) != null)
