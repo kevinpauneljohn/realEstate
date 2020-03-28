@@ -92,7 +92,7 @@ class SalesController extends Controller
      * */
     public function getUpLineIds($user_id)
     {
-        $user_id = $user_id;
+//        $user_id = $user_id;
         $user = User::find($user_id);
         return $user->upline_id;
     }
@@ -134,13 +134,13 @@ class SalesController extends Controller
             {
                 $user_rate =  $user->commissions()->first()->commission_rate;/*get the user commission rate*/
 
-                if($user_rate === 'override 1')
-                {
-                    $rate = $rate - 1; /*it will deduct 1% if the assigned rate is overriding*/
-                }else{
-                    $rate = $user_rate; /*this will set the exact commission rate if it's not overriding*/
-                }
-
+//                if($user_rate === 'override 1')
+//                {
+//                    $rate = $rate - 1; /*it will deduct 1% if the assigned rate is overriding*/
+//                }else{
+//                    $rate = $user_rate; /*this will set the exact commission rate if it's not overriding*/
+//                }
+                $rate = $user_rate;
             }
         }
         return $rate;

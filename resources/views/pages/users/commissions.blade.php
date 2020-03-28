@@ -80,7 +80,7 @@
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="activity">
-                                <button type="button" class="btn btn-primary" style="margin:3px;" data-target="#add-commission-modal" data-toggle="modal">Add Commission</button>
+                                <button type="button" class="btn btn-primary" style="margin:3px;" data-target="#add-commission-modal" data-toggle="modal" @if($rate_limit === null) disabled="disabled" @endif>Add Commission</button>
 
                                 <table id="commission-list" class="table table-bordered table-striped" role="grid">
                                     <thead>
@@ -111,6 +111,7 @@
         <!-- /.row -->
     </div>
 
+    @if($rate_limit !== null)
     @can('add commissions')
         <!--edit role modal-->
         <div class="modal fade" id="add-commission-modal">
@@ -124,8 +125,7 @@
                                 <label for="commission_rate">Commission Rate</label>
                                 <select class="form-control" name="commission_rate" id="commission_rate">
                                     <option value=""> -- Select -- </option>
-                                    <option value="override 1"> Override 1% </option>
-                                        @for($ctr = 1; $ctr < $rate_limit; $ctr++)
+                                        @for($ctr = 1; $ctr <= $rate_limit; $ctr++)
                                             <option value="{{$ctr-0.5}}">{{$ctr-0.5}}%</option>
                                             <option value="{{$ctr}}">{{$ctr}}%</option>
                                         @endfor
@@ -144,6 +144,7 @@
         </div>
         <!--end add user modal-->
     @endcan
+    @endif
 @stop
 
 @section('css')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Commission;
 use App\Downline;
 use App\Events\CreateNetworkEvent;
 use App\Lead;
@@ -289,15 +290,25 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $rate_limit = 0;
-        if($user->hasRole('manager'))
+        $rate_limit = 4;
+        if(!auth()->user()->hasRole('super admin'))
         {
-            $rate_limit = 4;
-        }elseif ($user->hasRole('agent')){
-            $rate_limit = 3;
-        }elseif ($user->hasRole('referral')){
-            $rate_limit = 2;
+            $upline = User::findOrFail(auth()->user()->id);
+            $rate_limit = $upline->commissions()->first();
+
+            if($rate_limit !== null)
+            {
+                $rate_limit = $rate_limit->commission_rate-1;
+            }
         }
+//        if($user->hasRole('manager'))
+//        {
+//            $rate_limit = 4;
+//        }elseif ($user->hasRole('agent')){
+//            $rate_limit = 3;
+//        }elseif ($user->hasRole('referral')){
+//            $rate_limit = 2;
+//        }
 
         return view('pages.users.commissions')->with([
             'user'  => $user,
