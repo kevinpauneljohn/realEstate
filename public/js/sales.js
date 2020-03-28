@@ -36,7 +36,13 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
                         }
                     },1500);
                 });
-            }else{
+            }
+            else{
+                if(result.success === false)
+                {
+                    toastr.error(result.message);
+                }
+
                 $('.submit-form-btn').attr('disabled',false);
                 $('.spinner').hide();
             }

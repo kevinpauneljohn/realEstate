@@ -58,27 +58,33 @@ class SalesController extends Controller
 
         if($validator->passes())
         {
-            $sales = new Sales();
-            $sales->reservation_date = $request->reservation_date;
-            $sales->user_id = auth()->user()->id;
-            $sales->lead_id = $request->buyer;
-            $sales->project_id = $request->project;
-            $sales->model_unit_id = $request->model_unit;
-            $sales->total_contract_price = $request->total_contract_price;
-            $sales->discount = $request->discount;
-            $sales->reservation_fee = $request->reservation_fee;
-            $sales->equity = $request->equity;
-            $sales->loanable_amount = $request->loanable_amount;
-            $sales->financing = $request->financing;
-            $sales->terms = $request->terms;
-            $sales->details = $request->terms;
-            $sales->commission_rate = $this->setCommissionRate($request->project);
-            $sales->status = 'reserved';
+            /*sales will be save if the commission rate is greater than 0*/
+            if($this->setCommissionRate($request->project) > 0){
+                $sales = new Sales();
+                $sales->reservation_date = $request->reservation_date;
+                $sales->user_id = auth()->user()->id;
+                $sales->lead_id = $request->buyer;
+                $sales->project_id = $request->project;
+                $sales->model_unit_id = $request->model_unit;
+                $sales->total_contract_price = $request->total_contract_price;
+                $sales->discount = $request->discount;
+                $sales->reservation_fee = $request->reservation_fee;
+                $sales->equity = $request->equity;
+                $sales->loanable_amount = $request->loanable_amount;
+                $sales->financing = $request->financing;
+                $sales->terms = $request->terms;
+                $sales->details = $request->terms;
+                $sales->commission_rate = $this->setCommissionRate($request->project);
+                $sales->status = 'reserved';
 
-            if($sales->save())
-            {
-                return response()->json(['success' => true]);
+                if($sales->save())
+                {
+                    return response()->json(['success' => true]);
+                }
             }
+
+            /*sales will not be save and will return an error message*/
+            return response()->json(['success' => false, 'message' => 'Your commission rate is 0%, Please inform your manager']);
         }
         return response()->json($validator->errors());
     }
