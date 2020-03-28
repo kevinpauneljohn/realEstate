@@ -140,7 +140,15 @@ class SalesController extends Controller
 //                }else{
 //                    $rate = $user_rate; /*this will set the exact commission rate if it's not overriding*/
 //                }
-                $rate = $user_rate;
+
+                if($user_rate >= $rate)
+                {
+                    $rate = $rate - 1;
+                }elseif($user_rate <= 0){
+                    $rate = 0;
+                }else{
+                    $rate = $user_rate;
+                }
             }
         }
         return $rate;
