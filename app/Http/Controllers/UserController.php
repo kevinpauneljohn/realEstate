@@ -290,25 +290,19 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $rate_limit = 4;
+        $rate_limit = 4;/* 4% is the user's max commission rate which is only the super admin can give*/
+        /*if the use is not a super admin the commission rate that can be given will be based on the up line max rate*/
         if(!auth()->user()->hasRole('super admin'))
         {
-            $upline = User::findOrFail(auth()->user()->id);
-            $rate_limit = $upline->commissions()->first();
+            /*this will check if the up line has already commission rate set on the system*/
+            $rate_limit = User::findOrFail(auth()->user()->id)->commissions()->first();
 
             if($rate_limit !== null)
             {
+                /*if the up line commission rate is not null the rate given for the down line is one step lower*/
                 $rate_limit = $rate_limit->commission_rate-1;
             }
         }
-//        if($user->hasRole('manager'))
-//        {
-//            $rate_limit = 4;
-//        }elseif ($user->hasRole('agent')){
-//            $rate_limit = 3;
-//        }elseif ($user->hasRole('referral')){
-//            $rate_limit = 2;
-//        }
 
         return view('pages.users.commissions')->with([
             'user'  => $user,
