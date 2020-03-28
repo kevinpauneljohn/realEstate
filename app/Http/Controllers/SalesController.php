@@ -140,18 +140,13 @@ class SalesController extends Controller
             {
                 $user_rate =  $user->commissions()->first()->commission_rate;/*get the user commission rate*/
 
-//                if($user_rate === 'override 1')
-//                {
-//                    $rate = $rate - 1; /*it will deduct 1% if the assigned rate is overriding*/
-//                }else{
-//                    $rate = $user_rate; /*this will set the exact commission rate if it's not overriding*/
-//                }
-
+                /*this conditional statement will be used if the commission rate offers by the project is lower
+                or equal to the user's commission rate*/
                 if($user_rate >= $rate)
                 {
                     $rate = $rate - 1;
                 }elseif($user_rate <= 0){
-                    $rate = 0;
+                    $rate = 0; /* commission rate is zero and will return an error message to the user*/
                 }else{
                     $rate = $user_rate;
                 }
