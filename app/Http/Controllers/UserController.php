@@ -304,7 +304,6 @@ class UserController extends Controller
             }
         }
 
-//        return $rate_limit;
         return view('pages.users.commissions')->with([
             'user'  => $user,
             'rate_limit' => $rate_limit,
