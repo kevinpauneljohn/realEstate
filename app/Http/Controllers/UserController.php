@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Commission;
 use App\Downline;
 use App\Events\CreateNetworkEvent;
 use App\Lead;
@@ -13,7 +12,6 @@ use App\Rules\checkIfPasswordMatch;
 use App\Sales;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
