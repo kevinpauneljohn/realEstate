@@ -128,7 +128,7 @@
         <div class="modal fade" id="add-new-sales-modal">
             <form role="form" id="add-sales-form" class="form-submit">
                 @csrf
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Add New Sales</h4>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <!-- Date range -->
                                     <div class="form-group reservation_date">
                                         <label>Reservation Date</label><span class="required">*</span>
@@ -169,6 +169,34 @@
 
                                         </select>
                                     </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 lot_area">
+                                            <label for="lot_area">Lot Area</label>
+                                            <input type="text" name="lot_area" id="lot_area" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-lg-6 floor_area">
+                                            <label for="floor_area">Floor Area</label>
+                                            <input type="text" name="floor_area" id="floor_area" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-4 phase">
+                                            <label for="phase">Phase</label>
+                                            <input type="text" name="phase" id="phase" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-lg-4 block_number">
+                                            <label for="block_number">Block</label>
+                                            <input type="text" name="block_number" id="block_number" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-lg-4 lot_number">
+                                            <label for="lot_number">Lot</label>
+                                            <input type="text" name="lot_number" id="lot_number" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-4">
                                     <div class="form-group total_contract_price">
                                         <label>Total Contract Price</label>
                                         <input type="text" name="total_contract_price" id="total_contract_price" class="form-control">
@@ -177,33 +205,38 @@
                                         <label>Discount</label>
                                         <input type="text" name="discount" id="discount" class="form-control">
                                     </div>
+                                    <div class="form-group processing_fee">
+                                        <label for="processing_fee">Processing Fee</label>
+                                        <input type="text" name="processing_fee" id="processing_fee" class="form-control">
+                                    </div>
                                     <div class="form-group reservation_fee">
                                         <label>Reservation Fee</label>
                                         <input type="text" name="reservation_fee" id="reservation_fee" class="form-control">
                                     </div>
-                                </div>
-
-                                <div class="col-lg-6">
                                     <div class="form-group equity">
-                                        <label>Equity</label>
+                                        <label>Equity/Down Payment</label>
                                         <input type="text" name="equity" id="equity" class="form-control">
                                     </div>
                                     <div class="form-group loanable_amount">
                                         <label>Loanable Amount</label>
                                         <input type="text" name="loanable_amount" id="loanable_amount" class="form-control">
                                     </div>
+
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group financing">
                                         <label>Financing</label>
                                         <select name="financing" id="financing" class="form-control select2" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
+                                            <option value="Cash">Cash</option>
                                             <option value="INHOUSE">INHOUSE</option>
                                             <option value="HDMF">HDMF</option>
                                             <option value="Bank">Bank</option>
                                         </select>
                                     </div>
-                                    <div class="form-group terms">
-                                        <label>Terms</label>
-                                        <input type="text" name="terms" id="terms" class="form-control">
+                                    <div class="form-group dp_terms">
+                                        <label for="dp_terms">Equity / Down Payment Terms</label>
+                                        <input type="text" name="dp_terms" id="dp_terms" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="details">Details</label>
