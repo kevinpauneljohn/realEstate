@@ -37,7 +37,7 @@
                         <th>Contact Number</th>
                         <th>Role</th>
                         <th>Up line</th>
-                        <th width="20%">Action</th>
+                        <th>Action</th>
                     </tr>
                     </tfoot>
                 </table>

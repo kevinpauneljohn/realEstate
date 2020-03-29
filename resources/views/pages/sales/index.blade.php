@@ -91,7 +91,7 @@
                 <table id="sales-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
-                        <th>Date Reserved</th>
+                        <th width="5%">Date Reserved</th>
                         <th>Full Name</th>
                         <th>Project</th>
                         <th>Model Unit</th>
@@ -224,6 +224,20 @@
 
                                 </div>
                                 <div class="col-lg-4">
+                                    <div class="form-group financing">
+                                        <label>Financing</label>
+                                        <select name="financing" id="financing" class="form-control select2" style="width: 100%;">
+                                            <option value=""> -- Select -- </option>
+                                            <option value="Cash">Cash</option>
+                                            <option value="INHOUSE">INHOUSE</option>
+                                            <option value="HDMF">HDMF</option>
+                                            <option value="Bank">Bank</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group dp_terms">
+                                        <label for="dp_terms">Equity / Down Payment Terms</label>
+                                        <input type="text" name="dp_terms" id="dp_terms" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         <label for="details">Details</label>
                                         <textarea name="details" id="details" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>

@@ -66,14 +66,20 @@ class SalesController extends Controller
                 $sales->lead_id = $request->buyer;
                 $sales->project_id = $request->project;
                 $sales->model_unit_id = $request->model_unit;
+                $sales->lot_area = $request->lot_area;
+                $sales->floor_area = $request->floor_area;
+                $sales->phase = $request->phase;
+                $sales->block = $request->block_number;
+                $sales->lot = $request->lot_number;
                 $sales->total_contract_price = $request->total_contract_price;
                 $sales->discount = $request->discount;
+                $sales->processing_fee = $request->processing_fee;
                 $sales->reservation_fee = $request->reservation_fee;
                 $sales->equity = $request->equity;
                 $sales->loanable_amount = $request->loanable_amount;
                 $sales->financing = $request->financing;
-                $sales->terms = $request->terms;
-                $sales->details = $request->terms;
+                $sales->terms = $request->dp_terms;
+                $sales->details = $request->details;
                 $sales->commission_rate = $this->setCommissionRate($request->project);
                 $sales->status = 'reserved';
 
@@ -195,6 +201,9 @@ class SalesController extends Controller
             ->addColumn('email',function($sale){
                 return Lead::find($sale->lead_id)->email;
             })
+            ->editColumn('status',function($sale){
+                return $this->statusLabel($sale->status);
+            })
             ->addColumn('action', function ($sale)
             {
                 $action = "";
@@ -212,8 +221,23 @@ class SalesController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','status'])
             ->make(true);
+    }
+
+    public function statusLabel($status)
+    {
+        switch ($status){
+            case "reserved" :
+                return '<span class="badge badge-info right role-badge">Reserved</span>';
+                break;
+            case "cancelled" :
+                return '<span class="badge badge-danger right role-badge">Cancelled</span>';
+                break;
+            case "paid" :
+                return '<span class="badge badge-success right role-badge">Paid</span>';
+                break;
+        }
     }
 
     /**
