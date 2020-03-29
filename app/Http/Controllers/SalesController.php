@@ -156,7 +156,50 @@ class SalesController extends Controller
 
     }
 
-
+//    public function test()
+//    {
+//        $project_id = 2;
+//        $user = auth()->user()->id;/*set the id of the current user*/
+//        $upLines = array(); /*instantiate the up line ids */
+//        $ctr = 1; /*array counter*/
+//
+//        #this will loop until it gets all the user's up line IDs
+//
+//        $upLines[$user] = 0;/*initialize the up line value to 0*/
+//        while($this->getUpLineIds($user) != null)
+//        {
+//            $user = $this->getUpLineIds($user);/*set the new user id*/
+//            $upLines[$user] = $ctr;/*set the user key value use for arranging the user by position or rank*/
+//            $ctr++;
+//        }
+//
+//
+//        $project_rate = Project::find($project_id); /*get the project rate*/
+//        $rate = $project_rate->commission_rate; /*instantiate the project rate*/
+//
+//        arsort($upLines);/*this will arrange the Ids in descending order*/
+//        foreach ($upLines as $key => $value)
+//        {
+//            $user = User::find($key);
+//
+//            if(!$user->hasRole('super admin'))
+//            {
+//                $user_rate =  $user->commissions()->first()->commission_rate;/*get the user commission rate*/
+//
+//                /*this conditional statement will be used if the commission rate offers by the project is lower
+//                or equal to the user's commission rate*/
+//                if($user_rate >= $rate)
+//                {
+//                    $rate = $rate - 1;
+//                }elseif($user_rate <= 0){
+//                    $rate = 0; /* commission rate is zero and will return an error message to the user*/
+//                }else{
+//                    $rate = $user_rate;
+//                }
+//            }
+//        }
+//        return $rate;
+//    }
 
     /**
      * March 06, 2020
