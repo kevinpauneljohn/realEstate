@@ -201,6 +201,13 @@ class SalesController extends Controller
             ->addColumn('email',function($sale){
                 return Lead::find($sale->lead_id)->email;
             })
+            ->editColumn('commission_rate',function($sale){
+                if($sale->commission_rate != null)
+                {
+                    return $sale->commission_rate.'%';
+                }
+                return "";
+            })
             ->editColumn('status',function($sale){
                 return $this->statusLabel($sale->status);
             })
@@ -209,7 +216,7 @@ class SalesController extends Controller
                 $action = "";
                 if(auth()->user()->can('view sales'))
                 {
-                    $action .= '<a href="'.route("leads.show",["lead" => $sale->id]).'" class="btn btn-xs btn-success view-btn" id="'.$sale->id.'"><i class="fa fa-eye"></i> View</a>';
+                    $action .= '<button class="btn btn-xs btn-success view-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i> View</button>';
                 }
                 if(auth()->user()->can('edit sales'))
                 {

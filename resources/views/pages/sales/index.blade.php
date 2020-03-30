@@ -123,6 +123,57 @@
         </div>
     </div>
 
+    @can('view sales')
+        <div class="modal fade" id="view-sales-details">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Sales Detail</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <table class="table table-bordered table-hover">
+                                        <tbody>
+                                        <tr><td>Status</td><td id="sale-status">Sales Status</td></tr>
+                                        <tr><td>Date Of Reservation</td><td id="reservation-date">Sales Status</td></tr>
+                                        <tr><td>Buyer's Name</td><td id="buyer-name">Sales Status</td></tr>
+                                        <tr><td>Contact Number</td><td id="contact-number">Sales Status</td></tr>
+                                        <tr><td>Email</td><td id="contact-number">Sales Status</td></tr>
+                                        <tr><td>Commission Rate</td><td id="commission-rate">Sales Status</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-6">
+                                    <table class="table table-bordered table-hover">
+                                        <tbody>
+                                        <tr><td>Project</td><td id="project">Sales Status</td></tr>
+                                        <tr><td>Model Unit</td><td id="model-unit">Sales Status</td></tr>
+                                        <tr><td>Lot Area</td><td id="lot-area">Sales Status</td></tr>
+                                        <tr><td>Floor Area</td><td id="Floor Area">Sales Status</td></tr>
+                                        <tr><td>Phase / Block / Lot</td><td id="location">Sales Status</td></tr>
+                                        <tr><td>Total Contract Price</td><td id="total-contract-price">Sales Status</td></tr>
+                                        <tr><td>Discount</td><td id="discount-amount">Sales Status</td></tr>
+                                        <tr><td>Processing Fee</td><td id="processing-fee">Sales Status</td></tr>
+                                        <tr><td>Reservation Fee</td><td id="reservation-fee">Sales Status</td></tr>
+                                        <tr><td>Equity</td><td id="equity-amount">Sales Status</td></tr>
+                                        <tr><td>Loanable Amount</td><td id="loanable-amount">Sales Status</td></tr>
+                                        <tr><td>Financing Terms</td><td id="financing-terms">Sales Status</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+        </div>
+        @endcan
+
     @can('add sales')
         <!--add new sales modal-->
         <div class="modal fade" id="add-new-sales-modal">
