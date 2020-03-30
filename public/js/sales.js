@@ -125,7 +125,7 @@ $(document).on('click','.view-sales-btn',function(){
             let rf = parseInt(result.sales.reservation_fee);
             let equity = parseInt(result.sales.equity);
             let loan_amount = parseInt(result.sales.loanable_amount);
-            let email = "", contactNumber = "";
+            let email = "", contactNumber = "", phase ="", block ="",lot ="";
 
             if(result.leads.email != null)
             {
@@ -134,6 +134,18 @@ $(document).on('click','.view-sales-btn',function(){
             if(result.leads.mobileNo != null)
             {
                 contactNumber = result.leads.mobileNo;
+            }
+            if(result.sales.phase != null)
+            {
+                phase = result.sales.phase;
+            }
+            if(result.sales.block != null)
+            {
+                block = result.sales.block;
+            }
+            if(result.sales.lot != null)
+            {
+                lot = result.sales.lot;
             }
 
             $('#sale-status').html('<strong>'+statusLabel(result.sales.status)+'</strong>');
@@ -146,7 +158,7 @@ $(document).on('click','.view-sales-btn',function(){
             $('#model-unit-name').html('<strong>'+result.model_unit.name+'</strong>');
             $('#lot-area').html('<strong>'+result.model_unit.lot_area+'</strong>');
             $('#floor-area').html('<strong>'+result.model_unit.floor_area+'</strong>');
-            $('#location').html('<strong>Phase: '+result.sales.phase+' Block:'+result.sales.block+' Lot:'+result.sales.lot+'</strong>');
+            $('#location').html('<strong>Phase: '+phase+' Block:'+block+' Lot:'+lot+'</strong>');
             $('#total-contract-price').html('<strong>&#8369; '+tcp.toLocaleString()+'</strong>');
             $('#discount-amount').html('<strong>&#8369; '+discountAmount.toLocaleString()+'</strong>');
             $('#processing-fee').html('<strong>&#8369; '+pf.toLocaleString()+'</strong>');
