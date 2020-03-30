@@ -135,7 +135,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-5">
                                     <table class="table table-bordered table-hover">
                                         <tbody>
                                         <tr><td>Status</td><td id="sale-status">Sales Status</td></tr>
@@ -147,7 +147,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-7">
                                     <table class="table table-bordered table-hover">
                                         <tbody>
                                         <tr><td>Project</td><td id="project">Sales Status</td></tr>
@@ -162,6 +162,7 @@
                                         <tr><td>Equity</td><td id="equity-amount">Sales Status</td></tr>
                                         <tr><td>Loanable Amount</td><td id="loanable-amount">Sales Status</td></tr>
                                         <tr><td>Financing Terms</td><td id="financing-terms">Sales Status</td></tr>
+                                        <tr><td>Equity/Down Payment Terms</td><td id="dp-terms">Sales Status</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
