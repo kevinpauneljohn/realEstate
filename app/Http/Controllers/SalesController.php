@@ -23,7 +23,7 @@ class SalesController extends Controller
         return view('pages.sales.index')->with([
             'leads' => Lead::where('user_id',auth()->user()->id)->get(),
             'projects'   => Project::all(),
-            'total_units_sold' => User::findOrFail(auth()->user()->id)->sales()->count(),
+            'total_units_sold' => User::findOrFail(auth()->user()->id)->sales()->where('status','!=','cancelled')->count(),
             'total_sales'   => $this->getTotalSales(auth()->user()->id),
         ]);
     }
@@ -37,7 +37,7 @@ class SalesController extends Controller
      * */
     public function getTotalSales($user_id)
     {
-        $sales = User::findOrFail($user_id)->sales;/*get all the user's sales*/
+        $sales = User::findOrFail($user_id)->sales()->where('status','!=','cancelled')->get();/*get all the user's sales*/
         $total_sales = 0;/*initiate the total sales by 0*/
 
         /*add all sales total contract price less the discount*/
