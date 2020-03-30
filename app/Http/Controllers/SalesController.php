@@ -9,7 +9,6 @@ use App\Sales;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Collection;
 use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
@@ -24,7 +23,30 @@ class SalesController extends Controller
         return view('pages.sales.index')->with([
             'leads' => Lead::where('user_id',auth()->user()->id)->get(),
             'projects'   => Project::all(),
+            'total_units_sold' => User::findOrFail(auth()->user()->id)->sales()->count(),
+            'total_sales'   => $this->getTotalSales(auth()->user()->id),
         ]);
+    }
+
+    /**
+     * March 31, 2020
+     * @author john kevin paunel
+     * get the user total sales
+     * @param string $user_id
+     * @return string
+     * */
+    public function getTotalSales($user_id)
+    {
+        $sales = User::findOrFail($user_id)->sales;/*get all the user's sales*/
+        $total_sales = 0;/*initiate the total sales by 0*/
+
+        /*add all sales total contract price less the discount*/
+        foreach ($sales as $sale)
+        {
+            $difference = $sale->total_contract_price - $sale->discount;
+            $total_sales = $total_sales + $difference;
+        }
+        return number_format($total_sales);
     }
 
     /**

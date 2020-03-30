@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Sales extends Model
 {
     use SoftDeletes;
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
