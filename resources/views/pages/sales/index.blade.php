@@ -138,31 +138,31 @@
                                 <div class="col-lg-5">
                                     <table class="table table-bordered table-hover">
                                         <tbody>
-                                        <tr><td>Status</td><td id="sale-status">Sales Status</td></tr>
-                                        <tr><td>Date Of Reservation</td><td id="reservation-date">Sales Status</td></tr>
-                                        <tr><td>Buyer's Name</td><td id="buyer-name">Sales Status</td></tr>
-                                        <tr><td>Contact Number</td><td id="contact-number">Sales Status</td></tr>
-                                        <tr><td>Email</td><td id="contact-number">Sales Status</td></tr>
-                                        <tr><td>Commission Rate</td><td id="commission-rate">Sales Status</td></tr>
+                                        <tr><td>Status</td><td id="sale-status"></td></tr>
+                                        <tr><td>Date Of Reservation</td><td id="reservation-date"></td></tr>
+                                        <tr><td>Buyer's Name</td><td id="buyer-name"></td></tr>
+                                        <tr><td>Contact Number</td><td id="contact-number"></td></tr>
+                                        <tr><td>Email</td><td id="email-address"></td></tr>
+                                        <tr><td>Commission Rate</td><td id="commission-rate"></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="col-lg-7">
                                     <table class="table table-bordered table-hover">
                                         <tbody>
-                                        <tr><td>Project</td><td id="project">Sales Status</td></tr>
-                                        <tr><td>Model Unit</td><td id="model-unit">Sales Status</td></tr>
-                                        <tr><td>Lot Area</td><td id="lot-area">Sales Status</td></tr>
-                                        <tr><td>Floor Area</td><td id="Floor Area">Sales Status</td></tr>
-                                        <tr><td>Phase / Block / Lot</td><td id="location">Sales Status</td></tr>
-                                        <tr><td>Total Contract Price</td><td id="total-contract-price">Sales Status</td></tr>
-                                        <tr><td>Discount</td><td id="discount-amount">Sales Status</td></tr>
-                                        <tr><td>Processing Fee</td><td id="processing-fee">Sales Status</td></tr>
-                                        <tr><td>Reservation Fee</td><td id="reservation-fee">Sales Status</td></tr>
-                                        <tr><td>Equity</td><td id="equity-amount">Sales Status</td></tr>
-                                        <tr><td>Loanable Amount</td><td id="loanable-amount">Sales Status</td></tr>
-                                        <tr><td>Financing Terms</td><td id="financing-terms">Sales Status</td></tr>
-                                        <tr><td>Equity/Down Payment Terms</td><td id="dp-terms">Sales Status</td></tr>
+                                        <tr><td>Project</td><td id="project-name"></td></tr>
+                                        <tr><td>Model Unit</td><td id="model-unit-name"></td></tr>
+                                        <tr><td>Lot Area</td><td id="lot-area"></td></tr>
+                                        <tr><td>Floor Area</td><td id="floor-area"></td></tr>
+                                        <tr><td>Phase / Block / Lot</td><td id="location"></td></tr>
+                                        <tr><td>Total Contract Price</td><td id="total-contract-price"></td></tr>
+                                        <tr><td>Discount</td><td id="discount-amount"></td></tr>
+                                        <tr><td>Processing Fee</td><td id="processing-fee"></td></tr>
+                                        <tr><td>Reservation Fee</td><td id="reservation-fee"></td></tr>
+                                        <tr><td>Equity</td><td id="equity-amount"></td></tr>
+                                        <tr><td>Loanable Amount</td><td id="loanable-amount"></td></tr>
+                                        <tr><td>Financing Terms</td><td id="financing-terms"></td></tr>
+                                        <tr><td>Equity/Down Payment Terms</td><td id="dp-terms"></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -398,6 +398,7 @@
     <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
+    @can('view sales')
     <script src="{{asset('js/sales.js')}}"></script>
     <!-- Summernote -->
     <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
@@ -449,4 +450,5 @@
             format: 'yyyy-mm-dd'
         });
     </script>
+    @endcan
 @stop

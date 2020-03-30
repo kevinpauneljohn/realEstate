@@ -97,3 +97,64 @@ $(document).on('change','#project',function(){
         }
     });
 });
+
+function statusLabel(status)
+{
+    if(status == 'reserved')
+    {
+        return '<span class="badge badge-info right role-badge">Reserved</span>';
+    }else if(status == 'cancelled')
+    {
+        return '<span class="badge badge-danger right role-badge">Cancelled</span>';
+    }else if(status == 'paid')
+    {
+        return '<span class="badge badge-success right role-badge">Paid</span>';
+    }
+}
+
+$(document).on('click','.view-sales-btn',function(){
+    let id = this.id;
+
+    $.ajax({
+        'url' : '/sales/'+id,
+        'type' : 'GET',
+        success: function(result){
+            let tcp = parseInt(result.sales.total_contract_price);
+            let discountAmount = parseInt(result.sales.discount);
+            let pf = parseInt(result.sales.processing_fee);
+            let rf = parseInt(result.sales.reservation_fee);
+            let equity = parseInt(result.sales.equity);
+            let loan_amount = parseInt(result.sales.loanable_amount);
+            let email = "", contactNumber = "";
+
+            if(result.leads.email != null)
+            {
+                email = result.leads.email;
+            }
+            if(result.leads.mobileNo != null)
+            {
+                contactNumber = result.leads.mobileNo;
+            }
+
+            $('#sale-status').html('<strong>'+statusLabel(result.sales.status)+'</strong>');
+            $('#reservation-date').html('<strong>'+result.sales.reservation_date+'</strong>');
+            $('#buyer-name').html('<strong>'+result.leads.firstname+' '+result.leads.lastname+'</strong>');
+            $('#contact-number').html('<strong>'+contactNumber+'</strong>');
+            $('#email-address').html('<strong>'+email+'</strong>');
+            $('#commission-rate').html('<strong>'+result.sales.commission_rate+'%</strong>');
+            $('#project-name').html('<strong>'+result.project.name+'</strong>');
+            $('#model-unit-name').html('<strong>'+result.model_unit.name+'</strong>');
+            $('#lot-area').html('<strong>'+result.model_unit.lot_area+'</strong>');
+            $('#floor-area').html('<strong>'+result.model_unit.floor_area+'</strong>');
+            $('#location').html('<strong>Phase: '+result.sales.phase+' Block:'+result.sales.block+' Lot:'+result.sales.lot+'</strong>');
+            $('#total-contract-price').html('<strong>&#8369; '+tcp.toLocaleString()+'</strong>');
+            $('#discount-amount').html('<strong>&#8369; '+discountAmount.toLocaleString()+'</strong>');
+            $('#processing-fee').html('<strong>&#8369; '+pf.toLocaleString()+'</strong>');
+            $('#reservation-fee').html('<strong>&#8369; '+rf.toLocaleString()+'</strong>');
+            $('#equity-amount').html('<strong>&#8369; '+equity.toLocaleString()+'</strong>');
+            $('#loanable-amount').html('<strong>&#8369; '+loan_amount.toLocaleString()+'</strong>');
+            $('#financing-terms').html('<strong>'+result.sales.financing+'</strong>');
+            $('#dp-terms').html('<strong>'+result.sales.terms+'</strong>');
+        }
+    });
+});

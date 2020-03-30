@@ -9,6 +9,7 @@ use App\Sales;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use mysql_xdevapi\Collection;
 use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
@@ -214,7 +215,7 @@ class SalesController extends Controller
                 $action = "";
                 if(auth()->user()->can('view sales'))
                 {
-                    $action .= '<button class="btn btn-xs btn-success view-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i> View</button>';
+                    $action .= '<button class="btn btn-xs btn-success view-sales-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i> View</button>';
                 }
                 if(auth()->user()->can('edit sales'))
                 {
@@ -253,7 +254,16 @@ class SalesController extends Controller
      */
     public function show($id)
     {
-        //
+        $sales = Sales::findOrFail($id);
+        $lead = Lead::find($sales->lead_id);
+        $project = Project::find($sales->project_id);
+        $model_unit = ModelUnit::find($sales->model_unit_id);
+        return response()->json([
+            'sales' => $sales,
+            'leads' => $lead,
+            'project' => $project,
+            'model_unit' => $model_unit,
+        ]);
     }
 
     /**
