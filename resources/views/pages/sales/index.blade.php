@@ -134,7 +134,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
+                            <div class="row sales-details">
                                 <div class="col-lg-5">
                                     <table class="table table-bordered table-hover">
                                         <tbody>

@@ -118,7 +118,14 @@ $(document).on('click','.view-sales-btn',function(){
     $.ajax({
         'url' : '/sales/'+id,
         'type' : 'GET',
+        beforeSend: function (request, settings) {
+            start_time = new Date().getTime();
+        },
         success: function(result){
+
+            let request_time = new Date().getTime() - start_time;
+            console.log(request_time);
+
             let tcp = parseInt(result.sales.total_contract_price);
             let discountAmount = parseInt(result.sales.discount);
             let pf = parseInt(result.sales.processing_fee);
