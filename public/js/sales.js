@@ -119,12 +119,12 @@ $(document).on('click','.view-sales-btn',function(){
         'url' : '/sales/'+id,
         'type' : 'GET',
         beforeSend: function (request, settings) {
-            start_time = new Date().getTime();
+            $('.image-loader').show();
+            $('.sales-details').hide();
         },
         success: function(result){
-
-            let request_time = new Date().getTime() - start_time;
-            console.log(request_time);
+            $('.image-loader').hide();
+            $('.sales-details').show();
 
             let tcp = parseInt(result.sales.total_contract_price);
             let discountAmount = parseInt(result.sales.discount);

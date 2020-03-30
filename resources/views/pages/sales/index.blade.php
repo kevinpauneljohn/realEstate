@@ -134,8 +134,14 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="row sales-details">
-                                <div class="col-lg-5">
+                            <div class="image-loader">
+                                <div class="spinner-border text-secondary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-5 sales-details">
                                     <table class="table table-bordered table-hover">
                                         <tbody>
                                         <tr><td>Status</td><td id="sale-status"></td></tr>
@@ -147,7 +153,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-lg-7">
+                                <div class="col-lg-7 sales-details">
                                     <table class="table table-bordered table-hover">
                                         <tbody>
                                         <tr><td>Project</td><td id="project-name"></td></tr>

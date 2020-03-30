@@ -53,3 +53,11 @@ body{
 table td{
     padding:8px!important;
 }
+.image-loader{
+    margin:auto;
+    width: 10%;
+    display:none;
+}
+.sales-details{
+    display:none;
+}
