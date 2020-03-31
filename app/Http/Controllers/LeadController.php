@@ -39,7 +39,7 @@ class LeadController extends Controller
                 {
                     $action .= '<a href="'.route("leads.edit",["lead" => $lead->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$lead->id.'"><i class="fa fa-edit"></i> Edit</a>';
                 }
-                if(auth()->user()->can('delete lead'))
+                if(auth()->user()->can('delete lead') && $lead->sales()->count() < 1)
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$lead->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
                 }

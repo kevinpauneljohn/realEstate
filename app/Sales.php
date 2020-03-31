@@ -13,4 +13,9 @@ class Sales extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function leads()
+    {
+        return $this->belongsTo(Lead::class);
+    }
 }

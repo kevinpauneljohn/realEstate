@@ -40,4 +40,9 @@ class Lead extends Model
         'point_of_contact',
         'remarks',
     ];
+
+    public function sales()
+    {
+        return $this->hasMany(Sales::class);
+    }
 }
