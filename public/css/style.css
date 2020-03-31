@@ -61,3 +61,6 @@ table td{
 .sales-details{
     display:none;
 }
+.dataTables_wrapper{
+    overflow-x:auto;
+}
