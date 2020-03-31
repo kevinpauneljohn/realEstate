@@ -32,6 +32,14 @@ class ProjectController extends Controller
             ->addColumn('model_units', function ($project){
                 return ModelUnit::where('project_id',$project->id)->count();
             })
+            ->editColumn('commission_rate',function($project){
+                $rate = "";
+                if($project->commission_rate != null)
+                {
+                    $rate = $project->commission_rate.'%';
+                }
+                return $rate;
+            })
             ->addColumn('action', function ($project)
             {
                 $action = "";
