@@ -104,18 +104,11 @@ Route::post('/commissions','CommissionController@store')->name('commissions.stor
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-    $sales = \App\User::find(auth()->user()->id)->sales;
-    $total_sales = 0;
-
-    foreach ($sales as $sale)
-    {
-        $difference = $sale->total_contract_price - $sale->discount;
-        $total_sales = $total_sales + $difference;
-    }
-    return number_format($total_sales);
+   // return $_SESSION['collapse'];
 });
 
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
 Route::put('/change-password','UserController@changePasswordValidate')->name('users.change.password.update')->middleware(['auth']);
+
 

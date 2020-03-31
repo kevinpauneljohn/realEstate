@@ -132,7 +132,7 @@ $(document).on('click','.view-sales-btn',function(){
             let rf = parseInt(result.sales.reservation_fee);
             let equity = parseInt(result.sales.equity);
             let loan_amount = parseInt(result.sales.loanable_amount);
-            let email = "", contactNumber = "", phase ="", block ="",lot ="";
+            let email = "", contactNumber = "", phase ="", block ="",lot ="", lot_area = "", floor_area = "", equity_terms = "";
 
             if(result.leads.email != null)
             {
@@ -154,6 +154,18 @@ $(document).on('click','.view-sales-btn',function(){
             {
                 lot = result.sales.lot;
             }
+            if(result.model_unit.lot_area != null)
+            {
+                lot_area = result.model_unit.lot_area;
+            }
+            if(result.model_unit.floor_area != null)
+            {
+                floor_area = result.model_unit.floor_area;
+            }
+            if(result.sales.terms != null)
+            {
+                equity_terms = result.sales.terms;
+            }
 
             $('#sale-status').html('<strong>'+statusLabel(result.sales.status)+'</strong>');
             $('#reservation-date').html('<strong>'+result.sales.reservation_date+'</strong>');
@@ -163,8 +175,8 @@ $(document).on('click','.view-sales-btn',function(){
             $('#commission-rate').html('<strong>'+result.sales.commission_rate+'%</strong>');
             $('#project-name').html('<strong>'+result.project.name+'</strong>');
             $('#model-unit-name').html('<strong>'+result.model_unit.name+'</strong>');
-            $('#lot-area').html('<strong>'+result.model_unit.lot_area+'</strong>');
-            $('#floor-area').html('<strong>'+result.model_unit.floor_area+'</strong>');
+            $('#lot-area').html('<strong>'+lot_area+'</strong>');
+            $('#floor-area').html('<strong>'+floor_area+'</strong>');
             $('#location').html('<strong>Phase: '+phase+' Block:'+block+' Lot:'+lot+'</strong>');
             $('#total-contract-price').html('<strong>&#8369; '+tcp.toLocaleString()+'</strong>');
             $('#discount-amount').html('<strong>&#8369; '+discountAmount.toLocaleString()+'</strong>');
@@ -173,7 +185,7 @@ $(document).on('click','.view-sales-btn',function(){
             $('#equity-amount').html('<strong>&#8369; '+equity.toLocaleString()+'</strong>');
             $('#loanable-amount').html('<strong>&#8369; '+loan_amount.toLocaleString()+'</strong>');
             $('#financing-terms').html('<strong>'+result.sales.financing+'</strong>');
-            $('#dp-terms').html('<strong>'+result.sales.terms+'</strong>');
+            $('#dp-terms').html('<strong>'+equity_terms+'</strong>');
         }
     });
 });
