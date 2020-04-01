@@ -9,4 +9,21 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Requirement extends Model
 {
     use SoftDeletes, LogsActivity;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'project_id',
+        'name',
+        'type',
+    ];
+
+    protected static $logAttributes = [
+        'project_id',
+        'name',
+        'type',
+    ];
 }
