@@ -179,7 +179,7 @@ return [
 //        ],
         [
             'text' => 'Dashboard',
-            'icon' => 'fa fa-home',
+            'icon' => 'fa fa-tachometer-alt',
             'route'  => 'dashboard',
         ],
         [
@@ -229,6 +229,12 @@ return [
             'icon'    => 'fas fa-home',
             'route'    => 'model.units.index',
             'can'     => 'view model unit',
+        ],
+        [
+            'text'    => 'Requirements',
+            'icon'    => 'fas fa-file-alt',
+            'route'    => 'model.units.index',
+            'can'     => 'view requirements',
         ],
         [
             'text'    => 'Leads',
