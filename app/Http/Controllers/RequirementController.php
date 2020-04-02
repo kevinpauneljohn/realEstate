@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Project;
 use Illuminate\Http\Request;
 
 class RequirementController extends Controller
@@ -13,7 +14,9 @@ class RequirementController extends Controller
      */
     public function index()
     {
-        return view('pages.requirements.index');
+        return view('pages.requirements.index')->with([
+            'projects'   => Project::all(),
+        ]);
     }
 
     /**

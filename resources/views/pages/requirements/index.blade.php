@@ -61,78 +61,44 @@
         </div>
     </div>
 
-    @can('view sales')
-        <div class="modal fade" id="view-sales-details">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Sales Detail</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="image-loader">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-5 sales-details">
-                                <table class="table table-bordered table-hover">
-                                    <tbody>
-                                    <tr><td>Status</td><td id="sale-status"></td></tr>
-                                    <tr><td>Date Of Reservation</td><td id="reservation-date"></td></tr>
-                                    <tr><td>Buyer's Name</td><td id="buyer-name"></td></tr>
-                                    <tr><td>Contact Number</td><td id="contact-number"></td></tr>
-                                    <tr><td>Email</td><td id="email-address"></td></tr>
-                                    <tr><td>Commission Rate</td><td id="commission-rate"></td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-lg-7 sales-details">
-                                <table class="table table-bordered table-hover">
-                                    <tbody>
-                                    <tr><td>Project</td><td id="project-name"></td></tr>
-                                    <tr><td>Model Unit</td><td id="model-unit-name"></td></tr>
-                                    <tr><td>Lot Area</td><td id="lot-area"></td></tr>
-                                    <tr><td>Floor Area</td><td id="floor-area"></td></tr>
-                                    <tr><td>Phase / Block / Lot</td><td id="location"></td></tr>
-                                    <tr><td>Total Contract Price</td><td id="total-contract-price"></td></tr>
-                                    <tr><td>Discount</td><td id="discount-amount"></td></tr>
-                                    <tr><td>Processing Fee</td><td id="processing-fee"></td></tr>
-                                    <tr><td>Reservation Fee</td><td id="reservation-fee"></td></tr>
-                                    <tr><td>Equity</td><td id="equity-amount"></td></tr>
-                                    <tr><td>Loanable Amount</td><td id="loanable-amount"></td></tr>
-                                    <tr><td>Financing Terms</td><td id="financing-terms"></td></tr>
-                                    <tr><td>Equity/Down Payment Terms</td><td id="dp-terms"></td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-    @endcan
-
     @can('add requirements')
         <!--add new sales modal-->
         <div class="modal fade" id="add-new-sales-modal">
             <form role="form" id="add-sales-form" class="form-submit">
                 @csrf
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New Sales</h4>
+                            <h4 class="modal-title">Add New Requirements</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group project">
+                                <label>Assign Project</label><span class="required">*</span>
+                                <select class="select2" name="project[]" id="project" multiple="multiple" data-placeholder="Select a role" style="width: 100%;">
+                                    @foreach($projects as $project)
+                                        <option value="{{$project->id}}">{{$project->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group title">
+                                <label for="title">Title</label><span>(Optional)</span>
+                                <input type="text" name="title" class="form-control" id="title">
+                            </div>
+                            <div class="form-group financing_type">
+                                <label for="type">Financing Type</label><span class="required">*</span>
+                                <select name="financing_type" class="form-control" id="financing_type">
+                                    <option value=""> -- Select -- </option>
+                                    <option value="INHOUSE">INHOUSE</option>
+                                    <option value="BANK">BANK</option>
+                                    <option value="HDMF">HDMF</option>
+                                </select>
+                            </div>
+                            <div class="form-group description">
+
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
