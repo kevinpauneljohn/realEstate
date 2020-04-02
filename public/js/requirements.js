@@ -96,5 +96,4 @@ $(document).on('click','.row-description-btn',function(){
     }else{
         this.closest('.row-description').remove();
     }
-    console.log(value);
 });
