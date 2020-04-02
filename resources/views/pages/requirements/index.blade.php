@@ -1,84 +1,22 @@
 @extends('adminlte::page')
 
-@section('title', 'Requirements')
+@section('title', 'View Requirements')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Sales</h1>
+            <h1 class="m-0 text-dark">View Requirements</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Sales</li>
+                <li class="breadcrumb-item active">View Requirements</li>
             </ol>
         </div><!-- /.col -->
     </div>
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>&#8369; {{$total_sales}}</h3>
-
-                    <p>Total Sales</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-money-bill"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                    <p>Total Sales for this year</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-money-bill-alt"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>{{$total_units_sold}}</h3>
-
-                    <p>Total Units Sold</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-home"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>65</h3>
-
-                    <p>Total Cancelled this year</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-exclamation-triangle"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-    </div>
     <div class="card">
         <div class="card-header">
             @can('add sales')
@@ -181,7 +119,7 @@
         </div>
     @endcan
 
-    @can('add sales')
+    @can('add requirements')
         <!--add new sales modal-->
         <div class="modal fade" id="add-new-sales-modal">
             <form role="form" id="add-sales-form" class="form-submit">
@@ -195,113 +133,6 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <!-- Date range -->
-                                    <div class="form-group reservation_date">
-                                        <label>Reservation Date</label><span class="required">*</span>
-                                        <input type="text" name="reservation_date" id="reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
-                                    </div>
-                                    <div class="form-group buyer">
-                                        <label for="buyer">Buyer's Name</label><span class="required">*</span>
-                                        <select name="buyer" id="buyer" class="form-control select2" style="width: 100%;">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($leads as $lead)
-                                                <option value="{{$lead->id}}">{{ucfirst($lead->firstname)}} {{ucfirst($lead->lastname)}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group project">
-                                        <label for="project">Project</label><span class="required">*</span>
-                                        <select name="project" id="project" class="form-control select2" style="width: 100%;">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($projects as $project)
-                                                <option value="{{$project->id}}">{{$project->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group model_unit">
-                                        <label for="model_unit">Model Unit</label><span class="required">*</span>
-                                        <select name="model_unit" id="model_unit" class="form-control select2" style="width: 100%;">
-                                            <option value=""> -- Select -- </option>
-
-                                        </select>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-6 lot_area">
-                                            <label for="lot_area">Lot Area</label>
-                                            <input type="text" name="lot_area" id="lot_area" class="form-control" />
-                                        </div>
-                                        <div class="form-group col-lg-6 floor_area">
-                                            <label for="floor_area">Floor Area</label>
-                                            <input type="text" name="floor_area" id="floor_area" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-4 phase">
-                                            <label for="phase">Phase</label>
-                                            <input type="text" name="phase" id="phase" class="form-control" />
-                                        </div>
-                                        <div class="form-group col-lg-4 block_number">
-                                            <label for="block_number">Block</label>
-                                            <input type="text" name="block_number" id="block_number" class="form-control" />
-                                        </div>
-                                        <div class="form-group col-lg-4 lot_number">
-                                            <label for="lot_number">Lot</label>
-                                            <input type="text" name="lot_number" id="lot_number" class="form-control" />
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="form-group total_contract_price">
-                                        <label>Total Contract Price</label>
-                                        <input type="text" name="total_contract_price" id="total_contract_price" class="form-control">
-                                    </div>
-                                    <div class="form-group discount">
-                                        <label>Discount</label>
-                                        <input type="text" name="discount" id="discount" class="form-control">
-                                    </div>
-                                    <div class="form-group processing_fee">
-                                        <label for="processing_fee">Processing Fee</label>
-                                        <input type="text" name="processing_fee" id="processing_fee" class="form-control">
-                                    </div>
-                                    <div class="form-group reservation_fee">
-                                        <label>Reservation Fee</label>
-                                        <input type="text" name="reservation_fee" id="reservation_fee" class="form-control">
-                                    </div>
-                                    <div class="form-group equity">
-                                        <label>Equity/Down Payment</label>
-                                        <input type="text" name="equity" id="equity" class="form-control">
-                                    </div>
-                                    <div class="form-group loanable_amount">
-                                        <label>Loanable Amount</label>
-                                        <input type="text" name="loanable_amount" id="loanable_amount" class="form-control">
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group financing">
-                                        <label>Financing</label>
-                                        <select name="financing" id="financing" class="form-control select2" style="width: 100%;">
-                                            <option value=""> -- Select -- </option>
-                                            <option value="Cash">Cash</option>
-                                            <option value="INHOUSE">INHOUSE</option>
-                                            <option value="HDMF">HDMF</option>
-                                            <option value="Bank">Bank</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group dp_terms">
-                                        <label for="dp_terms">Equity / Down Payment Terms</label>
-                                        <input type="text" name="dp_terms" id="dp_terms" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="details">Details</label>
-                                        <textarea name="details" id="details" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

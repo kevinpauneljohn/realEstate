@@ -15,6 +15,7 @@ class CreateRequirementsTable extends Migration
     {
         Schema::create('requirements', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title')->nullable();
             $table->text('project_id');
             $table->string('name');
             $table->string('type');

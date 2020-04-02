@@ -111,4 +111,7 @@ Route::get('/test',function(){
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
 Route::put('/change-password','UserController@changePasswordValidate')->name('users.change.password.update')->middleware(['auth']);
 
+/*requirements*/
+Route::get('/requirements','RequirementController@index')->name('requirements.index')->middleware(['auth','permission:view requirements']);
+
 

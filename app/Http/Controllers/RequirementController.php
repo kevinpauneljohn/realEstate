@@ -13,7 +13,7 @@ class RequirementController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.requirements.index');
     }
 
     /**
