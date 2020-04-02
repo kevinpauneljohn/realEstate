@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RequirementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RequirementController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/requirements.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/requirements.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/requirements/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/requirements/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,23 +20,23 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.10309278">
+    <splitter split-orientation="horizontal" split-proportion="0.6251981">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/web.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="508">
-                  <caret line="121" column="157" selection-start-line="121" selection-start-column="157" selection-end-line="121" selection-end-column="157" />
+                  <caret line="121" column="2" selection-start-line="121" selection-start-column="2" selection-end-line="121" selection-end-column="2" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/js/requirements.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="573">
-                  <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+                <state relative-caret-position="106">
+                  <caret line="82" column="33" selection-start-line="82" selection-start-column="33" selection-end-line="82" selection-end-column="33" />
                 </state>
               </provider>
             </entry>
@@ -79,8 +78,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/RequirementController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="288">
-                  <caret line="63" column="59" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
+                <state relative-caret-position="224">
+                  <caret line="105" column="8" selection-start-line="105" selection-start-column="8" selection-end-line="122" selection-end-column="54" />
                   <folding>
                     <element signature="e#40#53#0#PHP" expanded="true" />
                   </folding>
@@ -209,9 +208,9 @@
         <option value="$PROJECT_DIR$/config/adminlte.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_04_01_225549_create_requirements_table.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/requirements/index.blade.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/public/js/requirements.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/RequirementController.php" />
+        <option value="$PROJECT_DIR$/public/js/requirements.js" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
       </list>
     </option>
   </component>
@@ -483,21 +482,7 @@
       <workItem from="1585390455308" duration="11479000" />
       <workItem from="1585482958113" duration="21274000" />
       <workItem from="1585664411669" duration="11694000" />
-      <workItem from="1585779654299" duration="27147000" />
-    </task>
-    <task id="LOCAL-00150" summary="change password">
-      <created>1585164425985</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1585164425985</updated>
-    </task>
-    <task id="LOCAL-00151" summary="change password">
-      <created>1585164679433</created>
-      <option name="number" value="00151" />
-      <option name="presentableId" value="LOCAL-00151" />
-      <option name="project" value="LOCAL" />
-      <updated>1585164679433</updated>
+      <workItem from="1585779654299" duration="29481000" />
     </task>
     <task id="LOCAL-00152" summary="change password">
       <created>1585164990929</created>
@@ -828,11 +813,25 @@
       <option name="project" value="LOCAL" />
       <updated>1585840117823</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <task id="LOCAL-00199" summary="create requirements migration table">
+      <created>1585845516082</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1585845516082</updated>
+    </task>
+    <task id="LOCAL-00200" summary="create requirements migration table">
+      <created>1585847249534</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1585847249534</updated>
+    </task>
+    <option name="localTasksCounter" value="201" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="369192000" />
+    <option name="totallyTimeSpent" value="371526000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1177,13 +1176,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="121" column="157" selection-start-line="121" selection-start-column="157" selection-end-line="121" selection-end-column="157" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/requirements/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="295">
@@ -1191,20 +1183,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/requirements.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/RequirementController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="63" column="59" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
+        <state relative-caret-position="224">
+          <caret line="105" column="8" selection-start-line="105" selection-start-column="8" selection-end-line="122" selection-end-column="54" />
           <folding>
             <element signature="e#40#53#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/requirements.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="82" column="33" selection-start-line="82" selection-start-column="33" selection-end-line="82" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="508">
+          <caret line="121" column="2" selection-start-line="121" selection-start-column="2" selection-end-line="121" selection-end-column="2" />
         </state>
       </provider>
     </entry>

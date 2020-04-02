@@ -103,25 +103,24 @@ class RequirementController extends Controller
      */
     public function store(Request $request)
     {
-//        $validator = Validator::make($request->all(),[
-//            'project'   => ['required'],
-//            'financing_type'    => ['required']
-//        ]);
-//
-//        if($validator->passes())
-//        {
-//            $requirements = new Requirement();
-//            $requirements->title = $request->title;
-//            $requirements->project_id = json_encode($request->project);
-//            $requirements->description = json_encode($request->description);
-//            $requirements->type = $request->financing_type;
-//            if($requirements->save())
-//            {
-//                return response()->json(['success' => true]);
-//            }
-//        }
-//        return response()->json($validator->errors());
-        return $request->all();
+        $validator = Validator::make($request->all(),[
+            'project'   => ['required'],
+            'financing_type'    => ['required']
+        ]);
+
+        if($validator->passes())
+        {
+            $requirements = new Requirement();
+            $requirements->title = $request->title;
+            $requirements->project_id = json_encode($request->project);
+            $requirements->description = json_encode($request->description);
+            $requirements->type = $request->financing_type;
+            if($requirements->save())
+            {
+                return response()->json(['success' => true]);
+            }
+        }
+        return response()->json($validator->errors());
     }
 
     /**

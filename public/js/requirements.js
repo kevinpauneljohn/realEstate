@@ -66,7 +66,7 @@ $(document).ready(function(){
         let data = addForm.serialize();
 
         submitform(
-            '/requirements/',
+            '/requirements',
             'POST',
             data,
             'Requirements Successfully Added!',
