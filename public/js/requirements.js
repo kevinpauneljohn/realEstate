@@ -105,7 +105,7 @@ $(document).ready(function(){
             '/requirements/'+id,
             'DELETE',
             data,
-            'Requirements Successfully Added!',
+            'Requirements Successfully Deleted!',
             true,
             '',
             false,
