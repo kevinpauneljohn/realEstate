@@ -7,6 +7,7 @@ use App\ModelUnit;
 use App\Project;
 use App\Requirement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -56,13 +57,13 @@ class RequirementController extends Controller
                 {
                     $action .= '<button class="btn btn-xs btn-success view-sales-btn" id="'.$requirement->id.'" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i> View</button>';
                 }
-                if(auth()->user()->can('edit sales'))
+                if(auth()->user()->can('edit requirements'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn" id="'.$requirement->id.'" data-toggle="modal" data-target="#edit-requirement-modal"><i class="fa fa-edit"></i> Edit</a>';
                 }
-                if(auth()->user()->can('delete sales'))
+                if(auth()->user()->can('delete requirements'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$requirement->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-requirements-btn" id="'.$requirement->id.'" data-toggle="modal" data-target="#delete-requirements-modal"><i class="fa fa-trash"></i> Delete</a>';
                 }
                 return $action;
             })
@@ -147,7 +148,27 @@ class RequirementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'edit_project'   => ['required'],
+            'edit_financing_type'    => ['required']
+        ],[
+           'edit_project.required' => 'Project field is required',
+           'edit_financing_type.required' => 'Financing field is required',
+        ]);
+
+        if($validator->passes())
+        {
+            $requirements = Requirement::findOrFail($id);
+            $requirements->title = $request->edit_title;
+            $requirements->project_id = json_encode($request->edit_project);
+            $requirements->description = json_encode($request->edit_description);
+            $requirements->type = $request->edit_financing_type;
+            if($requirements->save())
+            {
+                return response()->json(['success' => true]);
+            }
+        }
+        return response()->json($validator->errors());
     }
 
     /**
@@ -158,6 +179,10 @@ class RequirementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $requirements = Requirement::findOrFail($id);
+        if($requirements->delete())
+        {
+            return response()->json(['success' => true]);
+        }
     }
 }

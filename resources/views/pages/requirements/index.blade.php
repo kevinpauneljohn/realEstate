@@ -151,8 +151,11 @@
                             </div>
                             <div class="form-group edit-desc-inputs">
                                 <label>Description</label>
-
                             </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -163,17 +166,17 @@
         <!--end add user modal-->
     @endcan
 
-    @can('delete project')
+    @can('delete requirements')
         <!--delete user-->
-        <div class="modal fade" id="delete-project-modal">
-            <form role="form" id="delete-project-form" class="form-submit">
+        <div class="modal fade" id="delete-requirements-modal">
+            <form role="form" id="delete-requirements-form" class="form-submit">
                 @csrf
                 @method('DELETE')
-                <input type="hidden" name="deleteProjectId" id="deleteProjectId">
+                <input type="hidden" name="deleteRequirementsId" id="deleteRequirementsId">
                 <div class="modal-dialog">
                     <div class="modal-content bg-danger">
                         <div class="modal-body">
-                            <p class="delete_project">Delete Project: <span class="delete-project-name"></span></p>
+                            <p class="delete_project">Delete Requirements: <span class="delete-requirements-name"></span></p>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>

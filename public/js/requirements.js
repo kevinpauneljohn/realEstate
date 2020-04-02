@@ -74,6 +74,42 @@ $(document).ready(function(){
             '',
             false,
         );
+        clear_errors('project','financing_type');
+    });
+
+    $('#edit-requirement-form').submit(function(form){
+        form.preventDefault();
+
+        let data = $('#edit-requirement-form').serialize();
+        let id = $('#updateRequirementId').val();
+
+        submitform(
+            '/requirements/'+id,
+            'PUT',
+            data,
+            'Requirements Successfully Updated!',
+            true,
+            '',
+            false,
+        );
+        clear_errors('edit_project','edit_financing_type');
+    });
+
+    $('#delete-requirements-form').submit(function(form){
+        form.preventDefault();
+
+        let data = $('#edit-requirement-form').serialize();
+        let id = $('#deleteRequirementsId').val();
+
+        submitform(
+            '/requirements/'+id,
+            'DELETE',
+            data,
+            'Requirements Successfully Added!',
+            true,
+            '',
+            false,
+        );
     });
 });
 
@@ -107,7 +143,7 @@ $(document).on('click','.edit-row-description-btn',function(){
     {
         $('.edit-desc-inputs').append('<div class="row edit-row-description">\n' +
             '                                    <div class="col-sm-9">\n' +
-            '                                        <input type="text" name="description[]" class="form-control description"/>\n' +
+            '                                        <input type="text" name="edit_description[]" class="form-control edit_description"/>\n' +
             '                                    </div>\n' +
             '                                    <div class="col-sm-3">\n' +
             '                                        <button type="button" class="btn btn-success edit-row-description-btn" value="plus"><i class="fa fa-plus"></i></button>\n' +
@@ -148,8 +184,12 @@ $(document).on('click','.edit-btn',function(){
                     '                                    </div>\n' +
                     '                                </div>');
             });
-
-            console.log(result.description);
         }
     });
+});
+
+$(document).on('click','.delete-requirements-btn',function(){
+    let id = this.id;
+
+    $('#deleteRequirementsId').val(id);
 });
