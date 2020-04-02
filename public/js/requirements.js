@@ -97,3 +97,59 @@ $(document).on('click','.row-description-btn',function(){
         this.closest('.row-description').remove();
     }
 });
+
+$(document).on('click','.edit-row-description-btn',function(){
+    let value = this.value;
+
+    let row = $('.edit-row-description');
+
+    if(value == 'plus')
+    {
+        $('.edit-desc-inputs').append('<div class="row edit-row-description">\n' +
+            '                                    <div class="col-sm-9">\n' +
+            '                                        <input type="text" name="description[]" class="form-control description"/>\n' +
+            '                                    </div>\n' +
+            '                                    <div class="col-sm-3">\n' +
+            '                                        <button type="button" class="btn btn-success edit-row-description-btn" value="plus"><i class="fa fa-plus"></i></button>\n' +
+            '                                        <button type="button" class="btn btn-danger edit-row-description-btn" value="minus"><i class="fa fa-minus"></i></button>\n' +
+            '                                    </div>\n' +
+            '                                </div>');
+    }else{
+        this.closest('.edit-row-description').remove();
+    }
+});
+
+$(document).on('click','.edit-btn',function(){
+    let id = this.id;
+
+
+    $.ajax({
+        'url' : '/get-requirements',
+        'type' : 'POST',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'data' : {'id':id},
+        beforeSend: function(){
+            $('.edit-row-description').remove();
+        },
+        success: function(result){
+            $('#updateRequirementId').val(id);
+            $('#edit_title').val(result.requirements.title);
+            $('#edit_project').val(result.project).change();
+            $('#edit_financing_type').val(result.requirements.type).change();
+
+            $.each(result.description, function (key, value) {
+                $('.edit-desc-inputs').append('<div class="row edit-row-description">\n' +
+                    '                                    <div class="col-sm-9">\n' +
+                    '                                        <input type="text" name="edit_description[]" class="form-control edit_description" value="'+value+'"/>\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="col-sm-3">\n' +
+                    '                                        <button type="button" class="btn btn-success edit-row-description-btn" value="plus"><i class="fa fa-plus"></i></button>\n' +
+                    '                                        <button type="button" class="btn btn-danger edit-row-description-btn" value="minus"><i class="fa fa-minus"></i></button>\n' +
+                    '                                    </div>\n' +
+                    '                                </div>');
+            });
+
+            console.log(result.description);
+        }
+    });
+});

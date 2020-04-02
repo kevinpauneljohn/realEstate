@@ -149,17 +149,9 @@
                                     <option value="HDMF">HDMF</option>
                                 </select>
                             </div>
-                            <div class="form-group desc-inputs">
+                            <div class="form-group edit-desc-inputs">
                                 <label>Description</label>
-                                <div class="row row-description">
-                                    <div class="col-sm-9">
-                                        <input type="text" name="edit_description[]" class="form-control description"/>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <button type="button" class="btn btn-success row-description-btn" value="plus"><i class="fa fa-plus"></i></button>
-                                        <button type="button" class="btn btn-danger row-description-btn" value="minus"><i class="fa fa-minus"></i></button>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -206,7 +198,7 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
-        .desc-inputs .row-description{
+        .desc-inputs .row-description, .edit-desc-inputs .edit-row-description{
             margin-top:2px!important;
         }
         .project-badge{

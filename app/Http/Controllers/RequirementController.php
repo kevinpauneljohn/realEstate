@@ -58,7 +58,7 @@ class RequirementController extends Controller
                 }
                 if(auth()->user()->can('edit sales'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary view-btn" id="'.$requirement->id.'" data-toggle="modal" data-target="#edit-requirement-modal"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn" id="'.$requirement->id.'" data-toggle="modal" data-target="#edit-requirement-modal"><i class="fa fa-edit"></i> Edit</a>';
                 }
                 if(auth()->user()->can('delete sales'))
                 {
@@ -68,6 +68,14 @@ class RequirementController extends Controller
             })
             ->rawColumns(['action','project_id','description'])
             ->make(true);
+    }
+
+    public function getRequirements(Request $request)
+    {
+        $requirements = Requirement::findOrFail($request->id);
+        $project = json_decode($requirements->project_id);
+        $description = json_decode($requirements->description);
+        return response()->json(['requirements' => $requirements, 'project' => $project, 'description' => $description]);
     }
 
     /**
