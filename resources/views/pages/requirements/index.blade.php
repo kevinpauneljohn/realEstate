@@ -88,7 +88,7 @@
                                 <input type="text" name="title" class="form-control" id="title">
                             </div>
                             <div class="form-group financing_type">
-                                <label for="type">Financing Type</label><span class="required">*</span>
+                                <label for="financing_type">Financing Type</label><span class="required">*</span>
                                 <select name="financing_type" class="form-control" id="financing_type">
                                     <option value=""> -- Select -- </option>
                                     <option value="INHOUSE">INHOUSE</option>

@@ -70,9 +70,9 @@ $(document).ready(function(){
             'POST',
             data,
             'Requirements Successfully Added!',
-            false,
-            '',
             true,
+            '',
+            false,
         );
     });
 });
