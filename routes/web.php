@@ -113,5 +113,6 @@ Route::put('/change-password','UserController@changePasswordValidate')->name('us
 
 /*requirements*/
 Route::get('/requirements','RequirementController@index')->name('requirements.index')->middleware(['auth','permission:view requirements']);
+Route::post('/requirements','RequirementController@store')->name('requirements.store')->middleware(['auth','permission:add requirements']);
 
 
