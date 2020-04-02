@@ -17,7 +17,7 @@ class CreateRequirementsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title')->nullable();
             $table->text('project_id');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('type');
             $table->timestamps();
             $table->softDeletes();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RequirementController extends Controller
 {
@@ -37,7 +38,9 @@ class RequirementController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        $validator = Validator::make($request->all(),[
+
+        ]);
     }
 
     /**
