@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Lead;
+use App\ModelUnit;
 use App\Project;
 use App\Requirement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
 
 class RequirementController extends Controller
 {
@@ -19,6 +22,52 @@ class RequirementController extends Controller
         return view('pages.requirements.index')->with([
             'projects'   => Project::all(),
         ]);
+    }
+
+    public function requirements_list()
+    {
+        $requirements = Requirement::all();
+        return DataTables::of($requirements)
+            ->editColumn('project_id',function($requirement){
+                $project = json_decode($requirement->project_id);
+                $projects = "";
+                foreach ($project as $id)
+                {
+
+                    $projects .= '<span class="right badge badge-info project-badge">'.Project::find($id)->name.'</span>';
+                }
+                return $projects;
+            })
+            ->editColumn('description',function($requirement){
+                $description = "<ul>";
+
+                    foreach(json_decode($requirement->description) as $desc)
+                    {
+                        $description .= '<li>'.$desc.'</li>';
+                    }
+                    $description .= '</ul>';
+
+                    return $description;
+            })
+            ->addColumn('action', function ($requirement)
+            {
+                $action = "";
+                if(auth()->user()->can('view requirements'))
+                {
+                    $action .= '<button class="btn btn-xs btn-success view-sales-btn" id="'.$requirement->id.'" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i> View</button>';
+                }
+                if(auth()->user()->can('edit sales'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs btn-primary view-btn" id="'.$requirement->id.'" data-toggle="modal" data-target="#edit-requirement-modal"><i class="fa fa-edit"></i> Edit</a>';
+                }
+                if(auth()->user()->can('delete sales'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$requirement->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
+                }
+                return $action;
+            })
+            ->rawColumns(['action','project_id','description'])
+            ->make(true);
     }
 
     /**

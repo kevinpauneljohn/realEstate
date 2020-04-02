@@ -19,40 +19,30 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            @can('add sales')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-requirements-modal"><i class="fa fa-plus-circle"></i> Add Sales</button>
+            @can('add requirements')
+                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-requirements-modal"><i class="fa fa-plus-circle"></i> Add Requirements</button>
             @endcan
 
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
-                <table id="sales-list" class="table table-bordered table-striped" role="grid">
+                <table id="requirements-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
-                        <th width="5%">Date Reserved</th>
-                        <th>Full Name</th>
+                        <th>Title</th>
                         <th>Project</th>
-                        <th>Model Unit</th>
-                        <th>Total Contract Price</th>
-                        <th>Discount</th>
-                        <th>Financing</th>
-                        <th>Rate</th>
-                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Type</th>
                         <th>Action</th>
                     </tr>
                     </thead>
 
                     <tfoot>
                     <tr>
-                        <th>Date Reserved</th>
-                        <th>Full Name</th>
-                        <th>Project</th>
-                        <th>Model Unit</th>
-                        <th>Total Contract Price</th>
-                        <th>Discount</th>
-                        <th>Financing</th>
-                        <th>Rate</th>
-                        <th>Status</th>
+                        <th width="15%">Title</th>
+                        <th width="25%">Project</th>
+                        <th width="35%">Description</th>
+                        <th>Type</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -77,7 +67,7 @@
                         <div class="modal-body">
                             <div class="form-group project">
                                 <label>Assign Project</label><span class="required">*</span>
-                                <select class="select2" name="project[]" id="project" multiple="multiple" data-placeholder="Select a role" style="width: 100%;">
+                                <select class="select2" name="project[]" id="project" multiple="multiple" data-placeholder="Select a project" style="width: 100%;">
                                     @foreach($projects as $project)
                                         <option value="{{$project->id}}">{{$project->name}}</option>
                                     @endforeach
@@ -124,11 +114,11 @@
 
     @can('edit project')
         <!--edit role modal-->
-        <div class="modal fade" id="edit-project-modal">
-            <form role="form" id="edit-project-form" class="form-submit">
+        <div class="modal fade" id="edit-requirement-modal">
+            <form role="form" id="edit-requirement-form" class="form-submit">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="updateProjectId" id="updateProjectId">
+                <input type="hidden" name="updateRequirementId" id="updateRequirementId">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -138,21 +128,38 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group edit_name">
-                                <label for="edit_name">Project Name</label>
-                                <input type="text" name="edit_name" class="form-control" id="edit_name">
+                            <div class="form-group edit_project">
+                                <label>Assign Project</label><span class="required">*</span>
+                                <select class="select2" name="edit_project[]" id="edit_project" multiple="multiple" data-placeholder="Select a project" style="width: 100%;">
+                                    @foreach($projects as $project)
+                                        <option value="{{$project->id}}">{{$project->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="form-group edit_address">
-                                <label for="edit_address">Address</label>
-                                <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
+                            <div class="form-group edit_title">
+                                <label for="edit_title">Title</label><span>(Optional)</span>
+                                <input type="text" name="edit_title" class="form-control" id="edit_title">
                             </div>
-                            <div class="form-group edit_remarks">
-                                <label for="edit_remarks">Remarks</label>
-                                <textarea name="edit_remarks" id="edit_remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                            <div class="form-group edit_financing_type">
+                                <label for="edit_financing_type">Financing Type</label><span class="required">*</span>
+                                <select name="edit_financing_type" class="form-control" id="edit_financing_type">
+                                    <option value=""> -- Select -- </option>
+                                    <option value="INHOUSE">INHOUSE</option>
+                                    <option value="BANK">BANK</option>
+                                    <option value="HDMF">HDMF</option>
+                                </select>
                             </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <div class="form-group desc-inputs">
+                                <label>Description</label>
+                                <div class="row row-description">
+                                    <div class="col-sm-9">
+                                        <input type="text" name="edit_description[]" class="form-control description"/>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button type="button" class="btn btn-success row-description-btn" value="plus"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="btn btn-danger row-description-btn" value="minus"><i class="fa fa-minus"></i></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -202,6 +209,9 @@
         .desc-inputs .row-description{
             margin-top:2px!important;
         }
+        .project-badge{
+            margin-right:2px;
+        }
     </style>
 @stop
 
@@ -212,43 +222,17 @@
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
     @can('view sales')
         <script src="{{asset('js/requirements.js')}}"></script>
-        <!-- Summernote -->
-        <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
-        <script>
-
-            $(function () {
-                // Summernote
-                $('.textarea').summernote({
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['fontname', ['fontname']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['insert', ['link']],
-                        ['height', ['height']],
-                        ['view', ['fullscreen']],
-                    ],
-                    lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
-                });
-            })
-        </script>
         <script>
             $(function() {
-                $('#sales-list').DataTable({
+                $('#requirements-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('sales.list') !!}',
+                    ajax: '{!! route('requirements.list') !!}',
                     columns: [
-                        { data: 'reservation_date', name: 'reservation_date'},
-                        { data: 'full_name', name: 'full_name'},
-                        { data: 'project', name: 'project'},
-                        { data: 'model_unit', name: 'model_unit'},
-                        { data: 'total_contract_price', name: 'total_contract_price'},
-                        { data: 'discount', name: 'discount'},
-                        { data: 'financing', name: 'financing'},
-                        { data: 'commission_rate', name: 'commission_rate'},
-                        { data: 'status', name: 'status'},
+                        { data: 'title', name: 'title'},
+                        { data: 'project_id', name: 'project_id'},
+                        { data: 'description', name: 'description'},
+                        { data: 'type', name: 'type'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
@@ -257,10 +241,6 @@
             });
             //Initialize Select2 Elements
             $('.select2').select2();
-            $('#reservation_date').datepicker({
-                autoclose: true,
-                format: 'yyyy-mm-dd'
-            });
         </script>
     @endcan
 @stop

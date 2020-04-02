@@ -104,7 +104,9 @@ Route::post('/commissions','CommissionController@store')->name('commissions.stor
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-   // return $_SESSION['collapse'];
+   $requirements = \App\Requirement::find(1)->first();
+   echo $requirements->project_id;
+
 });
 
 /*change password*/
@@ -114,5 +116,6 @@ Route::put('/change-password','UserController@changePasswordValidate')->name('us
 /*requirements*/
 Route::get('/requirements','RequirementController@index')->name('requirements.index')->middleware(['auth','permission:view requirements']);
 Route::post('/requirements','RequirementController@store')->name('requirements.store')->middleware(['auth','permission:add requirements']);
+Route::get('/requirements-list','RequirementController@requirements_list')->name('requirements.list')->middleware(['auth','permission:view requirements']);
 
 
