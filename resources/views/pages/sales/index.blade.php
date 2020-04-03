@@ -139,38 +139,53 @@
                                     <span class="sr-only">Loading...</span>
                                 </div>
                             </div>
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#sales-details">Sales Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#sales-requirements">Requirements</a>
+                                </li>
+                            </ul>
 
-                            <div class="row">
-                                <div class="col-lg-5 sales-details">
-                                    <table class="table table-bordered table-hover">
-                                        <tbody>
-                                        <tr><td>Status</td><td id="sale-status"></td></tr>
-                                        <tr><td>Date Of Reservation</td><td id="reservation-date"></td></tr>
-                                        <tr><td>Buyer's Name</td><td id="buyer-name"></td></tr>
-                                        <tr><td>Contact Number</td><td id="contact-number"></td></tr>
-                                        <tr><td>Email</td><td id="email-address"></td></tr>
-                                        <tr><td>Commission Rate</td><td id="commission-rate"></td></tr>
-                                        </tbody>
-                                    </table>
+                            <div class="tab-content">
+                                <div id="sales-details" class="container tab-pane active">
+                                    <div class="row">
+                                        <div class="col-lg-5 sales-details">
+                                            <table class="table table-bordered table-hover">
+                                                <tbody>
+                                                <tr><td>Status</td><td id="sale-status"></td></tr>
+                                                <tr><td>Date Of Reservation</td><td id="reservation-date"></td></tr>
+                                                <tr><td>Buyer's Name</td><td id="buyer-name"></td></tr>
+                                                <tr><td>Contact Number</td><td id="contact-number"></td></tr>
+                                                <tr><td>Email</td><td id="email-address"></td></tr>
+                                                <tr><td>Commission Rate</td><td id="commission-rate"></td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-7 sales-details">
+                                            <table class="table table-bordered table-hover">
+                                                <tbody>
+                                                <tr><td>Project</td><td id="project-name"></td></tr>
+                                                <tr><td>Model Unit</td><td id="model-unit-name"></td></tr>
+                                                <tr><td>Lot Area</td><td id="lot-area"></td></tr>
+                                                <tr><td>Floor Area</td><td id="floor-area"></td></tr>
+                                                <tr><td>Phase / Block / Lot</td><td id="location"></td></tr>
+                                                <tr><td>Total Contract Price</td><td id="total-contract-price"></td></tr>
+                                                <tr><td>Discount</td><td id="discount-amount"></td></tr>
+                                                <tr><td>Processing Fee</td><td id="processing-fee"></td></tr>
+                                                <tr><td>Reservation Fee</td><td id="reservation-fee"></td></tr>
+                                                <tr><td>Equity</td><td id="equity-amount"></td></tr>
+                                                <tr><td>Loanable Amount</td><td id="loanable-amount"></td></tr>
+                                                <tr><td>Financing Terms</td><td id="financing-terms"></td></tr>
+                                                <tr><td>Equity/Down Payment Terms</td><td id="dp-terms"></td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-7 sales-details">
-                                    <table class="table table-bordered table-hover">
-                                        <tbody>
-                                        <tr><td>Project</td><td id="project-name"></td></tr>
-                                        <tr><td>Model Unit</td><td id="model-unit-name"></td></tr>
-                                        <tr><td>Lot Area</td><td id="lot-area"></td></tr>
-                                        <tr><td>Floor Area</td><td id="floor-area"></td></tr>
-                                        <tr><td>Phase / Block / Lot</td><td id="location"></td></tr>
-                                        <tr><td>Total Contract Price</td><td id="total-contract-price"></td></tr>
-                                        <tr><td>Discount</td><td id="discount-amount"></td></tr>
-                                        <tr><td>Processing Fee</td><td id="processing-fee"></td></tr>
-                                        <tr><td>Reservation Fee</td><td id="reservation-fee"></td></tr>
-                                        <tr><td>Equity</td><td id="equity-amount"></td></tr>
-                                        <tr><td>Loanable Amount</td><td id="loanable-amount"></td></tr>
-                                        <tr><td>Financing Terms</td><td id="financing-terms"></td></tr>
-                                        <tr><td>Equity/Down Payment Terms</td><td id="dp-terms"></td></tr>
-                                        </tbody>
-                                    </table>
+                                <div id="sales-requirements" class="container tab-pane fade">
+
                                 </div>
                             </div>
                         </div>
@@ -393,8 +408,8 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
-        .delete_role{
-            font-size: 20px;
+        .tab-pane{
+            padding-top:10px;
         }
     </style>
 @stop
