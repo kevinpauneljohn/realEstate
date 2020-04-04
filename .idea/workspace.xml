@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommissionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommissionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/commission.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/commission.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/users/commissions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/commissions.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +19,7 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.28550074">
+    <splitter split-orientation="horizontal" split-proportion="0.132287">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -42,11 +40,20 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/js/commission.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="474">
-                  <caret line="91" column="86" selection-start-line="91" selection-start-column="86" selection-end-line="91" selection-end-column="86" />
+                <state relative-caret-position="423">
+                  <caret line="90" column="73" selection-start-line="90" selection-start-column="73" selection-end-line="90" selection-end-column="73" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/resources/views/pages/users/index.blade.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="327">
+                  <caret line="140" column="24" lean-forward="true" selection-start-line="140" selection-start-column="24" selection-end-line="145" selection-end-column="30" />
                 </state>
               </provider>
             </entry>
@@ -79,20 +86,20 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/users/commissions.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="304">
-                  <caret line="136" column="103" selection-start-line="136" selection-start-column="88" selection-end-line="136" selection-end-column="103" />
+                <state relative-caret-position="270">
+                  <caret line="125" column="66" selection-start-line="125" selection-start-column="66" selection-end-line="125" selection-end-column="66" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommissionController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="389">
-                  <caret line="189" column="90" selection-start-line="189" selection-start-column="90" selection-end-line="189" selection-end-column="90" />
+                <state relative-caret-position="491">
+                  <caret line="197" selection-start-line="197" selection-end-line="197" />
                 </state>
               </provider>
             </entry>
@@ -226,10 +233,10 @@
         <option value="$PROJECT_DIR$/app/Project.php" />
         <option value="$PROJECT_DIR$/app/Commission.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/users/commissions.blade.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/public/js/commission.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommissionController.php" />
+        <option value="$PROJECT_DIR$/public/js/commission.js" />
+        <option value="$PROJECT_DIR$/resources/views/pages/users/commissions.blade.php" />
       </list>
     </option>
   </component>
@@ -513,21 +520,7 @@
       <workItem from="1585664411669" duration="11694000" />
       <workItem from="1585779654299" duration="32884000" />
       <workItem from="1585912627505" duration="1058000" />
-      <workItem from="1585957611144" duration="12740000" />
-    </task>
-    <task id="LOCAL-00159" summary="change password">
-      <created>1585230722622</created>
-      <option name="number" value="00159" />
-      <option name="presentableId" value="LOCAL-00159" />
-      <option name="project" value="LOCAL" />
-      <updated>1585230722622</updated>
-    </task>
-    <task id="LOCAL-00160" summary="change password">
-      <created>1585325861367</created>
-      <option name="number" value="00160" />
-      <option name="presentableId" value="LOCAL-00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1585325861367</updated>
+      <workItem from="1585957611144" duration="14063000" />
     </task>
     <task id="LOCAL-00161" summary="change password">
       <created>1585326029321</created>
@@ -858,11 +851,25 @@
       <option name="project" value="LOCAL" />
       <updated>1585964979252</updated>
     </task>
-    <option name="localTasksCounter" value="208" />
+    <task id="LOCAL-00208" summary="added add_project_column_to_commissions migrations">
+      <created>1585971885788</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1585971885789</updated>
+    </task>
+    <task id="LOCAL-00209" summary="added add_project_column_to_commissions migrations">
+      <created>1586023443565</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1586023443581</updated>
+    </task>
+    <option name="localTasksCounter" value="210" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="388727000" />
+    <option name="totallyTimeSpent" value="390050000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1084,13 +1091,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/users/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="242" column="8" selection-start-line="242" selection-start-column="8" selection-end-line="265" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../ftp_site/public/js/product.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1222,24 +1222,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/users/commissions.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommissionController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="136" column="103" selection-start-line="136" selection-start-column="88" selection-end-line="136" selection-end-column="103" />
+        <state relative-caret-position="491">
+          <caret line="197" selection-start-line="197" selection-end-line="197" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/commission.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="91" column="86" selection-start-line="91" selection-start-column="86" selection-end-line="91" selection-end-column="86" />
+        <state relative-caret-position="423">
+          <caret line="90" column="73" selection-start-line="90" selection-start-column="73" selection-end-line="90" selection-end-column="73" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommissionController.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/users/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="189" column="90" selection-start-line="189" selection-start-column="90" selection-end-line="189" selection-end-column="90" />
+        <state relative-caret-position="327">
+          <caret line="140" column="24" lean-forward="true" selection-start-line="140" selection-start-column="24" selection-end-line="145" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/users/commissions.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="125" column="66" selection-start-line="125" selection-start-column="66" selection-end-line="125" selection-end-column="66" />
         </state>
       </provider>
     </entry>

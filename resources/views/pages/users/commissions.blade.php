@@ -122,6 +122,12 @@
                 <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Commission</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
                         <div class="modal-body">
                             <div class="form-group project">
                                 <label for="project">Project</label> <span>(Optional)</span>
@@ -143,7 +149,7 @@
                                 </select>
                             </div>
                             <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="reset" class="btn btn-default">Reset</button>
                                 <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                             </div>
                         </div>

@@ -88,6 +88,7 @@ $(document).on('change','#project',function(){
                 $('#commission_rate').html("");
             },
             success: function (result) {
+                $('#commission_rate').append('<option value=""> -- Select -- </option>');
                 $.each(result, function (key, value) {
                     $('#commission_rate').append('<option value="'+value+'">'+value+'%</option>');
                 });
