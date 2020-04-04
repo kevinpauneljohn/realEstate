@@ -87,6 +87,7 @@
                                     <tr role="row">
                                         <th>Date Assigned</th>
                                         <th>Commission Rate</th>
+                                        <th>Project</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -95,6 +96,7 @@
                                     <tr>
                                         <th>Date Assigned</th>
                                         <th>Commission Rate</th>
+                                        <th>Project</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>
@@ -121,7 +123,7 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <div class="form-group commission_rate">
+                            <div class="form-group commission_rate"><span class="required">*</span>
                                 <label for="commission_rate">Commission Rate</label>
                                 <select class="form-control" name="commission_rate" id="commission_rate">
                                     <option value=""> -- Select -- </option>
@@ -129,6 +131,15 @@
                                             <option value="{{$ctr-0.5}}">{{$ctr-0.5}}%</option>
                                             <option value="{{$ctr}}">{{$ctr}}%</option>
                                         @endfor
+                                </select>
+                            </div>
+                            <div class="form-group project">
+                                <label for="project">Project</label>
+                                <select class="form-control" name="project" id="project">
+                                    <option value=""> -- Select -- </option>
+                                    @foreach($projects as $project)
+                                        <option value="{{$project->id}}">{{$project->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="modal-footer justify-content-between">
@@ -218,6 +229,7 @@
                     columns: [
                         { data: 'created_at', name: 'created_at'},
                         { data: 'commission_rate', name: 'commission_rate'},
+                        { data: 'project_id', name: 'project_id'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

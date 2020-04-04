@@ -305,7 +305,8 @@ class UserController extends Controller
         return view('pages.users.commissions')->with([
             'user'  => $user,
             'rate_limit' => $rate_limit,
-            'upline' => User::findOrFail($user->upline_id)
+            'upline' => User::findOrFail($user->upline_id),
+            'projects'  => Project::all(),
         ]);
     }
     /**

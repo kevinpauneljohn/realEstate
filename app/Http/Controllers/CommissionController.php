@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commission;
+use App\Project;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -51,6 +52,7 @@ class CommissionController extends Controller
             $commission = new Commission();
             $commission->user_id = $request->user_id;
             $commission->commission_rate = $request->commission_rate;
+            $commission->project_id = $request->project;
 
             if($commission->save())
             {
@@ -70,6 +72,20 @@ class CommissionController extends Controller
     {
         $commissions = Commission::where('user_id',$id)->get();
         return DataTables::of($commissions)
+            ->editColumn('commission_rate',function($commission){
+                $rate = "";
+                if($commission->commission_rate != null)
+                {
+                    $rate = $commission->commission_rate.'%';
+                }
+                return $rate;
+            })
+            ->editColumn('project_id',function($commission){
+                if($commission->project_id != null)
+                {
+                    return $commission->project->name;
+                }
+            })
             ->addColumn('action', function ($commission)
             {
                 $action = "";

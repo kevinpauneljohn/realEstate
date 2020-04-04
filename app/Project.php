@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Project extends Model
 {
     use SoftDeletes;
+
+    public function commissions()
+    {
+        return $this->hasMany(Commission::class);
+    }
 }

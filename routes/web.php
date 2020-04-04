@@ -104,9 +104,14 @@ Route::post('/commissions','CommissionController@store')->name('commissions.stor
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-   $requirements = \App\Requirement::find(1)->first();
-   echo $requirements->project_id;
 
+    $user = \App\User::find('5ed07945-931b-48d6-89ca-22a8f28b9abb');
+//    if($user->commissions()->where('project_id','=',2)->count() > 0){
+//        return 'greater';
+//    }
+//    return 'equal';
+
+    return $user->commissions()->where('project_id','=',1)->first()->commission_rate;
 });
 
 /*change password*/

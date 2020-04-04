@@ -165,7 +165,13 @@ class SalesController extends Controller
 
             if(!$user->hasRole('super admin'))
             {
-                $user_rate =  $user->commissions()->first()->commission_rate;/*get the user commission rate*/
+                if($user->commissions()->where('project_id','=',$project_id)->count() > 0)
+                {
+                    /*if the commission was set to a specific project and it matches the sales project id*/
+                    $user_rate = $user->commissions()->where('project_id','=',1)->first()->commission_rate;
+                }else{
+                    $user_rate =  $user->commissions()->where('project_id','=',null)->first()->commission_rate;/*get the user commission rate*/
+                }
 
                 /*this conditional statement will be used if the commission rate offers by the project is lower
                 or equal to the user's commission rate*/
