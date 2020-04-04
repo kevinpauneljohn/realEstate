@@ -174,9 +174,6 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
-        .delete_role{
-            font-size: 20px;
-        }
         small{
             margin: 2px;
         }

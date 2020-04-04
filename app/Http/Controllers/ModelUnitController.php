@@ -75,6 +75,22 @@ class ModelUnitController extends Controller
     {
         $model_units = ModelUnit::all();
         return DataTables::of($model_units)
+            ->editColumn('lot_area',function($model_unit){
+                $lot_area = "";
+                if($model_unit->lot_area != null)
+                {
+                    $lot_area = $model_unit->lot_area.' sqm';
+                }
+                return $lot_area;
+            })
+            ->editColumn('floor_area',function($model_unit){
+                $floor_area = "";
+                if($model_unit->floor_area != null)
+                {
+                    $floor_area = $model_unit->floor_area.' sqm';
+                }
+                return $floor_area;
+            })
             ->addColumn('project_name',function($model_unit){
                 return Project::find($model_unit->project_id)->name;
             })

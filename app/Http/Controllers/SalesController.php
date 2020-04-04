@@ -73,6 +73,7 @@ class SalesController extends Controller
             'project'  => 'required',
             'model_unit'  => 'required',
             'total_contract_price'  => 'required',
+            'financing'  => 'required',
         ],[
             'reservation_date.required' => 'Reservation Date is required'
         ]);
@@ -327,5 +328,18 @@ class SalesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * April 05, 2020
+     * @author john kevin paunel
+     * get the details of model unit
+     * @param int $id
+     * @return mixed
+     * */
+    public function model_unit_details($id)
+    {
+        $model_unit = ModelUnit::findOrFail($id);
+        return $model_unit;
     }
 }

@@ -97,6 +97,7 @@ Route::post('/sales','SalesController@store')->name('sales.store')->middleware([
 Route::get('/sales-list','SalesController@sales_list')->name('sales.list')->middleware(['auth','permission:view sales']);
 Route::get('/user-sales-list/{id}','UserController@user_sales_list')->name('users.sales.list')->middleware(['auth','permission:view sales']);
 Route::get('/sales/{sale}','SalesController@show')->name('sales.show')->middleware(['auth','permission:view sales']);
+Route::get('/get-model-unit-details/{modelUnit}','SalesController@model_unit_details')->name('model.units.details')->middleware(['auth']);
 
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commissions']);

@@ -78,7 +78,7 @@ $(document).ready(function () {
             '',
             false,
         );
-        clear_errors('reservation_date','buyer');
+        clear_errors('reservation_date','buyer','project','model_unit','total_contract_price','financing');
     })
 });
 
@@ -186,6 +186,20 @@ $(document).on('click','.view-sales-btn',function(){
             $('#loanable-amount').html('<strong>&#8369; '+loan_amount.toLocaleString()+'</strong>');
             $('#financing-terms').html('<strong>'+result.sales.financing+'</strong>');
             $('#dp-terms').html('<strong>'+equity_terms+'</strong>');
+        }
+    });
+});
+
+$(document).on('change','#model_unit',function(){
+    let value = this.value;
+
+    $.ajax({
+        'url' : '/get-model-unit-details/'+value,
+        'type' : 'GET',
+        success: function(result)
+        {
+            $('#lot_area').val(result.lot_area);
+            $('#floor_area').val(result.floor_area);
         }
     });
 });

@@ -101,17 +101,17 @@
                                     </div>
                                     <div class="form-group floor_level">
                                         <label for="floor_level">Floor Level</label><span class="required">*</span>
-                                        <input type="text" name="floor_level" id="floor_level" class="form-control">
+                                        <input type="number" name="floor_level" id="floor_level" class="form-control" min="0">
                                     </div>
                                     <div class="form-group lot_area">
                                         <label for="lot_area">Lot Area</label><span class="required">*</span>
-                                        <input type="text" name="lot_area" id="lot_area" class="form-control">
+                                        <input type="number" name="lot_area" id="lot_area" class="form-control" step="0.01" min="0">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group floor_area">
                                         <label for="floor_area">Floor Area</label><span class="required">*</span>
-                                        <input type="text" name="floor_area" id="floor_area" class="form-control">
+                                        <input type="number" name="floor_area" id="floor_area" class="form-control" step="0.01" min="0">
                                     </div>
                                     <div class="form-group description">
                                         <label for="description">Description</label>
