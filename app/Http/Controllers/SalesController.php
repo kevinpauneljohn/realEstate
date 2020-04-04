@@ -165,6 +165,7 @@ class SalesController extends Controller
 
             if(!$user->hasRole('super admin'))
             {
+                /*this will check if the project id is available on users commissions table project id column*/
                 if($user->commissions()->where('project_id','=',$project_id)->count() > 0)
                 {
                     /*if the commission was set to a specific project and it matches the sales project id*/
