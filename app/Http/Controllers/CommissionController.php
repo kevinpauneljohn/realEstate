@@ -150,6 +150,7 @@ class CommissionController extends Controller
     /**
      * March 04,2020
      * @author john kevin paunel
+     * will set the maximum commission rate depending on the project and up line commission rate
      * @param int $project_id
      * @return mixed
      * */
@@ -194,6 +195,7 @@ class CommissionController extends Controller
             $option[$ctr] = $commission - 0;
             $commission = $commission - 0.5;
         }
+
         return $option;
     }
 }
