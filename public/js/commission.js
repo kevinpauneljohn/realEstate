@@ -74,3 +74,24 @@ $(document).ready(function () {
         );
     });
 });
+
+
+$(document).on('change','#project',function(){
+    let value = this.value;
+
+    if(value != "")
+    {
+        $.ajax({
+            'url' : '/upline-commission/'+value,
+            'type' : 'GET',
+            beforeSend: function(){
+                $('#commission_rate').html("");
+            },
+            success: function (result) {
+                $.each(result, function (key, value) {
+                    $('#commission_rate').append('<option value="'+value+'">'+value+'%</option>');
+                });
+            }
+        });
+    }
+});

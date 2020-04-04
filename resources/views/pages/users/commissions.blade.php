@@ -123,6 +123,15 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-body">
+                            <div class="form-group project">
+                                <label for="project">Project</label> <span>(Optional)</span>
+                                <select class="form-control" name="project" id="project">
+                                    <option value=""> -- Select -- </option>
+                                    @foreach($projects as $project)
+                                        <option value="{{$project->id}}">{{$project->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="form-group commission_rate"><span class="required">*</span>
                                 <label for="commission_rate">Commission Rate</label>
                                 <select class="form-control" name="commission_rate" id="commission_rate">
@@ -131,15 +140,6 @@
                                             <option value="{{$ctr-0.5}}">{{$ctr-0.5}}%</option>
                                             <option value="{{$ctr}}">{{$ctr}}%</option>
                                         @endfor
-                                </select>
-                            </div>
-                            <div class="form-group project">
-                                <label for="project">Project</label>
-                                <select class="form-control" name="project" id="project">
-                                    <option value=""> -- Select -- </option>
-                                    @foreach($projects as $project)
-                                        <option value="{{$project->id}}">{{$project->name}}</option>
-                                    @endforeach
                                 </select>
                             </div>
                             <div class="modal-footer justify-content-between">

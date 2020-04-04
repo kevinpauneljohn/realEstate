@@ -146,4 +146,54 @@ class CommissionController extends Controller
     {
         //
     }
+
+    /**
+     * March 04,2020
+     * @author john kevin paunel
+     * @param int $project_id
+     * @return mixed
+     * */
+    public function getUpLineCommissionOnAProject($project_id)
+    {
+        $user = auth()->user();
+
+        if($user->hasRole('super admin'))
+        {
+            /*if the user is a a super admin*/
+            $project = Project::find($project_id);
+
+            /*commission will be based on project rate*/
+            if($project->commission_rate > 4)
+            {
+                /*the maximum commission rate for down lines is only 4%*/
+                $commission = 4;
+            }else{
+                $commission = $project->commission_rate - 0.5;
+            }
+
+        }else{
+            /*if the user is not a super admin*/
+
+            /*commission will be based on up line rate per project*/
+            $rate = $user->commissions()->where('project_id','=',$project_id);
+
+            if($rate->count() > 0)
+            {
+                $commission = $rate->first()->commission_rate;
+            }else{
+                $commission = $user->commissions()->where('project_id','=',null)->first()->commission_rate;
+            }
+            $commission = $commission - 0.5;
+        }
+
+
+        /*this will be used as a drop down for commission rate found on commission.js file*/
+        $option = array();
+        for($ctr = 0; $commission > 0; $ctr++)
+        {
+            $option[$ctr] = $commission - 0;
+            $commission = $commission - 0.5;
+        }
+        return $option;
+    }
 }
