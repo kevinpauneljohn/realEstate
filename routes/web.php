@@ -107,13 +107,30 @@ Route::get('/upline-commission/{project}','CommissionController@getUpLineCommiss
 
 Route::get('/test',function(){
 
-    $user = \App\User::find('5ed07945-931b-48d6-89ca-22a8f28b9abb');
-//    if($user->commissions()->where('project_id','=',2)->count() > 0){
-//        return 'greater';
-//    }
-//    return 'equal';
+    $requirements = \App\Requirement::all();
+    $document = array();
+    $ctr = 0;
+    foreach ($requirements as $requirement)
+    {
+        foreach (json_decode($requirement->project_id) as $val)
+        {
 
-    return $user->commissions()->where('project_id','=',1)->first()->commission_rate;
+
+            if($val == 1 && $requirement->type == 'HDMF')
+            {
+                //echo $val." ".$requirement->type."<br/>";
+               $document[$ctr] = \App\Requirement::where([
+                   ['id','=',$requirement->id],
+                   ['type','=','HDMF'],
+               ])->get();
+               $ctr++;
+            }
+           //
+        }
+    }
+    return $document;
+
+
 });
 
 /*change password*/

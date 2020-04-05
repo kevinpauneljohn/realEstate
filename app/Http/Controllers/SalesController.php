@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
+use App\Requirement;
 use App\Sales;
 use App\User;
 use Illuminate\Http\Request;
@@ -293,7 +294,40 @@ class SalesController extends Controller
             'leads' => $lead,
             'project' => $project,
             'model_unit' => $model_unit,
+            'requirements' => $this->getRequirements($sales->project_id, $sales->financing),
         ]);
+    }
+
+    /**
+     * March 05, 2020
+     * @author john kevin paunel
+     * get the sales requirement
+     * @param int $project_id
+     * @param string $financing_type
+     * @return array
+     * */
+    public function getRequirements($project_id, $financing_type)
+    {
+        $requirements = Requirement::all(); /*get all the requirements template*/
+        $document = array(); /*instantiate for storing array*/
+        $ctr = 0;
+        foreach ($requirements as $requirement)
+        {
+            /*get the project id's of a specific requirement row*/
+            foreach (json_decode($requirement->project_id) as $val)
+            {
+                if($val == $project_id && $requirement->type == $financing_type)
+                {
+                    /*if the sales project id and financing type matches the requirement row details returns true*/
+                    $document[$ctr] = \App\Requirement::where([
+                        ['id','=',$requirement->id],
+                        ['type','=','HDMF'],
+                    ])->get();
+                    $ctr++;
+                }
+            }
+        }
+        return $document;
     }
 
     /**

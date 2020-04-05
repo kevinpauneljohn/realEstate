@@ -123,6 +123,7 @@ $(document).on('click','.view-sales-btn',function(){
             $('.sales-details').hide();
         },
         success: function(result){
+            console.log(result);
             $('.image-loader').hide();
             $('.sales-details').show();
 
