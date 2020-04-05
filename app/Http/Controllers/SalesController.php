@@ -319,7 +319,7 @@ class SalesController extends Controller
                 if($val == $project_id && $requirement->type == $financing_type)
                 {
                     /*if the sales project id and financing type matches the requirement row details returns true*/
-                    $document[$ctr] = \App\Requirement::where([
+                    $document[$ctr] = Requirement::where([
                         ['id','=',$requirement->id],
                         ['type','=','HDMF'],
                     ])->get();
