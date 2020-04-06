@@ -23,4 +23,9 @@ class Requirement extends Model
         'template_id',
         'description',
     ];
+
+    public function template()
+    {
+        return $this->belongsTo(Template::class);
+    }
 }

@@ -107,30 +107,8 @@ Route::get('/upline-commission/{project}','CommissionController@getUpLineCommiss
 
 Route::get('/test',function(){
 
-    $requirements = \App\Requirement::all();
-    $document = array();
-    $ctr = 0;
-    foreach ($requirements as $requirement)
-    {
-        foreach (json_decode($requirement->project_id) as $val)
-        {
-
-
-            if($val == 1 && $requirement->type == 'HDMF')
-            {
-                //echo $val." ".$requirement->type."<br/>";
-               $document[$ctr] = \App\Requirement::where([
-                   ['id','=',$requirement->id],
-                   ['type','=','HDMF'],
-               ])->get();
-               $ctr++;
-            }
-           //
-        }
-    }
-    return $document;
-
-
+    $templates = \App\Template::find(3);
+    return $templates->requirements;
 });
 
 /*change password*/

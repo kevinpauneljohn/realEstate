@@ -294,7 +294,7 @@ class SalesController extends Controller
             'leads' => $lead,
             'project' => $project,
             'model_unit' => $model_unit,
-            'requirements' => $this->getRequirements($sales->project_id, $sales->financing),
+//            'requirements' => $this->getRequirements($sales->project_id, $sales->financing),
         ]);
     }
 

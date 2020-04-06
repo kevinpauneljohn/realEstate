@@ -230,8 +230,9 @@ class RequirementController extends Controller
      */
     public function destroy($id)
     {
-        $requirements = Requirement::findOrFail($id);
-        if($requirements->delete())
+        $template = Template::findOrFail($id);
+
+        if($template->delete())
         {
             return response()->json(['success' => true]);
         }

@@ -190,9 +190,9 @@ $(document).on('click','.view-sales-btn',function(){
 
             /*requirements tab*/
 
-                $.each(result.requirements, function (key, value){
-                    console.log(value[0].description);
-                });
+                // $.each(result.requirements, function (key, value){
+                //     console.log(value[0].description);
+                // });
 
         }
     });

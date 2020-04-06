@@ -106,9 +106,9 @@ $(document).ready(function(){
             'DELETE',
             data,
             'Requirements Successfully Deleted!',
-            true,
-            '',
             false,
+            '',
+            true,
         );
     });
 });
@@ -196,4 +196,11 @@ $(document).on('click','.delete-requirements-btn',function(){
     let id = this.id;
 
     $('#deleteRequirementsId').val(id);
+    $tr = $(this).closest('tr');
+
+    var data = $tr.children("td").map(function () {
+        return $(this).text();
+    }).get();
+
+    $('.delete-requirements-name').html('<h3 style="color:yellow;">'+data[0]+'</h3>')
 });
