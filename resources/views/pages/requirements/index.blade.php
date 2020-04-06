@@ -30,7 +30,6 @@
                     <thead>
                     <tr role="row">
                         <th>Title</th>
-                        <th>Project</th>
                         <th>Description</th>
                         <th>Type</th>
                         <th>Action</th>
@@ -40,8 +39,7 @@
                     <tfoot>
                     <tr>
                         <th width="15%">Title</th>
-                        <th width="25%">Project</th>
-                        <th width="35%">Description</th>
+                        <th width="50%">Description</th>
                         <th>Type</th>
                         <th>Action</th>
                     </tr>
@@ -65,14 +63,6 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group project">
-                                <label>Assign Project</label><span class="required">*</span>
-                                <select class="select2" name="project[]" id="project" multiple="multiple" data-placeholder="Select a project" style="width: 100%;">
-                                    @foreach($projects as $project)
-                                        <option value="{{$project->id}}">{{$project->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
                             <div class="form-group title">
                                 <label for="title">Title</label><span>(Optional)</span>
                                 <input type="text" name="title" class="form-control" id="title">
@@ -128,14 +118,6 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group edit_project">
-                                <label>Assign Project</label><span class="required">*</span>
-                                <select class="select2" name="edit_project[]" id="edit_project" multiple="multiple" data-placeholder="Select a project" style="width: 100%;">
-                                    @foreach($projects as $project)
-                                        <option value="{{$project->id}}">{{$project->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
                             <div class="form-group edit_title">
                                 <label for="edit_title">Title</label><span>(Optional)</span>
                                 <input type="text" name="edit_title" class="form-control" id="edit_title">
@@ -154,7 +136,7 @@
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="reset" class="btn btn-default">Reset</button>
                             <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                         </div>
                     </div>
@@ -224,8 +206,7 @@
                     serverSide: true,
                     ajax: '{!! route('requirements.list') !!}',
                     columns: [
-                        { data: 'title', name: 'title'},
-                        { data: 'project_id', name: 'project_id'},
+                        { data: 'name', name: 'name'},
                         { data: 'description', name: 'description'},
                         { data: 'type', name: 'type'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}

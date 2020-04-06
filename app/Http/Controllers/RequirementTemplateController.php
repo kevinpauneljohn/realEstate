@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Template;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RequirementTemplateController extends Controller
 {
@@ -34,7 +36,17 @@ class RequirementTemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'title'   => ['required'],
+            'financing_type'    => ['required']
+        ]);
+
+        if($validator->passes())
+        {
+           $template = new Template();
+           $template->name = $request->title;
+        }
+        return response()->json($validator->errors());
     }
 
     /**

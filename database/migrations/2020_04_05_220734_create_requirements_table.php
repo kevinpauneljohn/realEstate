@@ -18,8 +18,6 @@ class CreateRequirementsTable extends Migration
             $table->unsignedBigInteger('template_id');
             $table->text('description')->nullable();
             $table->timestamps();
-            $table->softDeletes();
-
             $table->foreign('template_id')->references('id')->on('templates');
         });
     }

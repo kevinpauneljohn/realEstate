@@ -16,10 +16,10 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
         'type' : type,
         'data' : data,
         'cache' : false,
-        beforeSend: function(){
-            $('.submit-form-btn').attr('disabled',true);
-            $('.spinner').show();
-        },
+        // beforeSend: function(){
+        //     $('.submit-form-btn').attr('disabled',true);
+        //     $('.spinner').show();
+        // },
         success: function(result, status, xhr){
             if(consoleLog === true)
             {
@@ -37,8 +37,8 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
                     },1500);
                 });
             }else{
-                $('.submit-form-btn').attr('disabled',false);
-                $('.spinner').hide();
+                // $('.submit-form-btn').attr('disabled',false);
+                // $('.spinner').hide();
             }
 
             $.each(result, function (key, value) {
@@ -74,7 +74,7 @@ $(document).ready(function(){
             '',
             false,
         );
-        clear_errors('project','financing_type');
+        clear_errors('title','financing_type');
     });
 
     $('#edit-requirement-form').submit(function(form){
@@ -92,7 +92,7 @@ $(document).ready(function(){
             '',
             false,
         );
-        clear_errors('edit_project','edit_financing_type');
+        clear_errors('edit_title','edit_financing_type');
     });
 
     $('#delete-requirements-form').submit(function(form){
@@ -137,8 +137,6 @@ $(document).on('click','.row-description-btn',function(){
 $(document).on('click','.edit-row-description-btn',function(){
     let value = this.value;
 
-    let row = $('.edit-row-description');
-
     if(value == 'plus')
     {
         $('.edit-desc-inputs').append('<div class="row edit-row-description">\n' +
@@ -151,7 +149,14 @@ $(document).on('click','.edit-row-description-btn',function(){
             '                                    </div>\n' +
             '                                </div>');
     }else{
-        this.closest('.edit-row-description').remove();
+        if(this.id == "")
+        {
+            this.closest('.edit-row-description').remove();
+        }else{
+            $('#input_'+this.id+', #plus_'+this.id+', #'+this.id).attr('disabled',true);
+            $('#edit-requirement-form .modal-body').append('<input type="hidden" name="delete_requirements[]" value="'+this.id+'">');
+            $('#update_description_'+this.id).remove()
+        }
     }
 });
 
@@ -169,18 +174,17 @@ $(document).on('click','.edit-btn',function(){
         },
         success: function(result){
             $('#updateRequirementId').val(id);
-            $('#edit_title').val(result.requirements.title);
-            $('#edit_project').val(result.project).change();
-            $('#edit_financing_type').val(result.requirements.type).change();
+            $('#edit_title').val(result.template.name);
+            $('#edit_financing_type').val(result.template.type).change();
 
-            $.each(result.description, function (key, value) {
+            $.each(result.requirements, function (key, value) {
                 $('.edit-desc-inputs').append('<div class="row edit-row-description">\n' +
                     '                                    <div class="col-sm-9">\n' +
-                    '                                        <input type="text" name="edit_description[]" class="form-control edit_description" value="'+value+'"/>\n' +
+                    '<input type="text" name="edit_description['+value.id+']" class="form-control edit_description" id="input_'+value.id+'" value="'+value.description+'"/>\n' +
                     '                                    </div>\n' +
                     '                                    <div class="col-sm-3">\n' +
-                    '                                        <button type="button" class="btn btn-success edit-row-description-btn" value="plus"><i class="fa fa-plus"></i></button>\n' +
-                    '                                        <button type="button" class="btn btn-danger edit-row-description-btn" value="minus"><i class="fa fa-minus"></i></button>\n' +
+                    '                                        <button type="button" class="btn btn-success edit-row-description-btn" id="plus_'+value.id+'" value="plus"><i class="fa fa-plus"></i></button>\n' +
+                    '                                        <button type="button" class="btn btn-danger edit-row-description-btn" id="'+value.id+'" value="minus"><i class="fa fa-minus"></i></button>\n' +
                     '                                    </div>\n' +
                     '                                </div>');
             });
