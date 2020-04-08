@@ -233,21 +233,8 @@ return [
         [
             'text'    => 'Requirements',
             'icon'    => 'fas fa-file-alt',
+            'route'    => 'requirements.index',
             'can'     => 'view requirements',
-            'submenu' => [
-                [
-                    'text' => 'view Requirements',
-                    'route'  => 'requirements.index',
-                    'can'  => 'view requirements',
-                    'icon_color' => 'blue',
-                ],
-                [
-                    'text' => 'Add Requirements',
-                    'route'  => 'permissions.index',
-                    'can'  => 'view requirements',
-                    'icon_color' => 'red',
-                ],
-            ],
         ],
         [
             'text'    => 'Leads',

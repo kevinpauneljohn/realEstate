@@ -216,12 +216,33 @@ $(document).on('change','#model_unit',function(){
 /*requirements template dropdown*/
 $(document).on('change','#template',function(){
     let value = this.value;
+    let container = $('#sales-requirements');
+    if(value != "")
+    {
+        $.ajax({
+            'url' : '/get-requirements-by-template/'+value,
+            'type' : 'GET',
+            beforeSend: function(){
+              $('.selected-table').remove();
+            },
+            success: function(result){
+                container.append('' +
+                    '<table class="table table-bordered selected-table">' +
+                    '<tr><td><strong>Title</strong></td><td>'+result.template.name+'</td></tr>' +
+                    '<tr><td><strong>Financing Type</strong></td><td>'+result.template.type+'</td></tr>' +
+                    '<tr><td colspan="2"><h4>Requirements</h4></td></tr></table>'
+                );
 
-    $.ajax({
-        'url' : '/get-requirements-by-template/'+value,
-        'type' : 'GET',
-        success: function(result){
-            console.log(result);
-        }
-    });
+                $.each(result.requirements, function (key,value) {
+                    // console.log(key+' '+value.description);
+                    $('.selected-table').append('' +
+                        '<tr><td colspan="2">'+value.description+'</td></tr>'
+                    );
+                });
+            },error: function (xhr, status, error) {
+                toastr.error(status+' - '+error);
+
+            }
+        });
+    }
 });

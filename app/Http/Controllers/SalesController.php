@@ -388,7 +388,7 @@ class SalesController extends Controller
      * */
     public function getRequirementsByTemplate($template_id)
     {
-        $template = Template::findOrFail($template_id)->requirements;
-        return $template;
+        $template = Template::findOrFail($template_id);
+        return response()->json(['template' => $template, 'requirements' => $template->requirements]);
     }
 }
