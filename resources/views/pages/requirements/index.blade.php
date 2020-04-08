@@ -218,5 +218,8 @@
             //Initialize Select2 Elements
             $('.select2').select2();
         </script>
+        <script>
+            alert(window.history.go(-3));
+        </script>
     @endcan
 @stop

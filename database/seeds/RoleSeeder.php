@@ -63,5 +63,15 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view model unit']);
         Permission::create(['name' => 'edit model unit']);
         Permission::create(['name' => 'delete model unit']);
+
+        Permission::create(['name' => 'add commissions']);
+        Permission::create(['name' => 'view commissions']);
+        Permission::create(['name' => 'edit commissions']);
+        Permission::create(['name' => 'delete commissions']);
+
+        Permission::create(['name' => 'add requirements']);
+        Permission::create(['name' => 'view requirements']);
+        Permission::create(['name' => 'edit requirements']);
+        Permission::create(['name' => 'delete requirements']);
     }
 }

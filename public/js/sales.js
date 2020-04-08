@@ -16,10 +16,10 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
         'type' : type,
         'data' : data,
         'cache' : false,
-        beforeSend: function(){
-            $('.submit-form-btn').attr('disabled',true);
-            $('.spinner').show();
-        },
+        // beforeSend: function(){
+        //     $('.submit-form-btn').attr('disabled',true);
+        //     $('.spinner').show();
+        // },
         success: function(result, status, xhr){
             if(consoleLog === true)
             {
@@ -43,8 +43,8 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
                     toastr.error(result.message);
                 }
 
-                $('.submit-form-btn').attr('disabled',false);
-                $('.spinner').hide();
+                // $('.submit-form-btn').attr('disabled',false);
+                // $('.spinner').hide();
             }
 
             $.each(result, function (key, value) {
@@ -59,6 +59,7 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 
         },error: function(xhr, status, error){
             console.log(xhr);
+            toastr.error("You don't have commission rate yet.");
         }
     });
 }
