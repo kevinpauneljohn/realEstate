@@ -16,10 +16,10 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
         'type' : type,
         'data' : data,
         'cache' : false,
-        // beforeSend: function(){
-        //     $('.submit-form-btn').attr('disabled',true);
-        //     $('.spinner').show();
-        // },
+        beforeSend: function(){
+            $('.submit-form-btn').attr('disabled',true);
+            $('.spinner').show();
+        },
         success: function(result, status, xhr){
             if(consoleLog === true)
             {
@@ -43,8 +43,8 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
                     toastr.error(result.message);
                 }
 
-                // $('.submit-form-btn').attr('disabled',false);
-                // $('.spinner').hide();
+                $('.submit-form-btn').attr('disabled',false);
+                $('.spinner').hide();
             }
 
             $.each(result, function (key, value) {
@@ -224,8 +224,10 @@ $(document).on('change','#template',function(){
             'type' : 'GET',
             beforeSend: function(){
               $('.selected-table').remove();
+                $('.spinner').show();
             },
             success: function(result){
+                $('.spinner').hide();
                 container.append('' +
                     '<table class="table table-bordered selected-table">' +
                     '<tr><td><strong>Title</strong></td><td>'+result.template.name+'</td></tr>' +
