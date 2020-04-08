@@ -185,7 +185,15 @@
                                     </div>
                                 </div>
                                 <div id="sales-requirements" class="container tab-pane fade">
-
+                                    <div class="form-group">
+                                        <label for="template">Select Requirements Template</label>
+                                        <select class="form-control" name="template" id="template">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($templates as $template)
+                                                <option value="{{$template->id}}">{{$template->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>

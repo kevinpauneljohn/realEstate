@@ -7,6 +7,7 @@ use App\ModelUnit;
 use App\Project;
 use App\Requirement;
 use App\Sales;
+use App\Template;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,6 +27,7 @@ class SalesController extends Controller
             'projects'   => Project::all(),
             'total_units_sold' => User::findOrFail(auth()->user()->id)->sales()->where('status','!=','cancelled')->count(),
             'total_sales'   => $this->getTotalSales(auth()->user()->id),
+            'templates' => Template::all(),
         ]);
     }
 
@@ -375,5 +377,18 @@ class SalesController extends Controller
     {
         $model_unit = ModelUnit::findOrFail($id);
         return $model_unit;
+    }
+
+    /**
+     * April 08, 2020
+     * @author john kevin paunel
+     * get all the requirements by ID
+     * @param int $template_id
+     * @return object
+     * */
+    public function getRequirementsByTemplate($template_id)
+    {
+        $template = Template::findOrFail($template_id)->requirements;
+        return $template;
     }
 }

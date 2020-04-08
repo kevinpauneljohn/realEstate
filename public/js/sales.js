@@ -212,3 +212,16 @@ $(document).on('change','#model_unit',function(){
         }
     });
 });
+
+/*requirements template dropdown*/
+$(document).on('change','#template',function(){
+    let value = this.value;
+
+    $.ajax({
+        'url' : '/get-requirements-by-template/'+value,
+        'type' : 'GET',
+        success: function(result){
+            console.log(result);
+        }
+    });
+});
