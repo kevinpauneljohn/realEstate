@@ -185,20 +185,25 @@
                                     </div>
                                 </div>
                                 <div id="sales-requirements" class="container tab-pane fade">
-                                    <div class="form-group">
-                                        <label for="template">Select Requirements Template</label>
-                                        <select class="form-control" name="template" id="template">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($templates as $template)
-                                                <option value="{{$template->id}}">{{$template->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="image-loader">
-                                            <div class="spinner-border text-primary" role="status">
-                                                <span class="sr-only">Loading...</span>
+                                    <form id="sales-requirements-form">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="salesId" id="salesId">
+                                        <div class="form-group">
+                                            <label for="template">Select Requirements Template</label>
+                                            <select class="form-control" name="template" id="template">
+                                                <option value=""> -- Select -- </option>
+                                                @foreach($templates as $template)
+                                                    <option value="{{$template->id}}">{{$template->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="image-loader">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

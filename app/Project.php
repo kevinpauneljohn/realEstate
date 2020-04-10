@@ -13,4 +13,9 @@ class Project extends Model
     {
         return $this->hasMany(Commission::class);
     }
+
+    public function sale()
+    {
+        return $this->hasOne(Sales::class);
+    }
 }

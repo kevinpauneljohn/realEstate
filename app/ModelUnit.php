@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ModelUnit extends Model
 {
     use SoftDeletes;
+
+    public function sale()
+    {
+        return $this->hasOne(Sales::class);
+    }
 }

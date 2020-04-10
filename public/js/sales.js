@@ -28,7 +28,7 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
             if(result.success === true)
             {
                 setTimeout(function(){
-                    toastr.success(message)
+                    toastr.success(message);
                     setTimeout(function(){
                         if(reload === true)
                         {
@@ -116,6 +116,7 @@ function statusLabel(status)
 $(document).on('click','.view-sales-btn',function(){
     let id = this.id;
 
+    $('#salesId').val(id);
     $.ajax({
         'url' : '/sales/'+id,
         'type' : 'GET',
@@ -216,14 +217,14 @@ $(document).on('change','#model_unit',function(){
 /*requirements template dropdown*/
 $(document).on('change','#template',function(){
     let value = this.value;
-    let container = $('#sales-requirements');
+    let container = $('#sales-requirements-form');
     if(value != "")
     {
         $.ajax({
             'url' : '/get-requirements-by-template/'+value,
             'type' : 'GET',
             beforeSend: function(){
-              $('.selected-table').remove();
+              $('.selected-table, .sales-requirements-btn').remove();
                 $('.spinner').show();
             },
             success: function(result){
@@ -241,10 +242,46 @@ $(document).on('change','#template',function(){
                         '<tr><td colspan="2">'+value.description+'</td></tr>'
                     );
                 });
+
+                container.append('<button type="submit" class="btn btn-primary sales-requirements-btn"><i class="fa fa-save"></i> Save</button>');
             },error: function (xhr, status, error) {
                 toastr.error(status+' - '+error);
 
             }
         });
     }
+});
+
+/*save requirements template*/
+$(document).on('submit','#sales-requirements-form',function(form){
+    form.preventDefault();
+
+    let data = $('#sales-requirements-form');
+
+    $.ajax({
+        'url' : '/save-requirements-template',
+        'type' : 'PUT',
+        'data' : data.serialize(),
+        beforeSend: function(){
+            $('.sales-requirements-btn').attr('disabled',true);
+        },
+        success: function (result) {
+            console.log(result);
+
+            if(result.success === true)
+            {
+                toastr.success('Requirements Successfully Saved!');
+            }else{
+                toastr.error('An error occurred');
+            }
+
+            $('.sales-requirements-btn').attr('disabled',false);
+        },error: function (xhr, status, error) {
+            $.each(xhr, function (key, value) {
+                console.log(key+' - '+value);
+            });
+            console.log(status+' : '+error);
+            toastr.error(status+' : '+error);
+        }
+    });
 });

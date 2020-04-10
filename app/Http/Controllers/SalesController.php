@@ -9,6 +9,7 @@ use App\Requirement;
 use App\Sales;
 use App\Template;
 use App\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -28,6 +29,24 @@ class SalesController extends Controller
             'total_units_sold' => User::findOrFail(auth()->user()->id)->sales()->where('status','!=','cancelled')->count(),
             'total_sales'   => $this->getTotalSales(auth()->user()->id),
             'templates' => Template::all(),
+        ]);
+    }
+
+    /**
+     * April 10, 2020
+     * @author john kevin paunel
+     * sales requirements page
+     * @param integer $sales_id
+     * @return mixed
+     * */
+    public function requirements($sales_id)
+    {
+        $sales = Sales::findOrFail($sales_id);
+        return view('pages.sales.requirements')->with([
+            'sales' => $sales,
+            'lead' => $sales->lead,
+            'project' => $sales->project,
+            'modelUnit' => $sales->modelUnit,
         ]);
     }
 
@@ -258,6 +277,10 @@ class SalesController extends Controller
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
                 }
+                if(auth()->user()->can('upload requirements'))
+                {
+                    $action .= '<a href="'.route('sales.upload.requirements',['sale' => $sale->id]).'" class="btn btn-xs btn-info"><i class="fas fa-file-upload"></i> Upload Requirements</a>';
+                }
                 return $action;
             })
             ->rawColumns(['action','status'])
@@ -390,5 +413,25 @@ class SalesController extends Controller
     {
         $template = Template::findOrFail($template_id);
         return response()->json(['template' => $template, 'requirements' => $template->requirements]);
+    }
+
+    /**
+     * April 10, 2020
+     * @author john kevin paunel
+     * save the requirements of template to sales table
+     * @param Request $request
+     * @return Response
+     * */
+    public function save_requirements_template(Request $request)
+    {
+        $sales = Sales::findOrFail($request->salesId);
+        $sales->template_id = $request->template;
+
+        if($sales->save())
+        {
+            return response()->json(['success' => true]);
+        }else{
+            return response()->json(['success' => false]);
+        }
     }
 }

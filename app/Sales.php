@@ -14,8 +14,23 @@ class Sales extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function leads()
+    public function lead()
     {
         return $this->belongsTo(Lead::class);
+    }
+
+    public function template()
+    {
+        return $this->belongsTo(Template::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    public function modelUnit()
+    {
+        return $this->belongsTo(ModelUnit::class);
     }
 }

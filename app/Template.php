@@ -13,4 +13,9 @@ class Template extends Model
     {
         return $this->hasMany(Requirement::class);
     }
+
+    public function sales()
+    {
+        return $this->hasMany(Sales::class);
+    }
 }
