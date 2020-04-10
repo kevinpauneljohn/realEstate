@@ -88,22 +88,52 @@
                          @if($requirements != null)
 
                                 @foreach($requirements as $requirement)
-                                    <form role="form">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="requirement_{{$requirement->id}}">{{$requirement->description}}</label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="requirement_{{$requirement->id}}">
-                                                    <label class="custom-file-label" for="requirement_{{$requirement->id}}">Choose file</label>
+                                    @php
+                                        $list = \App\SaleRequirement::where('requirement_id',$requirement->id);
+                                    @endphp
+                                    @if($list->count() == 0)
+
+                                        <form role="form" action="{{route('requirements.image.upload')}}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="requirementId" value="{{$requirement->id}}">
+                                            <input type="hidden" name="saleId" value="{{$sales->id}}">
+                                            <div class="form-group">
+                                                <label for="requirement_{{$requirement->id}}">{{$requirement->description}}</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" name="requirement_{{$requirement->id}}" class="custom-file-input {{$errors->has('requirement_'.$requirement->id) ? 'is-invalid' : ''}}" id="requirement_{{$requirement->id}}"
+                                                               value="{{old('requirement_'.$requirement->id)}}">
+                                                        <label class="custom-file-label" for="requirement_{{$requirement->id}}">Choose file</label>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                        <button type="submit" class="input-group-text" id="">Upload</button>
+                                                    </div>
                                                 </div>
-                                                <div class="input-group-append">
-                                                    <button type="submit" class="input-group-text" id="">Upload</button>
-                                                </div>
+
+                                                @error('requirement_'.$requirement->id)
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
                                             </div>
-                                        </div>
-                                    </form>
+                                        </form>
+
+                                        @else
+
+                                    @endif
                                 @endforeach
+                                @if($lists->count() > 0)
+                                    @foreach($lists->get() as $list)
+                                        @php
+                                            $description = \App\Requirement::find($list->requirement_id)->description
+                                        @endphp
+                                        <div class="requirements-image float-left">
+                                            <label>{{$description}}</label><br/>
+                                            <img src="{{asset('/thumbnail/'.$list->image)}}" alt="{{$description}}" class="img-thumbnail">
+                                        </div>
+                                    @endforeach
+                                @endif
+
                              @endif
                      @endif
                 </div>

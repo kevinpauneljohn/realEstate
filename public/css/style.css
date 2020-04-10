@@ -64,3 +64,6 @@ table td{
 .dataTables_wrapper{
     overflow-x:auto;
 }
+.requirements-image{
+    margin:10px;
+}

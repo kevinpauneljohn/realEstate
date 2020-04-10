@@ -28,4 +28,9 @@ class Requirement extends Model
     {
         return $this->belongsTo(Template::class);
     }
+
+    public function saleRequirements()
+    {
+        return $this->hasMany(SaleRequirement::class);
+    }
 }

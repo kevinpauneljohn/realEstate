@@ -6,12 +6,14 @@ use App\Lead;
 use App\ModelUnit;
 use App\Project;
 use App\Requirement;
+use App\SaleRequirement;
 use App\Sales;
 use App\Template;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
@@ -50,6 +52,7 @@ class SalesController extends Controller
             'modelUnit'     => $sales->modelUnit,
             'templates'     => Template::all(),
             'requirements'  => $requirements,
+            'lists'          => SaleRequirement::where('sale_id',$sales_id),
         ]);
     }
 
@@ -436,5 +439,53 @@ class SalesController extends Controller
         }else{
             return response()->json(['success' => false]);
         }
+    }
+
+    /**
+     * April 10, 2020
+     * @author john kevin paunel
+     * upload requirements
+     * @param Request $request
+     * @return mixed
+     * */
+    public function upload_requirements(Request $request)
+    {
+        $id = $request->requirementId;
+        $validator = Validator::make($request->all(),[
+            'requirement_'.$id => ['required','image:image:jpeg,png','max:1999']
+        ],[
+            'requirement_'.$id.'.required'  => 'Requirement Image is required',
+            'requirement_'.$id.'.image'  => 'Requirement must be an image file',
+        ]);
+
+        if($validator->passes())
+        {
+            $image = $request->file('requirement_'.$id);
+            $image_name = time().'.'.$image->getClientOriginalExtension();
+
+            //instantiate the sales requirements variable
+            $salesRequirements = new SaleRequirement();
+            $salesRequirements->sale_id = $request->saleId;
+            $salesRequirements->requirement_id = $id;
+            $salesRequirements->image = $image_name;
+
+            if($salesRequirements->save())
+            {
+                //resize the image for thumbnail purpose and save it to thumbnail folder
+                $destinationPath = public_path('/thumbnail');
+
+                $resize_image = Image::make($image->getRealPath());
+                $resize_image->resize(150,150, function ($constraint){
+                    $constraint->aspectRatio();
+                })->save($destinationPath.'/'.$image_name);
+
+                //save the image to images folder
+                $destinationPath = public_path('/images');
+                $image->move($destinationPath,$image_name);
+
+                return back()->with(['success' => true]);
+            }
+        }
+        return back()->withErrors($validator->errors())->withInput();
     }
 }
