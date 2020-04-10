@@ -42,11 +42,14 @@ class SalesController extends Controller
     public function requirements($sales_id)
     {
         $sales = Sales::findOrFail($sales_id);
+        $requirements = ($sales->template_id != null) ? Requirement::where('template_id',$sales->template_id)->get() : null;
         return view('pages.sales.requirements')->with([
-            'sales' => $sales,
-            'lead' => $sales->lead,
-            'project' => $sales->project,
-            'modelUnit' => $sales->modelUnit,
+            'sales'         => $sales,
+            'lead'          => $sales->lead,
+            'project'       => $sales->project,
+            'modelUnit'     => $sales->modelUnit,
+            'templates'     => Template::all(),
+            'requirements'  => $requirements,
         ]);
     }
 

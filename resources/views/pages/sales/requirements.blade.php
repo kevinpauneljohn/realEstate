@@ -63,17 +63,48 @@
         </div>
         <div class="col-lg-9">
             <div class="card">
-                <div class="card-header">
-
-                </div>
                 <div class="card-body">
                      @if($sales->template_id == null)
-                         <form role="form">
-                             @csrf
-                             <div class="form-group">
-                                 <label for="template">Select Requirement Template</label>
-                             </div>
-                         </form>
+                        <form id="sales-requirements-form">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="salesId" id="salesId" value="{{$sales->id}}">
+                            <div class="form-group">
+                                <label for="template">Select Requirements Template</label>
+                                <select class="form-control" name="template" id="template">
+                                    <option value=""> -- Select -- </option>
+                                    @foreach($templates as $template)
+                                        <option value="{{$template->id}}">{{$template->name}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="image-loader">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                         @else
+                         @if($requirements != null)
+
+                                @foreach($requirements as $requirement)
+                                    <form role="form">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="requirement_{{$requirement->id}}">{{$requirement->description}}</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="requirement_{{$requirement->id}}">
+                                                    <label class="custom-file-label" for="requirement_{{$requirement->id}}">Choose file</label>
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <button type="submit" class="input-group-text" id="">Upload</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                @endforeach
+                             @endif
                      @endif
                 </div>
             </div>
@@ -99,7 +130,13 @@
     <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
-    @can('view sales')
-        <script src="{{asset('js/sales.js')}}"></script>
-    @endcan
+    <script src="{{asset('/vendor/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+    @if($sales->template_id == null)
+        <script src="{{asset('js/uploadRequirements.js')}}"></script>
+    @endif
+    <script type="text/javascript">
+        $(document).ready(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
 @stop
