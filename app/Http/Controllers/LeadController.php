@@ -97,7 +97,7 @@ class LeadController extends Controller
 
         if($lead->save())
         {
-            return redirect(route('leads.edit',['lead'  => $lead->id]));
+            return redirect(route('leads.edit',['lead'  => $lead->id]))->with(['success' => true,'message' => 'Leads Successfully Added!']);
         }
         return back()->withErrors()->withInput();
     }
@@ -220,7 +220,7 @@ class LeadController extends Controller
 
         if($lead->save())
         {
-            return back()->withInput()->with(['success' => true]);
+            return back()->withInput()->with(['success' => true,'message' => 'Lead Successfully Updated']);
         }
         return back()->withErrors()->withInput();
     }

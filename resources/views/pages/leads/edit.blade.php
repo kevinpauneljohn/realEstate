@@ -28,11 +28,11 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                @if(session('success') === true)
+               {{-- @if(session('success') === true)
                     <div class="alert alert-success">
-                        Successfully Updated!
+                        {{session('message')}}
                     </div>
-                @endif
+                @endif--}}
                 <form method="POST" action="{{route('leads.update',['lead' => $lead->id])}}" class="form-submit">
                     @csrf
                     @method('PUT')
@@ -269,5 +269,10 @@
             $('[data-mask]').inputmask()
             //$('.textarea').html('hello');
         </script>
+        @if(session('success') === true)
+            <script>
+                toastr.success('{{session('message')}}');
+            </script>
+        @endif
     @endcan
 @stop

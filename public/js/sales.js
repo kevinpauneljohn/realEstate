@@ -189,13 +189,7 @@ $(document).on('click','.view-sales-btn',function(){
             $('#loanable-amount').html('<strong>&#8369; '+loan_amount.toLocaleString()+'</strong>');
             $('#financing-terms').html('<strong>'+result.sales.financing+'</strong>');
             $('#dp-terms').html('<strong>'+equity_terms+'</strong>');
-
-            /*requirements tab*/
-
-                // $.each(result.requirements, function (key, value){
-                //     console.log(value[0].description);
-                // });
-
+            
         }
     });
 });
