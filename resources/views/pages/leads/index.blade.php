@@ -114,7 +114,7 @@
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[0,'asc']
+                    order:[0,'desc']
                 });
             });
             //Initialize Select2 Elements

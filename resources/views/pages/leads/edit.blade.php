@@ -28,11 +28,6 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-               {{-- @if(session('success') === true)
-                    <div class="alert alert-success">
-                        {{session('message')}}
-                    </div>
-                @endif--}}
                 <form method="POST" action="{{route('leads.update',['lead' => $lead->id])}}" class="form-submit">
                     @csrf
                     @method('PUT')
