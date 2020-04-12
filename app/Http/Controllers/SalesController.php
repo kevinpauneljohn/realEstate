@@ -289,7 +289,7 @@ class SalesController extends Controller
                 }
                 if(auth()->user()->can('edit sales'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-warning" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status"><i class="fas fa-thermometer-three-quarters"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-warning update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';
                 }
                 return $action;
             })
@@ -297,6 +297,13 @@ class SalesController extends Controller
             ->make(true);
     }
 
+    /**
+     * April 12, 2020
+     * @author john kevin paunel
+     * set sale status label
+     * @param string $status
+     * @return mixed
+     * */
     public function statusLabel($status)
     {
         switch ($status){
@@ -491,5 +498,26 @@ class SalesController extends Controller
             }
         }
         return back()->withErrors($validator->errors())->withInput();
+    }
+
+    /**
+     * April 12, 2020
+     * @author john kevin paunel
+     * update the sale status
+     * */
+    public function updateSaleStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'status'    => 'required',
+            'reason'    => 'required'
+        ]);
+
+        if($validator->passes())
+        {
+//            if(!auth()->user()->hasRole('super admin'))
+//            {
+//
+//            }
+        }
     }
 }

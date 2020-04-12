@@ -399,21 +399,22 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group edit_name">
-                                <label for="edit_name">Project Name</label>
-                                <input type="text" name="edit_name" class="form-control" id="edit_name">
+                            <div class="form-group status">
+                                <label for="status">Sale Status</label><span class="required">*</span>
+                                <select name="status" id="status" class="select2 form-control" style="width: 100%;">
+                                    <option value=""> -- Select -- </option>
+                                    <option value="reserved">Reserved</option>
+                                    <option value="cancelled">Cancelled</option>
+                                    <option value="paid">Paid</option>
+                                </select>
                             </div>
-                            <div class="form-group edit_address">
-                                <label for="edit_address">Address</label>
-                                <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
-                            </div>
-                            <div class="form-group edit_remarks">
-                                <label for="edit_remarks">Remarks</label>
-                                <textarea name="edit_remarks" id="edit_remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                            <div class="form-group reason">
+                                <label for="reason">Reason</label>
+                                <textarea class="form-control" name="reason" id="reason"></textarea>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                                <button type="submit" class="btn btn-primary submit-form-btn" id="status-submit-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                             </div>
                         </div>
                     </div>
@@ -434,11 +435,6 @@
     <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
-    <style type="text/css">
-        .tab-pane{
-            padding-top:10px;
-        }
-    </style>
 @stop
 
 @section('js')

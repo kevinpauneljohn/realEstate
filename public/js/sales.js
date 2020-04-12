@@ -208,3 +208,50 @@ $(document).on('change','#model_unit',function(){
     });
 });
 
+/*change sale status*/
+
+let status, //instantiate the current sale status
+    id;
+
+$(document).on('click','.update-sale-status-btn',function () {
+    id = this.id; /*get the id value*/
+    $tr = $(this).closest('tr');
+
+    var data = $tr.children("td").map(function () {
+        return $(this).text();
+    }).get();
+
+    status = data[8].toLowerCase();
+
+    $('#updateSaleId').val(id);
+    $('#status').val(status).change();
+});
+
+
+
+$(document).on('change','#status',function () {
+    let value = this.value,
+        updateStatusBtn = $('#status-submit-btn'),
+        disabled = true;
+
+    if(value !== status && value !== '')
+    {
+        disabled = false;
+    }
+    updateStatusBtn.attr('disabled',disabled)
+});
+
+$(document).on('submit','#edit-status-form',function (form) {
+    form.preventDefault();
+
+    submitform(
+        '/sale-status-update',
+        'PUT',
+        $('#edit-status-form').serialize(),
+        'Status update request sent! <br/><strong>Please wait for the admin approval</strong>',
+        'false',
+        '',
+        true,
+    );
+});
+
