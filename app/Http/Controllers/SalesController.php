@@ -9,6 +9,7 @@ use App\Requirement;
 use App\SaleRequirement;
 use App\Sales;
 use App\Template;
+use App\Threshold;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -507,6 +508,8 @@ class SalesController extends Controller
      * */
     public function updateSaleStatus(Request $request)
     {
+        $user = auth()->user();
+
         $validator = Validator::make($request->all(),[
             'status'    => 'required',
             'reason'    => 'required'
@@ -514,10 +517,18 @@ class SalesController extends Controller
 
         if($validator->passes())
         {
-//            if(!auth()->user()->hasRole('super admin'))
-//            {
-//
-//            }
+            if(!$user->hasRole('super admin'))
+            {
+                $data = array('status' => $request->status);
+
+                $threshold = new Threshold();
+                $threshold->user_id = $user->id;
+                $threshold->type = 'update';
+                $threshold->description = $request->reason;
+                $threshold->data = $data;
+                $threshold->table = 'sales';
+                $threshold->status = 'pending';
+            }
         }
     }
 }

@@ -19,8 +19,9 @@ class CreateThresholdsTable extends Migration
             $table->string('type');
             $table->text('description');
             $table->longText('data');
+            $table->string('table');
             $table->string('status');
-            $table->uuid('approved_by');
+            $table->uuid('approved_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
