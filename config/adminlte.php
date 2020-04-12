@@ -66,14 +66,14 @@ return [
     |
     */
 
-    'classes_body' => 'sidebar-dark-purple',
-    'classes_brand' => 'navbar-purple',
-    'classes_brand_text' => 'navbar-purple',
+    'classes_body' => 'sidebar-dark-primary',
+    'classes_brand' => 'navbar-primary',
+    'classes_brand_text' => 'navbar-primary',
     'classes_content_header' => 'container-fluid',
     'classes_content' => 'container-fluid',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => 'sidebar-dark-purple',
-    'classes_topnav' => 'navbar-dark navbar-purple',
+    'classes_sidebar_nav' => 'sidebar-dark-primary',
+    'classes_topnav' => 'navbar-dark navbar-primary',
     'classes_topnav_nav' => 'navbar-expand-md',
     'classes_topnav_container' => 'container',
 
@@ -186,6 +186,12 @@ return [
             'text' => 'Announcement',
             'icon' => 'fa fa-bullhorn',
             'url'  => '#',
+        ],
+        [
+            'text'    => 'Requests',
+            'icon'    => 'fas fa-tasks',
+            'route'   => 'thresholds.index',
+            'can'     => 'view request',
         ],
         [
             'text'    => 'Users',

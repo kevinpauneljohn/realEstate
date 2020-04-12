@@ -9,7 +9,7 @@ function clear_errors()
     }
 }
 
-function submitform(url , type , data , message , reload = true, elementAttr, consoleLog = true)
+function submitform(url , type , data , message , reload = true, elementAttr, consoleLog = true, errorMessage)
 {
     $.ajax({
         'url' : url,
@@ -59,7 +59,7 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 
         },error: function(xhr, status, error){
             console.log(xhr);
-            toastr.error("You don't have commission rate yet.");
+            toastr.error(errorMessage);
         }
     });
 }
@@ -78,6 +78,7 @@ $(document).ready(function () {
             true,
             '',
             false,
+            "You don't have commission rate yet."
         );
         clear_errors('reservation_date','buyer','project','model_unit','total_contract_price','financing');
     })
@@ -227,8 +228,6 @@ $(document).on('click','.update-sale-status-btn',function () {
     $('#status').val(status).change();
 });
 
-
-
 $(document).on('change','#status',function () {
     let value = this.value,
         updateStatusBtn = $('#status-submit-btn'),
@@ -249,9 +248,10 @@ $(document).on('submit','#edit-status-form',function (form) {
         'PUT',
         $('#edit-status-form').serialize(),
         'Status update request sent! <br/><strong>Please wait for the admin approval</strong>',
-        'false',
-        '',
         true,
+        '',
+        false,
+        ''
     );
 });
 

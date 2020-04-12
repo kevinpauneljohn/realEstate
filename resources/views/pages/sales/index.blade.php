@@ -410,7 +410,7 @@
                             </div>
                             <div class="form-group reason">
                                 <label for="reason">Reason</label>
-                                <textarea class="form-control" name="reason" id="reason"></textarea>
+                                <textarea class="form-control" name="reason" id="reason">@role('super admin') proceed @endrole</textarea>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

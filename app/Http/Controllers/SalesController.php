@@ -505,6 +505,8 @@ class SalesController extends Controller
      * April 12, 2020
      * @author john kevin paunel
      * update the sale status
+     * @param Request $request
+     * @return mixed
      * */
     public function updateSaleStatus(Request $request)
     {
@@ -519,16 +521,32 @@ class SalesController extends Controller
         {
             if(!$user->hasRole('super admin'))
             {
-                $data = array('status' => $request->status);
+                //sent the request first to the threshold table and need's admin or super admin approval before update
+                $data = array('id' => $request->updateSaleId,'status' => $request->status);
 
                 $threshold = new Threshold();
                 $threshold->user_id = $user->id;
                 $threshold->type = 'update';
                 $threshold->description = $request->reason;
-                $threshold->data = $data;
+                $threshold->data = json_encode($data);
                 $threshold->table = 'sales';
                 $threshold->status = 'pending';
+
+                if($threshold->save())
+                {
+                    return response()->json(['success' => true]);
+                }
+            }else{
+                //update the sale status directly at the sales table
+                $sale = Sales::find($request->updateSaleId);
+                $sale->status = $request->status;
+
+                if($sale->save())
+                {
+                    return response()->json(['success' => true]);
+                }
             }
         }
+        return response()->json($validator->errors());
     }
 }
