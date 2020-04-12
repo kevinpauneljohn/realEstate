@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class LeadActivity extends Model
 {
     use SoftDeletes;
+
+    public function lead()
+    {
+        return $this->belongsTo(Lead::class);
+    }
 }

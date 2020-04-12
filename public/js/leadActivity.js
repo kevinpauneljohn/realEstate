@@ -119,22 +119,35 @@ $(document).on('change','#schedule',function () {
     $.ajax({
         'url' : '/leads-schedule/'+date,
         'type' : 'GET',
+        beforeSend: function(){
+            $('#schedules').html("");
+        },
         success: function (result) {
-            console.log(result);
-            $.each(result, function (key, value) {
-                $('#schedules').append('<div class="timeline timeline-inverse">' +
-                    '<div class="time-label"><span class="bg-primary"> '+value.schedule+'</span></div>' +
-                    '<div>' +
-                    '<i class="fas fa-calendar-alt bg-primary"></i>' +
-                    '<div class="timeline-item">' +
-                    '<span class="time"><i class="far fa-clock"></i>'+value.start_date+'</span>' +
-                    '<h3 class="timeline-header"><a href="#">'+value.category+'</a></h3>' +
-                    '<div class="timeline-body"><a href="/leads/'+value.lead_id+'"><button type="button" class="btn btn-success">View Details</button></a><br/>' +
-                    ''+value.details+'</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>');
-            });
+            console.log(result.length);
+            if(result.length === 0)
+            {
+                $('#schedules').html("<h3>Nothing To Show</h3>");
+            }else{
+                $('#schedules').html('<div class="timeline timeline-inverse"></div>');
+                $.each(result, function (key, value) {
+                    var details = "";
+                    if(value.details !== null)
+                    {
+                        details = value.details;
+                    }
+                    $('.timeline').append(
+                        '<div class="time-label"><span class="bg-primary"> '+value.schedule+'</span></div>' +
+                        '<div>' +
+                        '<i class="fas fa-calendar-alt bg-primary"></i>' +
+                        '<div class="timeline-item">' +
+                        '<span class="time"><i class="far fa-clock"></i> '+value.start_date+'</span>' +
+                        '<h3 class="timeline-header"><a href="#">'+value.category+'</a></h3>' +
+                        '<div class="timeline-body">' +
+                        ''+details+'<br/><a href="/leads/'+value.lead_id+'">View Details</a></div>' +
+                        '</div>' +
+                        '</div>');
+                });
+            }
         }
     });
 });
@@ -142,26 +155,37 @@ $(document).on('change','#schedule',function () {
 $(document).on('change','#edit_schedule',function () {
     let date = $('#edit_schedule').val();
 
-    $('#edit_schedules').html("");
     $.ajax({
         'url' : '/leads-schedule/'+date,
         'type' : 'GET',
+        beforeSend: function(){
+            $('#edit_schedules').html("");
+        },
         success: function (result) {
-
-            $.each(result, function (key, value) {
-                $('#edit_schedules').append('<div class="timeline timeline-inverse">' +
-                    '<div class="time-label"><span class="bg-primary">'+value.schedule+'</span></div>' +
-                    '<div>' +
-                    '<i class="fas fa-calendar-alt bg-primary"></i>' +
-                    '<div class="timeline-item">' +
-                    '<span class="time"><i class="far fa-clock"></i>'+value.start_date+'</span>' +
-                    '<h3 class="timeline-header"><a href="#">'+value.category+'</a></h3>' +
-                    '<div class="timeline-body"><a href="/leads/'+value.lead_id+'"><button type="button" class="btn btn-success">View Details</button></a><br/>' +
-                    ''+value.details+'</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>');
-            });
+            if(result.length === 0)
+            {
+                $('#edit_schedules').html("<h3>Nothing To Show</h3>");
+            }else{
+                $('#edit_schedules').html('<div class="timeline timeline-inverse"></div>')
+                $.each(result, function (key, value) {
+                    var details = "";
+                    if(value.details !== null)
+                    {
+                        details = value.details;
+                    }
+                    $('.timeline').append(
+                        '<div class="time-label"><span class="bg-primary"> '+value.schedule+'</span></div>' +
+                        '<div>' +
+                        '<i class="fas fa-calendar-alt bg-primary"></i>' +
+                        '<div class="timeline-item">' +
+                        '<span class="time"><i class="far fa-clock"></i> '+value.start_date+'</span>' +
+                        '<h3 class="timeline-header"><a href="#">'+value.category+'</a></h3>' +
+                        '<div class="timeline-body">' +
+                        ''+details+'<br/><a href="/leads/'+value.lead_id+'">View Details</a></div>' +
+                        '</div>' +
+                        '</div>');
+                });
+            }
         }
     });
 });
@@ -175,8 +199,8 @@ $(document).on('click','.edit-schedule-btn',function (schedule) {
         success: function (result) {
             $('#scheduleId').val(result.id);
             $('#edit_schedule').val(result.schedule);
-            $('#edit_start_time').val(result.start_date);
-            $('#edit_end_time').val(result.end_date);
+            $('input[name=edit_start_time]').val(result.start_date);
+            $('input[name=edit_end_time]').val(result.end_date);
             $('#edit_remarks').summernote("code", result.details);
             $('#edit_category').val(result.category).change();
         }

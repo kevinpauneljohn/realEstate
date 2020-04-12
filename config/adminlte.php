@@ -401,6 +401,17 @@ return [
                 ],
             ],
         ],
+        [
+            'name' => 'Moment',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+            ],
+        ],
 
     ],
 ];

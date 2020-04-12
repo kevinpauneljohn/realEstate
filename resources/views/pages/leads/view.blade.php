@@ -22,32 +22,23 @@
         <div class="row">
             <div class="col-md-3">
 
-                <!-- Profile Image -->
-                <div class="card card-primary card-outline">
-                    <div class="card-body box-profile">
-                        <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="{{asset('/images/avatar.png')}}" alt="User profile picture">
-                        </div>
-
-                        <h3 class="profile-username text-center">
-                            {{ucfirst($lead->firstname)}}
-                            {{ucfirst($lead->middlename)}}
-                            {{ucfirst($lead->lastname)}}
-                        </h3>
-
-                        <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-info btn-block"><b>Edit</b></a>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-
                 <!-- About Me Box -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Details</h3>
+                        <h3 class="card-title">Lead Overview</h3>
+                        <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="float-right"><i class="fas fa-user-edit"></i> Edit Lead</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                        <strong><i class="fas fa-id-badge mr-1"></i> Full Name</strong>
+
+                        <p class="text-muted">
+                            {{ucfirst($lead->firstname)}}
+                            {{ucfirst($lead->middlename)}}
+                            {{ucfirst($lead->lastname)}}
+                        </p>
+
+                        <hr>
                         <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
 
                         <p class="text-muted">{{$lead->address}}</p>
@@ -62,7 +53,7 @@
 
                         <hr>
 
-                        <strong><i class="fas fa-phone mr-1"></i> Mobile Phone</strong>
+                        <strong><i class="fas fa-mobile-alt mr-1"></i> Mobile Phone</strong>
 
                         <p class="text-muted">
                             {{$lead->mobileNo}}
@@ -70,7 +61,7 @@
 
                         <hr>
 
-                        <strong><i class="fas fa-mail-forward mr-1"></i> Email</strong>
+                        <strong><i class="fas fa-envelope-open mr-1"></i> Email</strong>
 
                         <p class="text-muted">
                             {{$lead->email}}
@@ -156,7 +147,7 @@
         <form role="form" id="add-schedule-form" class="form-submit">
             @csrf
             <input type="hidden" name="leadId" value="{{$lead->id}}">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Create Schedule</h4>
@@ -174,11 +165,23 @@
                                 <div class="row">
                                     <div class="col-lg-6 start_time">
                                         <label for="start_time">Start Time</label>
-                                        <input type="text" name="start_time" class="form-control timepicker" id="start_time">
+{{--                                        <input type="text" name="start_time" class="form-control timepicker" id="start_time">--}}
+                                        <div class="input-group date" id="time_start" data-target-input="nearest">
+                                            <input type="text" class="form-control datetimepicker-input" data-target="#time_start" name="start_time"/>
+                                            <div class="input-group-append" data-target="#time_start" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="end_time">End Time</label>
-                                        <input type="text" name="end_time" class="form-control timepicker" id="end_time">
+{{--                                        <input type="text" name="end_time" class="form-control timepicker" id="end_time">--}}
+                                        <div class="input-group date" id="time_end" data-target-input="nearest">
+                                            <input type="text" class="form-control datetimepicker-input" data-target="#time_end" name="end_time"/>
+                                            <div class="input-group-append" data-target="#time_end" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -222,7 +225,7 @@
                 @method('PUT')
                 <input type="hidden" name="editLeadId" value="{{$lead->id}}">
                 <input type="hidden" name="scheduleId" id="scheduleId">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Create Schedule</h4>
@@ -240,11 +243,23 @@
                                     <div class="row">
                                         <div class="col-lg-6 edit_start_time">
                                             <label for="edit_start_time">Start Time</label>
-                                            <input type="text" name="edit_start_time" class="form-control timepicker" id="edit_start_time">
+{{--                                            <input type="text" name="edit_start_time" class="form-control timepicker" id="edit_start_time">--}}
+                                            <div class="input-group date" id="edit_time_start" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" data-target="#edit_time_start" name="edit_start_time"/>
+                                                <div class="input-group-append" data-target="#edit_time_start" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <label for="edit_end_time">End Time</label>
-                                            <input type="text" name="edit_end_time" class="form-control timepicker" id="edit_end_time">
+{{--                                            <input type="text" name="edit_end_time" class="form-control timepicker" id="edit_end_time">--}}
+                                            <div class="input-group date" id="edit_time_end" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" data-target="#edit_time_end" name="edit_end_time"/>
+                                                <div class="input-group-append" data-target="#edit_time_end" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -311,8 +326,10 @@
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
-    <!-- Bootstrap time Picker -->
-    <link rel="stylesheet" href="{{asset('/vendor/timepicker/bootstrap-timepicker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/vendor/daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" href="{{asset('/vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    {{--<!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="{{asset('/vendor/timepicker/bootstrap-timepicker.min.css')}}">--}}
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
@@ -331,7 +348,10 @@
         <!-- bootstrap datepicker -->
         <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
         <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
-        <script src="{{asset('/vendor/timepicker/bootstrap-timepicker.min.js')}}"></script>
+        <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
+        <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+
+{{--        <script src="{{asset('/vendor/timepicker/bootstrap-timepicker.min.js')}}"></script>--}}
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
         <script src="{{asset('js/leadActivity.js')}}"></script>
@@ -378,11 +398,15 @@
             });
             //Initialize Select2 Elements
             $('.select2').select2();
-            //Timepicker
+            /*//Timepicker
             $('.timepicker').timepicker({
                 showInputs: false,
                 defaultTime: false,
-            });
+            });*/
+            //Timepicker
+            $('#time_start, #time_end, #edit_time_start, #edit_time_end').datetimepicker({
+                format: 'LT'
+            })
 
         </script>
     @endcan

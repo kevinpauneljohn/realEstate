@@ -45,4 +45,9 @@ class Lead extends Model
     {
         return $this->hasMany(Sales::class);
     }
+
+    public function LeadActivities()
+    {
+        return $this->hasMany(LeadActivity::class);
+    }
 }
