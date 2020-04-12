@@ -273,19 +273,23 @@ class SalesController extends Controller
                 $action = "";
                 if(auth()->user()->can('view sales'))
                 {
-                    $action .= '<button class="btn btn-xs btn-success view-sales-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i> View</button>';
+                    $action .= '<button class="btn btn-xs btn-success view-sales-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-sales-details" title="View"><i class="fa fa-eye"></i></button>';
                 }
                 if(auth()->user()->can('edit sales'))
                 {
-                    $action .= '<a href="'.route("leads.edit",["lead" => $sale->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$sale->id.'"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="'.route("leads.edit",["lead" => $sale->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$sale->id.'" title="Edit"><i class="fa fa-edit"></i></a>';
                 }
                 if(auth()->user()->can('delete sales'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#delete-lead-modal" title="Delete"><i class="fa fa-trash"></i></a>';
                 }
                 if(auth()->user()->can('upload requirements'))
                 {
-                    $action .= '<a href="'.route('sales.upload.requirements',['sale' => $sale->id]).'" class="btn btn-xs btn-info"><i class="fas fa-file-upload"></i> Upload Requirements</a>';
+                    $action .= '<a href="'.route('sales.upload.requirements',['sale' => $sale->id]).'" class="btn btn-xs btn-info" title="Upload Requirements"><i class="fas fa-file-upload"></i></a>';
+                }
+                if(auth()->user()->can('edit sales'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs btn-warning" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status"><i class="fas fa-thermometer-three-quarters"></i></a>';
                 }
                 return $action;
             })

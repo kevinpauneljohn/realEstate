@@ -382,6 +382,48 @@
         </div>
         <!--end delete user modal-->
     @endcan
+
+    @can('edit sales')
+        <!--update sale status-->
+        <div class="modal fade" id="update-sale-status">
+            <form role="form" id="edit-status-form" class="form-submit">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="updateSaleId" id="updateSaleId">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Sale Status</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group edit_name">
+                                <label for="edit_name">Project Name</label>
+                                <input type="text" name="edit_name" class="form-control" id="edit_name">
+                            </div>
+                            <div class="form-group edit_address">
+                                <label for="edit_address">Address</label>
+                                <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
+                            </div>
+                            <div class="form-group edit_remarks">
+                                <label for="edit_remarks">Remarks</label>
+                                <textarea name="edit_remarks" id="edit_remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add user modal-->
+    @endcan
 @stop
 
 @section('css')

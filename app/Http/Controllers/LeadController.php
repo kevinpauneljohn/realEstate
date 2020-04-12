@@ -134,7 +134,7 @@ class LeadController extends Controller
             'lead'  => Lead::where([
                 ['id','=',$id],
                 ['user_id','=',auth()->user()->id],
-            ])->first()
+            ])->firstOrFail()
         ]);
     }
 
