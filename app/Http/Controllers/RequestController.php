@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Threshold;
 use App\User;
-use function foo\func;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -16,7 +15,7 @@ class RequestController extends Controller
     }
 
     /**
-     * April 12, 2020
+     * @since April 12, 2020
      * @author john kevin paunel
      * request datatables
      * */
@@ -54,7 +53,7 @@ class RequestController extends Controller
     }
 
     /**
-     * April 12, 2020
+     * @since April 12, 2020
      * @author john kevin paunel
      * get the data to show for requestList method
      * @return object

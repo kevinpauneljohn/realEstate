@@ -248,7 +248,7 @@ $(document).on('submit','#edit-status-form',function (form) {
         'PUT',
         $('#edit-status-form').serialize(),
         'Status update request sent! <br/><strong>Please wait for the admin approval</strong>',
-        true,
+        true    ,
         '',
         false,
         ''
