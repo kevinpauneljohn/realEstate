@@ -199,25 +199,25 @@ return [
             'route'    => 'users.index',
             'can'     => 'view user',
         ],
-        [
-            'text'    => 'Roles and Permissions',
-            'icon'    => 'fas fa-users',
-            'can'     => 'view role',
-            'submenu' => [
-                [
-                    'text' => 'roles',
-                    'route'  => 'roles.index',
-                    'can'  => 'view role',
-                    'icon_color' => 'blue',
-                ],
-                [
-                    'text' => 'permissions',
-                    'route'  => 'permissions.index',
-                    'can'  => 'view permission',
-                    'icon_color' => 'red',
-                ],
-            ],
-        ],
+//        [
+//            'text'    => 'Roles and Permissions',
+//            'icon'    => 'fas fa-users',
+//            'can'     => 'view role',
+//            'submenu' => [
+//                [
+//                    'text' => 'roles',
+//                    'route'  => 'roles.index',
+//                    'can'  => 'view role',
+//                    'icon_color' => 'blue',
+//                ],
+//                [
+//                    'text' => 'permissions',
+//                    'route'  => 'permissions.index',
+//                    'can'  => 'view permission',
+//                    'icon_color' => 'red',
+//                ],
+//            ],
+//        ],
         [
             'text' => 'Sales',
             'icon' => 'fas fa-chart-bar',
@@ -267,14 +267,40 @@ return [
             'can'     => 'view schedule',
             'route'   => 'schedules.index',
         ],
+//        [
+//            'text'    => 'My Profile',
+//            'icon'    => 'fas fa-id-card',
+//            'submenu' => [
+//                [
+//                    'text' => 'Change Password',
+//                    'route'  => 'users.change.password',
+//                    'icon_color'  => 'blue',
+//                ],
+//            ],
+//        ],
         [
-            'text'    => 'My Profile',
-            'icon'    => 'fas fa-id-card',
+            'text'    => 'Settings',
+            'icon'    => 'fas fa-cogs',
+            'can'     => 'view settings',
             'submenu' => [
+                [
+                    'text' => 'Priorities',
+                    'route'  => 'priorities.index',
+                    'can'  => 'view priority',
+                ],
+                [
+                    'text' => 'roles',
+                    'route'  => 'roles.index',
+                    'can'  => 'view role',
+                ],
+                [
+                    'text' => 'permissions',
+                    'route'  => 'permissions.index',
+                    'can'  => 'view permission',
+                ],
                 [
                     'text' => 'Change Password',
                     'route'  => 'users.change.password',
-                    'icon_color'  => 'blue',
                 ],
             ],
         ],
