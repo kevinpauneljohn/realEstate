@@ -269,6 +269,10 @@
             <script>
                 toastr.success('{{session('message')}}');
             </script>
+            @elseif(session('success') === false)
+            <script>
+                toastr.warning('{{session('message')}}');
+            </script>
         @endif
     @endcan
 @stop

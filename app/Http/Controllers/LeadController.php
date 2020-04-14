@@ -197,8 +197,11 @@ class LeadController extends Controller
         $this->validate_field($request);
 
         $interest = "";
-        foreach ($request->project as $project){
-            $interest .= $project.",";
+        if($request->project != null)
+        {
+            foreach ($request->project as $project){
+                $interest .= $project.",";
+            }
         }
 
         $lead = Lead::findOrFail($id);
@@ -217,9 +220,14 @@ class LeadController extends Controller
         $lead->project = $interest;
         $lead->remarks = $request->remarks;
 
-        if($lead->save())
+        if($lead->isDirty())
         {
-            return back()->withInput()->with(['success' => true,'message' => 'Lead Successfully Updated']);
+            if($lead->save())
+            {
+                return back()->withInput()->with(['success' => true,'message' => 'Lead Successfully Updated']);
+            }
+        }else{
+            return back()->withInput()->with(['success' => false,'message' => 'No changes occurred!']);
         }
         return back()->withErrors()->withInput();
     }
