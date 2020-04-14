@@ -75,5 +75,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'delete requirements']);
 
         Permission::create(['name' => 'upload requirements']);
+        Permission::create(['name' => 'view settings']);
     }
 }

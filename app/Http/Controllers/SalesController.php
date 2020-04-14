@@ -541,10 +541,15 @@ class SalesController extends Controller
                 $sale = Sales::find($request->updateSaleId);
                 $sale->status = $request->status;
 
-                if($sale->save())
+                if($sale->isDirty('status'))
                 {
-                    return response()->json(['success' => true]);
+                    if($sale->save())
+                    {
+                        return response()->json(['success' => true, 'message' => 'Sale Status Successfully Updated!']);
+                    }
                 }
+                return response()->json(['success' => false, 'message' => 'No Changes Occurred!']);
+
             }
         }
         return response()->json($validator->errors());
