@@ -262,7 +262,7 @@
             });
             //Money Euro
             $('[data-mask]').inputmask()
-            //$('.textarea').html('hello');
+            {{--$('.textarea').html('{!! old('remarks') !!}');--}}
         </script>
         @if(session('success') === true)
             <script>

@@ -256,7 +256,7 @@
             });
             //Money Euro
             $('[data-mask]').inputmask()
-            $('.textarea').html({{old('remarks')}});
+            $('.textarea').html('{!! old('remarks') !!}');
         </script>
     @endcan
 @stop
