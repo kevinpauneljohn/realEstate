@@ -145,6 +145,7 @@
                                     <option value="Online" @if(old('point_of_contact') == "Online") selected="selected" @endif>Online</option>
                                     <option value="Saturation" @if(old('point_of_contact') == "Saturation") selected="selected" @endif>Saturation</option>
                                     <option value="Referral" @if(old('point_of_contact') == "Referral") selected="selected" @endif>Referral</option>
+                                    <option value="Referral" @if(old('point_of_contact') == "Others") selected="selected" @endif>Others</option>
                                 </select>
                                 @error('point_of_contact')
                                 <span class="invalid-feedback" role="alert">
@@ -154,7 +155,7 @@
                             </div>
 
                             <div class="form-group project">
-                                <label for="project">Project Interested</label><span class="required">*</span>
+                                <label for="project">Project Interested</label>
                                 <select class="select2" name="project[]" id="project" multiple="multiple" data-placeholder="Select a project" style="width: 100%;">
                                     @foreach($projects as $project)
                                         <option value="{{$project->name}}">{{$project->name}}</option>
