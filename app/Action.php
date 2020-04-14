@@ -5,12 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Priority extends Model
+class Action extends Model
 {
     use SoftDeletes;
 
-    public function actions()
+    public function priority()
     {
-        return $this->hasMany(Action::class);
+        return $this->belongsTo(Priority::class);
     }
 }

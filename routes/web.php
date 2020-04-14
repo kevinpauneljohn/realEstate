@@ -138,3 +138,9 @@ Route::get('/priorities/list','PriorityController@priorityList')->name('prioriti
 Route::post('/priorities','PriorityController@store')->name('priorities.store')->middleware(['auth','permission:add priority']);
 Route::put('/priorities/{priority}','PriorityController@update')->name('priorities.update')->middleware(['auth','permission:edit priority']);
 Route::delete('/priorities/{priority}','PriorityController@destroy')->name('priorities.delete')->middleware(['auth','permission:delete priority']);
+
+/*actions*/
+Route::get('/actions','ActionController@index')->name('actions.index')->middleware(['auth','permission:view action']);
+Route::get('/actions/list','ActionController@actionList')->name('actions.list')->middleware(['auth','permission:view action']);
+Route::post('/actions','ActionController@store')->name('actions.store')->middleware(['auth','permission:add action']);
+Route::get('/action/get/{action}','ActionController@getAction')->name('actions.get')->middleware(['auth','permission:view action']);

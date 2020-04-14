@@ -254,6 +254,11 @@ return [
             'can'     => 'view settings',
             'submenu' => [
                 [
+                    'text' => 'Actions',
+                    'route'  => 'actions.index',
+                    'can'  => 'view action',
+                ],
+                [
                     'text' => 'Priorities',
                     'route'  => 'priorities.index',
                     'can'  => 'view priority',

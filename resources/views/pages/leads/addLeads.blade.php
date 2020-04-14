@@ -254,7 +254,7 @@
             $('#datepicker').datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd'
-            });
+            }).datepicker("setDate", new Date());
             //Money Euro
             $('[data-mask]').inputmask()
             $('.textarea').html('{!! old('remarks') !!}');

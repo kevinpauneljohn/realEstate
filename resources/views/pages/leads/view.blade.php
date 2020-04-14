@@ -396,6 +396,8 @@
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             });
+
+            $("#schedule").datepicker().datepicker("setDate", new Date());
             //Initialize Select2 Elements
             $('.select2').select2();
             /*//Timepicker
