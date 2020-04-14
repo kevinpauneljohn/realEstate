@@ -73,7 +73,7 @@
                                 <textarea class="form-control" name="description" id="description"></textarea>
                             </div>
                             <div class="form-group day">
-                                <label for="name">Day</label><span class="required">*</span>
+                                <label for="day">Day</label><span class="required">*</span>
                                 <select class="form-control select2" name="day" id="day" style="width:100%">
                                     <option value=""></option>
                                     @for($day = 1; $day <= 30; $day++)
@@ -99,19 +99,94 @@
         </div>
         <!--end add new priority modal-->
     @endcan
+
+    @can('edit priority')
+        <!--edit priority modal-->
+        <div class="modal fade" id="edit-priority-modal">
+            <form role="form" id="edit-priority-form" class="form-submit">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="priorityId" id="priorityId">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Priority</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group edit_name">
+                                <label for="edit_name">Priority Name</label><span class="required">*</span>
+                                <input type="text" name="edit_name" class="form-control" id="edit_name">
+                            </div>
+                            <div class="form-group edit_description">
+                                <label for="edit_description">Description</label><span class="required">*</span>
+                                <textarea class="form-control" name="edit_description" id="edit_description"></textarea>
+                            </div>
+                            <div class="form-group edit_day">
+                                <label for="edit_day">Day</label><span class="required">*</span>
+                                <select class="form-control select2" name="edit_day" id="edit_day" style="width:100%">
+                                    <option value=""></option>
+                                    @for($day = 1; $day <= 30; $day++)
+                                        <option value="{{$day}}">{{$day}} day/s</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <!-- Color Picker -->
+                            <div class="form-group edit_color">
+                                <label for="edit_color">Color picker:</label><span class="required">*</span>
+                                <input type="color" class="form-control" name="edit_color" id="edit_color">
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new priority modal-->
+    @endcan
+
+    @can('delete priority')
+        <!--delete priority-->
+        <div class="modal fade" id="delete-priority-modal">
+            <form role="form" id="delete-priority-form" class="form-submit">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="deletePriorityId" id="deletePriorityId">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-danger">
+                        <div class="modal-body">
+                            <p class="delete_role">Delete Priority: <span class="delete-priority-name"></span></p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end delete terminal modal-->
+    @endcan
 @stop
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css')}}">
 @stop
 
 @section('js')
     <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
-    <script src="{{asset('vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
     <script src="{{asset('js/validation.js')}}"></script>
     <script src="{{asset('js/priority.js')}}"></script>
     @can('view sales')
@@ -134,8 +209,6 @@
             });
             //Initialize Select2 Elements
             $('.select2').select2();
-            //Colorpicker
-            $('.my-colorpicker1').colorpicker()
         </script>
     @endcan
 @stop

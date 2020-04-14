@@ -9,7 +9,7 @@ function clear_errors()
     }
 }
 
-function submitform(url , type , data , message , reload = true, elementAttr, consoleLog = true, errorMessage)
+function submitform(url , type , data , reload = true, elementAttr, consoleLog = true, errorMessage)
 {
     $.ajax({
         'url' : url,
@@ -28,7 +28,7 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
             if(result.success === true)
             {
                 setTimeout(function(){
-                    toastr.success(message);
+                    toastr.success(result.message);
                     setTimeout(function(){
                         if(reload === true)
                         {
@@ -62,4 +62,14 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
             toastr.error(errorMessage);
         }
     });
+}
+
+function dataObject(btn){
+    $tr = $(btn).closest('tr');
+
+    var data = $tr.children("td").map(function () {
+        return $(this).text();
+    }).get();
+
+    return data;
 }
