@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Action;
 use App\Priority;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -76,6 +77,38 @@ class ActionController extends Controller
     }
 
     /**
+     * @since april 15, 2020
+     * @author john kevin paunel
+     * update action modal
+     * @param Request $request
+     * @param int $id
+     * @return mixed
+     * */
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'edit_action'   => 'required',
+            'edit_description' => 'required',
+            'edit_priority' => 'required'
+        ]);
+
+        if($validator->passes()){
+            $action = Action::find($id);
+            $action->name = $request->edit_action;
+            $action->description = $request->edit_description;
+            $action->priority_id = $request->edit_priority;
+
+            if($action->isDirty())
+            {
+                $action->save();
+                return response()->json(['success' => true, 'message' => 'Action Successfully Edited']);
+            }
+            return response()->json(['success' => false, 'message' => 'No Changes Occurred']);
+        }
+        return response()->json($validator->errors());
+    }
+
+    /**
      * @since April 14, 2020
      * @author john kevin paunel
      * get the action object
@@ -85,5 +118,20 @@ class ActionController extends Controller
     public function getAction($id)
     {
         return Action::findOrFail($id);
+    }
+
+    /**
+     * @since April 15, 2020
+     * @author john kevin paunel
+     * delete action model
+     * @param int $id
+     * @return Response
+     * */
+    public function destroy($id)
+    {
+        $action = Action::find($id);
+        $action->delete();
+
+        return response()->json(['success' => true, 'message' => 'Action Successfully Removed!']);
     }
 }

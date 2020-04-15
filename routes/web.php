@@ -144,3 +144,5 @@ Route::get('/actions','ActionController@index')->name('actions.index')->middlewa
 Route::get('/actions/list','ActionController@actionList')->name('actions.list')->middleware(['auth','permission:view action']);
 Route::post('/actions','ActionController@store')->name('actions.store')->middleware(['auth','permission:add action']);
 Route::get('/action/get/{action}','ActionController@getAction')->name('actions.get')->middleware(['auth','permission:view action']);
+Route::put('/actions/{action}','ActionController@update')->name('actions.update')->middleware(['auth','permission:edit action']);
+Route::delete('/actions/{action}','ActionController@destroy')->name('actions.destroy')->middleware(['auth','permission:delete action']);

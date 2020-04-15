@@ -143,15 +143,15 @@
 
     @can('delete action')
         <!--delete priority-->
-        <div class="modal fade" id="delete-priority-modal">
-            <form role="form" id="delete-priority-form" class="form-submit">
+        <div class="modal fade" id="delete-action-modal">
+            <form role="form" id="delete-action-form" class="form-submit">
                 @csrf
                 @method('DELETE')
-                <input type="hidden" name="deletePriorityId" id="deletePriorityId">
+                <input type="hidden" name="deleteActionId" id="deleteActionId">
                 <div class="modal-dialog">
                     <div class="modal-content bg-danger">
                         <div class="modal-body">
-                            <p class="delete_role">Delete Priority: <span class="delete-priority-name"></span></p>
+                            <p class="delete_action">Delete Action: <span class="delete-action-name"></span></p>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>

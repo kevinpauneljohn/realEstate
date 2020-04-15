@@ -1,5 +1,7 @@
 $(function () {
-    let addActionForm = $('#add-action-form');
+    let addActionForm = $('#add-action-form'),
+        editActionForm = $('#edit-action-form'),
+        deleteActionForm = $('#delete-action-form');
 
     addActionForm.submit(function (form) {
         form.preventDefault();
@@ -14,13 +16,32 @@ $(function () {
 
         clear_errors('action','description','priority');
     });
+
+    editActionForm.submit(function (form) {
+        form.preventDefault();
+
+        let data = editActionForm.serializeArray();
+
+        submitform(
+            '/actions/'+data[2].value,
+            'PUT',data,true,'',true,''
+        )
+    });
+
+    deleteActionForm.submit(function (form) {
+        form.preventDefault();
+
+        let data = deleteActionForm.serializeArray();
+        console.log(data);
+        submitform('/actions/'+data[2].value,'DELETE',data,true,'',true,'');
+    });
 });
 
 
 let id;
 $(document).on('click','.edit-action-btn',function () {
     id = this.id;
-    let data = dataObject(this);
+
     $('#actionId').val(id);
 
     $.ajax({
@@ -40,6 +61,12 @@ $(document).on('click','.edit-action-btn',function () {
         }
 
     });
+});
 
-    // console.log(data);
+$(document).on('click','.delete-action-btn',function () {
+    id = this.id;
+    let data = dataObject(this);
+    $('#deleteActionId').val(id);
+    $('.delete-action-name').text(data[1]).attr('style','color:yellow');
+    console.log(data);
 });
