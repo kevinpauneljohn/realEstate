@@ -23,7 +23,7 @@ class CreateThresholdsTable extends Migration
             $table->string('status');
             $table->uuid('approved_by')->nullable();
             $table->unsignedBigInteger('priority_id');
-            $table->text('admin_report');
+            $table->text('admin_report')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ActionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ActionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/action.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/actions/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/actions/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_13_011022_create_thresholds_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_13_011022_create_thresholds_table.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,7 +19,7 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.24346527">
+    <splitter split-orientation="horizontal" split-proportion="0.29354355">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
@@ -30,18 +27,6 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="542">
                   <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PriorityController.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-986">
-                  <caret line="29" column="12" selection-start-line="29" selection-start-column="12" selection-end-line="41" selection-end-column="14" />
-                  <folding>
-                    <element signature="e#40#57#0#PHP" expanded="true" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -59,56 +44,32 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/public/js/action.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="340">
-                  <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/config/adminlte.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4437">
+                <state relative-caret-position="386">
                   <caret line="261" column="43" selection-start-line="261" selection-start-column="43" selection-end-line="261" selection-end-column="43" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ActionController.php">
+            <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="287">
-                  <caret line="122" column="7" lean-forward="true" selection-start-line="122" selection-start-column="7" selection-end-line="122" selection-end-column="7" />
+                  <caret line="533" selection-start-line="533" selection-end-line="533" />
                   <folding>
-                    <element signature="e#40#55#0#PHP" expanded="true" />
+                    <element signature="e#40#53#0#PHP" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Priority.php">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_13_011022_create_thresholds_table.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="16" selection-start-line="16" selection-end-line="16" />
-                  <folding>
-                    <element signature="e#23#62#0#PHP" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Action.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
-                  <caret line="13" column="47" selection-start-line="13" selection-start-column="47" selection-end-line="13" selection-end-column="47" />
-                  <folding>
-                    <element signature="e#23#62#0#PHP" expanded="true" />
-                  </folding>
+                <state relative-caret-position="120">
+                  <caret line="17" column="36" lean-forward="true" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
                 </state>
               </provider>
             </entry>
@@ -214,13 +175,11 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/RequestController.php" />
         <option value="$PROJECT_DIR$/public/js/sales.js" />
         <option value="$PROJECT_DIR$/database/migrations/2020_04_13_010725_create_priorities_table.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2020_04_13_011022_create_thresholds_table.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/priorities/index.blade.php" />
         <option value="$PROJECT_DIR$/public/js/validation.js" />
         <option value="$PROJECT_DIR$/public/js/priority.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PriorityController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" />
         <option value="$PROJECT_DIR$/database/seeds/RoleSeeder.php" />
         <option value="$PROJECT_DIR$/config/adminlte.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/leads/addLeads.blade.php" />
@@ -234,6 +193,8 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/ActionController.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/public/js/action.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2020_04_13_011022_create_thresholds_table.php" />
       </list>
     </option>
   </component>
@@ -367,13 +328,26 @@
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="database" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="database" type="462c0819:PsiDirectoryNode" />
-              <item name="seeds" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -477,21 +451,7 @@
       <workItem from="1586648364174" duration="30614000" />
       <workItem from="1586739118452" duration="9323000" />
       <workItem from="1586830508659" duration="23546000" />
-      <workItem from="1586914808511" duration="4856000" />
-    </task>
-    <task id="LOCAL-00193" summary="create requirements migration table">
-      <created>1585795514099</created>
-      <option name="number" value="00193" />
-      <option name="presentableId" value="LOCAL-00193" />
-      <option name="project" value="LOCAL" />
-      <updated>1585795514099</updated>
-    </task>
-    <task id="LOCAL-00194" summary="create requirements migration table">
-      <created>1585799487470</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1585799487474</updated>
+      <workItem from="1586914808511" duration="7016000" />
     </task>
     <task id="LOCAL-00195" summary="create requirements migration table">
       <created>1585799669112</created>
@@ -822,17 +782,31 @@
       <option name="project" value="LOCAL" />
       <updated>1586867696545</updated>
     </task>
-    <option name="localTasksCounter" value="242" />
+    <task id="LOCAL-00242" summary="action module">
+      <created>1586926164124</created>
+      <option name="number" value="00242" />
+      <option name="presentableId" value="LOCAL-00242" />
+      <option name="project" value="LOCAL" />
+      <updated>1586926164126</updated>
+    </task>
+    <task id="LOCAL-00243" summary="action module">
+      <created>1586932248834</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1586932248834</updated>
+    </task>
+    <option name="localTasksCounter" value="244" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="545879000" />
+    <option name="totallyTimeSpent" value="548039000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.10134228" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.068456374" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1030,13 +1004,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_12_083519_create_thresholds_table.php" />
-    <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_13_011022_create_thresholds_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="28" column="76" selection-start-line="28" selection-start-column="76" selection-end-line="28" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_13_010725_create_priorities_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
@@ -1116,16 +1083,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="541" column="49" lean-forward="true" selection-start-line="541" selection-start-column="49" selection-end-line="541" selection-end-column="49" />
-          <folding>
-            <element signature="e#40#53#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/ExampleComponent.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1140,20 +1097,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="338">
           <caret line="262" column="14" lean-forward="true" selection-start-line="262" selection-start-column="14" selection-end-line="262" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_14_095239_create_actions_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="28" column="19" lean-forward="true" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4437">
-          <caret line="261" column="43" selection-start-line="261" selection-start-column="43" selection-end-line="261" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -1229,13 +1172,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ActionController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
@@ -1246,10 +1182,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/action.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
+        <state relative-caret-position="-73">
           <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="261" column="43" selection-start-line="261" selection-start-column="43" selection-end-line="261" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_14_095239_create_actions_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="28" column="19" lean-forward="true" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="533" selection-start-line="533" selection-end-line="533" />
+          <folding>
+            <element signature="e#40#53#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_13_011022_create_thresholds_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="17" column="36" lean-forward="true" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
         </state>
       </provider>
     </entry>

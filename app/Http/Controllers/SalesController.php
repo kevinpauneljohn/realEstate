@@ -532,6 +532,7 @@ class SalesController extends Controller
                 $threshold->table = 'sales';
                 $threshold->status = 'pending';
 
+
                 if($threshold->save())
                 {
                     return response()->json(['success' => true]);
