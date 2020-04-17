@@ -24,8 +24,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/web.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="389">
-                  <caret line="111" column="40" selection-start-line="111" selection-start-column="40" selection-end-line="111" selection-end-column="40" />
+                <state relative-caret-position="372">
+                  <caret line="110" column="25" lean-forward="true" selection-start-line="110" selection-start-column="25" selection-end-line="110" selection-end-column="25" />
                 </state>
               </provider>
             </entry>
@@ -499,21 +499,7 @@
       <workItem from="1586830508659" duration="23546000" />
       <workItem from="1586914808511" duration="12386000" />
       <workItem from="1587127608075" duration="1256000" />
-      <workItem from="1587129373316" duration="907000" />
-    </task>
-    <task id="LOCAL-00198" summary="create requirements migration table">
-      <created>1585840117823</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1585840117823</updated>
-    </task>
-    <task id="LOCAL-00199" summary="create requirements migration table">
-      <created>1585845516082</created>
-      <option name="number" value="00199" />
-      <option name="presentableId" value="LOCAL-00199" />
-      <option name="project" value="LOCAL" />
-      <updated>1585845516082</updated>
+      <workItem from="1587129373316" duration="1526000" />
     </task>
     <task id="LOCAL-00200" summary="create requirements migration table">
       <created>1585847249534</created>
@@ -844,11 +830,25 @@
       <option name="project" value="LOCAL" />
       <updated>1587130062406</updated>
     </task>
-    <option name="localTasksCounter" value="247" />
+    <task id="LOCAL-00247" summary="action module">
+      <created>1587130287817</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1587130287817</updated>
+    </task>
+    <task id="LOCAL-00248" summary="action module">
+      <created>1587130537328</created>
+      <option name="number" value="00248" />
+      <option name="presentableId" value="LOCAL-00248" />
+      <option name="project" value="LOCAL" />
+      <updated>1587130537328</updated>
+    </task>
+    <option name="localTasksCounter" value="249" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="555572000" />
+    <option name="totallyTimeSpent" value="556191000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1260,8 +1260,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="111" column="40" selection-start-line="111" selection-start-column="40" selection-end-line="111" selection-end-column="40" />
+        <state relative-caret-position="372">
+          <caret line="110" column="25" lean-forward="true" selection-start-line="110" selection-start-column="25" selection-end-line="110" selection-end-column="25" />
         </state>
       </provider>
     </entry>

@@ -108,7 +108,7 @@ Route::get('/upline-commission/{project}','CommissionController@getUpLineCommiss
 
 Route::get('/test',function(\Illuminate\Http\Request $request){
 
-    return 'login accepted';
+    return $request->all();
 });
 
 /*change password*/
