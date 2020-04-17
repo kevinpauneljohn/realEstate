@@ -106,10 +106,9 @@ Route::post('/commissions','CommissionController@store')->name('commissions.stor
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
-Route::get('/test',function(){
+Route::get('/test',function(\Illuminate\Http\Request $request){
 
-    $templates = \App\Template::find(3);
-    return $templates->requirements;
+    return $request->all();
 });
 
 /*change password*/

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
+use App\Repositories\ThresholdRepository;
 use App\Requirement;
 use App\SaleRequirement;
 use App\Sales;
@@ -19,6 +20,13 @@ use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
 {
+    private $thresholdRepository;
+
+    public function __construct(ThresholdRepository $thresholdRepository)
+    {
+        $this->thresholdRepository = $thresholdRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -521,6 +529,8 @@ class SalesController extends Controller
         {
             if(!$user->hasRole('super admin'))
             {
+                $priority = $this->thresholdRepository->getThresholdPriority('update sale status');
+
                 //sent the request first to the threshold table and need's admin or super admin approval before update
                 $data = array('id' => $request->updateSaleId,'status' => $request->status);
 
@@ -531,6 +541,7 @@ class SalesController extends Controller
                 $threshold->data = json_encode($data);
                 $threshold->table = 'sales';
                 $threshold->status = 'pending';
+                $threshold->priority_id = $priority;
 
 
                 if($threshold->save())
