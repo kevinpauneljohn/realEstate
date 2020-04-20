@@ -7,6 +7,12 @@
 
 @section('adminlte_css')
     @stack('css')
+    <style type="text/css">
+        .errors{
+            color:red;
+            text-align:center;
+        }
+    </style>
     @yield('css')
 @stop
 
@@ -41,19 +47,14 @@
                     <i class="fa fa-warning"></i> Invalid Credentials
                 </div>
                 @endif
-                    @if (count($errors))
-                        @if (count($errors) == 1 && in_array(__('auth.throttle'), $errors->get('email')))
-                            <p>@lang('auth.throttle')</p>
-                            <button>Close</button>
-                            <button>Contact</button>
-                        @else
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                    @if($errors->has('email'))
+                        <div class="alert alert-danger">
+                            <i class="fa fa-warning"></i> {{$errors->first('email')}}
+                        </div>
                     @endif
+                    @if(session('attempts'))
+                        <div class="errors">{{4-session('attempts')}} Attempt(s) Left</div>
+                        @endif
                     <p class="login-box-msg">{{ __('adminlte::adminlte.login_message') }}</p>
                 <form action="{{ route('authenticate') }}" method="post" class="form-submit">
                     {{ csrf_field() }}
