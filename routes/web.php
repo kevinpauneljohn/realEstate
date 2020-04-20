@@ -16,11 +16,15 @@
 //});
 
 //Auth::routes();
+
 Route::get('/','LandingPageController');
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/login','CustomAuth\LoginController@login_form')->name('login');
-Route::post('/login','CustomAuth\LoginController@authenticate')->name('authenticate');
+//Route::group(['middleware' => 'throttle:2,1'], function (){
+    Route::get('/login','CustomAuth\LoginController@login_form')->name('login');
+    Route::post('/login','CustomAuth\LoginController@authenticate')->name('authenticate');
+//});
+
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');

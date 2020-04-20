@@ -41,7 +41,20 @@
                     <i class="fa fa-warning"></i> Invalid Credentials
                 </div>
                 @endif
-                <p class="login-box-msg">{{ __('adminlte::adminlte.login_message') }}</p>
+                    @if (count($errors))
+                        @if (count($errors) == 1 && in_array(__('auth.throttle'), $errors->get('email')))
+                            <p>@lang('auth.throttle')</p>
+                            <button>Close</button>
+                            <button>Contact</button>
+                        @else
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    @endif
+                    <p class="login-box-msg">{{ __('adminlte::adminlte.login_message') }}</p>
                 <form action="{{ route('authenticate') }}" method="post" class="form-submit">
                     {{ csrf_field() }}
                     <div class="input-group mb-3">
@@ -71,7 +84,15 @@
                         @endif
                     </div>
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-6">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember" name="remember">
+                                <label for="remember">
+                                    Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6">
                             <button type="submit" class="btn btn-primary btn-block btn-flat submit-form-btn">
                                 <i class="spinner fa fa-spinner fa-spin"></i> {{ __('adminlte::adminlte.sign_in') }}
                             </button>

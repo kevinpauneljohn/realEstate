@@ -7,10 +7,11 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class LoginController extends Controller
 {
-
+    use ThrottlesLogins;
     /**
      * Feb. 09, 2020
      * @author john kevin paunel
@@ -34,12 +35,14 @@ class LoginController extends Controller
      * */
     public function authenticate(Request $request)
     {
+        $remember = ($request->remember == null) ? false : true;
+
         $request->validate([
             'username'      => 'required',
             'password'      => 'required'
         ]);
         $credential = $request->only('username','password');
-        if(Auth::attempt($credential))
+        if(Auth::attempt($credential,$remember))
         {
             return redirect(route('dashboard'));
         }
