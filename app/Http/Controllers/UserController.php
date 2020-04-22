@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Downline;
 use App\Events\CreateNetworkEvent;
+use App\Http\Middleware\checkUserAuth;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
@@ -22,6 +23,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         /*this will set the allowed role depending on the position the user has*/
@@ -74,10 +76,7 @@ class UserController extends Controller
             })
             ->addColumn('full_name',function($sale){
                 $lead = Lead::find($sale->lead_id);
-                $firstname = $lead->firstname;
-                $lastname = $lead->lastname;
-
-                return ucfirst($firstname).' '.ucfirst($lastname);
+                return $lead->fullname;
             })
             ->addColumn('project',function($sale){
                 $project = Project::find($sale->project_id);
@@ -130,12 +129,15 @@ class UserController extends Controller
 
         return DataTables::of($users)
             ->addColumn('fullname', function ($user){
-                $fullname = ucfirst($user->firstname).' '.ucfirst($user->lastname);
-                return $fullname;
+                return $user->fullname;
             })
             ->addColumn('upline', function ($user){
-                $upline = User::find($user->upline_id);
-                return ucfirst($upline->firstname).' '.ucfirst($upline->lastname);
+                if($user->upline_id != null)
+                {
+                    $upline = User::find($user->upline_id);
+                    return $upline->fullname;
+                }
+                return "";
             })
             ->addColumn('roles', function ($user){
 

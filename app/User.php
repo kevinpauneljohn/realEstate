@@ -57,6 +57,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     public function downlines()
     {
         return $this->hasMany(Downline::class);
@@ -70,5 +71,25 @@ class User extends Authenticatable
     public function sales()
     {
         return $this->hasMany(Sales::class);
+    }
+
+    public function getFirstnameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function getMiddlenameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function getLastnameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
     }
 }

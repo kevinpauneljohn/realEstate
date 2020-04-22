@@ -50,4 +50,9 @@ class Lead extends Model
     {
         return $this->hasMany(LeadActivity::class);
     }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
 }

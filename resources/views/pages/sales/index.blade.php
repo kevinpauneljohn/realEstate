@@ -99,7 +99,8 @@
                         <th>Discount</th>
                         <th>Financing</th>
                         <th>Rate</th>
-                        <th>Status</th>
+                        <th>Sale Status</th>
+                        <th>Request Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -114,7 +115,8 @@
                         <th>Discount</th>
                         <th>Financing</th>
                         <th>Rate</th>
-                        <th>Status</th>
+                        <th>Sale Status</th>
+                        <th>Request Status</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -481,6 +483,7 @@
                     { data: 'financing', name: 'financing'},
                     { data: 'commission_rate', name: 'commission_rate'},
                     { data: 'status', name: 'status'},
+                    { data: 'request_status', name: 'request_status'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 responsive:true,

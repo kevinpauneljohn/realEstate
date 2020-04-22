@@ -14,6 +14,7 @@ use App\Threshold;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\DataTables;
@@ -34,6 +35,10 @@ class SalesController extends Controller
      */
     public function index()
     {
+//        $threshold = Threshold::where('data->id',0)->firstOr(function (){
+//            return 'test';
+//        });
+//        return $threshold;
         return view('pages.sales.index')->with([
             'leads' => Lead::where('user_id',auth()->user()->id)->get(),
             'projects'   => Project::all(),
@@ -244,6 +249,14 @@ class SalesController extends Controller
             ->editColumn('discount',function($sale){
                 return number_format($sale->discount);
             })
+            ->addColumn('request_status',function($sale){
+                $threshold = Threshold::where([
+                    ['table','=','sales'],
+                    ['data->id','=',$sale->id],
+                ])->first();
+
+                return $threshold != null ? $this->statusLabel($threshold->status) : '';
+            })
             ->addColumn('full_name',function($sale){
                 $lead = Lead::find($sale->lead_id);
                 $firstname = $lead->firstname;
@@ -302,7 +315,7 @@ class SalesController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action','status'])
+            ->rawColumns(['action','status','request_status'])
             ->make(true);
     }
 
@@ -324,6 +337,12 @@ class SalesController extends Controller
                 break;
             case "paid" :
                 return '<span class="badge badge-success right role-badge">Paid</span>';
+                break;
+            case "pending" :
+                return '<span class="badge badge-warning right role-badge">Pending</span>';
+                break;
+            case "reject" :
+                return '<span class="badge badge-danger right role-badge">Rejected</span>';
                 break;
         }
     }
@@ -538,7 +557,7 @@ class SalesController extends Controller
                 $threshold->user_id = $user->id;
                 $threshold->type = 'update';
                 $threshold->description = $request->reason;
-                $threshold->data = json_encode($data);
+                $threshold->data = $data;
                 $threshold->table = 'sales';
                 $threshold->status = 'pending';
                 $threshold->priority_id = $priority;

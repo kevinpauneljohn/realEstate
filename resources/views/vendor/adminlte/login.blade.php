@@ -9,7 +9,6 @@
     @stack('css')
     <style type="text/css">
         .errors{
-            color:red;
             text-align:center;
         }
     </style>
