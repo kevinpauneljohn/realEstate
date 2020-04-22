@@ -92,4 +92,9 @@ class User extends Authenticatable
     {
         return "{$this->firstname} {$this->lastname}";
     }
+
+    public function getUsernameAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }

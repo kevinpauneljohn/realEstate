@@ -35,10 +35,7 @@ class SalesController extends Controller
      */
     public function index()
     {
-//        $threshold = Threshold::where('data->id',0)->firstOr(function (){
-//            return 'test';
-//        });
-//        return $threshold;
+
         return view('pages.sales.index')->with([
             'leads' => Lead::where('user_id',auth()->user()->id)->get(),
             'projects'   => Project::all(),
@@ -251,7 +248,7 @@ class SalesController extends Controller
             })
             ->addColumn('request_status',function($sale){
                 $threshold = Threshold::where([
-                    ['table','=','sales'],
+                    ['storage_name','=','sales'],
                     ['data->id','=',$sale->id],
                 ])->first();
 
@@ -553,20 +550,9 @@ class SalesController extends Controller
                 //sent the request first to the threshold table and need's admin or super admin approval before update
                 $data = array('id' => $request->updateSaleId,'status' => $request->status);
 
-                $threshold = new Threshold();
-                $threshold->user_id = $user->id;
-                $threshold->type = 'update';
-                $threshold->description = $request->reason;
-                $threshold->data = $data;
-                $threshold->table = 'sales';
-                $threshold->status = 'pending';
-                $threshold->priority_id = $priority;
+                $this->thresholdRepository->saveThreshold('update',$request->reason,$data,'sales','pending',$priority);
 
-
-                if($threshold->save())
-                {
-                    return response()->json(['success' => true]);
-                }
+                return response()->json(['success' => true]);
             }else{
                 //update the sale status directly at the sales table
                 $sale = Sales::find($request->updateSaleId);

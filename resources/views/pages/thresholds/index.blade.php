@@ -73,7 +73,7 @@
                     columns: [
                         { data: 'created_at', name: 'created_at'},
                         { data: 'user_id', name: 'user_id'},
-                        { data: 'type', name: 'type'},
+                        { data: 'request', name: 'request'},
                         { data: 'description', name: 'description'},
                         { data: 'status', name: 'status'},
                         { data: 'approved_by', name: 'approved_by'},

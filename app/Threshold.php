@@ -19,8 +19,9 @@ class Threshold extends Model
         $this->attributes['data'] = json_encode($value);
     }
 
-    public function setUserIdAttribute()
+
+    public function getRequestAttribute()
     {
-        $this->attributes['user_id'] = auth()->user()->id;
+        return ucfirst("{$this->type} {$this->table}");
     }
 }

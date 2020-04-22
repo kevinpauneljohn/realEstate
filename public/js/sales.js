@@ -250,7 +250,7 @@ $(document).on('submit','#edit-status-form',function (form) {
         'Status update request sent! <br/><strong>Please wait for the admin approval</strong>',
         true    ,
         '',
-        false,
+        true,
         ''
     );
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\ThresholdRepository;
 use App\Threshold;
 use App\User;
 use Illuminate\Http\Request;
@@ -9,6 +10,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RequestController extends Controller
 {
+    private $thresholdRepository;
+
+    public function __construct(ThresholdRepository $thresholdRepository)
+    {
+        $this->thresholdRepository = $thresholdRepository;
+    }
+
     public function index()
     {
         return view('pages.thresholds.index');
@@ -21,8 +29,11 @@ class RequestController extends Controller
      * */
     public function requestList()
     {
-        $thresholds = $this->getRequestListDataToShow();
+        $thresholds = $this->thresholdRepository->getAllThreshold();
         return DataTables::of($thresholds)
+            ->addColumn('request',function($threshold){
+                return $threshold->request;
+            })
             ->editColumn('user_id', function ($threshold){
                 $username = User::find($threshold->user_id)->username;
                 return $username;
@@ -50,31 +61,5 @@ class RequestController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
-    }
-
-    /**
-     * @since April 12, 2020
-     * @author john kevin paunel
-     * get the data to show for requestList method
-     * @return object
-     * */
-    private function getRequestListDataToShow()
-    {
-        $user = auth()->user();
-
-        if($user->hasRole('super admin'))
-        {
-            //get all threshold
-            $threshold = Threshold::all();
-        }else{
-
-            //get only the threshold requested by the current user
-            $threshold = Threshold::where([
-                ['user_id','=',$user->id],
-                ['status','=','pending']
-            ])->get();
-        }
-
-        return $threshold;
     }
 }
