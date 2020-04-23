@@ -76,8 +76,6 @@ class RequestController extends Controller
      * */
     public function threshold_details($id)
     {
-        //$threshold = Threshold::find($id);
         return $this->thresholdRepository->getThresholdDetails($id);
-        //return $threshold->request;
     }
 }

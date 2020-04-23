@@ -84,7 +84,7 @@
                         </div>
                         <table class="table table-sm ">
                             <tr>
-                                <td>Status</td>
+                                <td>Request Status</td>
                                 <td id="request-status"></td>
                             </tr>
                             <tr>

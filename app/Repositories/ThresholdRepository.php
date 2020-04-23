@@ -77,7 +77,7 @@ class ThresholdRepository
             [
                 'role'  => $threshold->user->getRoleNames(),
                 'priority' => $threshold->priority->name,
-        ]);
+            ]);
 
         return $request->all();
     }

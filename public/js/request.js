@@ -6,9 +6,12 @@ $(document).on('click','.view-request-btn',function () {
         'url' : '/requests/'+id,
         'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         'type' : 'POST',
+        beforeSend: function(){
+            $('.request-data, .role').html("");
+        },
         success: function(result){
             let separator = "";
-            console.log(result.user.roles);
+            console.log(result);
             $('.username').html('<a href="#">'+result.user.firstname+' '+result.user.lastname+'</a>');
             $('.reason').text(result.description);
             $('#request-type').text(result.type+' '+result.storage_name).css('font-weight','bold');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
+use App\Repositories\SalesRepository;
 use App\Repositories\ThresholdRepository;
 use App\Requirement;
 use App\SaleRequirement;
@@ -21,11 +22,12 @@ use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
 {
-    private $thresholdRepository;
+    private $thresholdRepository, $salesRepository;
 
-    public function __construct(ThresholdRepository $thresholdRepository)
+    public function __construct(ThresholdRepository $thresholdRepository, SalesRepository $salesRepository)
     {
         $this->thresholdRepository = $thresholdRepository;
+        $this->salesRepository = $salesRepository;
     }
 
     /**
@@ -547,9 +549,19 @@ class SalesController extends Controller
             {
                 $priority = $this->thresholdRepository->getThresholdPriority('update sale status');
 
+                //get the sales object
+                $sale = $this->salesRepository->getSalesById($request->updateSaleId);
+                //get the sales current status
+                $currentSaleStatus = $sale->status;
                 //sent the request first to the threshold table and need's admin or super admin approval before update
-                $data = array('id' => $request->updateSaleId,'status' => $request->status);
+                $data = array(
+                    'ID' => $request->updateSaleId,
+                    'View Sales' => '<a href="'.route('users.profile',['user' => $sale->user_id]).'" target="_blank">Click Here</a>',
+                    'Status' => $request->status,
+                    'Action' => 'Update Sale Status from <span style="color:black">'.$currentSaleStatus.'</span> to <span style="color:black">'.$request->status.'</span>'
+                );
 
+                //save the Request to threshold table
                 $this->thresholdRepository->saveThreshold('update',$request->reason,$data,'sales','pending',$priority);
 
                 return response()->json(['success' => true]);
