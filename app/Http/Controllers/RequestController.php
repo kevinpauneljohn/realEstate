@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\SalesRepository;
 use App\Repositories\ThresholdRepository;
 use App\Threshold;
 use App\User;
@@ -10,11 +11,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RequestController extends Controller
 {
-    private $thresholdRepository;
+    private $thresholdRepository,
+            $salesRepository;
 
-    public function __construct(ThresholdRepository $thresholdRepository)
+
+    public function __construct(ThresholdRepository $thresholdRepository, SalesRepository $salesRepository)
     {
         $this->thresholdRepository = $thresholdRepository;
+        $this->salesRepository = $salesRepository;
     }
 
     public function index()
@@ -61,5 +65,19 @@ class RequestController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    /**
+     * @since april 22, 2020
+     * @author john kevin paunel
+     * fetch the sales data
+     * @param int $id
+     * @return object
+     * */
+    public function threshold_details($id)
+    {
+        //$threshold = Threshold::find($id);
+        return $this->thresholdRepository->getThresholdDetails($id);
+        //return $threshold->request;
     }
 }

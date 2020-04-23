@@ -73,6 +73,11 @@ class User extends Authenticatable
         return $this->hasMany(Sales::class);
     }
 
+    public function thresholds()
+    {
+        return $this->hasMany(Threshold::class);
+    }
+
     public function getFirstnameAttribute($value)
     {
         return ucfirst($value);

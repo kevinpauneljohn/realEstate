@@ -9,7 +9,7 @@ class Sales extends Model
 {
     use SoftDeletes;
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

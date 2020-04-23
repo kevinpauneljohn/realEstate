@@ -9,12 +9,6 @@ use App\Threshold;
 
 class ThresholdRepository
 {
-    private $user;
-
-    public function __construct()
-    {
-        $this->user = auth()->user();
-    }
 
     /**
      * @since April 15, 2020
@@ -62,16 +56,30 @@ class ThresholdRepository
      * */
     public function getAllThreshold()
     {
-        if($this->user->hasRole('super admin'))
+        if(auth()->user()->hasRole('super admin'))
         {
             $threshold = Threshold::all();
         }else{
 
             //get only the threshold requested by the current user
             $threshold = Threshold::where([
-                ['user_id','=',$this->user->id]
+                ['user_id','=',auth()->user()->id]
             ])->get();
         }
         return $threshold;
     }
+
+    public function getThresholdDetails($id)
+    {
+        $threshold = Threshold::find($id);
+        $request = collect(
+            $threshold,
+            [
+                'role'  => $threshold->user->getRoleNames(),
+                'priority' => $threshold->priority->name,
+        ]);
+
+        return $request->all();
+    }
+
 }

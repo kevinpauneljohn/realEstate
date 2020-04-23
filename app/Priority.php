@@ -13,4 +13,9 @@ class Priority extends Model
     {
         return $this->hasMany(Action::class);
     }
+
+    public function thresholds()
+    {
+        return $this->hasMany(Threshold::class);
+    }
 }
