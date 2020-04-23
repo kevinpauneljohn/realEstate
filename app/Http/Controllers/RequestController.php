@@ -55,7 +55,7 @@ class RequestController extends Controller
                 $action = "";
                 if(auth()->user()->can('view request'))
                 {
-                    $action .= '<button class="btn btn-xs btn-success view-request-btn" id="'.$threshold->id.'" data-toggle="modal" data-target="#view-request-details" title="View"><i class="fa fa-eye"></i></button>';
+                    $action .= '<a href="'.route('requests.show',['request' => $threshold->id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$threshold->id.'" title="View"><i class="fa fa-eye"></i></a>';
                 }
                 if(auth()->user()->can('edit request'))
                 {
@@ -74,8 +74,9 @@ class RequestController extends Controller
      * @param int $id
      * @return object
      * */
-    public function threshold_details($id)
+    public function show($id)
     {
-        return $this->thresholdRepository->getThresholdDetails($id);
+        //return $this->thresholdRepository->getThresholdDetails($id);
+        return view('pages.thresholds.view')->with($this->thresholdRepository->getThresholdDetails($id));
     }
 }

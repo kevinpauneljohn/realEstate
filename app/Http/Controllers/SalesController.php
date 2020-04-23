@@ -547,18 +547,19 @@ class SalesController extends Controller
         {
             if(!$user->hasRole('super admin'))
             {
+                //get the request or threshold priority
                 $priority = $this->thresholdRepository->getThresholdPriority('update sale status');
 
                 //get the sales object
                 $sale = $this->salesRepository->getSalesById($request->updateSaleId);
                 //get the sales current status
                 $currentSaleStatus = $sale->status;
+
                 //sent the request first to the threshold table and need's admin or super admin approval before update
                 $data = array(
-                    'ID' => $request->updateSaleId,
-                    'View Sales' => '<a href="'.route('users.profile',['user' => $sale->user_id]).'" target="_blank">Click Here</a>',
-                    'Status' => $request->status,
-                    'Action' => 'Update Sale Status from <span style="color:black">'.$currentSaleStatus.'</span> to <span style="color:black">'.$request->status.'</span>'
+                    'status' => $request->status,
+                    'action' => 'Update Sale Status from <span style="color:#007bff">'.$currentSaleStatus.'</span> to <span style="color:#007bff">'.$request->status.'</span>',
+                    'original_data' => $this->salesRepository->getSalesOriginalData($request->updateSaleId)
                 );
 
                 //save the Request to threshold table

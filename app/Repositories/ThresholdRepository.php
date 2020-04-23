@@ -71,7 +71,7 @@ class ThresholdRepository
 
     public function getThresholdDetails($id)
     {
-        $threshold = Threshold::find($id);
+        $threshold = Threshold::findOrFail($id);
         $request = collect(
             $threshold,
             [

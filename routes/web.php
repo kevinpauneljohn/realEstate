@@ -150,4 +150,4 @@ Route::get('/action/get/{action}','ActionController@getAction')->name('actions.g
 Route::put('/actions/{action}','ActionController@update')->name('actions.update')->middleware(['auth','permission:edit action']);
 Route::delete('/actions/{action}','ActionController@destroy')->name('actions.destroy')->middleware(['auth','permission:delete action']);
 
-Route::post('/requests/{request}','RequestController@threshold_details')->name('requests.show')->middleware(['auth','permission:view request']);
+Route::get('/requests/{request}','RequestController@show')->name('requests.show')->middleware(['auth','permission:view request']);

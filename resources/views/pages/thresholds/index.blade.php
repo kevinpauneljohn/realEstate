@@ -49,61 +49,6 @@
         </div>
     </div>
 
-    @can('view request')
-        <!--view request modal-->
-        <div class="modal fade" id="view-request-details">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">View Request Details</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="post">
-                                        <div class="user-block">
-                                            <img class="img-circle img-bordered-sm" src="{{asset('images/avatar.png')}}" alt="user image">
-                                            <span class="username"></span>
-                                            <span class="description role">Role: </span>
-                                        </div>
-                                        <!-- /.user-block -->
-                                        <div class="post">
-                                            <div class="info-box bg-light">
-                                                <div class="info-box-content">
-                                                    <span class="info-box-text text-muted">Reason</span>
-                                                    <span class="info-box-number text-muted mb-0 reason"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <table class="table table-sm ">
-                            <tr>
-                                <td>Request Status</td>
-                                <td id="request-status"></td>
-                            </tr>
-                            <tr>
-                                <td>Request Type</td>
-                                <td id="request-type"></td>
-                            </tr>
-                            <tr>
-                                <td>Priority Level</td>
-                                <td id="priority"></td>
-                            </tr>
-                        </table>
-                        <table class="table table-sm request-data"></table>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-        </div>
-        <!--view request modal-->
-    @endcan
 @stop
 
 @section('css')
