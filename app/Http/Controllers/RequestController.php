@@ -79,4 +79,10 @@ class RequestController extends Controller
         //return $this->thresholdRepository->getThresholdDetails($id);
         return view('pages.thresholds.view')->with($this->thresholdRepository->getThresholdDetails($id));
     }
+
+    public function update(Request $request, $id)
+    {
+        $this->thresholdRepository->updateThreshold($id,'approved',auth()->user()->id,null,$request->reason);
+        return response()->json(['success' => true, 'message' => 'Request successfully updated!']);
+    }
 }

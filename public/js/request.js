@@ -36,3 +36,15 @@
 //         }
 //     });
 // });
+
+
+let approve = $('#approve-form');
+
+$(document).on('submit','#approve-form',function(form){
+    form.preventDefault();
+    let data = approve.serializeArray();
+
+    submitform('/requests/'+data[2]['value'],'PUT',data,true,'',true,'');
+});
+
+

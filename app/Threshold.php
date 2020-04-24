@@ -24,11 +24,19 @@ class Threshold extends Model
         return ($value != null) ? json_decode($value) : '';
     }
 
+    public function getExtraDataAttribute($value)
+    {
+        return ($value != null) ? json_decode($value) : '';
+    }
+
     public function setDataAttribute($value)
     {
         $this->attributes['data'] = json_encode($value);
     }
-
+    public function setExtraDataAttribute($value)
+    {
+        $this->attributes['extra_data'] = json_encode($value);
+    }
 
     public function getRequestAttribute()
     {

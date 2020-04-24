@@ -65,7 +65,7 @@
                                 </div>
                                 <!-- /.user-block -->
                                 <p>
-                                    <strong>Request Action: </strong>{!! $data->action !!}
+                                    <strong>Request Action: </strong>{!! $extra_data->action !!}
                                 </p>
                                 <p>
                                     <strong>Reason: </strong>{{$description}}
@@ -73,7 +73,7 @@
                             </div>
                             <div class="post">
                                 <h4>Data Origin</h4>
-                                {!! $data->original_data !!}
+                                {!! $extra_data->original_data !!}
                             </div>
                         </div>
                     </div>
@@ -101,36 +101,52 @@
                         <p class="text-sm">Up Line
                             <b class="d-block"><a href="{{route('users.profile',['user' => $user['upline_id']])}}" target="_blank">{{\App\User::findOrFail($user['upline_id'])->fullname}}</a></b>
                         </p>
+                        <p class="text-sm">Admin Report
+                            <b class="d-block">{{$admin_report}}</b>
+                        </p>
                     </div>
-
-                    <h5 class="mt-5 text-muted">Project files</h5>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-                        </li>
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-                        </li>
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
-                        </li>
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
-                        </li>
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-                        </li>
-                    </ul>
                     <div class="text-center mt-5 mb-3">
-                        <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                        <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#approve" @if($status !== 'pending') disabled="disabled" @endif>Approve</button>
+                        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#reject" @if($status !== 'pending') disabled="disabled" @endif>Reject</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- /.card-body -->
     </div>
-
+    @if($status === 'pending')
+    @can('approve request')
+        <div class="modal fade" id="approve">
+            <form role="form" id="approve-form" class="form-submit">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="thresholdId" value="{{$id}}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Approve Request</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group reason">
+                                <label for="reason">Reason</label><span class="required">*</span>
+                                <textarea class="form-control" name="reason"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+    @endcan
+    @endif
 @stop
 
 @section('css')

@@ -34,17 +34,39 @@ class ThresholdRepository
      * @param string $status
      * @param object $priority
      * */
-    public function saveThreshold($type, $reason, $data, $table, $status,$priority)
+    public function saveThreshold($type, $reason, $data, $extra_data, $table, $status,$priority)
     {
         $threshold = new Threshold();
         $threshold->user_id = auth()->user()->id;
         $threshold->type = $type;
         $threshold->description = $reason;
         $threshold->data = $data;
+        $threshold->extra_data = $extra_data;
         $threshold->storage_name = $table;
         $threshold->status = $status;
         $threshold->priority_id = $priority;
 
+        $threshold->save();
+    }
+
+    /**
+     * @since April 24, 2020
+     * @author john kevin paunel
+     * update threshold data
+     * @param int $id
+     * @param string $status
+     * @param int $approved_by
+     * @param int $priority_id
+     * @param string $admin_report
+     * @return object
+     * */
+    public function updateThreshold($id, $status = null, $approved_by = null, $priority_id = null, $admin_report = null)
+    {
+        $threshold = Threshold::find($id);
+        if($status !== null){$threshold->status = $status;}
+        if($approved_by !== null){$threshold->approved_by = $approved_by;}
+        if($priority_id !== null){$threshold->priority_id = $priority_id;}
+        if($admin_report !== null){$threshold->admin_report = $admin_report;}
         $threshold->save();
     }
 

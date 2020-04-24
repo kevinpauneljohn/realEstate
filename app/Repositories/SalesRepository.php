@@ -32,6 +32,7 @@ class SalesRepository
         return $this->getSalesById($id)->user;
     }
 
+
     /**
      * @since April 23, 2020
      * @author john kevin paunel
@@ -56,23 +57,23 @@ class SalesRepository
      * @param int $id
      * @return string
      * */
-    public function getSalesOriginalData($id)
+    public function getSalesOriginalData($id,$status)
     {
         $sale = $this->getSalesById($id);
-        $originalData = '<table class="table table-sm">';
-        $originalData .= '<tr><td>Client Name</td><td>'.$sale->lead->fullname.'</td></tr>';
-        $originalData .= '<tr><td>Project</td><td>'.$sale->project->name.'</td></tr>';
-        $originalData .= '<tr><td>Model Unit</td><td>'.$sale->modelUnit->name.'</td></tr>';
-        $originalData .= '<tr><td>Total Contract Price</td><td>'.$sale->total_contract_price.'</td></tr>';
-        $originalData .= '<tr><td>Discount</td><td>'.$sale->discount.'</td></tr>';
-        $originalData .= '<tr><td>Processing Fee</td><td>'.$sale->processing_fee.'</td></tr>';
-        $originalData .= '<tr><td>Reservation Fee</td><td>'.$sale->reservation_fee.'</td></tr>';
-        $originalData .= '<tr><td>Equity</td><td>'.$sale->equity.'</td></tr>';
-        $originalData .= '<tr><td>Loanable Amount</td><td>'.$sale->loanable_amount.'</td></tr>';
-        $originalData .= '<tr><td>Financing</td><td>'.$sale->financing.'</td></tr>';
-        $originalData .= '<tr><td>Terms</td><td>'.$sale->terms.'</td></tr>';
-        $originalData .= '<tr><td>Details</td><td>'.$sale->details.'</td></tr>';
-        $originalData .= '<tr><td>Status</td><td>'.$sale->status.'</td></tr>';
+        $originalData = '<table class="table table-sm table-bordered table-hover">';
+        $originalData .= '<tr><td>Client Name</td><td>'.$sale->lead->fullname.'</td><td></td></tr>';
+        $originalData .= '<tr><td>Project</td><td>'.$sale->project->name.'</td><td></td></tr>';
+        $originalData .= '<tr><td>Model Unit</td><td>'.$sale->modelUnit->name.'</td><td></td></tr>';
+        $originalData .= '<tr><td>Total Contract Price</td><td>'.number_format($sale->total_contract_price).'</td><td></td></tr>';
+        $originalData .= '<tr><td>Discount</td><td>'.number_format($sale->discount).'</td><td></td></tr>';
+        $originalData .= '<tr><td>Processing Fee</td><td>'.number_format($sale->processing_fee).'</td><td></td></tr>';
+        $originalData .= '<tr><td>Reservation Fee</td><td>'.number_format($sale->reservation_fee).'</td><td></td></tr>';
+        $originalData .= '<tr><td>Equity</td><td>'.number_format($sale->equity).'</td><td></td></tr>';
+        $originalData .= '<tr><td>Loanable Amount</td><td>'.number_format($sale->loanable_amount).'</td><td></td></tr>';
+        $originalData .= '<tr><td>Financing</td><td>'.$sale->financing.'</td><td></td></tr>';
+        $originalData .= '<tr><td>Terms</td><td>'.$sale->terms.'</td><td></td></tr>';
+        $originalData .= '<tr><td>Details</td><td>'.$sale->details.'</td><td></td></tr>';
+        $originalData .= '<tr><td>Status</td><td>'.$sale->status.'</td><td>'.$status.'</td></tr>';
         $originalData .= '</table>';
 
         return $originalData;

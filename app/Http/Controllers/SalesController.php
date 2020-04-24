@@ -547,9 +547,6 @@ class SalesController extends Controller
         {
             if(!$user->hasRole('super admin'))
             {
-                //get the request or threshold priority
-                $priority = $this->thresholdRepository->getThresholdPriority('update sale status');
-
                 //get the sales object
                 $sale = $this->salesRepository->getSalesById($request->updateSaleId);
                 //get the sales current status
@@ -558,12 +555,19 @@ class SalesController extends Controller
                 //sent the request first to the threshold table and need's admin or super admin approval before update
                 $data = array(
                     'status' => $request->status,
-                    'action' => 'Update Sale Status from <span style="color:#007bff">'.$currentSaleStatus.'</span> to <span style="color:#007bff">'.$request->status.'</span>',
-                    'original_data' => $this->salesRepository->getSalesOriginalData($request->updateSaleId)
                 );
 
+                //extra_data column from threshold table
+                $extra_data = array(
+                    'action' => 'Update Sale Status from <span style="color:#007bff">'.$currentSaleStatus.'</span> to <span style="color:#007bff">'.$request->status.'</span>',
+                    'original_data' => $this->salesRepository->getSalesOriginalData($request->updateSaleId,$request->status)
+                );
+
+                //get the request or threshold priority
+                $priority = $this->thresholdRepository->getThresholdPriority('update sale status');
+
                 //save the Request to threshold table
-                $this->thresholdRepository->saveThreshold('update',$request->reason,$data,'sales','pending',$priority);
+                $this->thresholdRepository->saveThreshold('update',$request->reason,$data,$extra_data,'sales','pending',$priority);
 
                 return response()->json(['success' => true]);
             }else{
