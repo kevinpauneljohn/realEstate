@@ -57,10 +57,6 @@ class RequestController extends Controller
                 {
                     $action .= '<a href="'.route('requests.show',['request' => $threshold->id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$threshold->id.'" title="View"><i class="fa fa-eye"></i></a>';
                 }
-                if(auth()->user()->can('edit request'))
-                {
-                    $action .= '<button class="btn btn-xs btn-primary edit-request-btn" id="'.$threshold->id.'" data-toggle="modal" data-target="#edit-request-details" title="Approve"><i class="far fa-thumbs-up"></i></button>';
-                }
                 return $action;
             })
             ->rawColumns(['action'])
@@ -84,5 +80,6 @@ class RequestController extends Controller
     {
         $this->thresholdRepository->updateThreshold($id,'approved',auth()->user()->id,null,$request->reason);
         return response()->json(['success' => true, 'message' => 'Request successfully updated!']);
+         //return (array)$threshold->data;
     }
 }

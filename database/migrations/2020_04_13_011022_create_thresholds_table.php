@@ -21,6 +21,7 @@ class CreateThresholdsTable extends Migration
             $table->longText('data');
             $table->longText('extra_data');
             $table->string('storage_name');
+            $table->string('storage_id');
             $table->string('status');
             $table->uuid('approved_by')->nullable();
             $table->unsignedBigInteger('priority_id');

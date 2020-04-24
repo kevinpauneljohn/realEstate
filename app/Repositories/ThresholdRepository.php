@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Action;
 use App\Threshold;
+use Illuminate\Support\Facades\DB;
 
 class ThresholdRepository
 {
@@ -31,10 +32,11 @@ class ThresholdRepository
      * @param string $reason
      * @param array $data
      * @param string $table
+     * @param int $table_id
      * @param string $status
      * @param object $priority
      * */
-    public function saveThreshold($type, $reason, $data, $extra_data, $table, $status,$priority)
+    public function saveThreshold($type, $reason, $data, $extra_data, $table, $table_id, $status,$priority)
     {
         $threshold = new Threshold();
         $threshold->user_id = auth()->user()->id;
@@ -43,6 +45,7 @@ class ThresholdRepository
         $threshold->data = $data;
         $threshold->extra_data = $extra_data;
         $threshold->storage_name = $table;
+        $threshold->storage_id = $table_id;
         $threshold->status = $status;
         $threshold->priority_id = $priority;
 
@@ -68,7 +71,24 @@ class ThresholdRepository
         if($priority_id !== null){$threshold->priority_id = $priority_id;}
         if($admin_report !== null){$threshold->admin_report = $admin_report;}
         $threshold->save();
+        $this->thresholdAction($threshold);
     }
+
+    /**
+     * @since April 24, 2020
+     * @author john kevin paunel
+     * apply the update or delete to the requested table
+     * @param object $threshold
+     * @return void
+     * */
+    public function thresholdAction($threshold)
+    {
+        DB::table($threshold->storage_name)
+        ->where('id',$threshold->storage_id)
+        ->update((array)$threshold->data);
+    }
+
+
 
     /**
      * @since April 22, 2020

@@ -567,7 +567,7 @@ class SalesController extends Controller
                 $priority = $this->thresholdRepository->getThresholdPriority('update sale status');
 
                 //save the Request to threshold table
-                $this->thresholdRepository->saveThreshold('update',$request->reason,$data,$extra_data,'sales','pending',$priority);
+                $this->thresholdRepository->saveThreshold('update',$request->reason,$data,$extra_data,'sales',$request->updateSaleId,'pending',$priority);
 
                 return response()->json(['success' => true]);
             }else{
