@@ -318,38 +318,139 @@
         <!--end add new user modal-->
     @endcan
 
-    @can('edit project')
-        <!--edit role modal-->
-        <div class="modal fade" id="edit-project-modal">
-            <form role="form" id="edit-project-form" class="form-submit">
+    @can('edit sales')
+        <div class="modal fade" id="edit-sales-modal">
+            <form role="form" id="edit-sales-form" class="form-submit">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="updateProjectId" id="updateProjectId">
-                <div class="modal-dialog">
+                <input type="hidden" name="updateSalesId" id="updateSalesId">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update Project</h4>
+                            <h4 class="modal-title">Edit Sales</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group edit_name">
-                                <label for="edit_name">Project Name</label>
-                                <input type="text" name="edit_name" class="form-control" id="edit_name">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <!-- Date range -->
+                                    <div class="form-group edit_reservation_date">
+                                        <label>Reservation Date</label><span class="required">*</span>
+                                        <input type="text" name="edit_reservation_date" id="edit_reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                    </div>
+                                    <div class="form-group edit_buyer">
+                                        <label for="edit_buyer">Buyer's Name</label><span class="required">*</span>
+                                        <select name="edit_buyer" id="edit_buyer" class="form-control select2" style="width: 100%;">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($leads as $lead)
+                                                <option value="{{$lead->id}}">{{ucfirst($lead->firstname)}} {{ucfirst($lead->lastname)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group edit_project">
+                                        <label for="edit_project">Project</label><span class="required">*</span>
+                                        <select name="edit_project" id="edit_project" class="form-control" style="width: 100%;">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($projects as $project)
+                                                <option value="{{$project->id}}">{{$project->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group edit_model_unit">
+                                        <label for="edit_model_unit">Model Unit</label><span class="required">*</span>
+                                        <select name="edit_model_unit" id="edit_model_unit" class="form-control" style="width: 100%;">
+
+                                        </select>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 edit_lot_area">
+                                            <label for="edit_lot_area">Lot Area</label>
+                                            <input type="text" name="edit_lot_area" id="edit_lot_area" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-lg-6 edit_floor_area">
+                                            <label for="edit_floor_area">Floor Area</label>
+                                            <input type="text" name="edit_floor_area" id="edit_floor_area" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-4 edit_phase">
+                                            <label for="edit_phase">Phase</label>
+                                            <input type="text" name="edit_phase" id="edit_phase" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-lg-4 edit_block_number">
+                                            <label for="edit_block_number">Block</label>
+                                            <input type="text" name="edit_block_number" id="edit_block_number" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-lg-4 edit_lot_number">
+                                            <label for="edit_lot_number">Lot</label>
+                                            <input type="text" name="edit_lot_number" id="edit_lot_number" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form-group edit_total_contract_price">
+                                        <label>Total Contract Price</label><span class="required">*</span>
+                                        <input type="text" name="edit_total_contract_price" id="edit_total_contract_price" class="form-control">
+                                    </div>
+                                    <div class="form-group edit_discount">
+                                        <label>Discount</label>
+                                        <input type="text" name="edit_discount" id="edit_discount" class="form-control">
+                                    </div>
+                                    <div class="form-group edit_processing_fee">
+                                        <label for="edit_processing_fee">Processing Fee</label>
+                                        <input type="text" name="edit_processing_fee" id="edit_processing_fee" class="form-control">
+                                    </div>
+                                    <div class="form-group edit_reservation_fee">
+                                        <label>Reservation Fee</label>
+                                        <input type="text" name="edit_reservation_fee" id="edit_reservation_fee" class="form-control">
+                                    </div>
+                                    <div class="form-group edit_equity">
+                                        <label>Equity/Down Payment</label>
+                                        <input type="text" name="edit_equity" id="edit_equity" class="form-control">
+                                    </div>
+                                    <div class="form-group edit_loanable_amount">
+                                        <label>Loanable Amount</label>
+                                        <input type="text" name="edit_loanable_amount" id="edit_loanable_amount" class="form-control">
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group edit_financing">
+                                        <label>Financing</label>
+                                        <select name="edit_financing" id="edit_financing" class="form-control select2" style="width: 100%;">
+                                            <option value=""> -- Select -- </option>
+                                            <option value="Cash">Cash</option>
+                                            <option value="INHOUSE">INHOUSE</option>
+                                            <option value="HDMF">HDMF</option>
+                                            <option value="Bank">Bank</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group edit_dp_terms">
+                                        <label for="edit_dp_terms">Equity / Down Payment Terms</label>
+                                        <input type="text" name="edit_dp_terms" id="edit_dp_terms" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_details">Details</label>
+                                        <textarea name="edit_details" id="edit_details" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group edit_address">
-                                <label for="edit_address">Address</label>
-                                <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group update_reason">
+                                        <label for="update_reason">Reason</label><span class="required">*</span>
+                                        <textarea class="form-control" name="update_reason" id="update_reason">@if(auth()->user()->hasRole('super admin')) Proceed @endif</textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group edit_remarks">
-                                <label for="edit_remarks">Remarks</label>
-                                <textarea name="edit_remarks" id="edit_remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -357,7 +458,6 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end add user modal-->
     @endcan
 
     @can('delete project')
@@ -495,7 +595,12 @@
         $('#reservation_date').datepicker({
             autoclose: true,
             format: 'yyyy-mm-dd'
-        }).datepicker("setDate", new Date());;
+        }).datepicker("setDate", new Date());
+
+        $('#edit_reservation_date').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+        });
     </script>
     @endcan
 @stop

@@ -9,7 +9,7 @@ function clear_errors()
     }
 }
 
-function submitform(url , type , data , message , reload = true, elementAttr, consoleLog = true, errorMessage)
+function submitform(url , type , data , reload = true, elementAttr, consoleLog = true, errorMessage)
 {
     $.ajax({
         'url' : url,
@@ -28,7 +28,7 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
             if(result.success === true)
             {
                 setTimeout(function(){
-                    toastr.success(message);
+                    toastr.success(result.message);
                     setTimeout(function(){
                         if(reload === true)
                         {
@@ -84,21 +84,32 @@ $(document).ready(function () {
     })
 });
 
-$(document).on('change','#project',function(){
-    let value = this.value;
-    $('#model_unit').html('<option value=""> -- Select -- </option>');
+function projectChange(paramId, element, selected)
+{
     $.ajax({
-        'url' : '/project-model-units/'+value,
+        'url' : '/project-model-units/'+paramId,
         'type' : 'GET',
+        beforeSend: function(){
+            $('#'+element).html("");
+        },
         success: function(result){
             $.each(result, function (key, value) {
                 //console.log(value.name);
-
-                $('#model_unit').append('<option value="'+value.id+'">'+value.name+'</option>');
+                if(selected === value.id)
+                {
+                    selected = "selected"
+                }
+                $('#'+element).append('<option value="'+value.id+'"'+selected+'>'+value.name+'</option>');
             });
         }
     });
+}
+$(document).on('change','#project',function(){
+    let value = this.value;
+    projectChange(value, 'model_unit');
 });
+
+
 
 function statusLabel(status)
 {
@@ -212,7 +223,8 @@ $(document).on('change','#model_unit',function(){
 /*change sale status*/
 
 let status, //instantiate the current sale status
-    id;
+    id,
+    selected='';
 
 $(document).on('click','.update-sale-status-btn',function () {
     id = this.id; /*get the id value*/
@@ -253,5 +265,61 @@ $(document).on('submit','#edit-status-form',function (form) {
         true,
         ''
     );
+});
+
+
+$(document).on('click','.edit-sales-btn',function () {
+    id = this.id;
+    $.ajax({
+        'url' : '/sales/edit/'+id,
+        'type' : 'GET',
+        beforeSend: function () {
+
+        },success: function (result) {
+            selected = result.project_id;
+            $('#updateSalesId').val(id);
+            $('#edit_reservation_date').val(result.reservation_date);
+            $('#edit_buyer').val(result.lead_id).change();
+            $('#edit_project').val(result.project_id).change();
+            //$('#edit_model_unit').val(result.model_unit_id).change();
+            $('#edit_lot_area').val(result.lot_area);
+            $('#edit_floor_area').val(result.floor_area);
+            $('#edit_phase').val(result.phase);
+            $('#edit_block_number').val(result.block);
+            $('#edit_lot_number').val(result.lot);
+            $('#edit_total_contract_price').val(result.total_contract_price);
+            $('#edit_discount').val(result.discount);
+            $('#edit_processing_fee').val(result.processing_fee);
+            $('#edit_reservation_fee').val(result.reservation_fee);
+            $('#edit_equity').val(result.equity);
+            $('#edit_loanable_amount').val(result.loanable_amount);
+            $('#edit_financing').val(result.financing).change();
+            $('#edit_dp_terms').val(result.terms);
+            $('#edit_details').summernote("code", result.details);
+
+        },error: function (xhr, status, error) {
+            $.each(xhr, function (key, value) {
+                console.log('KEY: '+key+' VALUE: '+value);
+            });
+            console.log(status+' - '+error);
+        }
+    });
+});
+
+$(document).on('change','#edit_project',function(){
+    let value = this.value;
+    projectChange(value, 'edit_model_unit',selected);
+});
+
+$(document).on('submit','#edit-sales-form',function (form) {
+    form.preventDefault();
+
+    let data = $('#edit-sales-form').serializeArray();
+
+    submitform('/sales/'+id, 'PUT',data,
+        false,'',true,'');
+
+    clear_errors('edit_reservation_date','update_reason','edit_project',
+        'edit_model_unit','edit_total_contract_price','edit_financing','update_reason');
 });
 

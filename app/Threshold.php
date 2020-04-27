@@ -48,8 +48,8 @@ class Threshold extends Model
         return ucfirst($value);
     }
 
-    public function getTypeAttribute($value)
-    {
-        return ucfirst($value);
-    }
+//    public function getTypeAttribute($value)
+//    {
+//        return ucfirst($value);
+//    }
 }

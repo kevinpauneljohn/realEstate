@@ -298,7 +298,7 @@ class SalesController extends Controller
                 }
                 if(auth()->user()->can('edit sales'))
                 {
-                    $action .= '<a href="'.route("leads.edit",["lead" => $sale->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$sale->id.'" title="Edit"><i class="fa fa-edit"></i></a>';
+                    $action .= '<button class="btn btn-xs btn-primary edit-sales-btn" id="'.$sale->id.'" data-target="#edit-sales-modal" data-toggle="modal" title="Edit"><i class="fa fa-edit"></i></button>';
                 }
                 if(auth()->user()->can('delete sales'))
                 {
@@ -403,11 +403,11 @@ class SalesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return object
      */
     public function edit($id)
     {
-        //
+        return $this->salesRepository->getSalesById($id);
     }
 
     /**
@@ -417,9 +417,112 @@ class SalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $test = null)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'edit_reservation_date'  => 'required',
+            'edit_buyer'  => 'required',
+            'edit_project'  => 'required',
+            'edit_model_unit'  => 'required',
+            'edit_total_contract_price'  => 'required',
+            'edit_financing'  => 'required',
+            'update_reason'  => 'required',
+        ],[
+            'edit_reservation_date.required' => 'Reservation Date is required',
+            'edit_buyer.required' => 'Buyer is required',
+            'edit_project.required' => 'Project is required',
+            'edit_model_unit.required' => 'Model unit is required',
+            'edit_total_contract_price.required' => 'Total Contract Price is required',
+            'edit_financing.required' => 'Financing is required',
+            'update_reason.required' => 'Reason is required',
+        ]);
+
+        if($validator->passes())
+        {
+            if(auth()->user()->hasRole('super admin'))
+            {
+                $sale = $this->salesRepository->updateSales($request, $id);
+            }else{
+                $priority = $this->thresholdRepository->getThresholdPriority('update sales attribute');
+
+                $sale = $this->salesRepository->getSalesById($id);
+                $sale->reservation_date = $request->edit_reservation_date;
+                $sale->lead_id = $request->edit_buyer;
+                $sale->project_id = $request->edit_project;
+                $sale->model_unit_id = $request->edit_model_unit;
+                $sale->lot_area =$request->edit_lot_area;
+                $sale->floor_area = $request->edit_floor_area;
+                $sale->phase = $request->edit_phase;
+                $sale->block = $request->edit_block_number;
+                $sale->lot = $request->edit_lot_number;
+                $sale->total_contract_price = $request->edit_total_contract_price;
+                $sale->discount = $request->edit_discount;
+                $sale->processing_fee = $request->edit_processing_fee;
+                $sale->reservation_fee = $request->edit_reservation_fee;
+                $sale->equity = $request->edit_equity;
+                $sale->loanable_amount = $request->edit_loanable_amount;
+                $sale->financing = $request->edit_financing;
+                $sale->terms = $request->edit_dp_terms;
+                $sale->details = $request->edit_details;
+
+                if($sale->isDirty())
+                {
+                    if($sale->isDirty('reservation_date')){$data['reservation_date'] = $request->edit_reservation_date;}
+                    if($sale->isDirty('lead_id')){$data['lead_id'] = $request->edit_buyer;}
+                    if($sale->isDirty('project_id')){$data['project_id'] = $request->edit_project;}
+                    if($sale->isDirty('model_unit_id')){$data['model_unit_id'] = $request->edit_model_unit;}
+                    if($sale->isDirty('lot_area')){$data['lot_area'] = $request->edit_lot_area;}
+                    if($sale->isDirty('floor_area')){$data['floor_area'] = $request->edit_floor_area;}
+                    if($sale->isDirty('phase')){$data['phase'] = $request->edit_phase;}
+                    if($sale->isDirty('block')){$data['block'] = $request->edit_block_number;}
+                    if($sale->isDirty('lot')){$data['lot'] = $request->edit_lot_number;}
+                    if($sale->isDirty('total_contract_price')){$data['total_contract_price'] = $request->edit_total_contract_price;}
+                    if($sale->isDirty('discount')){$data['discount'] = $request->edit_discount;}
+                    if($sale->isDirty('processing_fee')){$data['processing_fee'] = $request->edit_processing_fee;}
+                    if($sale->isDirty('reservation_fee')){$data['reservation_fee'] = $request->edit_reservation_fee;}
+                    if($sale->isDirty('equity')){$data['equity'] = $request->edit_equity;}
+                    if($sale->isDirty('loanable_amount')){$data['loanable_amount'] = $request->edit_loanable_amount;}
+                    if($sale->isDirty('financing')){$data['financing'] = $request->edit_financing;}
+                    if($sale->isDirty('terms')){$data['terms'] = $request->edit_dp_terms;}
+                    if($sale->isDirty('details')){$data['details'] = $request->edit_details;}
+
+                    $dataComparison = array(
+                        'reservation_date' => ($sale->isDirty('reservation_date')) ? $request->edit_reservation_date :"",
+                        'lead_id' => ($sale->isDirty('lead_id')) ? $request->edit_buyer :"",
+                        'project_id' => ($sale->isDirty('project_id')) ? $request->edit_project :"",
+                        'model_unit_id' => ($sale->isDirty('model_unit_id'))?$request->edit_model_unit:"",
+                        'lot_area' => ($sale->isDirty('lot_area')) ? $request->edit_lot_area :"",
+                        'floor_area' => ($sale->isDirty('floor_area')) ? $request->edit_floor_area :"",
+                        'phase' => ($sale->isDirty('phase')) ? $request->edit_phase :"",
+                        'block' => ($sale->isDirty('block')) ? $request->edit_block_number :"",
+                        'lot' => ($sale->isDirty('lot')) ? $request->edit_lot_number :"",
+                        'total_contract_price' => ($sale->isDirty('total_contract_price')) ? $request->edit_total_contract_price :"",
+                        'discount' => ($sale->isDirty('discount')) ? $request->edit_discount :"",
+                        'processing_fee' => ($sale->isDirty('processing_fee')) ? $request->edit_processing_fee :"",
+                        'reservation_fee' => ($sale->isDirty('reservation_fee')) ? $request->edit_reservation_fee : "",
+                        'equity' => ($sale->isDirty('equity')) ? $request->edit_equity :"",
+                        'loanable_amount' => ($sale->isDirty('loanable_amount')) ? $request->edit_loanable_amount : "",
+                        'financing' => ($sale->isDirty('financing')) ? $request->edit_financing: "",
+                        'terms' => ($sale->isDirty('terms')) ? $request->edit_dp_terms :"",
+                        'details' => ($sale->isDirty('details')) ? $request->edit_details :"",
+                    );
+//
+                    $extra_data = array(
+                        'action' => 'Update the sales attribute',
+                        'original_data' => $this->salesRepository->getSalesOriginalData($request->updateSalesId,$request->status,$dataComparison)
+                    );
+
+                    $this->thresholdRepository->saveThreshold('update',$request->update_reason,$data,$extra_data,
+                        'sales',$request->updateSalesId,'pending',$priority);
+                    return response()->json(['success' => true, 'message' => 'Request for update sent<br/>Please wait for the admin approvel',
+                    'data' => $data, 'comparison' => $dataComparison, 'extra' => $extra_data]);
+                }else{
+                    return response()->json(['success' => false, 'message' => 'No Changes Occurred!']);
+                }
+            }
+            //return response()->json($sale);
+        }
+        return response()->json($validator->errors());
     }
 
     /**

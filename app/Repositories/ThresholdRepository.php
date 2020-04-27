@@ -7,10 +7,10 @@ namespace App\Repositories;
 use App\Action;
 use App\Threshold;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class ThresholdRepository
 {
-
     /**
      * @since April 15, 2020
      * @author john kevin paunel
@@ -61,7 +61,7 @@ class ThresholdRepository
      * @param int $approved_by
      * @param int $priority_id
      * @param string $admin_report
-     * @return object
+     * @return void
      * */
     public function updateThreshold($id, $status = null, $approved_by = null, $priority_id = null, $admin_report = null)
     {
@@ -83,9 +83,16 @@ class ThresholdRepository
      * */
     public function thresholdAction($threshold)
     {
-        DB::table($threshold->storage_name)
-        ->where('id',$threshold->storage_id)
-        ->update((array)$threshold->data);
+        if($threshold->type == 'update')
+        {
+            DB::table($threshold->storage_name)
+                ->where('id',$threshold->storage_id)
+                ->update((array)$threshold->data);
+        }else{
+            DB::table($threshold->storage_name)
+                ->where('id',$threshold->storage_id)
+                ->update(['deleted_at' => now()]);
+        }
     }
 
 
@@ -111,6 +118,13 @@ class ThresholdRepository
         return $threshold;
     }
 
+    /**
+     * @since April 24, 2020
+     * @author john kevin paunel
+     * get all the threshold details
+     * @param int $id
+     * @return object
+     * */
     public function getThresholdDetails($id)
     {
         $threshold = Threshold::findOrFail($id);
