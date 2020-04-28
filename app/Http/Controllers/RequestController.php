@@ -58,6 +58,10 @@ class RequestController extends Controller
                 }
 
             })
+            ->editColumn('id',function ($threshold){
+                $request = str_pad($threshold->id, 5, '0', STR_PAD_LEFT);
+                return '<a href="'.route('requests.show',['request' => $threshold->id]).'"><span style="color:#007bff">'.$request.'</span></a>';
+            })
             ->editColumn('description', function ($threshold){
                 return $threshold->extra_data->action;
             })
@@ -88,7 +92,7 @@ class RequestController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action','description'])
+            ->rawColumns(['action','id','description'])
             ->make(true);
     }
 

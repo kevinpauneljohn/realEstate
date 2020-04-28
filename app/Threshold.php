@@ -40,7 +40,7 @@ class Threshold extends Model
 
     public function getRequestAttribute()
     {
-        return ucfirst("{$this->type} {$this->table}");
+        return ucfirst("{$this->type} {$this->storage_name}");
     }
 
     public function getDescriptionAttribute($value)

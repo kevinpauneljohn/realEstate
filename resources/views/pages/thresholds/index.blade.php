@@ -31,6 +31,7 @@
                 <table id="threshold-list" class="table table-bordered" role="grid">
                     <thead>
                     <tr role="row">
+                        <th>Request #</th>
                         <th>Date Requested</th>
                         <th>How Recently</th>
                         <th>Requested By</th>
@@ -44,6 +45,7 @@
 
                     <tfoot>
                     <tr>
+                        <th>Ticker #</th>
                         <th>Date Requested</th>
                         <th>How Recently</th>
                         <th>Requested By</th>
@@ -91,6 +93,7 @@
                     serverSide: true,
                     ajax: '{!! route('thresholds.list') !!}',
                     columns: [
+                        { data: 'id', name: 'id'},
                         { data: 'created_at', name: 'created_at'},
                         { data: 'recent_time', name: 'recent_time'},
                         { data: 'user_id', name: 'user_id'},
