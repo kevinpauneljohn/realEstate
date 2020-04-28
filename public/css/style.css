@@ -67,3 +67,14 @@ table td{
 .requirements-image{
     margin:10px;
 }
+.pending{
+
+}
+.approved
+{
+    background-color:#e6fee7;
+}
+.rejected
+{
+    background-color:#ffd4d4;
+}

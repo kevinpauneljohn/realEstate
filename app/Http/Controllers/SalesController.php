@@ -148,7 +148,7 @@ class SalesController extends Controller
 
                 if($sales->save())
                 {
-                    return response()->json(['success' => true]);
+                    return response()->json(['success' => true, 'message' => 'Sales successfully added!']);
                 }
             }
 
@@ -251,10 +251,10 @@ class SalesController extends Controller
             ->addColumn('request_status',function($sale){
                 $threshold = Threshold::where([
                     ['storage_name','=','sales'],
-                    ['data->id','=',$sale->id],
-                ])->first();
+                    ['storage_id','=',$sale->id],
+                ]);
 
-                return $threshold != null ? $this->statusLabel($threshold->status) : '';
+                return $threshold->count();
             })
             ->addColumn('full_name',function($sale){
                 $lead = Lead::find($sale->lead_id);
@@ -445,6 +445,7 @@ class SalesController extends Controller
             }else{
                 $priority = $this->thresholdRepository->getThresholdPriority('update sales attribute');
 
+                //this will instantiate the sales attribute to check if there are changes in the model
                 $sale = $this->salesRepository->getSalesById($id);
                 $sale->reservation_date = $request->edit_reservation_date;
                 $sale->lead_id = $request->edit_buyer;
@@ -467,6 +468,7 @@ class SalesController extends Controller
 
                 if($sale->isDirty())
                 {
+                    //only the changed attribute will be use
                     if($sale->isDirty('reservation_date')){$data['reservation_date'] = $request->edit_reservation_date;}
                     if($sale->isDirty('lead_id')){$data['lead_id'] = $request->edit_buyer;}
                     if($sale->isDirty('project_id')){$data['project_id'] = $request->edit_project;}
@@ -486,11 +488,12 @@ class SalesController extends Controller
                     if($sale->isDirty('terms')){$data['terms'] = $request->edit_dp_terms;}
                     if($sale->isDirty('details')){$data['details'] = $request->edit_details;}
 
+                    ///this will be use to display the data origin of the request for the $extra_data array
                     $dataComparison = array(
                         'reservation_date' => ($sale->isDirty('reservation_date')) ? $request->edit_reservation_date :"",
-                        'lead_id' => ($sale->isDirty('lead_id')) ? $request->edit_buyer :"",
-                        'project_id' => ($sale->isDirty('project_id')) ? $request->edit_project :"",
-                        'model_unit_id' => ($sale->isDirty('model_unit_id'))?$request->edit_model_unit:"",
+                        'lead_id' => ($sale->isDirty('lead_id')) ? Lead::find($request->edit_buyer)->fullname :"",
+                        'project_id' => ($sale->isDirty('project_id')) ? Project::find($request->edit_project)->name :"",
+                        'model_unit_id' => ($sale->isDirty('model_unit_id'))? ModelUnit::find($request->edit_model_unit)->name:"",
                         'lot_area' => ($sale->isDirty('lot_area')) ? $request->edit_lot_area :"",
                         'floor_area' => ($sale->isDirty('floor_area')) ? $request->edit_floor_area :"",
                         'phase' => ($sale->isDirty('phase')) ? $request->edit_phase :"",
@@ -512,15 +515,17 @@ class SalesController extends Controller
                         'original_data' => $this->salesRepository->getSalesOriginalData($request->updateSalesId,$request->status,$dataComparison)
                     );
 
+                    //save the request to the threshold table
                     $this->thresholdRepository->saveThreshold('update',$request->update_reason,$data,$extra_data,
                         'sales',$request->updateSalesId,'pending',$priority);
-                    return response()->json(['success' => true, 'message' => 'Request for update sent<br/>Please wait for the admin approvel',
-                    'data' => $data, 'comparison' => $dataComparison, 'extra' => $extra_data]);
+
+                    return response()->json(['success' => true, 'message' => 'Request for update sent<br/>Please wait for the admin approvel']);
                 }else{
                     return response()->json(['success' => false, 'message' => 'No Changes Occurred!']);
                 }
             }
-            //return response()->json($sale);
+            //return message for the add sales action
+            return response()->json($sale);
         }
         return response()->json($validator->errors());
     }
@@ -672,7 +677,7 @@ class SalesController extends Controller
                 //save the Request to threshold table
                 $this->thresholdRepository->saveThreshold('update',$request->reason,$data,$extra_data,'sales',$request->updateSaleId,'pending',$priority);
 
-                return response()->json(['success' => true]);
+                return response()->json(['success' => true,'message' => 'Status update request sent! <br/><strong>Please wait for the admin approval</strong>']);
             }else{
                 //update the sale status directly at the sales table
                 $sale = Sales::find($request->updateSaleId);

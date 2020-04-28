@@ -100,7 +100,7 @@
                         <th>Financing</th>
                         <th>Rate</th>
                         <th>Sale Status</th>
-                        <th>Request Status</th>
+                        <th>Request Count</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -116,7 +116,7 @@
                         <th>Financing</th>
                         <th>Rate</th>
                         <th>Sale Status</th>
-                        <th>Request Status</th>
+                        <th>Request Count</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>

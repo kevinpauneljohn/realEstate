@@ -27,7 +27,7 @@
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Request Status</span>
-                                    <span class="info-box-number text-center text-muted mb-0">{{$status}}</span>
+                                    <span class="info-box-number text-center text-muted mb-0">{{ucfirst($status)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Request Type</span>
-                                    <span class="info-box-number text-center text-muted mb-0">{{$type}} {{$storage_name}}</span>
+                                    <span class="info-box-number text-center text-muted mb-0">{{ucfirst($type)}} {{ucfirst($storage_name)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -105,47 +105,82 @@
                             <b class="d-block">{{$admin_report}}</b>
                         </p>
                     </div>
-                    <div class="text-center mt-5 mb-3">
-                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#approve" @if($status !== 'pending') disabled="disabled" @endif>Approve</button>
-                        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#reject" @if($status !== 'pending') disabled="disabled" @endif>Reject</button>
-                    </div>
+                    @can('approve request')
+                        <div class="text-center mt-5 mb-3">
+                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#approve" @if($status !== 'pending') disabled="disabled" @endif>Approve</button>
+                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#reject" @if($status !== 'pending') disabled="disabled" @endif>Reject</button>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>
         <!-- /.card-body -->
     </div>
     @if($status === 'pending')
-    @can('approve request')
-        <div class="modal fade" id="approve">
-            <form role="form" id="approve-form" class="form-submit">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="thresholdId" value="{{$id}}">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Approve Request</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group reason">
-                                <label for="reason">Reason</label><span class="required">*</span>
-                                <textarea class="form-control" name="reason"></textarea>
+        @can('approve request')
+            <div class="modal fade" id="approve">
+                <form role="form" id="approve-form" class="form-submit">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="thresholdId" value="{{$id}}">
+                    <input type="hidden" name="action" value="approved">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Approve Request</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group reason">
+                                    <label for="reason">Reason</label><span class="required">*</span>
+                                    <textarea class="form-control" name="reason"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                             </div>
                         </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
-                        </div>
+                        <!-- /.modal-content -->
                     </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-    @endcan
+                    <!-- /.modal-dialog -->
+                </form>
+            </div>
+        @endcan
+        @can('reject request')
+            <div class="modal fade" id="reject">
+                <form role="form" id="reject-form" class="form-submit">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="thresholdId" value="{{$id}}">
+                    <input type="hidden" name="action" value="rejected">
+                    <div class="modal-dialog">
+                        <div class="modal-content bg-danger">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Reject Request</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group reason">
+                                    <label for="reason">Reason</label><span class="required">*</span>
+                                    <textarea class="form-control" name="reason" style="min-height:200px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </form>
+            </div>
+        @endcan
     @endif
 @stop
 

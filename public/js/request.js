@@ -1,50 +1,43 @@
-// let id;
-// $(document).on('click','.view-request-btn',function () {
-//     id = this.id;
-//
-//     $.ajax({
-//         'url' : '/requests/'+id,
-//         'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-//         'type' : 'POST',
-//         beforeSend: function(){
-//             $('.spinner').show().closest('div').attr('align','center');
-//             $('.request-data, .role').html("");
-//         },
-//         success: function(result){
-//             $('.spinner').hide().closest('div').removeAttr('align');
-//             console.log(result);
-//             $('.username').html('<a href="#">'+result.user.firstname+' '+result.user.lastname+'</a>');
-//             $('.reason').text(result.description);
-//             $('#request-type').text(result.type+' '+result.storage_name).css('font-weight','bold');
-//             $('#priority').text(result.priority.name).css({'font-weight' : 'bold','color' : result.priority.color});
-//             $('#request-status').text(result.status).css('font-weight','bold');
-//
-//             $.each(result.data,function (key, value) {
-//                 $('.request-data').append('<tr><td>'+key+'</td><td class="data-value">'+value+'</td></tr>');
-//             });
-//
-//             $.each(result.user.roles, function (key, value) {
-//                 $('.role').append('<span style="color: dodgerblue;">'+value.name+'</span>, ');
-//             });
-//
-//         },error: function(xhr, status, error){
-//             $.each(xhr, function (key, value) {
-//                 console.log('Key: '+key+' Value: '+value);
-//             });
-//
-//             console.log('Status: '+status+' Error: '+error);
-//         }
-//     });
-// });
-
-
-let approve = $('#approve-form');
+let approve = $('#approve-form'),
+    reject = $('#reject-form');
 
 $(document).on('submit','#approve-form',function(form){
     form.preventDefault();
     let data = approve.serializeArray();
 
     submitform('/requests/'+data[2]['value'],'PUT',data,true,'',true,'');
+});
+
+$(document).on('submit','#reject-form', function (form) {
+    form.preventDefault();
+
+    let data = reject.serializeArray();
+    submitform('/requests/'+data[2]['value'],'PUT',data,true,'',true,'');
+});
+
+$(document).on('change','#request-status',function(){
+    let value = this.value;
+
+    $.ajax({
+        'url' : '/requests/status',
+        'type' : 'POST',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'data' : {'status':value},
+        success: function (result) {
+            ///console.log(result);
+            location.reload();
+
+        },error: function (xhr, status, error) {
+            $.each(xhr, function (key, value) {
+                console.log('Key: '+key+' Value: '+value);
+            });
+            console.log('Status: '+status+' Error: '+error);
+
+            setTimeout(function(){
+               location.reload();
+            },3000);
+        }
+    });
 });
 
 

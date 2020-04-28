@@ -138,4 +138,26 @@ class ThresholdRepository
         return $request->all();
     }
 
+    /**
+     * @since April 28, 2020
+     * @author john kevin paunel
+     * set the requests status to display
+     * @param string $status
+     * @return object
+     * */
+    public function getThresholdStatus($status)
+    {
+        $user = auth()->user();
+        if($user->hasRole('super admin'))
+        {
+            $threshold = Threshold::where('status',$status)->get();
+        }else{
+            $threshold = Threshold::where([
+                ['user_id','=',$user->id],
+                ['status','=',$status]
+            ])->get();
+        }
+        return $threshold;
+    }
+
 }

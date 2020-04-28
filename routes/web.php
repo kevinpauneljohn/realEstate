@@ -154,3 +154,4 @@ Route::delete('/actions/{action}','ActionController@destroy')->name('actions.des
 
 Route::get('/requests/{request}','RequestController@show')->name('requests.show')->middleware(['auth','permission:view request']);
 Route::put('/requests/{request}','RequestController@update')->name('requests.update')->middleware(['auth','permission:approve request']);
+Route::post('/requests/status','RequestController@setRequestStatus')->name('requests.status')->middleware(['auth']);

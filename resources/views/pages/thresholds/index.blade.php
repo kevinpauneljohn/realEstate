@@ -18,17 +18,26 @@
 
 @section('content')
     <div class="card">
+        <div class="card-header">
+            Select Status to Display: <select name="request_status" id="request-status" class="select2" style="min-width: 200px;">
+                <option value="all"> -- All -- </option>
+                <option value="pending" @if(session('statusRequests') == 'pending') selected @endif>Pending</option>
+                <option value="approved" @if(session('statusRequests') == 'approved') selected @endif>Approved</option>
+                <option value="rejected" @if(session('statusRequests') == 'rejected') selected @endif>Rejected</option>
+            </select>
+        </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="threshold-list" class="table table-bordered table-striped" role="grid">
+                <table id="threshold-list" class="table table-bordered" role="grid">
                     <thead>
                     <tr role="row">
                         <th>Date Requested</th>
+                        <th>How Recently</th>
                         <th>Requested By</th>
                         <th>Type</th>
-                        <th>Reason</th>
+                        <th>Request Action</th>
                         <th>Status</th>
-                        <th>Approved By</th>
+                        <th>Assessed By</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -36,11 +45,12 @@
                     <tfoot>
                     <tr>
                         <th>Date Requested</th>
+                        <th>How Recently</th>
                         <th>Requested By</th>
                         <th>Type</th>
-                        <th>Reason</th>
+                        <th>Request Action</th>
                         <th>Status</th>
-                        <th>Approved By</th>
+                        <th>Assessed By</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -82,6 +92,7 @@
                     ajax: '{!! route('thresholds.list') !!}',
                     columns: [
                         { data: 'created_at', name: 'created_at'},
+                        { data: 'recent_time', name: 'recent_time'},
                         { data: 'user_id', name: 'user_id'},
                         { data: 'request', name: 'request'},
                         { data: 'description', name: 'description'},
@@ -90,7 +101,7 @@
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[0,'asc']
+                    order:[0,'desc']
                 });
             });
             //Initialize Select2 Elements

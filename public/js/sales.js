@@ -72,13 +72,7 @@ $(document).ready(function () {
         let data = $('#add-sales-form').serialize();
         submitform(
             '/sales',
-            'POST',
-            data,
-            'New sales Successfully Added!',
-            true,
-            '',
-            false,
-            "You don't have commission rate yet."
+            'POST',data,false,'',true,'You do not have commission rate yes <strong>Please approach your up line regarding this</strong>'
         );
         clear_errors('reservation_date','buyer','project','model_unit','total_contract_price','financing');
     })
@@ -259,11 +253,7 @@ $(document).on('submit','#edit-status-form',function (form) {
         '/sale-status-update',
         'PUT',
         $('#edit-status-form').serialize(),
-        'Status update request sent! <br/><strong>Please wait for the admin approval</strong>',
-        true    ,
-        '',
-        true,
-        ''
+        true,'',true,''
     );
 });
 
@@ -317,9 +307,10 @@ $(document).on('submit','#edit-sales-form',function (form) {
     let data = $('#edit-sales-form').serializeArray();
 
     submitform('/sales/'+id, 'PUT',data,
-        false,'',true,'');
+        true,'',true,'');
 
     clear_errors('edit_reservation_date','update_reason','edit_project',
         'edit_model_unit','edit_total_contract_price','edit_financing','update_reason');
 });
+
 
