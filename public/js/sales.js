@@ -313,4 +313,48 @@ $(document).on('submit','#edit-sales-form',function (form) {
         'edit_model_unit','edit_total_contract_price','edit_financing','update_reason');
 });
 
+$(document).on('click','.view-request-btn',function () {
+    id = this.id;
+    $.ajax({
+        'url' : '/requests/number',
+        'type' : 'POST',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'data' : {'id':id},
+        beforeSend: function(){
+            $('.tickets').remove();
+            $('#view-request .modal-body').prepend('<div align="center" class="loader"><div class="spinner-border"></div></div>');
+        },
+        success: function (result) {
+            let ctr = 1;
+            let label="";
+
+            $('#view-request .modal-body .loader').remove();
+            $.each(result, function (key, value) {
+                if(value.status === 'pending')
+                {
+                    label = '<span class="badge bg-cyan">'+value.status+'</span>';
+                }
+                else if(value.status === 'approved')
+                {
+                    label = '<span class="badge bg-success">'+value.status+'</span>';
+                }
+                else if(value.status === 'rejected')
+                {
+                    label = '<span class="badge bg-danger">'+value.status+'</span>';
+                }
+                $('.request-ticket').append('<tr class="tickets"><td>'+ctr+'</td><td><a href="/requests/'+value.id+'" target="_blank" title="Click here">'+String(value.id).padStart(5, '0')+'</a></td><td>'+label+'</td></tr>');
+                ctr++;
+            })
+
+        },error: function (xhr, status, error) {
+            console.log(xhr);
+            // $.each(xhr, function (key, value) {
+            //     console.log('Key: '+key+' Value: '+value);
+            // });
+            // console.log('Status: '+status+' Error: '+error);
+        }
+    });
+});
+
+
 

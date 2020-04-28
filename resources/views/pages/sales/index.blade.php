@@ -116,7 +116,7 @@
                         <th>Financing</th>
                         <th>Rate</th>
                         <th>Sale Status</th>
-                        <th>Request Count</th>
+                        <th width="3%">Request Count</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -524,6 +524,30 @@
                 </div>
                 <!-- /.modal-dialog -->
             </form>
+        </div>
+        <!--end add user modal-->
+    @endcan
+
+    @can('view request')
+        <!--view request-->
+        <div class="modal fade" id="view-request">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Requests</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered request-ticket">
+                                <tr><th>#</th><th>Request #</th><th>Status</th></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
         </div>
         <!--end add user modal-->
     @endcan

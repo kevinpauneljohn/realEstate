@@ -112,10 +112,11 @@ Route::post('/commissions','CommissionController@store')->name('commissions.stor
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
-//Route::get('/test',function(\Illuminate\Http\Request $request){
-//
-//    return $request->all();
-//});
+Route::get('/test',function(){
+    $model = \App\ModelUnit::class;
+    $modelTable = str_replace('\\', '', Str::snake(Str::plural(class_basename($model))));
+    return $modelTable;
+});
 
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
@@ -155,3 +156,4 @@ Route::delete('/actions/{action}','ActionController@destroy')->name('actions.des
 Route::get('/requests/{request}','RequestController@show')->name('requests.show')->middleware(['auth','permission:view request']);
 Route::put('/requests/{request}','RequestController@update')->name('requests.update')->middleware(['auth','permission:approve request']);
 Route::post('/requests/status','RequestController@setRequestStatus')->name('requests.status')->middleware(['auth']);
+Route::post('/requests/number','RequestController@getRequestNumber')->name('requests.tickets')->middleware(['auth','permission:view request']);

@@ -312,6 +312,10 @@ class SalesController extends Controller
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-warning update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';
                 }
+                if(auth()->user()->can('view request'))
+                {
+                    $action .= '<button class="btn btn-xs bg-fuchsia view-request-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-request" title="View all requests #"><i class="fa fa-ticket-alt"></i></button>';
+                }
                 return $action;
             })
             ->rawColumns(['action','status','request_status'])

@@ -73,3 +73,22 @@ function dataObject(btn){
 
     return data;
 }
+
+function statusLabel(status)
+{
+    let label = "";
+    if(status === 'pending')
+    {
+        label = '<label class="bg bg-cyan">'+string(status)+'</label>';
+    }
+    else if(status === 'approved')
+    {
+        label = '<label class="bg bg-success">'+string(status)+'</label>';
+    }
+    else if(status === 'rejected')
+    {
+        label = '<label class="bg bg-danger">'+string(status)+'</label>';
+    }
+
+    return label;
+}

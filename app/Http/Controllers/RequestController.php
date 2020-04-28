@@ -142,4 +142,16 @@ class RequestController extends Controller
         }
         return response()->json(['success' => true]);
     }
+
+    /**
+     * @since April 28, 2020
+     * @author john kevin paunel
+     * get ticket objects
+     * @param Request $request
+     * @return object
+     * */
+    public function getRequestNumber(Request $request)
+    {
+        return $this->thresholdRepository->getAllRequestByStorageId('sales',$request->id);
+    }
 }

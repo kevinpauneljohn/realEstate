@@ -119,6 +119,32 @@ class ThresholdRepository
     }
 
     /**
+     * @since April 28, 2020
+     * @author john kevin paunel
+     * get all request number
+     * @param string $table
+     * @param int $id
+     * @return object
+     * */
+    public function getAllRequestByStorageId($table, $id)
+    {
+        if(auth()->user()->can('key holder'))
+        {
+            $request = Threshold::where([
+                ['storage_name','=',$table],
+                ['storage_id','=',$id],
+            ])->orderBy('id','desc')->get();
+        }else{
+            $request = Threshold::where([
+                ['user_id','=',auth()->user()->id],
+                ['storage_name','=',$table],
+                ['storage_id','=',$id],
+            ])->orderBy('id','desc')->get();
+        }
+        return $request;
+    }
+
+    /**
      * @since April 24, 2020
      * @author john kevin paunel
      * get all the threshold details

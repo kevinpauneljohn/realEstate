@@ -35,7 +35,7 @@ $(document).on('change','#request-status',function(){
 
             setTimeout(function(){
                location.reload();
-            },3000);
+            },300);
         }
     });
 });
