@@ -27,7 +27,7 @@ class ThresholdRepository
     /**
      * @since April 22, 2020
      * @author john kevin paunel
-     * save the use request to threshold
+     * save the user request to threshold
      * @param string $type
      * @param string $reason
      * @param array $data
@@ -71,7 +71,11 @@ class ThresholdRepository
         if($priority_id !== null){$threshold->priority_id = $priority_id;}
         if($admin_report !== null){$threshold->admin_report = $admin_report;}
         $threshold->save();
-        $this->thresholdAction($threshold);
+
+        if($status == 'approved')
+        {
+            $this->thresholdAction($threshold);
+        }
     }
 
     /**

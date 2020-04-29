@@ -9,6 +9,7 @@ use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Carbon;
 
@@ -119,9 +120,16 @@ class RequestController extends Controller
      * */
     public function update(Request $request, $id)
     {
-        $this->thresholdRepository->updateThreshold($id,$request->action,auth()->user()->id,null,$request->reason);
-        return response()->json(['success' => true, 'message' => 'Request successfully updated!']);
-         //return (array)$threshold->data;
+        $validator = Validator::make($request->all(),[
+            'reason'    => 'required'
+        ]);
+
+        if($validator->passes())
+        {
+            $this->thresholdRepository->updateThreshold($id,$request->action,auth()->user()->id,null,$request->reason);
+            return response()->json(['success' => true, 'message' => 'Request successfully updated!']);
+        }
+        return response()->json($validator->errors());
     }
 
     /**

@@ -12,7 +12,7 @@ $(document).on('submit','#reject-form', function (form) {
     form.preventDefault();
 
     let data = reject.serializeArray();
-    submitform('/requests/'+data[2]['value'],'PUT',data,true,'',true,'');
+    submitform('/requests/'+data[2]['value'],'PUT',data,true,'#reject-form ',true,'');
 });
 
 $(document).on('change','#request-status',function(){

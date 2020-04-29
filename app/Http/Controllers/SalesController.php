@@ -37,7 +37,7 @@ class SalesController extends Controller
      */
     public function index()
     {
-
+        //return $this->salesRepository->get_sales_request_count_in_threshold_for_attribute(5);
         return view('pages.sales.index')->with([
             'leads' => Lead::where('user_id',auth()->user()->id)->get(),
             'projects'   => Project::all(),
@@ -167,7 +167,6 @@ class SalesController extends Controller
      * */
     public function getUpLineIds($user_id)
     {
-//        $user_id = $user_id;
         $user = User::find($user_id);
         return $user->upline_id;
     }
@@ -447,6 +446,12 @@ class SalesController extends Controller
             {
                 $sale = $this->salesRepository->updateSales($request, $id);
             }else{
+
+                if($this->salesRepository->get_sales_request_count_in_threshold_for_attribute($id) > 0)
+                {
+                    return response()->json(['success' => false, 'message' => 'You have a current sales details update request!']);
+                }
+
                 $priority = $this->thresholdRepository->getThresholdPriority('update sales attribute');
 
                 //this will instantiate the sales attribute to check if there are changes in the model
@@ -472,6 +477,7 @@ class SalesController extends Controller
 
                 if($sale->isDirty())
                 {
+
                     //only the changed attribute will be use
                     if($sale->isDirty('reservation_date')){$data['reservation_date'] = $request->edit_reservation_date;}
                     if($sale->isDirty('lead_id')){$data['lead_id'] = $request->edit_buyer;}
@@ -659,6 +665,12 @@ class SalesController extends Controller
         {
             if(!$user->hasRole('super admin'))
             {
+                //will not save new status change request if there is a similar pending request
+                if($this->salesRepository->get_sales_request_count_in_threshold($request->updateSaleId) > 0)
+                {
+                    return response()->json(['success' => false,'message' => 'You have a current change status request!']);
+                }
+
                 //get the sales object
                 $sale = $this->salesRepository->getSalesById($request->updateSaleId);
                 //get the sales current status

@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Sales;
+use App\Threshold;
 
 class SalesRepository
 {
@@ -140,6 +141,46 @@ class SalesRepository
         }
 
         return ['success' => false, 'message' => 'No Changes Occurred!', $sales];
+    }
+
+    /**
+     * @since April 29, 2020
+     * @author john kevin paunel
+     * get the sales request count
+     * @param int $salesId
+     * @return object
+     * */
+    public function get_sales_request_count_in_threshold($salesId)
+    {
+        $threshold = Threshold::where([
+            ['storage_name','=','sales'],
+            ['storage_id','=',$salesId],
+            ['user_id','=',auth()->user()->id],
+            ['status','=','pending'],
+            ['data->status','!=',null],
+        ])->count();
+
+        return $threshold;
+    }
+
+    /**
+     * @since April 29, 2020
+     * @author john kevin paunel
+     * get the sales request count for update attribute
+     * @param int $salesId
+     * @return object
+     * */
+    public function get_sales_request_count_in_threshold_for_attribute($salesId)
+    {
+        $threshold = Threshold::where([
+            ['storage_name','=','sales'],
+            ['storage_id','=',$salesId],
+            ['user_id','=',auth()->user()->id],
+            ['status','=','pending'],
+            ['extra_data->action','=','Update the sales attribute'],
+        ])->count();
+
+        return $threshold;
     }
 
 }

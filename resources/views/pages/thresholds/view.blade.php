@@ -135,7 +135,7 @@
                             <div class="modal-body">
                                 <div class="form-group reason">
                                     <label for="reason">Reason</label><span class="required">*</span>
-                                    <textarea class="form-control" name="reason"></textarea>
+                                    <textarea class="form-control" name="reason" id="reason"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
@@ -157,7 +157,7 @@
                     <input type="hidden" name="thresholdId" value="{{$id}}">
                     <input type="hidden" name="action" value="rejected">
                     <div class="modal-dialog">
-                        <div class="modal-content bg-danger">
+                        <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">Reject Request</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -167,12 +167,12 @@
                             <div class="modal-body">
                                 <div class="form-group reason">
                                     <label for="reason">Reason</label><span class="required">*</span>
-                                    <textarea class="form-control" name="reason" style="min-height:200px;"></textarea>
+                                    <textarea class="form-control" name="reason" id="reason" style="min-height:200px;"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                             </div>
                         </div>
                         <!-- /.modal-content -->
