@@ -4,8 +4,10 @@
 namespace App\Repositories;
 
 
+use App\Project;
 use App\Sales;
 use App\Threshold;
+use App\User;
 
 class SalesRepository
 {
@@ -181,6 +183,80 @@ class SalesRepository
         ])->count();
 
         return $threshold;
+    }
+
+    /**
+     * March 24, 2020
+     * @author john kevin paunel
+     * get the upline IDs
+     * @param string $user_id
+     * @return string
+     * */
+    public function getUpLineIds($user_id)
+    {
+        $user = User::find($user_id);
+        return $user->upline_id;
+    }
+
+    /**
+     * @author john kevin paunel
+     * set the agents commission rate
+     * algorithm for getting the commission rate
+     * returns the user's current sales commission rate
+     * @param int $project_id
+     * @return mixed
+     * */
+    public function setCommissionRate($project_id,$user_id)
+    {
+        ///$user = auth()->user()->id;/*set the id of the current user*/
+        $user = $user_id;/*set the id of the current user*/
+        $upLines = array(); /*instantiate the up line ids */
+        $ctr = 1; /*array counter*/
+
+        #this will loop until it gets all the user's up line IDs
+
+        $upLines[$user] = 0;/*initialize the up line value to 0*/
+        while($this->getUpLineIds($user) != null)
+        {
+            $user = $this->getUpLineIds($user);/*set the new user id*/
+            $upLines[$user] = $ctr;/*set the user key value use for arranging the user by position or rank*/
+            $ctr++;
+        }
+
+
+        $project_rate = Project::find($project_id); /*get the project rate*/
+        $rate = $project_rate->commission_rate; /*instantiate the project rate*/
+
+        arsort($upLines);/*this will arrange the Ids in descending order*/
+        foreach ($upLines as $key => $value)
+        {
+            $user = User::find($key);
+
+            if(!$user->hasRole('super admin'))
+            {
+                /*this will check if the project id is available on users commissions table project id column*/
+                if($user->commissions()->where('project_id','=',$project_id)->count() > 0)
+                {
+                    /*if the commission was set to a specific project and it matches the sales project id*/
+                    $user_rate = $user->commissions()->where('project_id','=',1)->first()->commission_rate;
+                }else{
+                    $user_rate =  $user->commissions()->where('project_id','=',null)->first()->commission_rate;/*get the user commission rate*/
+                }
+
+                /*this conditional statement will be used if the commission rate offers by the project is lower
+                or equal to the user's commission rate*/
+                if($user_rate >= $rate)
+                {
+                    $rate = $rate - 1;
+                }elseif($user_rate <= 0){
+                    $rate = 0; /* commission rate is zero and will return an error message to the user*/
+                }else{
+                    $rate = $user_rate;
+                }
+            }
+        }
+        return $rate;
+
     }
 
 }

@@ -59,7 +59,12 @@ function submitform(url , type , data , reload = true, elementAttr, consoleLog =
 
         },error: function(xhr, status, error){
             console.log(xhr);
-            toastr.error(errorMessage);
+            setTimeout(function(){
+                toastr.error(errorMessage);
+                setTimeout(function(){
+                  //location.reload();
+                },1500);
+            });
         }
     });
 }
@@ -72,13 +77,13 @@ $(document).ready(function () {
         let data = $('#add-sales-form').serialize();
         submitform(
             '/sales',
-            'POST',data,false,'',true,'You do not have commission rate yes <strong>Please approach your up line regarding this</strong>'
+            'POST',data,true,'',true,'You do not have commission rate yes <strong>Please approach your up line regarding this</strong>'
         );
         clear_errors('reservation_date','buyer','project','model_unit','total_contract_price','financing');
     })
 });
 
-function projectChange(paramId, element, selected)
+function projectChange(paramId, element)
 {
     $.ajax({
         'url' : '/project-model-units/'+paramId,
@@ -89,11 +94,7 @@ function projectChange(paramId, element, selected)
         success: function(result){
             $.each(result, function (key, value) {
                 //console.log(value.name);
-                if(selected === value.id)
-                {
-                    selected = "selected"
-                }
-                $('#'+element).append('<option value="'+value.id+'"'+selected+'>'+value.name+'</option>');
+                $('#'+element).append('<option value="'+value.id+'">'+value.name+'</option>');
             });
         }
     });
@@ -217,8 +218,7 @@ $(document).on('change','#model_unit',function(){
 /*change sale status*/
 
 let status, //instantiate the current sale status
-    id,
-    selected='';
+    id;
 
 $(document).on('click','.update-sale-status-btn',function () {
     id = this.id; /*get the id value*/
@@ -266,12 +266,10 @@ $(document).on('click','.edit-sales-btn',function () {
         beforeSend: function () {
 
         },success: function (result) {
-            selected = result.project_id;
             $('#updateSalesId').val(id);
             $('#edit_reservation_date').val(result.reservation_date);
             $('#edit_buyer').val(result.lead_id).change();
             $('#edit_project').val(result.project_id).change();
-            //$('#edit_model_unit').val(result.model_unit_id).change();
             $('#edit_lot_area').val(result.lot_area);
             $('#edit_floor_area').val(result.floor_area);
             $('#edit_phase').val(result.phase);
@@ -287,6 +285,11 @@ $(document).on('click','.edit-sales-btn',function () {
             $('#edit_dp_terms').val(result.terms);
             $('#edit_details').summernote("code", result.details);
 
+            $.each(result.modelUnit, function (key, value) {
+                $('#edit_model_unit').append('<option value="'+value.id+'">'+value.name+'</option>');
+            });
+
+            $('#edit_model_unit').val(result.model_unit_id).change();
         },error: function (xhr, status, error) {
             $.each(xhr, function (key, value) {
                 console.log('KEY: '+key+' VALUE: '+value);
@@ -298,7 +301,7 @@ $(document).on('click','.edit-sales-btn',function () {
 
 $(document).on('change','#edit_project',function(){
     let value = this.value;
-    projectChange(value, 'edit_model_unit',selected);
+    projectChange(value, 'edit_model_unit');
 });
 
 $(document).on('submit','#edit-sales-form',function (form) {

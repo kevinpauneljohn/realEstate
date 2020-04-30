@@ -259,27 +259,27 @@
                                 <div class="col-lg-4">
                                     <div class="form-group total_contract_price">
                                         <label>Total Contract Price</label>
-                                        <input type="text" name="total_contract_price" id="total_contract_price" class="form-control">
+                                        <input type="number" name="total_contract_price" id="total_contract_price" class="form-control">
                                     </div>
                                     <div class="form-group discount">
                                         <label>Discount</label>
-                                        <input type="text" name="discount" id="discount" class="form-control">
+                                        <input type="number" name="discount" id="discount" class="form-control" min="0" value="0">
                                     </div>
                                     <div class="form-group processing_fee">
                                         <label for="processing_fee">Processing Fee</label>
-                                        <input type="text" name="processing_fee" id="processing_fee" class="form-control">
+                                        <input type="number" name="processing_fee" id="processing_fee" class="form-control" min="0" value="0">
                                     </div>
                                     <div class="form-group reservation_fee">
                                         <label>Reservation Fee</label>
-                                        <input type="text" name="reservation_fee" id="reservation_fee" class="form-control">
+                                        <input type="number" name="reservation_fee" id="reservation_fee" class="form-control" min="0" value="0">
                                     </div>
                                     <div class="form-group equity">
                                         <label>Equity/Down Payment</label>
-                                        <input type="text" name="equity" id="equity" class="form-control">
+                                        <input type="number" name="equity" id="equity" class="form-control" min="0" value="0">
                                     </div>
                                     <div class="form-group loanable_amount">
                                         <label>Loanable Amount</label>
-                                        <input type="text" name="loanable_amount" id="loanable_amount" class="form-control">
+                                        <input type="number" name="loanable_amount" id="loanable_amount" class="form-control" min="0" value="0">
                                     </div>
 
                                 </div>
@@ -394,27 +394,27 @@
                                 <div class="col-lg-4">
                                     <div class="form-group edit_total_contract_price">
                                         <label>Total Contract Price</label><span class="required">*</span>
-                                        <input type="text" name="edit_total_contract_price" id="edit_total_contract_price" class="form-control">
+                                        <input type="number" name="edit_total_contract_price" id="edit_total_contract_price" class="form-control">
                                     </div>
                                     <div class="form-group edit_discount">
                                         <label>Discount</label>
-                                        <input type="text" name="edit_discount" id="edit_discount" class="form-control">
+                                        <input type="number" name="edit_discount" id="edit_discount" class="form-control">
                                     </div>
                                     <div class="form-group edit_processing_fee">
                                         <label for="edit_processing_fee">Processing Fee</label>
-                                        <input type="text" name="edit_processing_fee" id="edit_processing_fee" class="form-control">
+                                        <input type="number" name="edit_processing_fee" id="edit_processing_fee" class="form-control">
                                     </div>
                                     <div class="form-group edit_reservation_fee">
                                         <label>Reservation Fee</label>
-                                        <input type="text" name="edit_reservation_fee" id="edit_reservation_fee" class="form-control">
+                                        <input type="number" name="edit_reservation_fee" id="edit_reservation_fee" class="form-control">
                                     </div>
                                     <div class="form-group edit_equity">
                                         <label>Equity/Down Payment</label>
-                                        <input type="text" name="edit_equity" id="edit_equity" class="form-control">
+                                        <input type="number" name="edit_equity" id="edit_equity" class="form-control">
                                     </div>
                                     <div class="form-group edit_loanable_amount">
                                         <label>Loanable Amount</label>
-                                        <input type="text" name="edit_loanable_amount" id="edit_loanable_amount" class="form-control">
+                                        <input type="number" name="edit_loanable_amount" id="edit_loanable_amount" class="form-control">
                                     </div>
 
                                 </div>

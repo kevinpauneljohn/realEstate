@@ -85,7 +85,7 @@
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
     <script src="{{asset('js/validation.js')}}"></script>
     <script src="{{asset('js/request.js')}}"></script>
-    @can('view sales')
+    @can('view request')
         <script>
             $(function() {
                 $('#threshold-list').DataTable({

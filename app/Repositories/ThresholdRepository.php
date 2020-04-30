@@ -109,7 +109,7 @@ class ThresholdRepository
      * */
     public function getAllThreshold()
     {
-        if(auth()->user()->hasRole('super admin'))
+        if(auth()->user()->hasRole(['super admin','admin']))
         {
             $threshold = Threshold::all();
         }else{
@@ -178,7 +178,7 @@ class ThresholdRepository
     public function getThresholdStatus($status)
     {
         $user = auth()->user();
-        if($user->hasRole('super admin'))
+        if($user->hasRole(['super admin','admin']))
         {
             $threshold = Threshold::where('status',$status)->get();
         }else{

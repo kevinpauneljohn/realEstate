@@ -113,16 +113,27 @@ class SalesController extends Controller
             'buyer'  => 'required',
             'project'  => 'required',
             'model_unit'  => 'required',
-            'total_contract_price'  => 'required',
+            'total_contract_price'  => 'required|numeric',
+            'discount'  => 'numeric',
+            'processing_fee'  => 'numeric',
+            'reservation_fee'  => 'numeric',
+            'equity'  => 'numeric',
+            'loanable_amount'  => 'numeric',
             'financing'  => 'required',
         ],[
-            'reservation_date.required' => 'Reservation Date is required'
+            'reservation_date.required' => 'Reservation Date is required',
+            'total_contract_price.numeric' => 'Total Contract Price must be a whole number',
+            'discount.numeric' => 'Discount must be a whole number',
+            'processing_fee.numeric' => 'Processing fee must be a whole number',
+            'reservation_fee.numeric' => 'Reservation fee must be a whole number',
+            'equity.numeric' => 'Equity must be a whole number',
+            'loanable_amount.numeric' => 'Loanable amount must be a whole number',
         ]);
 
         if($validator->passes())
         {
             /*sales will be save if the commission rate is greater than 0*/
-            if($this->setCommissionRate($request->project) > 0){
+            if($this->setCommissionRate($request->project,auth()->user()->id) > 0){
                 $sales = new Sales();
                 $sales->reservation_date = $request->reservation_date;
                 $sales->user_id = auth()->user()->id;
@@ -143,7 +154,7 @@ class SalesController extends Controller
                 $sales->financing = $request->financing;
                 $sales->terms = $request->dp_terms;
                 $sales->details = $request->details;
-                $sales->commission_rate = $this->setCommissionRate($request->project);
+                $sales->commission_rate = $this->salesRepository->setCommissionRate($request->project,auth()->user()->id);
                 $sales->status = 'reserved';
 
                 if($sales->save())
@@ -158,78 +169,7 @@ class SalesController extends Controller
         return response()->json($validator->errors());
     }
 
-    /**
-     * March 24, 2020
-     * @author john kevin paunel
-     * get the upline IDs
-     * @param string $user_id
-     * @return string
-     * */
-    public function getUpLineIds($user_id)
-    {
-        $user = User::find($user_id);
-        return $user->upline_id;
-    }
 
-    /**
-     * @author john kevin paunel
-     * set the agents commission rate
-     * algorithm for getting the commission rate
-     * returns the user's current sales commission rate
-     * @param int $project_id
-     * @return mixed
-     * */
-    public function setCommissionRate($project_id)
-    {
-        $user = auth()->user()->id;/*set the id of the current user*/
-        $upLines = array(); /*instantiate the up line ids */
-        $ctr = 1; /*array counter*/
-
-        #this will loop until it gets all the user's up line IDs
-
-        $upLines[$user] = 0;/*initialize the up line value to 0*/
-        while($this->getUpLineIds($user) != null)
-        {
-            $user = $this->getUpLineIds($user);/*set the new user id*/
-            $upLines[$user] = $ctr;/*set the user key value use for arranging the user by position or rank*/
-            $ctr++;
-        }
-
-
-        $project_rate = Project::find($project_id); /*get the project rate*/
-        $rate = $project_rate->commission_rate; /*instantiate the project rate*/
-
-        arsort($upLines);/*this will arrange the Ids in descending order*/
-        foreach ($upLines as $key => $value)
-        {
-            $user = User::find($key);
-
-            if(!$user->hasRole('super admin'))
-            {
-                /*this will check if the project id is available on users commissions table project id column*/
-                if($user->commissions()->where('project_id','=',$project_id)->count() > 0)
-                {
-                    /*if the commission was set to a specific project and it matches the sales project id*/
-                    $user_rate = $user->commissions()->where('project_id','=',1)->first()->commission_rate;
-                }else{
-                    $user_rate =  $user->commissions()->where('project_id','=',null)->first()->commission_rate;/*get the user commission rate*/
-                }
-
-                /*this conditional statement will be used if the commission rate offers by the project is lower
-                or equal to the user's commission rate*/
-                if($user_rate >= $rate)
-                {
-                    $rate = $rate - 1;
-                }elseif($user_rate <= 0){
-                    $rate = 0; /* commission rate is zero and will return an error message to the user*/
-                }else{
-                    $rate = $user_rate;
-                }
-            }
-        }
-        return $rate;
-
-    }
 
 
     /**
@@ -410,7 +350,9 @@ class SalesController extends Controller
      */
     public function edit($id)
     {
-        return $this->salesRepository->getSalesById($id);
+        $sales = collect($this->salesRepository->getSalesById($id));
+        $merge = $sales->merge(['modelUnit' => ModelUnit::where('project_id',$this->salesRepository->getSalesById($id)->project_id)->get()]);
+        return $merge->all();
     }
 
     /**
@@ -420,14 +362,19 @@ class SalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $test = null)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'edit_reservation_date'  => 'required',
             'edit_buyer'  => 'required',
             'edit_project'  => 'required',
             'edit_model_unit'  => 'required',
-            'edit_total_contract_price'  => 'required',
+            'edit_total_contract_price'  => 'required|numeric',
+            'edit_discount'  => 'numeric',
+            'edit_processing_fee'  => 'numeric',
+            'edit_reservation_fee'  => 'numeric',
+            'edit_equity'  => 'numeric',
+            'edit_loanable_amount'  => 'numeric',
             'edit_financing'  => 'required',
             'update_reason'  => 'required',
         ],[
@@ -436,6 +383,12 @@ class SalesController extends Controller
             'edit_project.required' => 'Project is required',
             'edit_model_unit.required' => 'Model unit is required',
             'edit_total_contract_price.required' => 'Total Contract Price is required',
+            'edit_total_contract_price.numeric' => 'Total Contract Price must be a whole number',
+            'edit_discount.numeric' => 'Discount must be a whole number',
+            'edit_processing_fee.numeric' => 'Processing fee must be a whole number',
+            'edit_reservation_fee.numeric' => 'Reservation fee must be a whole number',
+            'edit_equity.numeric' => 'Equity must be a whole number',
+            'edit_loanable_amount.numeric' => 'Loanable amount must be a whole number',
             'edit_financing.required' => 'Financing is required',
             'update_reason.required' => 'Reason is required',
         ]);
@@ -451,7 +404,7 @@ class SalesController extends Controller
                 {
                     return response()->json(['success' => false, 'message' => 'You have a current sales details update request!']);
                 }
-
+                $commissionRate = $this->salesRepository->setCommissionRate($request->edit_project,auth()->user()->id);
                 $priority = $this->thresholdRepository->getThresholdPriority('update sales attribute');
 
                 //this will instantiate the sales attribute to check if there are changes in the model
@@ -474,10 +427,10 @@ class SalesController extends Controller
                 $sale->financing = $request->edit_financing;
                 $sale->terms = $request->edit_dp_terms;
                 $sale->details = $request->edit_details;
+                $sale->commission_rate = $commissionRate;
 
                 if($sale->isDirty())
                 {
-
                     //only the changed attribute will be use
                     if($sale->isDirty('reservation_date')){$data['reservation_date'] = $request->edit_reservation_date;}
                     if($sale->isDirty('lead_id')){$data['lead_id'] = $request->edit_buyer;}
@@ -497,6 +450,7 @@ class SalesController extends Controller
                     if($sale->isDirty('financing')){$data['financing'] = $request->edit_financing;}
                     if($sale->isDirty('terms')){$data['terms'] = $request->edit_dp_terms;}
                     if($sale->isDirty('details')){$data['details'] = $request->edit_details;}
+                    if($sale->isDirty('commission_rate')){$data['commission_rate'] = $commissionRate;}
 
                     ///this will be use to display the data origin of the request for the $extra_data array
                     $dataComparison = array(
@@ -518,6 +472,7 @@ class SalesController extends Controller
                         'financing' => ($sale->isDirty('financing')) ? $request->edit_financing: "",
                         'terms' => ($sale->isDirty('terms')) ? $request->edit_dp_terms :"",
                         'details' => ($sale->isDirty('details')) ? $request->edit_details :"",
+                        'commission_rate' => ($sale->isDirty('commission_rate')) ? $commissionRate :"",
                     );
 //
                     $extra_data = array(
@@ -525,11 +480,21 @@ class SalesController extends Controller
                         'original_data' => $this->salesRepository->getSalesOriginalData($request->updateSalesId,$request->status,$dataComparison)
                     );
 
-                    //save the request to the threshold table
-                    $this->thresholdRepository->saveThreshold('update',$request->update_reason,$data,$extra_data,
-                        'sales',$request->updateSalesId,'pending',$priority);
 
-                    return response()->json(['success' => true, 'message' => 'Request for update sent<br/>Please wait for the admin approvel']);
+                    //save the sales update request if there are changes in total contract price and discount field
+                    if($sale->isDirty('lead_id') || $sale->isDirty('total_contract_price') || $sale->isDirty('discount')
+                        || $sale->isDirty('project_id') || $sale->isDirty('model_unit_id') || $sale->isDirty('financing'))
+                    {
+                        //save the request to the threshold table
+                        $this->thresholdRepository->saveThreshold('update',$request->update_reason,$data,$extra_data,
+                            'sales',$request->updateSalesId,'pending',$priority);
+
+                        return response()->json(['success' => true, 'message' => 'Request for update sent<br/>Please wait for the admin approvel']);
+                    }else{
+                        //update directly to sales table without saving the request to the threshold
+                        $sale = $this->salesRepository->updateSales($request, $id);
+                    }
+
                 }else{
                     return response()->json(['success' => false, 'message' => 'No Changes Occurred!']);
                 }
