@@ -48,6 +48,7 @@ class ThresholdRepository
         $threshold->storage_id = $table_id;
         $threshold->status = $status;
         $threshold->priority_id = $priority;
+        $threshold->lid = false;
 
         $threshold->save();
     }

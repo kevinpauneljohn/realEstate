@@ -89,7 +89,13 @@ class RequestController extends Controller
                 $action = "";
                 if(auth()->user()->can('view request'))
                 {
-                    $action .= '<a href="'.route('requests.show',['request' => $threshold->id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$threshold->id.'" title="View"><i class="fa fa-eye"></i></a>';
+                    if($threshold->user_id === auth()->user()->id || $threshold->lid === 1)
+                    {
+                        $action .= '<a href="'.route('requests.show',['request' => $threshold->id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$threshold->id.'" title="View"><i class="fa fa-eye"></i></a>';
+                    }else{
+                        $action .= '<button href="#" class="btn btn-xs btn-success" title="View" disabled><i class="fa fa-eye"></i></button>';
+                        $action .= '<button href="#" class="btn btn-xs btn-warning unlock-btn" title="Unlock" id="'.$threshold->id.'"><i class="fa fa-lock"></i></button>';
+                    }
                 }
                 return $action;
             })
@@ -161,5 +167,22 @@ class RequestController extends Controller
     public function getRequestNumber(Request $request)
     {
         return $this->thresholdRepository->getAllRequestByStorageId('sales',$request->id);
+    }
+
+    /**
+     * @since May 02, 2020
+     * @author john kevin paunel
+     * Open the request lid to access the content
+     * @param Request $request
+     * @return mixed
+     * */
+    public function openRequest(Request $request)
+    {
+        $threshold = Threshold::find($request->id);
+        $threshold->lid = true;
+        $threshold->time_open = now();
+        $threshold->save();
+
+        return response()->json(['success' => true, 'message' => 'Request successfully unlocked!']);
     }
 }

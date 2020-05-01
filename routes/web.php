@@ -153,7 +153,8 @@ Route::get('/action/get/{action}','ActionController@getAction')->name('actions.g
 Route::put('/actions/{action}','ActionController@update')->name('actions.update')->middleware(['auth','permission:edit action']);
 Route::delete('/actions/{action}','ActionController@destroy')->name('actions.destroy')->middleware(['auth','permission:delete action']);
 
-Route::get('/requests/{request}','RequestController@show')->name('requests.show')->middleware(['auth','permission:view request']);
+Route::get('/requests/{request}','RequestController@show')->name('requests.show')->middleware(['auth','checkLid','permission:view request']);
 Route::put('/requests/{request}','RequestController@update')->name('requests.update')->middleware(['auth','permission:approve request']);
 Route::post('/requests/status','RequestController@setRequestStatus')->name('requests.status')->middleware(['auth']);
 Route::post('/requests/number','RequestController@getRequestNumber')->name('requests.tickets')->middleware(['auth','permission:view request']);
+Route::post('/requests/open','RequestController@openRequest')->name('requests.open')->middleware(['auth','permission:view request']);

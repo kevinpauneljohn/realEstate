@@ -40,4 +40,35 @@ $(document).on('change','#request-status',function(){
     });
 });
 
+$(document).on('click','.unlock-btn',function () {
+    id = this.id;
+
+    $.ajax({
+        'url' : '/requests/open',
+        'type' : 'POST',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'data' : {'id':id},
+        success: function (result) {
+            if(result.success === true)
+            {
+                setTimeout(function(){
+                    toastr.success(result.message);
+                    setTimeout(function(){
+                        location.reload();
+                    },1500);
+                });
+            }
+        },error: function (xhr, status, error) {
+            $.each(xhr, function (key, value) {
+                console.log('Key: '+key+' Value: '+value);
+            });
+            console.log('Status: '+status+' Error: '+error);
+
+            setTimeout(function(){
+                location.reload();
+            },100);
+        }
+    });
+});
+
 
