@@ -38,6 +38,8 @@
                         <th>Type</th>
                         <th>Request Action</th>
                         <th>Status</th>
+                        <th>Priority</th>
+                        <th>Days Left</th>
                         <th>Assessed By</th>
                         <th>Action</th>
                     </tr>
@@ -52,6 +54,8 @@
                         <th>Type</th>
                         <th>Request Action</th>
                         <th>Status</th>
+                        <th>Priority</th>
+                        <th>Days Left</th>
                         <th>Assessed By</th>
                         <th>Action</th>
                     </tr>
@@ -100,6 +104,8 @@
                         { data: 'request', name: 'request'},
                         { data: 'description', name: 'description'},
                         { data: 'status', name: 'status'},
+                        { data: 'priority_id', name: 'priority_id'},
+                        { data: 'daysLeft', name: 'daysLeft'},
                         { data: 'approved_by', name: 'approved_by'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],

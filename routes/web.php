@@ -113,9 +113,20 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-    $model = \App\ModelUnit::class;
-    $modelTable = str_replace('\\', '', Str::snake(Str::plural(class_basename($model))));
-    return $modelTable;
+    $threshold = \App\Threshold::where('status','pending')->get();
+
+        foreach ($threshold as $key => $value)
+        {
+            if(today() <= $value->due_date)
+            {
+                //return 'before';
+                $request = \App\Threshold::find($value->id);
+                $request->priority_id = "";
+                $request->save();
+            }
+        }
+//    return $threshold->makeHidden(['data','extra_data','storage_name','storage_id',
+//        'lid','time_open','created_at','updated_at','deleted_at']);
 });
 
 /*change password*/

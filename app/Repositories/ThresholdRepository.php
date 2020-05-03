@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Action;
+use App\Priority;
 use App\Threshold;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -38,6 +39,8 @@ class ThresholdRepository
      * */
     public function saveThreshold($type, $reason, $data, $extra_data, $table, $table_id, $status,$priority)
     {
+        $days = Priority::find($priority)->days;
+
         $threshold = new Threshold();
         $threshold->user_id = auth()->user()->id;
         $threshold->type = $type;
@@ -48,6 +51,7 @@ class ThresholdRepository
         $threshold->storage_id = $table_id;
         $threshold->status = $status;
         $threshold->priority_id = $priority;
+        $threshold->due_date = today()->addDays($days);
         $threshold->lid = false;
 
         $threshold->save();

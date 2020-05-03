@@ -16,6 +16,7 @@ class AddLidColumnToThresholdsTable extends Migration
         Schema::table('thresholds', function (Blueprint $table) {
             $table->boolean('lid')->after('admin_report');
             $table->timestamp('time_open')->nullable()->after('lid');
+            $table->timestamp('due_date')->nullable()->after('priority_id');
         });
     }
 
@@ -27,7 +28,7 @@ class AddLidColumnToThresholdsTable extends Migration
     public function down()
     {
         Schema::table('thresholds', function (Blueprint $table) {
-            $table->dropColumn(['lid','time_open']);
+            $table->dropColumn(['lid','time_open','due_date']);
         });
     }
 }

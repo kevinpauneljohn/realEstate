@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PriorityRepository;
 use App\Repositories\SalesRepository;
 use App\Repositories\ThresholdRepository;
 use App\Threshold;
@@ -16,17 +17,22 @@ use Illuminate\Support\Carbon;
 class RequestController extends Controller
 {
     private $thresholdRepository,
-            $salesRepository;
+            $salesRepository,
+            $priorityRepository;
 
 
-    public function __construct(ThresholdRepository $thresholdRepository, SalesRepository $salesRepository)
+    public function __construct(ThresholdRepository $thresholdRepository,
+                                SalesRepository $salesRepository,
+                                PriorityRepository $priorityRepository)
     {
         $this->thresholdRepository = $thresholdRepository;
         $this->salesRepository = $salesRepository;
+        $this->priorityRepository = $priorityRepository;
     }
 
     public function index()
     {
+        //return $this->updateRequestPriority();
         return view('pages.thresholds.index');
     }
 
@@ -59,6 +65,10 @@ class RequestController extends Controller
                 }
 
             })
+            ->editColumn('priority_id',function($threshold){
+                $label = '<span class="badge" style="background-color:'.$threshold->priority->color.'">'.$threshold->priority->name.'</span>';
+                return $label;
+            })
             ->editColumn('id',function ($threshold){
                 $request = str_pad($threshold->id, 5, '0', STR_PAD_LEFT);
                 return '<a href="'.route('requests.show',['request' => $threshold->id]).'"><span style="color:#007bff">'.$request.'</span></a>';
@@ -84,6 +94,22 @@ class RequestController extends Controller
                 }
                 return $username;
             })
+            ->addColumn('daysLeft',function($threshold){
+                $startDate = Carbon::parse('2020-05-04 00:00:00');
+                //$startDate = Carbon::parse($threshold->created_at);
+                return today()->diffInDays($threshold->due_date);
+
+                //return $threshold->priority->days;
+
+//                if($startDate <= $threshold->due_date)
+//                {
+//                    return 'before';
+//                }else{
+//                    return 'past';
+//                }
+
+
+            })
             ->addColumn('action', function ($threshold)
             {
                 $action = "";
@@ -99,7 +125,7 @@ class RequestController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action','id','description'])
+            ->rawColumns(['action','id','description','priority_id'])
             ->make(true);
     }
 
@@ -185,4 +211,36 @@ class RequestController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Request successfully unlocked!']);
     }
+
+//    /**
+//     * @since May 03, 2020
+//     * @author john kevin paunel
+//     * this method will update the request priority depending on the days left
+//     * */
+//    public function updateRequestPriority()
+//    {
+//        //retrieve all the pending requests
+//        $threshold = Threshold::where('status','pending')->get();
+//
+//        //check the pending request one by one
+//        foreach ($threshold as $key => $value)
+//        {
+//            //check if the current dates is still below the due date
+//            if(today() <= $value->due_date)
+//            {
+//                $day = today()->diffInDays($value->due_date);//get the days left
+//
+//                //check if the day exists on the priority table and will execute the inside action if its true
+//                if($this->priorityRepository->countPriorityByDays($day) > 0
+//                    && $this->priorityRepository->getPriorityByNumberOfDay($day)->id !== $value->id)
+//                {
+//                    //this will update the priority id of the request
+//                    $request = Threshold::find($value->id);
+//                    $request->priority_id = $this->priorityRepository->getPriorityByNumberOfDay($day)->id;
+//                    $request->save();
+//                }
+//            }
+//        }
+//    }
+
 }
