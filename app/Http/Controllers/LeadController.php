@@ -37,6 +37,33 @@ class LeadController extends Controller
     {
         $leads = Lead::where('user_id',auth()->user()->id)->get();
         return DataTables::of($leads)
+            ->editColumn('lead_status', function($lead){
+                $status = array('New','Warm','Cold','For follow-up','For-tripping','Qualified','Not qualified');
+                $data = "<select>";
+
+                foreach ($status as $stats)
+                {
+                    $selected = "";
+
+                    if($lead->lead_status === $stats)
+                    {
+                        $selected = "selected";
+                    }
+
+                    if($stats === 'New' || $stats === 'Warm' || $stats === 'Cold')
+                    {
+                        $disabled = "disabled";
+                    }else{
+                        $disabled = "";
+                    }
+
+                        $data.= '<option value="'.$stats.'" '.$selected.' '.$disabled.'>'.$stats.'</option>';
+                }
+
+                $data .= '</select>';
+
+                return $data;
+            })
             ->addColumn('action', function ($lead)
             {
                 $action = "";
@@ -58,7 +85,7 @@ class LeadController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','lead_status'])
             ->make(true);
     }
 
@@ -107,6 +134,7 @@ class LeadController extends Controller
         $lead->point_of_contact = $request->point_of_contact;
         $lead->project = $interest;
         $lead->remarks = $request->remarks;
+        $lead->lead_status = 'New';
 
         if($lead->save())
         {

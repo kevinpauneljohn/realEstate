@@ -23,7 +23,7 @@ class Lead extends Model
         'status',
         'income_range',
         'point_of_contact',
-        'remarks',
+        'remarks','lead_status'
     ];
 
     protected static $logAttributes = [
@@ -39,6 +39,7 @@ class Lead extends Model
         'income_range',
         'point_of_contact',
         'remarks',
+        'lead_status'
     ];
 
     public function sales()

@@ -36,6 +36,7 @@
                         <th>Mobile No.</th>
                         <th>Email</th>
                         <th>Point Of Contact</th>
+                        <th>Lead Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -48,7 +49,8 @@
                         <th>Mobile No.</th>
                         <th>Email</th>
                         <th>Point Of Contact</th>
-                        <th>Action</th>
+                        <th width="8%">Lead Status</th>
+                        <th width="18%">Action</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -99,19 +101,6 @@
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
-
-                        <table class="table table-bordered table-hover">
-                            <tr><td>Status</td><td id="lead-status"></td></tr>
-                            <tr><td>Date Inquired</td><td id="date-inquired"></td></tr>
-                            <tr><td>Full Name</td><td id="lead-full-name"></td></tr>
-                            <tr><td>Mobile Phone</td><td id="mobile-phone"></td></tr>
-                            <tr><td>Land line</td><td id="land-line"></td></tr>
-                            <tr><td>Email</td><td id="lead-email"></td></tr>
-                            <tr><td>Civil Status</td><td id="civil-status"></td></tr>
-                            <tr><td>Income Range</td><td id="income-range"></td></tr>
-                            <tr><td>Project Interested</td><td id="project-interested"></td></tr>
-                            <tr><td colspan="2"><strong>Remarks</strong><p id="lead-remarks"></p></td></tr>
-                        </table>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -153,6 +142,7 @@
                         { data: 'mobileNo', name: 'mobileNo'},
                         { data: 'email', name: 'email'},
                         { data: 'point_of_contact', name: 'point_of_contact'},
+                        { data: 'lead_status', name: 'lead_status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
