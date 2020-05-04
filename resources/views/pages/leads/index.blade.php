@@ -81,6 +81,48 @@
         </div>
         <!--end delete permission modal-->
     @endcan
+
+    @can('edit lead')
+        <!--add new schedule modal-->
+        <div class="modal fade" id="lead-details">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Lead Details</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="image-loader">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered table-hover">
+                            <tr><td>Status</td><td id="lead-status"></td></tr>
+                            <tr><td>Date Inquired</td><td id="date-inquired"></td></tr>
+                            <tr><td>Full Name</td><td id="lead-full-name"></td></tr>
+                            <tr><td>Mobile Phone</td><td id="mobile-phone"></td></tr>
+                            <tr><td>Land line</td><td id="land-line"></td></tr>
+                            <tr><td>Email</td><td id="lead-email"></td></tr>
+                            <tr><td>Civil Status</td><td id="civil-status"></td></tr>
+                            <tr><td>Income Range</td><td id="income-range"></td></tr>
+                            <tr><td>Project Interested</td><td id="project-interested"></td></tr>
+                            <tr><td colspan="2"><strong>Remarks</strong><p id="lead-remarks"></p></td></tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
 @stop
 
 @section('css')

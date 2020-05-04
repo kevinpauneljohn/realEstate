@@ -88,3 +88,33 @@ $(document).on('click','.delete-lead-btn',function () {
         '<tr><td>Point Of Contact</td><td>'+data[5]+'</td></tr></table>');
     $('#deleteLeadId').val(id);
 });
+
+
+$(document).on('click','.view-details',function(){
+    id = this.id;
+    $.ajax({
+        'url' : '/leads/get',
+        'type' : 'POST',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'data' : {'id':id},
+        beforeSend: function () {
+            $('.image-loader').show();
+        },success: function(result){
+            console.log(result);
+
+            $('#date-inquired').text(result.date_inquired);
+            $('#lead-full-name').text(result.id);
+            $('#mobile-phone').text(result.mobileNo);
+            $('#land-line').text(result.landline);
+            $('#lead-email').text(result.email);
+            $('#civil-status').text(result.status);
+            $('#income-range').text(result.income_range);
+            $('#project-interested').text(result.project);
+            $('#lead-remarks').text(result.remarks);
+
+            $('.image-loader').hide();
+        },error: function(xhr,status,error){
+            console.log(xhr, status, error);
+        }
+    });
+});

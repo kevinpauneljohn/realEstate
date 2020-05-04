@@ -212,35 +212,4 @@ class RequestController extends Controller
         return response()->json(['success' => true, 'message' => 'Request successfully unlocked!']);
     }
 
-//    /**
-//     * @since May 03, 2020
-//     * @author john kevin paunel
-//     * this method will update the request priority depending on the days left
-//     * */
-//    public function updateRequestPriority()
-//    {
-//        //retrieve all the pending requests
-//        $threshold = Threshold::where('status','pending')->get();
-//
-//        //check the pending request one by one
-//        foreach ($threshold as $key => $value)
-//        {
-//            //check if the current dates is still below the due date
-//            if(today() <= $value->due_date)
-//            {
-//                $day = today()->diffInDays($value->due_date);//get the days left
-//
-//                //check if the day exists on the priority table and will execute the inside action if its true
-//                if($this->priorityRepository->countPriorityByDays($day) > 0
-//                    && $this->priorityRepository->getPriorityByNumberOfDay($day)->id !== $value->id)
-//                {
-//                    //this will update the priority id of the request
-//                    $request = Threshold::find($value->id);
-//                    $request->priority_id = $this->priorityRepository->getPriorityByNumberOfDay($day)->id;
-//                    $request->save();
-//                }
-//            }
-//        }
-//    }
-
 }

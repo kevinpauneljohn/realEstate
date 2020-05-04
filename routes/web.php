@@ -66,6 +66,7 @@ Route::get('/leads/{lead}','LeadController@show')->name('leads.show')->middlewar
 Route::get('/leads/{lead}/edit','LeadController@edit')->name('leads.edit')->middleware(['auth','permission:edit lead']);
 Route::put('/leads/{lead}','LeadController@update')->name('leads.update')->middleware(['auth','permission:edit lead']);
 Route::delete('/leads/{lead}','LeadController@destroy')->name('leads.destroy')->middleware(['auth','permission:delete lead']);
+Route::post('/leads/get','LeadController@getLeads')->name('leads.get')->middleware(['auth','permission:view lead']);
 
 /*projects*/
 Route::get('/projects','ProjectController@index')->name('projects.index')->middleware(['auth','permission:view project']);

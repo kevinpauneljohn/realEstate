@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Lead;
 use App\Project;
+use App\Repositories\LeadRepository;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class LeadController extends Controller
 {
+
+    public $leadRepository;
+
+    public function __construct(LeadRepository $leadRepository)
+    {
+        $this->leadRepository = $leadRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +40,10 @@ class LeadController extends Controller
             ->addColumn('action', function ($lead)
             {
                 $action = "";
+                if(auth()->user()->can('view lead'))
+                {
+                    $action .= '<button class="btn btn-xs btn-info view-details" id="'.$lead->id.'" data-toggle="modal" data-target="#lead-details"><i class="fa fa-info-circle"></i> Details</button>';
+                }
                 if(auth()->user()->can('view lead'))
                 {
                     $action .= '<a href="'.route("leads.show",["lead" => $lead->id]).'" class="btn btn-xs btn-success view-btn" id="'.$lead->id.'"><i class="fa fa-eye"></i> View</a>';
@@ -245,5 +258,10 @@ class LeadController extends Controller
         {
             return response()->json(['success' => true]);
         }
+    }
+
+    public function getLeads(Request $request)
+    {
+        return $this->leadRepository->getTransformedLeadById($request->id);
     }
 }

@@ -133,7 +133,7 @@ class SalesController extends Controller
         if($validator->passes())
         {
             /*sales will be save if the commission rate is greater than 0*/
-            if($this->setCommissionRate($request->project,auth()->user()->id) > 0){
+            if($this->salesRepository->setCommissionRate($request->project,auth()->user()->id) > 0){
                 $sales = new Sales();
                 $sales->reservation_date = $request->reservation_date;
                 $sales->user_id = auth()->user()->id;
