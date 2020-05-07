@@ -39,8 +39,8 @@
                                 <div class="profile-details">
                                     <table>
                                         <tr><td><strong>Address </strong></td><td>: {{$lead->address}}</td></tr>
-                                        <tr><td><strong>Email </strong></td><td>: <a href="mailto:{{$lead->email}}">{{$lead->email}}</a></td></tr>
-                                        <tr><td><strong>Phone </strong></td><td>: <a href="tel:{{$lead->mobileNo}}">{{$lead->mobileNo}}</a></td></tr>
+                                        <tr><td><strong>Email </strong></td><td>: <a href="mailto:{{$lead->email}}" data-toggle="tooltip" data-placement="right" title="Click to send email">{{$lead->email}}</a></td></tr>
+                                        <tr><td><strong>Phone </strong></td><td>: <a href="tel:{{$lead->mobileNo}}" data-toggle="tooltip" data-placement="right" title="Click to call client">{{$lead->mobileNo}}</a></td></tr>
                                         <tr><td><strong>Land line </strong></td><td>: <a href="tel:{{$lead->landline}}">{{$lead->landline}}</a></td></tr>
                                         <tr><td><strong>Civil Status </strong></td><td>: {{$lead->status}}</td></tr>
                                         <tr><td><strong>Income Range </strong></td><td>: {{$lead->income_range}} php</td></tr>
