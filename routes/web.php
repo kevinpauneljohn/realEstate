@@ -73,6 +73,9 @@ Route::post('/leads/mark','LeadController@markAsImportant')->name('leads.importa
 /*Log touches*/
 Route::post('/logs','LogTouchController@store')->name('logs.store')->middleware('auth','permission:edit lead');
 
+/*Lead Notes*/
+Route::post('/lead-notes','LeadNotesController@store')->name('leadNotes.store')->middleware(['auth','permission:add lead','throttle:20,1']);
+
 /*projects*/
 Route::get('/projects','ProjectController@index')->name('projects.index')->middleware(['auth','permission:view project']);
 Route::post('/projects','ProjectController@store')->name('projects.store')->middleware(['auth','permission:add project']);

@@ -22,9 +22,11 @@
         <div class="col-lg-9 lead-profile">
             <div class="card card-primary">
                 <div class="card-header main-profile">
-                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Touch</button>
-                    <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
-                    <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-exchange-alt"></i> Convert to sales</button>
+                    <span class="float-right">
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Touch</button>
+                        <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
+                        <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-exchange-alt"></i> Convert to sales</button>
+                    </span>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -95,7 +97,7 @@
                             <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#lea-remarks" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Remarks</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#lead-notes" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Notes</a>
+                            <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#lead-notes" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Notes <span class="note-count">({{$leadNotes->count()}})</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#lead-reminders" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Reminders</a>
@@ -111,7 +113,44 @@
                             {!! $lead->remarks !!}
                         </div>
                         <div class="tab-pane fade" id="lead-notes" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
-                            Notes
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form role="form" class="form-submit" id="notes-form">
+                                        @csrf
+                                        <input type="hidden" name="leadId" value="{{$lead->id}}">
+                                        <span class="required">*</span> (5000 characters max only)
+                                        <div class="form-group notes">
+                                            <textarea class="form-control" name="notes" id="notes" maxlength="5000"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary submit-form-btn float-right"><i class="spinner fa fa-spinner fa-spin"></i> Post</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="row note-lists">
+                                @if($leadNotes->count() > 0)
+                                    @foreach($leadNotes->orderBy('created_at','desc')->get() as $leadNote)
+                                        <div class="col-lg-12">
+                                            <div class="info-box bg-light">
+                                                <div class="info-box-content">
+                                                    <div class="row">
+                                                        <span class="col-lg-11">
+                                                            <span class="info-box-text text-muted">@if($leadNote->created_at === $leadNote->updated_at) Note Added @else Note Updated @endif {{$leadNote->updated_at}}</span>
+                                                            <span class="info-box-number text-muted mb-0">{!! $leadNote->notes !!}</span>
+                                                        </span>
+                                                        <span class="col-lg-1">
+                                                            <button type="button" class="btn btn-danger btn-xs" id="{{$leadNote->id}}"><i class="fa fa-trash"></i></button>
+                                                            <button type="button" class="btn btn-primary btn-xs" id="{{$leadNote->id}}"><i class="fa fa-edit"></i></button>
+                                                        </span>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="lead-reminders" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
                             Reminders
@@ -236,8 +275,11 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
-        .delete_role{
-            font-size: 20px;
+        .note-lists .col-lg-1{
+            margin-top:18px!important;
+        }
+        .note-lists .info-box-text{
+            color:#1365ec!important;
         }
         small{
             margin: 2px;
@@ -280,6 +322,9 @@
         .right-status i{
             color:#0cc60c;
         }
+        .note-lists{
+            margin-top:20px;
+        }
     </style>
 @stop
 
@@ -297,6 +342,7 @@
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
         <script src="{{asset('js/leadActivity.js')}}"></script>
         <script src="{{asset('js/schedule.js')}}"></script>
+        <script src="{{asset('js/leadNotes.js')}}"></script>
         <script>
 
             $(function () {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lead;
+use App\LeadNote;
 use App\Project;
 use App\Repositories\LeadRepository;
 use Illuminate\Http\Request;
@@ -178,7 +179,8 @@ class LeadController extends Controller
             'lead'  => Lead::where([
                 ['id','=',$id],
                 ['user_id','=',auth()->user()->id],
-            ])->firstOrFail()
+            ])->firstOrFail(),
+            'leadNotes' => LeadNote::where('lead_id',$id),
         ]);
     }
 
