@@ -47,12 +47,6 @@
                                         <tr><td><strong>Project Interested </strong></td><td>: {{$lead->project}}</td></tr>
                                     </table>
                                 </div>
-                            <div class="info-box bg-light">
-                                <div class="info-box-content">
-                                    <span class="info-box-text text-muted">Remarks</span>
-                                    <span class="info-box-number text-muted mb-0">{!! $lead->remarks !!}</span>
-                                </div>
-                            </div>
                         </span>
                         <span class="col-lg-3">
                             <div class="card card-subtitle right-status">
@@ -94,13 +88,40 @@
                 </div>
             </div>
 
-            <div class="card card-default">
-                <div class="card-header">
-
+            <div class="card card-primary card-outline card-tabs">
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#lea-remarks" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Remarks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#lead-notes" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Notes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#lead-reminders" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Reminders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill" href="#activity-logs" role="tab" aria-controls="custom-tabs-two-settings" aria-selected="false">Activity Logs</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="card-body">
-
+                    <div class="tab-content" id="custom-tabs-two-tabContent">
+                        <div class="tab-pane fade show active" id="lea-remarks" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                            {!! $lead->remarks !!}
+                        </div>
+                        <div class="tab-pane fade" id="lead-notes" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
+                            Notes
+                        </div>
+                        <div class="tab-pane fade" id="lead-reminders" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
+                            Reminders
+                        </div>
+                        <div class="tab-pane fade" id="activity-logs" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
+                            Activity logs
+                        </div>
+                    </div>
                 </div>
+                <!-- /.card -->
             </div>
         </div>
         <div class="col-lg-3">
