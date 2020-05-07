@@ -126,3 +126,29 @@ $(document).on('click','.view-details',function(){
         }
     });
 });
+
+let id = "", value = "", originalValue = "";
+$(document).on('change','.change-status', function(){
+    id = this.id, value = this.value;
+
+    $.ajax({
+        'url' : '/leads/status',
+        'type' : 'POST',
+        'data' : {'id':id},
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        beforeSend: function(){
+
+        },
+        success: function (result) {
+            console.log(result);
+            if(result !== "For follow-up" && value === "For follow-up")
+            {
+                $('#set-schedule').modal();
+            }
+        },error: function(xhr,status,error){
+            console.log(xhr, status, error);
+        }
+    });
+});
+
+

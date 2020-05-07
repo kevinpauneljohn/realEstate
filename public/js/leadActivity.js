@@ -211,3 +211,12 @@ $(document).on('click','.delete-schedule-btn',function () {
     let id = this.id;
     $('#deleteScheduleId').val(id);
 });
+
+
+$(document).on('submit','#log-touches-form',function(form){
+    form.preventDefault();
+    let data = $('#log-touches-form').serializeArray();
+
+    submitform('/logs','POST',data,'Activity Logs successfully created!',true,'',false);
+    clear_errors('medium','date','time','resolution');
+});

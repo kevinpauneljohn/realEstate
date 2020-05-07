@@ -15,6 +15,7 @@ class AddLeadStatusColumnToLeadsTable extends Migration
     {
         Schema::table('leads', function (Blueprint $table) {
             $table->string('lead_status')->after('remarks')->nullable();
+            $table->boolean('important')->after('lead_status');
         });
     }
 
@@ -26,7 +27,7 @@ class AddLeadStatusColumnToLeadsTable extends Migration
     public function down()
     {
         Schema::table('leads', function (Blueprint $table) {
-            $table->dropColumn('lead_status');
+            $table->dropColumn(['lead_status','important']);
         });
     }
 }

@@ -46,4 +46,25 @@ class LeadRepository
 
         return $collection->all();
     }
+
+    /**
+     * @since May 05, 2020
+     * @author john kevin paunel
+     * update the lead status
+     * @param string $id
+     * @param string $status
+     * @return array
+     * */
+    public function updateStatus($id, $status)
+    {
+        $lead = Lead::findOrFail($id);
+        $lead->lead_status = $status;
+
+        if($lead->idDirty())
+        {
+            $lead->save();
+            return array("success" => true,"message" => "Lead Status Successfully Updated!");
+        }
+        return array("success" => false,"message" => "No Changes Occurred!");
+    }
 }

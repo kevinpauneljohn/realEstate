@@ -37,9 +37,13 @@ class LeadController extends Controller
     {
         $leads = Lead::where('user_id',auth()->user()->id)->get();
         return DataTables::of($leads)
+            ->addColumn('fullname',function($lead){
+                $lead = '<a href="'.route("leads.show",["lead" => $lead->id]).'">'.$lead->fullname.'</a>';
+                return $lead;
+            })
             ->editColumn('lead_status', function($lead){
-                $status = array('New','Warm','Cold','For follow-up','For-tripping','Qualified','Not qualified');
-                $data = "<select>";
+                $status = array('New','Warm','Cold','For follow-up','For-tripping','Qualified','Not qualified','Not Interested');
+                $data = '<select id="'.$lead->id.'" class="change-status">';
 
                 foreach ($status as $stats)
                 {
@@ -85,7 +89,7 @@ class LeadController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action','lead_status'])
+            ->rawColumns(['action','lead_status','fullname'])
             ->make(true);
     }
 
@@ -288,8 +292,39 @@ class LeadController extends Controller
         }
     }
 
+    /**
+     * @since May 04, 2020
+     * @author john kevin paunel
+     * Route: leads.get
+     * @param Request $request
+     * @return object
+     * */
     public function getLeads(Request $request)
     {
         return $this->leadRepository->getTransformedLeadById($request->id);
+    }
+
+    /**
+     * @since May 06, 2020
+     * @author john kevin paunel
+     * @param Request $request
+     * @return object
+     * */
+    public function getLeadStatus(Request $request)
+    {
+        return $this->leadRepository->getLeadById($request->id)->lead_status;
+    }
+
+    public function markAsImportant(Request $request)
+    {
+        $lead = $this->leadRepository->getLeadById($request->id);
+        if($lead->important === 0)
+        {
+            $lead->important = true;
+        }else{
+            $lead->important = false;
+        }
+        $lead->save();
+        return response()->json(['success' => true]);
     }
 }

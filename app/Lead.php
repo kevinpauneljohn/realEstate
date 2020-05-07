@@ -52,8 +52,16 @@ class Lead extends Model
         return $this->hasMany(LeadActivity::class);
     }
 
+    public function LogTouches()
+    {
+        return $this->hasMany(LogTouch::class);
+    }
+
     public function getFullNameAttribute()
     {
-        return "{$this->firstname} {$this->lastname}";
+        $firstname = ucfirst($this->firstname);
+        $middlename = ucfirst($this->middlename);
+        $lastname = ucfirst($this->lastname);
+        return "{$firstname} {$middlename} {$lastname}";
     }
 }
