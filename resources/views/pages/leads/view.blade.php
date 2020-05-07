@@ -23,7 +23,7 @@
             <div class="card card-primary">
                 <div class="card-header main-profile">
                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Touch</button>
-                    <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</button>
+                    <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
                     <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-exchange-alt"></i> Convert to sales</button>
                 </div>
                 <div class="card-body">
@@ -41,8 +41,18 @@
                                         <tr><td><strong>Address </strong></td><td>: {{$lead->address}}</td></tr>
                                         <tr><td><strong>Email </strong></td><td>: <a href="mailto:{{$lead->email}}">{{$lead->email}}</a></td></tr>
                                         <tr><td><strong>Phone </strong></td><td>: <a href="tel:{{$lead->mobileNo}}">{{$lead->mobileNo}}</a></td></tr>
+                                        <tr><td><strong>Land line </strong></td><td>: <a href="tel:{{$lead->landline}}">{{$lead->landline}}</a></td></tr>
+                                        <tr><td><strong>Civil Status </strong></td><td>: {{$lead->status}}</td></tr>
+                                        <tr><td><strong>Income Range </strong></td><td>: {{$lead->income_range}} php</td></tr>
+                                        <tr><td><strong>Project Interested </strong></td><td>: {{$lead->project}}</td></tr>
                                     </table>
                                 </div>
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-muted">Remarks</span>
+                                    <span class="info-box-number text-muted mb-0">{!! $lead->remarks !!}</span>
+                                </div>
+                            </div>
                         </span>
                         <span class="col-lg-3">
                             <div class="card card-subtitle right-status">
@@ -52,8 +62,11 @@
                                 <div class="card-body">
                                     <i class="fa fa-comment"></i> <strong>Last Contacted</strong>
                                     <p class="last-contacted">
-                                        {{$lead->LogTouches->pluck('date')->last()->format('M d, yy')}} {{$lead->LogTouches->pluck('time')->last()}}<br/>
-                                        <a href="#">{{$lead->LogTouches->pluck('date')->last()->diffForHumans()}}</a>
+                                        @if($lead->LogTouches->count() > 0)
+                                            {{$lead->LogTouches->pluck('date')->last()->format('M d, yy')}} {{$lead->LogTouches->pluck('time')->last()}}<br/>
+                                            <a href="#">{{$lead->LogTouches->pluck('date')->last()->diffForHumans()}}</a>
+                                        @endif
+
                                     </p>
                                     <hr/>
                                     <div class="quick-preview">
@@ -212,6 +225,12 @@
             font-size:22px;
             color:#3168f3;
         }
+        .lead-profile table{
+            margin-bottom:20px;
+        }
+        .lead-profile table td{
+            padding:0px!important;
+        }
         .lead-profile table td:nth-child(2)
         {
             font-size:16px;
@@ -224,6 +243,7 @@
         }
         .img-thumbnail{
             max-height:250px;
+            margin-bottom:15px;
         }
         .star{
             margin-left:5px;
