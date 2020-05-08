@@ -157,7 +157,7 @@
                                 <div class="card-header"><button type="button" class="btn btn-primary btn-xs">New Reminder</button></div>
                                 <div class="card-body">
                                     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
-                                        <table id="reminder-list" class="table table-bordered table-striped" role="grid">
+                                        <table id="reminder-list" class="table table-bordered table-hover" role="grid">
                                             <thead>
                                             <tr role="row">
                                                 <th>Date Scheduled</th>
@@ -300,6 +300,12 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
+        #reminder-list td{
+            padding:8px!important;
+        }
+        #reminder-list{
+            width:100%!important;
+        }
         .note-lists .col-lg-1{
             margin-top:18px!important;
         }

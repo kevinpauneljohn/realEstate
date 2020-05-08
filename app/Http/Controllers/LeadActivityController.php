@@ -33,7 +33,7 @@ class LeadActivityController extends Controller
         ])->get();
         return DataTables::of($leadActivities)
             ->editColumn('schedule', function($leadActivity){
-                return $leadActivity->schedule->format('M d, Y');
+                return $leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date;
             })
             ->addColumn('action', function ($leadActivity)
             {
@@ -63,7 +63,7 @@ class LeadActivityController extends Controller
                       <label class="custom-control-label" for="customSwitch'.$leadActivity->id.'"></label>
                     </div>';
             })
-            ->rawColumns(['action','details','status'])
+            ->rawColumns(['action','details','status','schedule'])
             ->make(true);
     }
 
