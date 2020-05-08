@@ -153,7 +153,32 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="lead-reminders" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
-                            Reminders
+                            <div class="card card-default">
+                                <div class="card-header"><button type="button" class="btn btn-primary btn-xs">New Reminder</button></div>
+                                <div class="card-body">
+                                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
+                                        <table id="reminder-list" class="table table-bordered table-striped" role="grid">
+                                            <thead>
+                                            <tr role="row">
+                                                <th>Date Scheduled</th>
+                                                <th>Category</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tfoot>
+                                            <tr>
+                                                <th>Date Reserved</th>
+                                                <th>Category</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="activity-logs" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
                             Activity logs
@@ -364,13 +389,12 @@
         </script>
         <script>
             $(function() {
-                $('#activity-list').DataTable({
+                $('#reminder-list').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('leads.activity.list',['lead' => $lead->id]) !!}',
                     columns: [
                         { data: 'schedule', name: 'schedule'},
-                        { data: 'details', name: 'details'},
                         { data: 'category', name: 'category'},
                         { data: 'status', name: 'status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}

@@ -32,6 +32,9 @@ class LeadActivityController extends Controller
             ['lead_id','=',$id],
         ])->get();
         return DataTables::of($leadActivities)
+            ->editColumn('schedule', function($leadActivity){
+                return $leadActivity->schedule->format('M d, Y');
+            })
             ->addColumn('action', function ($leadActivity)
             {
                 $action = "";

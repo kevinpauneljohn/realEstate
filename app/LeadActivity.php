@@ -9,6 +9,8 @@ class LeadActivity extends Model
 {
     use SoftDeletes;
 
+    protected $dates = ['created_at', 'updated_at', 'deleted_at','schedule'];
+
     public function lead()
     {
         return $this->belongsTo(Lead::class);

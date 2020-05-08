@@ -12,7 +12,6 @@ $(document).on('submit','#notes-form',function (form) {
             $('.spinner').show();
         }
         ,success: function(result){
-            console.log(result);
             if(result.success === true)
             {
                 let item = $('<div class="col-lg-12" id="note-row-'+result.note.id+'">' +
