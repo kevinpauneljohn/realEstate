@@ -133,14 +133,14 @@
                                         <div class="col-lg-12">
                                             <div class="info-box bg-light">
                                                 <div class="info-box-content">
-                                                    <div class="row">
-                                                        <span class="col-lg-11">
+                                                    <div class="row" id="lead-note-{{$leadNote->id}}">
+                                                        <span class="col-lg-11" id="note-list-{{$leadNote->id}}">
                                                             <span class="info-box-text text-muted">@if($leadNote->created_at === $leadNote->updated_at) Note Added @else Note Updated @endif {{$leadNote->updated_at}}</span>
-                                                            <span class="info-box-number text-muted mb-0">{!! $leadNote->notes !!}</span>
+                                                            <span class="info-box-number text-muted mb-0" id="note-content-{{$leadNote->id}}">{!! $leadNote->notes !!}</span>
                                                         </span>
                                                         <span class="col-lg-1">
+                                                            <button type="button" class="btn btn-primary btn-xs edit-note" id="{{$leadNote->id}}"><i class="fa fa-edit"></i></button>
                                                             <button type="button" class="btn btn-danger btn-xs" id="{{$leadNote->id}}"><i class="fa fa-trash"></i></button>
-                                                            <button type="button" class="btn btn-primary btn-xs" id="{{$leadNote->id}}"><i class="fa fa-edit"></i></button>
                                                         </span>
                                                     </div>
 

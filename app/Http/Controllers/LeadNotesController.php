@@ -30,4 +30,30 @@ class LeadNotesController extends Controller
         }
         return response()->json($validation->errors());
     }
+
+    /**
+     * @since May 08, 2020
+     * @author john kevin paunel
+     * @param Request $request
+     * @return mixed
+     * */
+    public function update(Request $request, $id)
+    {
+        $validation = Validator::make($request->all(),[
+            'note'     => 'required|max:5000',
+        ]);
+
+        if($validation->passes())
+        {
+            $LeadNote = LeadNote::find($id);
+            $LeadNote->notes = $request->note;
+            if($LeadNote->isDirty())
+            {
+                $LeadNote->save();
+                return response()->json(['success' => true,'message' => 'Lead Note Successful updated!']);
+            }
+            return response()->json(['success' => false,'message' => 'No changes occurred']);
+        }
+        return response()->json($validation->errors());
+    }
 }
