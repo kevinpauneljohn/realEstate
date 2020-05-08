@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\LeadNote;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,5 +56,19 @@ class LeadNotesController extends Controller
             return response()->json(['success' => false,'message' => 'No changes occurred']);
         }
         return response()->json($validation->errors());
+    }
+
+    /**
+     * @since May 09, 2020
+     * @author john kevin paunel
+     * @param Request $request
+     * @param int $id
+     * @return mixed
+     * */
+    public function destroy(Request $request, $id)
+    {
+        $leadNote = LeadNote::find($id);
+        $leadNote->delete();
+        return response()->json(['success' => true,'count' => LeadNote::where('lead_id',$request->leadId)->count()]);
     }
 }

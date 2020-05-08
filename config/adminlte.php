@@ -419,6 +419,23 @@ return [
                 ],
             ],
         ],
+        [
+            'name' => 'sweetAlert',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/sweetalert2/sweetalert2.min.js',
+                ],
+            ],
+        ],
+
 
     ],
 ];

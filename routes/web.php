@@ -76,6 +76,7 @@ Route::post('/logs','LogTouchController@store')->name('logs.store')->middleware(
 /*Lead Notes*/
 Route::post('/lead-notes','LeadNotesController@store')->name('leadNotes.store')->middleware(['auth','permission:add lead','throttle:20,1']);
 Route::put('/lead-notes/{note}','LeadNotesController@update')->name('leadNotes.update')->middleware(['auth','permission:edit lead']);
+Route::delete('/lead-notes/{note}','LeadNotesController@destroy')->name('leadNotes.destroy')->middleware(['auth','permission:edit lead']);
 
 /*projects*/
 Route::get('/projects','ProjectController@index')->name('projects.index')->middleware(['auth','permission:view project']);

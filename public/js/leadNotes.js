@@ -15,7 +15,7 @@ $(document).on('submit','#notes-form',function (form) {
             console.log(result);
             if(result.success === true)
             {
-                let item = $('<div class="col-lg-12">' +
+                let item = $('<div class="col-lg-12" id="note-row-'+result.note.id+'">' +
                     '<div class="info-box bg-light">' +
                     '<div class="info-box-content">' +
                     '<div class="row" id="lead-note-'+result.note.id+'">' +
@@ -25,7 +25,7 @@ $(document).on('submit','#notes-form',function (form) {
                     '</span>' +
                     '<span class="col-lg-1">' +
                     '<button type="button" class="btn btn-primary btn-xs edit-note" id="'+result.note.id+'"><i class="fa fa-edit"></i></button>' +
-                    '<button type="button" class="btn btn-danger btn-xs" id="'+result.note.id+'"><i class="fa fa-trash"></i></button>' +
+                    '<button type="button" class="btn btn-danger btn-xs delete-note" id="'+result.note.id+'"><i class="fa fa-trash"></i></button>' +
                     '</span></div>' +
                     '</div></div></div>').hide()
                     .fadeIn(800);
@@ -101,6 +101,48 @@ $(document).on('submit','.form-note-class',function (form) {
 
         },error: function(xhr, status, error){
             console.log(xhr);
+        }
+    });
+});
+
+$(document).on('click','.delete-note',function(){
+    let id = this.id,
+        leadId = $('input[name=leadId]').val();
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+
+            $.ajax({
+                'url' : '/lead-notes/'+id,
+                'type' : 'DELETE',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {'_method':'DELETE','id' : id,'leadId' : leadId},
+                beforeSend: function(){
+
+                },success: function(output){
+                    if(output.success === true){
+                        $('#note-row-'+id).remove();
+                        $('.note-count').text('('+output.count+')');
+
+                        Swal.fire(
+                            'Deleted!',
+                            'Note has been deleted.',
+                            'success'
+                        );
+                    }
+                },error: function(xhr, status, error){
+                console.log(xhr);
+            }
+            });
+
         }
     });
 });

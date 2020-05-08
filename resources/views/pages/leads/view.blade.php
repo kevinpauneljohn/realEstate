@@ -130,7 +130,7 @@
                             <div class="row note-lists">
                                 @if($leadNotes->count() > 0)
                                     @foreach($leadNotes->orderBy('created_at','desc')->get() as $leadNote)
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-12" id="note-row-{{$leadNote->id}}">
                                             <div class="info-box bg-light">
                                                 <div class="info-box-content">
                                                     <div class="row" id="lead-note-{{$leadNote->id}}">
@@ -140,7 +140,7 @@
                                                         </span>
                                                         <span class="col-lg-1">
                                                             <button type="button" class="btn btn-primary btn-xs edit-note" id="{{$leadNote->id}}"><i class="fa fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-danger btn-xs" id="{{$leadNote->id}}"><i class="fa fa-trash"></i></button>
+                                                            <button type="button" class="btn btn-danger btn-xs delete-note" id="{{$leadNote->id}}"><i class="fa fa-trash"></i></button>
                                                         </span>
                                                     </div>
 
