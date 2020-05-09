@@ -161,6 +161,7 @@
                                             <thead>
                                             <tr role="row">
                                                 <th>Date Scheduled</th>
+                                                <th>Recent</th>
                                                 <th>Category</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -170,6 +171,7 @@
                                             <tfoot>
                                             <tr>
                                                 <th>Date Reserved</th>
+                                                <th>Recent</th>
                                                 <th>Category</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -401,6 +403,7 @@
                     ajax: '{!! route('leads.activity.list',['lead' => $lead->id]) !!}',
                     columns: [
                         { data: 'schedule', name: 'schedule'},
+                        { data: 'recent', name: 'recent'},
                         { data: 'category', name: 'category'},
                         { data: 'status', name: 'status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
@@ -415,11 +418,7 @@
             }).datepicker("setDate", new Date());
             //Initialize Select2 Elements
             $('.select2').select2();
-            /*//Timepicker
-            $('.timepicker').timepicker({
-                showInputs: false,
-                defaultTime: false,
-            });*/
+
             //Timepicker
             $('#timepicker').datetimepicker({
                 format: 'LT',

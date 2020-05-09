@@ -135,6 +135,7 @@ class SalesRepository
         $sales->financing = $request->edit_financing;
         $sales->terms = $request->edit_dp_terms;
         $sales->details = $request->edit_details;
+        $sales->commission_rate = $this->setCommissionRate($request->edit_project,auth()->user()->id);
 
         if($sales->isDirty())
         {

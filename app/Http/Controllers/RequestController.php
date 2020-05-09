@@ -95,20 +95,8 @@ class RequestController extends Controller
                 return $username;
             })
             ->addColumn('daysLeft',function($threshold){
-                $startDate = Carbon::parse('2020-05-04 00:00:00');
-                //$startDate = Carbon::parse($threshold->created_at);
+
                 return today()->diffInDays($threshold->due_date);
-
-                //return $threshold->priority->days;
-
-//                if($startDate <= $threshold->due_date)
-//                {
-//                    return 'before';
-//                }else{
-//                    return 'past';
-//                }
-
-
             })
             ->addColumn('action', function ($threshold)
             {

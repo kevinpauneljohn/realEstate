@@ -35,6 +35,9 @@ class LeadActivityController extends Controller
             ->editColumn('schedule', function($leadActivity){
                 return $leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date;
             })
+            ->addColumn('recent',function ($leadActivity){
+                return $leadActivity->schedule->diffForHumans();
+            })
             ->addColumn('action', function ($leadActivity)
             {
                 $action = "";
