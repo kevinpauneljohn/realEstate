@@ -182,7 +182,7 @@ $(document).on('submit','#new-reminder-form',function(form){
         success: function(result){
             if(result.success === true)
             {
-                let appendedItem = '<tr role="row">' +
+                let appendedItem = '<tr id="row-id-'+result.leadActivity.id+'">' +
                     '<td><input type="hidden" id="hidden-value-'+result.leadActivity.id+'" value="'+result.leadActivity.details+'">'+result.schedule+'</td>' +
                     '<td>'+result.recent+'</td>' +
                     '<td>'+result.leadActivity.category+'</td>' +
@@ -194,7 +194,7 @@ $(document).on('submit','#new-reminder-form',function(form){
                     '<td>' +
                     '<button type="button" class="btn btn-xs btn-success view-btn" id="'+result.leadActivity.id+'"><i class="fa fa-eye"></i></button>' +
                     '<button type="button" class="btn btn-xs btn-primary edit-reminder-btn" id="'+result.leadActivity.id+'" data-target="#edit-reminder" data-toggle="modal"><i class="fa fa-edit"></i></button>' +
-                    '<button type="button" class="btn btn-xs btn-danger delete-schedule-btn" id="'+result.leadActivity.id+'"><i class="fa fa-trash"></i></button>' +
+                    '<button type="button" class="btn btn-xs btn-danger delete-reminder-btn" id="'+result.leadActivity.id+'"><i class="fa fa-trash"></i></button>' +
                     '</td>' +
                     '</tr>';
                 $('#new-reminder').modal('toggle');
@@ -233,6 +233,7 @@ $(document).on('click','.edit-reminder-btn',function(){
         beforeSend:function(){
             $('#edit-reminder-form input,#edit-reminder-form select, #edit-reminder-form textarea,#edit-reminder-form button').attr('disabled',true);
         },success: function(result){
+            $('#reminderId').val(id);
             $('#edit_reminder_date').val(result.date_scheduled);
             $('#edit_reminder_time').val(result.activity.start_date);
             $('#edit_reminder_category').val(result.activity.category).change();
@@ -242,5 +243,94 @@ $(document).on('click','.edit-reminder-btn',function(){
         },error: function(xhr, status, error){
         console.log(xhr);
     }
+    });
+});
+
+$(document).on('click','.delete-reminder-btn',function(){
+    let id = this.id;
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+
+            $.ajax({
+                'url' : '/leads-activity/'+id,
+                'type' : 'DELETE',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {'_method':'DELETE','id' : id},
+                beforeSend: function(){
+
+                },success: function(output){
+                    if(output.success === true){
+                        $('#row-id-'+id).remove();
+
+                        Swal.fire(
+                            'Deleted!',
+                            'Note has been deleted.',
+                            'success'
+                        );
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+
+        }
+    });
+});
+
+$(document).on('submit','#edit-reminder-form',function(form){
+    form.preventDefault();
+    let data = $(this).serializeArray(),
+    id = data[3].value;
+
+    $.ajax({
+        'url' : '/leads-activity/'+id,
+        'type' : 'PUT',
+        'data' : data,
+        beforeSend: function(){
+            $('.submit-form-btn').attr('disabled',true);
+            $('.spinner').show();
+        },success: function(result){
+
+            console.log(result);
+            if(result.success === true)
+            {
+                $('#row-id-'+id+' td').remove();
+                let appendedItem =
+                    '<td><input type="hidden" id="hidden-value-'+id+'" value="'+result.leadActivity.details+'">'+result.schedule+'</td>' +
+                    '<td>'+result.recent+'</td>' +
+                    '<td>'+result.leadActivity.category+'</td>' +
+                    '<td>' +
+                    '<div class="custom-control custom-switch">' +
+                    '<input type="checkbox" class="custom-control-input" id="customSwitch'+id+'" value="'+id+'" '+result.checked+'>' +
+                    '<label class="custom-control-label" for="customSwitch'+id+'"></label>' +
+                    '</div></td>' +
+                    '<td>' +
+                    '<button type="button" class="btn btn-xs btn-success view-btn" id="'+id+'"><i class="fa fa-eye"></i></button>' +
+                    '<button type="button" class="btn btn-xs btn-primary edit-reminder-btn" id="'+id+'" data-target="#edit-reminder" data-toggle="modal"><i class="fa fa-edit"></i></button>' +
+                    '<button type="button" class="btn btn-xs btn-danger delete-reminder-btn" id="'+id+'"><i class="fa fa-trash"></i></button>' +
+                    '</td>';
+
+                $('#reminder-list tbody #row-id-'+id).prepend(appendedItem);
+
+                toastr.success(result.message);
+                $('#edit-reminder').modal('toggle');
+            }else{
+                toastr.error(result.message);
+            }
+
+            $('.submit-form-btn').attr('disabled',false);
+            $('.spinner').hide();
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
     });
 });

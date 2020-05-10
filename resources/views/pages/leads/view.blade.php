@@ -359,6 +359,7 @@
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="lead_id" value="{{$lead->id}}">
+                <input type="hidden" name="reminderId" id="reminderId">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">

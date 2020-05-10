@@ -32,6 +32,9 @@ class LeadActivityController extends Controller
             ['lead_id','=',$id],
         ])->get();
         return DataTables::of($leadActivities)
+            ->setRowId(function ($leadActivity) {
+                return 'row-id-'.$leadActivity->id;
+            })
             ->editColumn('schedule', function($leadActivity){
                 $hidden = '<input type="hidden" id="hidden-value-'.$leadActivity->id.'" value="'.$leadActivity->details.'">';
                 $hidden .= '<input type="hidden" id="hidden-client-'.$leadActivity->id.'" value="'.$leadActivity->lead->fullname.'">';
@@ -53,7 +56,7 @@ class LeadActivityController extends Controller
                 }
                 if(auth()->user()->can('delete lead'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-schedule-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#delete-schedule-modal"><i class="fa fa-trash"></i> </a>';
+                    $action .= '<button type="button" class="btn btn-xs btn-danger delete-reminder-btn" id="'.$leadActivity->id.'"><i class="fa fa-trash"></i> </button>';
                 }
                 return $action;
             })
@@ -136,7 +139,6 @@ class LeadActivityController extends Controller
             'reminder_date'      => 'required',
             'reminder_time'      => 'required',
             'reminder_category'      => 'required',
-            'reminder_details'      => 'required',
         ]);
 
         if($validator->passes())
@@ -195,23 +197,32 @@ class LeadActivityController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'edit_schedule'      => 'required',
-            'edit_category'      => 'required',
+            'edit_reminder_date'      => 'required',
+            'edit_reminder_time'      => 'required',
+            'edit_reminder_category'      => 'required',
+        ],[
+            'edit_reminder_date.required'      => 'Date field is required',
+            'edit_reminder_time.required'      => 'Time field is required',
+            'edit_reminder_category.required'  => 'Category field is required',
         ]);
 
         if($validator->passes())
         {
             $leadActivity = LeadActivity::findOrFail($id);
-            $leadActivity->details = $request->edit_remarks;
-            $leadActivity->schedule = $request->edit_schedule;
-            $leadActivity->start_date = $request->edit_start_time;
-            $leadActivity->end_date = $request->edit_end_time;
-            $leadActivity->category = $request->edit_category;
+            $leadActivity->details = $request->edit_reminder_details;
+            $leadActivity->schedule = $request->edit_reminder_date;
+            $leadActivity->start_date = $request->edit_reminder_time;
+            $leadActivity->category = $request->edit_reminder_category;
 
-            if($leadActivity->save())
+            if($leadActivity->isDirty())
             {
-                return response()->json(['success' => true]);
+                $leadActivity->save();
+                return response()->json(['success' => true,'message' => 'Reminder successfully saved!',
+                    'leadActivity' => $leadActivity, 'recent' => $leadActivity->schedule->diffForHumans(),
+                    'schedule' => $leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date,
+                    'checked' => $leadActivity->status === 'completed' ? 'checked':'']);
             }
+            return response()->json(['success' => false,'message' => 'No changes occurred']);
         }
 
         return response()->json($validator->errors());
@@ -226,9 +237,7 @@ class LeadActivityController extends Controller
     public function destroy($id)
     {
         $leadActivity = LeadActivity::findOrFail($id);
-        if($leadActivity->delete())
-        {
-            return response()->json(['success' => true]);
-        }
+        $leadActivity->delete();
+        return response()->json(['success' => true]);
     }
 }
