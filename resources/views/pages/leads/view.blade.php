@@ -357,6 +357,7 @@
         <div class="modal fade" id="edit-reminder">
             <form role="form" id="edit-reminder-form" class="form-submit">
                 @csrf
+                @method('PUT')
                 <input type="hidden" name="lead_id" value="{{$lead->id}}">
                 <div class="modal-dialog">
                     <div class="modal-content">

@@ -215,7 +215,7 @@ $(document).on('submit','#new-reminder-form',function(form){
                 let element = $('.'+key);
 
                 element.find('.error-'+key).remove();
-                element.addClass('is-invalid').append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
             });
 
         },error: function(xhr, status, error){
@@ -223,4 +223,20 @@ $(document).on('submit','#new-reminder-form',function(form){
         }
     });
     clear_errors('reminder_date','reminder_time','reminder_category','reminder_details');
+});
+
+$(document).on('click','.edit-reminder-btn',function(){
+    let id = this.id;
+
+    ajax({
+        'url' :'/leads-activity/'+id+'/edit',
+        'type' : 'GET',
+        beforeSend:function(){
+            $('#edit-reminder-form input');
+        },success: function(result){
+
+        },error: function(xhr, status, error){
+        console.log(xhr);
+    }
+    });
 });

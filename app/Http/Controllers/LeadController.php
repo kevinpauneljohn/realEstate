@@ -140,6 +140,7 @@ class LeadController extends Controller
         $lead->project = $interest;
         $lead->remarks = $request->remarks;
         $lead->lead_status = 'New';
+        $lead->important = false;
 
         if($lead->save())
         {

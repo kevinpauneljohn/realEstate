@@ -49,7 +49,7 @@ class LeadActivityController extends Controller
                 }
                 if(auth()->user()->can('edit lead'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-schedule-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#edit-schedule-modal"><i class="fa fa-edit"></i> </a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-reminder-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#edit-reminder"><i class="fa fa-edit"></i> </a>';
                 }
                 if(auth()->user()->can('delete lead'))
                 {
