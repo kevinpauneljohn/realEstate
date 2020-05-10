@@ -380,7 +380,7 @@
 
                                     <div class="input-group edit_reminder_time" id="edit_reminder-time" data-target-input="nearest">
                                         <input name="edit_reminder_time" id="edit_reminder_time" type="text" class="form-control datetimepicker-input" data-target="#edit_reminder-time" value="{{now()->format('h:i A')}}">
-                                        <div class="input-group-append" data-target="#reminder-time" data-toggle="datetimepicker">
+                                        <div class="input-group-append" data-target="#edit_reminder-time" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="far fa-clock"></i></div>
                                         </div>
                                     </div>
@@ -538,7 +538,7 @@
                     order:[0,'desc']
                 });
             });
-            $('#datepicker, #reminder_date').datepicker({
+            $('#datepicker, #reminder_date, #edit_reminder_date').datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             }).datepicker("setDate", new Date());
@@ -546,7 +546,7 @@
             $('.select2').select2();
 
             //Timepicker
-            $('#timepicker, #reminder-time').datetimepicker({
+            $('#timepicker, #reminder-time,#edit_reminder-time').datetimepicker({
                 format: 'LT',
                 defaultDate: new Date()
             });

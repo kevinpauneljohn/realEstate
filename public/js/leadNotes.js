@@ -193,11 +193,11 @@ $(document).on('submit','#new-reminder-form',function(form){
                     '</div></td>' +
                     '<td>' +
                     '<button type="button" class="btn btn-xs btn-success view-btn" id="'+result.leadActivity.id+'"><i class="fa fa-eye"></i></button>' +
-                    '<button type="button" class="btn btn-xs btn-primary edit-schedule-btn" id="'+result.leadActivity.id+'"><i class="fa fa-edit"></i></button>' +
+                    '<button type="button" class="btn btn-xs btn-primary edit-reminder-btn" id="'+result.leadActivity.id+'" data-target="#edit-reminder" data-toggle="modal"><i class="fa fa-edit"></i></button>' +
                     '<button type="button" class="btn btn-xs btn-danger delete-schedule-btn" id="'+result.leadActivity.id+'"><i class="fa fa-trash"></i></button>' +
                     '</td>' +
                     '</tr>';
-
+                $('#new-reminder').modal('toggle');
                 $('#reminder-list tbody').prepend(appendedItem);
                 toastr.success(result.message);
                 $('#new-reminder-form').trigger('reset');
@@ -211,7 +211,6 @@ $(document).on('submit','#new-reminder-form',function(form){
             $('.spinner').hide();
 
             $.each(result, function (key, value) {
-                console.log(key+' - '+value.length);
                 let element = $('.'+key);
 
                 element.find('.error-'+key).remove();
@@ -228,13 +227,18 @@ $(document).on('submit','#new-reminder-form',function(form){
 $(document).on('click','.edit-reminder-btn',function(){
     let id = this.id;
 
-    ajax({
+    $.ajax({
         'url' :'/leads-activity/'+id+'/edit',
         'type' : 'GET',
         beforeSend:function(){
-            $('#edit-reminder-form input');
+            $('#edit-reminder-form input,#edit-reminder-form select, #edit-reminder-form textarea,#edit-reminder-form button').attr('disabled',true);
         },success: function(result){
+            $('#edit_reminder_date').val(result.date_scheduled);
+            $('#edit_reminder_time').val(result.activity.start_date);
+            $('#edit_reminder_category').val(result.activity.category).change();
+            $('#edit_reminder_details').val(result.activity.details);
 
+            $('#edit-reminder-form input,#edit-reminder-form select, #edit-reminder-form textarea,#edit-reminder-form button').removeAttr('disabled');
         },error: function(xhr, status, error){
         console.log(xhr);
     }

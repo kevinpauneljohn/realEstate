@@ -28,4 +28,5 @@ class LeadNote extends Model
         $date = Carbon::parse($value);
         return $date->diffForHumans();
     }
+
 }

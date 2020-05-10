@@ -182,7 +182,7 @@ class LeadActivityController extends Controller
     public function edit($id)
     {
         $leadsActivity = LeadActivity::findOrFail($id);
-        return $leadsActivity;
+        return response()->json(['activity' => $leadsActivity,'date_scheduled' => $leadsActivity->schedule->format('Y-m-d')]);
     }
 
     /**
