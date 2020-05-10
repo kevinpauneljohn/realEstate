@@ -48,9 +48,9 @@ function submitform(url , type , data , reload = true, elementAttr, consoleLog =
             }
 
             $.each(result, function (key, value) {
-                var element = $(elementAttr+'#'+key);
+                var element = $('#'+key);
 
-                element.closest(elementAttr+'div.'+key)
+                element.closest('div.'+key)
                     .addClass(value.length > 0 ? 'has-error' : 'has-success')
                     .find('.text-danger')
                     .remove();

@@ -145,3 +145,82 @@ $(document).on('click','.delete-note',function(){
         }
     });
 });
+
+$(document).on('click','.view-btn',function(){
+    let id = this.id, item;
+
+    $tr = $(this).closest('tr');
+
+    var data = $tr.children("td").map(function () {
+        return $(this).text();
+    }).get();
+
+    item = '<table class="reminder-schedule"><tr><td><strong>Category: </strong><span style="color:green;">'+data[2]+'</span> / ' +
+        '<span><strong>Schedule:</strong> <span style="color:green;">'+data[0]+'</span></span> / <strong>'+data[1]+'</strong></td></tr></table>';
+    console.log(data);
+    Swal.fire({
+        title: item,
+        html: $('#hidden-value-'+id).val()
+    });
+});
+
+
+$(document).on('submit','#new-reminder-form',function(form){
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
+
+    $.ajax({
+        'url' : '/leads-activities',
+        'type' : 'POST',
+        'data' : data,
+        'cache' : false,
+        beforeSend: function(){
+            $('.submit-form-btn').attr('disabled',true);
+            $('.spinner').show();
+        },
+        success: function(result){
+            if(result.success === true)
+            {
+                let appendedItem = '<tr role="row">' +
+                    '<td><input type="hidden" id="hidden-value-'+result.leadActivity.id+'" value="'+result.leadActivity.details+'">'+result.schedule+'</td>' +
+                    '<td>'+result.recent+'</td>' +
+                    '<td>'+result.leadActivity.category+'</td>' +
+                    '<td>' +
+                    '<div class="custom-control custom-switch">' +
+                    '<input type="checkbox" class="custom-control-input" id="customSwitch'+result.leadActivity.id+'" value="'+result.leadActivity.id+'">' +
+                    '<label class="custom-control-label" for="customSwitch'+result.leadActivity.id+'"></label>' +
+                    '</div></td>' +
+                    '<td>' +
+                    '<button type="button" class="btn btn-xs btn-success view-btn" id="'+result.leadActivity.id+'"><i class="fa fa-eye"></i></button>' +
+                    '<button type="button" class="btn btn-xs btn-primary edit-schedule-btn" id="'+result.leadActivity.id+'"><i class="fa fa-edit"></i></button>' +
+                    '<button type="button" class="btn btn-xs btn-danger delete-schedule-btn" id="'+result.leadActivity.id+'"><i class="fa fa-trash"></i></button>' +
+                    '</td>' +
+                    '</tr>';
+
+                $('#reminder-list tbody').prepend(appendedItem);
+                toastr.success(result.message);
+                $('#new-reminder-form').trigger('reset');
+            }
+            else if(result.success === false)
+            {
+                toastr.error(result.message);
+            }
+
+            $('.submit-form-btn').attr('disabled',false);
+            $('.spinner').hide();
+
+            $.each(result, function (key, value) {
+                console.log(key+' - '+value.length);
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.addClass('is-invalid').append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+    clear_errors('reminder_date','reminder_time','reminder_category','reminder_details');
+});

@@ -33,7 +33,9 @@ class LeadActivityController extends Controller
         ])->get();
         return DataTables::of($leadActivities)
             ->editColumn('schedule', function($leadActivity){
-                return $leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date;
+                $hidden = '<input type="hidden" id="hidden-value-'.$leadActivity->id.'" value="'.$leadActivity->details.'">';
+                $hidden .= '<input type="hidden" id="hidden-client-'.$leadActivity->id.'" value="'.$leadActivity->lead->fullname.'">';
+                return $hidden.$leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date;
             })
             ->addColumn('recent',function ($leadActivity){
                 return $leadActivity->schedule->diffForHumans();
@@ -41,17 +43,17 @@ class LeadActivityController extends Controller
             ->addColumn('action', function ($leadActivity)
             {
                 $action = "";
-//                if(auth()->user()->can('view lead'))
-//                {
-//                    $action .= '<a href="'.route("leads.show",["lead" => $leadActivity->id]).'" class="btn btn-xs btn-success view-btn" id="'.$leadActivity->id.'"><i class="fa fa-eye"></i> View</a>';
-//                }
+                if(auth()->user()->can('view lead'))
+                {
+                    $action .= '<button type="button" class="btn btn-xs btn-success view-btn" id="'.$leadActivity->id.'"><i class="fa fa-eye"></i></button>';
+                }
                 if(auth()->user()->can('edit lead'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-schedule-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#edit-schedule-modal"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-schedule-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#edit-schedule-modal"><i class="fa fa-edit"></i> </a>';
                 }
                 if(auth()->user()->can('delete lead'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-schedule-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#delete-schedule-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-schedule-btn" id="'.$leadActivity->id.'" data-toggle="modal" data-target="#delete-schedule-modal"><i class="fa fa-trash"></i> </a>';
                 }
                 return $action;
             })
@@ -131,26 +133,30 @@ class LeadActivityController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'schedule'      => 'required',
-            'category'      => 'required',
+            'reminder_date'      => 'required',
+            'reminder_time'      => 'required',
+            'reminder_category'      => 'required',
+            'reminder_details'      => 'required',
         ]);
 
         if($validator->passes())
         {
             $leadActivity = new LeadActivity();
             $leadActivity->user_id = auth()->user()->id;
-            $leadActivity->lead_id = $request->leadId;
-            $leadActivity->details = $request->remarks;
-            $leadActivity->schedule = $request->schedule;
-            $leadActivity->start_date = $request->start_time;
-            $leadActivity->end_date = $request->end_time;
-            $leadActivity->category = $request->category;
+            $leadActivity->lead_id = $request->lead_id;
+            $leadActivity->details = $request->reminder_details;
+            $leadActivity->schedule = $request->reminder_date;
+            $leadActivity->start_date = $request->reminder_time;
+            $leadActivity->category = $request->reminder_category;
             $leadActivity->status = "pending";
 
             if($leadActivity->save())
             {
-                return response()->json(['success' => true]);
+                return response()->json(['success' => true,'message' => 'Reminder successfully saved!',
+                    'leadActivity' => $leadActivity, 'recent' => $leadActivity->schedule->diffForHumans(),
+                    'schedule' => $leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date]);
             }
+            return response()->json(['success' => false, 'message' => 'Reminder was not saved']);
         }
 
         return response()->json($validator->errors());

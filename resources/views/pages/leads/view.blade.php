@@ -154,7 +154,9 @@
                         </div>
                         <div class="tab-pane fade" id="lead-reminders" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
                             <div class="card card-default">
-                                <div class="card-header"><button type="button" class="btn btn-primary btn-xs">New Reminder</button></div>
+                                <div class="card-header">
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#new-reminder">New Reminder</button>
+                                </div>
                                 <div class="card-body">
                                     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
                                         <table id="reminder-list" class="table table-bordered table-hover" role="grid">
@@ -274,6 +276,129 @@
                             <div class="form-group">
                                 <label for="description">Description</label>(Optional)
                                 <textarea class="form-control" name="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
+
+    @can('add lead')
+        <!--add new schedule modal-->
+        <div class="modal fade" id="new-reminder">
+            <form role="form" id="new-reminder-form" class="form-submit">
+                @csrf
+                <input type="hidden" name="lead_id" value="{{$lead->id}}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">New Reminder</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="reminder_date">
+                                        <label for="date">Date</label><span class="required">*</span>
+                                        <input type="text" name="reminder_date" class="form-control datemask" id="reminder_date" value="{{today()->format('Y-m-d')}}" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="time">Time</label><span class="required">*</span>
+
+                                    <div class="input-group reminder_time" id="reminder-time" data-target-input="nearest">
+                                        <input name="reminder_time" id="reminder_time" type="text" class="form-control datetimepicker-input" data-target="#reminder-time" value="{{now()->format('h:i A')}}">
+                                        <div class="input-group-append" data-target="#reminder-time" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                            </div>
+                            <div class="form-group reminder_category">
+                                <label for="reminder_category">Category</label><span class="required">*</span>
+                                <select class="form-control" name="reminder_category" id="reminder_category">
+                                    <option value="Tripping">Tripping</option>
+                                    <option value="Follow-up">Follow-up</option>
+                                    <option value="Send Project Details">Send Project Details</option>
+                                    <option value="Send Requirements">Send Requirements</option>
+                                    <option value="Assist">Assist</option>
+                                </select>
+                            </div>
+                            <div class="form-group reminder_details">
+                                <label for="reminder_details">Details</label><span class="required">*</span>
+                                <textarea class="form-control" name="reminder_details" id="reminder_details"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
+
+    @can('edit lead')
+        <div class="modal fade" id="edit-reminder">
+            <form role="form" id="edit-reminder-form" class="form-submit">
+                @csrf
+                <input type="hidden" name="lead_id" value="{{$lead->id}}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Reminder</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="edit_reminder_date">
+                                        <label for="date">Date</label><span class="required">*</span>
+                                        <input type="text" name="edit_reminder_date" class="form-control datemask" id="edit_reminder_date" value="{{today()->format('Y-m-d')}}" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="time">Time</label><span class="required">*</span>
+
+                                    <div class="input-group edit_reminder_time" id="edit_reminder-time" data-target-input="nearest">
+                                        <input name="edit_reminder_time" id="edit_reminder_time" type="text" class="form-control datetimepicker-input" data-target="#edit_reminder-time" value="{{now()->format('h:i A')}}">
+                                        <div class="input-group-append" data-target="#reminder-time" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                            </div>
+                            <div class="form-group edit_reminder_category">
+                                <label for="edit_reminder_category">Category</label><span class="required">*</span>
+                                <select class="form-control" name="edit_reminder_category" id="edit_reminder_category">
+                                    <option value="Tripping">Tripping</option>
+                                    <option value="Follow-up">Follow-up</option>
+                                    <option value="Send Project Details">Send Project Details</option>
+                                    <option value="Send Requirements">Send Requirements</option>
+                                    <option value="Assist">Assist</option>
+                                </select>
+                            </div>
+                            <div class="form-group edit_reminder_details">
+                                <label for="edit_reminder_details">Details</label><span class="required">*</span>
+                                <textarea class="form-control" name="edit_reminder_details" id="edit_reminder_details"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -412,7 +537,7 @@
                     order:[0,'desc']
                 });
             });
-            $('#datepicker').datepicker({
+            $('#datepicker, #reminder_date').datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             }).datepicker("setDate", new Date());
@@ -420,7 +545,7 @@
             $('.select2').select2();
 
             //Timepicker
-            $('#timepicker').datetimepicker({
+            $('#timepicker, #reminder-time').datetimepicker({
                 format: 'LT',
                 defaultDate: new Date()
             });
