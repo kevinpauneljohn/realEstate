@@ -185,7 +185,44 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="activity-logs" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
-                            Activity logs
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- The time line -->
+                                    <div class="timeline">
+                                    @if($activity_logs->count() > 0)
+                                        @foreach($activity_logs->get() as $logs)
+                                            <!-- timeline time label -->
+                                                <div class="time-label">
+                                                    <span class="{{$label->getDateClassLabel($logs->medium)}}">{{$logs->date->format('M d, Y')}}</span>
+                                                </div>
+                                                <!-- timeline item -->
+                                                <div>
+                                                    {!! $label->getTimelineIcon($logs->medium) !!}
+{{--                                                    <i class="fas fa-envelope bg-blue"></i>--}}
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock"></i> {{$logs->time}}</span>
+                                                        <h3 class="timeline-header"><a href="#">{{$logs->medium}}</a> {{$logs->resolution}}</h3>
+
+                                                        <div class="timeline-body">
+                                                            {{$logs->description}}
+                                                        </div>
+                                                        <div class="timeline-footer">
+                                                            <a class="btn btn-primary btn-sm">Read more</a>
+                                                            <a class="btn btn-danger btn-sm">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- END timeline item -->
+                                        @endforeach
+                                    @endif
+                                        <div>
+                                            <i class="fas fa-clock bg-gray"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                            </div>
                         </div>
                     </div>
                 </div>

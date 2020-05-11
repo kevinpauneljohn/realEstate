@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lead;
 use App\LeadNote;
+use App\LogTouch;
 use App\Project;
 use App\Repositories\LeadRepository;
 use Illuminate\Http\Request;
@@ -182,6 +183,8 @@ class LeadController extends Controller
                 ['user_id','=',auth()->user()->id],
             ])->firstOrFail(),
             'leadNotes' => LeadNote::where('lead_id',$id),
+            'activity_logs' => LogTouch::where('lead_id',$id),
+            'label' => $this->leadRepository,
         ]);
     }
 
