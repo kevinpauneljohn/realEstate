@@ -59,7 +59,8 @@
                                     <i class="fa fa-comment"></i> <strong>Last Contacted</strong>
                                     <p class="last-contacted">
                                         @if($lead->LogTouches->count() > 0)
-                                            {{$lead->LogTouches->pluck('date')->last()->format('M d, yy')}} {{$lead->LogTouches->pluck('time')->last()}}<br/>
+                                            {{$lead->LogTouches->pluck('date')[0]->format('M d, yy')}}
+{{--                                            {{$lead->LogTouches->pluck('date')->last()->format('M d, yy')}} {{$lead->LogTouches->pluck('time')->last()}}<br/>--}}
                                             <a href="#">{{$lead->LogTouches->pluck('date')->last()->diffForHumans()}}</a>
                                         @endif
 

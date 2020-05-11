@@ -99,7 +99,7 @@ class LeadRepository
         }
         elseif ($action === 'Others')
         {
-            $icon = '<i class="fas fa-exchange bg-red"></i>';
+            $icon = '<i class="fas fa-exchange-alt bg-red"></i>';
         }
 
         return $icon;
