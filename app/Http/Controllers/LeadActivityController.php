@@ -143,22 +143,29 @@ class LeadActivityController extends Controller
 
         if($validator->passes())
         {
-            $leadActivity = new LeadActivity();
-            $leadActivity->user_id = auth()->user()->id;
-            $leadActivity->lead_id = $request->lead_id;
-            $leadActivity->details = $request->reminder_details;
-            $leadActivity->schedule = $request->reminder_date;
-            $leadActivity->start_date = $request->reminder_time;
-            $leadActivity->category = $request->reminder_category;
-            $leadActivity->status = "pending";
+            ///count the Lead activity if it reach the limit
+            $activityCount = LeadActivity::where('lead_id',$request->lead_id)->count();
 
-            if($leadActivity->save())
+            if($activityCount <= 50)
             {
-                return response()->json(['success' => true,'message' => 'Reminder successfully saved!',
-                    'leadActivity' => $leadActivity, 'recent' => $leadActivity->schedule->diffForHumans(),
-                    'schedule' => $leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date]);
+                $leadActivity = new LeadActivity();
+                $leadActivity->user_id = auth()->user()->id;
+                $leadActivity->lead_id = $request->lead_id;
+                $leadActivity->details = $request->reminder_details;
+                $leadActivity->schedule = $request->reminder_date;
+                $leadActivity->start_date = $request->reminder_time;
+                $leadActivity->category = $request->reminder_category;
+                $leadActivity->status = "pending";
+
+                if($leadActivity->save())
+                {
+                    return response()->json(['success' => true,'message' => 'Reminder successfully saved!',
+                        'leadActivity' => $leadActivity, 'recent' => $leadActivity->schedule->diffForHumans(),
+                        'schedule' => $leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date]);
+                }
+                return response()->json(['success' => false, 'message' => 'Reminder was not saved']);
             }
-            return response()->json(['success' => false, 'message' => 'Reminder was not saved']);
+            return response()->json(['success' => false, 'message' => 'You have reached the maximum reminder limit']);
         }
 
         return response()->json($validator->errors());

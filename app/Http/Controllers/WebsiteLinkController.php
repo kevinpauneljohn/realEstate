@@ -32,4 +32,13 @@ class WebsiteLinkController extends Controller
         }
         return response()->json($validator->errors());
     }
+
+    public function destroy($id)
+    {
+        $webLink = WebsiteLink::find($id);
+        if($webLink->delete()){
+            return response()->json(['success' => true, 'message' => 'Website link successfully deleted!']);
+        }
+        return response()->json(['success' => false, 'message' => 'Error occurred']);
+    }
 }
