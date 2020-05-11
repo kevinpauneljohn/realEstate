@@ -349,7 +349,7 @@ $(document).on('click','.delete-timeline',function(){
         if (result.value) {
 
             $.ajax({
-                'url' : '/leads-activity/'+id,
+                'url' : '/logs/'+id,
                 'type' : 'DELETE',
                 'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 'data' : {'_method':'DELETE','id' : id},
@@ -357,11 +357,10 @@ $(document).on('click','.delete-timeline',function(){
 
                 },success: function(output){
                     if(output.success === true){
-                        $('#row-id-'+id).remove();
-
+                        $('.logs-'+id).remove();
                         Swal.fire(
                             'Deleted!',
-                            'Note has been deleted.',
+                            'Activity logs has been deleted.',
                             'success'
                         );
                     }

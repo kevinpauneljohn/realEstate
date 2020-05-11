@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\LogTouch;
 use App\Repositories\LogTouchRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -41,5 +42,12 @@ class LogTouchController extends Controller
             return response()->json($response);
         }
         return response()->json($validation->errors());
+    }
+
+    public function destroy($id)
+    {
+        $logs = LogTouch::find($id);
+        $logs->delete();
+        return response()->json(['success' => true,'message' => 'Activity Logs successfully deleted!']);
     }
 }

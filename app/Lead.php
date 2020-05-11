@@ -69,4 +69,9 @@ class Lead extends Model
         $lastname = ucfirst($this->lastname);
         return "{$firstname} {$middlename} {$lastname}";
     }
+
+    public function websiteLinks()
+    {
+        return $this->hasMany(WebsiteLink::class);
+    }
 }

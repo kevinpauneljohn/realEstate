@@ -193,11 +193,11 @@
                                     @if($activity_logs->count() > 0)
                                         @foreach($activity_logs->orderBy('date','asc')->get() as $logs)
                                             <!-- timeline time label -->
-                                                <div class="time-label">
+                                                <div class="time-label logs-{{$logs->id}}">
                                                     <span class="{{$label->getDateClassLabel($logs->medium)}}">{{$logs->date->format('M d, Y')}}</span>
                                                 </div>
                                                 <!-- timeline item -->
-                                                <div>
+                                                <div class="logs-{{$logs->id}}">
                                                     {!! $label->getTimelineIcon($logs->medium) !!}
 {{--                                                    <i class="fas fa-envelope bg-blue"></i>--}}
                                                     <div class="timeline-item">
@@ -208,8 +208,8 @@
                                                             {!! $logs->description !!}
                                                         </div>
                                                         <div class="timeline-footer">
-                                                            <a class="btn btn-primary btn-sm">Read more</a>
-                                                            <a class="btn btn-danger btn-sm delete-timeline" id="{{$logs->id}}">Delete</a>
+                                                            <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                                                            <a href="#" class="btn btn-danger btn-sm delete-timeline" id="{{$logs->id}}">Delete</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -232,19 +232,10 @@
         <div class="col-lg-3">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card card-default">
+                    <div class="card card-secondary">
                         <div class="card-header">
-                            test
-                        </div>
-                        <div class="card-body"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            test
+                            <strong style="font-size: 18px;">Website Links</strong>
+                            <button class="btn btn-secondary btn-xs float-right" data-toggle="modal" data-target="#social-links">Add</button>
                         </div>
                         <div class="card-body"></div>
                     </div>
@@ -252,7 +243,42 @@
             </div>
         </div>
     </div>
-
+    @can('add lead')
+        <!--add new schedule modal-->
+        <div class="modal fade" id="social-links">
+            <form role="form" id="website-link-form" class="form-submit">
+                @csrf
+                <input type="hidden" name="lead_id" value="{{$lead->id}}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Website Link</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group website_name">
+                                <label for="website_name">Website Name</label><span class="required">*</span>
+                                <input type="text" name="website_name" id="website_name" class="form-control">
+                            </div>
+                            <div class="form-group url">
+                                <label for="url">URL</label><span class="required">*</span>
+                                <input type="text" name="url" id="url" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
     @can('edit lead')
         <!--add new schedule modal-->
         <div class="modal fade" id="log-touches">

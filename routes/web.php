@@ -72,6 +72,7 @@ Route::post('/leads/mark','LeadController@markAsImportant')->name('leads.importa
 
 /*Log touches*/
 Route::post('/logs','LogTouchController@store')->name('logs.store')->middleware('auth','permission:edit lead');
+Route::delete('/logs/{id}','LogTouchController@destroy')->name('logs.destroy')->middleware('auth','permission:edit lead');
 
 /*Lead Notes*/
 Route::post('/lead-notes','LeadNotesController@store')->name('leadNotes.store')->middleware(['auth','permission:add lead','throttle:20,1']);
