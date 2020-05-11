@@ -372,3 +372,49 @@ $(document).on('click','.delete-timeline',function(){
         }
     });
 });
+
+$(document).on('submit','#website-link-form',function(form){
+    form.preventDefault();
+    let data = $(this).serializeArray();
+
+    $.ajax({
+        'url' : '/website-link',
+        'type' : 'POST',
+        'data' : data,
+        beforeSend: function(){
+
+        },success: function(result){
+            if(result.success === true)
+            {
+                let item = '<li class="nav-item" id="link-'+result.websiteLink.id+'">' +
+                    '<a class="nav-link">' +
+                    '<a href="'+result.websiteLink.website_url+'" target="_blank" title="Click the link">'+result.websiteLink.website_name+'</a>' +
+                    '<span class="float-right text-danger">' +
+                    '<button type="button" class="btn btn-xs remove-link" id="'+result.websiteLink.id+'" title="Remove link"><i class="fa fa-times-circle"></i></button></span>' +
+                    '</a></li>';
+
+                $('.url-links').append(item);
+
+                $('#website-link-form').trigger('reset');
+                toastr.success(result.message);
+                $('#social-links').modal('toggle')
+            }else{
+                toastr.error(result.message);
+            }
+
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+    clear_errors('website_name','url')
+});
+
+$(document).on('click','.remove-link',function(){
+
+});

@@ -7,6 +7,7 @@ use App\LeadNote;
 use App\LogTouch;
 use App\Project;
 use App\Repositories\LeadRepository;
+use App\WebsiteLink;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -184,6 +185,7 @@ class LeadController extends Controller
             ])->firstOrFail(),
             'leadNotes' => LeadNote::where('lead_id',$id),
             'activity_logs' => LogTouch::where('lead_id',$id),
+            'website_links' => WebsiteLink::where('lead_id',$id),
             'label' => $this->leadRepository,
         ]);
     }

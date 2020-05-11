@@ -237,7 +237,20 @@
                             <strong style="font-size: 18px;">Website Links</strong>
                             <button class="btn btn-secondary btn-xs float-right" data-toggle="modal" data-target="#social-links">Add</button>
                         </div>
-                        <div class="card-body"></div>
+                        <div class="card-body">
+                            <ul class="nav nav-pills flex-column url-links">
+                                @foreach($website_links->get() as $link)
+                                    <li class="nav-item" id="link-{{$link->id}}">
+                                        <a class="nav-link">
+                                            <a href="{{$link->website_url}}" target="_blank" title="Click the link">{{$link->website_name}}</a>
+                                            <span class="float-right text-danger">
+                                                <button type="button" class="btn btn-xs remove-link" id="{{$link->id}}" title="Remove link"><i class="fa fa-times-circle"></i></button>
+                                            </span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -263,7 +276,7 @@
                                 <input type="text" name="website_name" id="website_name" class="form-control">
                             </div>
                             <div class="form-group url">
-                                <label for="url">URL</label><span class="required">*</span>
+                                <label for="url">URL</label><span class="required">*</span> (http:// or https:// must be included)
                                 <input type="text" name="url" id="url" class="form-control">
                             </div>
                         </div>
@@ -492,6 +505,9 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
+        .remove-link:hover{
+            color:red;
+        }
         #reminder-list td{
             padding:8px!important;
         }
