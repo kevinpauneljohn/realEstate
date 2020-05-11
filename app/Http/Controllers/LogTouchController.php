@@ -22,6 +22,7 @@ class LogTouchController extends Controller
             'date'            => 'required',
             'time'            => 'required',
             'resolution'      => 'required',
+            'description'      => 'max:3000',
         ]);
 
         if($validation->passes())
@@ -32,7 +33,7 @@ class LogTouchController extends Controller
                 'date'          => $request->date,
                 'time'          => $request->time,
                 'resolution'    => $request->resolution,
-                'description'   => $request->description,
+                'description'   => nl2br($request->description),
             );
 
             //create a log touches activity

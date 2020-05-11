@@ -334,3 +334,42 @@ $(document).on('submit','#edit-reminder-form',function(form){
         }
     });
 });
+
+$(document).on('click','.delete-timeline',function(){
+    let id = this.id;
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+
+            $.ajax({
+                'url' : '/leads-activity/'+id,
+                'type' : 'DELETE',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {'_method':'DELETE','id' : id},
+                beforeSend: function(){
+
+                },success: function(output){
+                    if(output.success === true){
+                        $('#row-id-'+id).remove();
+
+                        Swal.fire(
+                            'Deleted!',
+                            'Note has been deleted.',
+                            'success'
+                        );
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+
+        }
+    });
+});

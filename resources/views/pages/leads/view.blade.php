@@ -191,7 +191,7 @@
                                     <!-- The time line -->
                                     <div class="timeline">
                                     @if($activity_logs->count() > 0)
-                                        @foreach($activity_logs->get() as $logs)
+                                        @foreach($activity_logs->orderBy('date','asc')->get() as $logs)
                                             <!-- timeline time label -->
                                                 <div class="time-label">
                                                     <span class="{{$label->getDateClassLabel($logs->medium)}}">{{$logs->date->format('M d, Y')}}</span>
@@ -205,11 +205,11 @@
                                                         <h3 class="timeline-header"><a href="#">{{$logs->medium}}</a> {{$logs->resolution}}</h3>
 
                                                         <div class="timeline-body">
-                                                            {{$logs->description}}
+                                                            {!! $logs->description !!}
                                                         </div>
                                                         <div class="timeline-footer">
                                                             <a class="btn btn-primary btn-sm">Read more</a>
-                                                            <a class="btn btn-danger btn-sm">Delete</a>
+                                                            <a class="btn btn-danger btn-sm delete-timeline" id="{{$logs->id}}">Delete</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -311,8 +311,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="description">Description</label>(Optional)
-                                <textarea class="form-control" name="description"></textarea>
+                                <label for="description">Description</label>(Optional)(3000 characters max)
+                                <textarea class="form-control" name="description" maxlength="3000"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
