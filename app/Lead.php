@@ -42,6 +42,7 @@ class Lead extends Model
         'lead_status'
     ];
 
+
     public function sales()
     {
         return $this->hasMany(Sales::class);

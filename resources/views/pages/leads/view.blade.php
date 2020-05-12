@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Lead Details</h1>
+            <h1 class="m-0 text-dark">Manage Leads</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -236,7 +236,7 @@
                 <div class="col-lg-12">
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <strong style="font-size: 18px;">Website Links</strong>
+                            <strong style="font-size: 18px;">Quick Links</strong>
                             <button class="btn btn-secondary btn-xs float-right" data-toggle="modal" data-target="#social-links">Add</button>
                         </div>
                         <div class="card-body">
