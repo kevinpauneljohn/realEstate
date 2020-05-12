@@ -535,3 +535,4 @@ $(document).on('submit','#edit-log-touches-form',function(form){
     });
     clear_errors('edit_medium','edit_date','edit_time','edit_resolution','edit_description');
 });
+///
