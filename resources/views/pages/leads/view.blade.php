@@ -23,7 +23,7 @@
             <div class="card card-primary">
                 <div class="card-header main-profile">
                     <span class="float-right">
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Touch</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Activity</button>
                         <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
                         <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-exchange-alt"></i> Convert to sales</button>
                     </span>
@@ -209,7 +209,7 @@
                                                             {!! $logs->description !!}
                                                         </div>
                                                         <div class="timeline-footer">
-                                                            <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                                                            <a href="#" class="btn btn-primary btn-sm edit-timeline" id="{{$logs->id}}" data-toggle="modal" data-target="#edit-log-touches">Edit</a>
                                                             <a href="#" class="btn btn-danger btn-sm delete-timeline" id="{{$logs->id}}">Delete</a>
                                                         </div>
                                                     </div>
@@ -302,7 +302,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Log Touch</h4>
+                            <h4 class="modal-title">Log Activity</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -353,6 +353,89 @@
                             <div class="form-group">
                                 <label for="description">Description</label>(Optional)(3000 characters max)
                                 <textarea class="form-control" name="description" maxlength="3000"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
+
+    @can('edit lead')
+        <div class="modal fade" id="edit-log-touches">
+            <form role="form" id="edit-log-touches-form" class="form-submit">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="lead_url" value="{{url()->current()}}">
+                <input type="hidden" name="lead_id" value="{{$lead->id}}">
+                <input type="hidden" name="log_id" id="log_id">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Log Activity</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="edit_medium">
+                                            <label for="edit_medium">Medium</label><span class="required">*</span>
+                                            <select class="form-control" name="edit_medium" id="edit_medium">
+                                                <option value="Phone Call">Phone Call</option>
+                                                <option value="SMS">SMS</option>
+                                                <option value="Email">Email</option>
+                                                <option value="Meeting">Meeting</option>
+                                                <option value="Social Network">Social Network</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="edit_date">
+                                            <label for="edit_date">Date</label><span class="required">*</span>
+                                            <input type="text" name="edit_date" class="form-control datemask" id="edit_date" value="{{old('date_inquired')}}" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div>
+                                            <label for="edit_time">Time</label><span class="required">*</span>
+
+                                            <div class="input-group edit_time" id="edit-timepicker" data-target-input="nearest">
+                                                <input name="edit_time" id="edit_time" type="text" class="form-control datetimepicker-input" data-target="#edit-timepicker">
+                                                <div class="input-group-append" data-target="#edit-timepicker" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group edit_resolution">
+                                <label for="edit_resolution">Resolution</label><span class="required">*</span>
+                                <select name="edit_resolution" class="form-control" id="edit_resolution">
+                                    <option value="No Resolution">No Resolution</option>
+                                    <option value="Successful">Successful</option>
+                                    <option value="Unsuccessful">Unsuccessful</option>
+                                    <option value="Abandoned">Abandoned</option>
+                                    <option value="Sent SMS">Sent SMS</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group edit_description">
+                                <label for="edit_description">Description</label>(Optional)(3000 characters max)
+                                <textarea class="form-control" name="description" maxlength="3000" id="edit_description"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -619,7 +702,7 @@
                     order:[0,'desc']
                 });
             });
-            $('#datepicker, #reminder_date, #edit_reminder_date').datepicker({
+            $('#datepicker, #reminder_date, #edit_reminder_date, #edit_date').datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             }).datepicker("setDate", new Date());
@@ -627,7 +710,7 @@
             $('.select2').select2();
 
             //Timepicker
-            $('#timepicker, #reminder-time,#edit_reminder-time').datetimepicker({
+            $('#timepicker, #reminder-time,#edit_reminder-time, #edit-timepicker').datetimepicker({
                 format: 'LT',
                 defaultDate: new Date()
             });

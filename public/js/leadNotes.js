@@ -455,3 +455,83 @@ $(document).on('click','.remove-link',function(){
         }
     });
 });
+
+$(document).on('click','.edit-timeline',function () {
+   let id = this.id;
+   $('#log_id').val(id);
+
+   $.ajax({
+       'url' : '/logs/'+id,
+       'type' : 'GET',
+       beforeSend: function () {
+           let loader = '<div class="loading" align="center">' +
+               '<strong>Loading</strong>' +
+               '<div class="spinner-grow spinner-grow-sm text-info"></div>' +
+               '<div class="spinner-grow spinner-grow-sm text-info"></div>' +
+               '<div class="spinner-grow spinner-grow-sm text-info"></div>' +
+               '</div>'
+
+           $('#edit-log-touches-form .modal-body').prepend(loader);
+           $('#edit-log-touches-form input, #edit-log-touches-form select, #edit-log-touches-form textarea, #edit-log-touches-form button').attr('disabled',true);
+       },success: function(result){
+           $('#edit-log-touches-form .loading').remove();
+           if(result.success === true)
+           {
+               $('#edit_medium').val(result.logs.medium).change();
+               $('#edit_date').val(result.timelineDate);
+               $('#edit_time').val(result.logs.time);
+               $('#edit_resolution').val(result.logs.resolution).change();
+               $('#edit_description').val(result.logs.description);
+               $('#edit-log-touches-form input, #edit-log-touches-form select, #edit-log-touches-form textarea, #edit-log-touches-form button').removeAttr('disabled');
+           }else{
+               setTimeout(function(){
+                   toastr.error(result.message);
+                   setTimeout(function(){
+                       location.reload();
+                   },3000);
+               });
+           }
+       },error: function(xhr, status, error){
+           console.log(xhr);
+       }
+   });
+});
+
+$(document).on('submit','#edit-log-touches-form',function(form){
+    form.preventDefault();
+
+    let data = $(this).serializeArray(), url = data[2].value;
+    $.ajax({
+        'url' : '/logs/'+data[4].value,
+        'type' : 'PUT',
+        'data' : data,
+        beforeSend: function(){
+
+        },success: function(result){
+            console.log(result);
+            if(result.success === true)
+            {
+                $('#edit-log-touches .close').click();
+                $('.timeline').load(url+' .timeline');
+                toastr.success(result.message);
+            }else{
+                toastr.error(result.message);
+                if(result.reload === true){
+                    setTimeout(function(){
+                        location.reload();
+                    },3000);
+                }
+            }
+
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+    clear_errors('edit_medium','edit_date','edit_time','edit_resolution','edit_description');
+});
