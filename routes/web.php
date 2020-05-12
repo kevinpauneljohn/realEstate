@@ -130,7 +130,7 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-   return 'test';
+   return \App\Priority::where('name','critical')->first()->id;
 });
 
 /*change password*/

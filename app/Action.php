@@ -9,6 +9,8 @@ class Action extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = ['name','description','priority_id'];
+
     public function priority()
     {
         return $this->belongsTo(Priority::class);
