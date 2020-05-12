@@ -44,6 +44,13 @@ class LeadController extends Controller
                 $lead = '<a href="'.route("leads.show",["lead" => $lead->id]).'">'.$lead->fullname.'</a>';
                 return $lead;
             })
+            ->editColumn('important',function($lead){
+                if($lead->important === 1)
+                {
+                    return '<span class="badge badge-success role-badge">Important</span>';
+                }
+                return "";
+            })
             ->editColumn('lead_status', function($lead){
                 $status = array('New','Warm','Cold','For follow-up','For-tripping','Qualified','Not qualified','Not Interested');
                 $data = '<select id="'.$lead->id.'" class="change-status">';
@@ -76,23 +83,23 @@ class LeadController extends Controller
                 $action = "";
                 if(auth()->user()->can('view lead'))
                 {
-                    $action .= '<button class="btn btn-xs btn-info view-details" id="'.$lead->id.'" data-toggle="modal" data-target="#lead-details"><i class="fa fa-info-circle"></i> Details</button>';
+                    $action .= '<button class="btn btn-xs btn-info view-details" id="'.$lead->id.'" data-toggle="modal" data-target="#lead-details" title="View Details"><i class="fa fa-info-circle"></i> </button>';
                 }
                 if(auth()->user()->can('view lead'))
                 {
-                    $action .= '<a href="'.route("leads.show",["lead" => $lead->id]).'" class="btn btn-xs btn-success view-btn" id="'.$lead->id.'"><i class="fa fa-eye"></i> View</a>';
+                    $action .= '<a href="'.route("leads.show",["lead" => $lead->id]).'" class="btn btn-xs btn-success view-btn" id="'.$lead->id.'" title="Manage Leads"><i class="fas fa-folder-open"></i></a>';
                 }
                 if(auth()->user()->can('edit lead'))
                 {
-                    $action .= '<a href="'.route("leads.edit",["lead" => $lead->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$lead->id.'"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="'.route("leads.edit",["lead" => $lead->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$lead->id.'" title="Edit Leads"><i class="fa fa-edit"></i></a>';
                 }
                 if(auth()->user()->can('delete lead') && $lead->sales()->count() < 1)
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$lead->id.'" data-toggle="modal" data-target="#delete-lead-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$lead->id.'" data-toggle="modal" data-target="#delete-lead-modal" title="Delete Leads"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
-            ->rawColumns(['action','lead_status','fullname'])
+            ->rawColumns(['action','lead_status','fullname','important'])
             ->make(true);
     }
 

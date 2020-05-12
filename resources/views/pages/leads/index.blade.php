@@ -35,6 +35,7 @@
                         <th>Mobile No.</th>
                         <th>Email</th>
                         <th>Point Of Contact</th>
+                        <th>Importance</th>
                         <th>Lead Status</th>
                         <th>Action</th>
                     </tr>
@@ -47,6 +48,7 @@
                         <th>Mobile No.</th>
                         <th>Email</th>
                         <th>Point Of Contact</th>
+                        <th>Importance</th>
                         <th width="8%">Lead Status</th>
                         <th width="18%">Action</th>
                     </tr>
@@ -186,6 +188,7 @@
                         { data: 'mobileNo', name: 'mobileNo'},
                         { data: 'email', name: 'email'},
                         { data: 'point_of_contact', name: 'point_of_contact'},
+                        { data: 'important', name: 'important'},
                         { data: 'lead_status', name: 'lead_status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
@@ -204,7 +207,6 @@
                     format: 'MM/DD/YYYY hh:mm A'
                 }
             })
-
         </script>
     @endcan
 @stop

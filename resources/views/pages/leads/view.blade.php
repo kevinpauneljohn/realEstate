@@ -23,6 +23,7 @@
             <div class="card card-primary">
                 <div class="card-header main-profile">
                     <span class="float-right">
+                        <a href="{{route('leads.index')}}" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> View all</a>
                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Activity</button>
                         <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
                         <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-exchange-alt"></i> Convert to sales</button>

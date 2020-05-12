@@ -20,6 +20,9 @@
 @section('content')
 
     <div class="card">
+        <div class="card-header">
+            <a href="{{route('leads.index')}}"><button type="button" class="btn bg-gradient-success btn-sm">View all</button></a>
+        </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 @if(session('success') === true)
