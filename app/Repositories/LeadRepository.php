@@ -142,4 +142,49 @@ class LeadRepository
         return $icon;
     }
 
+    /**
+     * @since May 13, 2020
+     * @author john kevin paunel
+     * set the badge label of lead status
+     * @param string $status
+     * @return string
+     * */
+    public function setStatusBadge($status)
+    {
+        $badge = "";
+        if($status === 'New')
+        {
+            $badge = '<span class="badge bg-yellow role-badge">'.$status.'</span>';
+        }
+        elseif($status === 'Warm')
+        {
+            $badge = '<span class="badge bg-orange role-badge">'.$status.'</span>';
+        }
+        elseif($status === 'Cold')
+        {
+            $badge = '<span class="badge bg-info role-badge">'.$status.'</span>';
+        }
+        elseif($status === 'Qualified')
+        {
+            $badge = '<span class="badge bg-primary role-badge">'.$status.'</span>';
+        }
+        elseif($status === 'Not qualified')
+        {
+            $badge = '<span class="badge bg-danger role-badge">'.$status.'</span>';
+        }
+        elseif($status === 'Inquiry Only')
+        {
+            $badge = '<span class="badge bg-gradient-dark role-badge">'.$status.'</span>';
+        }
+        elseif($status === 'Not Interested Anymore')
+        {
+            $badge = '<span class="badge bg-gradient-warning role-badge">'.$status.'</span>';
+        }
+        elseif($status === 'Reserved')
+        {
+            $badge = '<span class="badge bg-success role-badge">'.$status.'</span>';
+        }
+        return $badge;
+    }
+
 }

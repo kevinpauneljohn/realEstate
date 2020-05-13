@@ -153,7 +153,6 @@ $(document).on('submit','#change-status-form',function(form){
             $('.spinner').show();
         },
         success: function (result) {
-            console.log(result);
 
             if(result.success === true)
             {
@@ -161,9 +160,12 @@ $(document).on('submit','#change-status-form',function(form){
                 setTimeout(function(){
                     location.reload();
                 },3000);
-            }else{
+            }else if(result.success === false){
                 toastr.error(result.message);
             }
+
+            $('.submit-form-btn').attr('disabled',false);
+            $('.spinner').hide();
 
             $.each(result, function (key, value) {
                 let element = $('.'+key);
@@ -176,6 +178,8 @@ $(document).on('submit','#change-status-form',function(form){
             console.log(xhr, status, error);
         }
     });
+
+    clear_errors('status','notes');
 });
 
 

@@ -45,6 +45,12 @@ class LeadController extends Controller
                 $lead = '<a href="'.route("leads.show",["lead" => $lead->id]).'">'.$lead->fullname.'</a>';
                 return $lead;
             })
+            ->editColumn('mobileNo',function($lead){
+                return '<a href="tel:'.$lead->mobileNo.'">'.$lead->mobileNo.'</a>';
+            })
+            ->editColumn('email',function($lead){
+                return '<a href="mailto:'.$lead->email.'">'.$lead->email.'</a>';
+            })
             ->editColumn('important',function($lead){
                 if($lead->important === 1)
                 {
@@ -53,7 +59,7 @@ class LeadController extends Controller
                 return "";
             })
             ->editColumn('lead_status', function($lead){
-                return $lead->lead_status;
+                return $this->leadRepository->setStatusBadge($lead->lead_status);
             })
             ->addColumn('action', function ($lead)
             {
@@ -80,7 +86,7 @@ class LeadController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action','lead_status','fullname','important'])
+            ->rawColumns(['action','lead_status','fullname','important','email','mobileNo'])
             ->make(true);
     }
 
