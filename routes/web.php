@@ -69,6 +69,7 @@ Route::delete('/leads/{lead}','LeadController@destroy')->name('leads.destroy')->
 Route::post('/leads/get','LeadController@getLeads')->name('leads.get')->middleware(['auth','permission:view lead']);
 Route::post('/leads/status','LeadController@getLeadStatus')->name('leads.status')->middleware('auth','permission:view lead');
 Route::post('/leads/mark','LeadController@markAsImportant')->name('leads.important')->middleware('auth','permission:view lead');
+Route::post('/leads/status/update','LeadController@updateLeadStatus')->name('leads.status.update')->middleware('auth','permission:edit lead');
 
 /*Log touches*/
 Route::post('/logs','LogTouchController@store')->name('logs.store')->middleware('auth','permission:edit lead');

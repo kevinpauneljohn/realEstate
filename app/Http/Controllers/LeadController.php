@@ -9,6 +9,7 @@ use App\Project;
 use App\Repositories\LeadRepository;
 use App\WebsiteLink;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class LeadController extends Controller
@@ -52,31 +53,7 @@ class LeadController extends Controller
                 return "";
             })
             ->editColumn('lead_status', function($lead){
-                $status = array('New','Warm','Cold','For follow-up','For-tripping','Qualified','Not qualified','Not Interested');
-                $data = '<select id="'.$lead->id.'" class="change-status">';
-
-                foreach ($status as $stats)
-                {
-                    $selected = "";
-
-                    if($lead->lead_status === $stats)
-                    {
-                        $selected = "selected";
-                    }
-
-                    if($stats === 'New' || $stats === 'Warm' || $stats === 'Cold')
-                    {
-                        $disabled = "disabled";
-                    }else{
-                        $disabled = "";
-                    }
-
-                        $data.= '<option value="'.$stats.'" '.$selected.' '.$disabled.'>'.$stats.'</option>';
-                }
-
-                $data .= '</select>';
-
-                return $data;
+                return $lead->lead_status;
             })
             ->addColumn('action', function ($lead)
             {
@@ -96,6 +73,10 @@ class LeadController extends Controller
                 if(auth()->user()->can('delete lead') && $lead->sales()->count() < 1)
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$lead->id.'" data-toggle="modal" data-target="#delete-lead-modal" title="Delete Leads"><i class="fa fa-trash"></i></a>';
+                }
+                if(auth()->user()->can('edit lead'))
+                {
+                    $action .= '<button class="btn btn-xs bg-yellow set-status" id="'.$lead->id.'" title="Change Status" data-toggle="modal" data-target="#set-status"><i class="fa fa-thermometer-three-quarters"></i></button>';
                 }
                 return $action;
             })
@@ -341,5 +322,37 @@ class LeadController extends Controller
         }
         $lead->save();
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * @since May 13, 2020
+     * @author john kevin paunel
+     * Update the lead status and lead notes
+     * @param Request $request
+     * @return mixed
+     * */
+    public function updateLeadStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'status' => 'required',
+            'notes' => 'required'
+        ]);
+
+        if($validator->passes())
+        {
+            $lead = Lead::find($request->lead_id);
+            $lead->lead_status = $request->status;
+            if($lead->isDirty())
+            {
+                $lead->save();
+                $leadNote = new LeadNote();
+                $leadNote->lead_id = $request->lead_id;
+                $leadNote->notes = $request->notes;
+                $leadNote->save();
+                return response()->json(['success' => true,'message' => 'Lead status successfully updated']);
+            }
+            return response()->json(['success' => false,'message' => 'No changes occurred']);
+        }
+        return response()->json($validator->errors());
     }
 }

@@ -101,7 +101,6 @@ $(document).on('click','.view-details',function(){
             $('.image-loader').show();
             $('.lead-details-table').remove();
         },success: function(result){
-            console.log(result);
             let mobile = result.mobileNo != null? result.mobileNo:"",
                 landline = result.landline != null? result.landline:"",
                 email = result.email != null? result.email:"",
@@ -127,24 +126,52 @@ $(document).on('click','.view-details',function(){
     });
 });
 
-let id = "", value = "", originalValue = "";
-$(document).on('change','.change-status', function(){
-    id = this.id, value = this.value;
+$(document).on('click','.set-status', function(){
+    let id = this.id;
+
+    $tr = $(this).closest('tr');
+
+    var data = $tr.children("td").map(function () {
+        return $(this).text();
+    }).get();
+
+    $('.change-status').val(data[6]).change();
+    $('#lead_id').val(id);
+});
+
+$(document).on('submit','#change-status-form',function(form){
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
 
     $.ajax({
-        'url' : '/leads/status',
+        'url' : '/leads/status/update',
         'type' : 'POST',
-        'data' : {'id':id},
-        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'data' : data,
         beforeSend: function(){
-
+            $('.submit-form-btn').attr('disabled',true);
+            $('.spinner').show();
         },
         success: function (result) {
             console.log(result);
-            if(result !== "For follow-up" && value === "For follow-up")
+
+            if(result.success === true)
             {
-                $('#set-schedule').modal();
+                toastr.success(result.message);
+                setTimeout(function(){
+                    location.reload();
+                },3000);
+            }else{
+                toastr.error(result.message);
             }
+
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+
         },error: function(xhr,status,error){
             console.log(xhr, status, error);
         }

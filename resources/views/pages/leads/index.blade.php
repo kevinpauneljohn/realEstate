@@ -49,8 +49,8 @@
                         <th>Email</th>
                         <th>Point Of Contact</th>
                         <th>Importance</th>
-                        <th width="8%">Lead Status</th>
-                        <th width="18%">Action</th>
+                        <th width="12%">Lead Status</th>
+                        <th width="12%">Action</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -115,42 +115,62 @@
 
     @can('edit lead')
         <!--add new schedule modal-->
-        <div class="modal fade" id="set-schedule">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Set Follow-up Schedule</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="image-loader">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
+        <div class="modal fade" id="set-status">
+            <form role="form" id="change-status-form" class="form-submit">
+                @csrf
+                <input type="hidden" name="lead_url" value="{{url()->current()}}">
+                <input type="hidden" name="lead_id" id="lead_id">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Change Lead Status</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            </button>
                         </div>
+                        <div class="modal-body">
+                            <div class="form-group status">
+                                <label for="status">Status</label><span class="required">*</span>
+                                <select class="change-status form-control" name="status" id="status">
+                                @php
+                                $status = array('New','Warm','Cold','Qualified','Not qualified','Inquiry Only','Not Interested Anymore','Reserved');
+                                $data = '';
 
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                </div>
-                                <input type="text" class="form-control float-right" id="reservationtime">
+                                    foreach ($status as $stats)
+                                    {
+
+                                    if($stats === 'New' || $stats === 'Warm' || $stats === 'Cold')
+                                    {
+                                    $disabled = "disabled";
+                                    }else{
+                                    $disabled = "";
+                                    }
+
+                                    $data.= '<option value="'.$stats.'" '.$disabled.'>'.$stats.'</option>';
+                                    }
+                                echo $data;
+                                @endphp
+                                </select>
                             </div>
-                            <!-- /.input group -->
+                            <div class="form-group notes">
+                                <label for="notes">Details</label><span class="required">*</span>
+                                <textarea class="form-control" name="notes" id="notes"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
+                <!-- /.modal-dialog -->
+            </form>
         </div>
         <!--end add new schedule modal-->
     @endcan
+
 @stop
 
 @section('css')
