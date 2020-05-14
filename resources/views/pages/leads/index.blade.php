@@ -35,7 +35,7 @@
                         <th>Mobile No.</th>
                         <th>Email</th>
                         <th>Point Of Contact</th>
-                        <th>Importance</th>
+                        <th>Important</th>
                         <th>Lead Status</th>
                         <th>Action</th>
                     </tr>
@@ -48,7 +48,7 @@
                         <th>Mobile No.</th>
                         <th>Email</th>
                         <th>Point Of Contact</th>
-                        <th>Importance</th>
+                        <th width="5%">Important</th>
                         <th width="12%">Lead Status</th>
                         <th width="12%">Action</th>
                     </tr>

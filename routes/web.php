@@ -123,6 +123,7 @@ Route::get('/sales/edit/{sale}','SalesController@edit')->name('sales.edit')->mid
 Route::get('/get-model-unit-details/{modelUnit}','SalesController@model_unit_details')->name('model.units.details')->middleware(['auth']);
 Route::put('/sale-status-update','SalesController@updateSaleStatus')->name('sales.status.update')->middleware(['auth','permission:edit sales']);
 Route::put('/sales/{sale}','SalesController@update')->name('sales.update')->middleware(['auth','permission:edit sales']);
+Route::get('/add-sales','SalesController@create')->name('sales.create')->middleware(['auth','permission:add sales']);
 
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commissions']);

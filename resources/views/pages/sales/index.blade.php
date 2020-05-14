@@ -82,7 +82,7 @@
     <div class="card">
         <div class="card-header">
             @can('add sales')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-sales-modal"><i class="fa fa-plus-circle"></i> Add Sales</button>
+                <a href="{{route('sales.create')}}" class="btn bg-gradient-primary btn-sm"><i class="fa fa-plus-circle"></i> Add Sales</a>
             @endcan
 
         </div>

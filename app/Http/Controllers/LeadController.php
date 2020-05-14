@@ -54,7 +54,7 @@ class LeadController extends Controller
             ->editColumn('important',function($lead){
                 if($lead->important === 1)
                 {
-                    return '<span class="badge badge-success role-badge">Important</span>';
+                    return '<div align="center"><img src="'.asset('/images/filled-star.svg').'" class="star" height="25"></div>';
                 }
                 return "";
             })

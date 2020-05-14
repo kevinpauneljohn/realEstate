@@ -96,7 +96,10 @@ class SalesController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.sales.addSales')->with([
+            'leads' => Lead::where('user_id',auth()->user()->id)->get(),
+            'projects' => Project::all()
+        ]);
     }
 
     /**
