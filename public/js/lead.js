@@ -180,6 +180,7 @@ $(document).on('submit','#change-status-form',function(form){
     });
 
     clear_errors('status','notes');
+    ///
 });
 
 
