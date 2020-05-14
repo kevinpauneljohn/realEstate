@@ -12,7 +12,7 @@
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
-        "jeroennoten/laravel-adminlte": "^3.0",
+        "jeroennoten/laravel-adminlte": "^3.2.0",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "spatie/laravel-activitylog": "^3.9",

@@ -57,6 +57,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function adminlte_image()
+    {
+        //return 'https://picsum.photos/300/300';
+        return asset('/images/avatar.png');
+    }
+
+    public function adminlte_desc()
+    {
+        return auth()->user()->username;
+    }
 
     public function downlines()
     {

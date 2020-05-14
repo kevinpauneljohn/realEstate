@@ -42,19 +42,19 @@
         <div class="card">
             <div class="card-body login-card-body">
                 @if(session('success') === false)
-                <div class="alert alert-danger">
-                    <i class="fa fa-warning"></i> Invalid Credentials
-                </div>
+                    <div class="alert alert-danger">
+                        <i class="fa fa-warning"></i> Invalid Credentials
+                    </div>
                 @endif
-                    @if($errors->has('email'))
-                        <div class="alert alert-danger">
-                            <i class="fa fa-warning"></i> {{$errors->first('email')}}
-                        </div>
-                    @endif
-                    @if(session('attempts'))
-                        <div class="errors">{{4-session('attempts')}} Attempt(s) Left</div>
-                        @endif
-                    <p class="login-box-msg">{{ __('adminlte::adminlte.login_message') }}</p>
+                @if($errors->has('email'))
+                    <div class="alert alert-danger">
+                        <i class="fa fa-warning"></i> {{$errors->first('email')}}
+                    </div>
+                @endif
+                @if(session('attempts'))
+                    <div class="errors">{{4-session('attempts')}} Attempt(s) Left</div>
+                @endif
+                <p class="login-box-msg">{{ __('adminlte::adminlte.login_message') }}</p>
                 <form action="{{ route('authenticate') }}" method="post" class="form-submit">
                     {{ csrf_field() }}
                     <div class="input-group mb-3">
