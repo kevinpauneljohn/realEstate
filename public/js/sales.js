@@ -69,18 +69,68 @@ function submitform(url , type , data , reload = true, elementAttr, consoleLog =
     });
 }
 
-$(document).ready(function () {
+// $(document).ready(function () {
+//
+//     $('#add-sales-form').submit(function (form) {
+//         form.preventDefault();
+//
+//         let data = $(this).serializeArray();
+//         submitform(
+//             '/sales',
+//             'POST',
+//             data,
+//             false,
+//             '',
+//             true,
+//             'You do not have commission rate yes <strong>Please approach your up line regarding this</strong>'
+//         );
+//         //clear_errors('reservation_date','buyer','project','model_unit','total_contract_price','financing');
+//     })
+// });
 
-    $('#add-sales-form').submit(function (form) {
-        form.preventDefault();
+$(document).on('submit','#add-sales-form',function(form){
+    form.preventDefault();
+    let data = $(this).serializeArray();
 
-        let data = $('#add-sales-form').serialize();
-        submitform(
-            '/sales',
-            'POST',data,true,'',true,'You do not have commission rate yes <strong>Please approach your up line regarding this</strong>'
-        );
-        clear_errors('reservation_date','buyer','project','model_unit','total_contract_price','financing');
-    })
+    $.ajax({
+        'url' : '/sales',
+        'type' : 'POST',
+        'data' : data,
+        beforeSend: function(){
+
+        },success: function(result){
+            console.log(result);
+
+            if(result.success === true)
+            {
+                $('#model_unit').html('<option value=""></option>');
+                let item = '<div class="callout callout-success">' +
+                    '<h5>Sales successfully added!</h5>' +
+                    '<p><a href="#">View Sales Details here</a></p></div>';
+                $('#example1_wrapper').prepend(item);
+                $('#add-sales-form').trigger('reset');
+                toastr.success(result.message);
+            }else if(result.success === false)
+            {
+                toastr.error(result.message);
+            }
+
+            $('.submit-form-btn').attr('disabled',false);
+            $('.spinner').hide();
+
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+    clear_errors('reservation_date','buyer','project','model_unit',
+        'total_contract_price','discount','processing_fee','reservation_fee',
+        'equity','loanable_amount','financing');
 });
 
 function projectChange(paramId, element)

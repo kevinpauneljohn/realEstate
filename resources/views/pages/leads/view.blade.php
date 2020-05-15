@@ -26,7 +26,7 @@
                         <a href="{{route('leads.index')}}" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> View all</a>
                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Activity</button>
                         <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
-                        <a href="{{route('sales.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-exchange-alt"></i> Convert to sales</a>
+                        <a href="{{route('sales.create')}}?leadId={{$lead->id}}" class="btn btn-sm btn-primary"><i class="fa fa-exchange-alt"></i> Convert to sales</a>
                     </span>
                 </div>
                 <div class="card-body">

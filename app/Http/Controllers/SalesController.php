@@ -94,11 +94,12 @@ class SalesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         return view('pages.sales.addSales')->with([
             'leads' => Lead::where('user_id',auth()->user()->id)->get(),
-            'projects' => Project::all()
+            'projects' => Project::all(),
+            'leadId' => $request->leadId
         ]);
     }
 
@@ -125,6 +126,7 @@ class SalesController extends Controller
         ],[
             'reservation_date.required' => 'Reservation Date is required',
             'total_contract_price.numeric' => 'Total Contract Price must be a whole number',
+            'total_contract_price.required' => 'Total Contract Price is required',
             'discount.numeric' => 'Discount must be a whole number',
             'processing_fee.numeric' => 'Processing fee must be a whole number',
             'reservation_fee.numeric' => 'Reservation fee must be a whole number',

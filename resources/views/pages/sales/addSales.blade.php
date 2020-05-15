@@ -25,103 +25,98 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                @if(session('success') === true)
-                    <div class="alert alert-success">
-                        Successfully Submitted!
-                    </div>
-                @endif
-                <form method="POST" action="{{route('leads.store')}}" class="form-submit">
+                <form method="POST" action="{{route('leads.store')}}" class="form-submit" id="add-sales-form">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-4">
                                 <!-- Date range -->
-                                <div class="form-group edit_reservation_date">
+                                <div class="form-group reservation_date">
                                     <label>Reservation Date</label><span class="required">*</span>
-                                    <input type="text" name="edit_reservation_date" id="edit_reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                    <input type="text" name="reservation_date" id="reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false" value="{{today()->format('Y-m-d')}}">
                                 </div>
-                                <div class="form-group edit_buyer">
-                                    <label for="edit_buyer">Buyer's Name</label><span class="required">*</span>
-                                    <select name="edit_buyer" id="edit_buyer" class="form-control select2" style="width: 100%;">
+                                <div class="form-group buyer">
+                                    <label for="buyer">Buyer's Name</label><span class="required">*</span>
+                                    <select name="buyer" id="buyer" class="form-control select2" style="width: 100%;">
                                         <option value=""> -- Select -- </option>
                                         @foreach($leads ?? '' as $lead)
-                                            <option value="{{$lead->id}}">{{ucfirst($lead->firstname)}} {{ucfirst($lead->lastname)}}</option>
+                                            <option value="{{$lead->id}}" @if($lead->id === $leadId) selected @endif>{{ucfirst($lead->firstname)}} {{ucfirst($lead->lastname)}}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group edit_project">
-                                    <label for="edit_project">Project</label><span class="required">*</span>
-                                    <select name="edit_project" id="edit_project" class="form-control" style="width: 100%;">
+                                <div class="form-group project">
+                                    <label for="project">Project</label><span class="required">*</span>
+                                    <select name="project" id="project" class="form-control" style="width: 100%;">
                                         <option value=""> -- Select -- </option>
                                         @foreach($projects as $project)
                                             <option value="{{$project->id}}">{{$project->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group edit_model_unit">
-                                    <label for="edit_model_unit">Model Unit</label><span class="required">*</span>
-                                    <select name="edit_model_unit" id="edit_model_unit" class="form-control" style="width: 100%;">
-
+                                <div class="form-group model_unit">
+                                    <label for="model_unit">Model Unit</label><span class="required">*</span>
+                                    <select name="model_unit" id="model_unit" class="form-control" style="width: 100%;">
+                                        <option value=""></option>
                                     </select>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-lg-6 edit_lot_area">
-                                        <label for="edit_lot_area">Lot Area</label>
-                                        <input type="text" name="edit_lot_area" id="edit_lot_area" class="form-control" />
+                                    <div class="form-group col-lg-6 lot_area">
+                                        <label for="lot_area">Lot Area</label>
+                                        <input type="text" name="lot_area" id="lot_area" class="form-control" />
                                     </div>
-                                    <div class="form-group col-lg-6 edit_floor_area">
-                                        <label for="edit_floor_area">Floor Area</label>
-                                        <input type="text" name="edit_floor_area" id="edit_floor_area" class="form-control" />
+                                    <div class="form-group col-lg-6 floor_area">
+                                        <label for="floor_area">Floor Area</label>
+                                        <input type="text" name="floor_area" id="floor_area" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-lg-4 edit_phase">
-                                        <label for="edit_phase">Phase</label>
-                                        <input type="text" name="edit_phase" id="edit_phase" class="form-control" />
+                                    <div class="form-group col-lg-4 phase">
+                                        <label for="phase">Phase</label>
+                                        <input type="text" name="phase" id="phase" class="form-control" />
                                     </div>
-                                    <div class="form-group col-lg-4 edit_block_number">
-                                        <label for="edit_block_number">Block</label>
-                                        <input type="text" name="edit_block_number" id="edit_block_number" class="form-control" />
+                                    <div class="form-group col-lg-4 block_number">
+                                        <label for="block_number">Block</label>
+                                        <input type="text" name="block_number" id="block_number" class="form-control" />
                                     </div>
-                                    <div class="form-group col-lg-4 edit_lot_number">
-                                        <label for="edit_lot_number">Lot</label>
-                                        <input type="text" name="edit_lot_number" id="edit_lot_number" class="form-control" />
+                                    <div class="form-group col-lg-4 lot_number">
+                                        <label for="lot_number">Lot</label>
+                                        <input type="text" name="lot_number" id="lot_number" class="form-control" />
                                     </div>
                                 </div>
 
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="form-group edit_total_contract_price">
+                                <div class="form-group total_contract_price">
                                     <label>Total Contract Price</label><span class="required">*</span>
-                                    <input type="number" name="edit_total_contract_price" id="edit_total_contract_price" class="form-control">
+                                    <input type="number" name="total_contract_price" id="total_contract_price" class="form-control">
                                 </div>
-                                <div class="form-group edit_discount">
+                                <div class="form-group discount">
                                     <label>Discount</label>
-                                    <input type="number" name="edit_discount" id="edit_discount" class="form-control">
+                                    <input type="number" name="discount" id="discount" class="form-control" value="0">
                                 </div>
-                                <div class="form-group edit_processing_fee">
-                                    <label for="edit_processing_fee">Processing Fee</label>
-                                    <input type="number" name="edit_processing_fee" id="edit_processing_fee" class="form-control">
+                                <div class="form-group processing_fee">
+                                    <label for="processing_fee">Processing Fee</label>
+                                    <input type="number" name="processing_fee" id="processing_fee" class="form-control" value="0">
                                 </div>
-                                <div class="form-group edit_reservation_fee">
+                                <div class="form-group reservation_fee">
                                     <label>Reservation Fee</label>
-                                    <input type="number" name="edit_reservation_fee" id="edit_reservation_fee" class="form-control">
+                                    <input type="number" name="reservation_fee" id="reservation_fee" class="form-control" value="0">
                                 </div>
-                                <div class="form-group edit_equity">
+                                <div class="form-group equity">
                                     <label>Equity/Down Payment</label>
-                                    <input type="number" name="edit_equity" id="edit_equity" class="form-control">
+                                    <input type="number" name="equity" id="equity" class="form-control" value="0">
                                 </div>
-                                <div class="form-group edit_loanable_amount">
+                                <div class="form-group loanable_amount">
                                     <label>Loanable Amount</label>
-                                    <input type="number" name="edit_loanable_amount" id="edit_loanable_amount" class="form-control">
+                                    <input type="number" name="loanable_amount" id="loanable_amount" class="form-control" value="0">
                                 </div>
 
                             </div>
                             <div class="col-lg-4">
-                                <div class="form-group edit_financing">
+                                <div class="form-group financing">
                                     <label>Financing</label>
-                                    <select name="edit_financing" id="edit_financing" class="form-control select2" style="width: 100%;">
+                                    <select name="financing" id="financing" class="form-control select2" style="width: 100%;">
                                         <option value=""> -- Select -- </option>
                                         <option value="Cash">Cash</option>
                                         <option value="INHOUSE">INHOUSE</option>
@@ -129,13 +124,13 @@
                                         <option value="Bank">Bank</option>
                                     </select>
                                 </div>
-                                <div class="form-group edit_dp_terms">
-                                    <label for="edit_dp_terms">Equity / Down Payment Terms</label>
-                                    <input type="text" name="edit_dp_terms" id="edit_dp_terms" class="form-control">
+                                <div class="form-group dp_terms">
+                                    <label for="dp_terms">Equity / Down Payment Terms</label>
+                                    <input type="text" name="dp_terms" id="dp_terms" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label for="edit_details">Details</label>
-                                    <textarea name="edit_details" id="edit_details" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                    <label for="details">Details</label>
+                                    <textarea name="details" id="details" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +169,7 @@
         <!-- bootstrap datepicker -->
         <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
         <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
-        <script src="{{asset('js/user.js')}}"></script>
+        <script src="{{asset('js/sales.js')}}"></script>
         <script src="{{asset('js/formSubmit.js')}}"></script>
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
@@ -217,8 +212,7 @@
             });
             //Initialize Select2 Elements
             $('.select2').select2();
-            //Date picker
-            $('#datepicker').datepicker({
+            $('#reservation_date').datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             }).datepicker("setDate", new Date());
