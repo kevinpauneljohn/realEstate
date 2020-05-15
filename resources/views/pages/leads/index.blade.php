@@ -34,7 +34,7 @@
                         <th>Name</th>
                         <th>Mobile No.</th>
                         <th>Email</th>
-                        <th>Point Of Contact</th>
+                        <th>Source</th>
                         <th>Important</th>
                         <th>Lead Status</th>
                         <th>Action</th>
@@ -47,7 +47,7 @@
                         <th>Name</th>
                         <th>Mobile No.</th>
                         <th>Email</th>
-                        <th>Point Of Contact</th>
+                        <th>Source</th>
                         <th width="5%">Important</th>
                         <th width="12%">Lead Status</th>
                         <th width="12%">Action</th>
@@ -134,7 +134,7 @@
                                 <label for="status">Status</label><span class="required">*</span>
                                 <select class="change-status form-control" name="status" id="status">
                                 @php
-                                $status = array('New','Warm','Cold','Qualified','Not qualified','Inquiry Only','Not Interested Anymore','Reserved');
+                                $status = array('New','Warm','Cold','Qualified','Not qualified','Inquiry Only','Not Interested Anymore');
                                 $data = '';
 
                                     foreach ($status as $stats)
