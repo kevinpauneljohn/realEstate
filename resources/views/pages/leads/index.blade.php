@@ -145,6 +145,7 @@
                         <th>Source</th>
                         <th>Important</th>
                         <th>Lead Status</th>
+                        <th>Last Contacted</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -158,6 +159,7 @@
                         <th>Source</th>
                         <th width="5%">Important</th>
                         <th width="12%">Lead Status</th>
+                        <th>Last Contacted</th>
                         <th width="12%">Action</th>
                     </tr>
                     </tfoot>
@@ -318,6 +320,7 @@
                         { data: 'point_of_contact', name: 'point_of_contact'},
                         { data: 'important', name: 'important'},
                         { data: 'lead_status', name: 'lead_status'},
+                        { data: 'last_contacted', name: 'last_contacted'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

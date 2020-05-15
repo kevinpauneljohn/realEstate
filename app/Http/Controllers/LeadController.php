@@ -51,6 +51,11 @@ class LeadController extends Controller
     {
         $leads = Lead::where('user_id',auth()->user()->id)->get();
         return DataTables::of($leads)
+            ->addColumn('last_contacted',function($lead){
+                if($lead->LogTouches->count() > 0){
+                    return $lead->LogTouches->pluck('date')->last()->diffForHumans();
+                }
+            })
             ->addColumn('fullname',function($lead){
                 $lead = '<a href="'.route("leads.show",["lead" => $lead->id]).'">'.$lead->fullname.'</a>';
                 return $lead;
