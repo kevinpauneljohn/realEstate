@@ -134,13 +134,13 @@
                                 <label for="status">Status</label><span class="required">*</span>
                                 <select class="change-status form-control" name="status" id="status">
                                 @php
-                                $status = array('New','Warm','Cold','Qualified','Not qualified','Inquiry Only','Not Interested Anymore');
+                                $status = array('Hot','Warm','Cold','Qualified','Not qualified','Inquiry Only','Not Interested Anymore');
                                 $data = '';
 
                                     foreach ($status as $stats)
                                     {
 
-                                    if($stats === 'New' || $stats === 'Warm' || $stats === 'Cold')
+                                    if($stats === 'Hot' || $stats === 'Warm' || $stats === 'Cold')
                                     {
                                     $disabled = "disabled";
                                     }else{

@@ -23,7 +23,7 @@
         <div class="card-header">
             @can('view lead')
                 <a href="{{route('leads.index')}}"><button type="button" class="btn bg-gradient-success btn-sm">View all</button></a>
-                <a href="{{route('leads.show',['lead' => $lead->id])}}"><button type="button" class="btn bg-gradient-info btn-sm">back to lead details</button></a>
+                <a href="{{route('leads.show',['lead' => $lead->id])}}"><button type="button" class="btn bg-gradient-info btn-sm">View details</button></a>
             @endcan
 
         </div>

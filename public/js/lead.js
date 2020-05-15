@@ -159,7 +159,7 @@ $(document).on('submit','#change-status-form',function(form){
                 toastr.success(result.message);
                 setTimeout(function(){
                     location.reload();
-                },3000);
+                },1000);
             }else if(result.success === false){
                 toastr.error(result.message);
             }

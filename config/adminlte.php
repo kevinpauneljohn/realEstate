@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Dream Home Seller CRM',
     'title_prefix' => '',
     'title_postfix' => '',
 

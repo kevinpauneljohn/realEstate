@@ -46,7 +46,7 @@ class PrioritiesSeeder extends Seeder
             ],
         ];
 
-        \App\Priority::create($data);
+        \App\Priority::insert($data);
 
         $data = [
             [
@@ -65,6 +65,6 @@ class PrioritiesSeeder extends Seeder
             ],
         ];
 
-        \App\Action::create($data);
+        \App\Action::insert($data);
     }
 }

@@ -138,7 +138,7 @@ class LeadController extends Controller
         $lead->point_of_contact = $request->point_of_contact;
         $lead->project = $interest;
         $lead->remarks = $request->remarks;
-        $lead->lead_status = 'New';
+        $lead->lead_status = 'Hot';
         $lead->important = false;
 
         if($lead->save())
@@ -353,10 +353,11 @@ class LeadController extends Controller
             $lead->lead_status = $request->status;
             if($lead->isDirty())
             {
+                $notes = '<h6>Status Updated to <span style="color: #0947d2;">'.$request->status.'</span></h6><p>'.$request->notes.'</p>';
                 $lead->save();
                 $leadNote = new LeadNote();
                 $leadNote->lead_id = $request->lead_id;
-                $leadNote->notes = $request->notes;
+                $leadNote->notes = $notes;
                 $leadNote->save();
                 return response()->json(['success' => true,'message' => 'Lead status successfully updated']);
             }

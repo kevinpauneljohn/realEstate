@@ -152,9 +152,9 @@ class LeadRepository
     public function setStatusBadge($status)
     {
         $badge = "";
-        if($status === 'New')
+        if($status === 'Hot')
         {
-            $badge = '<span class="badge bg-yellow role-badge">'.$status.'</span>';
+            $badge = '<span class="badge bg-red role-badge">'.$status.'</span>';
         }
         elseif($status === 'Warm')
         {
@@ -170,7 +170,7 @@ class LeadRepository
         }
         elseif($status === 'Not qualified')
         {
-            $badge = '<span class="badge bg-danger role-badge">'.$status.'</span>';
+            $badge = '<span class="badge bg-gray role-badge">'.$status.'</span>';
         }
         elseif($status === 'Inquiry Only')
         {
@@ -178,7 +178,7 @@ class LeadRepository
         }
         elseif($status === 'Not Interested Anymore')
         {
-            $badge = '<span class="badge bg-gradient-warning role-badge">'.$status.'</span>';
+            $badge = '<span class="badge bg-dark role-badge">'.$status.'</span>';
         }
         elseif($status === 'Reserved')
         {
