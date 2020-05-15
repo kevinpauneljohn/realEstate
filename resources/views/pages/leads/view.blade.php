@@ -24,6 +24,7 @@
                 <div class="card-header main-profile">
                     <span class="float-right">
                         <a href="{{route('leads.index')}}" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> View all</a>
+                        <button type="button" class="btn btn-sm btn-primary set-status" data-toggle="modal" data-target="#set-status"><i class="fa fa-thermometer-three-quarters"></i> Update Status</button>
                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Activity</button>
                         <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
                         <a href="{{route('sales.create')}}?leadId={{$lead->id}}" class="btn btn-sm btn-primary"><i class="fa fa-exchange-alt"></i> Convert to sales</a>
@@ -576,6 +577,64 @@
         </div>
         <!--end add new schedule modal-->
     @endcan
+
+    @can('edit lead')
+        <!--add new schedule modal-->
+        <div class="modal fade" id="set-status">
+            <form role="form" id="change-status-form" class="form-submit">
+                @csrf
+                <input type="hidden" name="lead_url" value="{{url()->current()}}">
+                <input type="hidden" name="lead_id" id="lead_id" value="{{$lead->id}}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Change Lead Status</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group status">
+                                <label for="status">Status</label><span class="required">*</span>
+                                <select class="change-status form-control" name="status" id="status">
+                                    @php
+                                        $status = array('Hot','Warm','Cold','Qualified','Not qualified','Inquiry Only','Not Interested Anymore');
+                                        $data = '';
+
+                                            foreach ($status as $stats)
+                                            {
+
+                                            if($stats === 'Hot' || $stats === 'Warm' || $stats === 'Cold')
+                                            {
+                                            $disabled = "disabled";
+                                            }else{
+                                            $disabled = "";
+                                            }
+
+                                            $data.= '<option value="'.$stats.'" '.$disabled.'>'.$stats.'</option>';
+                                            }
+                                        echo $data;
+                                    @endphp
+                                </select>
+                            </div>
+                            <div class="form-group notes">
+                                <label for="notes">Details</label><span class="required">*</span>
+                                <textarea class="form-control" name="notes" id="notes"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
 @stop
 
 @section('css')
@@ -741,6 +800,56 @@
                         console.log(xhr, status, error);
                     }
                 });
+            });
+
+
+            $(document).on('click','.set-status', function(){
+
+                $('.change-status').val('{{$lead->lead_status}}').change();
+            });
+
+            $(document).on('submit','#change-status-form',function(form){
+                form.preventDefault();
+
+                let data = $(this).serializeArray();
+
+                $.ajax({
+                    'url' : '/leads/status/update',
+                    'type' : 'POST',
+                    'data' : data,
+                    beforeSend: function(){
+                        $('.submit-form-btn').attr('disabled',true);
+                        $('.spinner').show();
+                    },
+                    success: function (result) {
+
+                        if(result.success === true)
+                        {
+                            toastr.success(result.message);
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        }else if(result.success === false){
+                            toastr.error(result.message);
+                        }
+
+                        $('.submit-form-btn').attr('disabled',false);
+                        $('.spinner').hide();
+
+                        $.each(result, function (key, value) {
+                            let element = $('.'+key);
+
+                            element.find('.error-'+key).remove();
+                            element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                        });
+
+                    },error: function(xhr,status,error){
+                        console.log(xhr, status, error);
+                    }
+                });
+
+                clear_errors('status','notes');
+                ///
             });
         </script>
     @endcan
