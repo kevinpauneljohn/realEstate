@@ -17,6 +17,114 @@
 @stop
 
 @section('content')
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-danger"><i class="fab fa-hotjar"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Hot</span>
+                    <span class="info-box-number">{{$total_hot_leads}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-warning"><i class="fas fa-fire"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Warm</span>
+                    <span class="info-box-number">{{$total_warm_leads}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fas fa-snowflake"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Cold</span>
+                    <span class="info-box-number">{{$total_cold_leads}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-primary"><i class="fas fa-user-plus"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Qualified</span>
+                    <span class="info-box-number">{{$total_qualified_leads}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-gray"><i class="fas fa-user-times"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Not Qualified</span>
+                    <span class="info-box-number">{{$total_not_qualified_leads}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-gray-dark"><i class="fas fa-user-minus"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Inquiry Only</span>
+                    <span class="info-box-number">{{$total_inquiry_only_leads}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-orange"><i class="fas fa-user-slash"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Not Interested Anymore</span>
+                    <span class="info-box-number">{{$total_not_interested_leads}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-success"><i class="fas fa-user-check"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Reserved</span>
+                    <span class="info-box-number">{{$total_reserved_leads}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
     <div class="card">
         <div class="card-header">
             @can('add lead')

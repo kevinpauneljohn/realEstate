@@ -10,6 +10,7 @@ use App\Repositories\LeadRepository;
 use App\WebsiteLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use SebastianBergmann\CodeCoverage\Report\Xml\Totals;
 use Yajra\DataTables\DataTables;
 
 class LeadController extends Controller
@@ -29,7 +30,16 @@ class LeadController extends Controller
      */
     public function index()
     {
-        return view('pages.leads.index');
+        return view('pages.leads.index')->with([
+            'total_hot_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Hot']])->count(),
+            'total_warm_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Warm']])->count(),
+            'total_cold_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Cold']])->count(),
+            'total_qualified_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Qualified']])->count(),
+            'total_not_qualified_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Not qualified']])->count(),
+            'total_inquiry_only_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Inquiry Only']])->count(),
+            'total_not_interested_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Not Interested Anymore']])->count(),
+            'total_reserved_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Reserved']])->count(),
+        ]);
     }
 
     /**
