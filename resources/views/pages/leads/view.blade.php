@@ -72,7 +72,7 @@
                                        <table class="status-details">
                                           <tbody><tr>
                                              <td>Status</td>
-                                             <td>: {{$lead->lead_status}}</td>
+                                             <td>: {!! $label->setStatusBadge($lead->lead_status) !!}</td>
                                               </tr>
                                               <tr>
                                                  <td>Source</td>
