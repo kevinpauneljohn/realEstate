@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UpdateLeadStatusEvent;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
@@ -163,6 +164,7 @@ class SalesController extends Controller
 
                 if($sales->save())
                 {
+                    event(new UpdateLeadStatusEvent($sales->lead_id));
                     return response()->json(['success' => true, 'message' => 'Sales successfully added!']);
                 }
             }

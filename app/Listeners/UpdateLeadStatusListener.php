@@ -27,8 +27,11 @@ class UpdateLeadStatusListener
      */
     public function handle(UpdateLeadStatusEvent $event)
     {
-        $lead = Lead::find($event->lead->id);
+        $lead = Lead::find($event->lead);
         $lead->lead_status = 'Reserved';
-        $lead->save();
+        if($lead->isDirty())
+        {
+            $lead->save();
+        }
     }
 }

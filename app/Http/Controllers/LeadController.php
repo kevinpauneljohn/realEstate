@@ -82,7 +82,10 @@ class LeadController extends Controller
                 }
                 if(auth()->user()->can('edit lead'))
                 {
-                    $action .= '<button class="btn btn-xs bg-yellow set-status" id="'.$lead->id.'" title="Change Status" data-toggle="modal" data-target="#set-status"><i class="fa fa-thermometer-three-quarters"></i></button>';
+                    if($lead->lead_status !== 'Reserved')
+                    {
+                        $action .= '<button class="btn btn-xs bg-yellow set-status" id="'.$lead->id.'" title="Change Status" data-toggle="modal" data-target="#set-status"><i class="fa fa-thermometer-three-quarters"></i></button>';
+                    }
                 }
                 return $action;
             })
