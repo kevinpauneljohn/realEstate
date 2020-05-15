@@ -19,7 +19,10 @@ class EventServiceProvider extends ServiceProvider
 //            SendEmailVerificationNotification::class,
 //        ],
         'App\Events\CreateNetworkEvent' => [
-            'App\Listeners\CreateNetworkListeners'
+            'App\Listeners\CreateNetworkListeners',
+        ],
+        'App\Events\UpdateLeadStatusEvent' => [
+            'App\Listeners\UpdateLeadStatusListener',
         ],
     ];
 
