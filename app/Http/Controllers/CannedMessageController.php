@@ -32,6 +32,7 @@ class CannedMessageController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'title' => 'required',
+            'status' => 'required',
             'category' => 'required',
             'body'  => 'required|max:8000'
         ]);
@@ -43,7 +44,7 @@ class CannedMessageController extends Controller
             $canned->canned_categories_id = $request->category;
             $canned->title = $request->title;
             $canned->body = nl2br($request->body);
-            $canned->status = 'Draft';
+            $canned->status = $request->status;
             $canned->save();
 
             return response()->json(['success' => true,'message' => 'Canned Message Successfully Created!']);

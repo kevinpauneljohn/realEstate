@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CannedCategory;
+use App\CannedMessageModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -31,6 +32,11 @@ class CannedCategoryController extends Controller
         $categories = CannedCategory::all();
 
         return DataTables::of($categories)
+            ->editColumn('name',function($category){
+                $count = CannedMessageModel::where('canned_categories_id',$category->id)->count();
+                return ucfirst($category->name).' ('.$count.')';
+
+            })
             ->addColumn('action', function ($category)
             {
                 $action = "";
@@ -42,5 +48,17 @@ class CannedCategoryController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function destroy($id)
+    {
+        $count = CannedMessageModel::where('canned_categories_id',$id)->count();
+        if($count === 0)
+        {
+            $category = CannedCategory::find($id);
+            $category->delete();
+            return response()->json(['success' => true, 'message' => 'Category successfully deleted!']);
+        }
+        return response()->json(['success' => false, 'message' => 'Category cannot be deleted']);
     }
 }

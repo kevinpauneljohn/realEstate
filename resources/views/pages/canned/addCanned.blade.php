@@ -10,7 +10,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Add Canned Message</li>
+                <li class="breadcrumb-item active">Canned Message Panel</li>
             </ol>
         </div><!-- /.col -->
     </div>
@@ -26,16 +26,22 @@
                         <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#create-canned" role="tab" aria-controls="custom-tabs-two-home" aria-selected="false">Create Canned Message</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#canned-list" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Canned Message List</a>
+                        <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#canned-list" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Canned Message Lists</a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
                 <div class="tab-content" id="custom-tabs-two-tabContent">
                     <div class="tab-pane fade active show" id="create-canned" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                        <h5>Short Codes</h5>
                         <form role="form" class="add-canned-message">
                             @csrf
+                            <div class="form-group status">
+                                <label for="status">Status</label><span class="required">*</span>
+                                <select name="status" class="form-control" id="status">
+                                    <option value="Drafts">Drafts</option>
+                                    <option value="Published">Published</option>
+                                </select>
+                            </div>
                             <div class="form-group title">
                                 <label for="title">Title</label><span class="required">*</span>
                                 <input type="text" name="title" class="form-control" id="title">
@@ -132,7 +138,7 @@
                         </div>
                     </form>
 
-                        <table id="canned-category-list" class="table" role="grid">
+                        <table id="canned-category-list" class="table table-hover" role="grid">
                             <thead>
                             <tr role="row" class="category-list-head">
                                 <th></th>
@@ -166,6 +172,9 @@
         .category-list-head{
             display:none;
         }
+        #canned-category-list td{
+            border-top:none;
+        }
     </style>
 @stop
 
@@ -182,18 +191,6 @@
         <script>
 
             $(function () {
-                // Summernote
-                // $('.textarea').summernote({
-                //     toolbar: [
-                //         ['font', ['bold', 'underline', 'clear']],
-                //         ['para', ['ul', 'ol', 'paragraph']],
-                //         ['insert', ['link']],
-                //         ['height', ['height']],
-                //         ['view', ['fullscreen']],
-                //     ],
-                //     lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
-                // });
-
                 $('#canned-category-list').DataTable({
                     processing: true,
                     serverSide: true,
@@ -218,11 +215,10 @@
                         { data: 'title', name: 'title'},
                         { data: 'canned_categories_id', name: 'canned_categories_id'},
                         { data: 'user_id', name: 'user_id'},
-                        { data: 'status', name: 'status'},
+                        { data: 'status', name: 'status',orderable: false,},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[0,'desc'],
                 });
             });
         </script>

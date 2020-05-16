@@ -15,4 +15,5 @@ class CannedMessageModel extends Model
     ];
 
     protected $logsAttribute = ['user_id','title','body','status'];
+
 }
