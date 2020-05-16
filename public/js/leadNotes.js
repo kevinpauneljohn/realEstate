@@ -356,7 +356,7 @@ $(document).on('submit','#website-link-form',function(form){
         'type' : 'POST',
         'data' : data,
         beforeSend: function(){
-
+            $('#website-link-form .submit-form-btn').val('Saving ... ').attr('disabled',true);
         },success: function(result){
             if(result.success === true)
             {
@@ -375,6 +375,8 @@ $(document).on('submit','#website-link-form',function(form){
             }else if(result.success === false){
                 toastr.error(result.message);
             }
+
+            $('#website-link-form .submit-form-btn').val('Save').attr('disabled',false);
 
             $.each(result, function (key, value) {
                 let element = $('.'+key);

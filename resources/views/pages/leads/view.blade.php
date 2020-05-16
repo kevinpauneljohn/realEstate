@@ -285,7 +285,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <input type="submit" class="btn btn-primary submit-form-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->

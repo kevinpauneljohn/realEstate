@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/leadNotes.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/leadNotes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/adminlte/partials/sidebar/right-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/adminlte/partials/sidebar/right-sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +19,7 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.1793863">
+    <splitter split-orientation="horizontal" split-proportion="0.22481751">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -90,8 +89,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4063">
-                  <caret line="239" column="28" selection-start-line="239" selection-start-column="28" selection-end-line="240" selection-end-column="141" />
+                <state relative-caret-position="447">
+                  <caret line="287" column="72" selection-start-line="287" selection-start-column="72" selection-end-line="287" selection-end-column="87" />
                 </state>
               </provider>
             </entry>
@@ -135,23 +134,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/CannedMessageModel.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="17" selection-start-line="17" selection-end-line="17" />
-                  <folding>
-                    <element signature="e#23#62#0#PHP" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/public/js/leadNotes.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="192">
-                  <caret line="300" column="45" lean-forward="true" selection-start-line="300" selection-start-column="45" selection-end-line="300" selection-end-column="45" />
+                <state relative-caret-position="345">
+                  <caret line="372" column="47" lean-forward="true" selection-start-line="372" selection-start-column="47" selection-end-line="372" selection-end-column="47" />
                   <folding>
                     <element signature="n#style#0;n#span#0;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#span#0;n#span#1;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
@@ -201,9 +188,9 @@
       <find>status</find>
       <find>/leads/status/update</find>
       <find>thro</find>
-      <find>website-link-form</find>
       <find>quick</find>
       <find>short</find>
+      <find>website-link-form</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -242,7 +229,6 @@
         <option value="$PROJECT_DIR$/resources/views/pages/leads/edit.blade.php" />
         <option value="$PROJECT_DIR$/app/Repositories/LeadRepository.php" />
         <option value="$PROJECT_DIR$/public/js/lead.js" />
-        <option value="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/WebsiteLinkController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" />
@@ -262,6 +248,7 @@
         <option value="$PROJECT_DIR$/public/css/style.css" />
         <option value="$PROJECT_DIR$/resources/views/vendor/adminlte/partials/sidebar/right-sidebar.blade.php" />
         <option value="$PROJECT_DIR$/config/adminlte.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" />
         <option value="$PROJECT_DIR$/public/js/leadNotes.js" />
       </list>
     </option>
@@ -390,22 +377,6 @@
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Filters" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -419,34 +390,15 @@
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="adminlte" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="adminlte" type="462c0819:PsiDirectoryNode" />
-              <item name="partials" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="adminlte" type="462c0819:PsiDirectoryNode" />
-              <item name="partials" type="462c0819:PsiDirectoryNode" />
-              <item name="sidebar" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="leads" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -585,14 +537,7 @@
       <workItem from="1589416189745" duration="11978000" />
       <workItem from="1589480053130" duration="23505000" />
       <workItem from="1589589487699" duration="34253000" />
-      <workItem from="1589655459410" duration="263000" />
-    </task>
-    <task id="LOCAL-00270" summary="added cron job for requests priority update">
-      <created>1588612644240</created>
-      <option name="number" value="00270" />
-      <option name="presentableId" value="LOCAL-00270" />
-      <option name="project" value="LOCAL" />
-      <updated>1588612644240</updated>
+      <workItem from="1589655459410" duration="1248000" />
     </task>
     <task id="LOCAL-00271" summary="added cron job for requests priority update">
       <created>1588613609853</created>
@@ -930,17 +875,24 @@
       <option name="project" value="LOCAL" />
       <updated>1589632242712</updated>
     </task>
-    <option name="localTasksCounter" value="319" />
+    <task id="LOCAL-00319" summary="canned message - view module">
+      <created>1589655786898</created>
+      <option name="number" value="00319" />
+      <option name="presentableId" value="LOCAL-00319" />
+      <option name="project" value="LOCAL" />
+      <updated>1589655786898</updated>
+    </task>
+    <option name="localTasksCounter" value="320" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1036752000" />
+    <option name="totallyTimeSpent" value="1037737000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14697987" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.08053691" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1328,13 +1280,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4063">
-          <caret line="239" column="28" selection-start-line="239" selection-start-column="28" selection-end-line="240" selection-end-column="141" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/canned/addCanned.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2822">
@@ -1348,23 +1293,6 @@
           <caret line="49" column="25" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
           <folding>
             <element signature="e#40#63#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/CannedCategory.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/CannedMessageModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#23#62#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1383,10 +1311,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/CannedMessageModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#23#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/CannedCategory.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="287" column="72" selection-start-line="287" selection-start-column="72" selection-end-line="287" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/leadNotes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="300" column="45" lean-forward="true" selection-start-line="300" selection-start-column="45" selection-end-line="300" selection-end-column="45" />
+        <state relative-caret-position="345">
+          <caret line="372" column="47" lean-forward="true" selection-start-line="372" selection-start-column="47" selection-end-line="372" selection-end-column="47" />
           <folding>
             <element signature="n#style#0;n#span#0;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#span#1;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
