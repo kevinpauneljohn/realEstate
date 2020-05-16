@@ -66,6 +66,7 @@ class LoginController extends Controller
         $credential = $request->only('username','password');
         if(Auth::attempt($credential,$remember))
         {
+            activity()->causedBy(\auth()->user()->id)->withProperties(['username' => auth()->user()->username])->log('user logged in');
             $request->session()->forget('attempts');
             return redirect(route('dashboard'));
         }
