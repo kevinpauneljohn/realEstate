@@ -126,7 +126,7 @@ return [
     */
 
     'sidebar_mini' => true,
-    'sidebar_collapse' => false,
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -295,17 +295,9 @@ return [
             'can'     => 'view settings',
             'submenu' => [
                 [
-                    'text'    => 'Canned Message',
-                    'icon'    => 'fas fa-cogs',
-                    'can'     => 'view canned message',
-                    'submenu' => [
-                        [
-                            'text' => 'Add Canned Message',
-                            'route'  => 'canned.create',
-                            'icon_color'  => 'blue',
-                            'can'  => 'add canned message',
-                        ],
-                    ]
+                    'text' => 'Canned Message',
+                    'route'  => 'canned.create',
+                    'can'  => 'add canned message',
                 ],
                 [
                     'text' => 'Actions',

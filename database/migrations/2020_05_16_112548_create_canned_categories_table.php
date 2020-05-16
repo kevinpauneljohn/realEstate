@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCannedMessageModelsTable extends Migration
+class CreateCannedCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateCannedMessageModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('canned_message_models', function (Blueprint $table) {
+        Schema::create('canned_categories', function (Blueprint $table) {
             $table->id();
             $table->uuid('user_id');
-            $table->unsignedInteger('canned_categories_id');
-            $table->string('title');
-            $table->text('body');
-            $table->string('status');
+            $table->string('name');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -32,6 +28,6 @@ class CreateCannedMessageModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('canned_message_models');
+        Schema::dropIfExists('canned_categories');
     }
 }

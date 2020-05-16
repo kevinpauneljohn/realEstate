@@ -398,7 +398,7 @@ $(document).on('submit','#website-link-form',function(form){
                 $('#website-link-form').trigger('reset');
                 toastr.success(result.message);
                 $('#social-links').modal('toggle')
-            }else{
+            }else if(result.success === false){
                 toastr.error(result.message);
             }
 
