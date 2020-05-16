@@ -81,3 +81,7 @@ table td{
 .user-header p small{
     font-size:16px!important;
 }
+
+.lead-details-table{
+    table-layout:fixed;
+}
