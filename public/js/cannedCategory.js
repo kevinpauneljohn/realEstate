@@ -69,8 +69,15 @@ $(document).on('click','.delete-category',function(){
 
                         let table = $('#canned-category-list').DataTable();
                         table.ajax.reload();
-                    }else{
+                    }else if(output.success === false){
                         toastr.error(output.message);
+
+                        if(result.reload === true)
+                        {
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        }
                     }
                 },error: function(xhr, status, error){
                     console.log(xhr);
