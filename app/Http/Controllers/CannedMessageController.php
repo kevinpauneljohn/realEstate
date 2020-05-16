@@ -69,15 +69,22 @@ class CannedMessageController extends Controller
                 $action = "";
                 if(auth()->user()->can('add canned message'))
                 {
-                    $action .= '<button class="btn btn-xs btn-info edit-category" id="'.$cannedMessage->id.' "title="Edit"><i class="fa fa-edit"></i> </button>';
+                    $action .= '<button class="btn btn-xs btn-info edit-canned" id="'.$cannedMessage->id.' "title="Edit"><i class="fa fa-edit"></i> </button>';
                 }
                 if(auth()->user()->can('delete canned message'))
                 {
-                    $action .= '<button class="btn btn-xs btn-danger delete-category" id="'.$cannedMessage->id.' "title="Delete"><i class="fa fa-trash"></i> </button>';
+                    $action .= '<button class="btn btn-xs btn-danger delete-canned" id="'.$cannedMessage->id.' "title="Delete"><i class="fa fa-trash"></i> </button>';
                 }
                 return $action;
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function destroy($id)
+    {
+        $canned = CannedMessageModel::find($id);
+        $canned->delete();
+        return response()->json(['success' => true, 'message' => 'Canned Message Successfully Deleted!']);
     }
 }
