@@ -52,6 +52,42 @@ class CannedMessageController extends Controller
         return response()->json($validator->errors());
     }
 
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'title' => 'required',
+            'status' => 'required',
+            'category' => 'required',
+            'body'  => 'required|max:8000'
+        ]);
+
+        if($validator->passes())
+        {
+            $canned = CannedMessageModel::find($id);
+            $canned->user_id = auth()->user()->id;
+            $canned->canned_categories_id = $request->category;
+            $canned->title = $request->title;
+            $canned->body = nl2br($request->body);
+            $canned->status = $request->status;
+
+            if($canned->isDirty())
+            {
+                $canned->save();
+                return response()->json(['success' => true,'message' => 'Canned Message Successfully Updated!']);
+            }else{
+                return response()->json(['success' => false,'message' => 'No changes occurred!']);
+            }
+
+        }
+        return response()->json($validator->errors());
+    }
+
+    public function show($id)
+    {
+        $canned = CannedMessageModel::find($id);
+        return $canned;
+    }
+
     public function cannedMessageList()
     {
         $cannedMessages = CannedMessageModel::all();
@@ -69,11 +105,11 @@ class CannedMessageController extends Controller
                 $action = "";
                 if(auth()->user()->can('add canned message'))
                 {
-                    $action .= '<button class="btn btn-xs btn-info edit-canned" id="'.$cannedMessage->id.' "title="Edit"><i class="fa fa-edit"></i> </button>';
+                    $action .= '<button class="btn btn-xs btn-info edit-canned" id="'.$cannedMessage->id.'" data-toggle="modal" data-target="#add-canned-message-modal" title="Edit"><i class="fa fa-edit"></i> </button>';
                 }
                 if(auth()->user()->can('delete canned message'))
                 {
-                    $action .= '<button class="btn btn-xs btn-danger delete-canned" id="'.$cannedMessage->id.' "title="Delete"><i class="fa fa-trash"></i> </button>';
+                    $action .= '<button class="btn btn-xs btn-danger delete-canned" id="'.$cannedMessage->id.'" title="Delete"><i class="fa fa-trash"></i> </button>';
                 }
                 return $action;
             })

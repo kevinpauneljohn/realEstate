@@ -21,7 +21,7 @@
         <div class="col-lg-9">
         <div class="card card-primary card-outline">
             <div class="card-header">
-                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-canned-message-modal" title="Add Canned Message"><i class="fas fa-plus"></i></button>
+                <button type="button" class="btn btn-default btn-sm add-canned-btn" data-toggle="modal" data-target="#add-canned-message-modal" title="Add Canned Message"><i class="fas fa-plus"></i></button>
             </div>
             <div class="card-body">
                 <div class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;margin-top:20px;">
@@ -103,7 +103,7 @@
                                         <label for="status">Status</label><span class="required">*</span>
                                         <select name="status" class="form-control" id="status">
                                             <option value="Publish">Publish</option>
-                                            <option value="Draft">Drafts</option>
+                                            <option value="Draft">Draft</option>
                                         </select>
                                     </div>
                                 </div>
@@ -162,6 +162,85 @@
             </form>
         </div>
     @endcan
+
+{{--    @can('edit canned message')--}}
+{{--        <div class="modal fade" id="edit-canned-message-modal">--}}
+{{--            <form role="form" class="edit-canned-message" id="edit-canned-message-form">--}}
+{{--                @csrf--}}
+{{--                <div class="modal-dialog modal-lg">--}}
+{{--                    <div class="modal-content">--}}
+{{--                        <div class="modal-header">--}}
+{{--                            <h4 class="modal-title">Edit Canned Message</h4>--}}
+{{--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                                <span aria-hidden="true">×</span>--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+{{--                        <div class="modal-body">--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col-lg-6">--}}
+{{--                                    <div class="form-group edit_status">--}}
+{{--                                        <label for="edit_status">Status</label><span class="required">*</span>--}}
+{{--                                        <select name="edit_status" class="form-control" id="edit_status">--}}
+{{--                                            <option value="Publish">Publish</option>--}}
+{{--                                            <option value="Draft">Draft</option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-lg-6">--}}
+{{--                                    <div class="form-group edit_category">--}}
+{{--                                        <label for="edit_category">Category</label><span class="required">*</span>--}}
+{{--                                        <select name="edit_category" class="form-control canned-category" id="edit_category">--}}
+{{--                                            <option value=""> -- Select -- </option>--}}
+{{--                                            @foreach($category as $cat)--}}
+{{--                                                <option value="{{$cat->id}}">{{$cat->name}}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                            <div class="form-group edit_title">--}}
+{{--                                <label for="edit_title">Title</label><span class="required">*</span>--}}
+{{--                                <input type="text" name="edit_title" class="form-control" id="edit_title">--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group edit_body">--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-lg-12">--}}
+{{--                                        <label for="edit_body">Body</label><span class="required">*</span> (Maximum of 8000 characters only)--}}
+{{--                                        <div class="dropdown float-right">--}}
+{{--                                            <button type="button" class="btn btn-default btn-flat btn-sm dropdown-toggle" data-toggle="dropdown">--}}
+{{--                                                Short Codes--}}
+{{--                                            </button>--}}
+{{--                                            <div class="dropdown-menu" style="cursor: pointer;">--}}
+{{--                                                @php--}}
+{{--                                                    $shortCodes = array('{full_name}','{first_name}','{middle_name}','{last_name}','{username}','{mobile_no}','{email}','{address}');--}}
+
+{{--                                                    foreach ($shortCodes as $code)--}}
+{{--                                                    {--}}
+{{--                                                        echo '<a class="dropdown-item" id="'.$code.'">'.$code.'</a>';--}}
+{{--                                                    }--}}
+{{--                                                @endphp--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-lg-12">--}}
+{{--                                        <textarea name="edit_body" class="textarea form-control" id="edit_body" data-min-height="150" placeholder="Place some text here" style="min-height: 200px;"></textarea>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="modal-footer justify-content-between">--}}
+{{--                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+{{--                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </form>--}}
+{{--        </div>--}}
+{{--    @endcan--}}
 @stop
 
 @section('css')
