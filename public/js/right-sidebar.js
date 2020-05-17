@@ -13,7 +13,7 @@ $(document).on('click','.copy-canned',function(){
     copyToClipboard('#canned-body-'+id);
 });
 function copyToClipboard(element) {
-    var $temp = $("<textarea style='align-content:center;'>");
+    var $temp = $("<textarea>");
     $("body").append($temp);
     $temp.val($(element).text().trim()).select();
     document.execCommand("copy");

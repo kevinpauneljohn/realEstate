@@ -34,7 +34,7 @@
                             @foreach(\App\CannedCategory::all() as $category)
                                 <h5>{{$category->name}}</h5>
                                 @foreach(\App\CannedMessageModel::where([['canned_categories_id','=',$category->id],['status','=','Published']])->get() as $message)
-                                    <div class="card card-orange">
+                                    <div class="card card-info">
                                         <div class="card-header">
                                             <h6 class="card-title" style="color: white">
                                                 {{ucfirst($message->title)}}
@@ -48,7 +48,7 @@
                                                 {!! \App\Repositories\CannedMessageRepository::filter($message->body) !!}
                                             </div>
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-info btn-xs copy-canned" id="{{$message->id}}"><i class="fas fa-copy"></i> Copy</button>
+                                                <button type="button" class="btn btn-success btn-flat btn-xs copy-canned" id="{{$message->id}}"><i class="fas fa-copy"></i> Copy</button>
                                             </div>
                                         </div>
                                     </div>

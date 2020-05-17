@@ -39,7 +39,7 @@
                                 <label for="status">Status</label><span class="required">*</span>
                                 <select name="status" class="form-control" id="status">
                                     <option value="Drafts">Drafts</option>
-                                    <option value="Published">Published</option>
+                                    <option value="Published">Publish</option>
                                 </select>
                             </div>
                             <div class="form-group title">
