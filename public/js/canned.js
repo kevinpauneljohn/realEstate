@@ -14,6 +14,7 @@ $(document).on('submit','.add-canned-message',function(form){
             if(result.success === true)
             {
                 $('.add-canned-message').trigger('reset');
+                $('#add-canned-message-modal').modal('toggle');
 
                 var table = $('#canned-messages-list').DataTable();
                 table.ajax.reload();

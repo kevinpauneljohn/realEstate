@@ -33,7 +33,7 @@
                             <!-- we are adding the .class so bootstrap.js collapse plugin detects it -->
                             @foreach(\App\CannedCategory::all() as $category)
                                 <h5>{{$category->name}}</h5>
-                                @foreach(\App\CannedMessageModel::where([['canned_categories_id','=',$category->id],['status','=','Published']])->get() as $message)
+                                @foreach(\App\CannedMessageModel::where([['canned_categories_id','=',$category->id],['status','=','Publish']])->get() as $message)
                                     <div class="card card-info">
                                         <div class="card-header">
                                             <h6 class="card-title" style="color: white">

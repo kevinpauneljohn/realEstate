@@ -19,100 +19,33 @@
 @section('content')
     <div class="row">
         <div class="col-lg-9">
-        <div class="card card-primary card-outline card-tabs">
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#create-canned" role="tab" aria-controls="custom-tabs-two-home" aria-selected="false">Create Canned Message</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#canned-list" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Canned Message Lists</a>
-                    </li>
-                </ul>
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-canned-message-modal" title="Add Canned Message"><i class="fas fa-plus"></i></button>
             </div>
             <div class="card-body">
-                <div class="tab-content" id="custom-tabs-two-tabContent">
-                    <div class="tab-pane fade active show" id="create-canned" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                        <form role="form" class="add-canned-message">
-                            @csrf
-                            <div class="form-group status">
-                                <label for="status">Status</label><span class="required">*</span>
-                                <select name="status" class="form-control" id="status">
-                                    <option value="Drafts">Drafts</option>
-                                    <option value="Published">Publish</option>
-                                </select>
-                            </div>
-                            <div class="form-group title">
-                                <label for="title">Title</label><span class="required">*</span>
-                                <input type="text" name="title" class="form-control" id="title">
-                            </div>
-                            <div class="form-group category">
-                                <label for="category">Category</label><span class="required">*</span>
-                                <select name="category" class="form-control canned-category" id="category">
-                                    <option value=""> -- Select -- </option>
-                                    @foreach($category as $cat)
-                                        <option value="{{$cat->id}}">{{$cat->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group body">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <label for="body">Body</label><span class="required">*</span> (Maximum of 8000 characters only)
-                                        <div class="dropdown float-right">
-                                            <button type="button" class="btn btn-default btn-flat btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                Short Codes
-                                            </button>
-                                            <div class="dropdown-menu" style="cursor: pointer;">
-                                                @php
-                                                    $shortCodes = array('{full_name}','{first_name}','{middle_name}','{last_name}','{username}','{mobile_no}','{email}','{address}');
+                <div class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;margin-top:20px;">
+                    <table id="canned-messages-list" class="table table-bordered table-hover" role="grid">
+                        <thead>
+                        <tr role="row">
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Created By</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
 
-                                                    foreach ($shortCodes as $code)
-                                                    {
-                                                        echo '<a class="dropdown-item" id="'.$code.'">'.$code.'</a>';
-                                                    }
-                                                @endphp
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <textarea name="body" class="textarea form-control" id="body" data-min-height="150" placeholder="Place some text here" style="min-height: 300px;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <input type="submit" class="btn btn-primary submit-form-btn" value="Save">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="tab-pane fade" id="canned-list" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
-                        <div class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;margin-top:20px;">
-                            <table id="canned-messages-list" class="table table-bordered table-hover" role="grid">
-                                <thead>
-                                <tr role="row">
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Created By</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-
-                                <tfoot>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Created By</th>
-                                    <th>Status</th>
-                                    <th width="20%">Action</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
+                        <tfoot>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Created By</th>
+                            <th>Status</th>
+                            <th width="20%">Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
             <!-- /.card -->
@@ -150,6 +83,85 @@
             </div>
         </div>
     </div>
+
+    @can('add canned message')
+        <div class="modal fade" id="add-canned-message-modal">
+            <form role="form" class="add-canned-message" id="add-canned-message-form">
+                @csrf
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add New Canned Message</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group status">
+                                        <label for="status">Status</label><span class="required">*</span>
+                                        <select name="status" class="form-control" id="status">
+                                            <option value="Publish">Publish</option>
+                                            <option value="Draft">Drafts</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group category">
+                                        <label for="category">Category</label><span class="required">*</span>
+                                        <select name="category" class="form-control canned-category" id="category">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($category as $cat)
+                                                <option value="{{$cat->id}}">{{$cat->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group title">
+                                <label for="title">Title</label><span class="required">*</span>
+                                <input type="text" name="title" class="form-control" id="title">
+                            </div>
+                            <div class="form-group body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label for="body">Body</label><span class="required">*</span> (Maximum of 8000 characters only)
+                                        <div class="dropdown float-right">
+                                            <button type="button" class="btn btn-default btn-flat btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Short Codes
+                                            </button>
+                                            <div class="dropdown-menu" style="cursor: pointer;">
+                                                @php
+                                                    $shortCodes = array('{full_name}','{first_name}','{middle_name}','{last_name}','{username}','{mobile_no}','{email}','{address}');
+
+                                                    foreach ($shortCodes as $code)
+                                                    {
+                                                        echo '<a class="dropdown-item" id="'.$code.'">'.$code.'</a>';
+                                                    }
+                                                @endphp
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <textarea name="body" class="textarea form-control" id="body" data-min-height="150" placeholder="Place some text here" style="min-height: 200px;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    @endcan
 @stop
 
 @section('css')
