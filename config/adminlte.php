@@ -147,8 +147,8 @@ return [
     |
     */
 
-    'right_sidebar' => false,
-    'right_sidebar_icon' => 'fas fa-cogs',
+    'right_sidebar' => true,
+    'right_sidebar_icon' => 'fas fa-th-large',
     'right_sidebar_theme' => 'dark',
     'right_sidebar_slide' => true,
     'right_sidebar_push' => false,
@@ -223,11 +223,11 @@ return [
             'icon' => 'fa fa-tachometer-alt',
             'route'  => 'dashboard',
         ],
-        [
-            'text' => 'Announcement',
-            'icon' => 'fa fa-bullhorn',
-            'url'  => '#',
-        ],
+//        [
+//            'text' => 'Announcement',
+//            'icon' => 'fa fa-bullhorn',
+//            'url'  => '#',
+//        ],
         [
             'text'    => 'Requests',
             'icon'    => 'fas fa-tasks',
