@@ -61,6 +61,7 @@ $(document).on('click','.delete-category',function(){
 
                 },success: function(output){
                     if(output.success === true){
+                        $('.canned-category option[value='+id+']').remove();
                         Swal.fire(
                             'Deleted!',
                             output.message,
