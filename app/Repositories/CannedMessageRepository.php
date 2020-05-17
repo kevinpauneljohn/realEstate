@@ -6,7 +6,7 @@ namespace App\Repositories;
 
 class CannedMessageRepository
 {
-    public function filter($body)
+    public static function filter($body)
     {
         $user = auth()->user();
         $search = array(

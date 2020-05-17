@@ -4,16 +4,62 @@
         <h5>Quick Tools</h5>
         <hr class="mb-2">
         <div class="mb-1">
-            <input type="radio" name="tools" value="canned" class="mr-1"><span>Canned Message</span>
+            <button type="button" class="btn btn-flat btn-primary" data-toggle="modal" data-target="#canned-message">View Canned Messages</button>
         </div>
         <div class="mb-4">
-            <input type="radio" name="tools" value="computation" class="mr-1"><span>Sample Computation</span>
+            <button type="button" class="btn btn-flat bg-purple" data-toggle="modal" data-target="#canned-message">View Sample Computation</button>
         </div>
-        <h6>Navbar Variants</h6>
-        <div class="d-flex">
-            <div class="d-flex flex-wrap mb-3">
-                test
-            </div>
-        </div>
+{{--        <h6>Navbar Variants</h6>--}}
+{{--        <div class="d-flex">--}}
+{{--            <div class="d-flex flex-wrap mb-3">--}}
+{{--                test--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
 </aside>
+
+    <!--add new roles modal-->
+    <div class="modal fade" id="canned-message">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Canned Messages</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="accordion">
+                            <!-- we are adding the .class so bootstrap.js collapse plugin detects it -->
+                            @foreach(\App\CannedCategory::all() as $category)
+                                <h5>{{$category->name}}</h5>
+                                @foreach(\App\CannedMessageModel::where([['canned_categories_id','=',$category->id],['status','=','Published']])->get() as $message)
+                                    <div class="card card-orange">
+                                        <div class="card-header">
+                                            <h6 class="card-title" style="color: white">
+                                                {{ucfirst($message->title)}}
+                                            </h6>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$message->id}}" class="collapsed float-right accordion-dropdown" aria-expanded="false" style="color: white" id="canned-accordion-{{$message->id}}">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </div>
+                                        <div id="collapse-{{$message->id}}" class="panel-collapse in collapse" style="">
+                                            <div class="card-body" id="canned-body-{{$message->id}}">
+                                                {!! \App\Repositories\CannedMessageRepository::filter($message->body) !!}
+                                            </div>
+                                            <div class="card-footer">
+                                                <button type="button" class="btn btn-info btn-xs copy-canned" id="{{$message->id}}"><i class="fas fa-copy"></i> Copy</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+    </div>
+    <!--end add new roles modal-->

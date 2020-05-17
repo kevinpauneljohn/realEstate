@@ -85,3 +85,6 @@ table td{
 .lead-details-table{
     table-layout:fixed;
 }
+#canned-message p{
+    margin-bottom:0px;
+}

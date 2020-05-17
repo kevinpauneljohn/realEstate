@@ -482,6 +482,17 @@ return [
                 ],
             ],
         ],
+        [
+            'name' => 'rightSideBar',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/right-sidebar.js',
+                ],
+            ],
+        ],
 
 
     ],
