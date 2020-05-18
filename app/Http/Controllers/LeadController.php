@@ -53,6 +53,9 @@ class LeadController extends Controller
     {
         $leads = Lead::where('user_id',auth()->user()->id)->get();
         return DataTables::of($leads)
+            ->editColumn('date_inquired',function($lead){
+                return $lead->date_inquired->format('M d, Y');
+            })
             ->addColumn('last_contacted',function($lead){
                 if($lead->LogTouches->count() > 0){
                     return $lead->LogTouches->pluck('date')->last()->diffForHumans();
