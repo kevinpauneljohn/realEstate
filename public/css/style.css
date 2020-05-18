@@ -83,7 +83,10 @@ table td{
 }
 
 .lead-details-table{
-    table-layout:fixed;
+    table-layout:fixed!important;
+}
+.lead-details-table td{
+    word-wrap: break-word;
 }
 #canned-message p{
     margin-bottom:0px;
