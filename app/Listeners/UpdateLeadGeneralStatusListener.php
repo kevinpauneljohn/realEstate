@@ -57,5 +57,6 @@ class UpdateLeadGeneralStatusListener
 
             }
         }
+        echo 'ok';
     }
 }
