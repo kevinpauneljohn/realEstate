@@ -75,7 +75,7 @@
                             <thead>
                             <tr role="row" class="category-list-head">
                                 <th></th>
-                                <th width="10%"></th>
+                                <th></th>
                             </tr>
                             </thead>
                         </table>
@@ -162,6 +162,36 @@
             </form>
         </div>
     @endcan
+
+    @can('add canned message')
+        <div class="modal fade" id="edit-category-modal">
+            <form role="form" class="edit-category" id="edit-category-form">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="category_id">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Category</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group edit_category">
+                                <label for="edit_category">Category</label>
+                                <input type="text" name="edit_category" class="form-control" id="edit_category">
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary submit-category-btn" value="Save">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    @endcan
 @stop
 
 @section('css')
@@ -186,6 +216,9 @@
         }
         #canned-category-list td{
             border-top:none;
+        }
+        #canned-category-list td{
+            padding:0px!important;
         }
     </style>
 @stop

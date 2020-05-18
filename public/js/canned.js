@@ -118,7 +118,7 @@ $(document).on('click','.delete-canned',function(){
                             'success'
                         );
 
-                        let table = $('#canned-messages-list').DataTable();
+                        let table = $('#canned-messages-list, #canned-category-list').DataTable();
                         table.ajax.reload();
                     }else{
                         toastr.error(output.message);
@@ -168,7 +168,7 @@ $(document).on('click','.add-canned-btn',function(){
     let form = $('.add-canned-message');
 
     $('.add-canned-message').trigger('reset');
-    $('input[name=_method], input[name=canned_id], .text-danger').remove();
+    $('.add-canned-message input[name=_method],.add-canned-message input[name=canned_id], .text-danger').remove();
     $('.add-canned-message .modal-title').text('Add New Canned Message');
     form.removeAttr('id').attr('id','add-canned-message-form');
 });

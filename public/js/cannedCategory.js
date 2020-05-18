@@ -89,3 +89,59 @@ $(document).on('click','.delete-category',function(){
     });
 });
 
+$(document).on('click','.edit-category-btn',function(){
+    let id = this.id;
+
+    $tr = $(this).closest('tr');
+
+    var data = $tr.children("td").map(function () {
+        return $(this).text();
+    }).get();
+
+    $('input[name=category_id]').val(id);
+    $('#edit-category-modal').modal('toggle');
+    $('#edit_category').val(function () {
+        let replacement = data[0].replace(/\(.*\)/, '');
+        return replacement.trim();
+    });
+});
+
+$(document).on('submit','#edit-category-form',function(form){
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
+
+    $.ajax({
+        'url' : '/canned-category/'+data[2].value,
+        'type' : 'PUT',
+        'data' : data,
+        beforeSend: function(){
+            $('.submit-category-btn').val('Saving ... ').attr('disabled',true);
+        },success: function(result){
+            console.log(result);
+            if(result.success === true)
+            {
+                let url = window.location.href;
+                $('.canned-category').load(url+' #category option');
+                let table = $('#canned-category-list, #canned-messages-list').DataTable();
+                table.ajax.reload();
+                toastr.success(result.message);
+                $('#edit-category-modal').modal('toggle');
+            }else if(result.success === false){
+                toastr.error(result.message);
+            }
+
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+            $('.submit-category-btn').val('Save').attr('disabled',false);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+    clear_errors('edit_category');
+});
+

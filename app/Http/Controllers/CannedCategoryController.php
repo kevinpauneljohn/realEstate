@@ -27,6 +27,25 @@ class CannedCategoryController extends Controller
         return response()->json($validator->errors());
     }
 
+    public function update(Request $request,$id)
+    {
+        $validator = Validator::make($request->all(),[
+            'edit_category' => 'required'
+        ]);
+        if($validator->passes())
+        {
+            $category = CannedCategory::find($id);
+            $category->name = $request->edit_category;
+            if($category->isDirty())
+            {
+                $category->save();
+                return response()->json(['success' => true,'message' => 'Category Successfully Saved!','catValue' => $category]);
+            }
+            return response()->json(['success' => false,'message' => 'No changes occurred']);
+        }
+        return response()->json($validator->errors());
+    }
+
     public function cannedCategoryList()
     {
         $categories = CannedCategory::all();
@@ -42,7 +61,11 @@ class CannedCategoryController extends Controller
                 $action = "";
                 if(auth()->user()->can('add canned message'))
                 {
-                    $action .= '<button class="btn btn-xs delete-category" id="'.$category->id.' "title="Delete"><i class="fa fa-times-circle"></i> </button>';
+                    $action .= '<button class="btn btn-xs edit-category-btn" id="'.$category->id.'" title="Edit"><i class="fa fa-edit"></i> </button>';
+                }
+                if(auth()->user()->can('add canned message'))
+                {
+                    $action .= '<button class="btn btn-xs delete-category" id="'.$category->id.'" title="Delete"><i class="fa fa-times-circle"></i> </button>';
                 }
                 return $action;
             })
