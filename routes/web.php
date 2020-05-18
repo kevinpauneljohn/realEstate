@@ -164,6 +164,7 @@ Route::put('/priorities/{priority}','PriorityController@update')->name('prioriti
 Route::delete('/priorities/{priority}','PriorityController@destroy')->name('priorities.delete')->middleware(['auth','permission:delete priority']);
 Route::get('/update-priority-status',function(){
     \Illuminate\Support\Facades\Artisan::call('update:priority');
+    //
 });
 
 /*actions*/
