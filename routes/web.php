@@ -70,7 +70,7 @@ Route::post('/leads/get','LeadController@getLeads')->name('leads.get')->middlewa
 Route::post('/leads/status','LeadController@getLeadStatus')->name('leads.status')->middleware('auth','permission:view lead');
 Route::post('/leads/mark','LeadController@markAsImportant')->name('leads.important')->middleware('auth','permission:view lead');
 Route::post('/leads/status/update','LeadController@updateLeadStatus')->name('leads.status.update')->middleware('auth','permission:edit lead');
-Route::get('/lead/general/update','LeadController@generalLeadStatusUpdate')->name('lead.status.general.update')->middleware(['auth','permission:edit lead']);
+Route::get('/lead/general/update','LeadController@generalLeadStatusUpdate')->name('lead.status.general.update');
 
 /*Log touches*/
 Route::post('/logs','LogTouchController@store')->name('logs.store')->middleware('auth','permission:edit lead');
