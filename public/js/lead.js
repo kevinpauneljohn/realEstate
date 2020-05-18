@@ -109,7 +109,7 @@ $(document).on('click','.view-details',function(){
 
             $('#lead-details .modal-body').append('<table class="table table-bordered table-hover lead-details-table">' +
                 '<tr><td>Status</td><td>'+result.lead_status+'</td></tr>' +
-                '<tr><td>Date Inquired</td><td>'+result.date_inquired+'</td></tr>' +
+                '<tr><td>Date Inquired</td><td>'+dateToYMD(new Date(result.date_inquired))+'</td></tr>' +
                 '<tr><td>Full Name</td><td>'+result.id+'</td></tr>' +
                 '<tr><td>Mobile Phone</td><td>'+mobile+'</td></tr>' +
                 '<tr><td>Land line</td><td>'+landline+'</td></tr>' +
@@ -125,6 +125,13 @@ $(document).on('click','.view-details',function(){
         }
     });
 });
+
+function dateToYMD(date) {
+    var d = date.getDate();
+    var m = date.getMonth() + 1; //Month from 0 to 11
+    var y = date.getFullYear();
+    return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+}
 
 $(document).on('click','.set-status', function(){
     let id = this.id;
