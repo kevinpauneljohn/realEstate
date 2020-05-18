@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark"><i class="fas fa-house-user"></i>Leads</h1>
+            <h1 class="m-0 text-dark">Leads</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -101,7 +101,7 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box">
-                <span class="info-box-icon bg-purple"><i class="fas fa-house-user"></i></span>
+                <span class="info-box-icon bg-purple"><i class="fas fa-street-view"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">For tripping</span>

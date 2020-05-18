@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/LeadRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/LeadRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -78,8 +76,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/index.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="103" column="81" selection-start-line="103" selection-start-column="81" selection-end-line="103" selection-end-column="81" />
+                <state relative-caret-position="340">
+                  <caret line="98" column="31" lean-forward="true" selection-start-line="98" selection-start-column="31" selection-end-line="98" selection-end-column="31" />
                 </state>
               </provider>
             </entry>
@@ -509,21 +507,7 @@
       <workItem from="1589416189745" duration="11978000" />
       <workItem from="1589480053130" duration="23505000" />
       <workItem from="1589589487699" duration="34253000" />
-      <workItem from="1589655459410" duration="59431000" />
-    </task>
-    <task id="LOCAL-00295" summary="lead management - view module">
-      <created>1589261543228</created>
-      <option name="number" value="00295" />
-      <option name="presentableId" value="LOCAL-00295" />
-      <option name="project" value="LOCAL" />
-      <updated>1589261543229</updated>
-    </task>
-    <task id="LOCAL-00296" summary="lead management - view module">
-      <created>1589267156464</created>
-      <option name="number" value="00296" />
-      <option name="presentableId" value="LOCAL-00296" />
-      <option name="project" value="LOCAL" />
-      <updated>1589267156464</updated>
+      <workItem from="1589655459410" duration="60118000" />
     </task>
     <task id="LOCAL-00297" summary="lead management - view module">
       <created>1589267258053</created>
@@ -854,11 +838,25 @@
       <option name="project" value="LOCAL" />
       <updated>1589806859497</updated>
     </task>
-    <option name="localTasksCounter" value="344" />
+    <task id="LOCAL-00344" summary="canned message - view module">
+      <created>1589807629861</created>
+      <option name="number" value="00344" />
+      <option name="presentableId" value="LOCAL-00344" />
+      <option name="project" value="LOCAL" />
+      <updated>1589807629861</updated>
+    </task>
+    <task id="LOCAL-00345" summary="canned message - view module">
+      <created>1589807878630</created>
+      <option name="number" value="00345" />
+      <option name="presentableId" value="LOCAL-00345" />
+      <option name="project" value="LOCAL" />
+      <updated>1589807878630</updated>
+    </task>
+    <option name="localTasksCounter" value="346" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1095920000" />
+    <option name="totallyTimeSpent" value="1096607000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1325,8 +1323,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="103" column="81" selection-start-line="103" selection-start-column="81" selection-end-line="103" selection-end-column="81" />
+        <state relative-caret-position="340">
+          <caret line="98" column="31" lean-forward="true" selection-start-line="98" selection-start-column="31" selection-end-line="98" selection-end-column="31" />
         </state>
       </provider>
     </entry>
