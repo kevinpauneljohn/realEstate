@@ -68,6 +68,6 @@ class UpdateLeadStatus extends Command
 
             }
         }
-        echo 'ok';
+//        echo 'ok';
     }
 }

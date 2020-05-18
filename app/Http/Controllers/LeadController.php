@@ -11,6 +11,7 @@ use App\Project;
 use App\Repositories\LeadRepository;
 use App\WebsiteLink;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -390,7 +391,9 @@ class LeadController extends Controller
      * */
     public function generalLeadStatusUpdate()
     {
+        Artisan::call('update:lead_status');
+        return Artisan::output();
         ///the system will update the status of the leads automatically
-        event(new UpdateLeadGeneralStatusEvent());
+        //event(new UpdateLeadGeneralStatusEvent());
     }
 }
