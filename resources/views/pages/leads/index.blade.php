@@ -72,18 +72,6 @@
         <!-- /.col -->
     </div>
     <div class="row">
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-gray"><i class="fas fa-user-times"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Not Qualified</span>
-                    <span class="info-box-number">{{$total_not_qualified_leads}}</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box">
@@ -111,6 +99,18 @@
             <!-- /.info-box -->
         </div>
         <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-purple"><i class="fas fa-house-user"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">For tripping</span>
+                    <span class="info-box-number">{{$total_for_tripping_leads}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box">
                 <span class="info-box-icon bg-success"><i class="fas fa-user-check"></i></span>
