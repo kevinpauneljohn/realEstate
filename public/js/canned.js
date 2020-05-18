@@ -13,6 +13,8 @@ $(document).on('submit','#add-canned-message-form',function(form){
 
             if(result.success === true)
             {
+                let url = window.location.href;
+                $('.canned-accordion').load(url+' .canned-accordion');
                 $('.add-canned-message').trigger('reset');
                 $('#add-canned-message-modal').modal('toggle');
 
@@ -52,6 +54,8 @@ $(document).on('submit','#edit-canned-message-form',function(form){
 
             if(result.success === true)
             {
+                let url = window.location.href;
+                $('.canned-accordion').load(url+' .canned-accordion');
                 $('.add-canned-message').trigger('reset');
                 $('#add-canned-message-modal').modal('toggle');
 

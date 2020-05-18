@@ -14,6 +14,8 @@ $(document).on('submit','.category-form',function(form){
 
             if(result.success === true)
             {
+                let url = window.location.href;
+                $('.canned-accordion').load(url+' .canned-accordion');
                 $('.category-form').trigger('reset');
                 $('.canned-category').append('<option value="'+result.catValue.id+'">'+result.catValue.name+'</option>');
                 toastr.success(result.message);
@@ -67,6 +69,9 @@ $(document).on('click','.delete-category',function(){
                             output.message,
                             'success'
                         );
+
+                        let url = window.location.href;
+                        $('.canned-accordion').load(url+' .canned-accordion');
 
                         let table = $('#canned-category-list').DataTable();
                         table.ajax.reload();
@@ -122,6 +127,7 @@ $(document).on('submit','#edit-category-form',function(form){
             if(result.success === true)
             {
                 let url = window.location.href;
+                $('.canned-accordion').load(url+' .canned-accordion');
                 $('.canned-category').load(url+' #category option');
                 let table = $('#canned-category-list, #canned-messages-list').DataTable();
                 table.ajax.reload();

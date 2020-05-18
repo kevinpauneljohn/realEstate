@@ -29,7 +29,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div id="accordion">
+                        <div id="accordion" class="canned-accordion">
                             <!-- we are adding the .class so bootstrap.js collapse plugin detects it -->
                             @foreach(\App\CannedCategory::all() as $category)
                                 <h5>{{$category->name}}</h5>
