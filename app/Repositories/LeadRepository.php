@@ -172,6 +172,10 @@ class LeadRepository
         {
             $badge = '<span class="badge bg-gray role-badge">'.$status.'</span>';
         }
+        elseif($status === 'For tripping')
+        {
+            $badge = '<span class="badge bg-success role-badge">'.$status.'</span>';
+        }
         elseif($status === 'Inquiry Only')
         {
             $badge = '<span class="badge bg-gradient-dark role-badge">'.$status.'</span>';

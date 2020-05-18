@@ -42,6 +42,10 @@ class Lead extends Model
         'lead_status'
     ];
 
+    protected $dates = [
+        'date_inquired'
+    ];
+
 
     public function sales()
     {

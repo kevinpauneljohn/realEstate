@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UpdateLeadGeneralStatusEvent;
 use App\Lead;
+use App\LeadActivity;
 use App\LeadNote;
 use App\LogTouch;
 use App\Project;
@@ -10,7 +12,6 @@ use App\Repositories\LeadRepository;
 use App\WebsiteLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use SebastianBergmann\CodeCoverage\Report\Xml\Totals;
 use Yajra\DataTables\DataTables;
 
 class LeadController extends Controller
@@ -379,5 +380,17 @@ class LeadController extends Controller
             return response()->json(['success' => false,'message' => 'No changes occurred']);
         }
         return response()->json($validator->errors());
+    }
+
+    /**
+     * @since May 18, 2020
+     * @author john kevin paunel
+     * update the lead status
+     * @return mixed
+     * */
+    public function generalLeadStatusUpdate()
+    {
+        ///the system will update the status of the leads automatically
+        event(new UpdateLeadGeneralStatusEvent());
     }
 }

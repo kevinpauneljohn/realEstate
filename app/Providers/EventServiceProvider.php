@@ -24,6 +24,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UpdateLeadStatusEvent' => [
             'App\Listeners\UpdateLeadStatusListener',
         ],
+        'App\Events\UpdateLeadGeneralStatusEvent' => [
+            'App\Listeners\UpdateLeadGeneralStatusListener',
+        ],
+        'App\Events\LeadStatusForTrippingEvent' => [
+            'App\Listeners\LeadStatusForTrippingStatusListener',
+        ],
     ];
 
     /**

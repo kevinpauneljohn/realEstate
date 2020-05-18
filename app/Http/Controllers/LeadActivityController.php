@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LeadStatusForTrippingEvent;
 use App\Lead;
 use App\LeadActivity;
 use Illuminate\Http\Request;
@@ -159,6 +160,12 @@ class LeadActivityController extends Controller
 
                 if($leadActivity->save())
                 {
+                    if($request->reminder_category === 'Tripping')
+                    {
+                        ///update the lead status category "For tripping"
+                        event(new LeadStatusForTrippingEvent($leadActivity->lead_id));
+                    }
+
                     return response()->json(['success' => true,'message' => 'Reminder successfully saved!',
                         'leadActivity' => $leadActivity, 'recent' => $leadActivity->schedule->diffForHumans(),
                         'schedule' => $leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date]);
@@ -224,6 +231,11 @@ class LeadActivityController extends Controller
             if($leadActivity->isDirty())
             {
                 $leadActivity->save();
+                if($request->edit_reminder_category === 'Tripping')
+                {
+                    ///update the lead status category "For tripping"
+                    event(new LeadStatusForTrippingEvent($leadActivity->lead_id));
+                }
                 return response()->json(['success' => true,'message' => 'Reminder successfully saved!',
                     'leadActivity' => $leadActivity, 'recent' => $leadActivity->schedule->diffForHumans(),
                     'schedule' => $leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date,

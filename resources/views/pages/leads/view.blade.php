@@ -599,7 +599,7 @@
                                 <label for="status">Status</label><span class="required">*</span>
                                 <select class="change-status form-control" name="status" id="status">
                                     @php
-                                        $status = array('Hot','Warm','Cold','Qualified','Not qualified','Inquiry Only','Not Interested Anymore');
+                                        $status = array('Hot','Warm','Cold','Qualified','Not qualified','For tripping','Inquiry Only','Not Interested Anymore');
                                         $data = '';
 
                                             foreach ($status as $stats)
