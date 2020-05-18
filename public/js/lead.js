@@ -163,10 +163,12 @@ $(document).on('submit','#change-status-form',function(form){
 
             if(result.success === true)
             {
+                $('#change-status-form').trigger('reset');
+                let table = $('#leads-list').DataTable();
+                table.ajax.reload();
                 toastr.success(result.message);
-                setTimeout(function(){
-                    location.reload();
-                },1000);
+                $('#set-status').modal('toggle');
+
             }else if(result.success === false){
                 toastr.error(result.message);
             }
