@@ -33,28 +33,29 @@ class UpdateLeadGeneralStatusListener
         {
             $leadUpdate = Lead::find($lead->id);
             $trippingCount = LeadActivity::where([
-                ['lead_id','=','c24960a9-3c06-4ece-9776-661fe3703508'],
+                ['lead_id','=',$lead->id],
                 ['category','=','Tripping'],
                 ['status','=','pending'],
             ])->count();
 
-            if($lead->updated_at->diffInDays() === 3 && $lead->lead_status === 'Hot')
+            if($lead->updated_at->diffInDays() >= 3 && $lead->lead_status === 'Hot')
             {
                 $leadUpdate->lead_status = 'Warm';
                 $leadUpdate->save();
             }
-            elseif($lead->updated_at->diffInDays() === 5 && $lead->lead_status === 'Warm'){
+            elseif($lead->updated_at->diffInDays() >= 5 && $lead->lead_status === 'Warm'){
                 $leadUpdate->lead_status = 'Cold';
                 $leadUpdate->save();
             }
-            elseif($lead->updated_at->diffInDays() === 3 && $lead->lead_status === 'Qualified'){
-                $leadUpdate->lead_status = 'Warm';
-                $leadUpdate->save();
-            }elseif($lead->lead_status === 'For Tripping' && $trippingCount === 0 && $lead->updated_at->diffInDays() === 3){
+            elseif($lead->updated_at->diffInDays() >= 3 && $lead->lead_status === 'Qualified'){
                 $leadUpdate->lead_status = 'Warm';
                 $leadUpdate->save();
             }
-            //echo $lead->updated_at->diffInDays().' '.$lead->lead_status.'<br/>';
+            elseif($lead->lead_status === 'For tripping' && $trippingCount === 0 && $lead->updated_at->diffInDays() >= 3){
+                $leadUpdate->lead_status = 'Warm';
+                $leadUpdate->save();
+
+            }
         }
     }
 }

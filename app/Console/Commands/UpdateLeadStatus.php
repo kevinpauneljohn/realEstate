@@ -67,8 +67,6 @@ class UpdateLeadStatus extends Command
                 $leadUpdate->save();
 
             }
-            //echo $trippingCount.'<br/>';
-            //echo 'tripping count = '.$trippingCount.' - Days= '.$lead->updated_at->diffInDays().' - Status= '.$lead->lead_status.'<br/>';
         }
     }
 }
