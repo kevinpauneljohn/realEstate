@@ -27,8 +27,13 @@ class LeadStatusForTrippingStatusListener
      */
     public function handle(LeadStatusForTrippingEvent $event)
     {
+        //if the lead was already converted to sales or with RESERVED status
+        //status will not be updated
         $lead = Lead::find($event->id);
-        $lead->lead_status = 'For tripping';
-        $lead->save();
+        if($lead->lead_status !== 'Reserved')
+        {
+            $lead->lead_status = 'For tripping';
+            $lead->save();
+        }
     }
 }
