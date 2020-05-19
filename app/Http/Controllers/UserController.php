@@ -8,6 +8,8 @@ use App\Http\Middleware\checkUserAuth;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
+use App\Repositories\ThresholdRepository;
+use App\Repositories\UserRepository;
 use App\Role;
 use App\Rules\checkIfPasswordMatch;
 use App\Sales;
@@ -18,6 +20,14 @@ use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
+    public $thresholdRepository, $userRepository;
+
+    public function __construct(ThresholdRepository $thresholdRepository, UserRepository $userRepository)
+    {
+        $this->thresholdRepository = $thresholdRepository;
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -199,15 +209,46 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->username = $request->username;
             $user->password = bcrypt($request->password);
-            $user->save();
 
-            $this->setRole($user,$request)->setDownline($user);
+            if(auth()->user()->hasRole('super admin'))
+            {
+                ///save directly to users table if the user is a super admin
+                $user->save();
 
-            event(new CreateNetworkEvent($user->id));
+                $this->setRole($user,$request)->setDownline($user);
 
-            return response()->json(['success' => true]);
+                event(new CreateNetworkEvent($user->id));
+
+                return response()->json(['success' => true]);
+            }else{
+                $data = array(
+                    'upline_id' => auth()->user()->id,
+                    'firstname' => $request->firstname,
+                    'middlename' => $request->middlename,
+                    'lastname' => $request->lastname,
+                    'mobileNo' => $request->mobileNo,
+                    'address' => $request->address,
+                    'date_of_birth' => $request->date_of_birth,
+                    'email' => $request->email,
+                    'username' => $request->username,
+                    'password' => $request->password,
+                    'role' => json_encode($request->role)
+                );
+
+                $extra_data = array(
+                    'action' => 'Create new user',
+                    'original_data' => $this->userRepository->getUsersOriginalData($data)
+                );
+                $reason = 'test user';
+                $priority = $this->thresholdRepository->getThresholdPriority('create new user');
+                ///save the request to the threshold first for approval
+                $this->thresholdRepository->saveThreshold('insert',$reason,$data,$extra_data,
+                    'users','','pending',$priority);
+
+                return response()->json(['success' => true,'message' => 'User Create successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
+            }
+
         }
-
         return response()->json($validator->errors());
     }
 

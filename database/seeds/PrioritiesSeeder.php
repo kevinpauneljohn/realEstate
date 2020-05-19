@@ -63,6 +63,13 @@ class PrioritiesSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'create new user',
+                'description' => 'create new user',
+                'priority_id' => \App\Priority::where('name','critical')->first()->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
 
         \App\Action::insert($data);

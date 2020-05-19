@@ -65,6 +65,9 @@ class RequestController extends Controller
                 }
 
             })
+            ->editColumn('created_at',function($threshold){
+                return $threshold->created_at->format('M d, Y');
+            })
             ->editColumn('priority_id',function($threshold){
                 $label = '<span class="badge" style="background-color:'.$threshold->priority->color.'">'.$threshold->priority->name.'</span>';
                 return $label;

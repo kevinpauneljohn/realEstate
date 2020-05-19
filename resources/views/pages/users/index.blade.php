@@ -118,7 +118,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <button type="submit" class="btn btn-primary"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
