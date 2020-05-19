@@ -125,7 +125,7 @@ $(document).on('click','.view-details',function(){
         }
     });
 });
-
+///
 function dateToYMD(date) {
     var d = date.getDate();
     var m = date.getMonth() + 1; //Month from 0 to 11
