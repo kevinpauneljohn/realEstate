@@ -60,22 +60,22 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 $(document).ready(function(){
 
     /*add user*/
-    $('#user-form').submit(function(form){
-        form.preventDefault();
-
-        let data = $('#user-form').serialize();
-
-        submitform(
-            '/users',
-            'POST',
-            data,
-            'New User Successfully Added!',
-            true,
-            '',
-            false,
-        );
-        clear_errors('firstname','lastname','username','password','role');
-    });
+    // $('#user-form').submit(function(form){
+    //     form.preventDefault();
+    //
+    //     let data = $('#user-form').serialize();
+    //
+    //     submitform(
+    //         '/users',
+    //         'POST',
+    //         data,
+    //         'New User Successfully Added!',
+    //         false,
+    //         '',
+    //         true,
+    //     );
+    //     clear_errors('firstname','lastname','username','password','role');
+    // });
 
     /*edit user*/
     $('#edit-user-form').submit(function(form){
@@ -147,5 +147,46 @@ $(document).on('click','.delete-user-btn',function () {
 
     $('#deleteUserId').val(id);
     $('.delete-user-name').html('<strong style="color:yellow;">'+data[0]+'</strong>?');
+});
+
+$(document).on('submit','#user-form',function(form){
+    form.preventDefault();
+    let data = $(this).serializeArray();
+
+    $.ajax({
+        'url' : '/users',
+        'type' : 'POST',
+        'data' : data,
+        beforeSend: function () {
+            $('.add-user-btn').val('Saving ... ').attr('disabled',true);
+        },success: function (result) {
+            if(result.success === true)
+            {
+                $('#user-form').trigger('reset');
+                var table = $('#users-list').DataTable();
+                table.ajax.reload();
+
+                toastr.success(result.message);
+                $('#add-new-user-modal').modal('toggle');
+            }else if(result.success === false)
+            {
+                toastr.error(result.message);
+            }
+
+            $.each(result, function (key, value) {
+                var element = $('#'+key);
+
+                element.closest('div.'+key)
+                    .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                    .find('.text-danger')
+                    .remove();
+                element.after('<p class="text-danger">'+value+'</p>');
+            });
+
+            $('.add-user-btn').val('Save').attr('disabled',false);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
 });
 

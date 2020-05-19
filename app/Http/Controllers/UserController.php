@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Downline;
 use App\Events\CreateNetworkEvent;
+use App\Events\UserRequestEvent;
 use App\Http\Middleware\checkUserAuth;
 use App\Lead;
 use App\ModelUnit;
@@ -221,33 +222,11 @@ class UserController extends Controller
 
                 return response()->json(['success' => true]);
             }else{
-                $data = array(
-                    'upline_id' => auth()->user()->id,
-                    'firstname' => $request->firstname,
-                    'middlename' => $request->middlename,
-                    'lastname' => $request->lastname,
-                    'mobileNo' => $request->mobileNo,
-                    'address' => $request->address,
-                    'date_of_birth' => $request->date_of_birth,
-                    'email' => $request->email,
-                    'username' => $request->username,
-                    'password' => $request->password,
-                    'role' => json_encode($request->role)
-                );
 
-                $extra_data = array(
-                    'action' => 'Create new user',
-                    'original_data' => $this->userRepository->getUsersOriginalData($data)
-                );
-                $reason = 'test user';
-                $priority = $this->thresholdRepository->getThresholdPriority('create new user');
-                ///save the request to the threshold first for approval
-                $this->thresholdRepository->saveThreshold('insert',$reason,$data,$extra_data,
-                    'users','','pending',$priority);
-
+                //save the user request to threshold for approval
+                $result = event(new UserRequestEvent($request));
                 return response()->json(['success' => true,'message' => 'User Create successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
             }
-
         }
         return response()->json($validator->errors());
     }

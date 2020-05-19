@@ -30,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\LeadStatusForTrippingEvent' => [
             'App\Listeners\LeadStatusForTrippingStatusListener',
         ],
+        'App\Events\UserRequestEvent' => [
+            'App\Listeners\UserRequestListener',
+        ],
     ];
 
     /**
