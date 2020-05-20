@@ -51,12 +51,10 @@ $(document).on('click','.unlock-btn',function () {
         success: function (result) {
             if(result.success === true)
             {
-                setTimeout(function(){
-                    toastr.success(result.message);
-                    setTimeout(function(){
-                        location.reload();
-                    },1500);
-                });
+                let table = $('#threshold-list').DataTable();
+                table.ajax.reload();
+
+                toastr.success(result.message);
             }
         },error: function (xhr, status, error) {
             $.each(xhr, function (key, value) {
