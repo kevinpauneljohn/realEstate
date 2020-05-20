@@ -111,7 +111,7 @@ class RequestController extends Controller
                         $action .= '<a href="'.route('requests.show',['request' => $threshold->id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$threshold->id.'" title="View"><i class="fa fa-eye"></i></a>';
                     }else{
                         $action .= '<button href="#" class="btn btn-xs btn-success" title="View" disabled><i class="fa fa-eye"></i></button>';
-                        $action .= '<button href="#" class="btn btn-xs btn-warning unlock-btn" title="Unlock" id="'.$threshold->id.'"><i class="fa fa-lock"></i></button>';
+                        $action .= '<button href="#" class="btn btn-xs btn-warning unlock-btn" title="Unlock Request" id="'.$threshold->id.'"><i class="fa fa-lock"></i></button>';
                     }
                 }
                 return $action;

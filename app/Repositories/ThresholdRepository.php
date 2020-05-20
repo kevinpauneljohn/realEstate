@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Action;
 use App\Priority;
 use App\Threshold;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
@@ -97,6 +98,31 @@ class ThresholdRepository
             DB::table($threshold->storage_name)
                 ->where('id',$threshold->storage_id)
                 ->update((array)$threshold->data);
+        }elseif($threshold->type == 'insert'){
+            if($threshold->storage_name == 'users')
+            {
+                $user = new User();
+                $user->upline_id = $threshold->data->upline_id;
+                $user->firstname = $threshold->data->firstname;
+                $user->middlename = $threshold->data->middlename;
+                $user->lastname = $threshold->data->lastname;
+                $user->mobileNo = $threshold->data->mobileNo;
+                $user->address = $threshold->data->address;
+                $user->date_of_birth = $threshold->data->date_of_birth;
+                $user->email = $threshold->data->email;
+                $user->username = $threshold->data->username;
+                $user->password = bcrypt($threshold->data->password);
+                $user->save();
+
+                $find = array('["','"]');
+                $replace = array('');
+                $input = str_replace($find,$replace,$threshold->data->role);
+                $roles = explode('","',$input);
+                foreach ($roles as $role){
+                    $user->assignRole($role);
+                }
+            }
+
         }else{
             DB::table($threshold->storage_name)
                 ->where('id',$threshold->storage_id)
