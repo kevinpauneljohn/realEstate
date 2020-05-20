@@ -25,7 +25,6 @@
                     <tr role="row">
                         <th>Date Scheduled</th>
                         <th>Full Name</th>
-                        <th>Details</th>
                         <th>Category</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -34,11 +33,10 @@
 
                     <tfoot>
                     <tr>
-                        <th width="10%">Date Scheduled</th>
-                        <th width="12%">Full Name</th>
-                        <th width="50%">Details</th>
-                        <th width="9%">Category</th>
-                        <th width="9%">Status</th>
+                        <th>Date Scheduled</th>
+                        <th>Full Name</th>
+                        <th>Category</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -202,7 +200,6 @@
                     columns: [
                         { data: 'schedule', name: 'schedule'},
                         { data: 'full_name', name: 'full_name'},
-                        { data: 'details', name: 'details'},
                         { data: 'category', name: 'category'},
                         { data: 'status', name: 'status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}

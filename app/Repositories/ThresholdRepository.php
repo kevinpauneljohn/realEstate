@@ -101,6 +101,7 @@ class ThresholdRepository
         }elseif($threshold->type == 'insert'){
             if($threshold->storage_name == 'users')
             {
+                ///create new user
                 $user = new User();
                 $user->upline_id = $threshold->data->upline_id;
                 $user->firstname = $threshold->data->firstname;

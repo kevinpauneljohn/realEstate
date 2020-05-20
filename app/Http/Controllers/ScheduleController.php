@@ -28,6 +28,10 @@ class ScheduleController extends Controller
     {
         $schedules = LeadActivity::where('user_id',auth()->user()->id)->get();
         return DataTables::of($schedules)
+            ->editColumn('schedule',function($schedules){
+                ///
+                return $schedules->schedule->format('M d, Y');
+            })
             ->addColumn('full_name', function ($schedule){
                 $lead = Lead::findOrFail($schedule->lead_id);
                 return ucfirst($lead->firstname).' '.ucfirst($lead->lastname);
