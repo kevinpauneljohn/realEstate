@@ -18,7 +18,9 @@
 //Auth::routes();
 
 Route::get('/','LandingPageController');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function (){
+    return redirect(route('dashboard'));
+})->name('home');
 
 //Route::group(['middleware' => 'throttle'], function (){
     Route::get('/login','CustomAuth\LoginController@login_form')->name('login');
