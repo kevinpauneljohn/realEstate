@@ -180,6 +180,7 @@ Route::get('/update-priority-status',function(){
     \Illuminate\Support\Facades\Artisan::call('update:priority');
     //
 });
+Route::get('/notify-user','NotificationsController@notify')->name('reminder');
 
 /*actions*/
 Route::get('/actions','ActionController@index')->name('actions.index')->middleware(['auth','permission:view action']);

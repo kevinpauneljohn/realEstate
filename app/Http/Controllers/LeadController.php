@@ -400,4 +400,5 @@ class LeadController extends Controller
         ///the system will update the status of the leads automatically
         //event(new UpdateLeadGeneralStatusEvent());
     }
+
 }
