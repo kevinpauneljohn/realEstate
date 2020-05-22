@@ -28,7 +28,7 @@ class UserRepository
         $table .= '<tr><td>Date Of Birth</td><td>'.$data['date_of_birth'].'</td></tr>';
         $table .= '<tr><td>Email</td><td>'.$data['email'].'</td></tr>';
         $table .= '<tr><td>Username</td><td>'.$data['username'].'</td></tr>';
-        $table .= '<tr><td>Password</td><td>'.$data['password'].'</td></tr>';
+        $table .= '<tr><td>Password</td><td>********</td></tr>';
         $table .= '<tr><td>Role</td><td>'.$data['role'].'</td></tr>';
         $table .= '</table>';
 

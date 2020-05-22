@@ -25,7 +25,12 @@ $(document).on('change','#request-status',function(){
         'data' : {'status':value},
         success: function (result) {
             ///console.log(result);
-            location.reload();
+            if(result.success === true)
+            {
+                var table = $('#threshold-list').DataTable();
+                table.ajax.reload();
+            }
+            // location.reload();
 
         },error: function (xhr, status, error) {
             $.each(xhr, function (key, value) {

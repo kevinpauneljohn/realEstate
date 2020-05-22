@@ -5,12 +5,21 @@ namespace App\Http\Controllers;
 use App\Events\LeadStatusForTrippingEvent;
 use App\Lead;
 use App\LeadActivity;
+use App\Repositories\TimeRepository;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class LeadActivityController extends Controller
 {
+    public $timeRepository;
+
+    public function __construct(TimeRepository $timeRepository)
+    {
+        $this->timeRepository = $timeRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +51,7 @@ class LeadActivityController extends Controller
                 return $hidden.$leadActivity->schedule->format('M d, Y').' <span style="color: #256cef;">at</span> '.$leadActivity->start_date;
             })
             ->addColumn('recent',function ($leadActivity){
-                return $leadActivity->schedule->diffForHumans();
+                return $this->timeRepository->date_time($leadActivity->schedule, $leadActivity->start_date)->diffForHumans();
             })
             ->addColumn('action', function ($leadActivity)
             {

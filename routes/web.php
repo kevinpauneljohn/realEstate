@@ -135,7 +135,20 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-   return \App\Priority::where('name','critical')->first()->id;
+   $schedule = \App\LeadActivity::all();
+
+   foreach ($schedule as $sched)
+   {
+       $date = $sched->schedule;
+       $time = new DateTime($sched->start_date);
+
+// Solution 1, merge objects to new object:
+       $merge = new DateTime($date->format('Y-m-d') .' ' .$time->format('H:i:s'));
+       //echo $merge->format('Y-m-d H:i:s'); // Outputs '2017-03-14 13:37:42'
+
+       $due = \Carbon\Carbon::parse($merge->format('Y-m-d H:i:s')); // now date is a carbon instance
+       echo $due->diffForHumans(\Carbon\Carbon::now()).'<br/>';
+   }
 });
 
 /*change password*/

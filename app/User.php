@@ -68,6 +68,11 @@ class User extends Authenticatable
         return auth()->user()->username;
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
     public function downlines()
     {
         return $this->hasMany(Downline::class);
