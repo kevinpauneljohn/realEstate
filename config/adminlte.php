@@ -495,6 +495,17 @@ return [
             ],
         ],
         [
+            'name' => 'responsive_voice',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://code.responsivevoice.org/responsivevoice.js?key=uC3LLI3C',
+                ],
+            ],
+        ],
+        [
             'name' => 'pusher',
             'active' => true,
             'files' => [
@@ -503,13 +514,14 @@ return [
                     'asset' => false,
                     'location' => 'https://js.pusher.com/6.0/pusher.min.js',
                 ],
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => 'js/notification.js',
-                ],
+//                [
+//                    'type' => 'js',
+//                    'asset' => true,
+//                    'location' => 'js/notification.js',
+//                ],
             ],
         ],
+
 
 
     ],

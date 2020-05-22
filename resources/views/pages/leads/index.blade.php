@@ -342,6 +342,7 @@
                     format: 'MM/DD/YYYY hh:mm A'
                 }
             })
+
         </script>
     @endcan
 @stop

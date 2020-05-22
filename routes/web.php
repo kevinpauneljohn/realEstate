@@ -18,6 +18,7 @@
 //Auth::routes();
 
 use App\Events\NotificationEvent;
+use Illuminate\Http\Request;
 
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
@@ -137,44 +138,12 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-    $schedule = \App\LeadActivity::where([
-        ['category','=','Tripping'],
-//            ['status','=','pending']
-    ])->get();
-
-    foreach ($schedule as $sched){
-        $date = $sched->schedule;
-        $time = new DateTime($sched->start_date);
-
-        $merge = new DateTime($date->format('Y-m-d') .' ' .$time->format('g:i A'));
-        //echo $merge->format('Y-m-d H:i:s'); // Outputs '2017-03-14 13:37:42'
-
-        $due = \Carbon\Carbon::parse($merge->format('Y-m-d g:i A')); // now date is a carbon instance
-        $dueDate = $due->diffForHumans();
-        $notification = array(
-            'user' => $sched->user_id,
-            'data'    => array(
-                'lead_id'   => $sched->lead_id,
-                'schedule'  => $sched->schedule->format('M d, Y'),
-                'time'      => $sched->start_date,
-                'category'  => $sched->category,
-                'time_left' => $dueDate,
-                'link'      => '/schedule'
-            ),
-            'viewed'  => false,
-            'type'    => 'lead activity'
-        );
-
-        if($dueDate == '1 day from now')
-        {
-            event(new NotificationEvent((object)$notification));
-        }elseif ($dueDate == '5 hours from now'){
-            event(new NotificationEvent((object)$notification));
-        }elseif ($dueDate == '1 hour from now'){
-            event(new NotificationEvent((object)$notification));
-        }
-    }
+    return view('test');
 });
+
+Route::post('/test',function(Request $request){
+    event(new NotificationEvent($request->test));
+})->name('test');
 
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);

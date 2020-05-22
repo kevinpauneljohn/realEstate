@@ -43,8 +43,7 @@ class ReminderNotification extends Command
     public function handle()
     {
         $schedule = \App\LeadActivity::where([
-            ['category','=','Tripping'],
-//            ['status','=','pending']
+            ['status','=','pending'],
         ])->get();
 
         foreach ($schedule as $sched){

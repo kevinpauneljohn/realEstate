@@ -15,11 +15,6 @@ class NotificationEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $notification;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
     public function __construct($notification)
     {
         $this->notification = $notification;
@@ -32,7 +27,8 @@ class NotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('notification-channel');
+        return ['notification-channel'];
+        //return new Channel('notification-channel');
     }
 
     public function broadcastAs()

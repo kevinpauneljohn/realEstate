@@ -15,7 +15,7 @@
     </ul>
 
     {{-- Navbar right links --}}
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto reminder-notification">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
