@@ -138,7 +138,21 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-    return view('test');
+    $schedule = \App\LeadActivity::where([
+        ['status','=','pending'],
+    ])->get();
+
+    foreach ($schedule as $sched)
+    {
+        $date = $sched->schedule;
+        $time = new DateTime($sched->start_date);
+
+        $merge = new DateTime($date->format('Y-m-d') .' ' .$time->format('g:i A'));
+        //echo $merge->format('Y-m-d H:i:s'); // Outputs '2017-03-14 13:37:42'
+
+        $due = \Carbon\Carbon::parse($merge->format('Y-m-d g:i A')); // now date is a carbon instance
+        echo $sched->id.' - '.$sched->category.' - '.$due."<br/>";
+    }
 });
 
 Route::post('/test',function(Request $request){

@@ -71,5 +71,6 @@ class ReminderNotification extends Command
                 event(new NotificationEvent((object)$notification));
             }
         }
+        echo 'ok';
     }
 }
