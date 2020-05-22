@@ -494,6 +494,22 @@ return [
                 ],
             ],
         ],
+        [
+            'name' => 'pusher',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://js.pusher.com/6.0/pusher.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/notification.js',
+                ],
+            ],
+        ],
 
 
     ],

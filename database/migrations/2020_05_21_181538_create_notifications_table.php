@@ -18,6 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->uuid('user_id');
             $table->text('data');
             $table->boolean('viewed');
+            $table->string('type');
             $table->timestamps();
         });
     }

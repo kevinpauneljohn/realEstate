@@ -14,4 +14,9 @@ class Notification extends Model
     {
         $this->attributes['data'] = json_encode($value);
     }
+
+    public function getDataAttribute($value)
+    {
+        return ($value != null) ? json_decode($value) : '';
+    }
 }

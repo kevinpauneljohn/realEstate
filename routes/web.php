@@ -17,6 +17,8 @@
 
 //Auth::routes();
 
+use App\Events\NotificationEvent;
+
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
     return redirect(route('dashboard'));
@@ -135,20 +137,43 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-   $schedule = \App\LeadActivity::all();
+    $schedule = \App\LeadActivity::where([
+        ['category','=','Tripping'],
+//            ['status','=','pending']
+    ])->get();
 
-   foreach ($schedule as $sched)
-   {
-       $date = $sched->schedule;
-       $time = new DateTime($sched->start_date);
+    foreach ($schedule as $sched){
+        $date = $sched->schedule;
+        $time = new DateTime($sched->start_date);
 
-// Solution 1, merge objects to new object:
-       $merge = new DateTime($date->format('Y-m-d') .' ' .$time->format('H:i:s'));
-       //echo $merge->format('Y-m-d H:i:s'); // Outputs '2017-03-14 13:37:42'
+        $merge = new DateTime($date->format('Y-m-d') .' ' .$time->format('g:i A'));
+        //echo $merge->format('Y-m-d H:i:s'); // Outputs '2017-03-14 13:37:42'
 
-       $due = \Carbon\Carbon::parse($merge->format('Y-m-d H:i:s')); // now date is a carbon instance
-       echo $due->diffForHumans(\Carbon\Carbon::now()).'<br/>';
-   }
+        $due = \Carbon\Carbon::parse($merge->format('Y-m-d g:i A')); // now date is a carbon instance
+        $dueDate = $due->diffForHumans();
+        $notification = array(
+            'user' => $sched->user_id,
+            'data'    => array(
+                'lead_id'   => $sched->lead_id,
+                'schedule'  => $sched->schedule->format('M d, Y'),
+                'time'      => $sched->start_date,
+                'category'  => $sched->category,
+                'time_left' => $dueDate,
+                'link'      => '/schedule'
+            ),
+            'viewed'  => false,
+            'type'    => 'lead activity'
+        );
+
+        if($dueDate == '1 day from now')
+        {
+            event(new NotificationEvent((object)$notification));
+        }elseif ($dueDate == '5 hours from now'){
+            event(new NotificationEvent((object)$notification));
+        }elseif ($dueDate == '1 hour from now'){
+            event(new NotificationEvent((object)$notification));
+        }
+    }
 });
 
 /*change password*/

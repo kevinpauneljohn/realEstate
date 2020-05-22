@@ -20,7 +20,11 @@
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
                 @php
-                    $notification = \App\Notification::where('user_id',auth()->user()->id);
+                    $notification = \App\Notification::where([
+                        ['user_id','=',auth()->user()->id],
+                        ['viewed','=',0],
+                        ['type','=','lead activity'],
+                    ]);
                 @endphp
                 @if($notification->count() > 0)
                 <span class="badge badge-warning navbar-badge">
@@ -29,23 +33,15 @@
                 @endif
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">15 Notifications</span>
+                <span class="dropdown-item dropdown-header">{{$notification->count()}} @if($notification->count() > 1)Notifications @else Notification @endif</span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                    <span class="float-right text-muted text-sm">3 mins</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-users mr-2"></i> 8 friend requests
-                    <span class="float-right text-muted text-sm">12 hours</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-file mr-2"></i> 3 new reports
-                    <span class="float-right text-muted text-sm">2 days</span>
-                </a>
-                <div class="dropdown-divider"></div>
+                @foreach($notification->limit(10)->get() as $notify)
+                    <a href="{{$notify->data->link}}" class="dropdown-item">
+                        <i class="fas fa-bell mr-2"></i> {{$notify->data->category}}
+                        <span class="float-right text-muted text-sm">{{$notify->created_at->diffForHumans()}}</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                @endforeach
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li>
