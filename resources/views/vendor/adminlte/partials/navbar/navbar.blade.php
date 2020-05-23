@@ -35,7 +35,7 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">{{$notification->count()}} @if($notification->count() > 1)Notifications @else Notification @endif</span>
                 <div class="dropdown-divider"></div>
-                @foreach($notification->limit(10)->get() as $notify)
+                @foreach($notification->orderBy('id','desc')->limit(10)->get() as $notify)
                     <a href="{{$notify->data->link}}" class="dropdown-item">
                         <i class="fas fa-bell mr-2"></i> {{$notify->data->category}}
                         <span class="float-right text-muted text-sm">{{$notify->created_at->diffForHumans()}}</span>
