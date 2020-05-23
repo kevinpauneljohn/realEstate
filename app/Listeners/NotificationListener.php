@@ -23,12 +23,13 @@ class NotificationListener
      * Handle the event.
      *
      * @param  NotificationEvent  $event
-     * @return mixed
+     * @return void
      */
     public function handle(NotificationEvent $event)
     {
         $checkNotification = Notification::where([
             ['user_id','=',$event->notification->user],
+            ['data->id','=',$event->notification->data['id']],
             ['data->lead_id','=',$event->notification->data['lead_id']],
             ['data->schedule','=',$event->notification->data['schedule']],
             ['data->time','=',$event->notification->data['time']],

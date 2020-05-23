@@ -52,6 +52,7 @@ class ReminderNotification extends Command
             $notification = array(
                 'user' => $sched->user_id,
                 'data'    => array(
+                    'id'        => $sched->id,
                     'lead_id'   => $sched->lead_id,
                     'schedule'  => $sched->schedule->format('M d, Y'),
                     'time'      => $sched->start_date,

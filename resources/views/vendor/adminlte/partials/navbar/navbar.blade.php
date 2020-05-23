@@ -33,7 +33,7 @@
                 @endif
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">{{$notification->count()}} @if($notification->count() > 1)Notifications @else Notification @endif</span>
+                <span class="dropdown-item dropdown-header">{{$notification->count()}} @if($notification->count() > 1)Reminders @else Reminder @endif</span>
                 <div class="dropdown-divider"></div>
                 @foreach($notification->orderBy('id','desc')->limit(10)->get() as $notify)
                     <a href="{{$notify->data->link}}" class="dropdown-item">
@@ -42,7 +42,7 @@
                     </a>
                     <div class="dropdown-divider"></div>
                 @endforeach
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                <a href="#" class="dropdown-item dropdown-footer">See All Reminders</a>
             </div>
         </li>
         {{-- Custom right links --}}
