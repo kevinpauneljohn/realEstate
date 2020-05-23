@@ -35,7 +35,7 @@
                                 @if(\App\CannedMessageModel::where('canned_categories_id',$category->id)->count() > 0)<h5>{{$category->name}}</h5>@endif
                                 @foreach(\App\CannedMessageModel::where([['canned_categories_id','=',$category->id],['status','=','Publish']])->get() as $message)
                                     <div class="card card-info">
-                                        <div class="card-header">
+                                        <div class="card-header" style="padding:6px;">
                                             <h6 class="card-title" style="color: white">
                                                 {{ucfirst($message->title)}}
                                             </h6>
