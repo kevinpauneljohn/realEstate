@@ -151,7 +151,7 @@ Route::get('/test',function(){
         //echo $merge->format('Y-m-d H:i:s'); // Outputs '2017-03-14 13:37:42'
 
         $due = \Carbon\Carbon::parse($merge->format('Y-m-d g:i A')); // now date is a carbon instance
-        echo $sched->id.' - '.$sched->category.' - '.$due.' - '.$due->diffForHumans()."<br/>";
+        echo $sched->status.' - '.$sched->id.' - '.$sched->category.' - '.$due.' - '.$due->diffForHumans()."<br/>";
     }
 });
 
