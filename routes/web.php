@@ -154,11 +154,11 @@ Route::get('/test',function(){
         $lead = \App\Lead::find($sched->lead_id);
         echo $lead->id.' - '.$lead->fullname.' - '.$sched->status.' - '.$sched->id.' - '.$sched->category.' - '.$due.' - '.$due->diffForHumans()."<br/><br/>";
     }
-});
+})->middleware(['auth']);
 
-Route::post('/test',function(Request $request){
-    event(new NotificationEvent($request->test));
-})->name('test');
+//Route::post('/test',function(Request $request){
+//    event(new NotificationEvent($request->test));
+//})->name('test');
 
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
