@@ -44,6 +44,7 @@ class ReminderNotification extends Command
     {
         $schedule = \App\LeadActivity::where([
             ['status','=','pending'],
+            ['deleted_at','=',null],
         ])->get();
 
         foreach ($schedule as $sched){
@@ -65,7 +66,10 @@ class ReminderNotification extends Command
             if($dueDate == '1 day from now')
             {
                 event(new NotificationEvent((object)$notification));
-            }elseif ($dueDate == '5 hours from now'){
+            }elseif ($dueDate == '3 days from now'){
+                event(new NotificationEvent((object)$notification));
+            }
+            elseif ($dueDate == '5 hours from now'){
                 event(new NotificationEvent((object)$notification));
             }elseif ($dueDate == '1 hour from now'){
                 event(new NotificationEvent((object)$notification));
