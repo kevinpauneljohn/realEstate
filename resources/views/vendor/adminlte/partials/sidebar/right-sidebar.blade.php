@@ -32,7 +32,7 @@
                         <div id="accordion" class="canned-accordion">
                             <!-- we are adding the .class so bootstrap.js collapse plugin detects it -->
                             @foreach(\App\CannedCategory::all() as $category)
-                                <h5>{{$category->name}}</h5>
+                                @if(\App\CannedMessageModel::where('canned_categories_id',$category->id)->count() > 0)<h5>{{$category->name}}</h5>@endif
                                 @foreach(\App\CannedMessageModel::where([['canned_categories_id','=',$category->id],['status','=','Publish']])->get() as $message)
                                     <div class="card card-info">
                                         <div class="card-header">
