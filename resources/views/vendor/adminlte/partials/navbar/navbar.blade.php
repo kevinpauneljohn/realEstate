@@ -32,15 +32,30 @@
                 </span>
                 @endif
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">{{$notification->count()}} @if($notification->count() > 1)Reminders @else Reminder @endif</span>
                 <div class="dropdown-divider"></div>
                 @foreach($notification->orderBy('id','desc')->limit(10)->get() as $notify)
-                    <a href="{{$notify->data->link}}" class="dropdown-item">
-                        <i class="fas fa-bell mr-2"></i> {{$notify->data->category}}
-                        <span class="float-right text-muted text-sm">{{$notify->created_at->diffForHumans()}}</span>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <i class="fas fa-bell mr-2 text-info"></i>
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    {{$notify->data->category}}
+                                    <span class="float-right text-sm text-muted"><i class="far fa-clock mr-1"></i> {{$notify->created_at->diffForHumans()}}</span>
+                                </h3>
+                                <p class="text-sm text-primary">{{\App\Lead::find($notify->data->lead_id)->fullname}}</p>
+                                <p class="text-sm text-success">{{$notify->data->time_left}}</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
                     </a>
-                    <div class="dropdown-divider"></div>
+{{--                    <a href="{{$notify->data->link}}" class="dropdown-item">--}}
+{{--                        <i class="fas fa-bell mr-2"></i> {{$notify->data->category}}<br/>Test--}}
+{{--                        <span class="float-right text-muted text-sm">{{$notify->created_at->diffForHumans()}}</span>--}}
+{{--                    </a>--}}
+{{--                    <div class="dropdown-divider"></div>--}}
                 @endforeach
                 <a href="#" class="dropdown-item dropdown-footer">See All Reminders</a>
             </div>
