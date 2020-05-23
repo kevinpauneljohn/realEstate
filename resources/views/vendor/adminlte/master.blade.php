@@ -65,27 +65,27 @@
 <script src="{{ mix('js/app.js') }}"></script>
 @endif
 @yield('load_js')
-<script>
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+{{--<script>--}}
+{{--    // Enable pusher logging - don't include this in production--}}
+{{--    Pusher.logToConsole = true;--}}
 
-    var pusher = new Pusher('c7e08e74c7aad7fb625e', {
-        cluster: 'ap1'
-    });
+{{--    var pusher = new Pusher('c7e08e74c7aad7fb625e', {--}}
+{{--        cluster: 'ap1'--}}
+{{--    });--}}
 
-    var channel = pusher.subscribe('notification-channel');
-    channel.bind('notification', function(result) {
-        console.log(result.notification.data.time_left);
-        let url = window.location.href;
-        let words = "You have an up coming "+result.notification.data.category+" "+result.notification.data.time_left;
-        $('.reminder-notification').load(url+' .reminder-notification');
-        notification(words);
-    });
+{{--    var channel = pusher.subscribe('notification-channel');--}}
+{{--    channel.bind('notification', function(result) {--}}
+{{--        console.log(result.notification.data.time_left);--}}
+{{--        let url = window.location.href;--}}
+{{--        let words = "You have an up coming "+result.notification.data.category+" "+result.notification.data.time_left;--}}
+{{--        $('.reminder-notification').load(url+' .reminder-notification');--}}
+{{--        notification(words);--}}
+{{--    });--}}
 
-    function notification(words)
-    {
-        responsiveVoice.speak(words);
-    }
-</script>
+{{--    function notification(words)--}}
+{{--    {--}}
+{{--        responsiveVoice.speak(words);--}}
+{{--    }--}}
+{{--</script>--}}
 </body>
 </html>

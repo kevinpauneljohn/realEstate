@@ -27,11 +27,11 @@ class NotificationListener
      */
     public function handle(NotificationEvent $event)
     {
-        $saveNotification = new Notification();
-        $saveNotification->user_id = $event->notification->user;
-        $saveNotification->data = $event->notification->data;
-        $saveNotification->viewed = $event->notification->viewed;
-        $saveNotification->type = $event->notification->type;
-        $saveNotification->save();
+//        $saveNotification = new Notification();
+//        $saveNotification->user_id = $event->notification->user;
+//        $saveNotification->data = $event->notification->data;
+//        $saveNotification->viewed = $event->notification->viewed;
+//        $saveNotification->type = $event->notification->type;
+//        $saveNotification->save();
     }
 }
