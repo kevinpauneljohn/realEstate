@@ -36,7 +36,7 @@
                 <span class="dropdown-item dropdown-header">{{$notification->count()}} @if($notification->count() > 1)Reminders @else Reminder @endif</span>
                 <div class="dropdown-divider"></div>
                 @foreach($notification->orderBy('id','desc')->limit(10)->get() as $notify)
-                    <a href="#" class="dropdown-item">
+                    <a href="{{route('leads.show',['lead' => $notify->data->lead_id])}}" class="dropdown-item">
                         <!-- Message Start -->
                         <div class="media">
                             <i class="fas fa-bell mr-2 text-info"></i>
