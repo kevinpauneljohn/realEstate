@@ -45,11 +45,13 @@
                                         </div>
                                         <div id="collapse-{{$message->id}}" class="panel-collapse in collapse" style="">
                                             <div class="card-body" id="canned-body-{{$message->id}}">
+                                                <button type="button" class="btn btn-success btn-flat btn-xs copy-canned float-right" id="{{$message->id}}"><i class="fas fa-copy"></i> Copy</button>
                                                 {!! \App\Repositories\CannedMessageRepository::filter($message->body) !!}
                                             </div>
-                                            <div class="card-footer">
-                                                <button type="button" class="btn btn-success btn-flat btn-xs copy-canned" id="{{$message->id}}"><i class="fas fa-copy"></i> Copy</button>
-                                            </div>
+
+{{--                                            <div class="card-footer">--}}
+{{--                                                <button type="button" class="btn btn-success btn-flat btn-xs copy-canned" id="{{$message->id}}"><i class="fas fa-copy"></i> Copy</button>--}}
+{{--                                            </div>--}}
                                         </div>
                                     </div>
                                 @endforeach
