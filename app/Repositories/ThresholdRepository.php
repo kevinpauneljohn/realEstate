@@ -85,6 +85,7 @@ class ThresholdRepository
         if($status == 'approved')
         {
             $this->thresholdAction($threshold);
+            event(new ThresholdEvent($threshold));
         }
     }
 
