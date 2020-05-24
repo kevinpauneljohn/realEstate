@@ -55,18 +55,14 @@ class NotificationsController extends Controller
             })
             ->addColumn('action',function($notification){
                 $action = '';
-                $action .= '<div class="btn-group">
-                   
-                    <button type="button" class="btn btn-default btn-sm notification-btn" data-toggle="dropdown" aria-expanded="false">
-                      <i class="fas fa-ellipsis-h"></i>
-                      <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-1px, 37px, 0px);">
-                        <a class="dropdown-item" href="#">Mark as read</a>
-                        <a class="dropdown-item" href="#">Remove this notification</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">View</a>
-                      </div>
-                    </button>
-                  </div>';
+                $action .= '<div class="btn-group">';
+                $action .= '<div class="btn-group">';
+                $action .= '<button type="button" class="btn btn-default notification-btn" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
+                $action .= '<div class="dropdown-menu">';
+                $action .= '<a class="dropdown-item mark-as-read" href="#" id="'.$notification->id.'">Mark as read</a>';
+                $action .= '<a class="dropdown-item remove-notification" href="'.route('leads.show',['lead' => $notification->data->lead_id]).'">View</a>';
+                $action .= '</div></div>';
+                $action .= '</div>';
                 return $action;
             })
             ->rawColumns(['notification','action'])
