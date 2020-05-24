@@ -34,7 +34,7 @@
 
                 @endphp
                 @if($request->count() > 0)
-                    <span class="badge badge-warning navbar-badge">
+                    <span class="badge badge-danger navbar-badge">
                     {{$request->count()}}
                 </span>
                 @endif
@@ -73,7 +73,7 @@
                     ]);
                 @endphp
                 @if($notification->count() > 0)
-                <span class="badge badge-warning navbar-badge">
+                <span class="badge badge-danger navbar-badge">
                     {{$notification->count()}}
                 </span>
                 @endif
