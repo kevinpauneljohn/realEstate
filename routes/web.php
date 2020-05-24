@@ -120,16 +120,16 @@ Route::get('/schedules-list','ScheduleController@schedule_list')->name('schedule
 Route::post('/update-schedule-status','ScheduleController@updateStatus')->name('schedule.status.update')->middleware(['auth','permission:edit schedule']);
 
 /*sales*/
-Route::get('/sales','SalesController@index')->name('sales.index')->middleware(['auth','permission:view sales']);
-Route::post('/sales','SalesController@store')->name('sales.store')->middleware(['auth','permission:add sales']);
-Route::get('/sales-list','SalesController@sales_list')->name('sales.list')->middleware(['auth','permission:view sales']);
-Route::get('/user-sales-list/{id}','UserController@user_sales_list')->name('users.sales.list')->middleware(['auth','permission:view sales']);
-Route::get('/sales/{sale}','SalesController@show')->name('sales.show')->middleware(['auth','permission:view sales']);
-Route::get('/sales/edit/{sale}','SalesController@edit')->name('sales.edit')->middleware(['auth','permission:edit sales']);
-Route::get('/get-model-unit-details/{modelUnit}','SalesController@model_unit_details')->name('model.units.details')->middleware(['auth']);
-Route::put('/sale-status-update','SalesController@updateSaleStatus')->name('sales.status.update')->middleware(['auth','permission:edit sales']);
-Route::put('/sales/{sale}','SalesController@update')->name('sales.update')->middleware(['auth','permission:edit sales']);
-Route::get('/add-sales','SalesController@create')->name('sales.create')->middleware(['auth','permission:add sales']);
+Route::get('/sales','SalesController@index')->name('sales.index')->middleware(['auth','permission:view sales','checkCommission']);
+Route::post('/sales','SalesController@store')->name('sales.store')->middleware(['auth','permission:add sales','checkCommission']);
+Route::get('/sales-list','SalesController@sales_list')->name('sales.list')->middleware(['auth','permission:view sales','checkCommission']);
+Route::get('/user-sales-list/{id}','UserController@user_sales_list')->name('users.sales.list')->middleware(['auth','permission:view sales','checkCommission']);
+Route::get('/sales/{sale}','SalesController@show')->name('sales.show')->middleware(['auth','permission:view sales','checkCommission']);
+Route::get('/sales/edit/{sale}','SalesController@edit')->name('sales.edit')->middleware(['auth','permission:edit sales','checkCommission']);
+Route::get('/get-model-unit-details/{modelUnit}','SalesController@model_unit_details')->name('model.units.details')->middleware(['auth','checkCommission']);
+Route::put('/sale-status-update','SalesController@updateSaleStatus')->name('sales.status.update')->middleware(['auth','permission:edit sales','checkCommission']);
+Route::put('/sales/{sale}','SalesController@update')->name('sales.update')->middleware(['auth','permission:edit sales','checkCommission']);
+Route::get('/add-sales','SalesController@create')->name('sales.create')->middleware(['auth','permission:add sales','checkCommission']);
 
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commissions']);
