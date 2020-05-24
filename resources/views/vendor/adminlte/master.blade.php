@@ -79,11 +79,7 @@
         let url = window.location.href;
         $('.reminder-notification').load(url+' .reminder-notification');
         // let words = "You have an up coming "+result.notification.data.category+" "+result.notification.data.time_left;
-        if(result.notification.user === '{{auth()->user()->id}}')
-        {
 
-            // notification(words);
-        }
     });
 
     function notification(words)
