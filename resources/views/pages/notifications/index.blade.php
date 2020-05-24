@@ -60,7 +60,7 @@
 @section('js')
     @can('view role')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('js/role.js')}}"></script>
+        <script src="{{asset('js/notification.js')}}"></script>
         <script>
             $(function() {
                 $('#notifications-list').DataTable({

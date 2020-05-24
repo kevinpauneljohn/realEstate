@@ -59,7 +59,7 @@ class NotificationsController extends Controller
                 $action .= '<div class="btn-group">';
                 $action .= '<button type="button" class="btn btn-default notification-btn" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
                 $action .= '<div class="dropdown-menu">';
-                $action .= '<a class="dropdown-item mark-as-read" href="#" id="'.$notification->id.'">Mark as read</a>';
+                $action .= '<a class="dropdown-item mark-read" href="#" id="'.$notification->id.'">Mark as read</a>';
                 $action .= '<a class="dropdown-item remove-notification" href="'.route('leads.show',['lead' => $notification->data->lead_id]).'">View</a>';
                 $action .= '</div></div>';
                 $action .= '</div>';
@@ -67,5 +67,14 @@ class NotificationsController extends Controller
             })
             ->rawColumns(['notification','action'])
             ->make(true);
+    }
+
+    public function update(Request $request,$id)
+    {
+        $notification = Notification::find($id);
+        $notification->viewed = true;
+        $notification->save();
+
+        return response()->json(['success' => true, 'message' => 'Reminder marked as read']);
     }
 }

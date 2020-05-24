@@ -1,14 +1,20 @@
-// Enable pusher logging - don't include this in production
-Pusher.logToConsole = true;
+$(document).on('click','.mark-read',function(){
+    let id = this.id;
+    $.ajax({
+        'url' : '/notifications/'+id,
+        'type' : 'PUT',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        beforeSend: function(){
 
-var pusher = new Pusher('c7e08e74c7aad7fb625e', {
-    cluster: 'ap1'
+        },success: function(result){
+            if(result.success === true)
+            {
+                toastr.success(result.message);
+                let table = $('#notifications-list').DataTable();
+                table.ajax.reload();
+            }
+        },error: function(xhr, status, error){
+        console.log(xhr);
+    }
+    });
 });
-
-var channel = pusher.subscribe('notification-channel');
-channel.bind('notification', function(result) {
-    let url = window.location.href;
-    $('.reminder-notification').load(url+' .reminder-notification');
-    responsiveVoice.speak("hello world", "UK English Male");
-});
-
