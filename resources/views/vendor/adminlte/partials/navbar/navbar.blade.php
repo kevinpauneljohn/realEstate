@@ -97,13 +97,8 @@
                         </div>
                         <!-- Message End -->
                     </a>
-{{--                    <a href="{{$notify->data->link}}" class="dropdown-item">--}}
-{{--                        <i class="fas fa-bell mr-2"></i> {{$notify->data->category}}<br/>Test--}}
-{{--                        <span class="float-right text-muted text-sm">{{$notify->created_at->diffForHumans()}}</span>--}}
-{{--                    </a>--}}
-{{--                    <div class="dropdown-divider"></div>--}}
                 @endforeach
-                <a href="#" class="dropdown-item dropdown-footer">See All Reminders</a>
+                <a href="{{route('notifications.index')}}" class="dropdown-item dropdown-footer">See All Reminders</a>
             </div>
         </li>
         {{-- Custom right links --}}
