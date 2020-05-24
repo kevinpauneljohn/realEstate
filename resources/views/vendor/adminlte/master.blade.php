@@ -85,6 +85,8 @@
         console.log(request);
         let url = window.location.href;
         $('.reminder-notification').load(url+' .reminder-notification');
+        var table = $('#sales-list').DataTable();
+        table.ajax.reload();
     });
 
 </script>
