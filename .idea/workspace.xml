@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/adminlte/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/adminlte/master.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/sales.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/sales.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,10 +19,10 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5060144">
+    <splitter split-orientation="horizontal" split-proportion="0.1">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/web.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="209">
@@ -34,63 +35,55 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/resources/views/vendor/adminlte/partials/navbar/navbar.blade.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1088">
-                  <caret line="76" column="46" lean-forward="true" selection-start-line="76" selection-start-column="46" selection-end-line="76" selection-end-column="46" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/resources/views/vendor/adminlte/master.blade.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="522">
-                  <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Http/Middleware/RequestLid.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Http/Controllers/RequestController.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="38" column="7" selection-start-line="38" selection-start-column="7" selection-end-line="38" selection-end-column="7" />
-                </state>
-              </provider>
-            </entry>
-          </file>
         </leaf>
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Http/Middleware/CheckCommission.php">
+            <entry file="file://$PROJECT_DIR$/public/js/sales.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="153">
-                  <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-                  <folding>
-                    <element signature="e#39#58#0#PHP" expanded="true" />
-                  </folding>
+                <state relative-caret-position="273">
+                  <caret line="371" column="32" lean-forward="true" selection-start-line="371" selection-start-column="32" selection-end-line="371" selection-end-column="32" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/Repositories/ThresholdRepository.php">
+            <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="425">
-                  <caret line="88" column="46" selection-start-line="88" selection-start-column="46" selection-end-line="88" selection-end-column="46" />
+                <state relative-caret-position="-7650">
+                  <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+                  <folding>
+                    <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#span#1;n#!!top" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="482">
+                  <caret line="768" column="12" lean-forward="true" selection-start-line="768" selection-start-column="12" selection-end-line="771" selection-end-column="49" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="164">
+                  <caret line="321" column="36" lean-forward="true" selection-start-line="321" selection-start-column="36" selection-end-line="321" selection-end-column="52" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/js/canned.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="294">
+                  <caret line="20" column="16" lean-forward="true" selection-start-line="20" selection-start-column="16" selection-end-line="21" selection-end-column="36" />
                 </state>
               </provider>
             </entry>
@@ -109,7 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>change lea</find>
       <find>lead sta</find>
       <find>/leads/get</find>
       <find>getTransformedLeadById</find>
@@ -139,6 +131,7 @@
       <find>type</find>
       <find>request</find>
       <find>event</find>
+      <find>edit-sales-form</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -147,13 +140,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" />
         <option value="$PROJECT_DIR$/app/Listeners/LeadStatusForTrippingStatusListener.php" />
         <option value="$PROJECT_DIR$/database/seeds/PrioritiesSeeder.php" />
         <option value="$PROJECT_DIR$/app/Events/UserRequestEvent.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/users/index.blade.php" />
         <option value="$PROJECT_DIR$/public/js/lead.js" />
-        <option value="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/thresholds/index.blade.php" />
         <option value="$PROJECT_DIR$/public/js/user.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
@@ -198,6 +189,8 @@
         <option value="$PROJECT_DIR$/app/Http/Middleware/RequestLid.php" />
         <option value="$PROJECT_DIR$/app/Repositories/ThresholdRepository.php" />
         <option value="$PROJECT_DIR$/resources/views/vendor/adminlte/master.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/sales.js" />
       </list>
     </option>
   </component>
@@ -334,13 +327,14 @@
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Events" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
@@ -348,11 +342,6 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Http" type="462c0819:PsiDirectoryNode" />
               <item name="Middleware" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
@@ -381,15 +370,15 @@
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="adminlte" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="sales" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -535,21 +524,7 @@
       <workItem from="1590114645558" duration="22915000" />
       <workItem from="1590181057507" duration="1989000" />
       <workItem from="1590201377136" duration="23873000" />
-      <workItem from="1590280417997" duration="14332000" />
-    </task>
-    <task id="LOCAL-00346" summary="canned message - view module">
-      <created>1589808299966</created>
-      <option name="number" value="00346" />
-      <option name="presentableId" value="LOCAL-00346" />
-      <option name="project" value="LOCAL" />
-      <updated>1589808299966</updated>
-    </task>
-    <task id="LOCAL-00347" summary="canned message - view module">
-      <created>1589809437380</created>
-      <option name="number" value="00347" />
-      <option name="presentableId" value="LOCAL-00347" />
-      <option name="project" value="LOCAL" />
-      <updated>1589809437380</updated>
+      <workItem from="1590280417997" duration="18436000" />
     </task>
     <task id="LOCAL-00348" summary="canned message - view module">
       <created>1589842332739</created>
@@ -880,11 +855,25 @@
       <option name="project" value="LOCAL" />
       <updated>1590308188191</updated>
     </task>
-    <option name="localTasksCounter" value="395" />
+    <task id="LOCAL-00395" summary="added threshold notification using pusher">
+      <created>1590308432669</created>
+      <option name="number" value="00395" />
+      <option name="presentableId" value="LOCAL-00395" />
+      <option name="project" value="LOCAL" />
+      <updated>1590308432669</updated>
+    </task>
+    <task id="LOCAL-00396" summary="added threshold notification using pusher">
+      <created>1590308883166</created>
+      <option name="number" value="00396" />
+      <option name="presentableId" value="LOCAL-00396" />
+      <option name="project" value="LOCAL" />
+      <updated>1590308883166</updated>
+    </task>
+    <option name="localTasksCounter" value="397" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1217780000" />
+    <option name="totallyTimeSpent" value="1221884000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -962,34 +951,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="added threshold notification using pusher" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/broadcasting.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="37" column="26" lean-forward="true" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="756" column="38" selection-start-line="756" selection-start-column="38" selection-end-line="756" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DashboardController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/test.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/lead.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -1273,20 +1234,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/RequestLid.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/vendor/adminlte/master.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="87" column="62" selection-start-line="87" selection-start-column="62" selection-end-line="87" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Repositories/ThresholdRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="70" column="30" lean-forward="true" selection-start-line="70" selection-start-column="30" selection-end-line="70" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/vendor/adminlte/partials/navbar/navbar.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1088">
           <caret line="76" column="46" lean-forward="true" selection-start-line="76" selection-start-column="46" selection-end-line="76" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/CheckCommission.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding>
-            <element signature="e#39#58#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1301,10 +1273,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/RequestLid.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/CheckCommission.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+        <state relative-caret-position="170">
+          <caret line="10" column="34" lean-forward="true" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
+          <folding>
+            <element signature="e#39#58#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="768" column="12" lean-forward="true" selection-start-line="768" selection-start-column="12" selection-end-line="771" selection-end-column="49" />
         </state>
       </provider>
     </entry>
@@ -1315,17 +1297,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repositories/ThresholdRepository.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="88" column="46" selection-start-line="88" selection-start-column="46" selection-end-line="88" selection-end-column="46" />
+        <state relative-caret-position="164">
+          <caret line="321" column="36" lean-forward="true" selection-start-line="321" selection-start-column="36" selection-end-line="321" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/vendor/adminlte/master.blade.php">
+    <entry file="file://$PROJECT_DIR$/public/js/sales.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
+        <state relative-caret-position="273">
+          <caret line="371" column="32" lean-forward="true" selection-start-line="371" selection-start-column="32" selection-end-line="371" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7650">
+          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

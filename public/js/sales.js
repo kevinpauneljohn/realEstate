@@ -359,9 +359,43 @@ $(document).on('submit','#edit-sales-form',function (form) {
 
     let data = $('#edit-sales-form').serializeArray();
 
-    submitform('/sales/'+id, 'PUT',data,
-        true,'',true,'');
+    // submitform('/sales/'+id, 'PUT',data,
+    //     true,'',true,'');
 
+    $.ajax({
+        'url'   : '/sales/'+id,
+        'type'  : 'PUT',
+        'data'  : data,
+        beforeSend: function(){
+            $('.submit-form-btn').val('Saving ... ').attr('disabled',true);
+        },success: function(result){
+            console.log(result);
+            if(result.success === true)
+            {
+                var table = $('#sales-list').DataTable();
+                table.ajax.reload();
+
+                $('#edit-sales-form').trigger('reset');
+                $('#edit-sales-modal').modal('toggle');
+                toastr.success(result.message);
+            }else if(result.success === false){
+                toastr.error(result.message);
+            }
+            $.each(result, function (key, value) {
+                var element = $('#'+key);
+
+                element.closest('div.'+key)
+                    .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                    .find('.text-danger')
+                    .remove();
+                element.after('<p class="text-danger">'+value+'</p>');
+            });
+
+            $('.submit-form-btn').val('Save').attr('disabled',false);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
     clear_errors('edit_reservation_date','update_reason','edit_project',
         'edit_model_unit','edit_total_contract_price','edit_financing','update_reason');
 });

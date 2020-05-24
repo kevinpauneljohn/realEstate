@@ -450,7 +450,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <input type="submit" class="btn btn-primary submit-form-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -616,7 +616,7 @@
         });
         //Initialize Select2 Elements
         $('.select2').select2();
-        $('#reservation_date').datepicker({
+        $('#edit_reservation_date').datepicker({
             autoclose: true,
             format: 'yyyy-mm-dd'
         }).datepicker("setDate", new Date());
@@ -625,6 +625,11 @@
             autoclose: true,
             format: 'yyyy-mm-dd'
         });
+
+        // $('#datepicker, #reminder_date, #edit_reminder_date, #edit_date').datepicker({
+        //     autoclose: true,
+        //     format: 'yyyy-mm-dd'
+        // }).datepicker("setDate", new Date());
     </script>
     @endcan
 @stop
