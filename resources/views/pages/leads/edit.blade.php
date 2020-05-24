@@ -148,7 +148,11 @@
                                     <option value="Online" @if($lead->point_of_contact == "Online") selected="selected" @endif>Online</option>
                                     <option value="Saturation" @if($lead->point_of_contact == "Saturation") selected="selected" @endif>Saturation</option>
                                     <option value="Referral" @if($lead->point_of_contact == "Referral") selected="selected" @endif>Referral</option>
-                                    <option value="Referral" @if($lead->point_of_contact == "Others") selected="selected" @endif>Others</option>
+                                    <option value="Youtube" @if(old('point_of_contact') == "Youtube") selected="selected" @endif>Youtube</option>
+                                    <option value="Facebook" @if(old('point_of_contact') == "Facebook") selected="selected" @endif>Facebook</option>
+                                    <option value="Phone Call" @if(old('point_of_contact') == "Phone Call") selected="selected" @endif>Phone Call</option>
+                                    <option value="SMS" @if(old('point_of_contact') == "SMS") selected="selected" @endif>SMS</option>
+                                    <option value="Others" @if($lead->point_of_contact == "Others") selected="selected" @endif>Others</option>
                                 </select>
                                 @error('point_of_contact')
                                 <span class="invalid-feedback" role="alert">
