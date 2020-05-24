@@ -494,17 +494,17 @@ return [
                 ],
             ],
         ],
-        [
-            'name' => 'responsive_voice',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => 'https://code.responsivevoice.org/responsivevoice.js?key=uC3LLI3C',
-                ],
-            ],
-        ],
+//        [
+//            'name' => 'responsive_voice',
+//            'active' => true,
+//            'files' => [
+//                [
+//                    'type' => 'js',
+//                    'asset' => false,
+//                    'location' => 'https://code.responsivevoice.org/responsivevoice.js?key=uC3LLI3C',
+//                ],
+//            ],
+//        ],
         [
             'name' => 'pusher',
             'active' => true,

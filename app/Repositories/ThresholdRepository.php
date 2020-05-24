@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Action;
+use App\Events\ThresholdEvent;
 use App\Priority;
 use App\Threshold;
 use App\User;
@@ -56,6 +57,9 @@ class ThresholdRepository
         $threshold->lid = false;
 
         $threshold->save();
+
+        ///notify the admin if there are user requests
+        event(new ThresholdEvent($threshold));
     }
 
     /**

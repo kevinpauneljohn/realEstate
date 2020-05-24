@@ -78,14 +78,15 @@
         console.log(result.notification);
         let url = window.location.href;
         $('.reminder-notification').load(url+' .reminder-notification');
-        // let words = "You have an up coming "+result.notification.data.category+" "+result.notification.data.time_left;
-
     });
 
-    function notification(words)
-    {
-        responsiveVoice.speak(words);
-    }
+    var requestChannel = pusher.subscribe('request-channel');
+    requestChannel.bind('request', function(request) {
+        console.log(request);
+        let url = window.location.href;
+        $('.reminder-notification').load(url+' .reminder-notification');
+    });
+
 </script>
 </body>
 </html>
