@@ -351,7 +351,7 @@
                                     </div>
                                     <div class="form-group edit_project">
                                         <label for="edit_project">Project</label><span class="required">*</span> <i class="fas fa-question-circle" data-toggle="tooltip" title="Requires Admin approval to reflect the changes"></i>
-                                        <select name="edit_project" id="edit_project" class="form-control" style="width: 100%;">
+                                        <select name="edit_project" id="edit_project" class="form-control select2" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
                                             @foreach($projects as $project)
                                                 <option value="{{$project->id}}">{{$project->name}}</option>
