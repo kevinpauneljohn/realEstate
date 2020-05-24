@@ -341,7 +341,7 @@
                                         <input type="text" name="edit_reservation_date" id="edit_reservation_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
                                     </div>
                                     <div class="form-group edit_buyer">
-                                        <label for="edit_buyer">Buyer's Name</label><span class="required">*</span>
+                                        <label for="edit_buyer">Buyer's Name</label><span class="required">*</span> <i class="fas fa-question-circle" data-toggle="tooltip" title="Requires Admin approval to reflect the changes"></i>
                                         <select name="edit_buyer" id="edit_buyer" class="form-control select2" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
                                             @foreach($leads as $lead)
@@ -350,7 +350,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group edit_project">
-                                        <label for="edit_project">Project</label><span class="required">*</span>
+                                        <label for="edit_project">Project</label><span class="required">*</span> <i class="fas fa-question-circle" data-toggle="tooltip" title="Requires Admin approval to reflect the changes"></i>
                                         <select name="edit_project" id="edit_project" class="form-control" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
                                             @foreach($projects as $project)
@@ -359,7 +359,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group edit_model_unit">
-                                        <label for="edit_model_unit">Model Unit</label><span class="required">*</span>
+                                        <label for="edit_model_unit">Model Unit</label><span class="required">*</span> <i class="fas fa-question-circle" data-toggle="tooltip" title="Requires Admin approval to reflect the changes"></i>
                                         <select name="edit_model_unit" id="edit_model_unit" class="form-control" style="width: 100%;">
 
                                         </select>
@@ -393,11 +393,11 @@
 
                                 <div class="col-lg-4">
                                     <div class="form-group edit_total_contract_price">
-                                        <label>Total Contract Price</label><span class="required">*</span>
+                                        <label>Total Contract Price</label><span class="required">*</span> <i class="fas fa-question-circle" data-toggle="tooltip" title="Requires Admin approval to reflect the changes"></i>
                                         <input type="number" name="edit_total_contract_price" id="edit_total_contract_price" class="form-control">
                                     </div>
                                     <div class="form-group edit_discount">
-                                        <label>Discount</label>
+                                        <label>Discount</label> <i class="fas fa-question-circle" data-toggle="tooltip" title="Requires Admin approval to reflect the changes"></i>
                                         <input type="number" name="edit_discount" id="edit_discount" class="form-control">
                                     </div>
                                     <div class="form-group edit_processing_fee">
@@ -420,7 +420,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group edit_financing">
-                                        <label>Financing</label>
+                                        <label>Financing</label> <i class="fas fa-question-circle" data-toggle="tooltip" title="Requires Admin approval to reflect the changes"></i>
                                         <select name="edit_financing" id="edit_financing" class="form-control select2" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
                                             <option value="Cash">Cash</option>
@@ -442,7 +442,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group update_reason">
-                                        <label for="update_reason">Reason</label><span class="required">*</span>
+                                        <label for="update_reason">Reason</label><span class="required">*</span> <span class="text-muted">(Please provide a valid reason to make sure the admin will approve your request)</span>
                                         <textarea class="form-control" name="update_reason" id="update_reason">@if(auth()->user()->hasRole('super admin')) Proceed @endif</textarea>
                                     </div>
                                 </div>
@@ -626,10 +626,9 @@
             format: 'yyyy-mm-dd'
         });
 
-        // $('#datepicker, #reminder_date, #edit_reminder_date, #edit_date').datepicker({
-        //     autoclose: true,
-        //     format: 'yyyy-mm-dd'
-        // }).datepicker("setDate", new Date());
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
     @endcan
 @stop
