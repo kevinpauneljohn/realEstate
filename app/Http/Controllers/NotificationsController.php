@@ -72,9 +72,12 @@ class NotificationsController extends Controller
     public function update(Request $request,$id)
     {
         $notification = Notification::find($id);
-        $notification->viewed = true;
-        $notification->save();
-
-        return response()->json(['success' => true, 'message' => 'Reminder marked as read']);
+        $notification->viewed = 1;
+        if($notification->isDirty('viewed'))
+        {
+            $notification->save();
+            return response()->json(['success' => true, 'message' => 'Reminder marked as read']);
+        }
+        return response()->json(['success' => false, 'message' => 'No changes occurred']);
     }
 }
