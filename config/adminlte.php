@@ -228,12 +228,12 @@ return [
 //            'icon' => 'fa fa-bullhorn',
 //            'url'  => '#',
 //        ],
-        [
-            'text'    => 'Requests',
-            'icon'    => 'fas fa-tasks',
-            'route'   => 'thresholds.index',
-            'can'     => 'view request',
-        ],
+//        [
+//            'text'    => 'Requests',
+//            'icon'    => 'fas fa-tasks',
+//            'route'   => 'thresholds.index',
+//            'can'     => 'view request',
+//        ],
         [
             'text'    => 'Users',
             'icon'    => 'fas fa-user',

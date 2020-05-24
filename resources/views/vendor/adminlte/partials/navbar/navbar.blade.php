@@ -18,6 +18,52 @@
     <ul class="navbar-nav ml-auto reminder-notification">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fas fa-clipboard-list"></i>
+                @php
+                    if(auth()->user()->hasAnyRole(['super admin','admin']))
+                    {
+                        $request = \App\Threshold::where([
+                            ['status','=','pending']
+                        ]);
+                    }else{
+                        $request = \App\Threshold::where([
+                            ['user_id','=',auth()->user()->id],
+                            ['status','=','pending'],
+                        ]);
+                    }
+
+                @endphp
+                @if($request->count() > 0)
+                    <span class="badge badge-warning navbar-badge">
+                    {{$request->count()}}
+                </span>
+                @endif
+            </a>
+            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
+                <span class="dropdown-item dropdown-header">{{$request->count()}} @if($request->count() > 1)Requests @else Request @endif</span>
+                <div class="dropdown-divider"></div>
+                @foreach($request->orderBy('id','desc')->limit(10)->get() as $change)
+                    <a href="@if(auth()->user()->can('view request')) {{route('requests.show',['request' => $change->id])}} @else # @endif" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <i class="fas fa-bell mr-2 text-info"></i>
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    {{$change->type}} {{$change->storage_name}}
+                                    <span class="float-right text-sm text-muted"><i class="far fa-clock mr-1"></i> {{$change->created_at->diffForHumans()}}</span>
+                                </h3>
+                                <p class="text-sm">Requested by: <span class="text-primary">{{\App\User::find($change->user_id)->fullname}}</span></p>
+                                <p class="text-sm text-success">{{$change->priority->name}}</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                @endforeach
+                <a href="@if(auth()->user()->can('view request')) {{route('thresholds.index')}} @else # @endif" class="dropdown-item dropdown-footer">See All Requests</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
                 @php
                     $notification = \App\Notification::where([
