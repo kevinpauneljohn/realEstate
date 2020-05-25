@@ -134,7 +134,7 @@ $(document).on('submit','#edit-computation-form',function (form) {
         'type'  : 'PUT',
         'data'  : data,
         beforeSend: function(){
-
+            $('.save-btn').val('Saving ... ').attr('disabled',true);
         },success: function(result){
             console.log(result);
 
