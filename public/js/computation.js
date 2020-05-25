@@ -6,7 +6,7 @@ $(document).on('change','#project',function(){
         'type' : 'GET',
         beforeSend: function(){
             $('.model-unit').remove();
-            $('input, select, textarea').attr('disabled',true);
+            $('#model_unit,#unit_type,#financing,#computation,.save-btn').attr('disabled',true);
         },success: function(result){
             //console.log(result);
 
@@ -15,7 +15,7 @@ $(document).on('change','#project',function(){
                 $('#model_unit').append(option);
             });
 
-            $('input, select, textarea').attr('disabled',false);
+            $('#model_unit,#unit_type,#financing,#computation,.save-btn').attr('disabled',false);
         },error: function(xhr,status,error){
             //console.log(xhr);
         }
@@ -47,6 +47,7 @@ $(document).on('submit','#computation-form',function(form){
                 table.ajax.reload();
 
                 $('#computation-form').trigger('reset');
+                $('#project').val("").change();
                 $('.model-unit').remove();
                 $('#add-new-computation-modal').modal('toggle');
 
