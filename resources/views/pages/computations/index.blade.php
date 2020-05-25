@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-header">
             @can('add computation')
-                <button type="button" class="btn bg-primary btn-sm add-computation-btn">Add</button>
+                <button type="button" class="btn bg-primary btn-sm add-computation-btn" data-toggle="modal" data-target="#add-new-computation-modal">Add</button>
             @endcan
 
         </div>
@@ -69,7 +69,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group project">
                                         <label for="project">Project</label><span class="required">*</span>
-                                        <select class="form-control select2" id="project" name="project" style="width: 100%;">
+                                        <select class="form-control" id="project" name="project" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
                                             @foreach($projects as $project)
                                                 <option value="{{$project->id}}">{{$project->name}}</option>
@@ -80,7 +80,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group model_unit">
                                         <label for="model_unit">Model Unit</label><span class="required">*</span>
-                                        <select class="form-control select2" id="model_unit" name="model_unit" style="width: 100%;">
+                                        <select class="form-control" id="model_unit" name="model_unit" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
 
                                         </select>
@@ -93,7 +93,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group unit_type">
                                         <label for="unit_type">Unit Type</label>
-                                        <select class="form-control select2" id="unit_type" name="unit_type" style="width: 100%;">
+                                        <select class="form-control" id="unit_type" name="unit_type" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
                                             <option value="Inner Unit">Inner Unit</option>
                                             <option value="End Unit">End Unit</option>
@@ -105,7 +105,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group financing">
                                         <label for="financing">Financing</label><span class="required">*</span>
-                                        <select class="form-control select2" id="financing" name="financing" style="width: 100%;">
+                                        <select class="form-control" id="financing" name="financing" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
                                             <option value="HDMF">HDMF</option>
                                             <option value="Bank">Bank</option>
