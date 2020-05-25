@@ -152,6 +152,10 @@
                                     <option value="Facebook" @if(old('point_of_contact') == "Facebook") selected="selected" @endif>Facebook</option>
                                     <option value="Phone Call" @if(old('point_of_contact') == "Phone Call") selected="selected" @endif>Phone Call</option>
                                     <option value="SMS" @if(old('point_of_contact') == "SMS") selected="selected" @endif>SMS</option>
+                                    <option value="Viber" @if(old('point_of_contact') == "Viber") selected="selected" @endif>Viber</option>
+                                    <option value="Whatsapp" @if(old('point_of_contact') == "Whatsapp") selected="selected" @endif>Whatsapp</option>
+                                    <option value="IMO" @if(old('point_of_contact') == "IMO") selected="selected" @endif>IMO</option>
+                                    <option value="Line" @if(old('point_of_contact') == "Line") selected="selected" @endif>Line</option>
                                     <option value="Others" @if($lead->point_of_contact == "Others") selected="selected" @endif>Others</option>
                                 </select>
                                 @error('point_of_contact')
