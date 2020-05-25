@@ -108,4 +108,11 @@ class ComputationController extends Controller
         return response()->json($validation->errors());
     }
 
+    public function destroy($id)
+    {
+        $computation = Computation::find($id);
+        $computation->delete();
+        return response()->json(['success' => true,'message' => 'Computation successfully deleted']);
+    }
+
 }

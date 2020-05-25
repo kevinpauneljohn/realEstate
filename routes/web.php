@@ -233,4 +233,5 @@ Route::get('/computations-list','ComputationController@computation_list')->name(
 Route::post('/computations','ComputationController@store')->name('computations.store')->middleware(['auth','permission:add computation']);
 Route::post('/computations/{computation}','ComputationController@show')->name('computations.show')->middleware(['auth','permission:edit computation']);
 Route::put('/computations/{computation}','ComputationController@update')->name('computations.update')->middleware(['auth','permission:edit computation']);
+Route::delete('/computations/{computation}','ComputationController@destroy')->name('computations.destroy')->middleware(['auth','permission:delete computation']);
 
