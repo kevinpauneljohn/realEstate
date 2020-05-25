@@ -59,7 +59,7 @@ class UserController extends Controller
                 ['name','!=','super admin'],
                 ['name','!=','admin'],
                 ['name','!=','manager'],
-                ['name','!=','agent'],
+                ['name','!=','team leader'],
             ])->get();
         }
         return view('pages.users.index')->with([
