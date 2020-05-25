@@ -300,6 +300,11 @@ return [
                     'can'  => 'add canned message',
                 ],
                 [
+                    'text' => 'Computations',
+                    'route'  => 'computations.index',
+                    'can'  => 'add computation',
+                ],
+                [
                     'text' => 'Actions',
                     'route'  => 'actions.index',
                     'can'  => 'view action',

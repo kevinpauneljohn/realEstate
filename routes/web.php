@@ -224,3 +224,7 @@ Route::put('/canned-category/{id}','CannedCategoryController@update')->name('can
 Route::get('/canned-category-list','CannedCategoryController@cannedCategoryList')->name('canned.category.list')->middleware(['auth','permission:view canned message']);
 Route::delete('/canned-category/{id}','CannedCategoryController@destroy')->name('canned.category.destroy')->middleware(['auth','permission:add canned message']);
 
+Route::get('/computations','ComputationController@index')->name('computations.index')->middleware(['auth','permission:add computation']);
+Route::get('/computations-list','ComputationController@computation_list')->name('computations.list')->middleware(['auth','permission:view computation']);
+Route::post('/');
+

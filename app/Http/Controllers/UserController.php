@@ -54,6 +54,13 @@ class UserController extends Controller
                 ['name','!=','manager'],
                 ['name','!=','agent'],
             ])->get();
+        }elseif (auth()->user()->hasRole('team leader')){
+            $roles = Role::where([
+                ['name','!=','super admin'],
+                ['name','!=','admin'],
+                ['name','!=','manager'],
+                ['name','!=','agent'],
+            ])->get();
         }
         return view('pages.users.index')->with([
             'roles' => $roles,

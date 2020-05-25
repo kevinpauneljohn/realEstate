@@ -128,7 +128,7 @@
     <div class="card">
         <div class="card-header">
             @can('add lead')
-                <a href="{{route('leads.create')}}"><button type="button" class="btn bg-gradient-primary btn-sm"><i class="fa fa-plus-circle"></i> Add New</button></a>
+                <a href="{{route('leads.create')}}"><button type="button" class="btn bg-primary btn-sm">Add</button></a>
             @endcan
 
         </div>

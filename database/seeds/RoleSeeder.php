@@ -86,5 +86,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view canned message']);
         Permission::create(['name' => 'edit canned message']);
         Permission::create(['name' => 'delete canned message']);
+
+        Permission::create(['name' => 'add computation']);
+        Permission::create(['name' => 'view computation']);
+        Permission::create(['name' => 'edit computation']);
+        Permission::create(['name' => 'delete computation']);
     }
 }

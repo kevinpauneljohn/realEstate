@@ -18,4 +18,9 @@ class Project extends Model
     {
         return $this->hasOne(Sales::class);
     }
+
+    public function computations()
+    {
+        return $this->hasMany(Computation::class);
+    }
 }
