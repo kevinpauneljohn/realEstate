@@ -19,8 +19,8 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            @can('add role')
-                <button type="button" class="btn bg-primary btn-sm" data-toggle="modal" data-target="#add-new-computation-modal">Add</button>
+            @can('add computation')
+                <button type="button" class="btn bg-primary btn-sm add-computation-btn">Add</button>
             @endcan
 
         </div>

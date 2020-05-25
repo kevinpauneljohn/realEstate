@@ -69,3 +69,19 @@ $(document).on('submit','#computation-form',function(form){
 
     clear_errors('project','model_unit','financing','computation');
 });
+
+$(document).on('click','.edit-computation-btn',function(){
+    let id = this.id;
+    $('#add-new-computation-modal .modal-title').text('Edit Computation');
+    $('.form-submit').removeAttr('id').attr('id','edit-computation-form').prepend('<input type="hidden" name="_method" value="PUT"><input type="hidden" name="id" value="'+id+'">');
+    $('.text-danger').remove();
+    $('#add-new-computation-modal').modal('toggle');
+});
+
+$(document).on('click','.add-computation-btn',function(){
+    $('#add-new-computation-modal .modal-title').text('Add Computation');
+    $('.form-submit input[name=_method],.form-submit input[name=id]').remove();
+    $('.form-submit').removeAttr('id').attr('id','computation-form');
+    $('.text-danger').remove();
+    $('#add-new-computation-modal').modal('toggle');
+});

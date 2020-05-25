@@ -31,16 +31,16 @@ class ComputationController extends Controller
             ->editColumn('model_unit_id',function($computation){
                 return ModelUnit::find($computation->model_unit_id)->name;
             })
-            ->addColumn('action', function ($role)
+            ->addColumn('action', function ($computation)
             {
                 $action = "";
-                if(auth()->user()->can('edit role'))
+                if(auth()->user()->can('edit computation'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-role-btn" id="'.$role->id.'" data-toggle="modal" data-target="#edit-role-modal"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-computation-btn" id="'.$computation->id.'"><i class="fa fa-edit"></i> Edit</a>';
                 }
-                if(auth()->user()->can('delete role'))
+                if(auth()->user()->can('delete computation'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-role-btn" id="'.$role->id.'" data-toggle="modal" data-target="#delete-role-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-computation-btn" id="'.$computation->id.'"><i class="fa fa-trash"></i> Delete</a>';
                 }
                 return $action;
             })
