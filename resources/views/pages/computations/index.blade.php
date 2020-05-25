@@ -116,16 +116,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group computation">
                                 <label for="computation">Computation Details</label><span class="required">*</span>
-                                <textarea class="form-control" name="computation" id="computation" style="min-height: 300px;">
-
-                                </textarea>
+                                <textarea class="form-control" name="computation" id="computation" style="min-height: 400px;"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary submit-form-btn" value="Save">
+                            <input type="submit" class="btn btn-primary save-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -157,6 +155,7 @@
         <!-- bootstrap datepicker -->
         <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
         <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
+        <script src="{{asset('js/validation.js')}}"></script>
         <script src="{{asset('js/computation.js')}}"></script>
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
