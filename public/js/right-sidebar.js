@@ -10,20 +10,20 @@ $(document).on('click','.accordion-dropdown',function(){
 
 $(document).on('click','.copy-canned',function(){
     let id = this.id;
-    copyToClipboard('#canned-body-'+id);
+    copyToClipboard('#canned-body-'+id,'Canned message was copied');
 });
-function copyToClipboard(element) {
+function copyToClipboard(element,message) {
     var $temp = $("<textarea>");
     $("body").append($temp);
     $temp.val($(element).text().trim()).select();
     document.execCommand("copy");
-    toastr.success('Canned message was copied');
+    toastr.success(message);
     $temp.remove();
 }
 
 $(document).on('click','.copy-computation',function(){
     let id = this.id;
-    copyToClipboard('#computation-'+id);
+    copyToClipboard('#computation-'+id,'Computation was copied');
 });
 
 $(document).on('submit','.sample-computation-form',function(form){
