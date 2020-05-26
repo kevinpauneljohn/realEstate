@@ -133,17 +133,25 @@ class ComputationController extends Controller
             $value = $item;
             if($item->location_type === null)
             {
-                $item->location_type = "";
+                $item->location_type = "\n";
+            }else{
+                $location = $item->location_type;
+                $item->location_type = 'Unit Location: '.$location."\n\n";
             }
             if($item->project_id)
             {
                 $id = $item->project_id;
-                $item->project_id = Project::find($id)->name;
+                $item->project_id = Project::find($id)->name."\n";
             }
             if($item->model_unit_id)
             {
                 $id = $item->model_unit_id;
-                $item->model_unit_id = ModelUnit::find($id)->name;
+                $item->model_unit_id = ModelUnit::find($id)->name."\n";
+            }
+            if($item->financing)
+            {
+                $financing = $item->financing;
+                $item->financing = $financing." Sample Computation\n";
             }
             return $value;
         });

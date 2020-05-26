@@ -21,6 +21,11 @@ function copyToClipboard(element) {
     $temp.remove();
 }
 
+$(document).on('click','.copy-computation',function(){
+    let id = this.id;
+    copyToClipboard('#computation-'+id);
+});
+
 $(document).on('submit','.sample-computation-form',function(form){
     form.preventDefault();
 
@@ -35,13 +40,16 @@ $(document).on('submit','.sample-computation-form',function(form){
         },success: function(result){
 
             $.each(result,function(key, value){
-                console.log(value);
-                let item = '<div class="row computation-displayed"><div class="col-lg-12">' +
-                    '<div class="callout callout-info"><h5>Project: '+value.project_id+'<br/>Model Unit: '+value.model_unit_id+'</h5>' +
-                    '<span class="unit-type-title">Unit location: '+value.location_type+'</span><br/><br/>' +
-                    '<strong class="financing-title">'+value.financing+' Sample Computation</strong>' +
+
+                let item = '<div class="row computation-displayed">' +
+                    '<div class="col-lg-12">' +
+                    '<div class="callout callout-info">' +
+                    '<button class="btn btn-success btn-sm float-right copy-computation" id="'+value.id+'"><i class="fa fa-copy"></i> Copy</button>' +
+                    '<div id="computation-'+value.id+'"><h5>Project: '+value.project_id+'<br/>Model Unit: '+value.model_unit_id+'</h5>' +
+                    '<span class="unit-type-title">'+value.location_type+'</span><br/>' +
+                    '<strong class="financing-title">'+value.financing+'</strong>' +
                     '<p>'+value.computation+'</p>' +
-                    '</div></div></div>';
+                    '</div></div></div></div>';
                 $('.display-computation').append(item);
             });
 
