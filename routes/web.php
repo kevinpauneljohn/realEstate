@@ -237,3 +237,7 @@ Route::put('/computations/{computation}','ComputationController@update')->name('
 Route::delete('/computations/{computation}','ComputationController@destroy')->name('computations.destroy')->middleware(['auth','permission:delete computation']);
 Route::post('/sample-computation','ComputationController@sampleComputations')->name('computations.sample')->middleware(['auth','permission:view computation']);
 
+Route::get('/calculator',function(){
+    return view('pages.calculator.calculator');
+});
+
