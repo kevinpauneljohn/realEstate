@@ -20,3 +20,58 @@ function copyToClipboard(element) {
     toastr.success('Canned message was copied');
     $temp.remove();
 }
+
+$(document).on('submit','.sample-computation-form',function(form){
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
+    $.ajax({
+        'url' : '/sample-computation',
+        'type' : 'POST',
+        'data' : data,
+        beforeSend: function(){
+            $('.search-btn').val('Searching ... ').attr('disabled',true);
+            $('.computation-displayed').remove();
+        },success: function(result){
+
+            $.each(result,function(key, value){
+                console.log(value);
+                let item = '<div class="row computation-displayed"><div class="col-lg-12">' +
+                    '<div class="callout callout-info"><h5>Project: '+value.project_id+'<br/>Model Unit: '+value.model_unit_id+'</h5>' +
+                    '<span class="unit-type-title">Unit location: '+value.location_type+'</span><br/><br/>' +
+                    '<strong class="financing-title">'+value.financing+' Sample Computation</strong>' +
+                    '<p>'+value.computation+'</p>' +
+                    '</div></div></div>';
+                $('.display-computation').append(item);
+            });
+
+            $('.search-btn').val('Search').attr('disabled',false);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+});
+
+$(document).on('change','#project_label',function(){
+    let id = this.value;
+
+    $.ajax({
+        'url' : '/project-model-units/'+id,
+        'type' : 'GET',
+        beforeSend: function(){
+            $('.model-unit-label').remove();
+            $('#model_unit_label,#unit_type_label,#financing_label,.search-btn').attr('disabled',true);
+        },success: function(result){
+            //console.log(result);
+
+            $.each(result,function(key, value){
+                let option = '<option value="'+value.id+'" class="model-unit-label">'+value.name+'</option>';
+                $('#model_unit_label').append(option);
+            });
+
+            $('#model_unit_label,#unit_type_label,#financing_label,.search-btn').attr('disabled',false);
+        },error: function(xhr,status,error){
+            //console.log(xhr);
+        }
+    });
+});

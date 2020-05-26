@@ -115,4 +115,39 @@ class ComputationController extends Controller
         return response()->json(['success' => true,'message' => 'Computation successfully deleted']);
     }
 
+    /**
+     * @since May 26, 2020
+     * @author john kevin paunel
+     * get the sample computation of a specific project
+     * @param Request $request
+     * @return mixed
+     * */
+    public function sampleComputations(Request $request)
+    {
+        $computation = Computation::where('project_id','=',$request->project_label)
+            ->where('model_unit_id','=',$request->model_unit_label)
+            ->get();
+
+        $data = collect($computation);
+        $filtered = $data->map(function($item, $key){
+            $value = $item;
+            if($item->location_type === null)
+            {
+                $item->location_type = "";
+            }
+            if($item->project_id)
+            {
+                $id = $item->project_id;
+                $item->project_id = Project::find($id)->name;
+            }
+            if($item->model_unit_id)
+            {
+                $id = $item->model_unit_id;
+                $item->model_unit_id = ModelUnit::find($id)->name;
+            }
+            return $value;
+        });
+
+        return $filtered;
+    }
 }

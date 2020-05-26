@@ -7,14 +7,8 @@
             <button type="button" class="btn btn-flat btn-primary" data-toggle="modal" data-target="#canned-message">View Canned Messages</button>
         </div>
         <div class="mb-4">
-            <button type="button" class="btn btn-flat bg-purple" data-toggle="modal" data-target="#canned-message">View Sample Computation</button>
+            <button type="button" class="btn btn-flat bg-purple" data-toggle="modal" data-target="#sample-computation-modal">View Sample Computation</button>
         </div>
-{{--        <h6>Navbar Variants</h6>--}}
-{{--        <div class="d-flex">--}}
-{{--            <div class="d-flex flex-wrap mb-3">--}}
-{{--                test--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
 </aside>
 
@@ -65,3 +59,48 @@
             <!-- /.modal-dialog -->
     </div>
     <!--end add new roles modal-->
+
+<!--view sample computation modal-->
+<div class="modal fade" id="sample-computation-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Sample Computation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="sample-computation-form">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="project_label">Project</label>
+                                <select class="form-control" name="project_label" id="project_label">
+                                    <option value=""> -- Select -- </option>
+                                    @foreach(\App\Project::all() as $project)
+                                        <option value="{{$project->id}}">{{$project->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="model_unit_label">Model Unit</label>
+                                <select class="form-control" name="model_unit_label" id="model_unit_label">
+                                    <option value=""> -- Select -- </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary search-btn" value="Search">
+                </form>
+                <div class="display-computation"></div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--end sample computation modal-->
