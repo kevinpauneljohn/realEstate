@@ -67,7 +67,7 @@
                                 <a class="nav-link active" data-toggle="tab" href="#sales">Sales</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#agent">Agents</a>
+                                <a class="nav-link" data-toggle="tab" href="#down-line">Down Lines</a>
                             </li>
                             @if(auth()->user()->can('view down line leads'))
                                 <li class="nav-item">
@@ -108,8 +108,8 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div id="agent" class="container tab-pane fade"><br>
-                                <h3>Agents</h3>
+                            <div id="down-line" class="container tab-pane fade"><br>
+                                <h3>Down Lines</h3>
                                 <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                             </div>
                             @if(auth()->user()->can('view down line leads'))
