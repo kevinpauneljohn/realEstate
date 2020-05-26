@@ -33,36 +33,25 @@
                             {{ucfirst($user->firstname)}} {{ucfirst($user->lastname)}}
                         </h3>
 
-                        <a href="" class="btn btn-info btn-block"><b>Edit</b></a>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-
-                <!-- About Me Box -->
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Details</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <strong><i class="fas fa-plus mr-1"></i> Added By</strong>
-
-                        <p class="text-muted">{{ucfirst($upline->firstname)}} {{ucfirst($upline->lastname)}}</p>
-                        <hr>
-                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
-
-                        <p class="text-muted">{{$user->address}}</p>
-
-                        <hr>
-
-                        <strong><i class="fas fa-phone mr-1"></i> Contact Number</strong>
-
-                        <p class="text-muted">
-                            {{$user->mobileNo}}
+                        <p class="text-muted text-center">
+                            @foreach($user->getRoleNames() as $roles)
+                                <span class="badge badge-info">{{$roles}}</span>
+                            @endforeach
                         </p>
-
-
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b><i class="fas fa-plus mr-1"></i>Up line</b> <a class="float-right">{{ucfirst($upline->firstname)}} {{ucfirst($upline->lastname)}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b><i class="fas fa-user-alt mr-1"></i>Username</b> <a class="float-right">{{$user->username}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b><i class="fas fa-envelope mr-1"></i>Email</b> <a class="float-right">{{$user->email}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b><i class="fas fa-mobile-alt mr-1"></i>Mobile No.</b> <a class="float-right">{{$user->mobileNo}}</a>
+                            </li>
+                        </ul>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -71,15 +60,26 @@
             <!-- /.col -->
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header p-2">
-                        <button type="button" class="btn @if(request()->segment(3) == 'profile')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-money-bill"></i> Sales</button>
-                        <a href="{{route('users.agents',['user' => $user->id])}}"><button type="button" class="btn @if(request()->segment(3) == 'agents')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-calendar-alt"></i> Agents</button></a>
-                        <a href="{{route('users.commissions',['user' => $user->id])}}"><button type="button" class="btn @if(request()->segment(3) == 'commissions')btn-success @else btn-default @endif" data-toggle="modal"><i class="fa fa-calendar-alt"></i> Commission</button></a>
-                    </div><!-- /.card-header -->
                     <div class="card-body">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#sales">Sales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#agent">Agents</a>
+                            </li>
+                            @if(auth()->user()->can('view down line leads'))
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#leads">Leads</a>
+                                </li>
+                            @endif
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#commission">Commissions</a>
+                            </li>
+                        </ul>
                         <div class="tab-content">
-                            <div class="active tab-pane" id="activity">
-
+                            <div id="sales" class="container tab-pane active"><br>
                                 <table id="sales-list" class="table table-bordered table-striped" role="grid">
                                     <thead>
                                     <tr role="row">
@@ -91,7 +91,6 @@
                                         <th>Discount</th>
                                         <th>Financing</th>
                                         <th>Status</th>
-                                        <th>Action</th>
                                     </tr>
                                     </thead>
 
@@ -105,6 +104,55 @@
                                         <th>Discount</th>
                                         <th>Financing</th>
                                         <th>Status</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div id="agent" class="container tab-pane fade"><br>
+                                <h3>Agents</h3>
+                                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            </div>
+                            @if(auth()->user()->can('view down line leads'))
+                                <div id="leads" class="container tab-pane fade"><br>
+                                    <table id="leads-list" class="table table-bordered table-hover" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>Date Inquired</th>
+                                            <th>Name</th>
+                                            <th>Source</th>
+                                            <th>Lead Status</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tfoot>
+                                        <tr>
+                                            <th>Date Inquired</th>
+                                            <th>Name</th>
+                                            <th>Source</th>
+                                            <th>Lead Status</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            @endif
+                            <div id="commission" class="container tab-pane fade"><br>
+                                <button type="button" class="btn btn-primary btn-sm" style="margin:3px;" data-target="#add-commission-modal" data-toggle="modal" @if($rate_limit === null) disabled="disabled" @endif>Add Commission</button>
+
+                                <table id="commission-list" class="table table-bordered table-striped" role="grid">
+                                    <thead>
+                                    <tr role="row">
+                                        <th>Date Assigned</th>
+                                        <th>Commission Rate</th>
+                                        <th>Project</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tfoot>
+                                    <tr>
+                                        <th>Date Assigned</th>
+                                        <th>Commission Rate</th>
+                                        <th>Project</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>
@@ -120,6 +168,56 @@
         </div>
         <!-- /.row -->
     </div>
+
+    @if($rate_limit !== null)
+        @can('add commissions')
+            <!--edit role modal-->
+            <div class="modal fade" id="add-commission-modal">
+                <form role="form" id="add-commission-form" class="form-submit">
+                    @csrf
+                    <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Add Commission</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group project">
+                                    <label for="project">Project</label> <span>(Optional)</span>
+                                    <select class="form-control" name="project" id="project">
+                                        <option value=""> -- Select -- </option>
+                                        @foreach($projects as $project)
+                                            <option value="{{$project->id}}">{{$project->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group commission_rate"><span class="required">*</span>
+                                    <label for="commission_rate">Commission Rate</label>
+                                    <select class="form-control" name="commission_rate" id="commission_rate">
+                                        <option value=""> -- Select -- </option>
+                                        @for($ctr = 1; $ctr <= $rate_limit; $ctr++)
+                                            <option value="{{$ctr-0.5}}">{{$ctr-0.5}}%</option>
+                                            <option value="{{$ctr}}">{{$ctr}}%</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="reset" class="btn btn-default">Reset</button>
+                                    <input type="submit" class="btn btn-primary submit-commission-btn" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </form>
+            </div>
+            <!--end add user modal-->
+        @endcan
+    @endif
 @stop
 
 @section('css')
@@ -151,6 +249,7 @@
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
         <script src="{{asset('js/sales.js')}}"></script>
+        <script src="{{asset('js/commission.js')}}"></script>
         <script>
 
             $(function () {
@@ -199,6 +298,23 @@
                         { data: 'discount', name: 'discount'},
                         { data: 'financing', name: 'financing'},
                         { data: 'status', name: 'status'},
+                        // { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'asc']
+                });
+            });
+
+
+            $(function() {
+                $('#leads-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('user.leads.list',['user' => $user->id]) !!}',
+                    columns: [
+                        { data: 'created_at', name: 'created_at'},
+                        { data: 'commission_rate', name: 'commission_rate'},
+                        { data: 'project_id', name: 'project_id'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

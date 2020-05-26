@@ -56,7 +56,7 @@ class CommissionController extends Controller
 
             if($commission->save())
             {
-                return response()->json(['success' => true]);
+                return response()->json(['success' => true, 'message' => 'Commission successfully saved']);
             }
         }
         return response()->json($validator->errors());
@@ -72,6 +72,9 @@ class CommissionController extends Controller
     {
         $commissions = Commission::where('user_id',$id)->get();
         return DataTables::of($commissions)
+            ->editColumn('created_at',function($commission){
+                return $commission->created_at->format('M d, Y');
+            })
             ->editColumn('commission_rate',function($commission){
                 $rate = "";
                 if($commission->commission_rate != null)

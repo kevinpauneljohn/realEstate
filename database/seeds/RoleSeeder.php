@@ -91,5 +91,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view computation']);
         Permission::create(['name' => 'edit computation']);
         Permission::create(['name' => 'delete computation']);
+
+        Permission::create(['name' => 'view down line leads']);
     }
 }

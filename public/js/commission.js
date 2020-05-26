@@ -59,19 +59,59 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 
 $(document).ready(function () {
 
-    $('#add-commission-form').submit(function (form) {
-        form.preventDefault();
+    // $('#add-commission-form').submit(function (form) {
+    //     form.preventDefault();
+    //
+    //     let data = $('#add-commission-form').serialize();
+    //     submitform(
+    //         '/commissions',
+    //         'POST',
+    //         data,
+    //         'Commission Successfully Added!',
+    //         true,
+    //         '',
+    //         false,
+    //     );
+    // });
+});
 
-        let data = $('#add-commission-form').serialize();
-        submitform(
-            '/commissions',
-            'POST',
-            data,
-            'Commission Successfully Added!',
-            true,
-            '',
-            false,
-        );
+$(document).on('submit','#add-commission-form',function (form) {
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
+    $.ajax({
+        'url' : '/commissions',
+        'type' : 'POST',
+        'data' : data,
+        beforeSend: function(){
+            $('.submit-commission-btn').val('Saving ... ').attr('disabled',true);
+        },success: function(result){
+            console.log(result);
+
+            if(result.success === true)
+            {
+                let table = $('#commission-list').DataTable();
+                table.ajax.reload();
+
+                toastr.success(result.message);
+                $('#add-commission-form').trigger('reset');
+                $('#add-commission-modal').modal('toggle');
+            }
+
+            $.each(result, function (key, value) {
+                var element = $('#'+key);
+
+                element.closest('div.'+key)
+                    .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                    .find('.text-danger')
+                    .remove();
+                element.after('<p class="text-danger">'+value+'</p>');
+            });
+
+            $('.submit-commission-btn').val('Save').attr('disabled',false);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
     });
 });
 

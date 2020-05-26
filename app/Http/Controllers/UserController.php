@@ -286,36 +286,6 @@ class UserController extends Controller
     public function profile($id)
     {
         $user = User::findOrFail($id);
-        return view('pages.users.profile')->with([
-            'user'  => $user,
-            'upline' => User::findOrFail($user->upline_id)
-        ]);
-    }
-    /**
-     * March 11, 2020
-     * @author john kevin paunel
-     * get all user agents
-     * @param string $id
-     * @return mixed
-     * */
-    public function agents($id)
-    {
-        $user = User::findOrFail($id);
-        return view('pages.users.agents')->with([
-            'user'  => $user,
-            'upline' => User::findOrFail($user->upline_id)
-        ]);
-    }
-    /**
-     * March 11, 2020
-     * @author john kevin paunel
-     * view user commission rate
-     * @param string $id
-     * @return mixed
-     * */
-    public function commissions($id)
-    {
-        $user = User::findOrFail($id);
 
         $rate_limit = 4;/* 4% is the user's max commission rate which is only the super admin can give*/
         /*if the use is not a super admin the commission rate that can be given will be based on the up line max rate*/
@@ -331,13 +301,65 @@ class UserController extends Controller
             }
         }
 
-        return view('pages.users.commissions')->with([
+        $user = User::findOrFail($id);
+        return view('pages.users.profile')->with([
             'user'  => $user,
-            'rate_limit' => $rate_limit,
             'upline' => User::findOrFail($user->upline_id),
+            'rate_limit' => $rate_limit,
             'projects'  => Project::all(),
         ]);
     }
+
+//    /**
+//     * March 11, 2020
+//     * @author john kevin paunel
+//     * view user commission rate
+//     * @param string $id
+//     * @return mixed
+//     * */
+//    public function commissions($id)
+//    {
+//        $user = User::findOrFail($id);
+//
+//        $rate_limit = 4;/* 4% is the user's max commission rate which is only the super admin can give*/
+//        /*if the use is not a super admin the commission rate that can be given will be based on the up line max rate*/
+//        if(!User::find($user->upline_id)->hasRole('super admin'))
+//        {
+//            /*this will check if the up line has already commission rate set on the system*/
+//            $rate_limit = User::findOrFail($user->upline_id)->commissions()->first();
+//
+//            if($rate_limit !== null)
+//            {
+//                /*if the up line commission rate is not null the rate given for the down line is one step lower*/
+//                $rate_limit = $rate_limit->commission_rate-1;
+//            }
+//        }
+//
+//        return view('pages.users.commissions')->with([
+//            'user'  => $user,
+//            'rate_limit' => $rate_limit,
+//            'upline' => User::findOrFail($user->upline_id),
+//            'projects'  => Project::all(),
+//        ]);
+//    }
+
+
+    /**
+     * March 11, 2020
+     * @author john kevin paunel
+     * get all user agents
+     * @param string $id
+     * @return mixed
+     * */
+    public function agents($id)
+    {
+        $user = User::findOrFail($id);
+        return view('pages.users.agents')->with([
+            'user'  => $user,
+            'upline' => User::findOrFail($user->upline_id)
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *

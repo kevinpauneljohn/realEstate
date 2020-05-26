@@ -114,6 +114,25 @@ class LeadController extends Controller
             ->make(true);
     }
 
+    public function downLine_lead_list($user)
+    {
+        $leads = Lead::where('user_id',$user)->get();
+        return DataTables::of($leads)
+            ->editColumn('date_inquired',function($lead){
+                ///
+                return $lead->date_inquired->format('M d, Y');
+            })
+            ->addColumn('fullname',function($lead){
+                $lead = '<a href="'.route("leads.show",["lead" => $lead->id]).'">'.$lead->fullname.'</a>';
+                return $lead;
+            })
+            ->editColumn('lead_status', function($lead){
+                return $this->leadRepository->setStatusBadge($lead->lead_status);
+            })
+            ->rawColumns(['lead_status','fullname'])
+            ->make(true);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
