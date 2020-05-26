@@ -123,7 +123,7 @@ class LeadController extends Controller
                 return $lead->date_inquired->format('M d, Y');
             })
             ->addColumn('fullname',function($lead){
-                $lead = '<a href="'.route("leads.show",["lead" => $lead->id]).'">'.$lead->fullname.'</a>';
+                $lead = '<a href="#">'.$lead->fullname.'</a>';
                 return $lead;
             })
             ->editColumn('lead_status', function($lead){
