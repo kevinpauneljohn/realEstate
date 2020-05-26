@@ -307,15 +307,31 @@
 
 
             $(function() {
-                $('#leads-list').DataTable({
+                $('#commission-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('user.leads.list',['user' => $user->id]) !!}',
+                    ajax: '{!! route('commissions.list',['user' => $user->id]) !!}',
                     columns: [
                         { data: 'created_at', name: 'created_at'},
                         { data: 'commission_rate', name: 'commission_rate'},
                         { data: 'project_id', name: 'project_id'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'asc']
+                });
+            });
+
+            $(function() {
+                $('#leads-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('user.leads.list',['user' => $user->id]) !!}',
+                    columns: [
+                        { data: 'date_inquired', name: 'date_inquired'},
+                        { data: 'fullname', name: 'fullname'},
+                        { data: 'point_of_contact', name: 'point_of_contact'},
+                        { data: 'lead_status', name: 'lead_status'},
                     ],
                     responsive:true,
                     order:[0,'asc']
