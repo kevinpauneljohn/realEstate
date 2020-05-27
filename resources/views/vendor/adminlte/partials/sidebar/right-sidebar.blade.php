@@ -4,13 +4,13 @@
         <h5>Quick Tools</h5>
         <hr class="mb-2">
         <div class="mb-1">
-            <button type="button" class="btn btn-flat btn-primary" data-toggle="modal" data-target="#canned-message">View Canned Messages</button>
+            <a href="#" data-toggle="modal" data-target="#canned-message"><i class="far fa-comment-dots text-success"></i>&nbsp; View Canned Messages</a>
         </div>
         <div class="mb-1">
-            <button type="button" class="btn btn-flat bg-purple" data-toggle="modal" data-target="#sample-computation-modal">View Sample Computation</button>
+            <a href="#" data-toggle="modal" data-target="#sample-computation-modal"><i class="fas fa-file-alt text-success"></i> &nbsp;View Sample Computation</a>
         </div>
         <div class="mb-1">
-            <button type="button" class="btn btn-flat bg-orange calculator-template-btn" data-toggle="modal" data-target="#calculator-modal">Mortgage Calculator</button>
+            <a href="#" class="calculator-template-btn" data-toggle="modal" data-target="#calculator-modal"><i class="fas fa-calculator text-success"></i> &nbsp;Mortgage Calculator</a>
         </div>
     </div>
 </aside>
