@@ -28,8 +28,6 @@ $(document).on('submit','.bank-computation-form',function(form){
     let data = $(this).serializeArray(),
         total_contract_price = data[0].value;
 
-    console.log(data);
-
     let loanable_amount = parseFloat($('#loanable_amount').val()),
         interest_rate = convert_rate(parseFloat($('#interest_rate').val())),
         years = $('#years').val();
@@ -44,9 +42,12 @@ $(document).on('submit','.bank-computation-form',function(form){
     denominator = (Math.pow(denominator,converted_years))-1;
 
     let mortgage = (numerator/denominator)*loanable_amount;
+    let gross_monthly_income = (mortgage*100)/30;
+        gross_monthly_income = formatter.format(gross_monthly_income.toFixed(2));
+
     mortgage = formatter.format(mortgage.toFixed(2));
 
-    console.log(mortgage);
+
 
     $('.calculation-result').html(function(){
         let content = '<div class="callout callout-info" style="margin-top:10px;">' +
@@ -54,7 +55,8 @@ $(document).on('submit','.bank-computation-form',function(form){
             '<strong>Equity</strong> : '+numberWithCommas(data[2].value)+'<br/>'+
             '<strong>Loanable Amount</strong> : '+numberWithCommas(data[3].value)+'<br/>'+
             '<p><strong>Estimated Monthly Amortization For The Chosen Loan Tenure at '+data[4].value+'%</strong><br/>' +
-            '<strong>'+data[5].value+' years = </strong>'+numberWithCommas(mortgage)+'</p>'+
+            '<strong>'+data[5].value+' years = </strong>'+numberWithCommas(mortgage)+'<br/>' +
+            '<strong>Required Gross Monthly Income = </strong>'+numberWithCommas(gross_monthly_income)+'</p>'+
             '</div>';
 
         return content;
