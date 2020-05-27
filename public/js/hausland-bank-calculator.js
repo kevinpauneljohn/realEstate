@@ -61,18 +61,32 @@ $(document).on('submit','.bank-computation-form',function(form){
 
     mortgage = formatter.format(mortgage.toFixed(2));
 
+    let combined_months = "";
+    if(pf_months > equity_months){
+        combined_months = equity_months;
+    }else if(pf_months === equity_months)
+    {
+        combined_months = pf_months;
+    }else if(equity_months > pf_months){
+        combined_months = pf_months;
+    }
+
+    let combined_equity_and_pf = (pf_less_rf/pf_months) + (equity / equity_months);
+        combined_equity_and_pf = formatter.format(combined_equity_and_pf.toFixed(2));
+
 
 
     $('.calculation-result').html(function(){
         let content = '<div class="callout callout-info" style="margin-top:10px;">' +
-            '<strong>Total Contract Price</strong> : '+numberWithCommas(data[0].value)+'<br/>'+
+            '<strong>Total Contract Price</strong> : '+numberWithCommas(data[0].value)+'<br/><br/>'+
             '<strong>(PF) Processing fee</strong> : '+numberWithCommas(processing_fee)+'<br/>'+
             '<strong>(RF) Reservation fee</strong> : '+numberWithCommas(reservation_fee)+'<br/>'+
             '<strong>PF less RF</strong> : '+numberWithCommas(pf_less_rf)+'<br/>'+
-            '<strong>PF less RF within '+pf_months+' months</strong> : '+numberWithCommas(pf_less_rf_amort)+'<br/>'+
+            '<strong>PF less RF within '+pf_months+' months</strong> : '+numberWithCommas(pf_less_rf_amort)+'<br/><br/>'+
             '<strong>Equity</strong> : '+numberWithCommas(equity)+'<br/>'+
-            '<strong>Equity within '+equity_months+' month/s</strong> : '+numberWithCommas(equity_amort)+'<br/>'+
-            '<strong>Loanable Amount</strong> : '+numberWithCommas(loanable_amount)+'<br/>'+
+            '<strong>Equity within '+equity_months+' month/s</strong> : '+numberWithCommas(equity_amort)+'<br/><br/>'+
+            '<strong>Combined Equity and PF within '+combined_months+' month/s</strong> : '+numberWithCommas(combined_equity_and_pf)+'<br/><br/>'+
+            '<strong>Loanable Amount</strong> : '+numberWithCommas(loanable_amount)+'<br/><br/>'+
             '<p><strong>Estimated Monthly Amortization For The Chosen Loan Tenure at '+$('#interest_rate').val()+'%</strong><br/>' +
             '<strong>'+years+' years = </strong>'+numberWithCommas(mortgage)+'<br/>' +
             '<strong>Required Gross Monthly Income = </strong>'+numberWithCommas(gross_monthly_income)+'</p>'+
