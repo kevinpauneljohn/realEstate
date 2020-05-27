@@ -124,7 +124,7 @@
                         <option value=""> -- Select -- </option>
                         <option value="Apec Homes HDMF">Apec Homes HDMF</option>
                         <option value="Bank">Bank Calculator</option>
-                        <option value="Hausland">Hausland Development Corporation</option>
+                        <option value="Hausland Bank Calculator">Hausland Bank Calculator</option>
                     </select>
 
                     <div class="row display-calculator"></div>
