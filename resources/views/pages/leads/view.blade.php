@@ -20,16 +20,16 @@
 @section('content')
     <div class="row">
         <div class="col-lg-9 lead-profile">
-            <div class="card card-primary">
+            <div class="card card-default">
                 <div class="card-header main-profile">
                     <span class="float-right">
-                        <a href="{{route('leads.index')}}" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> View all</a>
+                        <a href="{{route('leads.index')}}" class="btn btn-sm btn-default"><i class="fa fa-eye"></i> View all</a>
                         @if($lead->lead_status !== 'Reserved')
-                            <button type="button" class="btn btn-sm btn-primary set-status" data-toggle="modal" data-target="#set-status"><i class="fa fa-thermometer-three-quarters"></i> Update Status</button>
+                            <button type="button" class="btn btn-sm btn-default set-status" data-toggle="modal" data-target="#set-status"><i class="fa fa-thermometer-three-quarters"></i> Update Status</button>
                         @endif
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Activity</button>
-                        <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
-                        <a href="{{route('sales.create')}}?leadId={{$lead->id}}" class="btn btn-sm btn-primary"><i class="fa fa-exchange-alt"></i> Convert to sales</a>
+                        <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#log-touches"><i class="fa fa-address-book"></i> Log Activity</button>
+                        <a href="{{route('leads.edit',['lead' => $lead->id])}}" class="btn btn-sm btn-default"><i class="fa fa-edit"></i> Edit</a>
+                        <a href="{{route('sales.create')}}?leadId={{$lead->id}}" class="btn btn-sm btn-default"><i class="fa fa-exchange-alt"></i> Convert to sales</a>
                     </span>
                 </div>
                 <div class="card-body">
@@ -237,7 +237,7 @@
         <div class="col-lg-3">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card card-secondary">
+                    <div class="card card-default">
                         <div class="card-header">
                             <strong style="font-size: 18px;">Quick Links</strong>
                             <button class="btn btn-secondary btn-xs float-right" data-toggle="modal" data-target="#social-links">Add</button>

@@ -68,7 +68,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header_class' => '',
     'usermenu_image' => true,
     'usermenu_desc' => true,
 
@@ -102,14 +102,25 @@ return [
     |
     */
 
-    'classes_body' => 'sidebar-dark-primary',
-    'classes_brand' => 'navbar-primary',
-    'classes_brand_text' => 'navbar-primary',
+//    'classes_body' => 'sidebar-dark-primary',
+//    'classes_brand' => 'navbar-primary',
+//    'classes_brand_text' => 'navbar-primary',
+//    'classes_content_header' => 'container-fluid',
+//    'classes_content' => 'container-fluid',
+//    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+//    'classes_sidebar_nav' => 'sidebar-dark-primary',
+//    'classes_topnav' => 'navbar-dark navbar-primary',
+//    'classes_topnav_nav' => 'navbar-expand-md',
+//    'classes_topnav_container' => 'container',
+
+    'classes_body' => '',
+    'classes_brand' => '',
+    'classes_brand_text' => '',
     'classes_content_header' => 'container-fluid',
     'classes_content' => 'container-fluid',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => 'sidebar-dark-primary',
-    'classes_topnav' => 'navbar-dark navbar-primary',
+    'classes_sidebar_nav' => '',
+    'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand-md',
     'classes_topnav_container' => 'container',
 
