@@ -122,7 +122,8 @@
                 <div class="form-group">
                     <select class="form-control" id="calculator-template">
                         <option value=""> -- Select -- </option>
-                        <option value="Apec Homes">Apec Homes</option>
+                        <option value="Apec Homes HDMF">Apec Homes HDMF</option>
+                        <option value="Bank">Bank Calculator</option>
                         <option value="Hausland">Hausland Development Corporation</option>
                     </select>
 
