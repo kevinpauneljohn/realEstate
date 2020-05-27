@@ -125,6 +125,7 @@
                         <option value="Apec Homes">Apec Homes</option>
                         <option value="Hausland">Hausland Development Corporation</option>
                     </select>
+
                     <div class="row display-calculator"></div>
                 </div>
             </div>

@@ -93,9 +93,16 @@ $(document).on('change','#calculator-template',function(){
         'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         'data' : {'template' : value},
         beforeSend: function(){
+            $('#calculator-template').attr('disabled',true).after('<div class="load-template" style="margin: auto;width: 10%;margin-top:20px;">' +
+                '<div class="spinner-border text-primary" role="status">' +
+                '<span class="sr-only">Loading...</span>' +
+                '</div>' +
+                '</div>');
             $('.display-calculator').html("");
         },success: function(result){
             $('.display-calculator').html(result);
+            $('#calculator-template').attr('disabled',false);
+            $('.load-template').remove();
         },error: function(xhr, status, error){
 
         }

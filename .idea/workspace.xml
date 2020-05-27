@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/calculator/apec_homes.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/calculator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_05_26_231201_create_calculators_table.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/right-sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/right-sidebar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/calculator/calculator.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/calculator/calculator.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/vendor/adminlte/partials/sidebar/right-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/adminlte/partials/sidebar/right-sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +19,7 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.22402358">
+    <splitter split-orientation="horizontal" split-proportion="0.6798419">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -43,8 +38,20 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/public/js/right-sidebar.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="525">
-                  <caret line="104" selection-start-line="104" selection-end-line="104" />
+                <state relative-caret-position="522">
+                  <caret line="103" column="61" selection-start-line="103" selection-start-column="61" selection-end-line="103" selection-end-column="61" />
+                  <folding>
+                    <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-195">
+                  <caret line="22" selection-start-line="22" selection-end-line="22" />
                 </state>
               </provider>
             </entry>
@@ -92,7 +99,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/js/calculator.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="561">
@@ -104,11 +111,25 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/views/vendor/adminlte/partials/sidebar/right-sidebar.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="204">
-                  <caret line="12" column="64" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="87" />
+                <state relative-caret-position="389">
+                  <caret line="127" selection-start-line="127" selection-end-line="127" />
+                  <folding>
+                    <element signature="e#356#362#0#HTML" expanded="true" />
+                    <element signature="e#540#546#0#HTML" expanded="true" />
+                    <element signature="e#708#714#0#HTML" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/css/style.css">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="335">
+                  <caret line="56" column="4" lean-forward="true" selection-start-line="56" selection-start-column="4" selection-end-line="58" selection-end-column="17" />
                 </state>
               </provider>
             </entry>
@@ -127,7 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>view</find>
       <find>openRequest</find>
       <find>requests</find>
       <find>update</find>
@@ -157,6 +177,7 @@
       <find>lead_li</find>
       <find>load</find>
       <find>header</find>
+      <find>details</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -213,9 +234,9 @@
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CalculatorController.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/calculator/calculator.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/calculator.js" />
         <option value="$PROJECT_DIR$/resources/views/vendor/adminlte/partials/sidebar/right-sidebar.blade.php" />
         <option value="$PROJECT_DIR$/public/js/right-sidebar.js" />
-        <option value="$PROJECT_DIR$/public/js/calculator.js" />
       </list>
     </option>
   </component>
@@ -364,13 +385,13 @@
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -524,21 +545,7 @@
       <workItem from="1590448512444" duration="15764000" />
       <workItem from="1590478481043" duration="16371000" />
       <workItem from="1590542811742" duration="794000" />
-      <workItem from="1590552373883" duration="4957000" />
-    </task>
-    <task id="LOCAL-00375" summary="canned message - view module">
-      <created>1590254358466</created>
-      <option name="number" value="00375" />
-      <option name="presentableId" value="LOCAL-00375" />
-      <option name="project" value="LOCAL" />
-      <updated>1590254358466</updated>
-    </task>
-    <task id="LOCAL-00376" summary="canned message - view module">
-      <created>1590257433751</created>
-      <option name="number" value="00376" />
-      <option name="presentableId" value="LOCAL-00376" />
-      <option name="project" value="LOCAL" />
-      <updated>1590257433751</updated>
+      <workItem from="1590552373883" duration="6628000" />
     </task>
     <task id="LOCAL-00377" summary="canned message - view module">
       <created>1590258679449</created>
@@ -869,17 +876,31 @@
       <option name="project" value="LOCAL" />
       <updated>1590536559619</updated>
     </task>
-    <option name="localTasksCounter" value="424" />
+    <task id="LOCAL-00424" summary="computations module">
+      <created>1590557533778</created>
+      <option name="number" value="00424" />
+      <option name="presentableId" value="LOCAL-00424" />
+      <option name="project" value="LOCAL" />
+      <updated>1590557533782</updated>
+    </task>
+    <task id="LOCAL-00425" summary="computations module">
+      <created>1590558247835</created>
+      <option name="number" value="00425" />
+      <option name="presentableId" value="LOCAL-00425" />
+      <option name="project" value="LOCAL" />
+      <updated>1590558247835</updated>
+    </task>
+    <option name="localTasksCounter" value="426" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1301622000" />
+    <option name="totallyTimeSpent" value="1303293000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.08926175" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15100671" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -960,13 +981,6 @@
           <folding>
             <element signature="e#39#58#0#PHP" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="335" column="45" selection-start-line="335" selection-start-column="45" selection-end-line="335" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -1122,13 +1136,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="23" column="48" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="95" column="1" selection-start-line="95" selection-start-column="1" selection-end-line="95" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -1312,20 +1319,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/vendor/adminlte/partials/sidebar/right-sidebar.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="64" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/right-sidebar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="104" selection-start-line="104" selection-end-line="104" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/calculator/calculator.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1340,6 +1333,42 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
           <caret line="51" column="28" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="56" column="4" lean-forward="true" selection-start-line="56" selection-start-column="4" selection-end-line="58" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/vendor/adminlte/partials/sidebar/right-sidebar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="127" selection-start-line="127" selection-end-line="127" />
+          <folding>
+            <element signature="e#356#362#0#HTML" expanded="true" />
+            <element signature="e#540#546#0#HTML" expanded="true" />
+            <element signature="e#708#714#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-195">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/right-sidebar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="103" column="61" selection-start-line="103" selection-start-column="61" selection-end-line="103" selection-end-column="61" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
           </folding>
