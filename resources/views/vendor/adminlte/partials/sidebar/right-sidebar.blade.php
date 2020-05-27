@@ -6,8 +6,11 @@
         <div class="mb-1">
             <button type="button" class="btn btn-flat btn-primary" data-toggle="modal" data-target="#canned-message">View Canned Messages</button>
         </div>
-        <div class="mb-4">
+        <div class="mb-1">
             <button type="button" class="btn btn-flat bg-purple" data-toggle="modal" data-target="#sample-computation-modal">View Sample Computation</button>
+        </div>
+        <div class="mb-1">
+            <button type="button" class="btn btn-flat bg-orange calculator-template-btn" data-toggle="modal" data-target="#calculator-modal">Mortgage Calculator</button>
         </div>
     </div>
 </aside>
@@ -104,3 +107,30 @@
     <!-- /.modal-dialog -->
 </div>
 <!--end sample computation modal-->
+
+<!--calculator modal-->
+<div class="modal fade" id="calculator-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Calculator</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select class="form-control" id="calculator-template">
+                        <option value=""> -- Select -- </option>
+                        <option value="Apec Homes">Apec Homes</option>
+                        <option value="Hausland">Hausland Development Corporation</option>
+                    </select>
+                    <div class="row display-calculator"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--end calculator modal-->

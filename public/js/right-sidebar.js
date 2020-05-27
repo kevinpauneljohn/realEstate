@@ -83,3 +83,23 @@ $(document).on('change','#project_label',function(){
         }
     });
 });
+
+$(document).on('change','#calculator-template',function(){
+    let value = this.value;
+
+    $.ajax({
+        'url' : '/calculator',
+        'type' : 'POST',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'data' : {'template' : value},
+        beforeSend: function(){
+            $('.display-calculator').html("");
+        },success: function(result){
+            $('.display-calculator').html(result);
+        },error: function(xhr, status, error){
+
+        }
+    });
+
+});
+
