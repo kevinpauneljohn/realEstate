@@ -69,6 +69,8 @@ $(document).on('change','.select-action',function(){
                                     'success'
                                 );
 
+                                let url = window.location.href;
+                                $('.reminder-notification').load(url+' .reminder-notification');
                                 let table = $('#notifications-list').DataTable();
                                 table.ajax.reload();
                             }else{
