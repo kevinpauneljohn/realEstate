@@ -112,6 +112,36 @@ $(document).on('change','#calculator-template',function(){
 
 $(document).on('change','#requirement-template',function(){
     let value = this.value;
-    console.log(value);
+
+    if(value !== "")
+    {
+        $.ajax({
+            'url' : '/template/'+value,
+            'type' : 'POST',
+            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            'data' : {'id' : value},
+            beforeSend: function(){
+                $('#requirement-template').attr('disabled',true).after('<div class="load-template" style="margin: auto;width: 10%;margin-top:20px;">' +
+                    '<div class="spinner-border text-primary" role="status">' +
+                    '<span class="sr-only">Loading...</span>' +
+                    '</div>' +
+                    '</div>');
+                $('.requirement-display').html("");
+            },success: function (result) {
+                //console.log(result);
+                $('.requirement-display').html('<div class="callout callout-info" style="margin-top:10px;width: 100%;"></div>');
+                $.each(result, function(key, value){
+                    $('.requirement-display .callout').append('<span>- '+value.description+'</span><br/>');
+                });
+
+                $('#requirement-template').attr('disabled',false);
+                $('.load-template').remove();
+            },error: function(xhr,status,error){
+                console.log(xhr);
+            }
+        });
+    }else{
+        $('.requirement-display').html("");
+    }
 });
 
