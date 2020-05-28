@@ -23,12 +23,6 @@ $(document).on('change','#project',function(){
     });
 });
 
-// $(document).on('change','#model_unit',function(){
-//     let id = this.value;
-//
-//     console.log(id);
-// });
-
 $(document).on('submit','#computation-form',function(form){
     form.preventDefault();
     let data = $(this).serializeArray();

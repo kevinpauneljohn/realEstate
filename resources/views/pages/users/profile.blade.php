@@ -40,7 +40,7 @@
                         </p>
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b><i class="fas fa-plus mr-1"></i>Up line</b> <a class="float-right">{{ucfirst($upline->firstname)}} {{ucfirst($upline->lastname)}}</a>
+                                <b><i class="fas fa-plus mr-1"></i>Up line</b> <a href="{{route('users.profile',['user' => $upline->id])}}" class="float-right">{{ucfirst($upline->firstname)}} {{ucfirst($upline->lastname)}}</a>
                             </li>
                             <li class="list-group-item">
                                 <b><i class="fas fa-user-alt mr-1"></i>Username</b> <a class="float-right">{{$user->username}}</a>
@@ -109,11 +109,76 @@
                                 </table>
                             </div>
                             <div id="down-line" class="container tab-pane fade"><br>
-                                <h3>Down Lines</h3>
-                                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <table id="down-lines-list" class="table table-bordered table-hover" role="grid">
+                                    <thead>
+                                    <tr role="row">
+                                        <th>Full Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Contact Number</th>
+                                        <th>Role</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tfoot>
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Contact Number</th>
+                                        <th>Role</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                             @if(auth()->user()->can('view down line leads'))
                                 <div id="leads" class="container tab-pane fade"><br>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-info"><i class="fas fa-filter"></i></span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">Total Leads</span>
+                                                    <span class="info-box-number">{{$total_leads}}</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-primary"><i class="fas fa-snowflake"></i></span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">Cold Leads</span>
+                                                    <span class="info-box-number">{{$cold_leads}}</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-purple"><i class="fas fa-street-view"></i></span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">For Tripping</span>
+                                                    <span class="info-box-number">{{$tripping_leads}}</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-success"><i class="fas fa-user-check"></i></span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">Reserved Leads</span>
+                                                    <span class="info-box-number">{{$reserved_leads}}</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table id="leads-list" class="table table-bordered table-hover" role="grid">
                                         <thead>
                                         <tr role="row">
@@ -332,6 +397,23 @@
                         { data: 'fullname', name: 'fullname'},
                         { data: 'point_of_contact', name: 'point_of_contact'},
                         { data: 'lead_status', name: 'lead_status'},
+                    ],
+                    responsive:true,
+                    order:[0,'asc']
+                });
+            });
+
+            $(function() {
+                $('#down-lines-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('users.down.lines',['upline' => $user->id]) !!}',
+                    columns: [
+                        { data: 'fullname', name: 'fullname'},
+                        { data: 'username', name: 'username'},
+                        { data: 'email', name: 'email'},
+                        { data: 'mobileNo', name: 'mobileNo'},
+                        { data: 'roles', name: 'roles'},
                     ],
                     responsive:true,
                     order:[0,'asc']

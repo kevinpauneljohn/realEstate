@@ -187,6 +187,29 @@ class UserController extends Controller
             ->make(true);
     }
 
+    public function downLines($user_id)
+    {
+        $downLines = User::where('upline_id',$user_id)->get();
+
+        return DataTables::of($downLines)
+            ->addColumn('fullname', function ($downLine){
+                $profile = '<a href="'.route('users.profile',['user' => $downLine->id]).'">'.$downLine->fullname.'</a>';
+                return $profile;
+            })
+            ->addColumn('roles', function ($downLine){
+
+                $roles = "";
+                foreach ($downLine->getRoleNames() as $role)
+                {
+                    $roles .= '<span class="badge badge-info right role-badge">'.$role.'</span>';
+                }
+                return $roles;
+            })
+            ->rawColumns(['fullname','roles'])
+            ->make(true);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -307,41 +330,12 @@ class UserController extends Controller
             'upline' => User::findOrFail($user->upline_id),
             'rate_limit' => $rate_limit,
             'projects'  => Project::all(),
+            'total_leads' => Lead::where('user_id',$id)->count(),
+            'cold_leads' => Lead::where([['user_id','=',$id],['lead_status','=','Cold']])->count(),
+            'tripping_leads' => Lead::where([['user_id','=',$id],['lead_status','=','For tripping']])->count(),
+            'reserved_leads' => Lead::where([['user_id','=',$id],['lead_status','=','Reserved']])->count(),
         ]);
     }
-
-//    /**
-//     * March 11, 2020
-//     * @author john kevin paunel
-//     * view user commission rate
-//     * @param string $id
-//     * @return mixed
-//     * */
-//    public function commissions($id)
-//    {
-//        $user = User::findOrFail($id);
-//
-//        $rate_limit = 4;/* 4% is the user's max commission rate which is only the super admin can give*/
-//        /*if the use is not a super admin the commission rate that can be given will be based on the up line max rate*/
-//        if(!User::find($user->upline_id)->hasRole('super admin'))
-//        {
-//            /*this will check if the up line has already commission rate set on the system*/
-//            $rate_limit = User::findOrFail($user->upline_id)->commissions()->first();
-//
-//            if($rate_limit !== null)
-//            {
-//                /*if the up line commission rate is not null the rate given for the down line is one step lower*/
-//                $rate_limit = $rate_limit->commission_rate-1;
-//            }
-//        }
-//
-//        return view('pages.users.commissions')->with([
-//            'user'  => $user,
-//            'rate_limit' => $rate_limit,
-//            'upline' => User::findOrFail($user->upline_id),
-//            'projects'  => Project::all(),
-//        ]);
-//    }
 
 
     /**
