@@ -40,7 +40,7 @@
                         </p>
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b><i class="fas fa-plus mr-1"></i>Up line</b> <a href="{{route('users.profile',['user' => $upline->id])}}" class="float-right">{{ucfirst($upline->firstname)}} {{ucfirst($upline->lastname)}}</a>
+                                <b><i class="fas fa-plus mr-1"></i>Up line</b> <a href="@if(!$upline->hasRole('super admin')){{route('users.profile',['user' => $upline->id])}}@else # @endif" class="float-right">{{ucfirst($upline->firstname)}} {{ucfirst($upline->lastname)}}</a>
                             </li>
                             <li class="list-group-item">
                                 <b><i class="fas fa-user-alt mr-1"></i>Username</b> <a class="float-right">{{$user->username}}</a>
