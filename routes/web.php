@@ -62,7 +62,7 @@ Route::get('/users/{user}/agents','UserController@agents')->name('users.agents')
 Route::get('/users/{user}/commissions','UserController@commissions')->name('users.commissions')->middleware(['auth','permission:view user']);
 Route::put('/users/{user}','UserController@update')->name('users.update')->middleware(['auth','permission:edit user']);
 Route::delete('/users/{user}','UserController@destroy')->name('users.destroy')->middleware('auth','permission:delete user');
-Route::get('/users/downline/{upline}','Usercontroller@downLines')->name('users.down.lines')->middleware(['auth','permission:view down lines']);
+Route::get('/users/downline/{upline}','UserController@downLines')->name('users.down.lines')->middleware(['auth','permission:view down lines']);
 
 /*leads*/
 Route::get('/leads','LeadController@index')->name('leads.index')->middleware(['auth','permission:view lead']);

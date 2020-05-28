@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/LeadRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/LeadRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/RoleSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/RoleSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/computation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/computation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,14 +18,14 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.76207644">
+    <splitter split-orientation="horizontal" split-proportion="0.83633745">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/web.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="379">
-                  <caret line="64" column="35" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="35" />
+                  <caret line="64" column="44" selection-start-line="64" selection-start-column="44" selection-end-line="64" selection-end-column="44" />
                   <folding>
                     <element signature="e#7#389#0#PHP" expanded="true" />
                     <element signature="e#479#512#0#PHP" expanded="true" />
@@ -41,19 +35,10 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/database/seeds/RoleSeeder.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="545">
-                  <caret line="95" column="39" selection-start-line="95" selection-start-column="39" selection-end-line="95" selection-end-column="54" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/users/profile.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="389">
-                  <caret line="160" column="84" selection-start-line="160" selection-start-column="84" selection-end-line="160" selection-end-column="84" />
+                <state relative-caret-position="525">
+                  <caret line="42" column="183" selection-start-line="42" selection-start-column="183" selection-end-line="42" selection-end-column="183" />
                 </state>
               </provider>
             </entry>
@@ -78,7 +63,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
+                <state relative-caret-position="2567">
                   <caret line="334" column="97" selection-start-line="334" selection-start-column="97" selection-end-line="334" selection-end-column="97" />
                 </state>
               </provider>
@@ -88,7 +73,7 @@
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadController.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="243">
-                  <caret line="39" column="110" lean-forward="true" selection-start-line="39" selection-start-column="110" selection-end-line="39" selection-end-column="122" />
+                  <caret line="39" column="110" selection-start-line="39" selection-start-column="110" selection-end-line="39" selection-end-column="122" />
                   <folding>
                     <element signature="n#style#0;n#span#0;n#h6#0;n#!!top" expanded="true" />
                   </folding>
@@ -194,11 +179,11 @@
         <option value="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" />
         <option value="$PROJECT_DIR$/public/js/computation.js" />
         <option value="$PROJECT_DIR$/database/seeds/RoleSeeder.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Repositories/UserRepository.php" />
         <option value="$PROJECT_DIR$/app/Repositories/LeadRepository.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
       </list>
     </option>
   </component>
@@ -514,21 +499,7 @@
       <workItem from="1590478481043" duration="16371000" />
       <workItem from="1590542811742" duration="794000" />
       <workItem from="1590552373883" duration="25632000" />
-      <workItem from="1590616857342" duration="3387000" />
-    </task>
-    <task id="LOCAL-00384" summary="canned message - view module">
-      <created>1590283028768</created>
-      <option name="number" value="00384" />
-      <option name="presentableId" value="LOCAL-00384" />
-      <option name="project" value="LOCAL" />
-      <updated>1590283028768</updated>
-    </task>
-    <task id="LOCAL-00385" summary="canned message - view module">
-      <created>1590291362073</created>
-      <option name="number" value="00385" />
-      <option name="presentableId" value="LOCAL-00385" />
-      <option name="project" value="LOCAL" />
-      <updated>1590291362073</updated>
+      <workItem from="1590616857342" duration="4433000" />
     </task>
     <task id="LOCAL-00386" summary="added check commission middleware for validating the commission rate existence">
       <created>1590294850428</created>
@@ -859,11 +830,25 @@
       <option name="project" value="LOCAL" />
       <updated>1590580421360</updated>
     </task>
-    <option name="localTasksCounter" value="433" />
+    <task id="LOCAL-00433" summary="computations module">
+      <created>1590632957131</created>
+      <option name="number" value="00433" />
+      <option name="presentableId" value="LOCAL-00433" />
+      <option name="project" value="LOCAL" />
+      <updated>1590632957146</updated>
+    </task>
+    <task id="LOCAL-00434" summary="computations module">
+      <created>1590633135762</created>
+      <option name="number" value="00434" />
+      <option name="presentableId" value="LOCAL-00434" />
+      <option name="project" value="LOCAL" />
+      <updated>1590633135762</updated>
+    </task>
+    <option name="localTasksCounter" value="435" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1325684000" />
+    <option name="totallyTimeSpent" value="1326730000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1298,21 +1283,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="64" column="35" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="35" />
-          <folding>
-            <element signature="e#7#389#0#PHP" expanded="true" />
-            <element signature="e#479#512#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
-          <caret line="39" column="110" lean-forward="true" selection-start-line="39" selection-start-column="110" selection-end-line="39" selection-end-column="122" />
+          <caret line="39" column="110" selection-start-line="39" selection-start-column="110" selection-end-line="39" selection-end-column="122" />
           <folding>
             <element signature="n#style#0;n#span#0;n#h6#0;n#!!top" expanded="true" />
           </folding>
@@ -1321,15 +1295,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
+        <state relative-caret-position="2567">
           <caret line="334" column="97" selection-start-line="334" selection-start-column="97" selection-end-line="334" selection-end-column="97" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/users/profile.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="160" column="84" selection-start-line="160" selection-start-column="84" selection-end-line="160" selection-end-column="84" />
+        <state relative-caret-position="525">
+          <caret line="42" column="183" selection-start-line="42" selection-start-column="183" selection-end-line="42" selection-end-column="183" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="64" column="44" selection-start-line="64" selection-start-column="44" selection-end-line="64" selection-end-column="44" />
+          <folding>
+            <element signature="e#7#389#0#PHP" expanded="true" />
+            <element signature="e#479#512#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
