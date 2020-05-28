@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lead;
 use App\Notification;
+use App\Requirement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Yajra\DataTables\DataTables;
@@ -37,9 +38,16 @@ class NotificationsController extends Controller
                 }
 
             })
+            ->addColumn('mark',function($notification){
+                if($notification->viewed === 0)
+                {
+                    return '<input type="checkbox" class="mark-box notify-un-viewed" value="'.$notification->id.'">';
+                }
+
+            })
             ->addColumn('notification', function ($notification)
             {
-                $action = "";
+                $action = '';
                 $action .= '<div class="media">
                     <img src="'.asset('/images/avatar-sm.png').'" class="user-image img-circle elevation-2" height="40" style="margin:0px 10px 10px 10px;">
                         <div class="media-body">
@@ -59,13 +67,16 @@ class NotificationsController extends Controller
                 $action .= '<div class="btn-group">';
                 $action .= '<button type="button" class="btn btn-default notification-btn" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
                 $action .= '<div class="dropdown-menu">';
-                $action .= '<a class="dropdown-item mark-read" href="#" id="'.$notification->id.'">Mark as read</a>';
+                if($notification->viewed === 0)
+                {
+                    $action .= '<a class="dropdown-item mark-read" href="#" id="'.$notification->id.'">Mark as read</a>';
+                }
                 $action .= '<a class="dropdown-item remove-notification" href="'.route('leads.show',['lead' => $notification->data->lead_id]).'">View</a>';
                 $action .= '</div></div>';
                 $action .= '</div>';
                 return $action;
             })
-            ->rawColumns(['notification','action'])
+            ->rawColumns(['mark','notification','action'])
             ->make(true);
     }
 
@@ -79,5 +90,21 @@ class NotificationsController extends Controller
             return response()->json(['success' => true, 'message' => 'Reminder marked as read']);
         }
         return response()->json(['success' => false, 'message' => 'No changes occurred']);
+    }
+
+    public function markBulk(Request $request)
+    {
+        $ids = $request->id;
+
+        foreach ($ids as $id)
+        {
+            $notification = Notification::find($id);
+            $notification->viewed = true;
+            if($notification->isDirty('viewed'))
+            {
+                $notification->save();
+            }
+        }
+        return response()->json(['success' => true, 'message' => 'Reminder marked as read']);
     }
 }

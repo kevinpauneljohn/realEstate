@@ -18,9 +18,22 @@
 
 @section('content')
     <div class="container card" style="max-width: 800px">
-        <table id="notifications-list" class="table" role="grid">
-
-        </table>
+        <div class="card-body">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="width:100px;">
+                        <input type="checkbox" class="mark-all"> Check all
+                    </td>
+                    <td>
+                        <select class="form-control select-action" style="width: 200px;">
+                            <option value=""> -- Select Action -- </option>
+                            <option value="Mark as read">Mark as read</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <table id="notifications-list" class="table" role="grid"></table>
+        </div>
     </div>
 
 @stop
@@ -68,6 +81,7 @@
                     serverSide: true,
                     ajax: '{!! route('notifications.list') !!}',
                     columns: [
+                        { data: 'mark', name: 'mark', orderable: false, searchable: false},
                         { data: 'notification', name: 'notification', orderable: false, searchable: false},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],

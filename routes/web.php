@@ -208,6 +208,7 @@ Route::get('/notify-user','NotificationsController@notify')->name('reminder');
 Route::get('/notifications','NotificationsController@index')->name('notifications.index')->middleware(['auth']);
 Route::get('/notifications-list','NotificationsController@notifications_list')->name('notifications.list')->middleware(['auth']);
 Route::put('/notifications/{notification}','NotificationsController@update')->name('notifications.update')->middleware(['auth']);
+Route::put('/notifications-bulk','NotificationsController@markBulk')->name('notifications.bulk.update')->middleware(['auth']);
 
 /*actions*/
 Route::get('/actions','ActionController@index')->name('actions.index')->middleware(['auth','permission:view action']);
