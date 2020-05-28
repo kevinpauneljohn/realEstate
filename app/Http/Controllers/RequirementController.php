@@ -28,32 +28,20 @@ class RequirementController extends Controller
     {
         $templates = Template::all();
         return DataTables::of($templates)
-            ->editColumn('description',function($template){
-                $requirement = Requirement::where('template_id',$template->id)->get();
-                $description = "<ul>";
-
-                    foreach($requirement as $desc)
-                    {
-                        $description .= '<li>'.$desc->description.'</li>';
-                    }
-                    $description .= '</ul>';
-
-                    return $description;
-            })
             ->addColumn('action', function ($template)
             {
                 $action = "";
                 if(auth()->user()->can('view requirements'))
                 {
-                    $action .= '<button class="btn btn-xs btn-success view-sales-btn" id="'.$template->id.'" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i> View</button>';
+                    $action .= '<button class="btn btn-xs btn-success view-sales-btn" id="'.$template->id.'" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i></button>';
                 }
                 if(auth()->user()->can('edit requirements'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn" id="'.$template->id.'" data-toggle="modal" data-target="#edit-requirement-modal"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn" id="'.$template->id.'" data-toggle="modal" data-target="#edit-requirement-modal"><i class="fa fa-edit"></i></a>';
                 }
                 if(auth()->user()->can('delete requirements'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-requirements-btn" id="'.$template->id.'" data-toggle="modal" data-target="#delete-requirements-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-requirements-btn" id="'.$template->id.'" data-toggle="modal" data-target="#delete-requirements-modal"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
@@ -105,7 +93,6 @@ class RequirementController extends Controller
 
             $template->save();
 
-
             foreach ($request->description as $desc)
             {
                 $requirement = new Requirement();
@@ -113,7 +100,7 @@ class RequirementController extends Controller
                 $requirement->description = $desc;
                 $requirement->save();
             }
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true,'message' => 'Requirements successfully saved']);
 
         }
         return response()->json($validator->errors());
@@ -174,7 +161,7 @@ class RequirementController extends Controller
             if($template->save())
             {
                 $this->update_or_create($request, $template)->delete_requirement($request);
-                return response()->json(['success' => true]);
+                return response()->json(['success' => true,'message' => 'Requirements successfully updated']);
             }
 
         }
@@ -234,7 +221,7 @@ class RequirementController extends Controller
 
         if($template->delete())
         {
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true,'message' => 'Requirements Successfully Deleted']);
         }
     }
 }

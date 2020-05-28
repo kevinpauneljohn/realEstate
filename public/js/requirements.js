@@ -57,61 +57,138 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
     });
 }
 
-$(document).ready(function(){
+$(document).on('submit','#add-requirements-form',function(form){
+    form.preventDefault();
+    let data = $(this).serializeArray();
 
-    let addForm = $('#add-requirements-form');
-    addForm.submit(function(form){
-        form.preventDefault();
+    $.ajax({
+        'url' : '/requirements',
+        'type' : 'POST',
+        'data' : data,
+        beforeSend: function(){
+            $('#add-requirements-form input,#add-requirements-form select,#add-requirements-form .row-description-btn').attr('disabled',true);
+            $('.submit-requirements-btn').val('Saving ... ');
+        },success: function(result){
+            if(result.success === true)
+            {
+                $('#add-requirements-form').trigger('reset');
+                let table = $('#requirements-list').DataTable();
+                table.ajax.reload();
+                toastr.success(result.message);
+                $('#add-new-requirements-modal').modal('toggle');
+            }
 
-        let data = addForm.serialize();
+            $.each(result, function (key, value) {
+                let element = $('#'+key);
 
-        submitform(
-            '/requirements',
-            'POST',
-            data,
-            'Requirements Successfully Added!',
-            true,
-            '',
-            false,
-        );
-        clear_errors('title','financing_type');
+                element.closest('div.'+key)
+                    .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                    .find('.text-danger')
+                    .remove();
+                element.after('<p class="text-danger">'+value+'</p>');
+            });
+
+            $('#add-requirements-form input,#add-requirements-form select,#add-requirements-form .row-description-btn').attr('disabled',false);
+            $('.submit-requirements-btn').val('Save');
+        },error: function(xhr,status,error){
+            console.log(xhr);
+        }
     });
+    clear_errors('title','financing_type');
+});
 
-    $('#edit-requirement-form').submit(function(form){
-        form.preventDefault();
+$(document).on('submit','#edit-requirement-form',function(form){
+    form.preventDefault();
+    let data = $('#edit-requirement-form').serializeArray(),
+        id = $('#updateRequirementId').val();
 
-        let data = $('#edit-requirement-form').serialize();
-        let id = $('#updateRequirementId').val();
+    $.ajax({
+        'url' : '/requirements/'+id,
+        'type' : 'PUT',
+        'data' : data,
+        beforeSend: function(){
+            $('#edit-requirement-form input,#edit-requirement-form select,#edit-requirement-form .edit-row-description-btn').attr('disabled',true);
+            $('.edit-form-btn').val('Saving ... ');
+        },success: function(result){
 
-        submitform(
-            '/requirements/'+id,
-            'PUT',
-            data,
-            'Requirements Successfully Updated!',
-            true,
-            '',
-            false,
-        );
-        clear_errors('edit_title','edit_financing_type');
+            if(result.success === true)
+            {
+                let table = $('#requirements-list').DataTable();
+                table.ajax.reload();
+                toastr.success(result.message);
+                $('#edit-requirement-modal').modal('toggle');
+            }
+
+            $('#edit-requirement-form input,#edit-requirement-form select,#edit-requirement-form .edit-row-description-btn').attr('disabled',false);
+            $('.edit-form-btn').val('Save');
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
     });
+    clear_errors('edit_title','edit_financing_type');
+});
 
-    $('#delete-requirements-form').submit(function(form){
-        form.preventDefault();
+$(document).on('click','.delete-requirements-btn',function(){
+    let id = this.id;
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
 
-        let data = $('#edit-requirement-form').serialize();
-        let id = $('#deleteRequirementsId').val();
+            $.ajax({
+                'url' : '/requirements/'+id,
+                'type' : 'DELETE',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {'_method':'DELETE','id' : id},
+                beforeSend: function(){
 
-        submitform(
-            '/requirements/'+id,
-            'DELETE',
-            data,
-            'Requirements Successfully Deleted!',
-            false,
-            '',
-            true,
-        );
+                },success: function(output){
+                    if(output.success === true){
+                        Swal.fire(
+                            'Deleted!',
+                            output.message,
+                            'success'
+                        );
+
+                        let table = $('#requirements-list').DataTable();
+                        table.ajax.reload();
+                    }else{
+                        toastr.error(output.message);
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+
+        }
     });
 });
+//
+// $(document).ready(function(){
+//
+//     $('#delete-requirements-form').submit(function(form){
+//         form.preventDefault();
+//
+//         let data = $('#edit-requirement-form').serialize();
+//         let id = $('#deleteRequirementsId').val();
+//
+//         submitform(
+//             '/requirements/'+id,
+//             'DELETE',
+//             data,
+//             'Requirements Successfully Deleted!',
+//             false,
+//             '',
+//             true,
+//         );
+//     });
+// });
 
 $(document).on('click','.row-description-btn',function(){
     let value = this.value;

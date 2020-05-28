@@ -17,34 +17,34 @@
 @stop
 
 @section('content')
-    <div class="card">
-        <div class="card-header">
-            @can('add requirements')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-requirements-modal"><i class="fa fa-plus-circle"></i> Add Requirements</button>
-            @endcan
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                @can('add requirements')
+                    <button type="button" class="btn bg-primary btn-sm" data-toggle="modal" data-target="#add-new-requirements-modal">Add</button>
+                @endcan
 
-        </div>
-        <div class="card-body">
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
-                <table id="requirements-list" class="table table-bordered table-striped" role="grid">
-                    <thead>
-                    <tr role="row">
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
+            </div>
+            <div class="card-body">
+                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
+                    <table id="requirements-list" class="table table-hover" role="grid">
+                        <thead>
+                        <tr role="row">
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
 
-                    <tfoot>
-                    <tr>
-                        <th width="15%">Title</th>
-                        <th width="50%">Description</th>
-                        <th>Type</th>
-                        <th>Action</th>
-                    </tr>
-                    </tfoot>
-                </table>
+                        <tfoot>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -71,6 +71,7 @@
                                 <label for="financing_type">Financing Type</label><span class="required">*</span>
                                 <select name="financing_type" class="form-control" id="financing_type">
                                     <option value=""> -- Select -- </option>
+                                    <option value="For Reservation">For Reservation</option>
                                     <option value="INHOUSE">INHOUSE</option>
                                     <option value="BANK">BANK</option>
                                     <option value="HDMF">HDMF</option>
@@ -91,7 +92,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <input type="submit" class="btn btn-primary submit-requirements-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -137,7 +138,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="reset" class="btn btn-default">Reset</button>
-                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <input type="submit" class="btn btn-primary edit-form-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -148,30 +149,30 @@
         <!--end add user modal-->
     @endcan
 
-    @can('delete requirements')
-        <!--delete user-->
-        <div class="modal fade" id="delete-requirements-modal">
-            <form role="form" id="delete-requirements-form" class="form-submit">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="deleteRequirementsId" id="deleteRequirementsId">
-                <div class="modal-dialog">
-                    <div class="modal-content bg-danger">
-                        <div class="modal-body">
-                            <p class="delete_project">Delete Requirements: <span class="delete-requirements-name"></span></p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-        <!--end delete user modal-->
-    @endcan
+{{--    @can('delete requirements')--}}
+{{--        <!--delete user-->--}}
+{{--        <div class="modal fade" id="delete-requirements-modal">--}}
+{{--            <form role="form" id="delete-requirements-form" class="form-submit">--}}
+{{--                @csrf--}}
+{{--                @method('DELETE')--}}
+{{--                <input type="hidden" name="deleteRequirementsId" id="deleteRequirementsId">--}}
+{{--                <div class="modal-dialog">--}}
+{{--                    <div class="modal-content bg-danger">--}}
+{{--                        <div class="modal-body">--}}
+{{--                            <p class="delete_project">Delete Requirements: <span class="delete-requirements-name"></span></p>--}}
+{{--                        </div>--}}
+{{--                        <div class="modal-footer justify-content-between">--}}
+{{--                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>--}}
+{{--                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <!-- /.modal-content -->--}}
+{{--                </div>--}}
+{{--                <!-- /.modal-dialog -->--}}
+{{--            </form>--}}
+{{--        </div>--}}
+{{--        <!--end delete user modal-->--}}
+{{--    @endcan--}}
 @stop
 
 @section('css')
@@ -207,7 +208,6 @@
                     ajax: '{!! route('requirements.list') !!}',
                     columns: [
                         { data: 'name', name: 'name'},
-                        { data: 'description', name: 'description'},
                         { data: 'type', name: 'type'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
