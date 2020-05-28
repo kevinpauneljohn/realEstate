@@ -75,14 +75,12 @@
 
     var channel = pusher.subscribe('notification-channel');
     channel.bind('notification', function(result) {
-        console.log(result.notification);
         let url = window.location.href;
         $('.reminder-notification').load(url+' .reminder-notification');
     });
 
     var requestChannel = pusher.subscribe('request-channel');
     requestChannel.bind('request', function(request) {
-        console.log(request);
         let url = window.location.href;
         $('.reminder-notification').load(url+' .reminder-notification');
         var table = $('#sales-list,#threshold-list,#users-list').DataTable();

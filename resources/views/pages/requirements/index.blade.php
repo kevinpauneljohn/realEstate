@@ -148,31 +148,6 @@
         </div>
         <!--end add user modal-->
     @endcan
-
-{{--    @can('delete requirements')--}}
-{{--        <!--delete user-->--}}
-{{--        <div class="modal fade" id="delete-requirements-modal">--}}
-{{--            <form role="form" id="delete-requirements-form" class="form-submit">--}}
-{{--                @csrf--}}
-{{--                @method('DELETE')--}}
-{{--                <input type="hidden" name="deleteRequirementsId" id="deleteRequirementsId">--}}
-{{--                <div class="modal-dialog">--}}
-{{--                    <div class="modal-content bg-danger">--}}
-{{--                        <div class="modal-body">--}}
-{{--                            <p class="delete_project">Delete Requirements: <span class="delete-requirements-name"></span></p>--}}
-{{--                        </div>--}}
-{{--                        <div class="modal-footer justify-content-between">--}}
-{{--                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>--}}
-{{--                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <!-- /.modal-content -->--}}
-{{--                </div>--}}
-{{--                <!-- /.modal-dialog -->--}}
-{{--            </form>--}}
-{{--        </div>--}}
-{{--        <!--end delete user modal-->--}}
-{{--    @endcan--}}
 @stop
 
 @section('css')

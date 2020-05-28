@@ -4,13 +4,16 @@
         <h5>Quick Tools</h5>
         <hr class="mb-2">
         <div class="mb-1">
-            <a href="#" data-toggle="modal" data-target="#canned-message"><i class="far fa-comment-dots text-success"></i>&nbsp; View Canned Messages</a>
+            <a href="#" data-toggle="modal" data-target="#canned-message"><i class="far fa-comment-dots text-success"></i>&nbsp; Canned Messages</a>
         </div>
         <div class="mb-1">
-            <a href="#" data-toggle="modal" data-target="#sample-computation-modal"><i class="fas fa-file-alt text-success"></i> &nbsp;View Sample Computation</a>
+            <a href="#" data-toggle="modal" data-target="#sample-computation-modal"><i class="fas fa-file-alt text-success"></i> &nbsp;Sample Computation</a>
         </div>
         <div class="mb-1">
             <a href="#" class="calculator-template-btn" data-toggle="modal" data-target="#calculator-modal"><i class="fas fa-calculator text-success"></i> &nbsp;Mortgage Calculator</a>
+        </div>
+        <div class="mb-1">
+            <a href="#" class="calculator-template-btn" data-toggle="modal" data-target="#requirements-modal"><i class="far fa-file-archive text-success"></i> &nbsp;Requirements</a>
         </div>
     </div>
 </aside>
@@ -128,6 +131,35 @@
                     </select>
 
                     <div class="row display-calculator"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--end calculator modal-->
+
+<!--calculator modal-->
+<div class="modal fade" id="requirements-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Requirements Template</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select class="form-control" id="requirement-template">
+                        <option value=""> -- Select -- </option>
+                        @foreach(\App\Template::all() as $template)
+                            <option value="{{$template->id}}">{{ucfirst($template->name)}}</option>
+                        @endforeach
+                    </select>
+
+                    <div class="row requirement-display"></div>
                 </div>
             </div>
         </div>

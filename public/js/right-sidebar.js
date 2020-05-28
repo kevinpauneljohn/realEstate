@@ -110,3 +110,8 @@ $(document).on('change','#calculator-template',function(){
 
 });
 
+$(document).on('change','#requirement-template',function(){
+    let value = this.value;
+    console.log(value);
+});
+
