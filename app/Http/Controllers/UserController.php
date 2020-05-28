@@ -171,15 +171,15 @@ class UserController extends Controller
                 $action = "";
                 if(auth()->user()->can('view user'))
                 {
-                    $action .= '<a href="'.route('users.profile',['user' => $user->id]).'" class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i> View</a>';
+                    $action .= '<a href="'.route('users.profile',['user' => $user->id]).'" class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i></a>';
                 }
                 if(auth()->user()->can('edit user'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-user-btn" id="'.$user->id.'" data-toggle="modal" data-target="#edit-user-modal"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-user-btn" id="'.$user->id.'" data-toggle="modal" data-target="#edit-user-modal"><i class="fa fa-edit"></i></a>';
                 }
                 if(auth()->user()->can('delete user'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-user-btn" id="'.$user->id.'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-user-btn" id="'.$user->id.'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
