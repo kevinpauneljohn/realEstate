@@ -178,11 +178,11 @@ class LeadRepository
         }
         elseif($status === 'Inquiry Only')
         {
-            $badge = '<span class="badge bg-gradient-dark role-badge">'.$status.'</span>';
+            $badge = '<span class="badge bg-gray-dark role-badge">'.$status.'</span>';
         }
         elseif($status === 'Not Interested Anymore')
         {
-            $badge = '<span class="badge bg-dark role-badge">'.$status.'</span>';
+            $badge = '<span class="badge bg-orange role-badge">'.$status.'</span>';
         }
         elseif($status === 'Reserved')
         {
