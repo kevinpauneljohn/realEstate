@@ -243,4 +243,9 @@ Route::post('/sample-computation','ComputationController@sampleComputations')->n
 Route::post('/calculator','CalculatorController@calculator')->name('calculator.template')->middleware(['auth']);
 
 Route::get('/contacts','ContactController@index')->name('contacts.index')->middleware(['auth','permission:view contacts']);
+Route::post('/contacts','ContactController@store')->name('contacts.store')->middleware(['auth','permission:add contacts']);
+Route::get('/contacts-list','ContactController@contact_list')->name('contacts.list')->middleware(['auth','permission:view contacts']);
+Route::get('/contacts/{contact}','ContactController@show')->name('contacts.show')->middleware(['auth','permission:view contacts']);
+Route::put('/contacts/{contact}','ContactController@update')->name('contacts.update')->middleware(['auth','permission:edit contacts']);
+Route::delete('/contacts/{contact}','ContactController@destroy')->name('contacts.destroy')->middleware(['auth','permission:delete contacts']);
 

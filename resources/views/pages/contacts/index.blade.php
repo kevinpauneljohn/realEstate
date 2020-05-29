@@ -17,38 +17,43 @@
 @stop
 
 @section('content')
-    <div class="card">
-        <div class="card-header">
-            @can('add role')
-                <button type="button" class="btn bg-primary btn-sm" data-toggle="modal" data-target="#add-contacts-modal">Add</button>
-            @endcan
+    <div class="container" style="max-width: 800px;">
+        <div class="card">
+            <div class="card-header">
+                @can('add role')
+                    <button type="button" class="btn bg-primary btn-sm" data-toggle="modal" data-target="#add-contacts-modal">Add</button>
+                @endcan
 
-        </div>
-        <div class="card-body">
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="roles-list" class="table table-bordered table-striped" role="grid">
-                    <thead>
-                    <tr role="row">
-                        <th>Role</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
+            </div>
+            <div class="card-body">
+                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <table id="contact-list" class="table table-hover" role="grid">
+                        <thead>
+                        <tr role="row">
+                            <th>Title</th>
+                            <th>Contact Person</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
 
-                    <tfoot>
-                    <tr>
-                        <th>Role</th>
-                        <th width="20%">Action</th>
-                    </tr>
-                    </tfoot>
-                </table>
+                        <tfoot>
+                        <tr>
+                            <th>Title</th>
+                            <th>Contact Person</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
+
     @can('add contacts')
         <!--add contacts modal-->
         <div class="modal fade" id="add-contacts-modal">
-            <form role="form" id="role-form" class="form-submit">
+            <form role="form" id="contact-form" class="form-submit">
                 @csrf
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -59,27 +64,17 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group title">
+                                <label for="title">Title</label><span class="required">*</span>
+                                <input type="text" name="title" class="form-control" id="title">
+                            </div>
                             <div class="form-group contact_person">
                                 <label for="contact_person">Contact Person</label><span class="required">*</span>
                                 <input type="text" name="contact_person" class="form-control" id="contact_person">
                             </div>
-                            <div class="form-group">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            Type
-                                        </button>
-                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Separated link</a>
-                                        </div>
-                                    </div>
-                                    <!-- /btn-group -->
-                                    <input type="text" class="form-control">
-                                </div>
+                            <div class="form-group contact_details">
+                                <label for="contact_details">Contact Details</label>
+                                <textarea class="form-control" name="contact_details" id="contact_details" style="min-height: 150px;"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -95,32 +90,62 @@
         <!--end contacts modal-->
     @endcan
 
-    @can('edit role')
-        <!--edit role modal-->
-        <div class="modal fade" id="edit-role-modal">
-            <form role="form" id="edit-role-form" class="form-submit">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="id" id="updateRoleId">
+    @can('view contacts')
+        <!--edit contacts modal-->
+        <div class="modal fade" id="view-contacts-modal">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update Role Name</h4>
+                            <h4 class="modal-title">View Contact Details</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="modal-body">
-                                <div class="form-group edit_role">
-                                    <label for="edit_role">Role Name</label><span class="required">*</span>
-                                    <input type="text" name="edit_role" class="form-control" id="edit_role">
-                                </div>
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+        </div>
+        <!--end edit contacts modal-->
+    @endcan
+
+    @can('edit contacts')
+        <!--edit contacts modal-->
+        <div class="modal fade" id="edit-contacts-modal">
+            <form role="form" id="edit-contacts-form" class="form-submit">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="id" id="updateContactId">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Contact Details</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group edit_title">
+                                <label for="edit_title">Title</label><span class="required">*</span>
+                                <input type="text" name="edit_title" class="form-control" id="edit_title">
                             </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <div class="form-group edit_contact_person">
+                                <label for="edit_contact_person">Contact Person</label><span class="required">*</span>
+                                <input type="text" name="edit_contact_person" class="form-control" id="edit_contact_person">
                             </div>
+                            <div class="form-group edit_contact_details">
+                                <label for="edit_contact_details">Contact Details</label>
+                                <textarea class="form-control" name="edit_contact_details" id="edit_contact_details" style="min-height: 150px;"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary submit-edit-contact-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -128,7 +153,7 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end add terminal modal-->
+        <!--end edit contacts modal-->
     @endcan
 
     @can('delete role')
@@ -171,15 +196,17 @@
 @section('js')
     @can('view role')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('js/role.js')}}"></script>
+        <script src="{{asset('js/validation.js')}}"></script>
+        <script src="{{asset('js/contact.js')}}"></script>
         <script>
             $(function() {
-                $('#roles-list').DataTable({
+                $('#contact-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('roles.list') !!}',
+                    ajax: '{!! route('contacts.list') !!}',
                     columns: [
-                        { data: 'name', name: 'name'},
+                        { data: 'title', name: 'title'},
+                        { data: 'contact_person', name: 'contact_person'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
