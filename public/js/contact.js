@@ -10,7 +10,6 @@ $(document).on('submit','#contact-form',function(form){
         beforeSend: function () {
             $('.submit-contact-btn').val('Saving ... ').attr('disabled',true);
         }, success: function (result) {
-            console.log(result);
 
             if(result.success === true)
             {
@@ -77,8 +76,6 @@ $(document).on('submit','#edit-contacts-form',function(form){
         beforeSend: function(){
             $('.submit-edit-contact-btn').val('Saving ... ').attr('disabled',true);
         },success: function(result){
-            console.log(result);
-
             if(result.success === true)
             {
                 toastr.success(result.message);
@@ -120,9 +117,7 @@ $(document).on('click','.view-contacts-btn',function(){
                 '</div>');
             $('#view-contacts-modal .modal-body').html("");
         },success: function(result){
-                console.log(result);
-
-                let item = '<strong>'+result.title+'</strong><p><strong>Contact Person</strong>: '+result.contact_person+'<br/><br/><span>'+result.contact_details+'</span></p>';
+            let item = '<strong>'+result.title+'</strong><p><strong>Contact Person</strong>: '+result.contact_person+'<br/><br/><span>'+result.contact_details+'</span></p>';
 
                 $('#view-contacts-modal .modal-body').html(item);
 

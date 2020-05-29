@@ -15,8 +15,41 @@
         <div class="mb-1">
             <a href="#" class="calculator-template-btn" data-toggle="modal" data-target="#requirements-modal"><i class="far fa-file-archive text-success"></i> &nbsp;Requirements</a>
         </div>
+        @can('view contacts')
+            <div class="mb-1">
+                <a href="#" class="contacts-tools-btn" data-toggle="modal" data-target="#view-contact-list-tools"><i class="far fa-address-book text-success"></i> &nbsp;Contact List</a>
+            </div>
+        @endcan
     </div>
 </aside>
+
+@can('view contacts')
+    <!--add new roles modal-->
+    <div class="modal fade" id="view-contact-list-tools">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Select Contact List</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <select class="form-control" id="select-contact-list">
+                        <option value=""> -- Select -- </option>
+                        @foreach(\App\Contact::all() as $contact)
+                            <option value="{{$contact->id}}">{{$contact->title}} - {{$contact->contact_person}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--end add new roles modal-->
+@endcan
+
 
     <!--add new roles modal-->
     <div class="modal fade" id="canned-message">

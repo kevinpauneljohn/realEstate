@@ -99,4 +99,10 @@ class ContactController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Contact successfully deleted!']);
     }
+
+//    public function contacts()
+//    {
+//        $contacts = Contact::all();
+//        return $contacts;
+//    }
 }

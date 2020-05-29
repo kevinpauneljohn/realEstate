@@ -145,3 +145,36 @@ $(document).on('change','#requirement-template',function(){
     }
 });
 
+$(document).on('change','#select-contact-list',function(){
+    let id = this.value;
+    if(id !== "")
+    {
+        $.ajax({
+            'url' : '/contacts/'+id,
+            'type' : 'GET',
+            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            beforeSend: function(){
+                $('#view-contact-list-tools #select-contact-list').after('<div class="load-template" style="margin: auto;width: 10%;margin-bottom: 20px;">' +
+                    '<div class="spinner-border text-primary" role="status">' +
+                    '<span class="sr-only">Loading...</span>' +
+                    '</div>' +
+                    '</div>');
+                $('#view-contact-list-tools .contact-list-content').remove();
+            },success: function(result){
+
+                let item = '<div class="callout callout-success contact-list-content" style="margin-top:20px;"><strong>'+result.title+'</strong><p><strong>Contact Person</strong>: '+result.contact_person+'<br/><br/><span>'+result.contact_details+'</span></p></div>';
+
+                $('#view-contact-list-tools #select-contact-list').after(item);
+
+                $('.load-template').remove();
+            },error: function(xhr, status, error){
+                console.log(xhr);
+            }
+
+        });
+    }else{
+        $('#view-contact-list-tools .contact-list-content').remove();
+    }
+
+});
+
