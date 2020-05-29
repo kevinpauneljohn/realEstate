@@ -81,7 +81,7 @@ class ContactController extends Controller
             $contact = Contact::find($id);
             $contact->title = $request->edit_title;
             $contact->contact_person = $request->edit_contact_person;
-            $contact->contact_details = $request->edit_contact_details;
+            $contact->contact_details = nl2br($request->edit_contact_details);
             if($contact->isDirty())
             {
                 $contact->save();

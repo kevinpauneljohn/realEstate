@@ -124,7 +124,7 @@ $(document).on('click','.view-contacts-btn',function(){
 
                 let item = '<strong>'+result.title+'</strong><p><strong>Contact Person</strong>: '+result.contact_person+'<br/><br/><span>'+result.contact_details+'</span></p>';
 
-                $('#view-contacts-modal .modal-body').append(item);
+                $('#view-contacts-modal .modal-body').html(item);
 
             $('.load-template').remove();
         },error: function(xhr, status, error){
