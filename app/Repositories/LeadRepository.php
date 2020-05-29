@@ -158,7 +158,7 @@ class LeadRepository
         }
         elseif($status === 'Warm')
         {
-            $badge = '<span class="badge bg-orange role-badge">'.$status.'</span>';
+            $badge = '<span class="badge bg-warning role-badge">'.$status.'</span>';
         }
         elseif($status === 'Cold')
         {
