@@ -49,7 +49,13 @@ $(document).on('click','.edit-contacts-btn',function(){
 
             $('#edit_title').val(result.title);
             $('#edit_contact_person').val(result.contact_person);
-            $('#edit_contact_details').text(result.contact_details);
+            $('#edit_contact_details').val(function(){
+                let regex = /(<([^>]+)>)/ig
+                let body = result.contact_details;
+                let content = body.replace(regex, "");
+
+                return content;
+            });
 
             $('#edit-contacts-form input,#edit-contacts-form textarea').attr('disabled',false);
         },error: function(xhr, status, error){
@@ -58,11 +64,6 @@ $(document).on('click','.edit-contacts-btn',function(){
 
     });
 });
-
-// function stripHTML(str){
-//     var strippedText = $("<div/>").html(str).text();
-//     return strippedText;
-// }​
 
 $(document).on('submit','#edit-contacts-form',function(form){
     form.preventDefault();
