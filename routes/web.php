@@ -242,3 +242,5 @@ Route::post('/sample-computation','ComputationController@sampleComputations')->n
 
 Route::post('/calculator','CalculatorController@calculator')->name('calculator.template')->middleware(['auth']);
 
+Route::get('/contacts','ContactController@index')->name('contacts.index')->middleware(['auth','permission:view contacts']);
+

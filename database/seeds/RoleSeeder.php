@@ -95,5 +95,10 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'view down line leads']);
         Permission::create(['name' => 'view down lines']);
+
+        Permission::create(['name' => 'add contacts']);
+        Permission::create(['name' => 'view contacts']);
+        Permission::create(['name' => 'edit contacts']);
+        Permission::create(['name' => 'delete contacts']);
     }
 }

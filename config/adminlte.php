@@ -326,14 +326,19 @@ return [
                     'can'  => 'view priority',
                 ],
                 [
-                    'text' => 'roles',
+                    'text' => 'Roles',
                     'route'  => 'roles.index',
                     'can'  => 'view role',
                 ],
                 [
-                    'text' => 'permissions',
+                    'text' => 'Permissions',
                     'route'  => 'permissions.index',
                     'can'  => 'view permission',
+                ],
+                [
+                    'text' => 'Contacts',
+                    'route'  => 'contacts.index',
+                    'can'  => 'view contacts',
                 ],
                 [
                     'text' => 'Change Password',
