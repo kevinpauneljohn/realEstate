@@ -18,14 +18,14 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.7254464">
+    <splitter split-orientation="horizontal" split-proportion="0.7217262">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/web.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="379">
-                  <caret line="148" column="112" selection-start-line="148" selection-start-column="112" selection-end-line="148" selection-end-column="112" />
+                <state relative-caret-position="396">
+                  <caret line="149" column="46" selection-start-line="149" selection-start-column="46" selection-end-line="149" selection-end-column="46" />
                   <folding>
                     <element signature="e#7#389#0#PHP" expanded="true" />
                     <element signature="e#479#512#0#PHP" expanded="true" />
@@ -477,21 +477,7 @@
       <workItem from="1590708646225" duration="597000" />
       <workItem from="1590723993446" duration="23335000" />
       <workItem from="1590763782843" duration="2347000" />
-      <workItem from="1590807808800" duration="10062000" />
-    </task>
-    <task id="LOCAL-00413" summary="computations module">
-      <created>1590411863845</created>
-      <option name="number" value="00413" />
-      <option name="presentableId" value="LOCAL-00413" />
-      <option name="project" value="LOCAL" />
-      <updated>1590411863845</updated>
-    </task>
-    <task id="LOCAL-00414" summary="computations module">
-      <created>1590414437129</created>
-      <option name="number" value="00414" />
-      <option name="presentableId" value="LOCAL-00414" />
-      <option name="project" value="LOCAL" />
-      <updated>1590414437131</updated>
+      <workItem from="1590807808800" duration="10416000" />
     </task>
     <task id="LOCAL-00415" summary="computations module">
       <created>1590460868249</created>
@@ -822,11 +808,25 @@
       <option name="project" value="LOCAL" />
       <updated>1590830363226</updated>
     </task>
-    <option name="localTasksCounter" value="462" />
+    <task id="LOCAL-00462" summary="contact list module">
+      <created>1590830631703</created>
+      <option name="number" value="00462" />
+      <option name="presentableId" value="LOCAL-00462" />
+      <option name="project" value="LOCAL" />
+      <updated>1590830631703</updated>
+    </task>
+    <task id="LOCAL-00463" summary="contact list module">
+      <created>1590830826561</created>
+      <option name="number" value="00463" />
+      <option name="presentableId" value="LOCAL-00463" />
+      <option name="project" value="LOCAL" />
+      <updated>1590830826561</updated>
+    </task>
+    <option name="localTasksCounter" value="464" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1384521000" />
+    <option name="totallyTimeSpent" value="1384875000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1289,8 +1289,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="148" column="112" selection-start-line="148" selection-start-column="112" selection-end-line="148" selection-end-column="112" />
+        <state relative-caret-position="396">
+          <caret line="149" column="46" selection-start-line="149" selection-start-column="46" selection-end-line="149" selection-end-column="46" />
           <folding>
             <element signature="e#7#389#0#PHP" expanded="true" />
             <element signature="e#479#512#0#PHP" expanded="true" />
