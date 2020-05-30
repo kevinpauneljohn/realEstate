@@ -249,10 +249,10 @@ class SalesController extends Controller
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#delete-lead-modal" title="Delete"><i class="fa fa-trash"></i></a>';
                 }
-                if(auth()->user()->can('upload requirements'))
-                {
-                    $action .= '<a href="'.route('sales.upload.requirements',['sale' => $sale->id]).'" class="btn btn-xs btn-info" title="Upload Requirements"><i class="fas fa-file-upload"></i></a>';
-                }
+//                if(auth()->user()->can('upload requirements'))
+//                {
+//                    $action .= '<a href="'.route('sales.upload.requirements',['sale' => $sale->id]).'" class="btn btn-xs btn-info" title="Upload Requirements"><i class="fas fa-file-upload"></i></a>';
+//                }
                 if(auth()->user()->can('edit sales'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-warning update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';

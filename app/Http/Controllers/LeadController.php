@@ -99,7 +99,7 @@ class LeadController extends Controller
                 }
                 if(auth()->user()->can('delete lead') && $lead->sales()->count() < 1)
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$lead->id.'" data-toggle="modal" data-target="#delete-lead-modal" title="Delete Leads"><i class="fa fa-trash"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$lead->id.'" title="Delete Leads"><i class="fa fa-trash"></i></a>';
                 }
                 if(auth()->user()->can('edit lead'))
                 {
@@ -333,7 +333,9 @@ class LeadController extends Controller
         $lead = Lead::findOrFail($id);
         if($lead->delete())
         {
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Lead was moved to trashed']);
+        }else{
+            return response()->json(['success' => false, 'message' => 'Error occurred']);
         }
     }
 
