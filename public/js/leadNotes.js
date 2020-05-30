@@ -221,15 +221,39 @@ $(document).on('change','#reminder_date',function(){
         'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         'data' : {'date' : value},
         beforeSend: function(){
-            $('.display-schedule ul').remove();
+            $('#new-reminder-form .display-schedule ul').remove();
             $('#new-reminder-form input, #new-reminder-form select, #new-reminder-form textarea, #new-reminder-form button').attr('disabled',true);
         },success: function (result) {
-            $('.display-schedule').append('<ul></ul>');
+            $('#new-reminder-form .display-schedule').append('<ul></ul>');
             $.each(result, function(key, value){
-                $('.display-schedule ul').append('<li><strong class="text-success">'+value.category+'</strong> <span class="text-primary">'+value.lead_id+'</span> - Time: <span class="text-muted">'+value.start_date+'</span></li>');
+                $('#new-reminder-form .display-schedule ul').append('<li><strong class="text-success">'+value.category+'</strong> <span class="text-primary">'+value.lead_id+'</span> - Time: <span class="text-muted">'+value.start_date+'</span></li>');
             });
 
             $('#new-reminder-form input, #new-reminder-form select, #new-reminder-form textarea, #new-reminder-form button').attr('disabled',false);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+});
+
+$(document).on('change','#edit_reminder_date',function(){
+    let value = this.value;
+
+    $.ajax({
+        'url' : '/leads-activity-schedule',
+        'type' : 'POST',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'data' : {'date' : value},
+        beforeSend: function(){
+            $('#edit-reminder-form .display-schedule ul').remove();
+            $('#edit-reminder-form input, #edit-reminder-form select, #edit-reminder-form textarea, #edit-reminder-form button').attr('disabled',true);
+        },success: function (result) {
+            $('#edit-reminder-form .display-schedule').append('<ul></ul>');
+            $.each(result, function(key, value){
+                $('#edit-reminder-form .display-schedule ul').append('<li><strong class="text-success">'+value.category+'</strong> <span class="text-primary">'+value.lead_id+'</span> - Time: <span class="text-muted">'+value.start_date+'</span></li>');
+            });
+
+            $('#edit-reminder-form input, #edit-reminder-form select, #edit-reminder-form textarea, #edit-reminder-form button').attr('disabled',false);
         },error: function(xhr, status, error){
             console.log(xhr);
         }
