@@ -24,7 +24,7 @@ class NotificationsController extends Controller
 
     public function notifications_list()
     {
-        $notifications = Notification::where('user_id',auth()->user()->id)->limit(100)->orderBy('id','desc')->get();
+        $notifications = Notification::where('user_id','=',auth()->user()->id)->where('deleted_at','=',null)->limit(100)->orderBy('id','desc')->get();
 
         return DataTables::of($notifications)
             ->setRowClass(function ($notifications){
