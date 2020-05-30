@@ -52,7 +52,7 @@ class NotificationsController extends Controller
                     <img src="'.asset('/images/avatar-sm.png').'" class="user-image img-circle elevation-2" height="40" style="margin:0px 10px 10px 10px;">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
-                                    '.$notification->data->category.' to <span class="text-primary">'.Lead::find($notification->data->lead_id).'</span>
+                                    '.$notification->data->category.' to <span class="text-primary">'.Lead::find($notification->data->lead_id)->fullname.'</span>
                                     '.$notification->data->time_left.'
                                     <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> '.$notification->created_at->diffForHumans().'</p>
                                 </h3>
