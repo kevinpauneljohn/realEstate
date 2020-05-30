@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Events\NotificationEvent;
+use App\Lead;
 use App\Repositories\TimeRepository;
 use DateTime;
 use Illuminate\Console\Command;
@@ -54,6 +55,7 @@ class ReminderNotification extends Command
                 'data'    => array(
                     'id'        => $sched->id,
                     'lead_id'   => $sched->lead_id,
+                    'client_name'   => Lead::find($sched->lead_id)->fullname,
                     'schedule'  => $sched->schedule->format('M d, Y'),
                     'time'      => $sched->start_date,
                     'category'  => $sched->category,

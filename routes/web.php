@@ -146,8 +146,7 @@ Route::get('/test',function(){
 
     foreach ($notifications as $notification)
     {
-        $lead = \App\Lead::find($notification->data->lead_id);
-        echo $notification->data->lead_id.' - '.$lead->firstname.'<br/>';
+        $notification->client_name;
     }
 
 })->middleware(['auth']);
