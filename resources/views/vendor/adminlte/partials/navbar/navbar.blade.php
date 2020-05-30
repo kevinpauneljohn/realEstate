@@ -91,7 +91,7 @@
                                     {{$notify->data->category}}
                                     <span class="float-right text-sm text-muted"><i class="far fa-clock mr-1"></i> {{$notify->created_at->diffForHumans()}}</span>
                                 </h3>
-                                <p class="text-sm text-primary">{{\App\Lead::find($notify->data->lead_id)->fullname}}</p>
+                                <p class="text-sm text-primary">{{$notify->data->client_name}}</p>
                                 <p class="text-sm text-success">{{$notify->data->time_left}}</p>
                             </div>
                         </div>
