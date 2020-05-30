@@ -6,6 +6,7 @@ use App\Events\LeadStatusForTrippingEvent;
 use App\Lead;
 use App\LeadActivity;
 use App\Repositories\TimeRepository;
+use App\Requirement;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -267,5 +268,31 @@ class LeadActivityController extends Controller
         $leadActivity = LeadActivity::findOrFail($id);
         $leadActivity->delete();
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * @since May 30, 2020
+     * @author john kevin paunel
+     * get all the schedule on the date selected
+     * @param Request $request
+     * @return object
+     * */
+    public function getSchedule(Request $request)
+    {
+        $schedule = LeadActivity::whereDate('schedule','=',$request->date)
+            ->where('user_id','=',auth()->user()->id)
+            ->where('status','=','pending')
+            ->get();
+        $data = collect($schedule);
+        $filtered = $data->map(function($item, $key){
+            $value = $item;
+            if($item->lead_id)
+            {
+                $id = $item->lead_id;
+                $item->lead_id = Lead::find($id)->fullname;
+            }
+            return $value;
+        });
+        return $filtered;
     }
 }

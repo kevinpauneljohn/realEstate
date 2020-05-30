@@ -116,6 +116,7 @@ Route::get('/leads-schedule/{date}','LeadActivityController@checkSchedule')->nam
 Route::get('/leads-activity/{id}/edit','LeadActivityController@edit')->name('leads.activity.edit')->middleware(['auth','permission:edit lead']);
 Route::put('/leads-activity/{id}','LeadActivityController@update')->name('leads.activity.update')->middleware(['auth','permission:edit lead']);
 Route::delete('/leads-activity/{id}','LeadActivityController@destroy')->name('leads.activity.destroy')->middleware('auth','permission:delete lead');
+Route::post('/leads-activity-schedule/','LeadActivityController@getSchedule')->name('leads.schedule')->middleware('auth','permission:view lead');
 
 /*schedule*/
 Route::get('/schedule','ScheduleController@index')->name('schedules.index')->middleware(['auth','permission:view schedule']);

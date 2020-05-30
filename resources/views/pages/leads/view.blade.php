@@ -503,6 +503,7 @@
                                 <label for="reminder_details">Details</label><span class="required">*</span>
                                 <textarea class="form-control" name="reminder_details" id="reminder_details"></textarea>
                             </div>
+                            <div class="display-schedule"></div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

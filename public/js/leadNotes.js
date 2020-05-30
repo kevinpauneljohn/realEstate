@@ -212,6 +212,29 @@ $(document).on('submit','#new-reminder-form',function(form){
     clear_errors('reminder_date','reminder_time','reminder_category','reminder_details');
 });
 
+$(document).on('change','#reminder_date',function(){
+    let value = this.value;
+
+    $.ajax({
+        'url' : '/leads-activity-schedule',
+        'type' : 'POST',
+        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        'data' : {'date' : value},
+        beforeSend: function(){
+            $('.display-schedule ul').remove();
+        },success: function (result) {
+            console.log(result);
+            $('.display-schedule').append('<ul></ul>');
+            $.each(result, function(key, value){
+                $('.display-schedule ul').append('<li><strong class="text-success">'+value.category+'</strong> <span class="text-primary">'+value.lead_id+'</span> - Time: <span class="text-muted">'+value.start_date+'</span></li>');
+            });
+
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+});
+
 $(document).on('click','.edit-reminder-btn',function(){
     let id = this.id;
 
