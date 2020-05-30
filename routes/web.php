@@ -142,25 +142,13 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-    $computations = DB::table('computations')->get();
+    $notifications = \App\Notification::all();
 
-    return $computations;
-//    $schedule = \App\LeadActivity::where([
-//        ['status','=','pending'],
-//    ])->get();
-//
-//    foreach ($schedule as $sched)
-//    {
-//        $date = $sched->schedule;
-//        $time = new DateTime($sched->start_date);
-//
-//        $merge = new DateTime($date->format('Y-m-d') .' ' .$time->format('g:i A'));
-//        //echo $merge->format('Y-m-d H:i:s'); // Outputs '2017-03-14 13:37:42'
-//
-//        $due = \Carbon\Carbon::parse($merge->format('Y-m-d g:i A')); // now date is a carbon instance
-//        $lead = \App\Lead::find($sched->lead_id);
-//        echo $lead->id.' - '.$lead->fullname.' - '.$sched->status.' - '.$sched->id.' - '.$sched->category.' - '.$due.' - '.$due->diffForHumans()."<br/><br/>";
-//    }
+    foreach ($notifications as $notification)
+    {
+        echo $notification->data->lead_id.' - '.\App\Lead::find($notification->data->lead_id)->fullname.'<br/>';
+    }
+
 })->middleware(['auth']);
 
 //Route::post('/test',function(Request $request){
