@@ -223,7 +223,6 @@ $(document).on('change','#reminder_date',function(){
         beforeSend: function(){
             $('.display-schedule ul').remove();
         },success: function (result) {
-            console.log(result);
             $('.display-schedule').append('<ul></ul>');
             $.each(result, function(key, value){
                 $('.display-schedule ul').append('<li><strong class="text-success">'+value.category+'</strong> <span class="text-primary">'+value.lead_id+'</span> - Time: <span class="text-muted">'+value.start_date+'</span></li>');
