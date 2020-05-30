@@ -50,32 +50,35 @@ class ReminderNotification extends Command
 
         foreach ($schedule as $sched){
             $dueDate = $this->timeRepository->date_time($sched->schedule, $sched->start_date)->diffForHumans();
-            $notification = array(
-                'user' => $sched->user_id,
-                'data'    => array(
-                    'id'        => $sched->id,
-                    'lead_id'   => $sched->lead_id,
-                    'client_name'   => Lead::find($sched->lead_id)->fullname,
-                    'schedule'  => $sched->schedule->format('M d, Y'),
-                    'time'      => $sched->start_date,
-                    'category'  => $sched->category,
-                    'time_left' => $dueDate,
-                    'link'      => '/schedule'
-                ),
-                'viewed'  => false,
-                'type'    => 'lead activity'
-            );
-
-            if($dueDate == '1 day from now')
+            if(Lead::where('id',$sched->lead_id)->count() > 0)
             {
-                event(new NotificationEvent((object)$notification));
-            }elseif ($dueDate == '3 days from now'){
-                event(new NotificationEvent((object)$notification));
-            }
-            elseif ($dueDate == '5 hours from now'){
-                event(new NotificationEvent((object)$notification));
-            }elseif ($dueDate == '1 hour from now'){
-                event(new NotificationEvent((object)$notification));
+                $notification = array(
+                    'user' => $sched->user_id,
+                    'data'    => array(
+                        'id'        => $sched->id,
+                        'lead_id'   => $sched->lead_id,
+                        'client_name'   => Lead::find($sched->lead_id)->fullname,
+                        'schedule'  => $sched->schedule->format('M d, Y'),
+                        'time'      => $sched->start_date,
+                        'category'  => $sched->category,
+                        'time_left' => $dueDate,
+                        'link'      => '/schedule'
+                    ),
+                    'viewed'  => false,
+                    'type'    => 'lead activity'
+                );
+
+                if($dueDate == '1 day from now')
+                {
+                    event(new NotificationEvent((object)$notification));
+                }elseif ($dueDate == '3 days from now'){
+                    event(new NotificationEvent((object)$notification));
+                }
+                elseif ($dueDate == '5 hours from now'){
+                    event(new NotificationEvent((object)$notification));
+                }elseif ($dueDate == '1 hour from now'){
+                    event(new NotificationEvent((object)$notification));
+                }
             }
         }
     }
