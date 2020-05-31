@@ -18,6 +18,30 @@
     <ul class="navbar-nav ml-auto reminder-notification">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fas fa-wallet"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
+                <span class="dropdown-item dropdown-header">Wallet</span>
+                <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <i class="fas fa-bell mr-2 text-info"></i>
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    <span class="float-right text-sm text-muted"><i class="far fa-clock mr-1"></i></span>
+                                </h3>
+                                <p class="text-sm"><span class="text-primary"></span></p>
+                                <p class="text-sm text-success"></p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                <a href="#" class="dropdown-item dropdown-footer">Open Wallet</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fas fa-clipboard-list"></i>
                 @php
                     if(auth()->user()->hasAnyRole(['super admin','admin']))

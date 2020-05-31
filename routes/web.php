@@ -144,13 +144,14 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-    return now()->format('m');
+//    return view('test');
+    return view('pages.dashboard');
 
 })->middleware(['auth']);
 
-//Route::post('/test',function(Request $request){
-//    event(new NotificationEvent($request->test));
-//})->name('test');
+Route::post('/test',function(Request $request){
+    dd($request->file('thing'));
+})->name('test');
 
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
