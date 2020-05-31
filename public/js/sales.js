@@ -314,6 +314,8 @@ $(document).on('click','.edit-sales-btn',function () {
         'url' : '/sales/edit/'+id,
         'type' : 'GET',
         beforeSend: function () {
+            $('#edit-sales-modal .modal-title').text("").prepend('Loading content ' +
+                '<div class="spinner-grow text-primary"></div><div class="spinner-grow text-primary"></div><div class="spinner-grow text-primary"></div>');
             $('input, select, textarea').attr('disabled',true);
         },success: function (result) {
             console.log(result);
@@ -344,6 +346,7 @@ $(document).on('click','.edit-sales-btn',function () {
 
             $('#edit_model_unit').val(result.model_unit_id).change();
 
+            $('#edit-sales-modal .modal-title').text("Edit Sales").find('.spinner-grow').remove();
             $('input, select, textarea').attr('disabled',false);
         },error: function (xhr, status, error) {
             console.log(xhr);
