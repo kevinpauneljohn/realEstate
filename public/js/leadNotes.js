@@ -270,7 +270,9 @@ $(document).on('click','.edit-reminder-btn',function(){
             $('#edit-reminder-form input,#edit-reminder-form select, #edit-reminder-form textarea,#edit-reminder-form button').attr('disabled',true);
         },success: function(result){
             $('#reminderId').val(id);
-            $('#edit_reminder_date').val(result.date_scheduled);
+            $('#edit_reminder_date').val(result.date_scheduled).attr('value',result.date_scheduled).each(function(){
+                $(this).datepicker('setDate', $(this).val());
+            });
             $('#edit_reminder_time').val(result.activity.start_date);
             $('#edit_reminder_category').val(result.activity.category).change();
             $('#edit_reminder_details').val(result.activity.details);
