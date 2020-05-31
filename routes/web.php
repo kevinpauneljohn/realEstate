@@ -18,6 +18,7 @@
 //Auth::routes();
 
 use App\Events\NotificationEvent;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -142,12 +143,7 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-    $notifications = \App\Notification::all();
-
-    foreach ($notifications as $notification)
-    {
-        $notification->client_name;
-    }
+    return now()->format('Y-m-d');
 
 })->middleware(['auth']);
 

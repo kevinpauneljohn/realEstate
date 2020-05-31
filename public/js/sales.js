@@ -316,8 +316,11 @@ $(document).on('click','.edit-sales-btn',function () {
         beforeSend: function () {
 
         },success: function (result) {
+            console.log(result);
             $('#updateSalesId').val(id);
-            $('#edit_reservation_date').val(result.reservation_date);
+            $('#edit_reservation_date').val(result.reservation_date).attr('value',result.reservation_date).each(function(){
+                $(this).datepicker('setDate', $(this).val());
+            });
             $('#edit_buyer').val(result.lead_id).change();
             $('#edit_project').val(result.project_id).change();
             $('#edit_lot_area').val(result.lot_area);
@@ -341,10 +344,7 @@ $(document).on('click','.edit-sales-btn',function () {
 
             $('#edit_model_unit').val(result.model_unit_id).change();
         },error: function (xhr, status, error) {
-            $.each(xhr, function (key, value) {
-                console.log('KEY: '+key+' VALUE: '+value);
-            });
-            console.log(status+' - '+error);
+            console.log(xhr);
         }
     });
 });

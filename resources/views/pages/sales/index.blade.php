@@ -619,12 +619,8 @@
         $('#edit_reservation_date').datepicker({
             autoclose: true,
             format: 'yyyy-mm-dd'
-        }).datepicker("setDate", new Date());
-
-        $('#edit_reservation_date').datepicker({
-            autoclose: true,
-            format: 'yyyy-mm-dd'
         });
+
 
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();

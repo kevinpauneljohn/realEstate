@@ -20,7 +20,8 @@ class SalesRepository
      * */
     public function getSalesById($id)
     {
-        return Sales::findOrFail($id);
+        $sales = Sales::findOrFail($id);
+        return $sales;
     }
 
     /**

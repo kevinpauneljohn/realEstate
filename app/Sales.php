@@ -2,12 +2,20 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sales extends Model
 {
     use SoftDeletes;
+
+    protected $dates = ['reservation_date'];
+
+    public function getReservationDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
 
     public function user()
     {

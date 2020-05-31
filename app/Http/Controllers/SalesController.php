@@ -78,7 +78,9 @@ class SalesController extends Controller
      * */
     public function getTotalSales($user_id)
     {
-        $sales = User::findOrFail($user_id)->sales()->where('status','!=','cancelled')->get();/*get all the user's sales*/
+        $sales = User::findOrFail($user_id)->sales()
+            ->whereYear('reservation_date',now()->format('Y'))
+            ->where('status','!=','cancelled')->get();/*get all the user's sales*/
         $total_sales = 0;/*initiate the total sales by 0*/
 
         /*add all sales total contract price less the discount*/
@@ -187,6 +189,9 @@ class SalesController extends Controller
     {
         $sales = Sales::where('user_id',auth()->user()->id)->get();
         return DataTables::of($sales)
+//            ->editColumn('reservation_date',function($sale){
+//                return $sale->reservation_date->format('M d, Y');
+//            })
             ->editColumn('total_contract_price',function($sale){
                 return number_format($sale->total_contract_price);
             })
