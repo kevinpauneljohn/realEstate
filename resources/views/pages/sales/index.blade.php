@@ -24,7 +24,7 @@
                 <div class="inner">
                     <h3>&#8369; {{$total_sales}}</h3>
 
-                    <p>Total Sales</p>
+                    <p>Total sales for this year</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-money-bill"></i>
@@ -37,9 +37,9 @@
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                    <h3>&#8369; {{$total_sales_this_month}}</h3>
 
-                    <p>Total Sales for this year</p>
+                    <p>Total sales for this month</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-money-bill-alt"></i>

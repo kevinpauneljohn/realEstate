@@ -143,7 +143,7 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-    return now()->format('Y-m-d');
+    return now()->format('m');
 
 })->middleware(['auth']);
 

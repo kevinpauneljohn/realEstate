@@ -42,6 +42,7 @@ class SalesController extends Controller
             'leads' => Lead::where('user_id',auth()->user()->id)->get(),
             'projects'   => Project::all(),
             'total_units_sold' => User::findOrFail(auth()->user()->id)->sales()->where('status','!=','cancelled')->count(),
+            'total_sales_this_month' => $this->getTotalSalesThisMonth(auth()->user()->id),
             'total_sales'   => $this->getTotalSales(auth()->user()->id),
             'templates' => Template::all(),
         ]);
@@ -80,6 +81,29 @@ class SalesController extends Controller
     {
         $sales = User::findOrFail($user_id)->sales()
             ->whereYear('reservation_date',now()->format('Y'))
+            ->where('status','!=','cancelled')->get();/*get all the user's sales*/
+        $total_sales = 0;/*initiate the total sales by 0*/
+
+        /*add all sales total contract price less the discount*/
+        foreach ($sales as $sale)
+        {
+            $difference = $sale->total_contract_price - $sale->discount;
+            $total_sales = $total_sales + $difference;
+        }
+        return number_format($total_sales);
+    }
+
+    /**
+     * May 31, 2020
+     * @author john kevin paunel
+     * get the user total sales
+     * @param string $user_id
+     * @return string
+     * */
+    public function getTotalSalesThisMonth($user_id)
+    {
+        $sales = User::findOrFail($user_id)->sales()
+            ->whereMonth('reservation_date',now()->format('m'))
             ->where('status','!=','cancelled')->get();/*get all the user's sales*/
         $total_sales = 0;/*initiate the total sales by 0*/
 
