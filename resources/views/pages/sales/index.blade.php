@@ -621,7 +621,6 @@
             format: 'yyyy-mm-dd'
         });
 
-
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
         });
