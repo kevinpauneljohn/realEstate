@@ -52,7 +52,7 @@ class PermissionController extends Controller
                 }
                 if(auth()->user()->can('delete permission'))
                 {
-                $action .= '<a href="#" class="btn btn-xs btn-danger delete-permission-btn" id="'.$permission->id.'" data-toggle="modal" data-target="#delete-permission-modal"><i class="fa fa-trash"></i> Delete</a>';
+                $action .= '<a href="#" class="btn btn-xs btn-danger delete-permission-btn" id="'.$permission->id.'"><i class="fa fa-trash"></i> Delete</a>';
                 }
                 return $action;
             })
@@ -104,7 +104,7 @@ class PermissionController extends Controller
                 $permission->assignRole($request->roles);
             }
 
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Permission successfully added!']);
         }
         return response()->json($validator->errors());
     }
@@ -162,7 +162,7 @@ class PermissionController extends Controller
 
             $permission->assignRole($request->edit_roles);
 
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Permission successfully updated!']);
         }
         return response()->json($validator->errors());
 

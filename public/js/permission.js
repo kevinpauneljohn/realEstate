@@ -9,109 +9,79 @@ function clear_errors()
     }
 }
 
-function submitform(url , type , data , message , reload = true, elementAttr, consoleLog = true)
-{
+$(document).on('submit','#permission-form',function(form){
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
+
     $.ajax({
-        'url' : url,
-        'type' : type,
+        'url' : '/permissions',
+        'type' : 'POST',
         'data' : data,
-        'cache' : false,
         beforeSend: function(){
-            $('.submit-form-btn').attr('disabled',true);
-            $('.spinner').show();
-        },
-        success: function(result, status, xhr){
-            if(consoleLog === true)
-            {
-                console.log(result);
-            }
+            $('.select2').val("").change();
+            $('.submit-permission-btn').val('Saving ... ').attr('disabled',true);
+        },success: function(result){
             if(result.success === true)
             {
-                setTimeout(function(){
-                    toastr.success(message)
-                    setTimeout(function(){
-                        if(reload === true)
-                        {
-                            location.reload();
-                        }
-                    },1500);
-                });
-            }else{
-                $('.submit-form-btn').attr('disabled',false);
-                $('.spinner').hide();
+                let table = $('#permissions-list').DataTable();
+                table.ajax.reload();
+
+                $('#permission-form').trigger('reset');
+                toastr.success(result.message);
+
+                $('#add-new-permission-modal').modal('toggle');
             }
 
             $.each(result, function (key, value) {
-                var element = $(elementAttr+'#'+key);
+                var element = $('#'+key);
 
-                element.closest(elementAttr+'div.'+key)
+                element.closest('div.'+key)
                     .addClass(value.length > 0 ? 'has-error' : 'has-success')
                     .find('.text-danger')
                     .remove();
                 element.after('<p class="text-danger">'+value+'</p>');
             });
 
+            $('.submit-permission-btn').val('Save').attr('disabled',false);
+        },error: function(xhr,status,error){
+            console.log(xhr);
+        }
+    });
+    clear_errors('permission');
+});
+
+$(document).on('submit','#edit-permission-form',function(form){
+    form.preventDefault();
+    let data = $(this).serializeArray();
+
+    $.ajax({
+        'url' : '/permissions/'+data[2].value,
+        'type' : 'PUT',
+        'data' : data,
+        beforeSend: function(){
+            $('.submit-edit-priority-btn').val('Saving ... ').attr('disabled',true);
+        },success: function(result){
+
+            if(result.success === true)
+            {
+                let table = $('#permissions-list').DataTable();
+                table.ajax.reload();
+                toastr.success(result.message);
+                $('#edit-permission-modal').modal('toggle');
+
+            }else if(result.success === false)
+            {
+                toastr.error(result.message);
+            }
+
+            $('.submit-edit-priority-btn').val('Save').attr('disabled',false);
         },error: function(xhr, status, error){
             console.log(xhr);
         }
     });
-}
-
-$(document).ready(function(){
-
-    /*add permission*/
-    $('#permission-form').submit(function(form){
-        form.preventDefault();
-        let data = $('#permission-form').serialize();
-
-        submitform(
-            '/permissions',
-            'POST',
-            data,
-            'New Permission Successfully Added!',
-            true,
-            '',
-            false,
-        );
-        clear_errors('permission');
-    });
-
-    /*edit permission*/
-    $('#edit-permission-form').submit(function(form){
-        form.preventDefault();
-        let data = $('#edit-permission-form').serialize();
-        let id = $('#updatePermissionId').val();
-
-        submitform(
-            '/permissions/'+id,
-            'PUT',
-            data,
-            'New Permission Successfully Updated!',
-            true,
-            '',
-            false,
-        );
-        clear_errors('edit_permission');
-    });
-
-    /*delete permission*/
-    $('#delete-permission-form').submit(function(form){
-        form.preventDefault();
-        let id = $('#deletePermissionId').val();
-        let data = $('#delete-permission-form').serialize();
-
-        //console.log(data);
-        submitform(
-            '/permissions/'+id,
-            'DELETE',
-            data,
-            'Permission Successfully Removed!',
-            false,
-            '',
-            true
-        );
-    });
 });
+
 
 /*edit trigger popup*/
 $(document).on('click','.edit-permission-btn',function () {
@@ -137,12 +107,42 @@ $(document).on('click','.edit-permission-btn',function () {
 
 /*delete trigger popup*/
 $(document).on('click','.delete-permission-btn',function () {
-    $tr = $(this).closest('tr');
-    id = this.id;
-    let data = $tr.children('td').map(function () {
-        return $(this).text();
-    }).get();
+    let id = this.id;
 
-    $('.delete-permission-name').html('<strong style="color:yellow;">'+data[0]+'</strong>');
-    $('#deletePermissionId').val(id);
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+
+            $.ajax({
+                'url' : '/permissions/'+id,
+                'type' : 'DELETE',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {'_method':'DELETE','id' : id},
+                beforeSend: function(){
+
+                },success: function(output){
+                    if(output.success === true){
+                        let table = $('#permissions-list').DataTable();
+                        table.ajax.reload();
+
+                        Swal.fire(
+                            'Deleted!',
+                            'Permission has been deleted.',
+                            'success'
+                        );
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+
+        }
+    });
 });

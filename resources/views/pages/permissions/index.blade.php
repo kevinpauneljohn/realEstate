@@ -67,7 +67,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <input type="submit" class="btn btn-primary submit-permission-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -111,7 +111,7 @@
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                                <input type="submit" class="btn btn-primary submit-edit-priority-btn" value="Save">
                             </div>
                         </div>
                     </div>
@@ -121,31 +121,6 @@
             </form>
         </div>
         <!--end add permission modal-->
-    @endcan
-
-    @can('delete permission')
-        <!--delete permission-->
-        <div class="modal fade" id="delete-permission-modal">
-            <form role="form" id="delete-permission-form" class="form-submit">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="deletePermissionId" id="deletePermissionId">
-                <div class="modal-dialog">
-                    <div class="modal-content bg-danger">
-                        <div class="modal-body">
-                            <p class="delete_permission">Delete Permission: <span class="delete-permission-name"></span></p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-        <!--end delete permission modal-->
     @endcan
 @stop
 
