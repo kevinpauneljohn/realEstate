@@ -277,7 +277,7 @@ class SalesController extends Controller
                 }
                 if(auth()->user()->can('delete sales'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#delete-lead-modal" title="Delete"><i class="fa fa-trash"></i></a>';
+                    $action .= '<button class="btn btn-xs btn-danger delete-sale-btn" id="'.$sale->id.'" title="Delete"><i class="fa fa-trash"></i></button>';
                 }
 //                if(auth()->user()->can('upload requirements'))
 //                {
@@ -549,7 +549,14 @@ class SalesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(auth()->user()->hasRole('super admin'))
+        {
+            $sale = Sales::find($id);
+            if($sale->delete())
+            {
+                return response()->json(['success' => true,'message' => 'Sales successfully deleted']);
+            }
+        }
     }
 
     /**

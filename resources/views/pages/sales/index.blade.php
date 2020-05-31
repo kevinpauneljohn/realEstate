@@ -460,30 +460,6 @@
         </div>
     @endcan
 
-    @can('delete project')
-        <!--delete user-->
-        <div class="modal fade" id="delete-project-modal">
-            <form role="form" id="delete-project-form" class="form-submit">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="deleteProjectId" id="deleteProjectId">
-                <div class="modal-dialog">
-                    <div class="modal-content bg-danger">
-                        <div class="modal-body">
-                            <p class="delete_project">Delete Project: <span class="delete-project-name"></span></p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-        <!--end delete user modal-->
-    @endcan
 
     @can('edit sales')
         <!--update sale status-->

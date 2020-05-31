@@ -440,10 +440,47 @@ $(document).on('click','.view-request-btn',function () {
 
         },error: function (xhr, status, error) {
             console.log(xhr);
-            // $.each(xhr, function (key, value) {
-            //     console.log('Key: '+key+' Value: '+value);
-            // });
-            // console.log('Status: '+status+' Error: '+error);
+        }
+    });
+});
+
+$(document).on('click','.delete-sale-btn',function(){
+    let id = this.id;
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+
+            $.ajax({
+                'url' : '/sales/'+id,
+                'type' : 'DELETE',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {'_method':'DELETE','id' : id},
+                beforeSend: function(){
+
+                },success: function(output){
+                    if(output.success === true){
+                        let table = $('#sales-list').DataTable();
+                        table.ajax.reload();
+
+                        Swal.fire(
+                            'Deleted!',
+                            'Sales has been deleted.',
+                            'success'
+                        );
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+
         }
     });
 });
