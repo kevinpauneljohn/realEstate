@@ -314,7 +314,7 @@ $(document).on('click','.edit-sales-btn',function () {
         'url' : '/sales/edit/'+id,
         'type' : 'GET',
         beforeSend: function () {
-            $('#edit-sales-form input, #edit-sales-form select,#edit-sales-form textarea').attr('disabled',true);
+            $('input, select, textarea').attr('disabled',true);
         },success: function (result) {
             console.log(result);
             $('#updateSalesId').val(id);
@@ -344,7 +344,7 @@ $(document).on('click','.edit-sales-btn',function () {
 
             $('#edit_model_unit').val(result.model_unit_id).change();
 
-            $('#edit-sales-form input, #edit-sales-form select,#edit-sales-form textarea').attr('disabled',false);
+            $('input, select, textarea').attr('disabled',false);
         },error: function (xhr, status, error) {
             console.log(xhr);
         }
