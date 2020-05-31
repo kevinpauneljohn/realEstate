@@ -44,6 +44,7 @@ class SalesController extends Controller
             'total_units_sold' => User::findOrFail(auth()->user()->id)->sales()->where('status','!=','cancelled')->count(),
             'total_sales_this_month' => $this->getTotalSalesThisMonth(auth()->user()->id),
             'total_sales'   => $this->getTotalSales(auth()->user()->id),
+            'total_cancelled'   => Sales::where('status','cancelled')->count(),
             'templates' => Template::all(),
         ]);
     }

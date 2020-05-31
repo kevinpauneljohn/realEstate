@@ -67,7 +67,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>65</h3>
+                    <h3>{{$total_cancelled}}</h3>
 
                     <p>Total Cancelled this year</p>
                 </div>
