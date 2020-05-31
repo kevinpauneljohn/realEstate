@@ -290,7 +290,7 @@ class LeadActivityController extends Controller
             {
                 $id = $item->lead_id;
                 $lead = Lead::where('id',$id);
-                if($lead->count > 0)
+                if($lead->count() > 0)
                 {
                     $item->lead_id = Lead::find($id)->fullname;
                 }else{
