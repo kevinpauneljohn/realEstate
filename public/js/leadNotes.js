@@ -226,7 +226,11 @@ $(document).on('change','#reminder_date',function(){
         },success: function (result) {
             $('#new-reminder-form .display-schedule').append('<ul></ul>');
             $.each(result, function(key, value){
-                $('#new-reminder-form .display-schedule ul').append('<li><strong class="text-success">'+value.category+'</strong> <span class="text-primary">'+value.lead_id+'</span> - Time: <span class="text-muted">'+value.start_date+'</span></li>');
+                if(value.lead_id !== "")
+                {
+                    $('#new-reminder-form .display-schedule ul').append('<li><strong class="text-success">'+value.category+'</strong> <span class="text-primary">'+value.lead_id+'</span> - Time: <span class="text-muted">'+value.start_date+'</span></li>');
+                }
+
             });
 
             $('#new-reminder-form input, #new-reminder-form select, #new-reminder-form textarea, #new-reminder-form button').attr('disabled',false);
