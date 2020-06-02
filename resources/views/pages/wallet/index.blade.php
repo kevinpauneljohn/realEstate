@@ -18,6 +18,48 @@
 
 @section('content')
     <div class="container" style="max-width: 1000px;">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info"><i class="fa fa-money-bill-alt"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Current Balance</span>
+                        <span class="info-box-number">&#8369; {{number_format($current_balance,2)}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-success"><i class="fa fa-money-bill-alt"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Remaining Balance</span>
+                        <span class="info-box-number">&#8369; {{$remaining_balance}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-warning"><i class="fa fa-money-bill-alt"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Cash Advances</span>
+                        <span class="info-box-number">&#8369; {{number_format(0,2)}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </div>
+
+
         <div class="card">
             <div class="card-header">
                 @can('withdraw money')
