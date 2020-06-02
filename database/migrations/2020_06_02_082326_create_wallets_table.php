@@ -16,7 +16,7 @@ class CreateWalletsTable extends Migration
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
             $table->uuid('user_id');
-            $table->decimal('amount');
+            $table->decimal('amount',8,2);
             $table->text('details');
             $table->string('category');
             $table->string('status');
