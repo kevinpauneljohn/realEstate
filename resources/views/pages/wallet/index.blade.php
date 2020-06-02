@@ -98,7 +98,7 @@
     </div>
 
 
-    @can('wihdraw money')
+    @can('withdraw money')
         <div class="modal fade" id="withdraw-money-modal">
             <form role="form" id="contact-form" class="form-submit">
                 @csrf
