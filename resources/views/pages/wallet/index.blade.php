@@ -111,22 +111,11 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group title">
-                                <label for="title">Title</label><span class="required">*</span>
-                                <input type="text" name="title" class="form-control" id="title">
-                            </div>
-                            <div class="form-group contact_person">
-                                <label for="contact_person">Contact Person</label><span class="required">*</span>
-                                <input type="text" name="contact_person" class="form-control" id="contact_person">
-                            </div>
-                            <div class="form-group contact_details">
-                                <label for="contact_details">Contact Details</label>
-                                <textarea class="form-control" name="contact_details" id="contact_details" style="min-height: 150px;"></textarea>
-                            </div>
+
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary submit-contact-btn" value="Save">
+                            <input type="submit" class="btn btn-primary submit-contact-btn" value="Save" disabled="disabled">
                         </div>
                     </div>
                     <!-- /.modal-content -->
