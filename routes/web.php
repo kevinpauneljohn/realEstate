@@ -240,4 +240,6 @@ Route::delete('/contacts/{contact}','ContactController@destroy')->name('contacts
 
 Route::get('/wallet','WalletController@index')->name('wallet.index')->middleware(['auth','permission:view wallet']);
 Route::get('/wallet-list','WalletController@total_wallet_amount')->name('wallet.list')->middleware(['auth','permission:view wallet']);
+Route::post('/get-source','WalletController@source')->name('money.source')->middleware(['auth','permission:view wallet|withdraw money']);
+Route::post('/withdraw','WalletController@withdrawMoney')->name('money.withdraw')->middleware(['auth','permission:view wallet|withdraw money']);
 

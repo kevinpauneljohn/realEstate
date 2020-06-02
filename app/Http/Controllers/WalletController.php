@@ -27,6 +27,11 @@ class WalletController extends Controller
         $wallets = Wallet::where('user_id',auth()->user()->id)->get();
 
         return DataTables::of($wallets)
+            ->addColumn('select',function($wallet){
+                $checkbox = '<input type="checkbox" name="source" class="source" value="'.$wallet->id.'">';
+                if($wallet->status === 'available')
+                {return $checkbox;}
+            })
             ->editColumn('created_at',function($wallet){
                 return $wallet->created_at->format('M d, Y h:i a');
             })
@@ -43,7 +48,29 @@ class WalletController extends Controller
             ->addColumn('description',function($wallet){
                 return $wallet->details->description;
             })
-            ->rawColumns(['amount','category'])
+            ->addColumn('action',function($wallet){
+                $action = '<button type="button" class="btn btn-xs btn-info" title="Withdrawal History"><i class="fas fa-history"></i></button>';
+                return $action;
+            })
+            ->rawColumns(['amount','category','select','action'])
             ->make(true);
+    }
+
+    /**
+     * @since June 02, 2020
+     * @author john kevin paunel
+     * get the data of all selected source
+     * @param Request $request
+     * @return object
+     * */
+    public function source(Request $request)
+    {
+        $wallet = Wallet::whereIn('id',$request->id)->get();
+        return $wallet;
+    }
+
+    public function withdrawMoney(Request $request)
+    {
+        return $request->all();
     }
 }
