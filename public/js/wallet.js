@@ -38,7 +38,7 @@ $(document).on('click','.select-source',function(){
                         '<td><span class="text-success">&#8369; '+value.amount+'</span></td>' +
                         '<td>'+value.details.description+'</td>' +
                         '<td><span class="text-primary">'+value.category+'</span></td>' +
-                        '<td><input type="hidden" name="id[]" value="'+value.id+'"><input type="number" name="custom_amount[]" class="form-control" step="0.1" max="'+value.amount+'"></td>' +
+                        '<td id="row-'+value.id+'"><input type="hidden" name="id[]" value="'+value.id+'"><input type="number" name="custom_amount[]" class="form-control" step="0.1" ></td>' +
                         '</tr>';
                     $('#source-form .modal-body table tbody').append(field);
                 });
@@ -62,9 +62,13 @@ $(document).on('submit','#source-form',function(form){
         'type' : 'POST',
         'data' : data,
         beforeSend: function(){
+            $('.text-danger').remove();
             $('.submit-withdraw-btn').val('Saving ... ').attr('disabled',true);
         },success: function(result){
-            console.log(result);
+
+            $.each(result, function(key, value){
+                $('#row-'+key+' input[type="number"]').after('<p class="text-danger">'+value+'</p>');
+            });
 
             $('.submit-withdraw-btn').val('Save').attr('disabled',false);
         },error: function(xhr, status, error){

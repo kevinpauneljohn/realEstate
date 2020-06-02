@@ -43,7 +43,8 @@ class WalletController extends Controller
             })
             ->addColumn('sender',function($wallet){
                 $user = User::find($wallet->details->sender);
-                return $user->fullname;
+                //return $user->fullname;
+                return ($user->hasRole('super admin')) ? "System"  : $user->fullname;
             })
             ->addColumn('description',function($wallet){
                 return $wallet->details->description;
@@ -69,8 +70,48 @@ class WalletController extends Controller
         return $wallet;
     }
 
+    /**
+     * @since June 02, 2020
+     * @author john kevin paunel
+     * withdraw moeny from wallet
+     * @param Request $request
+     * @return mixed
+     * */
     public function withdrawMoney(Request $request)
     {
-        return $request->all();
+        //combined the keys and value into pairs
+        $collection = collect($request->id);
+        $combined = $collection->combine($request->custom_amount);
+
+        $error = array();
+        $ctr = 0;
+        //validate the field
+        foreach ($combined as $key => $value)
+        {
+            $wallet = Wallet::find($key);
+            if($value > $wallet->amount)
+            {
+                $error[$key] = 'The custom amount must not be higher than the original amount';
+                $ctr++;
+            }elseif ($value === null){
+                $error[$key] = 'The custom amount field is required';
+                $ctr++;
+            }
+        }
+
+        if($ctr > 0)
+        {
+            //return the error validation
+            return response()->json($error);
+        }else{
+            //save the request if there are no validation errors
+            foreach ($combined as $key => $value)
+            {
+                $wallet = Wallet::find($key);
+                $wallet->amount = $wallet->amount - $value;
+                $wallet->save();
+            }
+            return response()->json(['success' => true, 'message' => 'Request successfully submitted']);
+        }
     }
 }
