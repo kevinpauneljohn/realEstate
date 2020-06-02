@@ -238,3 +238,6 @@ Route::put('/contacts/{contact}','ContactController@update')->name('contacts.upd
 Route::delete('/contacts/{contact}','ContactController@destroy')->name('contacts.destroy')->middleware(['auth','permission:delete contacts']);
 //Route::post('/all-contacts','ContactController@contacts')->name('contacts.all')->middleware(['auth','permission:view contacts']);
 
+Route::get('/wallet','WalletController@index')->name('wallet.index')->middleware(['auth','permission:view wallet']);
+Route::get('/wallet-list','WalletController@total_wallet_amount')->name('wallet.list')->middleware(['auth','permission:view wallet']);
+

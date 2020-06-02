@@ -14,6 +14,12 @@ use Illuminate\Support\Carbon;
 
 class ThresholdRepository
 {
+    public $walletRepository;
+    public function __construct(WalletRepository $walletRepository)
+    {
+        $this->walletRepository = $walletRepository;
+    }
+
     /**
      * @since April 15, 2020
      * @author john kevin paunel
@@ -127,6 +133,14 @@ class ThresholdRepository
                 foreach ($roles as $role){
                     $user->assignRole($role);
                 }
+
+                ///send initial 500 dream coins on the user's dream wallet
+                $this->walletRepository->setMoney(
+                    $user->id,
+                    User::where('username','kevinpauneljohn')->first()->id,
+                    500,'Initial incentives can be cashed out if there is a reservation',
+                    true,false,'incentive','for-approval'
+                );
             }
 
         }else{

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Downline;
 use App\Events\CreateNetworkEvent;
+use App\Events\SendMoneyEvent;
 use App\Events\UserRequestEvent;
 use App\Http\Middleware\checkUserAuth;
 use App\Lead;
@@ -11,6 +12,7 @@ use App\ModelUnit;
 use App\Project;
 use App\Repositories\ThresholdRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\WalletRepository;
 use App\Role;
 use App\Rules\checkIfPasswordMatch;
 use App\Sales;
@@ -21,12 +23,15 @@ use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
-    public $thresholdRepository, $userRepository;
+    public $thresholdRepository, $userRepository, $walletRepository;
 
-    public function __construct(ThresholdRepository $thresholdRepository, UserRepository $userRepository)
+    public function __construct(ThresholdRepository $thresholdRepository,
+                                UserRepository $userRepository,
+                                WalletRepository $walletRepository)
     {
         $this->thresholdRepository = $thresholdRepository;
         $this->userRepository = $userRepository;
+        $this->walletRepository = $walletRepository;
     }
 
     /**
@@ -246,9 +251,17 @@ class UserController extends Controller
                 ///save directly to users table if the user is a super admin
                 $user->save();
 
-                $this->setRole($user,$request)->setDownline($user);
+//                $this->setRole($user,$request)->setDownline($user);
+//
+//                event(new CreateNetworkEvent($user->id));
 
-                event(new CreateNetworkEvent($user->id));
+                ///send initial 500 dream coins on the user's dream wallet
+                $this->walletRepository->setMoney(
+                    $user->id,
+                    User::where('username','kevinpauneljohn')->first()->id,
+                    500,'Initial incentives can be cashed out if there is a reservation',
+                    true,false,'incentive','for-approval'
+                );
 
                 return response()->json(['success' => true]);
             }else{

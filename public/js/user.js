@@ -160,7 +160,6 @@ $(document).on('submit','#user-form',function(form){
         beforeSend: function () {
             $('.add-user-btn').val('Saving ... ').attr('disabled',true);
         },success: function (result) {
-            console.log(result);
             if(result.success === true)
             {
                 $('#user-form').trigger('reset');

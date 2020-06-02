@@ -35,6 +35,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\NotificationEvent' => [
             'App\Listeners\NotificationListener',
+        ],
+        'App\Events\SendMoneyEvent' => [
+            'App\Listeners\SendMoneyListener',
         ]
     ];
 

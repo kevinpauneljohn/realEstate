@@ -100,5 +100,8 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view contacts']);
         Permission::create(['name' => 'edit contacts']);
         Permission::create(['name' => 'delete contacts']);
+
+        Permission::create(['name' => 'view wallet']);
+        Permission::create(['name' => 'withdraw money']);
     }
 }
