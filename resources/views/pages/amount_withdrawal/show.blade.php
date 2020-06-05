@@ -81,8 +81,8 @@
                             <label for="action">Action</label>
                             <select class="form-control" name="action" style="width:200px;" id="action-{{$cashRequest->id}}">
                                 <option value=""> -- Select action -- </option>
-                                <option value="reject">Reject</option>
-                                <option value="approve">Approve</option>
+                                <option value="rejected">Reject</option>
+                                <option value="approved">Approve</option>
                             </select>
                         </div>
                     <div class="form-group extra_field">

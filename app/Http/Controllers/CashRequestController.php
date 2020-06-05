@@ -21,6 +21,9 @@ class CashRequestController extends Controller
     {
         $cashRequests = CashRequest::all();
         return DataTables::of($cashRequests)
+            ->editColumn('status',function($cashRequest){
+                return '<span class="text-primary">'.ucfirst($cashRequest->status).'</span>';
+            })
             ->editColumn('id',function($cashRequest){
                 return '<span class="text-primary">#'.str_pad($cashRequest->id, 5, '0', STR_PAD_LEFT).'</span>';
             })
@@ -34,7 +37,7 @@ class CashRequestController extends Controller
                 $action = '<a href="'.route('withdrawal.show',['id' => $cashRequest->id]).'" class="btn btn-xs btn-success" title="View"><i class="fas fa-eye"></i></a>';
                 return $action;
             })
-            ->rawColumns(['id','action'])
+            ->rawColumns(['id','action','status'])
             ->make(true);
     }
 

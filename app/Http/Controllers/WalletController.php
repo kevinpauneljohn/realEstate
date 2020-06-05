@@ -53,7 +53,7 @@ class WalletController extends Controller
                 return $wallet->created_at->format('M d, Y h:i a');
             })
             ->editColumn('amount',function($wallet){
-                return '<span class="text-success">&#8369; '.$wallet->amount.'</span>';
+                return '<span class="text-success">&#8369; '.number_format($wallet->amount,2).'</span>';
             })
             ->editColumn('category',function($wallet){
                 return '<span class="text-primary">'.$wallet->category.'</span>';

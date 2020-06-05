@@ -46,10 +46,13 @@ class UpdateCashRequestStatusListener
             //update the user's wallet value
             foreach ($amount_withdrawal_request->get() as $amount_withdrawn)
             {
-                $wallet = Wallet::find($amount_withdrawn->wallet_id);
-                /// update the original wallet amount
-                $wallet->amount = $amount_withdrawn->original_amount - $amount_withdrawn->requested_amount;
-                $wallet->save();
+                if($amount_withdrawn->status === 'approved')
+                {
+                    $wallet = Wallet::find($amount_withdrawn->wallet_id);
+                    /// update the original wallet amount
+                    $wallet->amount = $amount_withdrawn->original_amount - $amount_withdrawn->requested_amount;
+                    $wallet->save();
+                }
             }
         }
     }

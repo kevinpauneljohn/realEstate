@@ -38,7 +38,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Remaining Balance</span>
-                        <span class="info-box-number">&#8369; {{$remaining_balance}}</span>
+                        <span class="info-box-number">&#8369; {{number_format($remaining_balance,2)}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -92,6 +92,7 @@
                             <th>Description</th>
                             <th>Category</th>
                             <th>Sender</th>
+                            <th>Status</th>
                             <th>Request #</th>
                             <th>History</th>
                         </tr>

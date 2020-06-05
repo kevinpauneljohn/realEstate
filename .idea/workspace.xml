@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CashRequestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CashRequestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Listeners/UpdateCashRequestStatusListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/UpdateCashRequestStatusListener.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/amount_withdrawal/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/amount_withdrawal/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/wallet/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/wallet/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,9 +22,18 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.20855214">
+    <splitter split-orientation="horizontal" split-proportion="0.7932277">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/resources/views/pages/amount_withdrawal/show.blade.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="306">
+                  <caret line="77" column="24" lean-forward="true" selection-start-line="77" selection-start-column="24" selection-end-line="77" selection-end-column="24" />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/routes/web.php">
               <provider selected="true" editor-type-id="text-editor">
@@ -34,11 +47,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CashRequestController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="488">
-                  <caret line="79" column="114" selection-start-line="79" selection-start-column="114" selection-end-line="79" selection-end-column="114" />
+                <state relative-caret-position="-549">
+                  <caret line="24" column="81" selection-start-line="24" selection-start-column="81" selection-end-line="24" selection-end-column="81" />
                   <folding>
                     <element signature="e#40#60#0#PHP" expanded="true" />
                   </folding>
@@ -46,70 +59,13 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/resources/views/pages/wallet/index.blade.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2193">
-                  <caret line="171" column="18" selection-start-line="171" selection-start-column="18" selection-end-line="171" selection-end-column="18" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Events/UpdateCashRequestStatusEvent.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Listeners/UpdateCashRequestStatusListener.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="352">
-                  <caret line="40" column="9" lean-forward="true" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
+                <state relative-caret-position="355">
+                  <caret line="45" column="44" lean-forward="true" selection-start-line="45" selection-start-column="44" selection-end-line="45" selection-end-column="44" />
                   <folding>
                     <element signature="e#33#65#0#PHP" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
-                  <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-                  <folding>
-                    <element signature="e#40#72#0#PHP" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/index.blade.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="229">
-                  <caret line="144" column="44" lean-forward="true" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/js/cash-request.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="204">
-                  <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
-                  <folding>
-                    <element signature="n#style#0;n#button#0;n#td#2;n#tr#0;n#!!top" expanded="true" />
-                    <element signature="n#style#0;n#button#1;n#td#2;n#tr#0;n#!!top" expanded="true" />
-                    <marker date="1591320889127" expanded="true" signature="1561:1734" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -122,6 +78,31 @@
                   <caret line="33" column="47" selection-start-line="33" selection-start-column="47" selection-end-line="33" selection-end-column="47" />
                   <folding>
                     <element signature="e#33#65#0#PHP" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/resources/views/pages/wallet/index.blade.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="680">
+                  <caret line="40" column="98" selection-start-line="40" selection-start-column="98" selection-end-line="40" selection-end-column="98" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-34">
+                  <caret line="55" column="92" selection-start-line="55" selection-start-column="92" selection-end-line="55" selection-end-column="92" />
+                  <folding>
+                    <element signature="e#40#72#0#PHP" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -202,7 +183,6 @@
         <option value="$PROJECT_DIR$/database/migrations/2020_06_03_122157_create_amount_withdrawal_requests_table.php" />
         <option value="$PROJECT_DIR$/app/AmountWithdrawalRequest.php" />
         <option value="$PROJECT_DIR$/app/Wallet.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/wallet/index.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_06_03_122019_create_cash_requests_table.php" />
         <option value="$PROJECT_DIR$/app/User.php" />
         <option value="$PROJECT_DIR$/app/CashRequest.php" />
@@ -220,16 +200,17 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" />
         <option value="$PROJECT_DIR$/app/Events/SaveRequestExtraFieldEvent.php" />
         <option value="$PROJECT_DIR$/app/Listeners/SaveRequestExtraFieldListener.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/amount_withdrawal/show.blade.php" />
         <option value="$PROJECT_DIR$/public/js/cash-request.js" />
         <option value="$PROJECT_DIR$/app/Events/AmountWithdrawalRequestEvent.php" />
         <option value="$PROJECT_DIR$/app/Listeners/AmountWithdrawalRequestListener.php" />
         <option value="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" />
         <option value="$PROJECT_DIR$/app/Events/UpdateCashRequestStatusEvent.php" />
-        <option value="$PROJECT_DIR$/app/Listeners/UpdateCashRequestStatusListener.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CashRequestController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/wallet/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/Listeners/UpdateCashRequestStatusListener.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/amount_withdrawal/show.blade.php" />
       </list>
     </option>
   </component>
@@ -401,7 +382,7 @@
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="leads" type="462c0819:PsiDirectoryNode" />
+              <item name="amount_withdrawal" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -565,21 +546,7 @@
       <workItem from="1590944349546" duration="599000" />
       <workItem from="1591057364765" duration="73101000" />
       <workItem from="1591316759181" duration="4092000" />
-      <workItem from="1591334707735" duration="7667000" />
-    </task>
-    <task id="LOCAL-00448" summary="computations module">
-      <created>1590747607141</created>
-      <option name="number" value="00448" />
-      <option name="presentableId" value="LOCAL-00448" />
-      <option name="project" value="LOCAL" />
-      <updated>1590747607141</updated>
-    </task>
-    <task id="LOCAL-00449" summary="computations module">
-      <created>1590756024890</created>
-      <option name="number" value="00449" />
-      <option name="presentableId" value="LOCAL-00449" />
-      <option name="project" value="LOCAL" />
-      <updated>1590756024890</updated>
+      <workItem from="1591334707735" duration="10434000" />
     </task>
     <task id="LOCAL-00450" summary="computations module">
       <created>1590756452659</created>
@@ -910,17 +877,31 @@
       <option name="project" value="LOCAL" />
       <updated>1591353274091</updated>
     </task>
-    <option name="localTasksCounter" value="497" />
+    <task id="LOCAL-00497" summary="cash request module">
+      <created>1591354474696</created>
+      <option name="number" value="00497" />
+      <option name="presentableId" value="LOCAL-00497" />
+      <option name="project" value="LOCAL" />
+      <updated>1591354474696</updated>
+    </task>
+    <task id="LOCAL-00498" summary="cash request module">
+      <created>1591354546001</created>
+      <option name="number" value="00498" />
+      <option name="presentableId" value="LOCAL-00498" />
+      <option name="project" value="LOCAL" />
+      <updated>1591354546001</updated>
+    </task>
+    <option name="localTasksCounter" value="499" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1507589000" />
+    <option name="totallyTimeSpent" value="1510356000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2751678" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.077852346" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1262,20 +1243,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/amount_withdrawal/show.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="81" column="121" selection-start-line="81" selection-start-column="121" selection-end-line="81" selection-end-column="121" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/wallet/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2193">
-          <caret line="171" column="18" selection-start-line="171" selection-start-column="18" selection-end-line="171" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/cash_request/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -1326,6 +1293,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Events/UpdateCashRequestStatusEvent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="146" column="37" selection-start-line="146" selection-start-column="37" selection-end-line="146" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="55" column="92" selection-start-line="55" selection-start-column="92" selection-end-line="55" selection-end-column="92" />
+          <folding>
+            <element signature="e#40#72#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CashRequestController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-549">
+          <caret line="24" column="81" selection-start-line="24" selection-start-column="81" selection-end-line="24" selection-end-column="81" />
+          <folding>
+            <element signature="e#40#60#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Listeners/AmountWithdrawalRequestListener.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
@@ -1336,47 +1337,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Events/UpdateCashRequestStatusEvent.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/amount_withdrawal/show.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
-          <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+          <caret line="77" column="24" lean-forward="true" selection-start-line="77" selection-start-column="24" selection-end-line="77" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CashRequestController.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/wallet/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="79" column="114" selection-start-line="79" selection-start-column="114" selection-end-line="79" selection-end-column="114" />
-          <folding>
-            <element signature="e#40#60#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="680">
+          <caret line="40" column="98" selection-start-line="40" selection-start-column="98" selection-end-line="40" selection-end-column="98" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Listeners/UpdateCashRequestStatusListener.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="40" column="9" lean-forward="true" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
+        <state relative-caret-position="355">
+          <caret line="45" column="44" lean-forward="true" selection-start-line="45" selection-start-column="44" selection-end-line="45" selection-end-column="44" />
           <folding>
             <element signature="e#33#65#0#PHP" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-          <folding>
-            <element signature="e#40#72#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="144" column="44" lean-forward="true" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
         </state>
       </provider>
     </entry>
