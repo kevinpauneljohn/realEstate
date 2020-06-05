@@ -144,7 +144,7 @@
                         <th>Important</th>
                         <th>Lead Status</th>
                         <th>Last Contacted</th>
-                        <th width="15%">Action</th>
+                        <th width="13%">Action</th>
                     </tr>
                     </thead>
 
