@@ -58,6 +58,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function cashRequests()
+    {
+        return $this->hasMany(CashRequest::class);
+    }
+
     public function wallets()
     {
         return $this->hasMany(Wallet::class);

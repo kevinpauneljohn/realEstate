@@ -38,7 +38,7 @@ $(document).on('click','.select-source',function(){
                         '<td><span class="text-success">&#8369; '+value.amount+'</span></td>' +
                         '<td>'+value.details.description+'</td>' +
                         '<td><span class="text-primary">'+value.category+'</span></td>' +
-                        '<td id="row-'+value.id+'"><input type="hidden" name="id[]" value="'+value.id+'"><input type="number" name="custom_amount[]" class="form-control" step="0.1" ></td>' +
+                        '<td id="row-'+value.id+'"><input type="hidden" name="id[]" value="'+value.id+'"><input type="number" name="custom_amount[]" class="form-control" step="0.1" max="'+value.amount+'"></td>' +
                         '</tr>';
                     $('#source-form .modal-body table tbody').append(field);
                 });
@@ -65,6 +65,16 @@ $(document).on('submit','#source-form',function(form){
             $('.text-danger').remove();
             $('.submit-withdraw-btn').val('Saving ... ').attr('disabled',true);
         },success: function(result){
+
+            if(result.success === true)
+            {
+                let table = $('#wallet-list').DataTable();
+                table.ajax.reload();
+                toastr.success(result.message);
+                $('#source-form .modal-body table').remove();
+                $('#withdraw-money-modal').modal('toggle');
+
+            }
 
             $.each(result, function(key, value){
                 $('#row-'+key+' input[type="number"]').after('<p class="text-danger">'+value+'</p>');

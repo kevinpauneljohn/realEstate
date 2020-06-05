@@ -15,7 +15,46 @@
     </ul>
 
     {{-- Navbar right links --}}
+
     <ul class="navbar-nav ml-auto reminder-notification">
+        @role('super admin')
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="fas fa-money-bill-wave"></i>
+                    @php
+                        $request = \App\CashRequest::where('status','pending');
+                    @endphp
+                    @if($request->count() > 0)
+                        <span class="badge badge-danger navbar-badge">
+                    {{$request->count()}}
+                </span>
+                    @endif
+                </a>
+                <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">{{$request->count()}} @if($request->count() > 1)Cash Requests @else Cash Request @endif</span>
+                    <div class="dropdown-divider"></div>
+                    @foreach($request->orderBy('id','desc')->limit(10)->get() as $change)
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <i class="fas fa-check-circle mr-2 text-info"></i>
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+
+{{--                                        <span class="float-right text-sm text-muted"><i class="far fa-clock mr-1"></i> {{$change->created_at->diffForHumans()}}</span>--}}
+                                    </h3>
+                                    <p class="text-sm">Requested by: <span class="text-primary">{{$change->user->fullname}}</span></p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{$change->created_at->diffForHumans()}}</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                    @endforeach
+                    <a href="{{route('cash.index')}}" class="dropdown-item dropdown-footer">See All Cash Requests</a>
+                </div>
+            </li>
+        @endrole
+
         @can('view wallet')
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">

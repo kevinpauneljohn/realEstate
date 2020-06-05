@@ -21,6 +21,11 @@ class Wallet extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function AmountWithdrawalRequests()
+    {
+        return $this->hasMany(AmountWithdrawalRequest::class);
+    }
+
     public function setDetailsAttribute($value)
     {
         $this->attributes['details'] = json_encode($value);

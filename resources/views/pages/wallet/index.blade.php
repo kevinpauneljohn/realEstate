@@ -79,6 +79,7 @@
                             <th>Category</th>
                             <th>Sender</th>
                             <th>Status</th>
+                            <th>Request #</th>
                             <th>History</th>
                         </tr>
                         </thead>
@@ -91,6 +92,7 @@
                             <th>Description</th>
                             <th>Category</th>
                             <th>Sender</th>
+                            <th>Request #</th>
                             <th>History</th>
                         </tr>
                         </tfoot>
@@ -137,7 +139,9 @@
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
     <style type="text/css">
-
+        .request-pending{
+            background-color:#e8f8fe;
+        }
     </style>
 @stop
 
@@ -153,17 +157,18 @@
                     serverSide: true,
                     ajax: '{!! route('wallet.list') !!}',
                     columns: [
-                        { data: 'select', name: 'select'},
+                        { data: 'select', name: 'select', orderable: false, searchable: false},
                         { data: 'created_at', name: 'created_at'},
                         { data: 'amount', name: 'amount'},
                         { data: 'description', name: 'description'},
                         { data: 'category', name: 'category'},
                         { data: 'sender', name: 'sender'},
                         { data: 'status', name: 'status'},
+                        { data: 'cash_request', name: 'cash_request'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[0,'desc']
+                    order:[1,'desc']
                 });
             });
         </script>

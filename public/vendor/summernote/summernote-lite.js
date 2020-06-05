@@ -7915,7 +7915,7 @@
           }
       };
       HintPopover.prototype.nodeFromItem = function ($item) {
-          var hint = this.hints[$item.data('index')];
+          var hint = this.hints[$item.data('index.blade.php')];
           var item = $item.data('item');
           var node = hint.content ? hint.content(item) : item;
           if (typeof node === 'string') {

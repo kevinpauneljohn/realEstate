@@ -72,20 +72,6 @@
         <!-- /.col -->
     </div>
     <div class="row">
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-gray-dark"><i class="fas fa-user-minus"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Inquiry Only</span>
-                    <span class="info-box-number">{{$total_inquiry_only_leads}}</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box">
                 <span class="info-box-icon bg-orange"><i class="fas fa-user-slash"></i></span>
@@ -113,6 +99,19 @@
         </div>
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box">
+                <span class="info-box-icon bg-pink"><i class="fas fa-user-check"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">For Reservation</span>
+                    <span class="info-box-number">{{$total_for_reservation}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
                 <span class="info-box-icon bg-success"><i class="fas fa-user-check"></i></span>
 
                 <div class="info-box-content">
@@ -123,7 +122,6 @@
             </div>
             <!-- /.info-box -->
         </div>
-        <!-- /.col -->
     </div>
     <div class="card">
         <div class="card-header">
@@ -244,7 +242,7 @@
                                 <label for="status">Status</label><span class="required">*</span>
                                 <select class="change-status form-control" name="status" id="status">
                                 @php
-                                $status = array('Hot','Warm','Cold','Qualified','Not qualified','For tripping','Inquiry Only','Not Interested Anymore');
+                                $status = array('Hot','Warm','Cold','Qualified','Not qualified','For tripping','For reservation','Inquiry Only','Not Interested Anymore');
                                 $data = '';
 
                                     foreach ($status as $stats)

@@ -238,8 +238,18 @@ Route::put('/contacts/{contact}','ContactController@update')->name('contacts.upd
 Route::delete('/contacts/{contact}','ContactController@destroy')->name('contacts.destroy')->middleware(['auth','permission:delete contacts']);
 //Route::post('/all-contacts','ContactController@contacts')->name('contacts.all')->middleware(['auth','permission:view contacts']);
 
+
+/*wallet*/
 Route::get('/wallet','WalletController@index')->name('wallet.index')->middleware(['auth','permission:view wallet']);
 Route::get('/wallet-list','WalletController@total_wallet_amount')->name('wallet.list')->middleware(['auth','permission:view wallet']);
 Route::post('/get-source','WalletController@source')->name('money.source')->middleware(['auth','permission:view wallet|withdraw money']);
 Route::post('/withdraw','WalletController@withdrawMoney')->name('money.withdraw')->middleware(['auth','permission:view wallet|withdraw money']);
+
+/*cash request*/
+Route::get('/cash-request','CashRequestController@index')->name('cash.index')->middleware(['auth','role:super admin']);
+Route::get('/cash-request-list','CashRequestController@cashRequestList')->name('cash.list')->middleware(['auth','role:super admin']);
+Route::post('/cash-approval-result','CashRequestController@cash_approval')->name('cash.approval')->middleware(['auth','role:super admin']);
+
+/*amount withdrawal request*/
+Route::get('/cash-request/amount-withdrawal/{id}','AmountWithdrawalRequestController@show')->name('withdrawal.show')->middleware(['auth','role:super admin']);
 

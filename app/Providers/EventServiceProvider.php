@@ -38,6 +38,15 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\SendMoneyEvent' => [
             'App\Listeners\SendMoneyListener',
+        ],
+        'App\Events\SaveRequestExtraFieldEvent' => [
+            'App\Listeners\SaveRequestExtraFieldListener',
+        ],
+        'App\Events\AmountWithdrawalRequestEvent' => [
+            'App\Listeners\AmountWithdrawalRequestListener',
+        ],
+        'App\Events\UpdateCashRequestStatusEvent' => [
+            'App\Listeners\UpdateCashRequestStatusListener',
         ]
     ];
 

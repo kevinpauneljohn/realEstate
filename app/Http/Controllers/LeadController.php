@@ -41,6 +41,7 @@ class LeadController extends Controller
             'total_inquiry_only_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Inquiry Only']])->count(),
             'total_not_interested_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Not Interested Anymore']])->count(),
             'total_reserved_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Reserved']])->count(),
+            'total_for_reservation' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','For reservation']])->count(),
         ]);
     }
 

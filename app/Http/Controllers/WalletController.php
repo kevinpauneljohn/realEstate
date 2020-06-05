@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\AmountWithdrawalRequest;
+use App\CashRequest;
+use App\Events\CashRequestEvent;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -27,9 +30,20 @@ class WalletController extends Controller
         $wallets = Wallet::where('user_id',auth()->user()->id)->get();
 
         return DataTables::of($wallets)
+            ->setRowClass(function ($wallet){
+                $amount_request = Wallet::find($wallet->id)->AmountWithdrawalRequests->where('status','=','pending');
+
+                if($amount_request->count() > 0)
+                {
+                    return 'request-pending';
+                }
+
+            })
             ->addColumn('select',function($wallet){
+                $amount_request = Wallet::find($wallet->id)->AmountWithdrawalRequests->where('status','=','pending');
+
                 $checkbox = '<input type="checkbox" name="source" class="source" value="'.$wallet->id.'">';
-                if($wallet->status === 'available')
+                if($wallet->status === 'available' && $amount_request->count() < 1)
                 {return $checkbox;}
             })
             ->editColumn('created_at',function($wallet){
@@ -49,11 +63,19 @@ class WalletController extends Controller
             ->addColumn('description',function($wallet){
                 return $wallet->details->description;
             })
+            ->addColumn('cash_request',function($wallet){
+                $cash_request = Wallet::find($wallet->id)->AmountWithdrawalRequests->where('status','=','pending');
+                if($cash_request->count() > 0)
+                {
+                    $request = str_pad($cash_request->first()->cash_request_id, 5, '0', STR_PAD_LEFT);
+                    return '<a href="#">#'.$request.'</a>';
+                }
+            })
             ->addColumn('action',function($wallet){
-                $action = '<button type="button" class="btn btn-xs btn-info" title="Withdrawal History"><i class="fas fa-history"></i></button>';
+                $action = '<button type="button" class="btn btn-xs btn-info" title="Withdrawal History" id="'.$wallet->id.'"><i class="fas fa-history"></i></button>';
                 return $action;
             })
-            ->rawColumns(['amount','category','select','action'])
+            ->rawColumns(['amount','category','select','action','cash_request'])
             ->make(true);
     }
 
@@ -105,12 +127,28 @@ class WalletController extends Controller
             return response()->json($error);
         }else{
             //save the request if there are no validation errors
+
+            //create a cash request number first
+            $cashRequest = new CashRequest();
+            $cashRequest->user_id = auth()->user()->id;
+            $cashRequest->status = 'pending';
+            $cashRequest->save();
+
             foreach ($combined as $key => $value)
             {
                 $wallet = Wallet::find($key);
-                $wallet->amount = $wallet->amount - $value;
-                $wallet->save();
+
+                $amountWithdrawalRequest = new AmountWithdrawalRequest();
+                $amountWithdrawalRequest->cash_request_id = $cashRequest->id;
+                $amountWithdrawalRequest->wallet_id = $key;
+                $amountWithdrawalRequest->original_amount = $wallet->amount;
+                $amountWithdrawalRequest->requested_amount = $value;
+                $amountWithdrawalRequest->status = 'pending';
+                $amountWithdrawalRequest->save();
             }
+
+            //notify the super admin that there are cash requests
+            event(new CashRequestEvent($cashRequest));
             return response()->json(['success' => true, 'message' => 'Request successfully submitted']);
         }
     }
