@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CashRequest;
 use App\Events\AmountWithdrawalRequestEvent;
 use App\Events\SaveRequestExtraFieldEvent;
+use App\Events\UpdateCashRequestStatusEvent;
 use Illuminate\Http\Request;
 use ParagonIE\Sodium\Core\ChaCha20\Ctx;
 use Yajra\DataTables\DataTables;
@@ -73,7 +74,10 @@ class CashRequestController extends Controller
             event(new AmountWithdrawalRequestEvent($amount_withdrawal_id,$action));
             //event for saving the extra fields or the withdrawal requests
             event(new SaveRequestExtraFieldEvent($amount_withdrawal_id, $data));
-            return $request->all();
+            //if all the amount withdrawal under the cash request has been updated
+            //it will update all the amount from the user's wallet
+            event(new UpdateCashRequestStatusEvent($cash_request_number));
+            return response()->json(['success' => true, 'message' => 'Wallet amount has been successfully updated!']);
         }else{
             return response()->json(['success' => false, 'error' => 'action-'.$amount_withdrawal_id]);
         }

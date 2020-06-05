@@ -13,15 +13,16 @@ use Illuminate\Queue\SerializesModels;
 class UpdateCashRequestStatusEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $cash_request_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($cash_request_id)
     {
-        //
+        $this->cash_request_id = $cash_request_id;
     }
 
     /**

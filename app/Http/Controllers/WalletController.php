@@ -27,7 +27,10 @@ class WalletController extends Controller
 
     public function total_wallet_amount()
     {
-        $wallets = Wallet::where('user_id',auth()->user()->id)->get();
+        $wallets = Wallet::where([
+            ['user_id','=',auth()->user()->id],
+            ['amount','!=',0]
+        ])->get();
 
         return DataTables::of($wallets)
             ->setRowClass(function ($wallet){
