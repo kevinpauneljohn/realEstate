@@ -144,7 +144,7 @@
                         <th>Important</th>
                         <th>Lead Status</th>
                         <th>Last Contacted</th>
-                        <th>Action</th>
+                        <th width="15%">Action</th>
                     </tr>
                     </thead>
 
@@ -155,10 +155,10 @@
                         <th>Mobile No.</th>
                         <th>Email</th>
                         <th>Source</th>
-                        <th width="5%">Important</th>
-                        <th width="12%">Lead Status</th>
+                        <th>Important</th>
+                        <th>Lead Status</th>
                         <th>Last Contacted</th>
-                        <th width="12%">Action</th>
+                        <th>Action</th>
                     </tr>
                     </tfoot>
                 </table>
