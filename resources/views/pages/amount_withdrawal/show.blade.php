@@ -92,15 +92,16 @@
 
                     <div class="form-group extra_field">
                         <label class="text-muted">Extra Field (Optional)</label>
+                        <table class="table table-bordered" id="table-{{$cashRequest->id}}">
+                            <thead>
+                            <tr>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                            </thead>
                         @if($cashRequest->status === 'pending')
-                            <table class="table table-bordered" id="table-{{$cashRequest->id}}">
-                                <thead>
-                                <tr>
-                                    <th>Amount</th>
-                                    <th>Description</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
+
                                 <tbody>
                                 <tr class="extra-row-{{$cashRequest->id}} table-row">
                                     <td width="20%"><input type="number" step="0.1" class="form-control" name="extra_amount[]"></td>
@@ -112,8 +113,17 @@
                                     </td>
                                 </tr>
                                 </tbody>
-                            </table>
+                            @else
+                                <tbody>
+                                    @foreach(\App\extraField::where('amount_withdrawal_request_id',$cashRequest->id)->get() as $field)
+                                        <tr>
+                                            <td>&#8369; {{number_format($field->amount,2)}}</td>
+                                            <td colspan="2">{{$field->extra_field_description}}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                         @endif
+                        </table>
                     </div>
                         <div class="form-group remarks">
                             <label for="remarks">Remarks</label>

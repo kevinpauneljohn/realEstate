@@ -47,6 +47,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\UpdateCashRequestStatusEvent' => [
             'App\Listeners\UpdateCashRequestStatusListener',
+        ],
+        'App\Events\TransactionRecordEvent' => [
+            'App\Listeners\TransactionRecordListener',
         ]
     ];
 

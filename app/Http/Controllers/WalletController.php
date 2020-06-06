@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AmountWithdrawalRequest;
 use App\CashRequest;
 use App\Events\CashRequestEvent;
+use App\Events\TransactionRecordEvent;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -80,7 +81,7 @@ class WalletController extends Controller
                 }
             })
             ->addColumn('action',function($wallet){
-                $action = '<button type="button" class="btn btn-xs btn-info" title="Withdrawal History" id="'.$wallet->id.'"><i class="fas fa-history"></i></button>';
+                $action = '<a href="#" class="btn btn-xs btn-info money-history" title="Transaction History"><i class="fas fa-history"></i></a>';
                 return $action;
             })
             ->rawColumns(['amount','category','select','action','cash_request'])
@@ -153,6 +154,18 @@ class WalletController extends Controller
                 $amountWithdrawalRequest->requested_amount = $value;
                 $amountWithdrawalRequest->status = 'pending';
                 $amountWithdrawalRequest->save();
+
+                ///log the data to transaction table
+                $transaction = array(
+                    'user_id'           => auth()->user()->id,
+                    'wallet_id'         => $key,
+                    'cash_request_id'   => $cashRequest->id,
+                    'details'           => 'Requested amount of <span class="text-primary">&#8369; '.number_format($value,2).'</span> 
+from source of <span class="text-success">&#8369; '.number_format($wallet->amount,2).'</span>',
+                    'category'          => $wallet->category,
+                    'status'            => $amountWithdrawalRequest->status,
+                );
+                event(new TransactionRecordEvent($transaction));
             }
 
             //notify the super admin that there are cash requests
@@ -160,4 +173,5 @@ class WalletController extends Controller
             return response()->json(['success' => true, 'message' => 'Request successfully submitted']);
         }
     }
+
 }

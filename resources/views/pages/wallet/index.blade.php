@@ -64,6 +64,7 @@
             <div class="card-header">
                 @can('withdraw money')
                     <button type="button" class="btn bg-primary btn-sm select-source" data-toggle="modal" data-target="#withdraw-money-modal">Select Source</button>
+                    <a href="{{route('transaction.index')}}" class="btn bg-info btn-sm">Transaction History</a>
                 @endcan
 
             </div>

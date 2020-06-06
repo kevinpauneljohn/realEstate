@@ -86,3 +86,9 @@ $(document).on('submit','#source-form',function(form){
         }
     });
 });
+
+$(document).on('click','.money-history',function(){
+    let id = this.id;
+
+    console.log(id);
+});
