@@ -19,6 +19,9 @@
 @section('content')
     <div class="container" style="max-width: 1200px;">
         <div class="card">
+            <div class="card-header">
+                <a href="{{route('wallet.index')}}" class="btn btn-primary btn-sm">Open Wallet</a>
+            </div>
             <div class="card-body">
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <table id="transaction-list" class="table table-hover" role="grid">
