@@ -15,7 +15,7 @@ class TransactionHistoryController extends Controller
 
     public function transaction_list()
     {
-        $transactions = Transaction::where('user_id',auth()->user()->id)->get();
+        $transactions = Transaction::where('user_id',auth()->user()->id)->limit(100)->get();
         return DataTables::of($transactions)
             ->editColumn('cash_request_id',function($transaction){
                 $request = str_pad($transaction->cash_request_id, 5, '0', STR_PAD_LEFT);

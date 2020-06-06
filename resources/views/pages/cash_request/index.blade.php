@@ -19,12 +19,6 @@
 @section('content')
     <div class="container" style="max-width: 1000px;">
         <div class="card">
-            <div class="card-header">
-                @can('add role')
-                    <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-role-modal"><i class="fa fa-plus-circle"></i> Add New</button>
-                @endcan
-
-            </div>
             <div class="card-body">
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <table id="cash-request-list" class="table table-bordered table-striped" role="grid">
