@@ -26,12 +26,14 @@ $(document).on('submit','.cash-request-form',function(form){
                         $('#error-'+id).remove();
                         $('#cash-request-btn-'+id).val('Submitting ... ').attr('disabled',true);
                     },success: function (output) {
-                        // console.log(output);
+                        console.log(output);
                         if(output.success === false)
                         {
                             $('#'+output.error).after('<p class="text-danger" id="error-'+id+'">This is a required field</p>');
                         }else if(output.success === true)
                         {
+                            let url = window.location.href;
+                            $('.card').load(url+' #card-'+id);
                             Swal.fire(
                                 'Submitted!',
                                 output.message,

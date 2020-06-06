@@ -13,16 +13,17 @@ use Illuminate\Queue\SerializesModels;
 class AmountWithdrawalRequestEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $amount_withdrawal_requests_id, $action;
+    public $amount_withdrawal_requests_id, $action, $remarks;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($amount_withdrawal_requests_id, $action)
+    public function __construct($amount_withdrawal_requests_id, $action, $remarks)
     {
         $this->amount_withdrawal_requests_id = $amount_withdrawal_requests_id;
         $this->action = $action;
+        $this->remarks = $remarks;
     }
 
     /**

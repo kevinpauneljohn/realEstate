@@ -74,7 +74,7 @@ class CashRequestController extends Controller
             }
 
             //update the specific amount withdrawal requests by id
-            event(new AmountWithdrawalRequestEvent($amount_withdrawal_id,$action));
+            event(new AmountWithdrawalRequestEvent($amount_withdrawal_id,$action,$request->remarks));
             //event for saving the extra fields or the withdrawal requests
             event(new SaveRequestExtraFieldEvent($amount_withdrawal_id, $data));
             //if all the amount withdrawal under the cash request has been updated

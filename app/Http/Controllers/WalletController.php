@@ -22,6 +22,11 @@ class WalletController extends Controller
         return view('pages.wallet.index')->with([
             'current_balance' => Wallet::where([['user_id','=',auth()->user()->id],['status','!=','completed']])->sum('amount'),
             'remaining_balance' => $remaining_balance,
+            'cash_advances' => Wallet::where([
+                ['user_id','=',auth()->user()->id],
+                ['status','!=','completed'],
+                ['category','=','cash advance']
+            ])->sum('amount')
         ]);
     }
 

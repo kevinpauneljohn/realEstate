@@ -61,7 +61,7 @@
                 <input type="hidden" name="cash_request_id" value="{{$cashRequestId}}">
                 <input type="hidden" name="amount_withdrawal_id" value="{{$cashRequest->id}}">
                 @csrf
-            <div class="card">
+            <div class="card" id="card-{{$cashRequest->id}}">
                 <div class="card-header">
                     <span class="float-right"><i class="fa fa-calendar-alt"></i> {{$cashRequest->created_at->format('M d, Y h:i a')}}</span>
                     <span>Requester</span>: <strong class="text-primary" style="margin-right:50px;">{{ucfirst($cashRequest->wallet->user->fullname)}}</strong>
@@ -74,9 +74,10 @@
                     <p>
                         <span>Original Amount</span>: <strong class="text-primary">&#8369; {{number_format($cashRequest->original_amount,2)}}</strong><br/>
                         <span>Requested Amount</span>: <strong class="text-success">&#8369; {{number_format($cashRequest->requested_amount,2)}}</strong><br/>
-                        <span>Balance (if granted)</span>: <strong class="text-danger">&#8369; {{number_format($cashRequest->original_amount - $cashRequest->requested_amount,2)}}</strong>
+                        <span>Balance @if($cashRequest->status === 'pending')(if granted)@endif</span>: <strong class="text-danger">&#8369; {{number_format($cashRequest->original_amount - $cashRequest->requested_amount,2)}}</strong>
                     </p>
                     <input type="hidden" name="amount_withdrawal_id" value="{{$cashRequest->id}}">
+                        @if($cashRequest->status === 'pending')
                         <div class="form-group action">
                             <label for="action">Action</label>
                             <select class="form-control" name="action" style="width:200px;" id="action-{{$cashRequest->id}}">
@@ -85,34 +86,48 @@
                                 <option value="approved">Approve</option>
                             </select>
                         </div>
+                            @else
+                            <span>Status</span>: <strong class="text-primary">{{ucfirst($cashRequest->status)}}</strong>
+                        @endif
+
                     <div class="form-group extra_field">
                         <label class="text-muted">Extra Field (Optional)</label>
-                        <table class="table table-bordered" id="table-{{$cashRequest->id}}">
-                            <thead>
-                            <tr>
-                                <th>Amount</th>
-                                <th>Description</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="extra-row-{{$cashRequest->id}} table-row">
-                                <td width="20%"><input type="text" class="form-control" name="extra_amount[]"></td>
-                                <td width="68%"><input type="text" class="form-control" name="extra_description[]"></td>
-                                <td>
-                                    <input type="hidden" class="extra_field_id" value="{{$cashRequest->id}}">
-                                    <button type="button" class="btn btn-danger btn-sm float-right minus" style="margin:2px;"><i class="fa fa-minus"></i></button>
-                                    <button type="button" class="btn btn-success btn-sm float-right plus" style="margin:2px;"><i class="fa fa-plus"></i></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        @if($cashRequest->status === 'pending')
+                            <table class="table table-bordered" id="table-{{$cashRequest->id}}">
+                                <thead>
+                                <tr>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="extra-row-{{$cashRequest->id}} table-row">
+                                    <td width="20%"><input type="number" step="0.1" class="form-control" name="extra_amount[]"></td>
+                                    <td width="68%"><input type="text" class="form-control" name="extra_description[]"></td>
+                                    <td>
+                                        <input type="hidden" class="extra_field_id" value="{{$cashRequest->id}}">
+                                        <button type="button" class="btn btn-danger btn-sm float-right minus" style="margin:2px;"><i class="fa fa-minus"></i></button>
+                                        <button type="button" class="btn btn-success btn-sm float-right plus" style="margin:2px;"><i class="fa fa-plus"></i></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
                         <div class="form-group remarks">
                             <label for="remarks">Remarks</label>
-                            <textarea class="form-control" name="remarks" style="min-height: 150px;"></textarea>
+                            @if($cashRequest->status === 'pending')
+                                <textarea class="form-control" name="remarks" style="min-height: 150px;"></textarea>
+                                @else
+                                <p>
+                                    {{$cashRequest->remarks}}
+                                </p>
+                            @endif
                         </div>
+                    @if($cashRequest->status === 'pending')
                     <input type="submit" class="btn btn-primary" id="cash-request-btn-{{$cashRequest->id}}" value="Submit" style="width: 100%;">
+                        @endif
                 </div>
             </div>
         </form>

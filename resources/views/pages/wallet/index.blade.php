@@ -51,7 +51,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Cash Advances</span>
-                        <span class="info-box-number">&#8369; {{number_format(0,2)}}</span>
+                        <span class="info-box-number">&#8369; {{number_format($cash_advances,2)}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>

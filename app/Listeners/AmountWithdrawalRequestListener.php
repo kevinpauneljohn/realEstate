@@ -29,7 +29,8 @@ class AmountWithdrawalRequestListener
     {
         $amount_withdrawal_request = AmountWithdrawalRequest::find($event->amount_withdrawal_requests_id);
         $amount_withdrawal_request->status = $event->action;
-        if($amount_withdrawal_request->isDirty('status'))
+        $amount_withdrawal_request->remarks = $event->remarks;
+        if($amount_withdrawal_request->isDirty())
         {
             $amount_withdrawal_request->save();
         }
