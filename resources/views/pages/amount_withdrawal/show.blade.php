@@ -49,7 +49,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Total Amount Requested</span>
-                        <span class="info-box-number text-danger">&#8369; {{$cashRequests->sum('requested_amount')}}</span>
+                        <span class="info-box-number text-danger">&#8369; {{number_format($cashRequests->sum('requested_amount'),2)}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -112,7 +112,7 @@
                             <label for="remarks">Remarks</label>
                             <textarea class="form-control" name="remarks" style="min-height: 150px;"></textarea>
                         </div>
-                    <input type="submit" class="btn btn-primary" value="Submit" style="width: 100%;">
+                    <input type="submit" class="btn btn-primary" id="cash-request-btn-{{$cashRequest->id}}" value="Submit" style="width: 100%;">
                 </div>
             </div>
         </form>

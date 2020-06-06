@@ -4,22 +4,51 @@ $(document).on('submit','.cash-request-form',function(form){
     let data = $(this).serializeArray(),
         id = data[1].value;
 
-    $.ajax({
-        'url' : '/cash-approval-result',
-        'type' : 'POST',
-        'data' : data,
-        beforeSend: function(){
-            $('#error-'+id).remove();
-        },success: function (result) {
-            console.log(result);
-            if(result.success === false)
-            {
-                $('#'+result.error).after('<p class="text-danger" id="error-'+id+'">This is a required field</p>');
+    if(data[4].value !== "")
+    {
+        $('#error-'+id).remove();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, '+data[4].value+' it!'
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    'url' : '/cash-approval-result',
+                    'type' : 'POST',
+                    'data' : data,
+                    beforeSend: function(){
+                        $('#error-'+id).remove();
+                        $('#cash-request-btn-'+id).val('Submitting ... ').attr('disabled',true);
+                    },success: function (output) {
+                        // console.log(output);
+                        if(output.success === false)
+                        {
+                            $('#'+output.error).after('<p class="text-danger" id="error-'+id+'">This is a required field</p>');
+                        }else if(output.success === true)
+                        {
+                            Swal.fire(
+                                'Submitted!',
+                                output.message,
+                                'success'
+                            );
+                        }
+
+                        $('#cash-request-btn-'+id).val('Submit').attr('disabled',false);
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
             }
-        },error: function(xhr, status, error){
-            console.log(xhr);
-        }
-    });
+        });
+    }else{
+        $('#action-'+id).after('<p class="text-danger" id="error-'+id+'">This is a required field</p>');
+    }
 });
 
 $(document).on('click','.plus',function(){
