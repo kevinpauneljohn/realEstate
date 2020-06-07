@@ -27,7 +27,7 @@ class DashboardController extends Controller
             'report_type' => 'group_by_date',
             'model' => Lead::class,
             'group_by_field' => 'created_at',
-            'group_by_period' => 'week',
+            'group_by_period' => 'day',
             'chart_type' => 'line',
         ];
         $chart1 = new LaravelChart($chart_options);
