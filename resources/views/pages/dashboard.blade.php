@@ -55,19 +55,6 @@
 
         <div class="col-lg-8">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1>{{ $chart2->options['chart_title'] }}</h1>
-                            {!! $chart2->renderHtml() !!}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
@@ -99,5 +86,4 @@
     <script src="{{asset('js/dashboard.js')}}"></script>
     {!! $leads->renderChartJsLibrary() !!}
     {!! $leads->renderJs() !!}
-    {!! $chart2->renderJs() !!}
 @stop
