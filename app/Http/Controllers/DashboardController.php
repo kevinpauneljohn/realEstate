@@ -27,7 +27,8 @@ class DashboardController extends Controller
             'report_type' => 'group_by_date',
             'model' => Lead::class,
             'conditions'            => [
-                ['name' => 'Food', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => 'blue'],
+                ['name' => 'Total Leads', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => 'green'],
+                ['name' => 'Cold Leads', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Cold"','color' => 'blue'],
             ],
             'group_by_field' => 'created_at',
             'group_by_period' => 'day',
