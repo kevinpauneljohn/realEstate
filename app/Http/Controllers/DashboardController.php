@@ -19,6 +19,7 @@ class DashboardController extends Controller
     {
         //set the graph display by day, week, or month
         $display_period = Cookie::get('display_lead_graph');
+        $period = isset($display_period) ? $display_period : 'week';
 
         $reminder = \App\Notification::where([
             ['user_id','=',auth()->user()->id],
@@ -46,7 +47,7 @@ class DashboardController extends Controller
                 ['name' => 'Reserved Leads ('.$total_reserved_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
             ],
             'group_by_field' => 'created_at',
-            'group_by_period' => $display_period,
+            'group_by_period' => $period,
             'chart_type' => 'line',
         ];
         $leads = new LaravelChart($chart_options);
