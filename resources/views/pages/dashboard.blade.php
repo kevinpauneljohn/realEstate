@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-lg-8">
             <div class="row">
-                <div class="col-lg-6 col-6">
+                <div class="col-lg-4 col-6">
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-6 col-6">
+                <div class="col-lg-4 col-6">
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
@@ -35,6 +35,20 @@
                         </div>
                         <div class="icon">
                             <i class="fa fa-money-bill-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-4 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-pink">
+                        <div class="inner">
+                            <h3>&#8369; {{number_format($current_balance,2)}}</h3>
+
+                            <p>Wallet remaining cash</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-wallet"></i>
                         </div>
                     </div>
                 </div>

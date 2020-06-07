@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lead;
 use App\Repositories\SalesRepository;
 use App\User;
+use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
@@ -68,6 +69,7 @@ class DashboardController extends Controller
             'total_sales'   => $this->salesRepository->getTotalSales(auth()->user()->id),
             'current_month' => now()->format('F'),
             'current_year' => now()->format('Y'),
+            'current_balance' => Wallet::where([['user_id','=',auth()->user()->id],['status','!=','completed']])->sum('amount'),
         ]);
     }
 
