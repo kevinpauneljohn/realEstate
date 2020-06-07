@@ -18,8 +18,8 @@ class DashboardController extends Controller
     public function dashboard()
     {
         //set the graph display by day, week, or month
-        $display_period = Cookie::get('display_lead_graph');
-        $period = 'week';
+        $display_period = Cookie::get('display_period');
+        $period = isset($display_period) ? $display_period : 'week';
 
         $reminder = \App\Notification::where([
             ['user_id','=',auth()->user()->id],
@@ -54,13 +54,14 @@ class DashboardController extends Controller
 
         return view('pages.dashboard',compact('leads'))->with([
             'reminders' => $reminder,
-            'display_period' => $display_period
+            'display_period' => $period
         ]);
     }
 
 
     public function setDisplayLeadGraphStatus(Request $request)
     {
-        return response()->json(['success' => true, 'message' => 'Lead Graph Display Changed'])->cookie('display_lead_graph',$request->status,time()+ 60 * 60 * 24 * 365);
+        return response()->json(['success' => true, 'message' => 'Lead Graph Display Changed'])->withCookie(\cookie()->forever('display_period',$request->status));
+//        return $request->all();
     }
 }
