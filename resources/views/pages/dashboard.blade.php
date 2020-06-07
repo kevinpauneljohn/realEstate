@@ -57,7 +57,7 @@
             <div class="card">
                 <div class="card-header">
                     <span>Display</span>
-                    <select class="display-period">
+                    <select>
                         <option value="day" @if($display_period === 'day') selected @endif>Daily</option>
                         <option value="week" @if($display_period === 'week') selected @endif>Weekly</option>
                         <option value="month" @if($display_period === 'month') selected @endif>Monthly</option>
@@ -81,5 +81,5 @@
 @section('js')
     <script src="{{asset('js/dashboard.js')}}"></script>
     {!! $leads->renderChartJsLibrary() !!}
-    {!! $leads->renderJs() !!}
+    <span class="display-period">{!! $leads->renderJs() !!}</span>
 @stop

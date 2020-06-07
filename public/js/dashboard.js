@@ -13,7 +13,7 @@ $(document).on('change','.display-period',function(){
             if(result.success === true)
             {
                 let url = window.location.href;
-                location.reload();
+                $('.display-period').load(url+' .display-period');
             }
         },error: function(xhr, status, error){
             console.log(xhr);
