@@ -44,6 +44,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
+                            <h5 class="float-right text-muted">Lead Monitoring Graph</h5>
                             <span>Display</span>
                             <select class="display-period">
                                 <option value="day" @if($display_period === 'day') selected @endif>Daily</option>
