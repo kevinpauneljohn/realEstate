@@ -7,8 +7,39 @@
 @stop
 
 @section('content')
+
     <div class="row">
         <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-6 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>&#8369; {{$total_sales}}</h3>
+
+                            <p>Total sales this year {{$current_year}}</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-money-bill"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-6 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>&#8369; {{$total_sales_this_month}}</h3>
+
+                            <p>Total sales this month of {{ucfirst($current_month)}}</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-money-bill-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">

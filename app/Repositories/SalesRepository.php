@@ -261,4 +261,50 @@ class SalesRepository
 
     }
 
+    /**
+     * March 31, 2020
+     * @author john kevin paunel
+     * get the user total sales
+     * @param string $user_id
+     * @return string
+     * */
+    public function getTotalSales($user_id)
+    {
+        $sales = User::findOrFail($user_id)->sales()
+            ->whereYear('reservation_date',now()->format('Y'))
+            ->where('status','!=','cancelled')->get();/*get all the user's sales*/
+        $total_sales = 0;/*initiate the total sales by 0*/
+
+        /*add all sales total contract price less the discount*/
+        foreach ($sales as $sale)
+        {
+            $difference = $sale->total_contract_price - $sale->discount;
+            $total_sales = $total_sales + $difference;
+        }
+        return number_format($total_sales,2);
+    }
+
+    /**
+     * May 31, 2020
+     * @author john kevin paunel
+     * get the user total sales
+     * @param string $user_id
+     * @return string
+     * */
+    public function getTotalSalesThisMonth($user_id)
+    {
+        $sales = User::findOrFail($user_id)->sales()
+            ->whereMonth('reservation_date',now()->format('m'))
+            ->where('status','!=','cancelled')->get();/*get all the user's sales*/
+        $total_sales = 0;/*initiate the total sales by 0*/
+
+        /*add all sales total contract price less the discount*/
+        foreach ($sales as $sale)
+        {
+            $difference = $sale->total_contract_price - $sale->discount;
+            $total_sales = $total_sales + $difference;
+        }
+        return number_format($total_sales,2);
+    }
+
 }

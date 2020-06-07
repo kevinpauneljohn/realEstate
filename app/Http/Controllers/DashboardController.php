@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lead;
+use App\Repositories\SalesRepository;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -10,6 +11,13 @@ use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class DashboardController extends Controller
 {
+
+    public $salesRepository;
+
+    public function __construct(SalesRepository $salesRepository)
+    {
+        $this->salesRepository = $salesRepository;
+    }
 
     /**
      * Feb. 09, 2020
@@ -55,7 +63,11 @@ class DashboardController extends Controller
 
         return view('pages.dashboard',compact('leads'))->with([
             'reminders' => $reminder,
-            'display_period' => $period
+            'display_period' => $period,
+            'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth(auth()->user()->id),
+            'total_sales'   => $this->salesRepository->getTotalSales(auth()->user()->id),
+            'current_month' => now()->format('F'),
+            'current_year' => now()->format('Y'),
         ]);
     }
 
