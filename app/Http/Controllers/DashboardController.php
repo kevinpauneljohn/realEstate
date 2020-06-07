@@ -43,12 +43,12 @@ class DashboardController extends Controller
             'model' => Lead::class,
             'conditions'            => [
                 ['name' => 'Total Leads ('.$total_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => '#d800ff'],
-                ['name' => 'Cold Leads ('.$total_cold_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Cold"','color' => '#007eff'],
-                ['name' => 'Reserved Leads ('.$total_reserved_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
+//                ['name' => 'Cold Leads ('.$total_cold_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Cold"','color' => '#007eff'],
+//                ['name' => 'Reserved Leads ('.$total_reserved_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
             ],
             'group_by_field' => 'created_at',
             'group_by_period' => $period,
-            'chart_type' => 'line',
+            'chart_type' => 'bar',
         ];
         $leads = new LaravelChart($chart_options);
 
@@ -62,6 +62,5 @@ class DashboardController extends Controller
     public function setDisplayLeadGraphStatus(Request $request)
     {
         return response()->json(['success' => true, 'message' => 'Lead Graph Display Changed'])->withCookie(\cookie()->forever('display_period',$request->status));
-//        return $request->all();
     }
 }
