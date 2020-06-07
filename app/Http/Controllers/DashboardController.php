@@ -53,8 +53,6 @@ class DashboardController extends Controller
         ];
         $leads = new LaravelChart($chart_options);
 
-        $chart2 = new LaravelChart($chart_options);
-
         return view('pages.dashboard',compact('leads'))->with([
             'reminders' => $reminder,
             'display_period' => $period

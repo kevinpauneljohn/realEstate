@@ -31,18 +31,7 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-mlg-6">
-                            <div class="info-box">
-                                <span class="info-box-icon bg-success"><i class="fa fa-bell"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Total Reminders</span>
-                                    <span class="info-box-number">{{$reminders->count()}}</span>
-                                </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                        </div>
-                    </div>
+                    <h6>You have <span class="text-danger">{{$reminders->count()}}</span> unread @if($reminders->count() > 1) reminders @else reminder @endif</h6>
                     <div class="row">
                         <div class="col-12">
                             <table class="table">
@@ -68,7 +57,7 @@
                     </div>
                 </div>
                 <div class="card-footer" align="center">
-                    <a href="{{route('notifications.index')}}" class="btn btn-default btn-sm">View All Requests</a>
+                    <a href="{{route('notifications.index')}}" class="btn btn-default btn-sm">View All Reminders</a>
                 </div>
             </div>
         </div>
