@@ -22,22 +22,32 @@ class DashboardController extends Controller
             ['type','=','lead activity'],
         ]);
 
+        $total_leads = Lead::where('user_id',auth()->user()->id)->count();
+        $total_cold_leads = Lead::where([
+            ['user_id','=',auth()->user()->id],
+            ['lead_status','=','Cold'],
+        ])->count();
+        $total_reserved_leads = Lead::where([
+            ['user_id','=',auth()->user()->id],
+            ['lead_status','=','Reserved'],
+        ])->count();
+
         $chart_options = [
             'chart_title' => 'Weekly Leads',
             'report_type' => 'group_by_date',
             'model' => Lead::class,
             'conditions'            => [
-                ['name' => 'Total Leads', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => '#d800ff'],
-                ['name' => 'Cold Leads', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Cold"','color' => '#007eff'],
-                ['name' => 'Reserved Leads', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
+                ['name' => 'Total Leads ('.$total_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => '#d800ff'],
+                ['name' => 'Cold Leads ('.$total_cold_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Cold"','color' => '#007eff'],
+                ['name' => 'Reserved Leads ('.$total_reserved_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
             ],
             'group_by_field' => 'created_at',
             'group_by_period' => 'day',
             'chart_type' => 'line',
         ];
-        $chart1 = new LaravelChart($chart_options);
+        $leads = new LaravelChart($chart_options);
 
-        return view('pages.dashboard',compact('chart1'))->with([
+        return view('pages.dashboard',compact('leads'))->with([
             'reminders' => $reminder
         ]);
     }

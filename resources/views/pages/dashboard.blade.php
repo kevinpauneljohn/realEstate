@@ -56,10 +56,10 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
-                    <h5>{{ $chart1->options['chart_title'] }}</h5>
+                    <h5>{{ $leads->options['chart_title'] }}</h5>
                 </div>
                 <div class="card-body">
-                    {!! $chart1->renderHtml() !!}
+                    {!! $leads->renderHtml() !!}
                 </div>
             </div>
         </div>
@@ -72,6 +72,6 @@
 @stop
 
 @section('js')
-    {!! $chart1->renderChartJsLibrary() !!}
-    {!! $chart1->renderJs() !!}
+    {!! $leads->renderChartJsLibrary() !!}
+    {!! $leads->renderJs() !!}
 @stop
