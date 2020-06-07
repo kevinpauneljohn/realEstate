@@ -15,12 +15,9 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>&#8369; {{$total_sales}}</h3>
+                            <h4>&#8369; {{$total_sales}}</h4>
 
                             <p>Total sales this year {{$current_year}}</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-money-bill"></i>
                         </div>
                     </div>
                 </div>
@@ -29,12 +26,9 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>&#8369; {{$total_sales_this_month}}</h3>
+                            <h4>&#8369; {{$total_sales_this_month}}</h4>
 
                             <p>Total sales this month of {{ucfirst($current_month)}}</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-money-bill-alt"></i>
                         </div>
                     </div>
                 </div>
@@ -43,12 +37,9 @@
                     <!-- small box -->
                     <div class="small-box bg-pink">
                         <div class="inner">
-                            <h3>&#8369; {{number_format($current_balance,2)}}</h3>
+                            <h4>&#8369; {{number_format($current_balance,2)}}</h4>
 
                             <p>Wallet remaining cash</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-wallet"></i>
                         </div>
                     </div>
                 </div>
