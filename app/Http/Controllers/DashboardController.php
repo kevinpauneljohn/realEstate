@@ -26,6 +26,9 @@ class DashboardController extends Controller
             'chart_title' => 'Weekly Leads',
             'report_type' => 'group_by_date',
             'model' => Lead::class,
+            'conditions'            => [
+                ['name' => 'Food', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => 'blue'],
+            ],
             'group_by_field' => 'created_at',
             'group_by_period' => 'day',
             'chart_type' => 'line',
