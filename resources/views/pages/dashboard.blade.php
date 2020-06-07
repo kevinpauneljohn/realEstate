@@ -54,19 +54,36 @@
         </div>
 
         <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header">
-                    <span>Display</span>
-                    <select class="display-period">
-                        <option value="day" @if($display_period === 'day') selected @endif>Daily</option>
-                        <option value="week" @if($display_period === 'week') selected @endif>Weekly</option>
-                        <option value="month" @if($display_period === 'month') selected @endif>Monthly</option>
-                    </select>
-                    Leads
-                    {{\Illuminate\Support\Facades\Cookie::get('display_period')}}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1>{{ $chart2->options['chart_title'] }}</h1>
+                            {!! $chart2->renderHtml() !!}
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body display-graph">
-                    {!! $leads->renderHtml() !!}
+                <div class="col-lg-6">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Display</span>
+                            <select class="display-period">
+                                <option value="day" @if($display_period === 'day') selected @endif>Daily</option>
+                                <option value="week" @if($display_period === 'week') selected @endif>Weekly</option>
+                                <option value="month" @if($display_period === 'month') selected @endif>Monthly</option>
+                            </select>
+                            Leads
+                            {{\Illuminate\Support\Facades\Cookie::get('display_period')}}
+                        </div>
+                        <div class="card-body display-graph">
+                            {!! $leads->renderHtml() !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,4 +99,5 @@
     <script src="{{asset('js/dashboard.js')}}"></script>
     {!! $leads->renderChartJsLibrary() !!}
     {!! $leads->renderJs() !!}
+    {!! $chart2->renderJs() !!}
 @stop

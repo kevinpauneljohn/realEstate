@@ -46,6 +46,10 @@ class Lead extends Model
         'date_inquired'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function sales()
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lead;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
@@ -52,7 +53,24 @@ class DashboardController extends Controller
         ];
         $leads = new LaravelChart($chart_options);
 
-        return view('pages.dashboard',compact('leads'))->with([
+
+
+        $chart_options = [
+            'chart_title' => 'Users by names',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Lead',
+            'conditions'            => [
+                ['name' => 'Total Leads ('.$total_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => '#d800ff'],
+            ],
+            'group_by_field' => 'lead_status',
+            'chart_type' => 'pie',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('pages.dashboard',compact('leads','chart2'))->with([
             'reminders' => $reminder,
             'display_period' => $period
         ]);
