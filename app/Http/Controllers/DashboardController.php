@@ -48,7 +48,7 @@ class DashboardController extends Controller
             ],
             'group_by_field' => 'created_at',
             'group_by_period' => $period,
-            'chart_type' => 'bar',
+            'chart_type' => 'line',
         ];
         $leads = new LaravelChart($chart_options);
 
