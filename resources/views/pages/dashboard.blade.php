@@ -56,9 +56,16 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
-                    <h5>{{ $leads->options['chart_title'] }}</h5>
+                    <span>Display</span>
+                    <select class="display-period">
+                        <option value="day" @if($display_period === 'day') selected @endif>Daily</option>
+                        <option value="week" @if($display_period === 'week') selected @endif>Weekly</option>
+                        <option value="month" @if($display_period === 'month') selected @endif>Monthly</option>
+                    </select>
+                    Leads
+                    {{\Illuminate\Support\Facades\Cookie::get('display_lead_graph')}}
                 </div>
-                <div class="card-body">
+                <div class="card-body display-graph">
                     {!! $leads->renderHtml() !!}
                 </div>
             </div>
@@ -72,6 +79,7 @@
 @stop
 
 @section('js')
+    <script src="{{asset('js/dashboard.js')}}"></script>
     {!! $leads->renderChartJsLibrary() !!}
     {!! $leads->renderJs() !!}
 @stop

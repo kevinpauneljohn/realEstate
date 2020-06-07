@@ -254,4 +254,5 @@ Route::post('/cash-approval-result','CashRequestController@cash_approval')->name
 Route::get('/cash-request/amount-withdrawal/{id}','AmountWithdrawalRequestController@show')->name('withdrawal.show')->middleware(['auth','role:super admin']);
 Route::get('/transaction-history','TransactionHistoryController@index')->name('transaction.index')->middleware(['auth']);
 Route::get('/transaction-list','TransactionHistoryController@transaction_list')->name('transaction.list')->middleware(['auth']);
+Route::post('/set-lead-graph-display','DashboardController@setDisplayLeadGraphStatus')->name('lead.graph.status.display')->middleware(['auth']);
 

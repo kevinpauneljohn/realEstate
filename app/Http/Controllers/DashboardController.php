@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lead;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class DashboardController extends Controller
@@ -16,6 +17,9 @@ class DashboardController extends Controller
      * */
     public function dashboard()
     {
+        //set the graph display by day, week, or month
+        $display_period = Cookie::get('display_lead_graph');
+
         $reminder = \App\Notification::where([
             ['user_id','=',auth()->user()->id],
             ['viewed','=',0],
@@ -42,13 +46,20 @@ class DashboardController extends Controller
                 ['name' => 'Reserved Leads ('.$total_reserved_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
             ],
             'group_by_field' => 'created_at',
-            'group_by_period' => 'day',
+            'group_by_period' => $display_period,
             'chart_type' => 'line',
         ];
         $leads = new LaravelChart($chart_options);
 
         return view('pages.dashboard',compact('leads'))->with([
-            'reminders' => $reminder
+            'reminders' => $reminder,
+            'display_period' => $display_period
         ]);
+    }
+
+
+    public function setDisplayLeadGraphStatus(Request $request)
+    {
+        return response()->json(['success' => true, 'message' => 'Lead Graph Display Changed'])->cookie('display_lead_graph',$request->status,time()+ 60 * 60 * 24 * 365);
     }
 }
