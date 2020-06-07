@@ -32,7 +32,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-mlg-6">
                             <div class="info-box">
                                 <span class="info-box-icon bg-success"><i class="fa fa-bell"></i></span>
                                 <div class="info-box-content">

@@ -7,7 +7,7 @@ $(document).on('change','.display-period',function(){
         'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         'data' : {'status':value},
         beforeSend: function(){
-
+            $('.display-period').attr('disabled',true);
         },success: function(result){
             console.log(result);
             if(result.success === true)
