@@ -56,7 +56,7 @@ class DashboardController extends Controller
 
 
         $chart_options = [
-            'chart_title' => 'Users by names',
+            'chart_title' => 'Leads',
             'report_type' => 'group_by_string',
             'model' => 'App\Lead',
             'conditions'            => [
@@ -65,7 +65,7 @@ class DashboardController extends Controller
             'group_by_field' => 'lead_status',
             'chart_type' => 'pie',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+//            'filter_period' => 'month', // show users only registered this month
         ];
 
         $chart2 = new LaravelChart($chart_options);
