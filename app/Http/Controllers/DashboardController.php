@@ -19,7 +19,7 @@ class DashboardController extends Controller
     {
         //set the graph display by day, week, or month
         $display_period = Cookie::get('display_lead_graph');
-        $period = isset($display_period) ? $display_period : 'week';
+        $period = 'week';
 
         $reminder = \App\Notification::where([
             ['user_id','=',auth()->user()->id],
