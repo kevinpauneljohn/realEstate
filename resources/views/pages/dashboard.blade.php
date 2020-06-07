@@ -7,26 +7,63 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-success"><i class="fa fa-bell"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Reminders</span>
+                                    <span class="info-box-number">{{$reminders->count()}}</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table">
+                                @foreach($reminders->limit(3)->get() as $remind)
+                                    <tr>
+                                        <td>
+                                            <a href="{{route('leads.show',['lead' => $remind->data->lead_id])}}">
+                                            <div class="media">
+                                                <img src="http://crm.dream-homeseller.com/images/avatar-sm.png" class="user-image img-circle elevation-2" height="40" style="margin:0px 10px 10px 10px;">
+                                                <div class="media-body">
+                                                    <h3 class="dropdown-item-title">
+                                                        {{$remind->data->category}} to <span class="text-muted">{{ucfirst($remind->data->client_name)}}</span>
+                                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{$remind->data->time_left}}</p>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer" align="center">
+                    <a href="{{route('notifications.index')}}" class="btn btn-default btn-sm">View All Requests</a>
+                </div>
+            </div>
+        </div>
 
-    {{--@php
-        $urlContent = file_get_contents('https://mcc.edu.ph');
-
-        $dom = new DOMDocument();
-        @$dom->loadHTML($urlContent);
-        $xpath = new DOMXPath($dom);
-        $hrefs = $xpath->evaluate("/html/body//a");
-
-        for($i = 0; $i < $hrefs->length; $i++){
-        $href = $hrefs->item($i);
-        $url = $href->getAttribute('href');
-        $url = filter_var($url, FILTER_SANITIZE_URL);
-        // validate url
-        if(!filter_var($url, FILTER_VALIDATE_URL) === false){
-            echo '<a href="'.$url.'">'.$url.'</a><br />';
-        }
-        }
-    @endphp--}}
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{ $chart1->options['chart_title'] }}</h5>
+                </div>
+                <div class="card-body">
+                    {!! $chart1->renderHtml() !!}
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -35,5 +72,6 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    {!! $chart1->renderChartJsLibrary() !!}
+    {!! $chart1->renderJs() !!}
 @stop
