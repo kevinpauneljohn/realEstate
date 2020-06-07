@@ -8,6 +8,26 @@
 
 @section('content')
     <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Display</span>
+                            <select class="display-period">
+                                <option value="day" @if($display_period === 'day') selected @endif>Daily</option>
+                                <option value="week" @if($display_period === 'week') selected @endif>Weekly</option>
+                                <option value="month" @if($display_period === 'month') selected @endif>Monthly</option>
+                            </select>
+                            Leads
+                        </div>
+                        <div class="card-body display-graph">
+                            {!! $leads->renderHtml() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
@@ -49,27 +69,6 @@
                 </div>
                 <div class="card-footer" align="center">
                     <a href="{{route('notifications.index')}}" class="btn btn-default btn-sm">View All Requests</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-8">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <span>Display</span>
-                            <select class="display-period">
-                                <option value="day" @if($display_period === 'day') selected @endif>Daily</option>
-                                <option value="week" @if($display_period === 'week') selected @endif>Weekly</option>
-                                <option value="month" @if($display_period === 'month') selected @endif>Monthly</option>
-                            </select>
-                            Leads
-                        </div>
-                        <div class="card-body display-graph">
-                            {!! $leads->renderHtml() !!}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
