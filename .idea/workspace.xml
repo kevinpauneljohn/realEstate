@@ -18,7 +18,7 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.7696148">
+    <splitter split-orientation="horizontal" split-proportion="0.885164">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -49,8 +49,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DashboardController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="386">
-                  <caret line="29" column="104" selection-start-line="29" selection-start-column="104" selection-end-line="29" selection-end-column="104" />
+                <state relative-caret-position="420">
+                  <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
                   <folding>
                     <element signature="e#40#53#0#PHP" expanded="true" />
                   </folding>
@@ -576,21 +576,7 @@
       <workItem from="1591057364765" duration="73101000" />
       <workItem from="1591316759181" duration="4092000" />
       <workItem from="1591334707735" duration="33952000" />
-      <workItem from="1591504385703" duration="4082000" />
-    </task>
-    <task id="LOCAL-00459" summary="contact list module">
-      <created>1590829947085</created>
-      <option name="number" value="00459" />
-      <option name="presentableId" value="LOCAL-00459" />
-      <option name="project" value="LOCAL" />
-      <updated>1590829947086</updated>
-    </task>
-    <task id="LOCAL-00460" summary="contact list module">
-      <created>1590830052516</created>
-      <option name="number" value="00460" />
-      <option name="presentableId" value="LOCAL-00460" />
-      <option name="project" value="LOCAL" />
-      <updated>1590830052516</updated>
+      <workItem from="1591504385703" duration="4906000" />
     </task>
     <task id="LOCAL-00461" summary="contact list module">
       <created>1590830363225</created>
@@ -921,11 +907,25 @@
       <option name="project" value="LOCAL" />
       <updated>1591508095939</updated>
     </task>
-    <option name="localTasksCounter" value="508" />
+    <task id="LOCAL-00508" summary="dashboard display">
+      <created>1591508699541</created>
+      <option name="number" value="00508" />
+      <option name="presentableId" value="LOCAL-00508" />
+      <option name="project" value="LOCAL" />
+      <updated>1591508699541</updated>
+    </task>
+    <task id="LOCAL-00509" summary="dashboard display">
+      <created>1591509145823</created>
+      <option name="number" value="00509" />
+      <option name="presentableId" value="LOCAL-00509" />
+      <option name="project" value="LOCAL" />
+      <updated>1591509145823</updated>
+    </task>
+    <option name="localTasksCounter" value="510" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1537956000" />
+    <option name="totallyTimeSpent" value="1538780000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1392,8 +1392,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DashboardController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="29" column="104" selection-start-line="29" selection-start-column="104" selection-end-line="29" selection-end-column="104" />
+        <state relative-caret-position="420">
+          <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
           <folding>
             <element signature="e#40#53#0#PHP" expanded="true" />
           </folding>
