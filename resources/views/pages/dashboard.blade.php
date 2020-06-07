@@ -54,11 +54,6 @@
         </div>
 
         <div class="col-lg-8">
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <span>Display</span>
