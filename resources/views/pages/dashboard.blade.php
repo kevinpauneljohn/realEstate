@@ -65,7 +65,6 @@
                                 <option value="month" @if($display_period === 'month') selected @endif>Monthly</option>
                             </select>
                             Leads
-                            {{\Illuminate\Support\Facades\Cookie::get('display_period')}}
                         </div>
                         <div class="card-body display-graph">
                             {!! $leads->renderHtml() !!}
