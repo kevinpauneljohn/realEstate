@@ -156,30 +156,6 @@
         <!--end edit contacts modal-->
     @endcan
 
-    @can('delete role')
-        <!--delete terminal-->
-        <div class="modal fade" id="delete-role-modal">
-            <form role="form" id="delete-role-form" class="form-submit">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="deleteRoleId" id="deleteRoleId">
-                <div class="modal-dialog">
-                    <div class="modal-content bg-danger">
-                        <div class="modal-body">
-                            <p class="delete_role">Delete Role: <span class="delete-role-name"></span></p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-        <!--end delete terminal modal-->
-    @endcan
 @stop
 
 @section('css')
@@ -194,7 +170,6 @@
 @stop
 
 @section('js')
-    @can('view role')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/validation.js')}}"></script>
         <script src="{{asset('js/contact.js')}}"></script>
@@ -214,5 +189,4 @@
                 });
             });
         </script>
-    @endcan
 @stop
