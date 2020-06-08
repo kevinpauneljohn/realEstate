@@ -199,11 +199,16 @@ $(document).on('click','.edit-project-btn',function(){
     $.ajax({
         'url'   : '/projects/'+id,
         'type'  : 'GET',
+        beforeSend: function(){
+            $('#edit-project-form input,#edit-project-form textarea').attr('disabled',true);
+        },
         success: function(result){
             $('#edit_name').val(result.name);
             $('#edit_address').val(result.address);
             $('#edit_commission_rate').val(result.commission_rate);
             $('#edit_remarks').val(result.remarks);
+
+            $('#edit-project-form input,#edit-project-form textarea').attr('disabled',false);
         }
     });
 });
