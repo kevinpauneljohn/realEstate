@@ -106,9 +106,12 @@ Route::get('/projects/{project}/profile','ProjectController@profile')->name('pro
 
 /*model units*/
 Route::get('/model-units','ModelUnitController@index')->name('model.units.index')->middleware(['auth','permission:view model unit']);
+Route::put('/model-units/{model}','ModelUnitController@update')->name('model.update')->middleware(['auth','permission:edit model unit']);
 Route::post('/model-units','ModelUnitController@store')->name('model.units.store')->middleware(['auth','permission:add model unit']);
 Route::get('/model-units-list','ModelUnitController@model_unit_list')->name('model.units.list')->middleware(['auth','permission:view model unit']);
 Route::get('/project-model-units/{project_id}','ModelUnitController@project_model_unit')->name('projects.model.units')->middleware(['auth']);
+Route::get('/project-model-unit-list/{project_id}','ModelUnitController@project_model_unit_list')->name('projects.model.units.list')->middleware(['auth','permission:view model unit']);
+Route::post('/model-unit-details/{model}','ModelUnitController@getModelUnitDetails')->name('model.unit.details')->middleware(['auth','permission:view model unit|edit model unit']);
 
 /*lead activity schedule*/
 Route::get('/leads-activity-schedule/{lead}','LeadActivityController@lead_activity_list')->name('leads.activity.list')->middleware(['auth','permission:view lead']);

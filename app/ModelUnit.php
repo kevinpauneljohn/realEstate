@@ -13,4 +13,13 @@ class ModelUnit extends Model
     {
         return $this->hasOne(Sales::class);
     }
+
+    public function setDescriptionAttribute($value)
+    {
+        $this->attributes['description'] = json_encode($value);
+    }
+    public function getDescriptionAttribute($value)
+    {
+        return ($value != null) ? json_decode($value) : '';
+    }
 }

@@ -18,194 +18,154 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-
-
-                <!-- About Me Box -->
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Details</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <strong><i class="fas fa-home mr-1"></i> Project Name</strong>
-
-                        <p class="text-muted">{{$project->name}}</p>
-
-                        <hr>
-                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
-
-                        <p class="text-muted">{{$project->address}}</p>
-
-                        <hr>
-
-                        <strong><i class="far fa-file-alt mr-1"></i> Remarks</strong>
-
-                        <p class="text-muted">{!! $project->remarks !!}</p>
-                    </div>
-                    <!-- /.card-body -->
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-9 order-2 order-md-1">
+            <div class="card">
+                <div class="card-header">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-new-model-modal">Add Model Unit</button>
                 </div>
-                <!-- /.card -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header p-2">
-                        @can('add model unit')
-                            <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-project-modal"><i class="fa fa-plus-circle"></i> Add Model Unit</button>
-                        @endcan
-                    </div><!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="activity-list" class="table table-bordered table-striped" role="grid">
+                <div class="card-body">
+
+                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table id="model-units-list" class="table table-bordered table-striped" role="grid">
                             <thead>
                             <tr role="row">
-                                <th>Date Scheduled</th>
-                                <th>Details</th>
-                                <th>Category</th>
-                                <th>Status</th>
+                                <th>Model</th>
+                                <th>House Type</th>
+                                <th>Floor Level</th>
+                                <th>Lot Area</th>
+                                <th>Floor Area</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
 
                             <tfoot>
                             <tr>
-                                <th width="12%">Date Scheduled</th>
-                                <th width="50%">Details</th>
-                                <th width="9%">Category</th>
-                                <th width="9%">Status</th>
+                                <th>Model</th>
+                                <th>House Type</th>
+                                <th>Floor Level</th>
+                                <th>Lot Area</th>
+                                <th>Floor Area</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>
                         </table>
-                    </div><!-- /.card-body -->
+                    </div>
                 </div>
-                <!-- /.nav-tabs-custom -->
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
-    </div>
-
-
-    <!--add new schedule modal-->
-    <div class="modal fade" id="add-schedule-modal">
-        <form role="form" id="add-schedule-form">
-            @csrf
-            <input type="hidden" name="leadId" value="{{$project->id}}">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Create Schedule</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group schedule">
-                                    <label for="schedule">Date</label><span class="required">*</span>
-                                    <input type="text" name="schedule" class="form-control datemask" id="schedule" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6 start_time">
-                                        <label for="start_time">Start Time</label>
-                                        <input type="text" name="start_time" class="form-control timepicker" id="start_time">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label for="end_time">End Time</label>
-                                        <input type="text" name="end_time" class="form-control timepicker" id="end_time">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="remarks">Remarks</label>
-                                    <textarea name="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
-                                </div>
-                                <div class="form-group category">
-                                    <label for="category">Category</label>
-                                    <select name="category" class="form-control" id="category">
-                                        <option value=""> -- Select -- </option>
-                                        <option value="Tripping"> Tripping</option>
-                                        <option value="Assist"> Assist</option>
-                                        <option value="Follow-up"> Follow-up</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul id="schedules"></ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
+        <div class="col-12 col-md-12 col-lg-3 order-1 order-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-primary">{{$project->name}}</h4>
                 </div>
-                <!-- /.modal-content -->
+                <div class="card-body">
+                    <p class="text-muted">{{ucfirst($project->remarks)}}</p>
+                    <br>
+                    <div class="text-muted">
+                        <p class="text-sm">Address
+                            <b class="d-block">{{ucfirst($project->address)}}</b>
+                        </p>
+                        <p class="text-sm">Commission Rate
+                            <b class="d-block">{{$project->commission_rate}}%</b>
+                        </p>
+                    </div>
+
+                    {{--                    <h5 class="mt-5 text-muted">Project files</h5>--}}
+                    {{--                    <ul class="list-unstyled">--}}
+                    {{--                        <li>--}}
+                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>--}}
+                    {{--                        </li>--}}
+                    {{--                        <li>--}}
+                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>--}}
+                    {{--                        </li>--}}
+                    {{--                        <li>--}}
+                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>--}}
+                    {{--                        </li>--}}
+                    {{--                        <li>--}}
+                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>--}}
+                    {{--                        </li>--}}
+                    {{--                        <li>--}}
+                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>--}}
+                    {{--                        </li>--}}
+                    {{--                    </ul>--}}
+                    {{--                    <div class="text-center mt-5 mb-3">--}}
+                    {{--                        <a href="#" class="btn btn-sm btn-primary">Add files</a>--}}
+                    {{--                        <a href="#" class="btn btn-sm btn-warning">Report contact</a>--}}
+                    {{--                    </div>--}}
+                </div>
             </div>
-            <!-- /.modal-dialog -->
-        </form>
+        </div>
     </div>
-    <!--end add new schedule modal-->
 
-
-    @can('edit lead')
-        <!--add new schedule modal-->
-        <div class="modal fade" id="edit-schedule-modal">
-            <form role="form" id="edit-schedule-form">
+    @can('add model unit')
+        <!--add new model modal-->
+        <div class="modal fade" id="add-new-model-modal">
+            <form role="form" id="add-model-form" class="form-submit">
                 @csrf
-                @method('PUT')
-                <input type="hidden" name="editLeadId" value="{{$project->id}}">
-                <input type="hidden" name="scheduleId" id="scheduleId">
-                <div class="modal-dialog modal-lg">
+                <input type="hidden" name="project_id" value="{{$project->id}}">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Create Schedule</h4>
+                            <h4 class="modal-title">Add New Model</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group model_name">
+                                <label for="model_name">Model Name</label><span class="required">*</span>
+                                <input type="text" name="model_name" class="form-control" id="model_name">
+                            </div>
+                            <div class="form-group house_type">
+                                <label for="house_type">House Type</label><span class="required">*</span>
+                                <select name="house_type" id="house_type" class="form-control" style="width: 100%;">
+                                    <option value=""> -- Select -- </option>
+                                    <option value="Single-attached">Single-attached</option>
+                                    <option value="Single-detached">Single-detached</option>
+                                    <option value="Duplex">Duplex</option>
+                                    <option value="Townhouse">Townhouse</option>
+                                    <option value="Rowhouse">Rowhouse</option>
+                                    <option value="Condominium">Condominium</option>
+                                </select>
+                            </div>
+                            <div class="form-group floor_level">
+                                <label for="floor_level">Floor Level</label><span class="required">*</span>
+                                <select class="form-control" name="floor_level" id="floor_level">
+                                    <option value=""> -- Select -- </option>
+                                    <option value="Bungalow">Bungalow</option>
+                                    <option value="Two-storey">Two-storey</option>
+                                    <option value="Three-storey">Three-storey</option>
+                                    <option value="Four-storey">Four-storey</option>
+                                    <option value="Five-storey">Five-storey</option>
+                                </select>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="form-group edit_schedule">
-                                        <label for="edit_schedule">Date</label><span class="required">*</span>
-                                        <input type="text" name="edit_schedule" class="form-control datemask" id="edit_schedule" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 edit_start_time">
-                                            <label for="edit_start_time">Start Time</label>
-                                            <input type="text" name="edit_start_time" class="form-control timepicker" id="edit_start_time">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label for="edit_end_time">End Time</label>
-                                            <input type="text" name="edit_end_time" class="form-control timepicker" id="edit_end_time">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="edit_remarks">Remarks</label>
-                                        <textarea name="edit_remarks" class="textarea" id="edit_remarks" data-min-height="150" placeholder="Place some text here"></textarea>
-                                    </div>
-                                    <div class="form-group edit_category">
-                                        <label for="edit_category">Category</label>
-                                        <select name="edit_category" class="form-control" id="edit_category">
-                                            <option value=""> -- Select -- </option>
-                                            <option value="Tripping"> Tripping</option>
-                                            <option value="Assist"> Assist</option>
-                                            <option value="Follow-up"> Follow-up</option>
-                                        </select>
+                                    <div class="form-group lot_area">
+                                        <label for="lot_area">Lot Area</label><span class="required">*</span>
+                                        <input type="number" name="lot_area" class="form-control" id="lot_area" step="0.1">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <ul id="edit_schedules"></ul>
+                                    <div class="form-group floor_area">
+                                        <label for="floor_area">Floor Area</label><span class="required">*</span>
+                                        <input type="number" name="floor_area" class="form-control" id="floor_area" step="0.1">
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="form-group photo_url">
+                                <label for="photo_url">Facebook Photo URL</label><span class="required">*</span>
+                                <input type="text" name="photo_url" class="form-control" id="photo_url">
+                            </div>
+                            <div class="form-group remarks">
+                                <label for="remarks">Remarks</label>
+                                <textarea name="remarks" id="remarks" class="form-control"  placeholder="Place some text here"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <input type="submit" class="btn btn-primary submit-model-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -213,24 +173,79 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end add new schedule modal-->
+        <!--end add new model modal-->
     @endcan
 
-    @can('delete lead')
-        <!--delete schedule-->
-        <div class="modal fade" id="delete-schedule-modal">
-            <form role="form" id="delete-schedule-form">
+    @can('edit model unit')
+        <!--edit model modal-->
+        <div class="modal fade" id="edit-model-modal">
+            <form role="form" id="edit-model-form" class="form-submit">
                 @csrf
-                @method('DELETE')
-                <input type="hidden" name="deleteScheduleId" id="deleteScheduleId">
+                @method('PUT')
+                <input type="hidden" name="edit_project_id" value="{{$project->id}}">
+                <input type="hidden" name="model_id" id="model_id">
                 <div class="modal-dialog">
-                    <div class="modal-content bg-danger">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Model</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
                         <div class="modal-body">
-                            <p class="delete_schedule">Are you sure you want to delete schedule?</p>
+                            <div class="form-group edit_model_name">
+                                <label for="edit_model_name">Model Name</label><span class="required">*</span>
+                                <input type="text" name="edit_model_name" class="form-control" id="edit_model_name">
+                            </div>
+                            <div class="form-group edit_house_type">
+                                <label for="edit_house_type">House Type</label><span class="required">*</span>
+                                <select name="edit_house_type" id="edit_house_type" class="form-control" style="width: 100%;">
+                                    <option value=""> -- Select -- </option>
+                                    <option value="Single-attached">Single-attached</option>
+                                    <option value="Single-detached">Single-detached</option>
+                                    <option value="Duplex">Duplex</option>
+                                    <option value="Townhouse">Townhouse</option>
+                                    <option value="Rowhouse">Rowhouse</option>
+                                    <option value="Condominium">Condominium</option>
+                                </select>
+                            </div>
+                            <div class="form-group edit_floor_level">
+                                <label for="edit_floor_level">Floor Level</label><span class="required">*</span>
+                                <select class="form-control" name="edit_floor_level" id="edit_floor_level">
+                                    <option value=""> -- Select -- </option>
+                                    <option value="Bungalow">Bungalow</option>
+                                    <option value="Two-storey">Two-storey</option>
+                                    <option value="Three-storey">Three-storey</option>
+                                    <option value="Four-storey">Four-storey</option>
+                                    <option value="Five-storey">Five-storey</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group edit_lot_area">
+                                        <label for="edit_lot_area">Lot Area</label><span class="required">*</span>
+                                        <input type="number" name="edit_lot_area" class="form-control" id="edit_lot_area" step="0.1">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group edit_floor_area">
+                                        <label for="edit_floor_area">Floor Area</label><span class="required">*</span>
+                                        <input type="number" name="edit_floor_area" class="form-control" id="edit_floor_area" step="0.1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group edit_photo_url">
+                                <label for="edit_photo_url">Facebook Photo URL</label><span class="required">*</span>
+                                <input type="text" name="edit_photo_url" class="form-control" id="edit_photo_url">
+                            </div>
+                            <div class="form-group edit_remarks">
+                                <label for="edit_remarks">Remarks</label>
+                                <textarea name="edit_remarks" id="edit_remarks" class="form-control"  placeholder="Place some text here"></textarea>
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light">Delete</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary edit-model-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -238,7 +253,30 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end delete user modal-->
+        <!--end add new model modal-->
+    @endcan
+
+    @can('view model unit')
+        <div class="modal fade" id="view-model-unit-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">View Model Details</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+        </div>
     @endcan
 @stop
 
@@ -249,73 +287,39 @@
     <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <!-- Bootstrap time Picker -->
     <link rel="stylesheet" href="{{asset('/vendor/timepicker/bootstrap-timepicker.min.css')}}">
-    <!-- summernote -->
-    <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
-        .delete_role{
-            font-size: 20px;
-        }
+
     </style>
 @stop
 
 @section('js')
-    @can('view lead')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <!-- bootstrap datepicker -->
         <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
         <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
         <script src="{{asset('/vendor/timepicker/bootstrap-timepicker.min.js')}}"></script>
-        <!-- Summernote -->
-        <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
-        <script src="{{asset('js/leadActivity.js')}}"></script>
-        <script>
+        <script src="{{asset('js/validation.js')}}"></script>
+        <script src="{{asset('js/model_unit.js')}}"></script>
 
-            $(function () {
-                // Summernote
-                $('.textarea').summernote({
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['fontname', ['fontname']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['insert', ['link']],
-                        ['height', ['height']],
-                        ['view', ['fullscreen']],
-                    ],
-                    lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
-                });
-            })
-        </script>
         <script>
             $(function() {
-                $('#activity-list').DataTable({
+                $('#model-units-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('leads.activity.list') !!}',
+                    ajax: '{!! route('projects.model.units.list',['project_id' => $project->id]) !!}',
                     columns: [
-                        { data: 'schedule', name: 'schedule'},
-                        { data: 'details', name: 'details'},
-                        { data: 'category', name: 'category'},
-                        { data: 'status', name: 'status'},
+                        { data: 'name', name: 'name'},
+                        { data: 'house_type', name: 'house_type'},
+                        { data: 'floor_level', name: 'floor_level'},
+                        { data: 'lot_area', name: 'lot_area'},
+                        { data: 'floor_area', name: 'floor_area'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[0,'desc']
+                    order:[0,'asc']
                 });
-            });
-            $('#schedule, #edit_schedule').datepicker({
-                autoclose: true,
-                format: 'yyyy-mm-dd'
             });
             //Initialize Select2 Elements
             $('.select2').select2();
-            //Timepicker
-            $('.timepicker').timepicker({
-                showInputs: false,
-                defaultTime: false,
-            });
-
         </script>
-    @endcan
 @stop

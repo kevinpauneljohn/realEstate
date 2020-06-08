@@ -17,36 +17,38 @@
 @stop
 
 @section('content')
-    <div class="card">
-        <div class="card-header">
-            @can('add project')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-project-modal"><i class="fa fa-plus-circle"></i> Add Project</button>
-            @endcan
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                @can('add project')
+                    <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-project-modal"><i class="fa fa-plus-circle"></i> Add Project</button>
+                @endcan
 
-        </div>
-        <div class="card-body">
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="projects-list" class="table table-bordered table-striped" role="grid">
-                    <thead>
-                    <tr role="row">
-                        <th>Project Name</th>
-                        <th>Address</th>
-                        <th>Model Units</th>
-                        <th>Commission Rate</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
+            </div>
+            <div class="card-body">
+                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <table id="projects-list" class="table table-bordered table-striped" role="grid">
+                        <thead>
+                        <tr role="row">
+                            <th>Project Name</th>
+                            <th>Address</th>
+                            <th>Model Units</th>
+                            <th>Commission Rate</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
 
-                    <tfoot>
-                    <tr>
-                        <th>Project Name</th>
-                        <th width="40%">Address</th>
-                        <th>Model Units</th>
-                        <th>Commission Rate</th>
-                        <th>Action</th>
-                    </tr>
-                    </tfoot>
-                </table>
+                        <tfoot>
+                        <tr>
+                            <th>Project Name</th>
+                            <th width="40%">Address</th>
+                            <th>Model Units</th>
+                            <th>Commission Rate</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

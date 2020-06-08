@@ -45,15 +45,15 @@ class ProjectController extends Controller
                 $action = "";
                 if(auth()->user()->can('view project'))
                 {
-                    $action .= '<a href="'.route('projects.profile',['project' => $project->id]).'" class="btn btn-xs btn-success view-project-btn" id="'.$project->id.'"><i class="fa fa-eye"></i> View</a>';
+                    $action .= '<a href="'.route('projects.profile',['project' => $project->id]).'" class="btn btn-xs btn-success view-project-btn" id="'.$project->id.'"><i class="fa fa-eye"></i></a>';
                 }
                 if(auth()->user()->can('edit project'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-project-btn" id="'.$project->id.'" data-toggle="modal" data-target="#edit-project-modal"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-project-btn" id="'.$project->id.'" data-toggle="modal" data-target="#edit-project-modal"><i class="fa fa-edit"></i></a>';
                 }
                 if(auth()->user()->can('delete project'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-project-btn" id="'.$project->id.'" data-toggle="modal" data-target="#delete-project-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-project-btn" id="'.$project->id.'" data-toggle="modal" data-target="#delete-project-modal"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
@@ -114,9 +114,8 @@ class ProjectController extends Controller
      * */
     public function profile($id)
     {
-        return view('pages.projects.profile')->with([
-            'project'  => Project::findOrFail($id)
-        ]);
+        $project = Project::findOrFail($id);
+        return view('pages.projects.profile',compact('project'));
     }
 
     /**
