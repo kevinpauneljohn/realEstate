@@ -27,6 +27,7 @@
                     <table id="rank-list" class="table table-bordered table-striped" role="grid">
                         <thead>
                         <tr role="row">
+                            <th></th>
                             <th>Name</th>
                             <th width="40%">Description</th>
                             <th width="15%">Target Points</th>
@@ -37,6 +38,7 @@
 
                         <tfoot>
                         <tr>
+                            <th></th>
                             <th>Name</th>
                             <th>Description</th>
                             <th>Target Points</th>

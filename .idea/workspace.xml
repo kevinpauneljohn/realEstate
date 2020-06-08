@@ -62,7 +62,7 @@
             <entry file="file://$PROJECT_DIR$/resources/views/pages/rank/index.blade.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="454">
-                  <caret line="199" column="28" selection-start-line="199" selection-start-column="28" selection-end-line="199" selection-end-column="28" />
+                  <caret line="40" column="32" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
                 </state>
               </provider>
             </entry>
@@ -563,21 +563,7 @@
       <workItem from="1591316759181" duration="4092000" />
       <workItem from="1591334707735" duration="33952000" />
       <workItem from="1591504385703" duration="20250000" />
-      <workItem from="1591538179188" duration="27139000" />
-    </task>
-    <task id="LOCAL-00493" summary="wallet module">
-      <created>1591090118851</created>
-      <option name="number" value="00493" />
-      <option name="presentableId" value="LOCAL-00493" />
-      <option name="project" value="LOCAL" />
-      <updated>1591090118851</updated>
-    </task>
-    <task id="LOCAL-00494" summary="wallet module">
-      <created>1591102566810</created>
-      <option name="number" value="00494" />
-      <option name="presentableId" value="LOCAL-00494" />
-      <option name="project" value="LOCAL" />
-      <updated>1591102566810</updated>
+      <workItem from="1591538179188" duration="27685000" />
     </task>
     <task id="LOCAL-00495" summary="wallet module">
       <created>1591107378852</created>
@@ -908,11 +894,25 @@
       <option name="project" value="LOCAL" />
       <updated>1591629052256</updated>
     </task>
-    <option name="localTasksCounter" value="542" />
+    <task id="LOCAL-00542" summary="rank module">
+      <created>1591630785228</created>
+      <option name="number" value="00542" />
+      <option name="presentableId" value="LOCAL-00542" />
+      <option name="project" value="LOCAL" />
+      <updated>1591630785228</updated>
+    </task>
+    <task id="LOCAL-00543" summary="rank module">
+      <created>1591631197392</created>
+      <option name="number" value="00543" />
+      <option name="presentableId" value="LOCAL-00543" />
+      <option name="project" value="LOCAL" />
+      <updated>1591631197392</updated>
+    </task>
+    <option name="localTasksCounter" value="544" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1581263000" />
+    <option name="totallyTimeSpent" value="1581809000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1395,7 +1395,7 @@
     <entry file="file://$PROJECT_DIR$/resources/views/pages/rank/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="454">
-          <caret line="199" column="28" selection-start-line="199" selection-start-column="28" selection-end-line="199" selection-end-column="28" />
+          <caret line="40" column="32" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
         </state>
       </provider>
     </entry>
