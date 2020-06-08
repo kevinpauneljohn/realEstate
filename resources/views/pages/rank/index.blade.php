@@ -192,7 +192,7 @@
                     serverSide: true,
                     ajax: '{!! route('rank.list') !!}',
                     columns: [
-                        { data: 'id', name: 'id'},
+                        { data: 'id', name: 'id', orderable: false, searchable: false},
                         { data: 'name', name: 'name'},
                         { data: 'description', name: 'description'},
                         { data: 'points', name: 'points'},
