@@ -262,4 +262,6 @@ Route::get('/rank','RankController@index')->name('rank.index')->middleware(['aut
 Route::post('/rank','RankController@store')->name('rank.store')->middleware(['auth','permission:add rank']);
 Route::get('/rank-list','RankController@rank_list')->name('rank.list')->middleware(['auth','permission:view rank']);
 Route::post('/rank/{id}','RankController@getRank')->name('rank.get')->middleware(['auth','permission:view rank']);
+Route::put('/rank/{id}','RankController@update')->name('rank.update')->middleware(['auth','permission:edit rank']);
+Route::delete('/rank/{id}','RankController@destroy')->name('rank.destroy')->middleware(['auth','permission:delete rank']);
 

@@ -38,6 +38,10 @@ class RankController extends Controller
                 {
                     $action .= '<button type="button" class="btn btn-xs btn-primary edit-rank-btn" title="Edit" id="'.$rank->id.'" data-toggle="modal" data-target="#edit-rank-modal"><i class="fas fa-edit"></i></button>';
                 }
+                if(auth()->user()->can('delete rank'))
+                {
+                    $action .= '<button type="button" class="btn btn-xs btn-danger delete-rank-btn" title="Delete" id="'.$rank->id.'"><i class="fas fa-trash"></i></button>';
+                }
                 return $action;
             })
             ->rawColumns(['action','points'])
@@ -73,5 +77,47 @@ class RankController extends Controller
     public function getRank(Request $request)
     {
         return $this->rankRepository->getRank($request->id);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'edit_rank'  => 'required',
+            'edit_start_points'  => 'required',
+            'edit_end_points'  => 'required',
+            'edit_description'  => 'required',
+            'edit_time_line'  => 'required',
+        ],[
+            'edit_rank.required'  => 'Rank field is required',
+            'edit_start_points.required'  => 'Start points are required',
+            'edit_end_points.required'  => 'End points are required',
+            'edit_description.required'  => 'Description is required',
+            'edit_time_line.required'  => 'Time line is required',
+        ]);
+
+        if($validator->passes())
+        {
+            $rank = Rank::find($id);
+            $rank->name = $request->edit_rank;
+            $rank->description = $request->edit_description;
+            $rank->start_points = $request->edit_start_points;
+            $rank->end_points = $request->edit_end_points;
+            $rank->timeline = $request->edit_time_line;
+            if($rank->isDirty())
+            {
+                $rank->save();
+                return response()->json(['success' => true, 'message' => 'Rank successfully updated!']);
+            }else{
+                return response()->json(['success' => false, 'message' => 'No changes occurred']);
+            }
+        }
+        return response()->json($validator->errors());
+    }
+
+    public function destroy($id)
+    {
+        $rank = Rank::find($id);
+        $rank->delete();
+        return response()->json(['success' => true, 'message' => 'Rank successfully deleted!']);
     }
 }
