@@ -107,6 +107,7 @@ Route::get('/projects/{project}/profile','ProjectController@profile')->name('pro
 /*model units*/
 Route::get('/model-units','ModelUnitController@index')->name('model.units.index')->middleware(['auth','permission:view model unit']);
 Route::put('/model-units/{model}','ModelUnitController@update')->name('model.update')->middleware(['auth','permission:edit model unit']);
+Route::delete('/model-units/{model}','ModelUnitController@destroy')->name('model.destroy')->middleware(['auth','permission:delete model unit']);
 Route::post('/model-units','ModelUnitController@store')->name('model.units.store')->middleware(['auth','permission:add model unit']);
 Route::get('/model-units-list','ModelUnitController@model_unit_list')->name('model.units.list')->middleware(['auth','permission:view model unit']);
 Route::get('/project-model-units/{project_id}','ModelUnitController@project_model_unit')->name('projects.model.units')->middleware(['auth']);

@@ -156,7 +156,7 @@ class ModelUnitController extends Controller
                 }
                 if(auth()->user()->can('delete model unit'))
                 {
-                    $action .= '<button type="button" class="btn btn-xs btn-danger delete-lead-btn" id="'.$model_unit->id.'"><i class="fa fa-trash"></i> </button>';
+                    $action .= '<button type="button" class="btn btn-xs btn-danger delete-btn" id="'.$model_unit->id.'"><i class="fa fa-trash"></i> </button>';
                 }
                 return $action;
             })
@@ -274,6 +274,8 @@ class ModelUnitController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $modeUnit = ModelUnit::find($id);
+        $modeUnit->delete();
+        return response()->json(['success' => true,'message' => 'Model Unit successfully deleted']);
     }
 }
