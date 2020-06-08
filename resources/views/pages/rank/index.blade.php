@@ -190,6 +190,7 @@
                     serverSide: true,
                     ajax: '{!! route('rank.list') !!}',
                     columns: [
+                        { data: 'id', name: 'id'},
                         { data: 'name', name: 'name'},
                         { data: 'description', name: 'description'},
                         { data: 'points', name: 'points'},
@@ -197,7 +198,7 @@
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[2,'asc']
+                    order:[0,'asc']
                 });
             });
         </script>
