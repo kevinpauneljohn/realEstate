@@ -77,12 +77,16 @@ class WalletController extends Controller
                 if($cash_request->count() > 0)
                 {
                     $request = str_pad($cash_request->first()->cash_request_id, 5, '0', STR_PAD_LEFT);
-                    return '<a href="#">#'.$request.'</a>';
+                    return '<a href="'.route('cash.history.show',['id' => $cash_request->first()->cash_request_id]).'">#'.$request.'</a>';
                 }
             })
             ->addColumn('action',function($wallet){
-                $action = '<a href="#" class="btn btn-xs btn-info money-history" title="Transaction History"><i class="fas fa-history"></i></a>';
-                return $action;
+                if($wallet->AmountWithdrawalRequests->count() > 0)
+                {
+                    $action = '<a href="'.route('cash.history.show',['id' => $wallet->AmountWithdrawalRequests->first()->cash_request_id]).'" class="btn btn-xs btn-info money-history" title="Transaction History"><i class="fas fa-history"></i></a>';
+                    return $action;
+                }
+
             })
             ->rawColumns(['amount','category','select','action','cash_request'])
             ->make(true);

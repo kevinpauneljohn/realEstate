@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AmountWithdrawalRequest;
 use App\CashRequest;
 use App\Events\AmountWithdrawalRequestEvent;
 use App\Events\SaveRequestExtraFieldEvent;
@@ -41,6 +42,10 @@ class CashRequestController extends Controller
             ->make(true);
     }
 
+
+    /**
+     *
+     * */
     public function cash_approval(Request $request)
     {
         ///approve or reject the amount requested
@@ -84,6 +89,12 @@ class CashRequestController extends Controller
         }else{
             return response()->json(['success' => false, 'error' => 'action-'.$amount_withdrawal_id]);
         }
+    }
+
+    public function show($id)
+    {
+        $amount_withdrawal_request = AmountWithdrawalRequest::where('cash_request_id',$id)->get();
+        return view('pages.cash_request.show',compact('amount_withdrawal_request'));
     }
 
 }

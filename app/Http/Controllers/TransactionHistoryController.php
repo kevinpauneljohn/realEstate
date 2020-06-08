@@ -19,7 +19,7 @@ class TransactionHistoryController extends Controller
         return DataTables::of($transactions)
             ->editColumn('cash_request_id',function($transaction){
                 $request = str_pad($transaction->cash_request_id, 5, '0', STR_PAD_LEFT);
-                return '<a href="#">#'.$request.'</a>';
+                return '<a href="'.route('cash.history.show',['id' => $transaction->cash_request_id]).'">#'.$request.'</a>';
             })
             ->editColumn('created_at',function($transaction){
                 return $transaction->created_at->format('M d, Y - h:i a');

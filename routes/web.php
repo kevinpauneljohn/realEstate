@@ -249,6 +249,7 @@ Route::post('/withdraw','WalletController@withdrawMoney')->name('money.withdraw'
 Route::get('/cash-request','CashRequestController@index')->name('cash.index')->middleware(['auth','role:super admin']);
 Route::get('/cash-request-list','CashRequestController@cashRequestList')->name('cash.list')->middleware(['auth','role:super admin']);
 Route::post('/cash-approval-result','CashRequestController@cash_approval')->name('cash.approval')->middleware(['auth','role:super admin']);
+Route::get('/cash-request-history/{id}','CashRequestController@show')->name('cash.history.show')->middleware(['auth']);
 
 /*amount withdrawal request*/
 Route::get('/cash-request/amount-withdrawal/{id}','AmountWithdrawalRequestController@show')->name('withdrawal.show')->middleware(['auth','role:super admin']);

@@ -3,6 +3,7 @@ $(document).on('submit','.cash-request-form',function(form){
 
     let data = $(this).serializeArray(),
         id = data[1].value;
+    console.log(id);
 
     if(data[4].value !== "")
     {
@@ -33,7 +34,7 @@ $(document).on('submit','.cash-request-form',function(form){
                         }else if(output.success === true)
                         {
                             let url = window.location.href;
-                            $('.card').load(url+' #card-'+id);
+                            $('#card-'+id).load(url+' #card-'+id);
                             Swal.fire(
                                 'Submitted!',
                                 output.message,
