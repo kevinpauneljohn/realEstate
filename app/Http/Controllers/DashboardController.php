@@ -77,7 +77,7 @@ class DashboardController extends Controller
             'aggregate_function' => 'sum',
             'aggregate_field' => 'total_contract_price',
 
-            'group_by_field' => 'reservation_date',
+            'group_by_field' => 'created_at',
             'group_by_period' => 'month',
             'chart_type' => 'line',
         ];
