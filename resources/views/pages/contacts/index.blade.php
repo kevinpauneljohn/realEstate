@@ -20,7 +20,7 @@
     <div class="container" style="max-width: 800px;">
         <div class="card">
             <div class="card-header">
-                @can('add role')
+                @can('add contacts')
                     <button type="button" class="btn bg-primary btn-sm" data-toggle="modal" data-target="#add-contacts-modal">Add</button>
                 @endcan
 
