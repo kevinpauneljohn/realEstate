@@ -77,7 +77,7 @@
                             </div>
                             <div class="form-group remarks">
                                 <label for="remarks">Remarks</label>
-                                <textarea name="remarks" id="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                <textarea name="remarks" id="remarks" class="form-control" placeholder="Place some text here"></textarea>
                             </div>
                             <div class="form-group commission_rate">
                                 <label for="commission_rate">Commission Rate</label>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <input type="submit" class="btn btn-primary project-form-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -123,7 +123,7 @@
                             </div>
                             <div class="form-group edit_remarks">
                                 <label for="edit_remarks">Remarks</label>
-                                <textarea name="edit_remarks" id="edit_remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                <textarea name="edit_remarks" id="edit_remarks" class="form-control" placeholder="Place some text here"></textarea>
                             </div>
                             <div class="form-group edit_commission_rate">
                                 <label for="edit_commission_rate">Commission Rate</label>
@@ -131,7 +131,7 @@
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                                <input type="submit" class="btn btn-primary edit-form-btn" value="Save">
                             </div>
                         </div>
                     </div>
@@ -143,42 +143,14 @@
         <!--end add user modal-->
     @endcan
 
-    @can('delete project')
-        <!--delete user-->
-        <div class="modal fade" id="delete-project-modal">
-            <form role="form" id="delete-project-form" class="form-submit">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="deleteProjectId" id="deleteProjectId">
-                <div class="modal-dialog">
-                    <div class="modal-content bg-danger">
-                        <div class="modal-body">
-                            <p class="delete_project">Delete Project: <span class="delete-project-name"></span></p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-        <!--end delete user modal-->
-    @endcan
 @stop
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
-    <!-- summernote -->
-    <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style type="text/css">
-        .delete_role{
-            font-size: 20px;
-        }
+
     </style>
 @stop
 
@@ -186,27 +158,6 @@
     @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/project.js')}}"></script>
-        <!-- Summernote -->
-        <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
-        <script>
-
-            $(function () {
-                // Summernote
-                $('.textarea').summernote({
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['fontname', ['fontname']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['insert', ['link']],
-                        ['height', ['height']],
-                        ['view', ['fullscreen']],
-                    ],
-                    lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
-                });
-            })
-        </script>
         <script>
             $(function() {
                 $('#projects-list').DataTable({

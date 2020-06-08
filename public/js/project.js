@@ -60,54 +60,136 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 $(document).ready(function () {
 
     /*add project*/
-    $('#add-project-form').submit(function (form) {
-        form.preventDefault();
+    // $('#add-project-form').submit(function (form) {
+    //     form.preventDefault();
+    //
+    //     let data = $('#add-project-form').serialize();
+    //     submitform(
+    //         '/projects',
+    //         'POST',
+    //         data,
+    //         'New Project Successfully Added!',
+    //         true,
+    //         '',
+    //         false,
+    //     );
+    // });
 
-        let data = $('#add-project-form').serialize();
-        submitform(
-            '/projects',
-            'POST',
-            data,
-            'New Project Successfully Added!',
-            true,
-            '',
-            false,
-        );
+    // /*edit project*/
+    // $('#edit-project-form').submit(function (form) {
+    //     form.preventDefault();
+    //
+    //     let data = $('#edit-project-form').serialize();
+    //     let id = $('#updateProjectId').val();
+    //     submitform(
+    //         '/projects/'+id,
+    //         'PUT',
+    //         data,
+    //         'Project Successfully Edited!',
+    //         true,
+    //         '',
+    //         false,
+    //     );
+    // });
+
+    // /*delete project*/
+    // $('#delete-project-form').submit(function (form) {
+    //     form.preventDefault();
+    //
+    //     let data = $('#delete-project-form').serialize();
+    //     let id = $('#deleteProjectId').val();
+    //     submitform(
+    //         '/projects/'+id,
+    //         'DELETE',
+    //         data,
+    //         'Project Successfully Deleted!',
+    //         true,
+    //         '',
+    //         false,
+    //     );
+    // });
+});
+
+$(document).on('submit','#add-project-form',function(form){
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
+    console.log(data);
+
+    $.ajax({
+        'url' : '/projects',
+        'type' : 'POST',
+        'data' : data,
+        beforeSend: function(){
+            $('.project-form-btn').val('Saving ... ').attr('disabled',true);
+        },success: function(result){
+            console.log(result);
+
+            if(result.success === true)
+            {
+                let table = $('#projects-list').DataTable();
+                table.ajax.reload();
+
+                $('#add-project-form').trigger('reset');
+                toastr.success(result.message);
+                $('#add-new-project-modal').modal('toggle');
+            }
+
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+
+            $('.project-form-btn').val('Save').attr('disabled',false);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
     });
+    clear_errors('name','address','commission_rate');
+});
 
-    /*edit project*/
-    $('#edit-project-form').submit(function (form) {
-        form.preventDefault();
+$(document).on('submit','#edit-project-form',function(form){
+    form.preventDefault();
 
-        let data = $('#edit-project-form').serialize();
-        let id = $('#updateProjectId').val();
-        submitform(
-            '/projects/'+id,
-            'PUT',
-            data,
-            'Project Successfully Edited!',
-            true,
-            '',
-            false,
-        );
+    let data = $(this).serializeArray();
+    console.log(data);
+
+    $.ajax({
+        'url' : '/projects/'+data[2].value,
+        'type' : 'PUT',
+        'data' : data,
+        beforeSend: function(){
+            $('.edit-form-btn').val('Saving ... ').attr('disabled',true);
+        },success: function(result){
+            console.log(result);
+
+            if(result.success === true)
+            {
+                let table = $('#projects-list').DataTable();
+                table.ajax.reload();
+
+                toastr.success(result.message);
+                $('#edit-project-modal').modal('toggle');
+            }else if(result.success === false)
+            {
+                toastr.error(result.message);
+            }
+
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+
+            $('.edit-form-btn').val('Save').attr('disabled',false);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
     });
-
-    /*delete project*/
-    $('#delete-project-form').submit(function (form) {
-        form.preventDefault();
-
-        let data = $('#delete-project-form').serialize();
-        let id = $('#deleteProjectId').val();
-        submitform(
-            '/projects/'+id,
-            'DELETE',
-            data,
-            'Project Successfully Deleted!',
-            true,
-            '',
-            false,
-        );
-    });
+    clear_errors('edit_name','edit_address','edit_commission_rate');
 });
 
 $(document).on('click','.edit-project-btn',function(){
@@ -121,20 +203,51 @@ $(document).on('click','.edit-project-btn',function(){
             $('#edit_name').val(result.name);
             $('#edit_address').val(result.address);
             $('#edit_commission_rate').val(result.commission_rate);
-            $('#edit_remarks').summernote("code", result.remarks);
+            $('#edit_remarks').val(result.remarks);
         }
     });
 });
 
 /*delete trigger popup*/
 $(document).on('click','.delete-project-btn',function () {
-    $tr = $(this).closest('tr');
-    id = this.id;
-    let data = $tr.children('td').map(function () {
-        return $(this).text();
-    }).get();
+    let id = this.id;
 
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
 
-    $('.delete-project-name').html('<strong style="color:yellow;">'+data[0]+'</strong>?');
-    $('#deleteProjectId').val(id);
+            $.ajax({
+                'url' : '/projects/'+id,
+                'type' : 'DELETE',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {'_method':'DELETE','id' : id},
+                beforeSend: function(){
+
+                },success: function(output){
+                    if(output.success === true){
+                        Swal.fire(
+                            'Deleted!',
+                            output.message,
+                            'success'
+                        );
+
+                        let table = $('#projects-list').DataTable();
+                        table.ajax.reload();
+                    }else{
+                        toastr.error(output.message);
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+
+        }
+    });
 });

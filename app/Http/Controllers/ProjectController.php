@@ -53,7 +53,7 @@ class ProjectController extends Controller
                 }
                 if(auth()->user()->can('delete project'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-project-btn" id="'.$project->id.'" data-toggle="modal" data-target="#delete-project-modal"><i class="fa fa-trash"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-project-btn" id="'.$project->id.'"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
@@ -99,7 +99,7 @@ class ProjectController extends Controller
 
             if($project->save())
             {
-                return response()->json(['success' => true]);
+                return response()->json(['success' => true,'message' => 'Project successfully added!']);
             }
         }
         return response()->json($validator->errors());
@@ -168,9 +168,12 @@ class ProjectController extends Controller
             $project->remarks = $request->edit_remarks;
             $project->commission_rate = $request->edit_commission_rate;
 
-            if($project->save())
+            if($project->isDirty())
             {
-                return response()->json(['success' => true]);
+                $project->save();
+                return response()->json(['success' => true, 'message' => 'Project successfully updated!']);
+            }else{
+                return response()->json(['success' => false, 'message' => 'No changes occurred']);
             }
         }
         return response()->json($validator->errors());
@@ -188,7 +191,7 @@ class ProjectController extends Controller
 
         if($project->delete())
         {
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true,'message' => 'Project successfully deleted']);
         }
     }
 }
