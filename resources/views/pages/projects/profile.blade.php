@@ -22,7 +22,12 @@
         <div class="col-12 col-md-12 col-lg-9 order-2 order-md-1">
             <div class="card">
                 <div class="card-header">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-new-model-modal">Add Model Unit</button>
+                    @can('add model unit')
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-new-model-modal">Add Model Unit</button>
+                    @endcan
+                    @can('view project')
+                        <a href="{{route('projects.index')}}" class="btn btn-success btn-sm">All Projects</a>
+                    @endcan
                 </div>
                 <div class="card-body">
 
