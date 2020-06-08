@@ -341,6 +341,11 @@ return [
                     'can'  => 'view contacts',
                 ],
                 [
+                    'text' => 'Ranks',
+                    'route'  => 'rank.index',
+                    'can'  => 'view rank',
+                ],
+                [
                     'text' => 'Change Password',
                     'route'  => 'users.change.password',
                 ],

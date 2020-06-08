@@ -8,7 +8,6 @@ use App\Events\AmountWithdrawalRequestEvent;
 use App\Events\SaveRequestExtraFieldEvent;
 use App\Events\UpdateCashRequestStatusEvent;
 use Illuminate\Http\Request;
-use ParagonIE\Sodium\Core\ChaCha20\Ctx;
 use Yajra\DataTables\DataTables;
 
 class CashRequestController extends Controller

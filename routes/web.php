@@ -257,3 +257,9 @@ Route::get('/transaction-history','TransactionHistoryController@index')->name('t
 Route::get('/transaction-list','TransactionHistoryController@transaction_list')->name('transaction.list')->middleware(['auth']);
 Route::post('/set-lead-graph-display','DashboardController@setDisplayLeadGraphStatus')->name('lead.graph.status.display')->middleware(['auth']);
 
+/*rank*/
+Route::get('/rank','RankController@index')->name('rank.index')->middleware(['auth','permission:view rank|add rank|edit rank|delete rank']);
+Route::post('/rank','RankController@store')->name('rank.store')->middleware(['auth','permission:add rank']);
+Route::get('/rank-list','RankController@rank_list')->name('rank.list')->middleware(['auth','permission:view rank']);
+Route::post('/rank/{id}','RankController@getRank')->name('rank.get')->middleware(['auth','permission:view rank']);
+

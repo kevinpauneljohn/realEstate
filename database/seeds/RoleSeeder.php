@@ -103,5 +103,10 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'view wallet']);
         Permission::create(['name' => 'withdraw money']);
+
+        Permission::create(['name' => 'add rank']);
+        Permission::create(['name' => 'view rank']);
+        Permission::create(['name' => 'edit rank']);
+        Permission::create(['name' => 'delete rank']);
     }
 }
