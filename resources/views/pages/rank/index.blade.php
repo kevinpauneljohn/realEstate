@@ -29,8 +29,8 @@
                         <tr role="row">
                             <th></th>
                             <th>Name</th>
-                            <th width="40%">Description</th>
-                            <th width="15%">Target Points</th>
+                            <th width="38%">Description</th>
+                            <th width="12%">Target Points</th>
                             <th width="15%">Time line</th>
                             <th width="15%">Action</th>
                         </tr>
