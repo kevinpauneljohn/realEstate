@@ -17,16 +17,33 @@
 @stop
 
 @section('content')
-    <div class="container" style="max-width: 1000px;">
+    <div class="container" style="max-width: 800px;">
         <a href="{{\Illuminate\Support\Facades\URL::previous()}}" class="btn btn-primary btn-sm" style="margin-bottom: 10px;">Back</a>
+
+        @foreach($amount_withdrawal_request as $amount_requests)
         <div class="card">
             <div class="card-header">
-
+                <span class="float-right">Date Requested: <span class="text-primary">{{$amount_requests->created_at->format('M d, Y h:i a')}}</span></span>
+                Status: <span class="text-primary">{{ucfirst($amount_requests->status)}}</span> @if($amount_requests->status !== 'pending') / Date {{ucfirst($amount_requests->status)}}:
+                <span class="text-primary">{{$amount_requests->updated_at->format('M d, Y h:i a')}}</span> @endif
             </div>
             <div class="card-body">
-
+                <p>
+                    Source: <strong>{{ucfirst($amount_requests->wallet->category)}}</strong><br/>
+                    Original Amount: <strong class="text-success">&#8369; {{number_format($amount_requests->original_amount,2)}}</strong><br/>
+                    Requested Amount: <strong class="text-primary">&#8369; {{number_format($amount_requests->requested_amount,2)}}</strong><br/>
+                    Balance: <strong class="text-danger">&#8369; {{number_format($amount_requests->original_amount - $amount_requests->requested_amount,2)}}</strong><br/>
+                </p>
+                <h6>Description</h6>
+                <p>
+                    {{ucfirst($amount_requests->wallet->details->description)}}
+                </p>
+                <hr/>
+                <h6>System Remarks</h6>
+                <p>{{ucfirst($amount_requests->remarks)}}</p>
             </div>
         </div>
+        @endforeach
     </div>
 
 @stop
