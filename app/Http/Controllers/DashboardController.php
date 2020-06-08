@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lead;
 use App\Repositories\SalesRepository;
+use App\Sales;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -66,12 +67,16 @@ class DashboardController extends Controller
         $chart_options = [
             'chart_title' => 'Monthly Sales',
             'report_type' => 'group_by_date',
-            'model' => Lead::class,
+            'model' => Sales::class,
             'conditions'            => [
                 ['name' => 'Total Sales', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => 'green'],
 //                ['name' => 'Cold Leads ('.$total_cold_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Cold"','color' => '#007eff'],
 //                ['name' => 'Reserved Leads ('.$total_reserved_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
             ],
+
+            'aggregate_function' => 'sum',
+            'aggregate_field' => 'total_contract_price',
+
             'group_by_field' => 'created_at',
             'group_by_period' => 'month',
             'chart_type' => 'line',
