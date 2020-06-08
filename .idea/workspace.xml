@@ -4,7 +4,6 @@
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/dashboard.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,8 +94,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DashboardController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="542">
-                  <caret line="75" column="39" selection-start-line="75" selection-start-column="39" selection-end-line="75" selection-end-column="39" />
+                <state relative-caret-position="491">
+                  <caret line="79" column="49" selection-start-line="79" selection-start-column="49" selection-end-line="79" selection-end-column="49" />
                   <folding>
                     <element signature="e#40#53#0#PHP" expanded="true" />
                   </folding>
@@ -554,21 +553,7 @@
       <workItem from="1591316759181" duration="4092000" />
       <workItem from="1591334707735" duration="33952000" />
       <workItem from="1591504385703" duration="20250000" />
-      <workItem from="1591538179188" duration="4871000" />
-    </task>
-    <task id="LOCAL-00483" summary="contact list module">
-      <created>1590940563298</created>
-      <option name="number" value="00483" />
-      <option name="presentableId" value="LOCAL-00483" />
-      <option name="project" value="LOCAL" />
-      <updated>1590940563303</updated>
-    </task>
-    <task id="LOCAL-00484" summary="contact list module">
-      <created>1590940651951</created>
-      <option name="number" value="00484" />
-      <option name="presentableId" value="LOCAL-00484" />
-      <option name="project" value="LOCAL" />
-      <updated>1590940651951</updated>
+      <workItem from="1591538179188" duration="5652000" />
     </task>
     <task id="LOCAL-00485" summary="contact list module">
       <created>1590941075886</created>
@@ -899,11 +884,25 @@
       <option name="project" value="LOCAL" />
       <updated>1591541965947</updated>
     </task>
-    <option name="localTasksCounter" value="532" />
+    <task id="LOCAL-00532" summary="dashboard display">
+      <created>1591596230324</created>
+      <option name="number" value="00532" />
+      <option name="presentableId" value="LOCAL-00532" />
+      <option name="project" value="LOCAL" />
+      <updated>1591596230327</updated>
+    </task>
+    <task id="LOCAL-00533" summary="dashboard display">
+      <created>1591596443293</created>
+      <option name="number" value="00533" />
+      <option name="presentableId" value="LOCAL-00533" />
+      <option name="project" value="LOCAL" />
+      <updated>1591596443293</updated>
+    </task>
+    <option name="localTasksCounter" value="534" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1558995000" />
+    <option name="totallyTimeSpent" value="1559776000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1373,8 +1372,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DashboardController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="75" column="39" selection-start-line="75" selection-start-column="39" selection-end-line="75" selection-end-column="39" />
+        <state relative-caret-position="491">
+          <caret line="79" column="49" selection-start-line="79" selection-start-column="49" selection-end-line="79" selection-end-column="49" />
           <folding>
             <element signature="e#40#53#0#PHP" expanded="true" />
           </folding>
