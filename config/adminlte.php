@@ -264,12 +264,6 @@ return [
             'can'     => 'view project',
         ],
         [
-            'text'    => 'Model Units',
-            'icon'    => 'fas fa-home',
-            'route'    => 'model.units.index',
-            'can'     => 'view model unit',
-        ],
-        [
             'text'    => 'Requirements',
             'icon'    => 'fas fa-file-alt',
             'route'    => 'requirements.index',
