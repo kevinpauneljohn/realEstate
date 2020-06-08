@@ -30,7 +30,7 @@
                             <th></th>
                             <th>Name</th>
                             <th width="38%">Description</th>
-                            <th width="12%">Target Points</th>
+                            <th width="17%">Target Points</th>
                             <th width="15%">Time line</th>
                             <th width="15%">Action</th>
                         </tr>
