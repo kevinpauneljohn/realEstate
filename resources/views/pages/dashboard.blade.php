@@ -64,6 +64,18 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="float-right text-muted">Sales Monitoring Graph</h5>
+                        </div>
+                        <div class="card-body display-graph">
+                            {!! $sales->renderHtml() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-4">
             <div class="card">
@@ -110,4 +122,5 @@
     <script src="{{asset('js/dashboard.js')}}"></script>
     {!! $leads->renderChartJsLibrary() !!}
     {!! $leads->renderJs() !!}
+    {!! $sales->renderJs() !!}
 @stop

@@ -62,7 +62,23 @@ class DashboardController extends Controller
         ];
         $leads = new LaravelChart($chart_options);
 
-        return view('pages.dashboard',compact('leads'))->with([
+
+        $chart_options = [
+            'chart_title' => 'Monthly Sales',
+            'report_type' => 'group_by_date',
+            'model' => Lead::class,
+            'conditions'            => [
+                ['name' => 'Total Sales', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => 'green'],
+//                ['name' => 'Cold Leads ('.$total_cold_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Cold"','color' => '#007eff'],
+//                ['name' => 'Reserved Leads ('.$total_reserved_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
+            ],
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'line',
+        ];
+        $sales = new LaravelChart($chart_options);
+
+        return view('pages.dashboard',compact('leads','sales'))->with([
             'reminders' => $reminder,
             'display_period' => $period,
             'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth(auth()->user()->id),
