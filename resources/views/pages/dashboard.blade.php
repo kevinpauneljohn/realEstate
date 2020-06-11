@@ -80,9 +80,13 @@
         <div class="col-lg-4">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <div class="card bg-gradient-primary">
                         <div class="card-body">
-                            <h2 class="text-muted" align="center">Ranking Coming Soon</h2>
+                            <h6 align="center">Current Rank</h6>
+                            <h1 align="center" style="color:#f6ff00;">{{ucfirst(auth()->user()->userRankPoint->rank->name)}}</h1>
+                        </div>
+                        <div class="card-footer">
+                            <h6 align="center">Total Points = {{auth()->user()->userRankPoint->points}} pts</h6>
                         </div>
                     </div>
                 </div>

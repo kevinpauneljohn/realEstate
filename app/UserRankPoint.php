@@ -20,4 +20,9 @@ class UserRankPoint extends Model
     {
         return $this->belongsTo(Rank::class);
     }
+
+    public function userRankPoint()
+    {
+        return $this->belongsTo(UserRankPoint::class);
+    }
 }
