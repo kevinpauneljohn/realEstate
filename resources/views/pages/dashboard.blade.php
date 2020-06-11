@@ -86,7 +86,7 @@
                             <h1 align="center" style="color:#f6ff00;">{{ucfirst(auth()->user()->userRankPoint->rank->name)}}</h1>
                         </div>
                         <div class="card-footer">
-                            <h6 align="center">Total Points = {{number_format(auth()->user()->userRankPoint->points,2)}} pts</h6>
+                            <h6 align="center">Total Points Earned = {{number_format(auth()->user()->userRankPoint->points,2)}} pts</h6>
                         </div>
                     </div>
                 </div>

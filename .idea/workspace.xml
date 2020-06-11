@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/UserRankPoint.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/UserRankPoint.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/dashboard.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,7 +72,7 @@
             <entry file="file://$PROJECT_DIR$/resources/views/pages/dashboard.blade.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="369">
-                  <caret line="88" column="45" selection-start-line="88" selection-start-column="45" selection-end-line="88" selection-end-column="45" />
+                  <caret line="88" column="67" selection-start-line="88" selection-start-column="67" selection-end-line="88" selection-end-column="67" />
                   <folding>
                     <element signature="e#3455#3477#0#HTML" expanded="true" />
                   </folding>
@@ -513,21 +512,7 @@
       <workItem from="1591538179188" duration="44391000" />
       <workItem from="1591713591634" duration="616000" />
       <workItem from="1591840210446" duration="1860000" />
-      <workItem from="1591852604477" duration="19286000" />
-    </task>
-    <task id="LOCAL-00511" summary="dashboard display">
-      <created>1591515177848</created>
-      <option name="number" value="00511" />
-      <option name="presentableId" value="LOCAL-00511" />
-      <option name="project" value="LOCAL" />
-      <updated>1591515177848</updated>
-    </task>
-    <task id="LOCAL-00512" summary="dashboard display">
-      <created>1591520437419</created>
-      <option name="number" value="00512" />
-      <option name="presentableId" value="LOCAL-00512" />
-      <option name="project" value="LOCAL" />
-      <updated>1591520437419</updated>
+      <workItem from="1591852604477" duration="19397000" />
     </task>
     <task id="LOCAL-00513" summary="dashboard display">
       <created>1591520864425</created>
@@ -858,11 +843,25 @@
       <option name="project" value="LOCAL" />
       <updated>1591881628741</updated>
     </task>
-    <option name="localTasksCounter" value="560" />
+    <task id="LOCAL-00560" summary="rank module">
+      <created>1591882728640</created>
+      <option name="number" value="00560" />
+      <option name="presentableId" value="LOCAL-00560" />
+      <option name="project" value="LOCAL" />
+      <updated>1591882728640</updated>
+    </task>
+    <task id="LOCAL-00561" summary="rank module">
+      <created>1591882793062</created>
+      <option name="number" value="00561" />
+      <option name="presentableId" value="LOCAL-00561" />
+      <option name="project" value="LOCAL" />
+      <updated>1591882793062</updated>
+    </task>
+    <option name="localTasksCounter" value="562" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1620277000" />
+    <option name="totallyTimeSpent" value="1620388000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1331,7 +1330,7 @@
     <entry file="file://$PROJECT_DIR$/resources/views/pages/dashboard.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="369">
-          <caret line="88" column="45" selection-start-line="88" selection-start-column="45" selection-end-line="88" selection-end-column="45" />
+          <caret line="88" column="67" selection-start-line="88" selection-start-column="67" selection-end-line="88" selection-end-column="67" />
           <folding>
             <element signature="e#3455#3477#0#HTML" expanded="true" />
           </folding>
