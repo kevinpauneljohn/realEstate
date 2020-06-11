@@ -281,7 +281,7 @@ class SalesRepository
             $difference = $sale->total_contract_price - $sale->discount;
             $total_sales = $total_sales + $difference;
         }
-        return number_format($total_sales,2);
+        return $total_sales;
     }
 
     /**
@@ -304,7 +304,7 @@ class SalesRepository
             $difference = $sale->total_contract_price - $sale->discount;
             $total_sales = $total_sales + $difference;
         }
-        return number_format($total_sales,2);
+        return $total_sales;
     }
 
 }

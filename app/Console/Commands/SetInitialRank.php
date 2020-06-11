@@ -3,11 +3,13 @@
 namespace App\Console\Commands;
 
 use App\Events\UserRankPointsEvent;
+use App\Repositories\SalesRepository;
 use App\User;
 use Illuminate\Console\Command;
 
 class SetInitialRank extends Command
 {
+    public $salesRepository;
     /**
      * The name and signature of the console command.
      *
@@ -25,11 +27,12 @@ class SetInitialRank extends Command
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @return mixed
      */
-    public function __construct()
+    public function __construct(SalesRepository $salesRepository)
     {
         parent::__construct();
+        $this->salesRepository = $salesRepository;
     }
 
     /**
@@ -43,11 +46,11 @@ class SetInitialRank extends Command
 
         foreach ($users as $user)
         {
-            if($user->sales->count() > 0)
+            if($this->salesRepository->getTotalSales($user->id) > 0)
             {
                 //the user has sales and set the appropriate points
-                $discounted_price = $user->sales[0]->total_contract_price - $user->sales[0]->discount;
-                event(new UserRankPointsEvent($user,($discounted_price / 100000)));
+                //$discounted_price = $user->sales[0]->total_contract_price - $user->sales[0]->discount;
+                event(new UserRankPointsEvent($user,($this->salesRepository->getTotalSales($user->id) / 100000)));
             }else{
                 //set the points to zero
                 event(new UserRankPointsEvent($user,0));
