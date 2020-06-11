@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Action;
 use App\Events\ThresholdEvent;
+use App\Events\UserRankPointsEvent;
 use App\Priority;
 use App\Threshold;
 use App\User;
@@ -133,6 +134,9 @@ class ThresholdRepository
                 foreach ($roles as $role){
                     $user->assignRole($role);
                 }
+
+                //set the user rank based on his points
+                event(new UserRankPointsEvent($user,0));
 
                 ///send initial 500 dream coins on the user's dream wallet
                 $this->walletRepository->setMoney(

@@ -66,9 +66,11 @@
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#sales">Sales</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#down-line">Down Lines</a>
-                            </li>
+                            @if(auth()->user()->can('view down lines'))
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#down-line">Down Lines</a>
+                                </li>
+                            @endif
                             @if(auth()->user()->can('view down line leads'))
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#leads">Leads</a>
@@ -403,22 +405,24 @@
                 });
             });
 
-            $(function() {
-                $('#down-lines-list').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: '{!! route('users.down.lines',['upline' => $user->id]) !!}',
-                    columns: [
-                        { data: 'fullname', name: 'fullname'},
-                        { data: 'username', name: 'username'},
-                        { data: 'email', name: 'email'},
-                        { data: 'mobileNo', name: 'mobileNo'},
-                        { data: 'roles', name: 'roles'},
-                    ],
-                    responsive:true,
-                    order:[0,'asc']
+            @if(auth()->user()->can('view down lines'))
+                $(function() {
+                    $('#down-lines-list').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: '{!! route('users.down.lines',['upline' => $user->id]) !!}',
+                        columns: [
+                            { data: 'fullname', name: 'fullname'},
+                            { data: 'username', name: 'username'},
+                            { data: 'email', name: 'email'},
+                            { data: 'mobileNo', name: 'mobileNo'},
+                            { data: 'roles', name: 'roles'},
+                        ],
+                        responsive:true,
+                        order:[0,'asc']
+                    });
                 });
-            });
+            @endif
         </script>
     @endcan
 @stop

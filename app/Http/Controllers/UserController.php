@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Downline;
 use App\Events\CreateNetworkEvent;
 use App\Events\SendMoneyEvent;
+use App\Events\UserRankPointsEvent;
 use App\Events\UserRequestEvent;
 use App\Http\Middleware\checkUserAuth;
 use App\Lead;
@@ -251,11 +252,16 @@ class UserController extends Controller
                 ///save directly to users table if the user is a super admin
                 $user->save();
 
-//                $this->setRole($user,$request)->setDownline($user);
-//
-//                event(new CreateNetworkEvent($user->id));
+                //assign role to a user
+                $this->setRole($user,$request);
 
-                ///send initial 500 dream coins on the user's dream wallet
+                //connect the user to its up line
+                //event(new CreateNetworkEvent($user->id));
+
+                //set the user rank based on his points
+                event(new UserRankPointsEvent($user,0));
+
+                //send initial 500 dream coins on the user's dream wallet
                 $this->walletRepository->setMoney(
                     $user->id,
                     User::where('username','kevinpauneljohn')->first()->id,
@@ -295,22 +301,22 @@ class UserController extends Controller
         return $this;
     }
 
-    /**
-     * March 21, 2020
-     * @author john kevin paunel
-     * set user to downlines table
-     * @param string $user
-     * @return mixed
-     * */
-    public function setDownline($user)
-    {
-        $downline = new Downline();
-        $downline->user_id = auth()->user()->id;
-        $downline->downline_id = $user->id;
-        $downline->save();
-
-        return $this;
-    }
+//    /**
+//     * March 21, 2020
+//     * @author john kevin paunel
+//     * set user to downlines table
+//     * @param string $user
+//     * @return mixed
+//     * */
+//    public function setDownline($user)
+//    {
+//        $downline = new Downline();
+//        $downline->user_id = auth()->user()->id;
+//        $downline->downline_id = $user->id;
+//        $downline->save();
+//
+//        return $this;
+//    }
 
     /**
      * March 09, 2020

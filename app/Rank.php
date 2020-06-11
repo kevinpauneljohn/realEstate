@@ -9,4 +9,9 @@ class Rank extends Model
 {
     use SoftDeletes;
 
+    public function userRankPoints()
+    {
+        return $this->hasMany(UserRankPoint::class);
+    }
+
 }

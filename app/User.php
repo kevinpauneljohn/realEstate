@@ -58,10 +58,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function point()
+    public function userRankPoint()
     {
-        return $this->hasOne(Point::class);
+        return $this->hasOne(UserRankPoint::class);
     }
+
+//    public function point()
+//    {
+//        return $this->hasOne(Point::class);
+//    }
 
     public function promotion()
     {

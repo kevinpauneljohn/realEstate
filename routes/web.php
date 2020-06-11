@@ -148,8 +148,18 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-//    return view('test');
-    return view('pages.dashboard');
+
+    $users = User::all();
+
+    foreach ($users as $user)
+    {
+        if($user->sales->count() > 0)
+        {
+            $discounted_price = $user->sales[0]->total_contract_price - $user->sales[0]->discount;
+            echo $user->username.' - '.($discounted_price / 100000).'<br/>';
+        }
+    }
+
 
 })->middleware(['auth']);
 

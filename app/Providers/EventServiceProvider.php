@@ -50,6 +50,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\TransactionRecordEvent' => [
             'App\Listeners\TransactionRecordListener',
+        ],
+        'App\Events\UserRankPointsEvent' => [
+            'App\Listeners\UserRankPointsListener',
         ]
     ];
 
