@@ -40,6 +40,7 @@ class UserRankPointsListener
         $rank = Rank::where([
             ['start_points','<=',$point],
             ['end_points','>=',$point],
+            ['timeline','=','lifetime'],
         ])->first();
         return $rank->id;
     }
