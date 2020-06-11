@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lead;
+use App\Rank;
 use App\Repositories\SalesRepository;
 use App\Sales;
 use App\User;
@@ -91,6 +92,7 @@ class DashboardController extends Controller
             'current_month' => now()->format('F'),
             'current_year' => now()->format('Y'),
             'current_balance' => Wallet::where([['user_id','=',auth()->user()->id],['status','!=','completed']])->sum('amount'),
+            'ranks' => Rank::all(),
         ]);
     }
 

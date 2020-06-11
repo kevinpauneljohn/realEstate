@@ -86,7 +86,7 @@
                             <h1 align="center" style="color:#f6ff00;">{{ucfirst(auth()->user()->userRankPoint->rank->name)}}</h1>
                         </div>
                         <div class="card-footer">
-                            <a href="{{route('notifications.index')}}" class="btn btn-outline-light btn-sm float-right">View Rank Lists</a>
+                            <a href="{{route('notifications.index')}}" class="btn btn-outline-light btn-sm float-right" data-toggle="modal" data-target="#rank-lists-modal">View Rank Lists</a>
                             <h6>Total Points Earned = {{number_format(auth()->user()->userRankPoint->points,2)}} pts</h6>
                         </div>
                     </div>
@@ -129,6 +129,47 @@
             </div>
         </div>
     </div>
+
+    <!--rank lists modal-->
+    <div class="modal fade" id="rank-lists-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Rank Lists</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Rank Name</th>
+                                <th>Points</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($ranks as $rank)
+                                <tr>
+                                    <td>{{ucfirst($rank->name)}}</td>
+                                    <td><span class="text-primary">{{ucfirst($rank->start_points)}} pts</span> to
+                                        <span class="text-primary">{{ucfirst($rank->end_points)}} pts</span></td>
+                                    <td>{{ucfirst(ucfirst($rank->description))}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--end rank lists modal-->
 @stop
 
 @section('css')
