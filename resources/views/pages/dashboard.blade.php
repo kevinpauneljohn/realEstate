@@ -15,7 +15,7 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h4>&#8369; {{$total_sales}}</h4>
+                            <h4>&#8369; {{number_format($total_sales,2)}}</h4>
 
                             <p>Total sales this year {{$current_year}}</p>
                         </div>
@@ -26,7 +26,7 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h4>&#8369; {{$total_sales_this_month}}</h4>
+                            <h4>&#8369; {{number_format($total_sales_this_month,2)}}</h4>
 
                             <p>Total sales this month of {{ucfirst($current_month)}}</p>
                         </div>
