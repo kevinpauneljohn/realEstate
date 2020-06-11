@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\UpdateLeadStatusEvent;
+use App\Events\UserRankPointsEvent;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
@@ -14,6 +15,7 @@ use App\Sales;
 use App\Template;
 use App\Threshold;
 use App\User;
+use App\UserRankPoint;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -145,6 +147,11 @@ class SalesController extends Controller
 
                 if($sales->save())
                 {
+                    //add additional points based on sales price
+                    $plusPoint = ($request->total_contract_price - $request->discount)/100000;
+                    $points = auth()->user()->userRankPoint->points + $plusPoint;
+                    event(new UserRankPointsEvent(auth()->user(), $points));
+
                     event(new UpdateLeadStatusEvent($sales->lead_id));
                     return response()->json(['success' => true, 'message' => 'Sales successfully added!']);
                 }
@@ -508,6 +515,9 @@ class SalesController extends Controller
             $sale = Sales::find($id);
             if($sale->delete())
             {
+                //update the user ranking and points
+                $total_points = $this->salesRepository->getTotalSales(auth()->user()->id) / 100000;
+                event(new UserRankPointsEvent(auth()->user(),$total_points));
                 return response()->json(['success' => true,'message' => 'Sales successfully deleted']);
             }
         }

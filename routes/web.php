@@ -149,17 +149,18 @@ Route::get('/upline-commission/{project}','CommissionController@getUpLineCommiss
 
 Route::get('/test',function(){
 
-    $users = User::all();
+//    $users = User::all();
+//
+//    foreach ($users as $user)
+//    {
+//        if($user->sales->count() > 0)
+//        {
+//            $discounted_price = $user->sales[0]->total_contract_price - $user->sales[0]->discount;
+//            echo $user->username.' - '.($discounted_price / 100000).'<br/>';
+//        }
+//    }
 
-    foreach ($users as $user)
-    {
-        if($user->sales->count() > 0)
-        {
-            $discounted_price = $user->sales[0]->total_contract_price - $user->sales[0]->discount;
-            echo $user->username.' - '.($discounted_price / 100000).'<br/>';
-        }
-    }
-
+    return auth()->user()->userRankPoint->points;
 
 })->middleware(['auth']);
 

@@ -15,10 +15,11 @@ use Illuminate\Support\Carbon;
 
 class ThresholdRepository
 {
-    public $walletRepository;
-    public function __construct(WalletRepository $walletRepository)
+    public $walletRepository, $salesRepository;
+    public function __construct(WalletRepository $walletRepository, SalesRepository $salesRepository)
     {
         $this->walletRepository = $walletRepository;
+        $this->salesRepository = $salesRepository;
     }
 
     /**
@@ -151,6 +152,14 @@ class ThresholdRepository
             DB::table($threshold->storage_name)
                 ->where('id',$threshold->storage_id)
                 ->update(['deleted_at' => now()]);
+        }
+
+        //if the request has impact on sales table update the user rank and points
+        if($threshold->storage_name === 'sales')
+        {
+            $user = User::find($threshold->user_id);
+            $total_points = $this->salesRepository->getTotalSales($user->id) / 100000;
+            event(new UserRankPointsEvent($user,$total_points));
         }
     }
 

@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Events\UserRankPointsEvent;
 use App\Project;
 use App\Sales;
 use App\Threshold;
@@ -141,6 +142,9 @@ class SalesRepository
         if($sales->isDirty())
         {
             $sales->save();
+            //update the rank and points
+            $total_points = $this->getTotalSales(auth()->user()->id) / 100000;
+            event(new UserRankPointsEvent(auth()->user(),$total_points));
             return ['success' => true, 'message' => 'Sales Successfully Updated!', $sales];
         }
 
