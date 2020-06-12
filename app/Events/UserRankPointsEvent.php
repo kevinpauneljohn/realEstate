@@ -13,16 +13,17 @@ use Illuminate\Queue\SerializesModels;
 class UserRankPointsEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $user, $points;
+    public $user, $sales_points, $extra_points;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($user, $points)
+    public function __construct($user, $sales_points, $extra_points)
     {
         $this->user = $user;
-        $this->points = $points;
+        $this->sales_points = $sales_points;
+        $this->extra_points = $extra_points;
     }
 
     /**

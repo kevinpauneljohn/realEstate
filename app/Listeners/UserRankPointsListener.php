@@ -31,12 +31,13 @@ class UserRankPointsListener
     {
         UserRankPoint::updateOrCreate(
             ['user_id' => $event->user->id],
-            ['rank_id' => $this->setRankByPoints($event->points), 'points' => $event->points]
+            ['rank_id' => $this->setRankByPoints($event->sales_points, $event->extra_points), 'sales_points' => $event->sales_points,'extra_points' => $event->extra_points]
         );
     }
 
-    private function setRankByPoints($point)
+    private function setRankByPoints($sales_point,$extra_points)
     {
+        $point = $sales_point + $extra_points;
         $rank = Rank::where([
             ['start_points','<=',$point],
             ['end_points','>=',$point],

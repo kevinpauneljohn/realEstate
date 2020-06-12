@@ -46,14 +46,18 @@ class SetInitialRank extends Command
 
         foreach ($users as $user)
         {
+            ///check if the user has extra points
+            $extra_points = $user->userRankPoint == null ? 0 : $user->userRankPoint->exra_points;
+
             if($this->salesRepository->getTotalSales($user->id) > 0)
             {
                 //the user has sales and set the appropriate points
                 //$discounted_price = $user->sales[0]->total_contract_price - $user->sales[0]->discount;
-                event(new UserRankPointsEvent($user,($this->salesRepository->getTotalSales($user->id) / 100000)));
+
+                event(new UserRankPointsEvent($user,($this->salesRepository->getTotalSales($user->id) / 100000),$extra_points));
             }else{
                 //set the points to zero
-                event(new UserRankPointsEvent($user,0));
+                event(new UserRankPointsEvent($user,0,$extra_points));
             }
             echo 'success';
         }

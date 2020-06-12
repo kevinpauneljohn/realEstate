@@ -17,7 +17,8 @@ class CreateUserRankPointsTable extends Migration
             $table->id();
             $table->uuid('user_id');
             $table->unsignedBigInteger('rank_id');
-            $table->double('points');
+            $table->double('sales_points');
+            $table->double('extra_points');
             $table->timestamps();
             $table->softDeletes();
 

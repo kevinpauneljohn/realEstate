@@ -159,8 +159,9 @@ Route::get('/test',function(){
 //            echo $user->username.' - '.($discounted_price / 100000).'<br/>';
 //        }
 //    }
+    $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
 
-    return auth()->user()->userRankPoint->points;
+    return $extra_points;
 
 })->middleware(['auth']);
 

@@ -144,7 +144,11 @@ class SalesRepository
             $sales->save();
             //update the rank and points
             $total_points = $this->getTotalSales(auth()->user()->id) / 100000;
-            event(new UserRankPointsEvent(auth()->user(),$total_points));
+
+            ///check if the user has extra points
+            $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
+
+            event(new UserRankPointsEvent(auth()->user(),$total_points,$extra_points));
             return ['success' => true, 'message' => 'Sales Successfully Updated!', $sales];
         }
 

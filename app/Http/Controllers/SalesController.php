@@ -150,7 +150,11 @@ class SalesController extends Controller
                     //add additional points based on sales price
                     $plusPoint = ($request->total_contract_price - $request->discount)/100000;
                     $points = auth()->user()->userRankPoint->points + $plusPoint;
-                    event(new UserRankPointsEvent(auth()->user(), $points));
+
+                    ///check if the user has extra points
+                    $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
+
+                    event(new UserRankPointsEvent(auth()->user(), $points, $extra_points));
 
                     event(new UpdateLeadStatusEvent($sales->lead_id));
                     return response()->json(['success' => true, 'message' => 'Sales successfully added!']);

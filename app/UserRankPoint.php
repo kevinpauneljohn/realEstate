@@ -9,7 +9,7 @@ class UserRankPoint extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id','rank_id','points'];
+    protected $fillable = ['user_id','rank_id','sales_points','extra_points'];
 
     public function user()
     {

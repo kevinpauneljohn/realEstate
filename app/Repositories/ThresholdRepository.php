@@ -159,7 +159,10 @@ class ThresholdRepository
         {
             $user = User::find($threshold->user_id);
             $total_points = $this->salesRepository->getTotalSales($user->id) / 100000;
-            event(new UserRankPointsEvent($user,$total_points));
+
+            ///check if the user has extra points
+            $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
+            event(new UserRankPointsEvent($user,$total_points, $extra_points));
         }
     }
 

@@ -87,7 +87,7 @@
                         </div>
                         <div class="card-footer">
                             <a href="{{route('notifications.index')}}" class="btn btn-outline-light btn-sm float-right" data-toggle="modal" data-target="#rank-lists-modal">View Rank Lists</a>
-                            <h6>Total Points Earned = {{number_format(auth()->user()->userRankPoint->points,2)}} pts</h6>
+                            <h6>Total Points Earned = {{number_format((auth()->user()->userRankPoint->sales_points + auth()->user()->userRankPoint->extra_points),2)}} pts</h6>
                         </div>
                     </div>
                 </div>
