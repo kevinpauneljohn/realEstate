@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/SetInitialRank.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/SetInitialRank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Events/UserRankPointsEvent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Events/UserRankPointsEvent.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Listeners/UserRankPointsListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/UserRankPointsListener.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/SalesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/SalesRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/ThresholdRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/ThresholdRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/UserRankPoint.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/UserRankPoint.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_11_145635_create_user_rank_points_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_06_11_145635_create_user_rank_points_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +18,7 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.9">
+    <splitter split-orientation="horizontal" split-proportion="0.6390042">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -43,11 +34,20 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Repositories/ThresholdRepository.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="72">
                   <caret line="156" column="82" lean-forward="true" selection-start-line="156" selection-start-column="82" selection-end-line="156" selection-end-column="82" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/config/adminlte.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="250">
+                  <caret line="290" column="10" selection-start-line="290" selection-start-column="10" selection-end-line="295" selection-end-column="12" />
                 </state>
               </provider>
             </entry>
@@ -102,7 +102,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/dashboard.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="491">
+                <state relative-caret-position="41">
                   <caret line="89" column="153" selection-start-line="89" selection-start-column="153" selection-end-line="89" selection-end-column="153" />
                   <folding>
                     <element signature="e#3455#3477#0#HTML" expanded="true" />
@@ -211,7 +211,6 @@
         <option value="$PROJECT_DIR$/resources/views/pages/projects/profile.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/projects/index.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ProjectController.php" />
-        <option value="$PROJECT_DIR$/config/adminlte.php" />
         <option value="$PROJECT_DIR$/public/js/project.js" />
         <option value="$PROJECT_DIR$/app/Rank.php" />
         <option value="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" />
@@ -232,6 +231,7 @@
         <option value="$PROJECT_DIR$/app/Repositories/SalesRepository.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" />
         <option value="$PROJECT_DIR$/app/Repositories/ThresholdRepository.php" />
+        <option value="$PROJECT_DIR$/config/adminlte.php" />
       </list>
     </option>
   </component>
@@ -384,31 +384,7 @@
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Repositories" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -577,14 +553,7 @@
       <workItem from="1591538179188" duration="44391000" />
       <workItem from="1591713591634" duration="616000" />
       <workItem from="1591840210446" duration="1860000" />
-      <workItem from="1591852604477" duration="26981000" />
-    </task>
-    <task id="LOCAL-00518" summary="dashboard display">
-      <created>1591523104322</created>
-      <option name="number" value="00518" />
-      <option name="presentableId" value="LOCAL-00518" />
-      <option name="project" value="LOCAL" />
-      <updated>1591523104322</updated>
+      <workItem from="1591852604477" duration="29007000" />
     </task>
     <task id="LOCAL-00519" summary="dashboard display">
       <created>1591524450906</created>
@@ -922,11 +891,18 @@
       <option name="project" value="LOCAL" />
       <updated>1591887150687</updated>
     </task>
-    <option name="localTasksCounter" value="567" />
+    <task id="LOCAL-00567" summary="rank module">
+      <created>1591938644198</created>
+      <option name="number" value="00567" />
+      <option name="presentableId" value="LOCAL-00567" />
+      <option name="project" value="LOCAL" />
+      <updated>1591938644198</updated>
+    </task>
+    <option name="localTasksCounter" value="568" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1627972000" />
+    <option name="totallyTimeSpent" value="1629998000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1159,13 +1135,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="264" column="10" selection-start-line="264" selection-start-column="10" selection-end-line="264" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProjectController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117">
@@ -1352,7 +1321,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/dashboard.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
+        <state relative-caret-position="41">
           <caret line="89" column="153" selection-start-line="89" selection-start-column="153" selection-end-line="89" selection-end-column="153" />
           <folding>
             <element signature="e#3455#3477#0#HTML" expanded="true" />
@@ -1396,6 +1365,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="156" column="82" lean-forward="true" selection-start-line="156" selection-start-column="82" selection-end-line="156" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="290" column="10" selection-start-line="290" selection-start-column="10" selection-end-line="295" selection-end-column="12" />
         </state>
       </provider>
     </entry>

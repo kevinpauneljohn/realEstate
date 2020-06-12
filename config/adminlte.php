@@ -288,12 +288,12 @@ return [
                 ],
             ],
         ],
-        [
-            'text'    => 'Schedules',
-            'icon'    => 'fas fa-calendar-alt',
-            'can'     => 'view schedule',
-            'route'   => 'schedules.index',
-        ],
+//        [
+//            'text'    => 'Schedules',
+//            'icon'    => 'fas fa-calendar-alt',
+//            'can'     => 'view schedule',
+//            'route'   => 'schedules.index',
+//        ],
         [
             'text'    => 'Settings',
             'icon'    => 'fas fa-cogs',
