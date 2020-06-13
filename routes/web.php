@@ -281,3 +281,7 @@ Route::post('/rank/{id}','RankController@getRank')->name('rank.get')->middleware
 Route::put('/rank/{id}','RankController@update')->name('rank.update')->middleware(['auth','permission:edit rank']);
 Route::delete('/rank/{id}','RankController@destroy')->name('rank.destroy')->middleware(['auth','permission:delete rank']);
 
+Route::get('/contest','ContestController@index')->name('contest.index')->middleware(['auth','permission:view contest']);
+Route::get('/contest-list','ContestController@contest_list')->name('contest.list')->middleware(['auth','permission:view contest']);
+Route::post('/contest','ContestController@store')->name('contest.index')->middleware(['auth','permission:add contest']);
+

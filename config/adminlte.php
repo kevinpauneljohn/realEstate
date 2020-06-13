@@ -300,6 +300,11 @@ return [
             'can'     => 'view settings',
             'submenu' => [
                 [
+                    'text' => 'Contests',
+                    'route'  => 'contest.index',
+                    'can'  => 'view contest',
+                ],
+                [
                     'text' => 'Canned Message',
                     'route'  => 'canned.create',
                     'can'  => 'add canned message',

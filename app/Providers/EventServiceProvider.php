@@ -53,6 +53,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\UserRankPointsEvent' => [
             'App\Listeners\UserRankPointsListener',
+        ],
+        'App\Events\FirstBloodContestEvent' => [
+            'App\Listeners\FirstBloodContestContestListener',
         ]
     ];
 
