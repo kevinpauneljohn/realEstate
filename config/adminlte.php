@@ -292,7 +292,7 @@ return [
             'text'    => 'SCRUM',
             'icon'    => 'fas fa-thumbtack',
             'can'     => 'view scrum',
-            'route'   => 'scrum.index',
+            'route'   => 'tasks.index',
         ],
         [
             'text'    => 'Settings',
