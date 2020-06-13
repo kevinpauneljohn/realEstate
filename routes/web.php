@@ -286,4 +286,5 @@ Route::get('/contest-list','ContestController@contest_list')->name('contest.list
 Route::post('/contest','ContestController@store')->name('contest.index')->middleware(['auth','permission:add contest']);
 
 Route::get('/tasks','ScrumController@index')->name('tasks.index')->middleware(['auth','permission:view task']);
+Route::post('/tasks','ScrumController@store')->name('tasks.store')->middleware(['auth','permission:add task']);
 

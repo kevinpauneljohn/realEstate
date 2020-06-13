@@ -17,7 +17,7 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->text('extra_field');
+            $table->text('extra_field')->nullable();
             $table->unsignedBigInteger('priority_id');
             $table->uuid('user_id');
             $table->timestamps();

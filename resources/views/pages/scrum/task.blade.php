@@ -29,20 +29,20 @@
                 <table id="contest-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
-                        <th width="20%">Name</th>
+                        <th>Title</th>
                         <th>Description</th>
-                        <th width="8%">Active</th>
-                        <th width="10%">Date Active</th>
-                        <th width="10%">Action</th>
+                        <th>Priority</th>
+                        <th>Creator</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
 
                     <tfoot>
                     <tr>
-                        <th>Name</th>
+                        <th>Title</th>
                         <th>Description</th>
-                        <th>Active</th>
-                        <th>Date Active</th>
+                        <th>Priority</th>
+                        <th>Creator</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -54,59 +54,53 @@
     @can('add task')
         <!--add new roles modal-->
         <div class="modal fade" id="add-task-modal">
-            <form role="form" id="contest-form" class="form-submit">
+            <form role="form" id="task-form">
                 @csrf
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New Contest</h4>
+                            <h4 class="modal-title">Add New Task</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch" name="is_active" value="1">
-                                    <label class="custom-control-label" for="customSwitch">Active</label>
-                                </div>
-                            </div>
                             <div class="form-group title">
                                 <label for="title">Title</label><span class="required">*</span>
-                                <input type="text" name="title" class="form-control" id="title">
+                                <input type="text" name="title" id="title" class="form-control">
                             </div>
                             <div class="form-group description">
                                 <label for="description">Description</label><span class="required">*</span>
-                                <textarea name="description" class="form-control" id="description"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="date">Date</label><span class="required">*</span>
-                                <input type="text" name="date_active" class="form-control datemask" id="date_active" value="{{today()->format('Y-m-d')}}" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                <textarea class="form-control" id="description" name="description"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <div class="form-group amount">
-                                        <label for="amount">Amount</label><span class="required">*</span>
-                                        <input type="number" name="amount" class="form-control" id="amount" step="0.1" value="0">
+                                    <div class="form-group priority">
+                                        <label for="priority">Priority</label><span class="required">*</span>
+                                        <select class="form-control" name="priority" id="priority">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($priorities as $priority)
+                                                <option value="{{$priority->id}}">{{$priority->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group points">
-                                        <label for="points">Points</label><span class="required">*</span>
-                                        <input type="number" name="points" class="form-control" id="points" step="0.1" value="0">
-                                    </div>
-                                </div>
-                                <div class="col-lg-5">
-                                    <div class="form-group item">
-                                        <label for="item">Item</label>
-                                        <input type="text" name="item" class="form-control" id="item">
+                                <div class="col-lg-8">
+                                    <div class="form-group collaborator">
+                                        <label for="collaborator">Collaborator</label><span class="required">*</span>
+                                        <select class="form-control select2" multiple="multiple" name="collaborator[]" id="collaborator" style="width: 100%">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($users as $user)
+                                                <option value="{{$user->id}}">{{$user->fullname}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                            <input type="submit" class="btn btn-primary submit-task-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -195,7 +189,8 @@
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
     <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-    <script src="{{asset('js/contest.js')}}"></script>
+    <script src="{{asset('js/validation.js')}}"></script>
+    <script src="{{asset('js/task.js')}}"></script>
     <script>
         $(function() {
             $('#contest-list').DataTable({
@@ -218,6 +213,9 @@
             autoclose: true,
             format: 'yyyy-mm-dd'
         }).datepicker("setDate", new Date());
+
+        //Initialize Select2 Elements
+        $('.select2').select2();
     </script>
 @stop
 

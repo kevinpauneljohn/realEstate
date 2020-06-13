@@ -289,9 +289,9 @@ return [
             ],
         ],
         [
-            'text'    => 'SCRUM',
+            'text'    => 'Tasks',
             'icon'    => 'fas fa-thumbtack',
-            'can'     => 'view scrum',
+            'can'     => 'view task',
             'route'   => 'tasks.index',
         ],
         [
