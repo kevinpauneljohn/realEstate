@@ -58,6 +58,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class,'task_user');
+    }
+
     public function userRankPoint()
     {
         return $this->hasOne(UserRankPoint::class);

@@ -1,16 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Contest')
+@section('title', 'Tasks')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Contest</h1>
+            <h1 class="m-0 text-dark">Tasks</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Contest</li>
+                <li class="breadcrumb-item active">Tasks</li>
             </ol>
         </div><!-- /.col -->
     </div>
@@ -19,8 +19,8 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            @can('add contest')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-contest-modal"><i class="fa fa-plus-circle"></i> Add New</button>
+            @can('add task')
+                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
             @endcan
 
         </div>
@@ -51,9 +51,9 @@
         </div>
     </div>
 
-    @can('add contest')
+    @can('add task')
         <!--add new roles modal-->
-        <div class="modal fade" id="add-new-contest-modal">
+        <div class="modal fade" id="add-task-modal">
             <form role="form" id="contest-form" class="form-submit">
                 @csrf
                 <div class="modal-dialog">
@@ -189,34 +189,35 @@
 @stop
 
 @section('js')
-        <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-        <!-- bootstrap datepicker -->
-        <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-        <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
-        <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
-        <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-        <script src="{{asset('js/contest.js')}}"></script>
-        <script>
-            $(function() {
-                $('#contest-list').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: '{!! route('contest.list') !!}',
-                    columns: [
-                        { data: 'name', name: 'name'},
-                        { data: 'description', name: 'description'},
-                        { data: 'active', name: 'active'},
-                        { data: 'date_working', name: 'date_working'},
-                        { data: 'action', name: 'action', orderable: false, searchable: false}
-                    ],
-                    responsive:true,
-                    order:[0,'desc']
-                });
+    <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+    <!-- bootstrap datepicker -->
+    <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
+    <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+    <script src="{{asset('js/contest.js')}}"></script>
+    <script>
+        $(function() {
+            $('#contest-list').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('contest.list') !!}',
+                columns: [
+                    { data: 'name', name: 'name'},
+                    { data: 'description', name: 'description'},
+                    { data: 'active', name: 'active'},
+                    { data: 'date_working', name: 'date_working'},
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ],
+                responsive:true,
+                order:[0,'desc']
             });
+        });
 
-            $('#date_active').datepicker({
-                autoclose: true,
-                format: 'yyyy-mm-dd'
-            }).datepicker("setDate", new Date());
-        </script>
-    @stop
+        $('#date_active').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+        }).datepicker("setDate", new Date());
+    </script>
+@stop
+

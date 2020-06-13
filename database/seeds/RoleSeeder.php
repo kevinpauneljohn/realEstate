@@ -108,5 +108,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view rank']);
         Permission::create(['name' => 'edit rank']);
         Permission::create(['name' => 'delete rank']);
+
+        Permission::create(['name' => 'add task']);
+        Permission::create(['name' => 'view task']);
+        Permission::create(['name' => 'edit task']);
+        Permission::create(['name' => 'delete task']);
     }
 }
