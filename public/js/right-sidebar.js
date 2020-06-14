@@ -178,3 +178,6 @@ $(document).on('change','#select-contact-list',function(){
 
 });
 
+//Initialize Select2 Elements
+$('.select2').select2();
+

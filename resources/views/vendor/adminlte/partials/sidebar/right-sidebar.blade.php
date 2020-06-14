@@ -35,7 +35,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <select class="form-control" id="select-contact-list">
+                    <select class="form-control select2" id="select-contact-list" style="width:100%;">
                         <option value=""> -- Select -- </option>
                         @foreach(\App\Contact::all() as $contact)
                             <option value="{{$contact->id}}">{{$contact->title}} - {{$contact->contact_person}}</option>
@@ -116,7 +116,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="project_label">Project</label>
-                                <select class="form-control" name="project_label" id="project_label">
+                                <select class="form-control select2" name="project_label" id="project_label" style="width:100%;">
                                     <option value=""> -- Select -- </option>
                                     @foreach(\App\Project::all() as $project)
                                         <option value="{{$project->id}}">{{$project->name}}</option>
@@ -186,7 +186,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <select class="form-control" id="requirement-template">
+                    <select class="form-control select2" id="requirement-template" style="width:100%;">
                         <option value=""> -- Select -- </option>
                         @foreach(\App\Template::all() as $template)
                             <option value="{{$template->id}}">{{ucfirst($template->name)}}</option>
