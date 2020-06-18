@@ -1,9 +1,30 @@
 @extends('adminlte::page')
 
-@section('title', 'SCRUM')
+@section('title', 'Tasks Profile')
 
 @section('content_header')
-    <h1>SCRUM</h1>
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Tasks Profile</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
+                <li class="breadcrumb-item active">Tasks</li>
+            </ol>
+        </div><!-- /.col -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    @can('add task')
+                        <button type="button" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#add-task-modal">Create Child Task</button>
+                    @endcan
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('content')
@@ -14,6 +35,15 @@
                     <h3 class="card-title">Back Log</h3>
                 </div>
             </div>
+
+        </section>
+        <section class="col-lg-2 connectedSortable ui-sortable">
+            <div class="card card-yellow">
+                <div class="card-header">
+                    <h3 class="card-title">New</h3>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-header ui-sortable-handle" style="cursor: move;">
                     <h3 class="card-title">
@@ -29,13 +59,6 @@
                 <!-- /.card-body -->
                 <div class="card-footer clearfix">
 
-                </div>
-            </div>
-        </section>
-        <section class="col-lg-2 connectedSortable ui-sortable">
-            <div class="card card-yellow">
-                <div class="card-header">
-                    <h3 class="card-title">New</h3>
                 </div>
             </div>
         </section>
@@ -64,6 +87,66 @@
 
         </section>
     </div>
+
+    @can('add task')
+        <!--add new roles modal-->
+        <div class="modal fade" id="add-task-modal">
+            <form role="form" id="task-form">
+                @csrf
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add New Task</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group title">
+                                <label for="title">Title</label><span class="required">*</span>
+                                <input type="text" name="title" id="title" class="form-control">
+                            </div>
+                            <div class="form-group description">
+                                <label for="description">Description</label><span class="required">*</span>
+                                <textarea class="form-control" id="description" name="description"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group priority">
+                                        <label for="priority">Priority</label><span class="required">*</span>
+                                        <select class="form-control" name="priority" id="priority">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($priorities as $priority)
+                                                <option value="{{$priority->id}}">{{$priority->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="form-group user">
+                                        <label for="user">Collaborator</label><span class="required">*</span>
+                                        <select class="form-control select2" name="user" id="user" style="width: 100%">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($users as $user)
+                                                <option value="{{$user->id}}">{{$user->fullname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary submit-task-btn" value="Save">
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new roles modal-->
+    @endcan
 
 @stop
 

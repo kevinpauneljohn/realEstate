@@ -14,10 +14,8 @@ class CreateTaskUserTable extends Migration
     public function up()
     {
         Schema::create('task_user', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('task_id');
             $table->uuid('user_id');
-            $table->softDeletes();
 
             $table->foreign('task_id')->references('id')->on('tasks');
             $table->foreign('user_id')->references('id')->on('users');

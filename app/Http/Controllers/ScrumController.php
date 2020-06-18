@@ -75,7 +75,7 @@ class ScrumController extends Controller
 
                 if(auth()->user()->can('view contest'))
                 {
-                    $action .= '<button type="button" class="btn btn-xs btn-success edit-rank-btn" title="View" id="'.$task->id.'" data-toggle="modal" data-target="#edit-rank-modal"><i class="fas fa-eye"></i></button>';
+                    $action .= '<a href="'.route('tasks.overview',['id' => $task->id]).'" class="btn btn-xs btn-success" title="View"><i class="fas fa-eye"></i></a>';
                 }
                 if(auth()->user()->can('edit contest'))
                 {
@@ -106,5 +106,59 @@ class ScrumController extends Controller
         $merged = $collection->merge(['collaborator' => $task->users->pluck('id')]);
 
         return $merged->all();
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $validation = Validator::make($request->all(),[
+            'edit_title'         => 'required',
+            'edit_description'   => 'required|max:10000',
+            'edit_priority'      => 'required',
+            'edit_collaborator'  => 'required'
+        ],[
+            'edit_title.required'                => 'Title field is required',
+            'edit_description.required'          => 'Description field is required',
+            'edit_priority.required'             => 'Priority field is required',
+            'edit_collaborator.required'         => 'Collaborator field is required'
+        ]);
+
+        if($validation->passes())
+        {
+            $changeCtr = 0;
+            $task = Task::find($id);
+            $task->name = $request->edit_title;
+            $task->description = $request->edit_description;
+            $task->priority_id = $request->edit_priority;
+            if($task->isDirty())
+            {
+                $task->save();
+                $changeCtr = 1;
+            }
+
+            ///update the task user table
+            DB::table('task_user')->where('task_id','=',$task->id)->delete();
+                $collaborator = collect($request->edit_collaborator);
+                if($collaborator->count() > 0)
+                {
+                    foreach ($request->edit_collaborator as $value)
+                    {
+                        DB::table('task_user')->insert([
+                            ['task_id' => $task->id, 'user_id' => $value]
+                        ]);
+                    }
+                }
+
+                return response()->json(['success' => true, 'message' => 'Task successfully updated!']);
+
+        }
+        return response()->json($validation->errors());
+    }
+
+    public function overview($id)
+    {
+        $users = Task::find($id)->users;
+        $priorities = Priority::all();
+        return view('pages.scrum.index',compact('priorities','users'));
     }
 }
