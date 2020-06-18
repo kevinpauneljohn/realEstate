@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ChildTask;
 use App\Priority;
 use App\Task;
 use App\User;
@@ -35,6 +36,7 @@ class ScrumController extends Controller
             $task->description = $request->description;
             $task->priority_id = $request->priority;
             $task->user_id = auth()->user()->id;
+            $task->status = 'pending';
             $task->save();
 
             foreach ($request->collaborator as $value)
@@ -159,6 +161,7 @@ class ScrumController extends Controller
     {
         $users = Task::find($id)->users;
         $priorities = Priority::all();
-        return view('pages.scrum.index',compact('priorities','users'));
+        $childTasks = ChildTask::where('task_id',$id)->get();
+        return view('pages.scrum.index',compact('priorities','users','id','childTasks'));
     }
 }

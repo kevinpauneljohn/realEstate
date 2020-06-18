@@ -10,14 +10,13 @@ $(document).on('submit','#task-form',function(form){
         beforeSend: function(){
             $('.submit-task-btn').val('Saving ...').attr('disabled',true);
         },success: function(result){
-            console.log(result);
 
             if(result.success === true)
             {
-                let table = $('#contest-list').DataTable();
+                let table = $('#task-list').DataTable();
                 table.ajax.reload();
                 $('#task-form').trigger('reset');
-                $('#task-form #collaborator').val().change();
+                $('#task-form #collaborator').empty();
                 toastr.success(result.message);
 
                 $('#add-task-modal').modal('toggle');

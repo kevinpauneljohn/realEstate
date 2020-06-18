@@ -40,27 +40,29 @@
         <section class="col-lg-2 connectedSortable ui-sortable">
             <div class="card card-yellow">
                 <div class="card-header">
-                    <h3 class="card-title">New</h3>
+                    <h3 class="card-title">To Do</h3>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header ui-sortable-handle" style="cursor: move;">
-                    <h3 class="card-title">
-                        <i class="ion ion-clipboard mr-1"></i>
-                        To Do List
-                    </h3>
+            @foreach($childTasks as $childTask)
+                <div class="card">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                        <h3 class="card-title">
+                            <i class="ion ion-clipboard mr-1"></i>
+                            {{ucfirst($childTask->title)}}
+                        </h3>
 
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <p>{{substr(ucfirst($childTask->description), 0, 200)}} ... <a href="#">Read More</a></p>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <span class="text-muted">Assigned To: </span><span class="text-success">@if($childTask->assignee_id != null) {{\App\User::find($childTask->assignee_id)->fullname}} @endif</span>
+                    </div>
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer clearfix">
-
-                </div>
-            </div>
+            @endforeach
         </section>
         <section class="col-lg-2 connectedSortable ui-sortable">
             <div class="card card-primary">
@@ -93,6 +95,7 @@
         <div class="modal fade" id="add-task-modal">
             <form role="form" id="task-form">
                 @csrf
+                <input type="hidden" name="taskId" id="taskId" value="{{$id}}">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -123,9 +126,9 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
-                                    <div class="form-group user">
-                                        <label for="user">Collaborator</label><span class="required">*</span>
-                                        <select class="form-control select2" name="user" id="user" style="width: 100%">
+                                    <div class="form-group assignee">
+                                        <label for="assignee">Assign To</label><span class="required">*</span>
+                                        <select class="form-control select2" name="assignee" id="assignee" style="width: 100%">
                                             <option value=""> -- Select -- </option>
                                             @foreach($users as $user)
                                                 <option value="{{$user->id}}">{{$user->fullname}}</option>
@@ -166,10 +169,9 @@
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
     <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-    <script src="{{asset('js/contest.js')}}"></script>
+    <script src="{{asset('js/validation.js')}}"></script>
+    <script src="{{asset('js/childTask.js')}}"></script>
     <script src="{{asset('/vendor/jquery-ui/jquery-ui.min.js')}}"></script>
-    {{--        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>--}}
-    {{--        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--}}
     <script>
         $(function() {
 
