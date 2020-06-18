@@ -26,23 +26,27 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="contest-list" class="table table-bordered table-striped" role="grid">
+                <table id="task-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
+                        <th>Task #</th>
                         <th>Title</th>
                         <th>Description</th>
                         <th>Priority</th>
                         <th>Creator</th>
+                        <th>Date Created</th>
                         <th>Action</th>
                     </tr>
                     </thead>
 
                     <tfoot>
                     <tr>
+                        <th>Task #</th>
                         <th>Title</th>
                         <th>Description</th>
                         <th>Priority</th>
                         <th>Creator</th>
+                        <th>Date Created</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -111,57 +115,58 @@
         <!--end add new roles modal-->
     @endcan
 
-    @can('edit role')
-        <!--edit role modal-->
-        <div class="modal fade" id="edit-role-modal">
-            <form role="form" id="edit-role-form" class="form-submit">
+    @can('edit task')
+        <!--add new roles modal-->
+        <div class="modal fade" id="edit-task-modal">
+            <form role="form" id="edit-task-form">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" id="updateRoleId">
-                <div class="modal-dialog">
+                <input type="hidden" name="taskId" id="taskId">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update Role Name</h4>
+                            <h4 class="modal-title">Edit Task</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="modal-body">
-                                <div class="form-group edit_role">
-                                    <label for="edit_role">Role Name</label><span class="required">*</span>
-                                    <input type="text" name="edit_role" class="form-control" id="edit_role">
+                            <div class="form-group edit_title">
+                                <label for="edit_title">Title</label><span class="required">*</span>
+                                <input type="text" name="edit_title" id="edit_title" class="form-control">
+                            </div>
+                            <div class="form-group edit_description">
+                                <label for="edit_description">Description</label><span class="required">*</span>
+                                <textarea class="form-control" id="edit_description" name="edit_description"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group edit_priority">
+                                        <label for="edit_priority">Priority</label><span class="required">*</span>
+                                        <select class="form-control" name="edit_priority" id="edit_priority">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($priorities as $priority)
+                                                <option value="{{$priority->id}}">{{$priority->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="form-group edit_collaborator">
+                                        <label for="edit_collaborator">Collaborator</label><span class="required">*</span>
+                                        <select class="form-control select2" multiple="multiple" name="edit_collaborator[]" id="edit_collaborator" style="width: 100%">
+                                            <option value=""> -- Select -- </option>
+                                            @foreach($users as $user)
+                                                <option value="{{$user->id}}">{{$user->fullname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-        <!--end add terminal modal-->
-    @endcan
-
-    @can('delete role')
-        <!--delete terminal-->
-        <div class="modal fade" id="delete-role-modal">
-            <form role="form" id="delete-role-form" class="form-submit">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="deleteRoleId" id="deleteRoleId">
-                <div class="modal-dialog">
-                    <div class="modal-content bg-danger">
-                        <div class="modal-body">
-                            <p class="delete_role">Delete Role: <span class="delete-role-name"></span></p>
                         </div>
                         <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary submit-task-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -169,8 +174,9 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end delete terminal modal-->
+        <!--end add new roles modal-->
     @endcan
+
 @stop
 
 @section('css')
@@ -193,15 +199,17 @@
     <script src="{{asset('js/task.js')}}"></script>
     <script>
         $(function() {
-            $('#contest-list').DataTable({
+            $('#task-list').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('contest.list') !!}',
+                ajax: '{!! route('tasks.list') !!}',
                 columns: [
+                    { data: 'id', name: 'id'},
                     { data: 'name', name: 'name'},
                     { data: 'description', name: 'description'},
-                    { data: 'active', name: 'active'},
-                    { data: 'date_working', name: 'date_working'},
+                    { data: 'priority_id', name: 'priority_id'},
+                    { data: 'user_id', name: 'user_id'},
+                    { data: 'created_at', name: 'created_at'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 responsive:true,

@@ -59,24 +59,6 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
 
 $(document).ready(function(){
 
-    /*add user*/
-    // $('#user-form').submit(function(form){
-    //     form.preventDefault();
-    //
-    //     let data = $('#user-form').serialize();
-    //
-    //     submitform(
-    //         '/users',
-    //         'POST',
-    //         data,
-    //         'New User Successfully Added!',
-    //         false,
-    //         '',
-    //         true,
-    //     );
-    //     clear_errors('firstname','lastname','username','password','role');
-    // });
-
     /*edit user*/
     $('#edit-user-form').submit(function(form){
         form.preventDefault();
