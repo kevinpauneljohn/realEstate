@@ -19,6 +19,7 @@
 
 use App\Events\NotificationEvent;
 use App\User;
+use App\UserRankPoint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -159,9 +160,11 @@ Route::get('/test',function(){
 //            echo $user->username.' - '.($discounted_price / 100000).'<br/>';
 //        }
 //    }
-    $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
-
-    return $extra_points;
+//    $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
+//
+//    return auth()->user()->userRankPoint;
+    $total_points = UserRankPoint::where('user_id',auth()->user()->id);
+    return $total_points->first()->sales_points + $total_points->first()->extra_points;
 
 })->middleware(['auth']);
 

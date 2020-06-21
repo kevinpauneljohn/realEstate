@@ -9,6 +9,7 @@ use App\Project;
 use App\Sales;
 use App\Threshold;
 use App\User;
+use App\UserRankPoint;
 
 class SalesRepository
 {
@@ -313,6 +314,18 @@ class SalesRepository
             $total_sales = $total_sales + $difference;
         }
         return $total_sales;
+    }
+
+    /**
+     * @since June 06, 2020
+     * @author john kevin paunel
+     * get the current user Total Points
+     * @return int
+     * */
+    public function getCurrentUserTotalPoints()
+    {
+        $total_points = UserRankPoint::where('user_id',auth()->user()->id);
+        return $total_points->first()->sales_points + $total_points->first()->extra_points;
     }
 
 }

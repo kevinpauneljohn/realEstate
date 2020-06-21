@@ -149,7 +149,8 @@ class SalesController extends Controller
                 {
                     //add additional points based on sales price
                     $plusPoint = ($request->total_contract_price - $request->discount)/100000;
-                    $points = auth()->user()->userRankPoint->points + $plusPoint;
+                    //$points = auth()->user()->userRankPoint->points + $plusPoint;
+                    $points = auth()->user()->userRankPoint->sales_points + $plusPoint;
 
                     ///check if the user has extra points
                     $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
@@ -521,7 +522,10 @@ class SalesController extends Controller
             {
                 //update the user ranking and points
                 $total_points = $this->salesRepository->getTotalSales(auth()->user()->id) / 100000;
-                event(new UserRankPointsEvent(auth()->user(),$total_points));
+
+                ///check if the user has extra points
+                $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
+                event(new UserRankPointsEvent(auth()->user(),$total_points,$extra_points));
                 return response()->json(['success' => true,'message' => 'Sales successfully deleted']);
             }
         }
