@@ -32,4 +32,10 @@ class ChildTaskController extends Controller
         }
         return response()->json($validation->errors());
     }
+
+    public function show($id)
+    {
+        $childTask = ChildTask::find($id);
+        return $childTask;
+    }
 }

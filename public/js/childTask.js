@@ -32,3 +32,21 @@ $(document).on('submit','#task-form',function(form){
     });
     clear_errors('title','description','priority','assignee');
 });
+
+
+$(document).on('click','.read-more',function(){
+    let id = this.id;
+    // console.log(id);
+
+    $.ajax({
+        'url' : '/child-tasks/'+id,
+        'type' : 'GET',
+        beforeSend: function(){
+
+        },success: function(result){
+            console.log(result);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+});

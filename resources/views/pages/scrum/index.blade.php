@@ -55,7 +55,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <p>{{substr(ucfirst($childTask->description), 0, 200)}} ... <a href="#">Read More</a></p>
+                        <p>{{substr(ucfirst($childTask->description), 0, 150)}} ... <a href="#" id="{{$childTask->id}}" class="read-more" data-toggle="modal" data-target="#read-more-modal">Read More</a></p>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
@@ -89,6 +89,31 @@
 
         </section>
     </div>
+
+    @can('view task')
+        <!--add new roles modal-->
+        <div class="modal fade" id="read-more-modal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add New Task</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+        </div>
+        <!--end add new roles modal-->
+    @endcan
 
     @can('add task')
         <!--add new roles modal-->
