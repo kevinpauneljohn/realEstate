@@ -45,13 +45,17 @@
             </div>
 
             @foreach($childTasks as $childTask)
-                <div class="card">
+                <div class="card collapsed-card">
                     <div class="card-header ui-sortable-handle" style="cursor: move;">
                         <h3 class="card-title">
                             <i class="ion ion-clipboard mr-1"></i>
                             {{ucfirst($childTask->title)}}
                         </h3>
-
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-default btn-xs" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -96,12 +100,35 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New Task</h4>
+                            <h4 class="modal-title"></h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <p class="description"></p>
+                                </div>
+                                <div class="col-lg-4" style="background-color: #f5f5f5;">
+                                    <div class="form-group">
+                                        <label>Date Created: </label>
+                                        <span class="date-created"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Created By: </label>
+                                        <span class="created-by text-success"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="assigned_to">Assigned To: </label>
+                                        <span class="user-name text-primary"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="assigned_to">Deadline: </label>
+                                        <span class="deadline"></span>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="modal-footer justify-content-between">

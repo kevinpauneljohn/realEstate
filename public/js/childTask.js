@@ -45,6 +45,12 @@ $(document).on('click','.read-more',function(){
 
         },success: function(result){
             console.log(result);
+
+            $('#read-more-modal .modal-title').text(result.title);
+            $('#read-more-modal .modal-body .description').text(result.description);
+            $('#read-more-modal .user-name').text(result.assignee_id);
+            $('#read-more-modal .created-by').text(result.user_id);
+            $('#read-more-modal .date-created').text(result.created_at);
         },error: function(xhr, status, error){
             console.log(xhr);
         }

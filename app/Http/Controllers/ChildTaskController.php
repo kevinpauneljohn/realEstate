@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ChildTask;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,6 +37,24 @@ class ChildTaskController extends Controller
     public function show($id)
     {
         $childTask = ChildTask::find($id);
-        return $childTask;
+        $data = collect($childTask);
+        $filtered = $data->map(function ($item, $key){
+            if($key === 'assignee_id')
+            {
+                $id = $item;
+                $item = User::find($id)->fullname;
+            }
+            if($key === 'user_id')
+            {
+                $id = $item;
+                $item = User::find($id)->fullname;
+            }
+            if($key === 'created_at')
+            {
+                $item = date('M d, Y', strtotime($item));
+            }
+            return $item;
+        });
+        return $filtered;
     }
 }
