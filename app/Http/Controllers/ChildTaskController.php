@@ -39,11 +39,6 @@ class ChildTaskController extends Controller
         $childTask = ChildTask::find($id);
         $data = collect($childTask);
         $filtered = $data->map(function ($item, $key){
-            if($key === 'assignee_id')
-            {
-                $id = $item;
-                $item = User::find($id)->fullname;
-            }
             if($key === 'user_id')
             {
                 $id = $item;

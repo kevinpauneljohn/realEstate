@@ -17,6 +17,8 @@
     {{-- Navbar right links --}}
 
     <ul class="navbar-nav ml-auto reminder-notification">
+
+        @if(!auth()->user()->hasAnyRole('architect|client'))
         @role('super admin')
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
@@ -165,6 +167,8 @@
             </div>
         </li>
         {{-- Custom right links --}}
+
+        @endif
         @yield('content_top_nav_right')
 
         {{-- Configured right links --}}

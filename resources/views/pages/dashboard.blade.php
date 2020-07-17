@@ -8,6 +8,7 @@
 
 @section('content')
 
+    @if(!auth()->user()->hasAnyRole('architect|client'))
     <div class="row">
         <div class="col-lg-8">
             <div class="row">
@@ -143,21 +144,21 @@
                 <div class="modal-body">
                     <table class="table table-hover">
                         <thead>
-                            <tr>
-                                <th>Rank Name</th>
-                                <th>Points</th>
-                                <th>Description</th>
-                            </tr>
+                        <tr>
+                            <th>Rank Name</th>
+                            <th>Points</th>
+                            <th>Description</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach($ranks as $rank)
-                                <tr>
-                                    <td>{{ucfirst($rank->name)}}</td>
-                                    <td><span class="text-primary">{{ucfirst($rank->start_points)}} pts</span> to
-                                        <span class="text-primary">{{ucfirst($rank->end_points)}} pts</span></td>
-                                    <td>{{ucfirst(ucfirst($rank->description))}}</td>
-                                </tr>
-                            @endforeach
+                        @foreach($ranks as $rank)
+                            <tr>
+                                <td>{{ucfirst($rank->name)}}</td>
+                                <td><span class="text-primary">{{ucfirst($rank->start_points)}} pts</span> to
+                                    <span class="text-primary">{{ucfirst($rank->end_points)}} pts</span></td>
+                                <td>{{ucfirst(ucfirst($rank->description))}}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -170,6 +171,7 @@
         <!-- /.modal-dialog -->
     </div>
     <!--end rank lists modal-->
+    @endif
 @stop
 
 @section('css')

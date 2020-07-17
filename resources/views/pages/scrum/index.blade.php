@@ -110,22 +110,30 @@
                                 <div class="col-lg-8">
                                     <p class="description"></p>
                                 </div>
-                                <div class="col-lg-4" style="background-color: #f5f5f5;">
-                                    <div class="form-group">
-                                        <label>Date Created: </label>
-                                        <span class="date-created"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Created By: </label>
-                                        <span class="created-by text-success"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="assigned_to">Assigned To: </label>
-                                        <span class="user-name text-primary"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="assigned_to">Deadline: </label>
-                                        <span class="deadline"></span>
+                                <div class="col-lg-4">
+                                    <div class="card card-default">
+                                        <div class="card-body box-profile">
+                                            <ul class="list-group list-group-unbordered mb-3">
+                                                <li class="list-group-item">
+                                                    <b>Date Created</b> <a class="float-right date-created"></a>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <b>Created By</b> <a class="float-right created-by"></a>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <b>Assigned To</b> <a href="#" class="float-right user-name"></a>
+                                                    <select class="float-right user-name">
+                                                        <option value=""> -- Select -- </option>
+                                                        @foreach($users as $user)
+                                                            <option value="{{$user->id}}">{{$user->fullname}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <b>Due Date</b> <a class="float-right deadline"></a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

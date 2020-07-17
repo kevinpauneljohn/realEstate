@@ -1,27 +1,31 @@
 <aside class="control-sidebar control-sidebar-{{config('adminlte.right_sidebar_theme')}}">
     @yield('right-sidebar')
-    <div class="p-3 control-sidebar-content">
-        <h5>Quick Tools</h5>
-        <hr class="mb-2">
-        <div class="mb-1">
-            <a href="#" data-toggle="modal" data-target="#canned-message"><i class="far fa-comment-dots text-success"></i>&nbsp; Canned Messages</a>
-        </div>
-        <div class="mb-1">
-            <a href="#" data-toggle="modal" data-target="#sample-computation-modal"><i class="fas fa-file-alt text-success"></i> &nbsp;Sample Computation</a>
-        </div>
-        <div class="mb-1">
-            <a href="#" class="calculator-template-btn" data-toggle="modal" data-target="#calculator-modal"><i class="fas fa-calculator text-success"></i> &nbsp;Mortgage Calculator</a>
-        </div>
-        <div class="mb-1">
-            <a href="#" class="calculator-template-btn" data-toggle="modal" data-target="#requirements-modal"><i class="far fa-file-archive text-success"></i> &nbsp;Requirements</a>
-        </div>
-        @can('view contacts')
+    @if(!auth()->user()->hasAnyRole('architect|client'))
+        <div class="p-3 control-sidebar-content">
+            <h5>Quick Tools</h5>
+            <hr class="mb-2">
             <div class="mb-1">
-                <a href="#" class="contacts-tools-btn" data-toggle="modal" data-target="#view-contact-list-tools"><i class="far fa-address-book text-success"></i> &nbsp;Contact List</a>
+                <a href="#" data-toggle="modal" data-target="#canned-message"><i class="far fa-comment-dots text-success"></i>&nbsp; Canned Messages</a>
             </div>
-        @endcan
-    </div>
+            <div class="mb-1">
+                <a href="#" data-toggle="modal" data-target="#sample-computation-modal"><i class="fas fa-file-alt text-success"></i> &nbsp;Sample Computation</a>
+            </div>
+            <div class="mb-1">
+                <a href="#" class="calculator-template-btn" data-toggle="modal" data-target="#calculator-modal"><i class="fas fa-calculator text-success"></i> &nbsp;Mortgage Calculator</a>
+            </div>
+            <div class="mb-1">
+                <a href="#" class="calculator-template-btn" data-toggle="modal" data-target="#requirements-modal"><i class="far fa-file-archive text-success"></i> &nbsp;Requirements</a>
+            </div>
+            @can('view contacts')
+                <div class="mb-1">
+                    <a href="#" class="contacts-tools-btn" data-toggle="modal" data-target="#view-contact-list-tools"><i class="far fa-address-book text-success"></i> &nbsp;Contact List</a>
+                </div>
+            @endcan
+        </div>
+    @endif
 </aside>
+
+@if(!auth()->user()->hasAnyRole('architect|client'))
 
 @can('view contacts')
     <!--add new roles modal-->
@@ -202,3 +206,5 @@
     <!-- /.modal-dialog -->
 </div>
 <!--end calculator modal-->
+
+@endif

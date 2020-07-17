@@ -259,7 +259,7 @@ class UserController extends Controller
                 //event(new CreateNetworkEvent($user->id));
 
                 //set the user rank based on his points
-                event(new UserRankPointsEvent($user,0));
+                event(new UserRankPointsEvent($user,0,0));
 
                 //send initial 500 dream coins on the user's dream wallet
                 $this->walletRepository->setMoney(
