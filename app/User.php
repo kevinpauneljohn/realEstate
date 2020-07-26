@@ -108,6 +108,10 @@ class User extends Authenticatable
     {
         return auth()->user()->username;
     }
+    public function adminlte_profile_url()
+    {
+        return '/dashboard';
+    }
 
     public function notifications()
     {

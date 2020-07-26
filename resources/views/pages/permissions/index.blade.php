@@ -127,7 +127,7 @@
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">--}}
     <style type="text/css">
         .delete_role{
             font-size: 20px;
@@ -137,7 +137,7 @@
 
 @section('js')
     @can('view permission')
-        <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+{{--        <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>--}}
         <script src="{{asset('js/permission.js')}}"></script>
         <script>
             $(function() {

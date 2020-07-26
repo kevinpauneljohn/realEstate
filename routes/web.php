@@ -163,8 +163,7 @@ Route::get('/test',function(){
 //    $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
 //
 //    return auth()->user()->userRankPoint;
-    $total_points = UserRankPoint::where('user_id',auth()->user()->id);
-    return $total_points->first()->sales_points + $total_points->first()->extra_points;
+    return User::role('client')->get();
 
 })->middleware(['auth']);
 
@@ -297,4 +296,8 @@ Route::get('/tasks/overview/{id}','ScrumController@overview')->name('tasks.overv
 
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);
+
+Route::get('/clients','ClientController@index')->name('client.index')->middleware(['auth','permission:view client']);
+Route::post('/clients','ClientController@store')->name('client.store')->middleware(['auth','permission:add client']);
+Route::get('/clients-list','ClientController@client_list')->name('client.list')->middleware(['auth','permission:view client']);
 

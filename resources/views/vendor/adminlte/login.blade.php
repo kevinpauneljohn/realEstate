@@ -11,6 +11,9 @@
         .errors{
             text-align:center;
         }
+        .spinner{
+            display:none;
+        }
     </style>
     @yield('css')
 @stop

@@ -1,7 +1,5 @@
 <?php
 
-use App\Filters\RoleMenuFilter;
-
 return [
 
     /*
@@ -49,7 +47,7 @@ return [
 
     'logo' => '<b>Dream Home</b> Seller',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image-xl',
+    'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'AdminLTE',
@@ -71,6 +69,7 @@ return [
     'usermenu_header_class' => '',
     'usermenu_image' => true,
     'usermenu_desc' => true,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -92,36 +91,45 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Extra Classes
+    | Authentication Views Classes
+    |--------------------------------------------------------------------------
+    |
+    | Here you can change the look and behavior of the authentication views.
+    |
+    | For more detailed instructions you can look here:
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#661-authentication-views-classes
+    |
+    */
+
+    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_header' => '',
+    'classes_auth_body' => '',
+    'classes_auth_footer' => '',
+    'classes_auth_icon' => '',
+    'classes_auth_btn' => 'btn-flat btn-primary',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Panel Classes
     |--------------------------------------------------------------------------
     |
     | Here you can change the look and behavior of the admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#66-classes
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#662-admin-panel-classes
     |
     */
-
-//    'classes_body' => 'sidebar-dark-primary',
-//    'classes_brand' => 'navbar-primary',
-//    'classes_brand_text' => 'navbar-primary',
-//    'classes_content_header' => 'container-fluid',
-//    'classes_content' => 'container-fluid',
-//    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-//    'classes_sidebar_nav' => 'sidebar-dark-primary',
-//    'classes_topnav' => 'navbar-dark navbar-primary',
-//    'classes_topnav_nav' => 'navbar-expand-md',
-//    'classes_topnav_container' => 'container',
 
     'classes_body' => '',
     'classes_brand' => '',
     'classes_brand_text' => '',
+    'classes_content_wrapper' => '',
     'classes_content_header' => 'container-fluid',
     'classes_content' => 'container-fluid',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
-    'classes_topnav_nav' => 'navbar-expand-md',
+    'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
     /*
@@ -207,6 +215,8 @@ return [
     */
 
     'enabled_laravel_mix' => false,
+    'laravel_mix_css_path' => 'css/app.css',
+    'laravel_mix_js_path' => 'js/app.js',
 
     /*
     |--------------------------------------------------------------------------
@@ -295,6 +305,12 @@ return [
             'route'   => 'tasks.index',
         ],
         [
+            'text'    => 'Clients',
+            'icon'    => 'fas fa-user-tag',
+            'can'     => 'view client',
+            'route'   => 'client.index',
+        ],
+        [
             'text'    => 'Settings',
             'icon'    => 'fas fa-cogs',
             'can'     => 'view settings',
@@ -369,12 +385,10 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\SearchFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
-        App\Filters\RoleMenuFilter::class,
     ],
 
     /*
@@ -390,8 +404,7 @@ return [
     */
 
     'plugins' => [
-        [
-            'name' => 'Datatables',
+        'Datatables' => [
             'active' => true,
             'files' => [
                 [
@@ -411,8 +424,7 @@ return [
                 ],
             ],
         ],
-        [
-            'name' => 'Select2',
+        'Select2' => [
             'active' => true,
             'files' => [
                 [
@@ -427,9 +439,8 @@ return [
                 ],
             ],
         ],
-        [
-            'name' => 'Chartjs',
-            'active' => false,
+        'Chartjs' => [
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -438,19 +449,37 @@ return [
                 ],
             ],
         ],
-        [
-            'name' => 'Sweetalert2',
-            'active' => false,
+        'Sweetalert2' => [
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
                 ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/sweetalert2/sweetalert2.min.js',
+                ],
             ],
         ],
-        [
-            'name' => 'Toastr',
+        'pusher' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://js.pusher.com/6.0/pusher.min.js',
+                ],
+            ],
+        ],
+        'Toastr' => [
             'active' => true,
             'files' => [
                 [
@@ -465,8 +494,27 @@ return [
                 ],
             ],
         ],
-        [
-            'name' => 'Pace',
+        'Moment' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+            ],
+        ],
+        'rightSideBar' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/right-sidebar.js',
+                ],
+            ],
+        ],
+        'Pace' => [
             'active' => false,
             'files' => [
                 [
@@ -481,73 +529,5 @@ return [
                 ],
             ],
         ],
-        [
-            'name' => 'Moment',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => 'vendor/moment/moment.min.js',
-                ],
-            ],
-        ],
-        [
-            'name' => 'sweetAlert',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'css',
-                    'asset' => true,
-                    'location' => 'vendor/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css',
-                ],
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => 'vendor/sweetalert2/sweetalert2.min.js',
-                ],
-            ],
-        ],
-        [
-            'name' => 'rightSideBar',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => 'js/right-sidebar.js',
-                ],
-            ],
-        ],
-//        [
-//            'name' => 'responsive_voice',
-//            'active' => true,
-//            'files' => [
-//                [
-//                    'type' => 'js',
-//                    'asset' => false,
-//                    'location' => 'https://code.responsivevoice.org/responsivevoice.js?key=uC3LLI3C',
-//                ],
-//            ],
-//        ],
-        [
-            'name' => 'pusher',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => 'https://js.pusher.com/6.0/pusher.min.js',
-                ],
-//                [
-//                    'type' => 'js',
-//                    'asset' => true,
-//                    'location' => 'js/notification.js',
-//                ],
-            ],
-        ],
-
-
-
     ],
 ];
