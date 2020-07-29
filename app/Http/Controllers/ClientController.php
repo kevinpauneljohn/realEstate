@@ -36,10 +36,7 @@ class ClientController extends Controller
 
             if($user->save())
             {
-                ///create access token for external use of data or API for mobile app
-                //$accessToken = User::find($user->id);
-                //$accessToken->api_token = $user->createToken('authToken')->accessToken;
-//                $accessToken->save();
+                $user->createToken('authToken')->accessToken;
 
                 return response()->json(['success' => true,'message' => 'Client successfully added!']);
             }
