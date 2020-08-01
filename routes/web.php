@@ -300,4 +300,6 @@ Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.sho
 Route::get('/clients','ClientController@index')->name('client.index')->middleware(['auth','permission:view client']);
 Route::post('/clients','ClientController@store')->name('client.store')->middleware(['auth','permission:add client']);
 Route::get('/clients-list','ClientController@client_list')->name('client.list')->middleware(['auth','permission:view client']);
+Route::get('/client/{client}','ClientController@show')->name('client.show')->middleware(['auth','permission:view client']);
+
 

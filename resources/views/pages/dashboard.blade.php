@@ -172,6 +172,11 @@
     </div>
     <!--end rank lists modal-->
     @endif
+
+    @if(auth()->user()->hasRole('architect'))
+        architect dashboard
+    @endif
+
 @stop
 
 @section('css')

@@ -57,7 +57,7 @@ class ClientController extends Controller
                 $action = "";
                 if(auth()->user()->can('view client'))
                 {
-                    $action .= '<a href="'.route('users.profile',['user' => $client->id]).'" class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i></a>';
+                    $action .= '<a href="'.route('client.show',['client' => $client->id]).'" class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i></a>';
                 }
                 if(auth()->user()->can('edit client'))
                 {
@@ -71,5 +71,13 @@ class ClientController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+
+    public function show($id)
+    {
+        return view('pages.clients.profile')->with([
+            'client'    => User::find($id)
+        ]);
     }
 }
