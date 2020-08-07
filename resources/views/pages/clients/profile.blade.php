@@ -67,7 +67,7 @@
 
                     <div class="container">
                                 @can('add checklist')
-                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-client-modal"  style="margin-top:10px;">Add Check List</button>
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-checklist-modal"  style="margin-top:10px;">Add Check List</button>
                                 @endcan
                                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4"  style="margin-top:5px;">
                                     <table id="client-list" class="table table-hover" role="grid">
@@ -99,10 +99,12 @@
     </div>
 
     @can('add checklist')
-        <!--add contacts modal-->
-        <div class="modal fade" id="add-client-modal">
-            <form role="form" id="client-form" class="form-submit">
+        <!--add checklist modal-->
+        <div class="modal fade" id="add-checklist-modal">
+            <form role="form" id="checklist-form" class="form-submit">
                 @csrf
+                <input type="hidden" name="client" value="{{$client->id}}">
+                <input type="hidden" name="architect" value="{{auth()->user()->id}}">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -127,7 +129,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary submit-contact-btn" value="Save">
+                            <input type="submit" class="btn btn-primary submit-checklist-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -135,7 +137,7 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end contacts modal-->
+        <!--end checklist modal-->
     @endcan
 
 @stop
@@ -162,6 +164,7 @@
 @section('js')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/validation.js')}}"></script>
+        <script src="{{asset('js/checklist.js')}}"></script>
         <script src="{{asset('vendor/moment/moment.min.js')}}"></script>
         <script src="{{asset('vendor/daterangepicker/daterangepicker.js')}}"></script>
         <script src="{{asset('vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script><!-- Summernote -->

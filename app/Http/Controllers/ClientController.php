@@ -80,4 +80,5 @@ class ClientController extends Controller
             'client'    => User::find($id)
         ]);
     }
+
 }
