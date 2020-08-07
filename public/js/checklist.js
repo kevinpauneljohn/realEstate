@@ -15,6 +15,10 @@ $(document).on('submit','#checklist-form',function (form) {
             if(result.success === true)
             {
                 toastr.success(result.message);
+
+                var table = $('#client-list').DataTable();
+                table.ajax.reload();
+
                 $('#checklist-form').trigger('reset');
                 $('#add-checklist-modal').modal('toggle');
             }

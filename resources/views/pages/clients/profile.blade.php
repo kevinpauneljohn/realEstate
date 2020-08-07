@@ -73,6 +73,7 @@
                                     <table id="client-list" class="table table-hover" role="grid">
                                         <thead>
                                         <tr role="row">
+                                            <th>Title</th>
                                             <th>Description</th>
                                             <th>Deadline</th>
                                             <th>Action</th>
@@ -82,6 +83,7 @@
                                         <tfoot>
                                         <tr>
                                             <th>Description</th>
+                                            <th>Title</th>
                                             <th>Deadline</th>
                                             <th>Action</th>
                                         </tr>
@@ -176,31 +178,15 @@
         <script>
 
             $(function () {
-                $('#canned-category-list').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: '{!! route('canned.category.list') !!}',
-                    columns: [
-                        { data: 'name', name: 'name', orderable: false, searchable: false},
-                        { data: 'action', name: 'action', orderable: false, searchable: false}
-                    ],
-                    responsive:true,
-                    order:[0,'desc'],
-                    ordering: false,
-                    searching: false,
-                    paging: false,
-                    info:false
-                });
 
-                $('#canned-messages-list').DataTable({
+                $('#client-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('canned.message.list') !!}',
+                    ajax: '{!! route('checklist.client',['client' => $client->id]) !!}',
                     columns: [
                         { data: 'title', name: 'title'},
-                        { data: 'canned_categories_id', name: 'canned_categories_id'},
-                        { data: 'user_id', name: 'user_id'},
-                        { data: 'status', name: 'status',orderable: false,},
+                        { data: 'description', name: 'description'},
+                        { data: 'deadline', name: 'deadline'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

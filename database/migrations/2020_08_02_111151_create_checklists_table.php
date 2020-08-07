@@ -20,6 +20,7 @@ class CreateChecklistsTable extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('deadline')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
