@@ -18,6 +18,8 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'agent']);
         Role::create(['name' => 'manager']);
         Role::create(['name' => 'referral']);
+        Role::create(['name' => 'architect']);
+        Role::create(['name' => 'client']);
 
         Permission::create(['name' => 'add role']);
         Permission::create(['name' => 'view role']);
