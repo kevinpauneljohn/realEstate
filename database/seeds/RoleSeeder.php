@@ -115,5 +115,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view task']);
         Permission::create(['name' => 'edit task']);
         Permission::create(['name' => 'delete task']);
+
+        Permission::create(['name' => 'add client']);
+        Permission::create(['name' => 'view client']);
+        Permission::create(['name' => 'edit client']);
+        Permission::create(['name' => 'delete client']);
     }
 }

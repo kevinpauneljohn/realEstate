@@ -43,7 +43,7 @@
         <div class="card-header p-0 pt-1 border-bottom-0">
             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="project-description-tab" data-toggle="pill" href="#project-description" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Project Description</a>
+                    <a class="nav-link active" id="project-description-tab" data-toggle="pill" href="#project-description" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Overall Progress</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="progress-tab" data-toggle="pill" href="#progress" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Check List</a>

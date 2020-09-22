@@ -301,6 +301,8 @@ Route::get('/clients','ClientController@index')->name('client.index')->middlewar
 Route::post('/clients','ClientController@store')->name('client.store')->middleware(['auth','permission:add client']);
 Route::get('/clients-list','ClientController@client_list')->name('client.list')->middleware(['auth','permission:view client']);
 Route::get('/client/{client}','ClientController@show')->name('client.show')->middleware(['auth','permission:view client']);
+Route::get('/client-info/{client}','ClientController@edit')->name('client.edit')->middleware(['auth','permission:view client']);
+Route::put('/clients/{client}','ClientController@update')->name('client.update')->middleware(['auth','permission:edit client']);
 
 Route::post('/check-list','CheckListController@store')->name('checklist.store')->middleware(['auth','permission:add checklist']);
 Route::get('/check-list/{client}','CheckListController@check_list')->name('checklist.client')->middleware(['auth','permission:view checklist']);

@@ -142,38 +142,50 @@
         <!--end edit contacts modal-->
     @endcan
 
-    @can('edit contacts')
+    @can('edit client')
         <!--edit contacts modal-->
-        <div class="modal fade" id="edit-contacts-modal">
-            <form role="form" id="edit-contacts-form" class="form-submit">
+        <div class="modal fade" id="edit-client-modal">
+            <form role="form" id="edit-client-form" class="form-submit">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" id="updateContactId">
-                <div class="modal-dialog">
+                <input type="hidden" name="id" id="updateClientId">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update Contact Details</h4>
+                            <h4 class="modal-title">Update Client Details</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group edit_title">
-                                <label for="edit_title">Title</label><span class="required">*</span>
-                                <input type="text" name="edit_title" class="form-control" id="edit_title">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-4 edit_firstname">
+                                        <label for="edit_firstname">First Name</label>
+                                        <input type="text" name="edit_firstname" id="edit_firstname" class="form-control">
+                                    </div>
+                                    <div class="col-lg-4 edit_middlename">
+                                        <label for="edit_middlename">Middle Name</label>
+                                        <input type="text" name="edit_middlename" id="edit_middlename" class="form-control">
+                                    </div>
+                                    <div class="col-lg-4 edit_lastname">
+                                        <label for="edit_lastname">Last Name</label>
+                                        <input type="text" name="edit_lastname" id="edit_lastname" class="form-control">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group edit_contact_person">
-                                <label for="edit_contact_person">Contact Person</label><span class="required">*</span>
-                                <input type="text" name="edit_contact_person" class="form-control" id="edit_contact_person">
+                            <div class="form-group edit_address">
+                                <label for="edit_address">Address</label>
+                                <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
                             </div>
-                            <div class="form-group edit_contact_details">
-                                <label for="edit_contact_details">Contact Details</label>
-                                <textarea class="form-control" name="edit_contact_details" id="edit_contact_details" style="min-height: 150px;"></textarea>
+                            <div class="form-group edit_remarks">
+                                <label>Remarks</label>
+                                <textarea class="form-control" name="edit_remarks" id="edit_remarks"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary submit-edit-contact-btn" value="Save">
+                            <input type="submit" class="btn btn-primary submit-edit-client-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
