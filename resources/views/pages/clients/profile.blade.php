@@ -17,55 +17,84 @@
 @stop
 
 @section('content')
-    <div class="card card-widget widget-user">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-info">
-            <h3 class="widget-user-username">{{$client->fullname}}</h3>
-        </div>
-        <div class="widget-user-image">
-            <img class="img-circle elevation-2" src="{{asset('images/avatar.png')}}" alt="User Avatar">
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col-sm-4 border-right">
-                    <div class="description-block">
-                        <h5 class="description-header">Brentwoods Village</h5>
-                        <span class="description-text">Project</span>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card card-widget widget-user">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-info">
+                    <h3 class="widget-user-username">{{$client->fullname}}</h3>
+                </div>
+                <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="{{asset('images/avatar.png')}}" alt="User Avatar">
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">Brentwoods Village</h5>
+                                <span class="description-text">Project</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
                     </div>
-                    <!-- /.description-block -->
+                    <!-- /.row -->
                 </div>
             </div>
-            <!-- /.row -->
         </div>
-    </div>
 
-    <div class="card card-primary card-outline card-tabs">
-        <div class="card-header p-0 pt-1 border-bottom-0">
-            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="project-description-tab" data-toggle="pill" href="#project-description" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Overall Progress</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="progress-tab" data-toggle="pill" href="#progress" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Check List</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="files-tab" data-toggle="pill" href="#files" role="tab" aria-controls="files" aria-selected="false">Files</a>
-                </li>
-            </ul>
-        </div>
-        <div class="card-body">
-            <div class="tab-content" id="custom-tabs-two-tabContent">
-                <div class="tab-pane fade active show" id="project-description" role="tabpanel" aria-labelledby="project-description-tab">
-                    Project Description Here
+        <div class="col-lg-8">
+            <div class="card card-primary card-outline card-tabs">
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="project-description-tab" data-toggle="pill" href="#documentation" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Documentation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="progress-tab" data-toggle="pill" href="#progress" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Check List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="files-tab" data-toggle="pill" href="#files" role="tab" aria-controls="files" aria-selected="false">Files</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="tab-pane fade" id="progress" role="tabpanel" aria-labelledby="progress-tab">
+                <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-two-tabContent">
+                        <div class="tab-pane fade active show" id="documentation" role="tabpanel" aria-labelledby="project-description-tab">
+                            <div class="container">
+                                @can('add documentation')
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-documentation-modal"  style="margin-top:10px;">Add Documentation</button>
+                                @endcan
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4"  style="margin-top:5px;">
+                                    <table id="client-list" class="table table-hover" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th></th>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
 
-                    <h4>House Construction Check List</h4>
-                    <div class="progress">
-                        <div class="progress-bar" style="width:70%">70%</div>
-                    </div>
+                                        <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="progress" role="tabpanel" aria-labelledby="progress-tab">
 
-                    <div class="container">
+                            <h4>House Construction Check List</h4>
+                            <div class="progress">
+                                <div class="progress-bar" style="width:70%">70%</div>
+                            </div>
+
+                            <div class="container">
                                 @can('add checklist')
                                     <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-checklist-modal"  style="margin-top:10px;">Add Check List</button>
                                 @endcan
@@ -90,20 +119,24 @@
                                         </tfoot>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
+                            Files here
+                        </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
-                    Files here
-                </div>
+                <!-- /.card -->
             </div>
         </div>
-        <!-- /.card -->
     </div>
+
+
 
     @can('add checklist')
         <!--add checklist modal-->
         <div class="modal fade" id="add-checklist-modal">
-            <form role="form" id="checklist-form" class="form-submit">
+            <form role="form" id="checklist-form" class="form-submit" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="client" value="{{$client->id}}">
                 <input type="hidden" name="architect" value="{{auth()->user()->id}}">
@@ -142,6 +175,52 @@
         <!--end checklist modal-->
     @endcan
 
+    @can('add documentation')
+        <!--add checklist modal-->
+        <div class="modal fade" id="add-documentation-modal">
+            <form role="form" id="documentation-form" class="form-submit">
+                @csrf
+                <input type="hidden" name="client" value="{{$client->id}}">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Documentation File</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group label">
+                                <label for="label">Label</label>
+                                <input type="text" name="label" id="label" class="form-control">
+                            </div>
+                            <div class="form-group detail">
+                                <label for="detail">Details</label>
+                                <textarea class="form-control" name="detail" id="detail"></textarea>
+                            </div>
+                            <div class="form-group document">
+                                <label for="document">File</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input name="document" type="file" class="custom-file-input" id="document">
+                                        <label class="custom-file-label" for="document">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary submit-documentation-btn" value="Save">
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end checklist modal-->
+    @endcan
+
 @stop
 
 @section('css')
@@ -167,6 +246,7 @@
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/validation.js')}}"></script>
         <script src="{{asset('js/checklist.js')}}"></script>
+        <script src="{{asset('js/documentation.js')}}"></script>
         <script src="{{asset('vendor/moment/moment.min.js')}}"></script>
         <script src="{{asset('vendor/daterangepicker/daterangepicker.js')}}"></script>
         <script src="{{asset('vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script><!-- Summernote -->
@@ -175,6 +255,9 @@
         <!-- bootstrap datepicker -->
         <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
         <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
+        <!-- bs-custom-file-input -->
+        <script src="{{asset('/vendor/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+{{--        <script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>--}}
         <script>
 
             $(function () {
@@ -197,5 +280,7 @@
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             }).datepicker("setDate", new Date());
+
+            bsCustomFileInput.init();
         </script>
 @stop

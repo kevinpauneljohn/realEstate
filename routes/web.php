@@ -307,4 +307,6 @@ Route::put('/clients/{client}','ClientController@update')->name('client.update')
 Route::post('/check-list','CheckListController@store')->name('checklist.store')->middleware(['auth','permission:add checklist']);
 Route::get('/check-list/{client}','CheckListController@check_list')->name('checklist.client')->middleware(['auth','permission:view checklist']);
 
+Route::post('/documentation','DocumentationController@store')->name('documentation.store')->middleware(['auth','permission:add documentation']);
+
 

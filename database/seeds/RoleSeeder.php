@@ -120,5 +120,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view client']);
         Permission::create(['name' => 'edit client']);
         Permission::create(['name' => 'delete client']);
+
+        Permission::create(['name' => 'add documentation']);
+        Permission::create(['name' => 'view documentation']);
+        Permission::create(['name' => 'edit documentation']);
+        Permission::create(['name' => 'delete documentation']);
     }
 }

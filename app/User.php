@@ -162,4 +162,9 @@ class User extends Authenticatable
     {
         return ucfirst($value);
     }
+
+    public function documentations()
+    {
+        return $this->hasMany(Documentation::class);
+    }
 }
