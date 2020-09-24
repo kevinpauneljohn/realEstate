@@ -57,7 +57,7 @@ class DocumentationController extends Controller
         $documentations = Documentation::where('user_id',$id)->get();
         return DataTables::of($documentations)
             ->addColumn('image',function($document){
-                $image = '<img src="'.asset("images/".$document->filename).'" class="img-thumbnail" alt="'.$document->title.'">';
+                $image = '<img src="'.asset("images/".$document->filename).'" class="img-thumbnail" alt="'.$document->title.'" width="50">';
                 return $image;
             })
             ->addColumn('action', function ($client)

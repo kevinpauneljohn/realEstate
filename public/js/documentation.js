@@ -21,6 +21,16 @@ $(document).on('submit','#documentation-form',function(form){
         success: (data) => {
             console.log(data);
 
+            if(data.success === true)
+            {
+                toastr.success(data.message);
+                $('#documentation-form').trigger('reset');
+                $('#add-documentation-modal').modal('toggle');
+
+                let table = $('#documentation-list').DataTable();
+                table.ajax.reload();
+            }
+
             $.each(data, function (key, value) {
                 let element = $('.'+key);
 
