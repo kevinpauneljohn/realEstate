@@ -65,12 +65,12 @@
                                     <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-documentation-modal"  style="margin-top:10px;">Add Documentation</button>
                                 @endcan
                                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4"  style="margin-top:5px;">
-                                    <table id="client-list" class="table table-hover" role="grid">
+                                    <table id="documentation-list" class="table table-hover" role="grid">
                                         <thead>
                                         <tr role="row">
                                             <th></th>
-                                            <th>Title</th>
-                                            <th>Description</th>
+                                            <th>Label</th>
+                                            <th>Details</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -78,9 +78,9 @@
                                         <tfoot>
                                         <tr>
                                             <th></th>
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Action</th>
+                                            <th>Label</th>
+                                            <th>Details</th>
+                                            <th width="20%">Action</th>
                                         </tr>
                                         </tfoot>
                                     </table>
@@ -274,6 +274,20 @@
                     ],
                     responsive:true,
                 });
+            });
+
+            $('#documentation-list').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('document.list',['id' => $client->id]) !!}',
+                columns: [
+                    { data: 'image', name: 'image'},
+                    { data: 'title', name: 'title'},
+                    { data: 'description', name: 'description'},
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ],
+                responsive:true,
+                order:[0,'asc']
             });
 
             $('#reminder_date').datepicker({
