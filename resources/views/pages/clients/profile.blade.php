@@ -18,7 +18,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="card card-widget widget-user">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-info">
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <div class="col-lg-8">
+        <div class="col-lg-9">
             <div class="card card-primary card-outline card-tabs">
                 <div class="card-header p-0 pt-1 border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
