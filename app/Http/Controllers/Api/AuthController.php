@@ -19,22 +19,21 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         $request->validate([
-            'username'      => 'required',
+            'email'      => 'required',
             'password'      => 'required',
         ]);
 
-        $credential = $request->only('username','password');
 
-        if(Auth::attempt($credential))
+        if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password]))
         {
             return response()->json([
-                'user'  => \auth()->user(),
+                'user' => \auth()->user(),
                 'roles' => \auth()->user()->getRoleNames(),
-                'access_token'  => \auth()->user()->api_token,
-                'success'   => true,
+                'success' => true,
             ]);
+        }else{
+            return response()->json(['message' => 'invalid credentials', 'success' => false]);
         }
 
-        return response()->json(['message' => 'Invalid Credentials','success' => false]);
     }
 }
