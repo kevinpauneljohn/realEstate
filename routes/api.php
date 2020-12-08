@@ -17,4 +17,4 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-Route::post('/login','Api\AuthController@authenticate')->middleware(['auth:api','role:client']);
+Route::post('/login','Api\AuthController@authenticate')->middleware(['auth:api','role:client','cors:api']);
