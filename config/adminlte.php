@@ -311,6 +311,12 @@ return [
             'route'   => 'client.index',
         ],
         [
+            'text'    => 'Builders',
+            'icon'    => 'fas fa-user-cog',
+            'can'     => 'view builder',
+            'route'   => 'builder.index',
+        ],
+        [
             'text'    => 'Settings',
             'icon'    => 'fas fa-cogs',
             'can'     => 'view settings',

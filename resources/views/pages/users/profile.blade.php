@@ -61,172 +61,273 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-body">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#sales">Sales</a>
-                            </li>
-                            @if(auth()->user()->can('view down lines'))
+                        @if($user->hasRole('client'))
+                        <!-- Client View -->
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#down-line">Down Lines</a>
+                                    <a class="nav-link active" data-toggle="tab" href="#projects">Projects</a>
                                 </li>
-                            @endif
-                            @if(auth()->user()->can('view down line leads'))
+
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#leads">Leads</a>
+                                    <a class="nav-link" data-toggle="tab" href="#payment">Payments</a>
                                 </li>
-                            @endif
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#commission">Commissions</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div id="sales" class="container tab-pane active"><br>
-                                <table id="sales-list" class="table table-bordered table-striped" role="grid">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>Date Reserved</th>
-                                        <th>Full Name</th>
-                                        <th>Project</th>
-                                        <th>Model Unit</th>
-                                        <th>Total Contract Price</th>
-                                        <th>Discount</th>
-                                        <th>Financing</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </thead>
 
-                                    <tfoot>
-                                    <tr>
-                                        <th>Date Reserved</th>
-                                        <th>Full Name</th>
-                                        <th>Project</th>
-                                        <th>Model Unit</th>
-                                        <th>Total Contract Price</th>
-                                        <th>Discount</th>
-                                        <th>Financing</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <div id="down-line" class="container tab-pane fade"><br>
-                                <table id="down-lines-list" class="table table-bordered table-hover" role="grid">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>Full Name</th>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Contact Number</th>
-                                        <th>Role</th>
-                                    </tr>
-                                    </thead>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#files">Files</a>
+                                </li>
 
-                                    <tfoot>
-                                    <tr>
-                                        <th>Full Name</th>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Contact Number</th>
-                                        <th>Role</th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            @if(auth()->user()->can('view down line leads'))
-                                <div id="leads" class="container tab-pane fade"><br>
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-6 col-12">
-                                            <div class="info-box">
-                                                <span class="info-box-icon bg-info"><i class="fas fa-filter"></i></span>
 
-                                                <div class="info-box-content">
-                                                    <span class="info-box-text">Total Leads</span>
-                                                    <span class="info-box-number">{{$total_leads}}</span>
-                                                </div>
-                                                <!-- /.info-box-content -->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-6 col-12">
-                                            <div class="info-box">
-                                                <span class="info-box-icon bg-primary"><i class="fas fa-snowflake"></i></span>
-
-                                                <div class="info-box-content">
-                                                    <span class="info-box-text">Cold Leads</span>
-                                                    <span class="info-box-number">{{$cold_leads}}</span>
-                                                </div>
-                                                <!-- /.info-box-content -->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-6 col-12">
-                                            <div class="info-box">
-                                                <span class="info-box-icon bg-purple"><i class="fas fa-street-view"></i></span>
-
-                                                <div class="info-box-content">
-                                                    <span class="info-box-text">For Tripping</span>
-                                                    <span class="info-box-number">{{$tripping_leads}}</span>
-                                                </div>
-                                                <!-- /.info-box-content -->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-6 col-12">
-                                            <div class="info-box">
-                                                <span class="info-box-icon bg-success"><i class="fas fa-user-check"></i></span>
-
-                                                <div class="info-box-content">
-                                                    <span class="info-box-text">Reserved Leads</span>
-                                                    <span class="info-box-number">{{$reserved_leads}}</span>
-                                                </div>
-                                                <!-- /.info-box-content -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <table id="leads-list" class="table table-bordered table-hover" role="grid">
+                            </ul>
+                            <div class="tab-content">
+                                <div id="projects" class="container tab-pane active"><br>
+                                    <table id="project-list" class="table table-bordered table-striped" role="grid">
                                         <thead>
                                         <tr role="row">
-                                            <th>Date Inquired</th>
-                                            <th>Name</th>
-                                            <th>Source</th>
-                                            <th>Lead Status</th>
+                                            <th>Project Code</th>
+                                            <th>Date Stared</th>
+                                            <th>Description</th>
+                                            <th>Agent</th>
+                                            <th>Architect</th>
+                                            <th>Builder</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
 
                                         <tfoot>
                                         <tr>
-                                            <th>Date Inquired</th>
-                                            <th>Name</th>
-                                            <th>Source</th>
-                                            <th>Lead Status</th>
+                                            <th>Project Code</th>
+                                            <th>Date Stared</th>
+                                            <th>Description</th>
+                                            <th>Agent</th>
+                                            <th>Architect</th>
+                                            <th>Builder</th>
+                                            <th>Action</th>
                                         </tr>
                                         </tfoot>
                                     </table>
                                 </div>
-                            @endif
-                            <div id="commission" class="container tab-pane fade"><br>
-                                <button type="button" class="btn btn-primary btn-sm" style="margin:3px;" data-target="#add-commission-modal" data-toggle="modal" @if($rate_limit === null) disabled="disabled" @endif>Add Commission</button>
+                                <div id="payment" class="container tab-pane"><br>
+                                    <table id="payments-list" class="table table-bordered table-striped" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>Date Received</th>
+                                            <th>Amount</th>
+                                            <th>Details</th>
+                                            <th>Time</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
 
-                                <table id="commission-list" class="table table-bordered table-striped" role="grid">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>Date Assigned</th>
-                                        <th>Commission Rate</th>
-                                        <th>Project</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Date Received</th>
+                                            <th>Amount</th>
+                                            <th>Details</th>
+                                            <th>Time</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div id="files" class="container tab-pane fade"><br>
+                                    <table id="down-lines-list" class="table table-bordered table-hover" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>Full Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Contact Number</th>
+                                            <th>Role</th>
+                                        </tr>
+                                        </thead>
 
-                                    <tfoot>
-                                    <tr>
-                                        <th>Date Assigned</th>
-                                        <th>Commission Rate</th>
-                                        <th>Project</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Full Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Contact Number</th>
+                                            <th>Role</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                        <!-- /.tab-content -->
+                            <!-- /.tab-content -->
+                        <!-- end client view -->
+                        @else
+                        <!-- non client view-->
+                        <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#sales">Sales</a>
+                                </li>
+                                @if(auth()->user()->can('view down lines'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#down-line">Down Lines</a>
+                                    </li>
+                                @endif
+                                @if(auth()->user()->can('view down line leads'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#leads">Leads</a>
+                                    </li>
+                                @endif
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#commission">Commissions</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="sales" class="container tab-pane active"><br>
+                                    <table id="sales-list" class="table table-bordered table-striped" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>Date Reserved</th>
+                                            <th>Full Name</th>
+                                            <th>Project</th>
+                                            <th>Model Unit</th>
+                                            <th>Total Contract Price</th>
+                                            <th>Discount</th>
+                                            <th>Financing</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tfoot>
+                                        <tr>
+                                            <th>Date Reserved</th>
+                                            <th>Full Name</th>
+                                            <th>Project</th>
+                                            <th>Model Unit</th>
+                                            <th>Total Contract Price</th>
+                                            <th>Discount</th>
+                                            <th>Financing</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div id="down-line" class="container tab-pane fade"><br>
+                                    <table id="down-lines-list" class="table table-bordered table-hover" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>Full Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Contact Number</th>
+                                            <th>Role</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tfoot>
+                                        <tr>
+                                            <th>Full Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Contact Number</th>
+                                            <th>Role</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                @if(auth()->user()->can('view down line leads'))
+                                    <div id="leads" class="container tab-pane fade"><br>
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-6 col-12">
+                                                <div class="info-box">
+                                                    <span class="info-box-icon bg-info"><i class="fas fa-filter"></i></span>
+
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">Total Leads</span>
+                                                        <span class="info-box-number">{{$total_leads}}</span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-6 col-12">
+                                                <div class="info-box">
+                                                    <span class="info-box-icon bg-primary"><i class="fas fa-snowflake"></i></span>
+
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">Cold Leads</span>
+                                                        <span class="info-box-number">{{$cold_leads}}</span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-6 col-12">
+                                                <div class="info-box">
+                                                    <span class="info-box-icon bg-purple"><i class="fas fa-street-view"></i></span>
+
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">For Tripping</span>
+                                                        <span class="info-box-number">{{$tripping_leads}}</span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-6 col-12">
+                                                <div class="info-box">
+                                                    <span class="info-box-icon bg-success"><i class="fas fa-user-check"></i></span>
+
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">Reserved Leads</span>
+                                                        <span class="info-box-number">{{$reserved_leads}}</span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table id="leads-list" class="table table-bordered table-hover" role="grid">
+                                            <thead>
+                                            <tr role="row">
+                                                <th>Date Inquired</th>
+                                                <th>Name</th>
+                                                <th>Source</th>
+                                                <th>Lead Status</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tfoot>
+                                            <tr>
+                                                <th>Date Inquired</th>
+                                                <th>Name</th>
+                                                <th>Source</th>
+                                                <th>Lead Status</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                @endif
+                                <div id="commission" class="container tab-pane fade"><br>
+                                    <button type="button" class="btn btn-primary btn-sm" style="margin:3px;" data-target="#add-commission-modal" data-toggle="modal" @if($rate_limit === null) disabled="disabled" @endif>Add Commission</button>
+
+                                    <table id="commission-list" class="table table-bordered table-striped" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>Date Assigned</th>
+                                            <th>Commission Rate</th>
+                                            <th>Project</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tfoot>
+                                        <tr>
+                                            <th>Date Assigned</th>
+                                            <th>Commission Rate</th>
+                                            <th>Project</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.tab-content -->
+                        @endif
+
                     </div><!-- /.card-body -->
                 </div>
                 <!-- /.nav-tabs-custom -->

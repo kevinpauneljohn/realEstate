@@ -125,5 +125,11 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view documentation']);
         Permission::create(['name' => 'edit documentation']);
         Permission::create(['name' => 'delete documentation']);
+
+        //added Dec. 11, 2020 permission for builder features
+        Permission::create(['name' => 'add builder']);
+        Permission::create(['name' => 'view builder']);
+        Permission::create(['name' => 'edit builder']);
+        Permission::create(['name' => 'delete builder']);
     }
 }

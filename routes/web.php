@@ -310,4 +310,10 @@ Route::get('/check-list/{client}','CheckListController@check_list')->name('check
 Route::post('/documentation','DocumentationController@store')->name('documentation.store')->middleware(['auth','permission:add documentation']);
 Route::get('/documentation/{id}','DocumentationController@document_list')->name('document.list')->middleware(['auth','permission:view documentation']);
 
+/*builders*/
+Route::get('/builders','BuilderController@index')->name('builder.index')->middleware(['auth','permission:view builder']);
+Route::post('/builders','BuilderController@store')->name('builder.store')->middleware(['auth','permission:add builder']);
+Route::get('/builders-list','BuilderController@builderList')->name('builder.list')->middleware(['auth','permission:view builder']);
+/*end of builders*/
+
 
