@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Builder;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -22,6 +21,7 @@ class BuilderController extends Controller
 
         ]);
     }
+
 
     /**
      * Dec. 12, 2020
@@ -55,6 +55,55 @@ class BuilderController extends Controller
         return response()->json($validator->errors());
     }
 
+    /**
+     * December 13, 2020
+     * @author john kevin paunel
+     * get the builder model if the edit button was clicked
+     * @param int $id
+     * @return mixed
+    */
+    public function edit($id)
+    {
+        $builder = Builder::findOrFail($id);
+        return $builder;
+    }
+
+
+    /**
+     * Dec. 12, 2020
+     * @author john kevin paunel
+     * Update the builder's model
+     * @param Request $request
+     * @param int $id
+     * @return mixed
+     */
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'edit_name'      => 'required|max:150',
+        ],[
+            'edit_name.required' => ['Name field is required']
+        ]);
+
+        if($validator->passes())
+        {
+            $builder = Builder::findOrFail($id);
+            $builder->name = $request->edit_name;
+            $builder->address = $request->edit_address;
+            $builder->description = $request->edit_description;
+            $builder->remarks = $request->edit_remarks;
+
+            if($builder->isDirty())
+            {
+                $builder->save();
+                return response()->json(['success' => true,'message' => 'Builder successfully updated!']);
+            }else{
+                return response()->json(['success' => false, 'message' => 'No changes occurred']);
+            }
+        }
+        return response()->json($validator->errors());
+    }
+
 
     /**
      * Dec. 12, 2020
@@ -72,25 +121,34 @@ class BuilderController extends Controller
             ->addColumn('action', function ($builder)
             {
                 $action = "";
-                if(auth()->user()->can('view lead'))
+                if(auth()->user()->can('view builder'))
                 {
                     $action .= '<button class="btn btn-xs btn-info view-details" id="'.$builder->id.'" data-toggle="modal" data-target="#lead-details" title="View Details"><i class="fa fa-info-circle"></i> </button>';
                 }
-                if(auth()->user()->can('view lead'))
+                if(auth()->user()->can('edit builder'))
                 {
-                    $action .= '<a href="'.route("leads.show",["lead" => $builder->id]).'" class="btn btn-xs btn-success view-btn" id="'.$builder->id.'" title="Manage Leads"><i class="fas fa-folder-open"></i></a>';
-                }
-                if(auth()->user()->can('edit lead'))
-                {
-                    $action .= '<a href="'.route("leads.edit",["lead" => $builder->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$builder->id.'" title="Edit Leads"><i class="fa fa-edit"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn" id="'.$builder->id.'" data-toggle="modal" data-target="#edit-builder-modal" title="Edit Builder"><i class="fa fa-edit"></i></a>';
                 }
                 if(auth()->user()->can('delete lead'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$builder->id.'" title="Delete Leads"><i class="fa fa-trash"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-btn" id="'.$builder->id.'" title="Delete Builder"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    /**
+     * Dec. 13, 2020
+     * @author john kevin paunel
+     * soft delete the builder model
+     * @param int $id
+     * @return mixed
+    */
+    public function destroy($id)
+    {
+        Builder::findOrFail($id)->delete();
+        return response()->json(['success' => true]);
     }
 }

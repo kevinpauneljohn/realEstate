@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Projects')
+@section('title', 'Builders')
 
 @section('content_header')
     <div class="row mb-2">
@@ -86,7 +86,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group remarks">
                                         <label for="remarks">Remarks</label>
-                                        <textarea name="remarks" class="textarea" data-min-height="150" placeholder="Place some text here"></textarea>
+                                        <textarea name="remarks" id="remarks" class="form-control" data-min-height="150" placeholder="Place some text here"></textarea>
                                     </div>
                                 </div>
                                 {{--End of Second Column--}}
@@ -112,36 +112,47 @@
             <form role="form" id="edit-builder-form" class="form-submit">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="updateProjectId" id="updateProjectId">
-                <div class="modal-dialog">
+{{--                <input type="hidden" name="updateProjectId" id="updateProjectId">--}}
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update Project</h4>
+                            <h4 class="modal-title">Update Builder</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group edit_name">
-                                <label for="edit_name">Project Name</label>
-                                <input type="text" name="edit_name" class="form-control" id="edit_name">
+                            <div class="row">
+                                {{--First Column--}}
+                                <div class="col-lg-6">
+                                    <div class="form-group edit_name">
+                                        <label for="edit_name">Builder Name</label>
+                                        <input type="text" name="edit_name" class="form-control" id="edit_name">
+                                    </div>
+                                    <div class="form-group edit_address">
+                                        <label for="edit_address">Address</label>
+                                        <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
+                                    </div>
+                                    <div class="form-group edit_description">
+                                        <label for="edit_description">Description</label>
+                                        <textarea name="description" id="edit_description" class="form-control" placeholder="Place some text here"></textarea>
+                                    </div>
+                                </div>
+                                {{--End of First Column--}}
+                                {{--Second Column--}}
+                                <div class="col-lg-6">
+                                    <div class="form-group edit_remarks">
+                                        <label for="edit_remarks">Remarks</label>
+                                        <textarea name="edit_remarks" id="edit_remarks" class="form-control" data-min-height="150" placeholder="Place some text here"></textarea>
+                                    </div>
+                                </div>
+                                {{--End of Second Column--}}
                             </div>
-                            <div class="form-group edit_address">
-                                <label for="edit_address">Address</label>
-                                <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
-                            </div>
-                            <div class="form-group edit_remarks">
-                                <label for="edit_remarks">Remarks</label>
-                                <textarea name="edit_remarks" id="edit_remarks" class="form-control" placeholder="Place some text here"></textarea>
-                            </div>
-                            <div class="form-group edit_commission_rate">
-                                <label for="edit_commission_rate">Commission Rate</label>
-                                <input type="number" name="edit_commission_rate" class="form-control" id="edit_commission_rate" min="1">
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <input type="submit" class="btn btn-primary edit-form-btn" value="Save">
-                            </div>
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary builder-form-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -172,23 +183,23 @@
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
         <script>
-            $(function () {
-                // Summernote
-                $('.textarea').summernote({
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['fontname', ['fontname']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['insert', ['link']],
-                        ['height', ['height']],
-                        ['view', ['fullscreen']],
-                    ],
-                    // lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
-                    lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
-                });
-            })
+            // $(function () {
+            //     // Summernote
+            //     $('.textarea, .textarea2').summernote({
+            //         toolbar: [
+            //             ['style', ['style']],
+            //             ['font', ['bold', 'underline', 'clear']],
+            //             ['fontname', ['fontname']],
+            //             ['color', ['color']],
+            //             ['para', ['ul', 'ol', 'paragraph']],
+            //             ['insert', ['link']],
+            //             ['height', ['height']],
+            //             ['view', ['fullscreen']],
+            //         ],
+            //         // lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
+            //         lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
+            //     });
+            // })
             $(function() {
                 $('#builder-list').DataTable({
                     processing: true,
