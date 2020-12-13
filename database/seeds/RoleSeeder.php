@@ -131,5 +131,11 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view builder']);
         Permission::create(['name' => 'edit builder']);
         Permission::create(['name' => 'delete builder']);
+
+        //added Dec. 13, 2020 permission for dream home guide project module
+        Permission::create(['name' => 'add dhg project']);
+        Permission::create(['name' => 'view dhg project']);
+        Permission::create(['name' => 'edit dhg project']);
+        Permission::create(['name' => 'delete dhg project']);
     }
 }

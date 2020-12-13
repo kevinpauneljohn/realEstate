@@ -321,6 +321,12 @@ return [
                     'can'     => 'view builder',
                     'route'   => 'builder.index',
                 ],
+                [
+                    'text'    => 'Projects',
+                    'icon'    => 'fas fa-user-cog',
+                    'can'     => 'view builder',
+                    'route'   => 'dhg.project.index',
+                ],
             ],
         ],
         [

@@ -319,4 +319,10 @@ Route::put('/builders/{builder}','BuilderController@update')->name('builder.upda
 Route::delete('/builders/{builder}','BuilderController@destroy')->name('builder.destroy')->middleware(['auth','permission:delete builder']);
 /*end of builders*/
 
+/*dream home guide projects*/
+Route::get('/dhg-projects','ClientProjectController@index')->name('dhg.project.index')->middleware(['auth','permission:view dhg project']);
+Route::post('/dhg-projects','ClientProjectController@store')->name('dhg.project.store')->middleware(['auth','permission:add dhg project']);
+Route::get('/dhg-projects-list','ClientProjectController@dhgProjectList')->name('dhg.project.list')->middleware(['auth','permission:view dhg project']);
+/*end dream home guide projects*/
+
 

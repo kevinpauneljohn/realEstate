@@ -29,6 +29,7 @@ class CreateClientProjectsTable extends Migration
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('agent_id')->references('id')->on('users');
+            $table->foreign('architect_id')->references('id')->on('users');
         });
     }
 

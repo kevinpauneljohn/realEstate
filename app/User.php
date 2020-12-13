@@ -167,4 +167,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(Documentation::class);
     }
+
+    #1 dream home guide client can have many projects availed
+    public function clientProjects()
+    {
+        return $this->hasMany(ClientProjects::class,'user_id');
+    }
+
+    #this is another foreign key in the client_projects table which
+    #determines who created the project in the application
+    public function createdProjects()
+    {
+        return $this->hasMany(ClientProjects::class,'created_by');
+    }
+
+    #this is another foreign key in the client_projects table which
+    #determines who is the agent of the project created
+    public function projectAgent()
+    {
+        return $this->hasMany(ClientProjects::class,'agent_id');
+    }
 }
