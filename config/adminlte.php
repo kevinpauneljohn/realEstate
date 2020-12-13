@@ -305,16 +305,23 @@ return [
             'route'   => 'tasks.index',
         ],
         [
-            'text'    => 'Clients',
-            'icon'    => 'fas fa-user-tag',
-            'can'     => 'view client',
-            'route'   => 'client.index',
-        ],
-        [
-            'text'    => 'Builders',
-            'icon'    => 'fas fa-user-cog',
+            'text'    => 'Dream Home Guide',
+            'icon'    => 'fas fa-home',
             'can'     => 'view builder',
-            'route'   => 'builder.index',
+            'submenu'   => [
+                [
+                    'text'    => 'Clients',
+                    'icon'    => 'fas fa-user-tag',
+                    'can'     => 'view client',
+                    'route'   => 'client.index',
+                ],
+                [
+                    'text'    => 'Builders',
+                    'icon'    => 'fas fa-user-cog',
+                    'can'     => 'view builder',
+                    'route'   => 'builder.index',
+                ],
+            ],
         ],
         [
             'text'    => 'Settings',
