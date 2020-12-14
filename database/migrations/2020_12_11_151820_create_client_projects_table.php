@@ -19,6 +19,7 @@ class CreateClientProjectsTable extends Migration
             $table->uuid('user_id');//this will serve as the client ID
             $table->uuid('agent_id');//the agent who closed the deal
             $table->date('date_started');
+            $table->string('address')->nullable();
             $table->decimal('lot_price',28,2)->nullable();
             $table->decimal('house_price',28,2)->nullable();
             $table->text('description')->nullable();
