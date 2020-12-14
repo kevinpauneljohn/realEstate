@@ -65,7 +65,7 @@ $(document).on('click','.edit-btn', function(){
             $('#edit_agent').val(result.agent_id).change();
             $('#edit_address').val(result.address);
             $('#edit_lot_price').val(result.lot_price);
-            $('#edit_lot_price').val(result.lot_price);
+            $('#edit_house_price').val(result.house_price);
             $('#edit_description').summernote('code',result.description);
 
 
@@ -114,6 +114,47 @@ $(document).on('submit','#edit-project-form', function (form) {
         },error: function(xhr,status,error){
             console.log(xhr, status, error);
             $('.dhg-project-form-btn').attr('disabled',false).val('Save');
+        }
+    });
+});
+
+
+$(document).on('click','.delete-btn',function(){
+    let id = this.id;
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+
+            $.ajax({
+                'url' : '/dhg-projects/'+id,
+                'type' : 'DELETE',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {'_method':'DELETE'},
+                beforeSend: function(){
+
+                },success: function(output){
+                    if(output.success === true){
+                        $('#project-list').DataTable().ajax.reload();
+
+                        Swal.fire(
+                            'Deleted!',
+                            output.message,
+                            'success'
+                        );
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+
         }
     });
 });

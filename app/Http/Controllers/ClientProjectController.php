@@ -117,6 +117,12 @@ class ClientProjectController extends Controller
         return response()->json($validator->errors());
     }
 
+    public function destroy($id)
+    {
+        ClientProjects::findOrFail($id)->delete();
+        return response()->json(['success' => true, 'message' => 'Project successfully deleted!']);
+    }
+
 
     /**
      * Dec. 13, 2020
