@@ -9,6 +9,10 @@ class ClientProjects extends Model
 {
     use SoftDeletes;
 
+    protected $dates = [
+        'date_started'
+    ];
+
 
     #this will get the data of the client
     public function client()
@@ -28,6 +32,12 @@ class ClientProjects extends Model
         return $this->belongsTo(User::class,'agent_id');
     }
 
+    #this will get the data of the project architect
+    public function architect()
+    {
+        return $this->belongsTo(User::class,'architect_id');
+    }
+
     //because our architect_id column can accept null values
     //we will set the value automatically to null if there is no submitted value on our client_projects table
     public function setArchitectIdAttribute($value)
@@ -39,5 +49,10 @@ class ClientProjects extends Model
     public function getStatusAttribute($value)
     {
         return ucfirst($value);
+    }
+
+    public function builder()
+    {
+        return $this->belongsTo(Builder::class,'builder_id');
     }
 }

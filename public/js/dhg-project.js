@@ -27,6 +27,8 @@ $(document).on('submit','#add-project-form',function(form){
             {
                 $('#add-project-form').trigger('reset');
                 $('.textarea').summernote('reset');
+                $('#add-project-form .select2').val('').trigger('change');
+                $('.text-danger').remove();
                 toastr.success(result.message);
 
                 $('#project-list').DataTable().ajax.reload();

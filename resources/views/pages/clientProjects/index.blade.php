@@ -83,6 +83,15 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group architect">
+                                        <label for="architect">Architect</label>
+                                        <select class="select2" name="builder" id="architect" data-placeholder="Select an architect" style="width: 100%;">
+                                            <option></option>
+                                            @foreach($architects as $architect)
+                                                <option value="{{$architect->id}}">{{ucwords($architect->firstname.' '.$architect->lastname)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="form-group builder">
                                         <label for="builder">Builder</label>
                                         <select class="select2" name="builder" id="builder" data-placeholder="Select a builder" style="width: 100%;">
@@ -109,6 +118,14 @@
                                 {{--End of First Column--}}
                                 {{--Second Column--}}
                                 <div class="col-lg-6">
+                                    <div class="form-group lot_price">
+                                        <label for="lot_price">Lot Price</label>
+                                        <input type="number" class="form-control" name="lot_price" id="lot_price" step="any" min="0">
+                                    </div>
+                                    <div class="form-group house_price">
+                                        <label for="house_price">House Price</label>
+                                        <input type="number" class="form-control" name="house_price" id="house_price" step="any" min="0">
+                                    </div>
                                     <div class="form-group description">
                                         <label for="description">Description</label><span class="required">*</span>
                                         <textarea name="description" id="description" class="textarea" data-min-height="250" placeholder="Place some text here"></textarea>

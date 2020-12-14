@@ -19,9 +19,10 @@ class CreateClientProjectsTable extends Migration
             $table->uuid('user_id');//this will serve as the client ID
             $table->uuid('agent_id');//the agent who closed the deal
             $table->date('date_started');
+            $table->decimal('lot_price',28,2)->nullable();
+            $table->decimal('house_price',28,2)->nullable();
             $table->text('description')->nullable();
             $table->uuid('architect_id')->nullable();
-            $table->uuid('builder_id')->nullable();
             $table->string('status');
             $table->timestamps();
             $table->softDeletes();
@@ -30,6 +31,7 @@ class CreateClientProjectsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('agent_id')->references('id')->on('users');
             $table->foreign('architect_id')->references('id')->on('users');
+
         });
     }
 

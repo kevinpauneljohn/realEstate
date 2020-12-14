@@ -14,4 +14,10 @@ class Builder extends Model
     {
         $this->attributes['name'] = ucwords($value);
     }
+
+    #1 builder can have many dhg projects
+    public function clientProjects()
+    {
+        return $this->hasMany(ClientProjects::class,'builder_id');
+    }
 }

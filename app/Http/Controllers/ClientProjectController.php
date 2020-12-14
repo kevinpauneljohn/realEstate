@@ -22,7 +22,8 @@ class ClientProjectController extends Controller
         return view('pages.clientProjects.index')->with([
             'clients'    => User::role('client')->orderBy('firstname')->get(),
             'builders'   => Builder::all(),
-            'agents'     => $agents
+            'agents'     => $agents,
+            'architects'  => User::role('architect')->orderBy('firstname')->get()
         ]);
     }
 
@@ -38,6 +39,7 @@ class ClientProjectController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'client'        => 'required',
+            'agent'         => 'required',
             'address'       => 'required',
             'description'   => 'required'
         ]);
@@ -49,6 +51,8 @@ class ClientProjectController extends Controller
             $project->user_id = $request->client;
             $project->agent_id = $request->agent;
             $project->date_started = Carbon::now();
+            $project->lot_price = $request->lot_price;
+            $project->house_price = $request->house_price;
             $project->description = $request->description;
             $project->architect_id = "";
             $project->builder_id = $request->builder;
@@ -71,14 +75,31 @@ class ClientProjectController extends Controller
     {
         $dhg_projects = ClientProjects::all();
         return DataTables::of($dhg_projects)
+            ->editColumn('id', function($dhg_project){
+
+                $num_padded = sprintf("%05d", $dhg_project->id);
+                return '<a href="#">dhg-'.$num_padded.'</a>';
+            })
+            ->editColumn('date_started', function($dhg_project){
+                return $dhg_project->date_started->format('M d, Y');
+            })
             ->editColumn('created_by', function ($dhg_project){
                 return $dhg_project->creator->fullName;
             })
             ->editColumn('user_id', function ($dhg_project){
-                return $dhg_project->client->fullName;
+                return '<a href="#">'.$dhg_project->client->fullName.'</a>';
             })
             ->editColumn('agent_id', function ($dhg_project){
-                return $dhg_project->agent->fullName;
+                $agent = $dhg_project->agent;
+                return $agent ? $agent->fullName : "";
+            })
+            ->editColumn('architect_id', function ($dhg_project){
+                $architect = $dhg_project->architect;
+                return $architect ? $architect->fullName : '';
+            })
+            ->editColumn('builder_id', function ($dhg_project){
+                $builder = $dhg_project->builder;
+                return $builder ? $builder->name : '';
             })
             ->addColumn('action', function ($dhg_project)
             {
@@ -97,7 +118,7 @@ class ClientProjectController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['id','user_id','action'])
             ->make(true);
     }
 }

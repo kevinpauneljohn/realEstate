@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/js/dhg-project.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/pages/clientProjects/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Builder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Builder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/ClientProjects.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/ClientProjects.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientProjectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientProjectController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_11_151820_create_client_projects_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_11_151820_create_client_projects_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/RoleSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/RoleSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/dhg-project.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/dhg-project.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/clientProjects/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/clientProjects/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,8 +31,12 @@
             <file pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/public/js/leadNotes.js">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state>
+                  <state relative-caret-position="17">
                     <caret line="109" selection-start-line="109" selection-end-line="109" />
+                    <folding>
+                      <element signature="n#style#0;n#span#0;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#span#0;n#span#1;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
+                    </folding>
                   </state>
                 </provider>
               </entry>
@@ -69,8 +71,8 @@
             <file pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/routes/web.php">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="403">
-                    <caret line="324" column="81" selection-start-line="324" selection-start-column="81" selection-end-line="324" selection-end-column="97" />
+                  <state relative-caret-position="180">
+                    <caret line="113" column="32" selection-start-line="113" selection-start-column="13" selection-end-line="113" selection-end-column="32" />
                     <folding>
                       <element signature="e#7#389#0#PHP" expanded="true" />
                       <element signature="e#479#512#0#PHP" expanded="true" />
@@ -84,15 +86,6 @@
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="2210">
                     <caret line="130" column="56" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="56" />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/database/migrations/2020_12_11_151820_create_client_projects_table.php">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="256">
-                    <caret line="22" column="38" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="38" />
                   </state>
                 </provider>
               </entry>
@@ -115,21 +108,9 @@
     </window>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6592649">
+    <splitter split-orientation="horizontal" split-proportion="0.61897236">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Builder.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
-                  <caret line="11" column="64" selection-start-line="11" selection-start-column="64" selection-end-line="11" selection-end-column="64" />
-                  <folding>
-                    <element signature="e#23#62#0#PHP" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/config/adminlte.php">
               <provider selected="true" editor-type-id="text-editor">
@@ -142,17 +123,17 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/User.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="437">
-                  <caret line="177" column="58" selection-start-line="177" selection-start-column="58" selection-end-line="177" selection-end-column="58" />
+                <state relative-caret-position="454">
+                  <caret line="191" column="5" selection-start-line="191" selection-start-column="5" selection-end-line="191" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientProjectController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="165">
-                  <caret line="74" column="55" selection-start-line="74" selection-start-column="55" selection-end-line="74" selection-end-column="55" />
+                <state relative-caret-position="477">
+                  <caret line="120" column="39" selection-start-line="120" selection-start-column="39" selection-end-line="120" selection-end-column="39" />
                   <folding>
                     <element signature="e#40#56#0#PHP" expanded="true" />
                   </folding>
@@ -160,11 +141,41 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/Lead.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-255">
+                  <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/js/dhg-project.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="335">
-                  <caret line="31" column="16" lean-forward="true" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+                <state relative-caret-position="255">
+                  <caret line="30" column="31" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadController.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="119">
+                  <caret line="58" column="52" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="60" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/Builder.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="391">
+                  <caret line="23" selection-start-line="23" selection-end-line="23" />
+                  <folding>
+                    <element signature="e#23#62#0#PHP" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -176,7 +187,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PermissionController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1156">
+                <state relative-caret-position="-85">
                   <caret line="1" selection-start-column="5" selection-end-line="1" />
                 </state>
               </provider>
@@ -185,17 +196,17 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/js/builder.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="170">
+                <state relative-caret-position="374">
                   <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="46" selection-end-column="9" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/ClientProjects.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="454">
-                  <caret line="37" column="46" lean-forward="true" selection-start-line="37" selection-start-column="46" selection-end-line="37" selection-end-column="46" />
+                <state relative-caret-position="204">
+                  <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
                   <folding>
                     <element signature="e#23#62#0#PHP" expanded="true" />
                   </folding>
@@ -203,11 +214,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/clientProjects/index.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="185">
-                  <caret line="228" column="20" lean-forward="true" selection-start-line="228" selection-start-column="20" selection-end-line="228" selection-end-column="27" />
+                <state relative-caret-position="-1">
+                  <caret line="97" column="44" selection-start-line="97" selection-start-column="44" selection-end-line="97" selection-end-column="44" />
                 </state>
               </provider>
             </entry>
@@ -264,7 +275,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/database/migrations/2016_06_01_000001_create_oauth_auth_codes_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2016_06_01_000002_create_oauth_access_tokens_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2016_06_01_000004_create_oauth_clients_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_08_02_111151_create_checklists_table.php" />
@@ -297,7 +307,6 @@
         <option value="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_12_11_154444_create_client_payments_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_12_11_164720_create_builders_table.php" />
-        <option value="$PROJECT_DIR$/app/Builder.php" />
         <option value="$PROJECT_DIR$/public/js/lead.js" />
         <option value="$PROJECT_DIR$/public/js/CustomDataTableFunction.js" />
         <option value="$PROJECT_DIR$/resources/views/pages/builders/index.blade.php" />
@@ -307,14 +316,16 @@
         <option value="$PROJECT_DIR$/config/adminlte.php" />
         <option value="$PROJECT_DIR$/database/seeds/RoleSeeder.php" />
         <option value="$PROJECT_DIR$/public/dhg-project.js" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/app/User.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ClientProjectController.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_12_14_001919_add_foreign_references_to_architect_id_column.php" />
+        <option value="$PROJECT_DIR$/app/User.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2020_12_14_101213_add_foreign_key_to_client_projects_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_12_11_151820_create_client_projects_table.php" />
-        <option value="$PROJECT_DIR$/app/ClientProjects.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/clientProjects/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/Builder.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/public/js/dhg-project.js" />
+        <option value="$PROJECT_DIR$/app/ClientProjects.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ClientProjectController.php" />
       </list>
     </option>
   </component>
@@ -450,8 +461,8 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
+    <option name="x" value="23" />
+    <option name="y" value="10" />
     <option name="width" value="1940" />
     <option name="height" value="1050" />
   </component>
@@ -476,19 +487,6 @@
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="database" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -496,6 +494,17 @@
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="database" type="462c0819:PsiDirectoryNode" />
               <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -514,13 +523,13 @@
     <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\realEstateV2\realEstate\" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\realEstatev3\realEstate" />
       <recent name="D:\realEstateV2\realEstate" />
       <recent name="D:\realEstateV2\realEstate\vendor" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\realEstateV2\realEstate\" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -703,13 +712,7 @@
       <workItem from="1607664337307" duration="15077000" />
       <workItem from="1607773339442" duration="10946000" />
       <workItem from="1607862714598" duration="644000" />
-    </task>
-    <task id="LOCAL-00549" summary="rank module">
-      <created>1591645135563</created>
-      <option name="number" value="00549" />
-      <option name="presentableId" value="LOCAL-00549" />
-      <option name="project" value="LOCAL" />
-      <updated>1591645135564</updated>
+      <workItem from="1607908205154" duration="12012000" />
     </task>
     <task id="LOCAL-00550" summary="rank module">
       <created>1591645377783</created>
@@ -1047,11 +1050,18 @@
       <option name="project" value="LOCAL" />
       <updated>1607864016348</updated>
     </task>
-    <option name="localTasksCounter" value="598" />
+    <task id="LOCAL-00598" summary="DHG projects module">
+      <created>1607877898018</created>
+      <option name="number" value="00598" />
+      <option name="presentableId" value="LOCAL-00598" />
+      <option name="project" value="LOCAL" />
+      <updated>1607877898018</updated>
+    </task>
+    <option name="localTasksCounter" value="599" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1843806000" />
+    <option name="totallyTimeSpent" value="1856479000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1066,7 +1076,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12348993" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.152349" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1146,7 +1156,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Request module" />
     <MESSAGE value="request module update" />
     <MESSAGE value="added open lid functionality for accessing the request by admin" />
     <MESSAGE value="added cron job for requests priority update" />
@@ -1171,30 +1180,10 @@
     <MESSAGE value="add builder page and functionality" />
     <MESSAGE value="update the builders functionality&#10;completed the update and delete functionality in builder.js&#10;&#10;so far so good! :)" />
     <MESSAGE value="delete test completely" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete test completely" />
+    <MESSAGE value="DHG projects module" />
+    <option name="LAST_COMMIT_MESSAGE" value="DHG projects module" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/database/migrations/2020_02_23_143525_category_status_to_leads_activity_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2020_06_04_210109_create_extra_fields_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/users/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="63" selection-start-line="18" selection-start-column="63" selection-end-line="18" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/seeds/PrioritiesSeeder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1258,44 +1247,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/leadNotes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/permission.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1003">
-          <caret line="59" column="21" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/lead.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2210">
-          <caret line="130" column="56" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="52" selection-start-line="1" selection-start-column="52" selection-end-line="1" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="327" column="45" selection-start-line="327" selection-start-column="45" selection-end-line="327" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/dhg-project.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test.php" />
+    <entry file="file://$PROJECT_DIR$/public/dhg-project.js" />
     <entry file="file://$PROJECT_DIR$/resources/views/pages/builders/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1313,48 +1266,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/builder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="46" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/seeds/RoleSeeder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
           <caret line="110" column="52" selection-start-line="110" selection-start-column="52" selection-end-line="110" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PermissionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1156">
-          <caret line="1" selection-start-column="5" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/projects/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/LeadActivity.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BuilderController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="120" column="12" selection-start-line="120" selection-start-column="12" selection-end-line="136" selection-end-column="14" />
-          <folding>
-            <element signature="e#40#56#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1442,24 +1357,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="177" column="58" selection-start-line="177" selection-start-column="58" selection-end-line="177" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2020_02_23_152546_add_start_date_end_date_to_leads_activity_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-187">
           <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="313" column="21" selection-start-line="313" selection-start-column="18" selection-end-line="313" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -1470,44 +1371,119 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Builder.php">
+    <entry file="file://$PROJECT_DIR$/database/migrations/2020_12_14_001919_add_foreign_references_to_architect_id_column.php" />
+    <entry file="file://$PROJECT_DIR$/public/js/builder.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="64" selection-start-line="11" selection-start-column="64" selection-end-line="11" selection-end-column="64" />
+        <state relative-caret-position="374">
+          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="46" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/permission.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1003">
+          <caret line="59" column="21" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/LeadActivity.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/projects/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/lead.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2210">
+          <caret line="130" column="56" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/addSales.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="112" column="38" lean-forward="true" selection-start-line="112" selection-start-column="38" selection-end-line="112" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/leadNotes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
           <folding>
-            <element signature="e#23#62#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#span#1;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2020_12_14_001919_add_foreign_references_to_architect_id_column.php">
+    <entry file="file://$PROJECT_DIR$/database/migrations/2020_12_14_101213_add_foreign_key_to_client_projects_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+        <state relative-caret-position="476">
+          <caret line="30" column="67" selection-start-line="30" selection-start-column="67" selection-end-line="30" selection-end-column="67" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientProjectController.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BuilderController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="74" column="55" selection-start-line="74" selection-start-column="55" selection-end-line="74" selection-end-column="55" />
+        <state relative-caret-position="134">
+          <caret line="120" column="12" selection-start-line="120" selection-start-column="12" selection-end-line="136" selection-end-column="14" />
           <folding>
             <element signature="e#40#56#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="327" column="45" selection-start-line="327" selection-start-column="45" selection-end-line="327" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PermissionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-85">
+          <caret line="1" selection-start-column="5" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="191" column="5" selection-start-line="191" selection-start-column="5" selection-end-line="191" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Builder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#23#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2020_12_11_151820_create_client_projects_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="38" />
+        <state relative-caret-position="284">
+          <caret line="23" column="52" lean-forward="true" selection-start-line="23" selection-start-column="52" selection-end-line="23" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="324" column="81" selection-start-line="324" selection-start-column="81" selection-end-line="324" selection-end-column="97" />
+        <state relative-caret-position="180">
+          <caret line="113" column="32" selection-start-line="113" selection-start-column="13" selection-end-line="113" selection-end-column="32" />
           <folding>
             <element signature="e#7#389#0#PHP" expanded="true" />
             <element signature="e#479#512#0#PHP" expanded="true" />
@@ -1515,27 +1491,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/dhg-project.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="30" column="31" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="58" column="52" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Lead.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-255">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/clientProjects/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1">
+          <caret line="97" column="44" selection-start-line="97" selection-start-column="44" selection-end-line="97" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/ClientProjects.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="37" column="46" lean-forward="true" selection-start-line="37" selection-start-column="46" selection-end-line="37" selection-end-column="46" />
+        <state relative-caret-position="204">
+          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
           <folding>
             <element signature="e#23#62#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/clientProjects/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientProjectController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="228" column="20" lean-forward="true" selection-start-line="228" selection-start-column="20" selection-end-line="228" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/dhg-project.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="31" column="16" lean-forward="true" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+        <state relative-caret-position="477">
+          <caret line="120" column="39" selection-start-line="120" selection-start-column="39" selection-end-line="120" selection-end-column="39" />
+          <folding>
+            <element signature="e#40#56#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
