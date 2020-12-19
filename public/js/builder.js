@@ -89,7 +89,7 @@ $(document).on('click','.delete-btn',function(){
                         $('#builder-list').DataTable().ajax.reload();
                         Swal.fire(
                             'Deleted!',
-                            'Note has been deleted.',
+                            'Builder has been deleted.',
                             'success'
                         );
                     }

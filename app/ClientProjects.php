@@ -55,4 +55,9 @@ class ClientProjects extends Model
     {
         return $this->belongsTo(Builder::class,'builder_id');
     }
+
+    public function clientPayments()
+    {
+        return $this->hasMany(ClientPayment::class,'client_project_id');
+    }
 }

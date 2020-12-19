@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Builder;
 use App\ClientProjects;
+use App\Repositories\ClientProjectRepository;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,6 +13,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ClientProjectController extends Controller
 {
+    private $client_project_repository;
+
+    public function __construct(ClientProjectRepository $clientProjectRepository)
+    {
+        $this->client_project_repository = $clientProjectRepository;
+    }
+
     public function index()
     {
         # this variable retrieve all user whose role is NOT A CLIENT
@@ -64,6 +72,15 @@ class ClientProjectController extends Controller
             }
         }
         return response()->json($validator->errors());
+    }
+
+    public function show($id)
+    {
+        $clientProject = ClientProjects::findOrFail($id);
+        return view('pages.clientProjects.profile')->with([
+            'client_project'    => $clientProject,
+            'project_code'      => $this->client_project_repository->setClientProjectCode($id)
+        ]);
     }
 
     public function edit($id)
@@ -134,9 +151,7 @@ class ClientProjectController extends Controller
         $dhg_projects = ClientProjects::all();
         return DataTables::of($dhg_projects)
             ->editColumn('id', function($dhg_project){
-
-                $num_padded = sprintf("%05d", $dhg_project->id);
-                return '<a href="#">dhg-'.$num_padded.'</a>';
+                return '<a href="#">'.$this->client_project_repository->setClientProjectCode($dhg_project->id).'</a>';
             })
             ->editColumn('date_started', function($dhg_project){
                 return $dhg_project->date_started->format('M d, Y');
@@ -164,7 +179,7 @@ class ClientProjectController extends Controller
                 $action = "";
                 if(auth()->user()->can('view dhg project'))
                 {
-                    $action .= '<button class="btn btn-xs btn-info view-details" id="'.$dhg_project->id.'" data-toggle="modal" data-target="#lead-details" title="View Details"><i class="fa fa-info-circle"></i> </button>';
+                    $action .= '<a href="'.route("dhg.project.show",["project" => $dhg_project->id]).'" class="btn btn-xs btn-success view-details" id="'.$dhg_project->id.'" title="View Details"><i class="fa fa-eye"></i> </a>';
                 }
                 if(auth()->user()->can('edit dhg project'))
                 {
