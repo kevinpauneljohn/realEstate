@@ -329,4 +329,8 @@ Route::put('/dhg-projects/{project}','ClientProjectController@update')->name('dh
 Route::delete('/dhg-projects/{project}','ClientProjectController@destroy')->name('dhg.project.destroy')->middleware(['auth','permission:delete dhg project']);
 /*end dream home guide projects*/
 
+/*dream home client payment*/
+Route::get('/client-payment/{project}','ClientPaymentController@clientPaymentList')->name('client.payment.list')->middleware(['auth']);
+/*end dream home client payment*/
+
 

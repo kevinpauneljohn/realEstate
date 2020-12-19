@@ -137,5 +137,11 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view dhg project']);
         Permission::create(['name' => 'edit dhg project']);
         Permission::create(['name' => 'delete dhg project']);
+
+        //added Dec. 20, 2020 permission for client payment module
+        Permission::create(['name' => 'add client payment']);
+        Permission::create(['name' => 'view client payment']);
+        Permission::create(['name' => 'edit client payment']);
+        Permission::create(['name' => 'delete client payment']);
     }
 }

@@ -194,4 +194,5 @@ class ClientProjectController extends Controller
             ->rawColumns(['id','user_id','action'])
             ->make(true);
     }
+
 }

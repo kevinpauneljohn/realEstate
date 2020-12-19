@@ -50,14 +50,34 @@
 
                                 <div class="post clearfix">
                                     <h4 class="text-blue">Payment History</h4>
-                                    <p>
-                                        Lorem ipsum represents a long-held tradition for designers,
-                                        typographers and the like. Some people hate it and argue for
-                                        its demise, but others ignore.
-                                    </p>
-                                    <p>
-                                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 2</a>
-                                    </p>
+
+                                    @can('add client payment')
+                                        <p>
+                                            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#add-new-client-payment">Add Payment</button>
+                                        </p>
+                                    @endcan
+
+                                    <table id="payment-list" class="table table-bordered table-striped" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>Date Of Payment</th>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tfoot>
+                                        <tr>
+                                            <th>Date Of Payment</th>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +132,52 @@
     </section>
     <!-- /.content -->
 
+    @can('add client payment')
+        <!--add new dhg project modal-->
+        <div class="modal fade" id="add-new-client-payment">
+            <form role="form" id="add-project-form" class="form-submit">
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Payment</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group date_received">
+                                <label for="date_received">Date of Payment</label>
+                                <input type="date" name="date_received" class="form-control" id="date_received">
+                            </div>
+
+                            <div class="form-group amount">
+                                <label for="amount">Amount</label>
+                                <input type="number" name="amount" class="form-control" id="amount" step="any" min="0">
+                            </div>
+                            <div class="form-group description">
+                                <label for="description">Description</label>
+                                <textarea name="amount" class="form-control" id="description"></textarea>
+                            </div>
+                            <div class="form-group remarks">
+                                <label for="remarks">Remarks</label>
+                                <textarea name="remarks" class="form-control" id="remarks"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary dhg-project-form-btn" value="Save">
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new dhg project modal-->
+    @endcan
+
 @stop
 
 @section('css')
@@ -129,6 +195,23 @@
     @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/dhg-project.js')}}"></script>
-
+        <script>
+            $(function() {
+                $('#payment-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('client.payment.list',['project' => $client_project->id]) !!}',
+                    columns: [
+                        { data: 'date_received', name: 'date_received'},
+                        { data: 'amount', name: 'amount'},
+                        { data: 'details', name: 'details'},
+                        { data: 'remarks', name: 'remarks'},
+                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'asc']
+                });
+            });
+        </script>
     @endcan
 @stop
