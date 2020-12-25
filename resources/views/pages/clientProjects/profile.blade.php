@@ -133,10 +133,11 @@
     <!-- /.content -->
 
     @can('add client payment')
-        <!--add new dhg project modal-->
+        <!--add new payment modal-->
         <div class="modal fade" id="add-new-client-payment">
-            <form role="form" id="add-project-form" class="form-submit">
+            <form role="form" id="add-client-payment-form" class="form-submit">
                 @csrf
+                <input type="hidden" name="dhg_project_id" value="{{$client_project->id}}">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -158,7 +159,7 @@
                             </div>
                             <div class="form-group description">
                                 <label for="description">Description</label>
-                                <textarea name="amount" class="form-control" id="description"></textarea>
+                                <textarea name="description" class="form-control" id="description"></textarea>
                             </div>
                             <div class="form-group remarks">
                                 <label for="remarks">Remarks</label>
@@ -167,7 +168,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary dhg-project-form-btn" value="Save">
+                            <input type="submit" class="btn btn-primary dhg-client-project-form-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -175,7 +176,40 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end add new dhg project modal-->
+        <!--end add new payment modal-->
+    @endcan
+
+    @can('edit client payment')
+        <!--add new payment modal-->
+        <div class="modal fade" id="check-admin-credential-modal">
+            <form role="form" id="check-admin-credential-form" class="form-submit">
+                @csrf
+                <input type="hidden" name="payment_id">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Enter your password</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group password">
+                                <input type="password" name="password" class="form-control" id="password">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary check-admin-credential-form-btn" value="Send">
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+        <!--end add new payment modal-->
     @endcan
 
 @stop

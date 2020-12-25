@@ -51,31 +51,79 @@ $(document).on('submit','#add-project-form',function(form){
 
 $(document).on('click','.edit-btn', function(){
     rowId = this.id;
+    $('input[name=payment_id]').val(rowId);
+});
 
+$(document).on('submit','#check-admin-credential-form',function (form) {
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
     $.ajax({
-        'url' : '/dhg-projects/'+rowId+'/edit',
-        'type' : 'GET',
+        'url' : '/admin/credential',
+        'type' : 'POST',
+        'data' : data,
         beforeSend: function(){
-            $('#edit-project-form input, #edit-project-form select, #edit-project-form textarea').attr('disabled',true);
-        },success: function(result){
+            $('.check-admin-credential-form-btn').attr('disabled',true).val('Sending...');
+        },
+        success: function (result) {
 
-            $('#edit_client').val(result.user_id).change();
-            $('#edit_architect').val(result.architect_id).change();
-            $('#edit_builder').val(result.builder_id).change();
-            $('#edit_agent').val(result.agent_id).change();
-            $('#edit_address').val(result.address);
-            $('#edit_lot_price').val(result.lot_price);
-            $('#edit_house_price').val(result.house_price);
-            $('#edit_description').summernote('code',result.description);
+            if(result.success === true)
+            {
+                callModal();
+            }else{
+                toastr.warning(result.message);
+            }
 
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
 
-            $('#edit-project-form input, #edit-project-form select, #edit-project-form textarea').attr('disabled',false);
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+            $('.check-admin-credential-form-btn').attr('disabled',false).val('Send');
         },error: function(xhr,status,error){
             console.log(xhr, status, error);
-            $('#edit-project-form input, #edit-project-form select, #edit-project-form textarea').attr('disabled',false);
+            $('.check-admin-credential-form-btn').attr('disabled',false).val('Send');
+        }
+    });
+    clear_errors('password');
+});
+
+function callModal()
+{
+    $.ajax({
+        'url' : '/client-payment/edit/layout/'+rowId,
+        'type' : 'GET',
+        beforeSend: function(){
+          $('.edit-client-modal-container').remove();
+        },
+        success: function (modal) {
+            $(modal).insertAfter('.wrapper');
+            $('#check-admin-credential-modal').modal('toggle');
+            $('#edit-client-payment-modal').modal();
+            $('#check-admin-credential-form').trigger('reset');
+
+            $('#edit-client-payment-form .modal-content').prepend('<input type="hidden" name="payment_id" value="'+rowId+'">');
+        }
+    });
+}
+
+$(document).on('submit','#edit-client-payment-form', function(form){
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
+    $.ajax({
+        'url' : '/client-payment/'+rowId,
+        'type' : 'PUT',
+        'data' : data,
+        beforeSend: function () {
+
+        },success: function (result) {
+            console.log(result);
         }
     });
 });
+
 
 $(document).on('submit','#edit-project-form', function (form) {
     form.preventDefault();
@@ -158,3 +206,39 @@ $(document).on('click','.delete-btn',function(){
         }
     });
 });
+
+$(document).on('submit','#add-client-payment-form',function(form){
+    form.preventDefault();
+
+    let data = $(this).serializeArray();
+
+    $.ajax({
+        'url'  : '/client-payment',
+        'type' : 'POST',
+        'data' : data,
+        beforeSend: function(){
+            $('.dhg-client-project-form-btn').attr('disabled',true).val('Saving...');
+        },
+        success: function (result) {
+
+            if(result.success === true)
+            {
+                $('#add-client-payment-form').trigger('reset');
+                $('#payment-list').DataTable().ajax.reload();
+                $('#add-new-client-payment').modal('toggle');
+            }
+
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+
+            $('.dhg-client-project-form-btn').attr('disabled',false).val('Save');
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+});
+

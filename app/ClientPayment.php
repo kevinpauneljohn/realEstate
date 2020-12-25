@@ -9,9 +9,9 @@ class ClientPayment extends Model
 {
     use SoftDeletes;
 
-//    protected $dates = [
-//        'date_received'
-//    ];
+    protected $dates = [
+        'date_received'
+    ];
 
     public function clientProject()
     {
