@@ -5,6 +5,7 @@
         <div class="modal fade" id="edit-client-payment-modal">
             <form role="form" id="edit-client-payment-form" class="form-submit">
                 @csrf
+                <input type="hidden" name="project_id" value="{{$client_payment->client_project_id}}">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -35,7 +36,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary dhg-client-project-form-btn" value="Save">
+                            <input type="submit" class="btn btn-primary dhg-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->

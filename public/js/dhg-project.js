@@ -66,12 +66,9 @@ $(document).on('submit','#check-admin-credential-form',function (form) {
             $('.check-admin-credential-form-btn').attr('disabled',true).val('Sending...');
         },
         success: function (result) {
-
             if(result.success === true)
             {
                 callModal();
-            }else{
-                toastr.warning(result.message);
             }
 
             $.each(result, function (key, value) {
@@ -117,9 +114,25 @@ $(document).on('submit','#edit-client-payment-form', function(form){
         'type' : 'PUT',
         'data' : data,
         beforeSend: function () {
-
+            $('.dhg-btn').attr('disabled',true).val('Saving...');
         },success: function (result) {
-            console.log(result);
+
+            if(result.success === true)
+            {
+                $('#edit-client-payment-modal').modal('toggle');
+                toastr.success(result.message);
+                $('#payment-list').DataTable().ajax.reload();
+            }else if(result.success === false){
+                toastr.warning(result.message);
+            }
+
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
+            $('.dhg-btn').attr('disabled',false).val('Save');
         }
     });
 });

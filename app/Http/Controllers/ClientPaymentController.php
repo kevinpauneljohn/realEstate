@@ -18,14 +18,18 @@ class ClientPaymentController extends Controller
         $this->check_password = $checkPassword;
     }
 
-    public function store(Request $request)
+    private function validation($request)
     {
         $validator = Validator::make($request->all(),[
             'date_received'     => 'required|date',
             'amount'            => 'required',
         ]);
+        return $validator;
+    }
 
-        if($validator->passes())
+    public function store(Request $request)
+    {
+        if($this->validation($request)->passes())
         {
             $client_payment = new ClientPayment();
             $client_payment->client_project_id = $request->dhg_project_id;
@@ -41,12 +45,30 @@ class ClientPaymentController extends Controller
 
         }
 
-        return response()->json($validator->errors());
+        return response()->json($this->validation($request)->errors());
     }
 
     public function update(Request $request, $id)
     {
 
+        if($this->validation($request)->passes())
+        {
+            $client_payment = ClientPayment::findOrFail($id);
+
+            $client_payment->date_received = $request->date_received;
+            $client_payment->amount = $request->amount;
+            $client_payment->details = $request->description;
+            $client_payment->remarks = $request->remarks;
+
+            if($client_payment->isDirty())
+            {
+                $client_payment->save();
+                return response()->json(['success' => true, 'message' => 'Payment successfully updated!', $client_payment]);
+            }else{
+                return response()->json(['success' => false, 'message' => 'No changes occurred',$client_payment]);
+            }
+        }
+        return response()->json($this->validation($request)->errors());
     }
 
     /**
@@ -91,6 +113,8 @@ class ClientPaymentController extends Controller
      * Dec. 26, 2020
      * @author john kevin paunel
      * this will call the edit payment modal after the admin credential passes
+     * @param int $id
+     * @return mixed
      * */
     public function paymentModal($id)
     {
