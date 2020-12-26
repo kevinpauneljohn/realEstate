@@ -335,6 +335,7 @@ Route::post('/client-payment','ClientPaymentController@store')->name('client.pay
 Route::get('/client-payment/edit/layout/{id}','ClientPaymentController@paymentModal')->name('client.edit.payment.modal')->middleware(['auth','permission:edit client payment']);
 Route::post('/admin/credential','ClientPaymentController@adminCredential')->name('admin.check.credential')->middleware(['auth','permission:edit client payment']);
 Route::put('/client-payment/{id}','ClientPaymentController@update')->name('client.payment.update')->middleware(['auth','permission:edit client payment']);
+Route::delete('/client-payment/{id}','ClientPaymentController@destroy')->name('client.payment.destroy')->middleware(['auth','permission:delete client payment']);
 /*end dream home client payment*/
 
 

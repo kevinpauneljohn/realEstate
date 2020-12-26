@@ -90,6 +90,8 @@ $(document).on('submit','#check-admin-credential-form',function (form) {
             if(result.success === true)
             {
                 callModal();
+            }else if(result.success === false){
+                toastr.warning(result.message);
             }
 
             $.each(result, function (key, value) {
@@ -278,6 +280,47 @@ $(document).on('submit','#add-client-payment-form',function(form){
             $('.dhg-client-project-form-btn').attr('disabled',false).val('Save');
         },error: function(xhr, status, error){
             console.log(xhr);
+        }
+    });
+    clear_errors('date_received','amount','description','remarks');
+});
+
+$(document).on('click','.delete-payment-btn', function () {
+    rowId = this.id;
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+
+            $.ajax({
+                'url' : '/client-payment/'+rowId,
+                'type' : 'DELETE',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {'_method':'DELETE'},
+                beforeSend: function(){
+
+                },success: function(output){
+                    if(output.success === true){
+                        $('#payment-list').DataTable().ajax.reload();
+
+                        Swal.fire(
+                            'Deleted!',
+                            output.message,
+                            'success'
+                        );
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+
         }
     });
 });

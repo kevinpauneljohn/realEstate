@@ -71,6 +71,13 @@ class ClientPaymentController extends Controller
         return response()->json($this->validation($request)->errors());
     }
 
+    public function destroy($id)
+    {
+        $client_payment = ClientPayment::findOrFail($id);
+        $client_payment->delete();
+        return response()->json(['success' => true, 'message' => 'Client Payment Successfully Deleted!']);
+    }
+
     /**
      * Dec. 12, 2020
      * @author john kevin paunel
@@ -101,7 +108,7 @@ class ClientPaymentController extends Controller
                 }
                 if(auth()->user()->can('delete dhg project'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-btn" id="'.$client_payment->id.'" title="Delete Project"><i class="fa fa-trash"></i></a>';
+                    $action .= '<button type="button" class="btn btn-xs btn-danger delete-payment-btn" id="'.$client_payment->id.'" title="Delete Project"><i class="fa fa-trash"></i></button>';
                 }
                 return $action;
             })
