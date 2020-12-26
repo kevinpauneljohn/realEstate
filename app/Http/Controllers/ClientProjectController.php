@@ -183,7 +183,7 @@ class ClientProjectController extends Controller
                 }
                 if(auth()->user()->can('edit dhg project'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn" id="'.$dhg_project->id.'" data-toggle="modal" data-target="#edit-project-modal" title="Edit Project"><i class="fa fa-edit"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn edit-project" id="'.$dhg_project->id.'" data-toggle="modal" data-target="#edit-project-modal" title="Edit Project"><i class="fa fa-edit"></i></a>';
                 }
                 if(auth()->user()->can('delete dhg project'))
                 {

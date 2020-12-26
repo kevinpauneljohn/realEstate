@@ -60,11 +60,11 @@
                                     <table id="payment-list" class="table table-bordered table-striped" role="grid">
                                         <thead>
                                         <tr role="row">
-                                            <th>Date Of Payment</th>
-                                            <th>Amount</th>
+                                            <th width="12%">Date Of Payment</th>
+                                            <th width="15%">Amount</th>
                                             <th>Description</th>
                                             <th>Remarks</th>
-                                            <th>Action</th>
+                                            <th width="12%">Action</th>
                                         </tr>
                                         </thead>
 
