@@ -188,7 +188,7 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Enter your password</h4>
+                            <h6 class="modal-title">For Safety and Security <br/> Please, Enter your password</h6>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>

@@ -100,8 +100,14 @@ $(document).on('submit','#check-admin-credential-form',function (form) {
             });
             $('.check-admin-credential-form-btn').attr('disabled',false).val('Send');
         },error: function(xhr,status,error){
-            console.log(xhr, status, error);
-            $('.check-admin-credential-form-btn').attr('disabled',false).val('Send');
+
+            if(xhr.responseJSON.message === "CSRF token mismatch.")
+            {
+                toastr.info('Session expired. Reloading Page Now...');
+                setTimeout(function(){
+                    location.reload();
+                }, 3500);
+            }
         }
     });
     clear_errors('password');
