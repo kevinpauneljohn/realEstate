@@ -23,7 +23,7 @@ $(document).on('submit','#builder-member-form',function(form){
             $('.member-btn').attr('disabled',true).val('Adding...');
         },
         success: function(result){
-
+            console.log(result);
             if(result.success === true)
             {
                 toastr.success(result.message);
@@ -40,6 +40,10 @@ $(document).on('submit','#builder-member-form',function(form){
             });
             $('.member-btn').attr('disabled',false).val('Add');
         },error: function(xhr,status,error){
+            if(xhr.responseJSON.message === 'CSRF token mismatch.')
+            {
+                location.reload();
+            }
             console.log(xhr, status, error);
             $('.member-btn').attr('disabled',false).val('Add');
         }

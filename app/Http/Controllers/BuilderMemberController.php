@@ -15,7 +15,8 @@ class BuilderMemberController extends Controller
             $labeler_repository,
             $member_id,
             $builder_id,
-            $remove;
+            $remove,
+            $data;
 
     public function __construct(LabelerRepository $labelerRepository)
     {
@@ -25,20 +26,41 @@ class BuilderMemberController extends Controller
 
     public function addMember(Request $request)
     {
-        return $this->addMemberProcess($request);
+        //instantiate data variable with requests
+        $this->data = $request;
+        return $this->validation()->saveMember();
+    }
+
+    private function query($member_id, $builder_id)
+    {
+        $query = DB::table('builder_user')->where([
+            ['user_id','=',$member_id],
+            ['builder_id','=',$builder_id],
+        ]);
+        return $query;
     }
 
     //
-    private function addMemberProcess($request)
+    private function saveMember()
     {
-        if($this->validation($request) === true)
+        if($this->validation->passes())
         {
-            $builder = $request->builder;
-            $members = $request->members;
+            $builder = $this->data->builder; // consist 1 value only
+            $members = $this->data->members; ///this variable is an array and may contain more than 1 value
 
             foreach ($members as $member)
             {
-                $this->store($builder, $member);
+                //instantiate global member_id & builder_id
+                $this->member_id = $member;
+                $this->builder_id = $builder;
+
+                //will save member if not exists in database
+                if($this->checkIfMemberExists() === false)
+                {
+                    $this->store();
+                }else{
+                    return ['success' => false, 'message' => 'Member already exists!'];
+                }
             }
             return ['success' => true, 'message' => 'Member successfully added!'];
         }
@@ -46,20 +68,27 @@ class BuilderMemberController extends Controller
     }
 
     //check if there are errors on the submitted field
-    private function validation($request)
+    private function validation()
     {
-        $validation = Validator::make($request->all(),[
+        $this->validation = Validator::make($this->data->all(),[
             'members'   => 'required'
         ]);
 
-        //instantiate validation method
-        $this->validation = $validation;
-
-        if($validation->passes()){
-            return true;
-        }
-        return false;
+        return $this;
     }
+
+    //this will check id the user is already a member of a builder
+    private function checkIfMemberExists()
+    {
+        $exists = $this->query($this->member_id, $this->builder_id)->count();
+        if($exists > 0)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
     //display the form field errors
     private function validationErrors($validation)
@@ -68,12 +97,13 @@ class BuilderMemberController extends Controller
     }
 
     ///save the members in the specific builder if there are no validation errors
-    private function store($builder, $member)
+    private function store()
     {
         DB::table('builder_user')->insert([
-            'user_id'       => $member,
-            'builder_id'    => $builder
+            'user_id'       => $this->member_id,
+            'builder_id'    => $this->builder_id
         ]);
+        return $this;
     }
 
     public function member($id)
@@ -129,10 +159,7 @@ class BuilderMemberController extends Controller
     //remove the selected member id from the builder
     private function removeMember()
     {
-        $this->remove = DB::table('builder_user')->where([
-            ['user_id','=',$this->member_id],
-            ['builder_id','=',$this->builder_id],
-        ])->delete();
+        $this->remove = $this->query($this->member_id, $this->builder_id)->delete();
 
         return $this;
     }
