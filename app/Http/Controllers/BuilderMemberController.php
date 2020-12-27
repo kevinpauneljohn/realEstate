@@ -12,7 +12,10 @@ use Yajra\DataTables\Facades\DataTables;
 class BuilderMemberController extends Controller
 {
     private $validation,
-            $labeler_repository;
+            $labeler_repository,
+            $member_id,
+            $builder_id,
+            $remove;
 
     public function __construct(LabelerRepository $labelerRepository)
     {
@@ -92,11 +95,55 @@ class BuilderMemberController extends Controller
                 }
                 if(auth()->user()->can('delete builder member'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-btn" id="'.$member->id.'" title="Delete Builder"><i class="fa fa-trash"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-btn" id="'.$member->id.'_'.$member->pivot->builder_id.'" title="Delete Builder"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
             ->rawColumns(['role','action'])
             ->make(true);
+    }
+
+    /**
+     * Dec. 27, 2020
+     * @author john kevin paunel
+     * Remove the member from the builder profile
+     * @route builder.member.destroy
+     * @param string $id
+     * @return mixed
+     * */
+    public function destroy($id)
+    {
+        return $this->separate($id)->removeMember()->removeResponse();
+    }
+
+    //separate the string by "_" to get the member id and builder id
+    private function separate($id)
+    {
+        $array = explode("_",$id);
+        $this->member_id = $array[0];
+        $this->builder_id = $array[1];
+
+        return $this;
+    }
+
+    //remove the selected member id from the builder
+    private function removeMember()
+    {
+        $this->remove = DB::table('builder_user')->where([
+            ['user_id','=',$this->member_id],
+            ['builder_id','=',$this->builder_id],
+        ])->delete();
+
+        return $this;
+    }
+
+    //will return the appropriate response depending on the action occurred
+    private function removeResponse()
+    {
+        if($this->remove)
+        {
+            return response()->json(['success' => true, 'message' => 'Member successfully removed']);
+        }
+        return response()->json(['success' => false, 'message' => 'An error occurred']);
     }
 }
