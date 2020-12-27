@@ -23,13 +23,16 @@ $(document).on('submit','#builder-member-form',function(form){
             $('.member-btn').attr('disabled',true).val('Adding...');
         },
         success: function(result){
-            console.log(result);
+
             if(result.success === true)
             {
                 toastr.success(result.message);
                 $('#builder-member-form select').val('').change();
                 $('#member-list').DataTable().ajax.reload();
                 $('#builder-member-modal').modal('toggle');
+            }else if(result.success === false)
+            {
+                toastr.warning(result.message);
             }
 
             $.each(result, function (key, value) {
