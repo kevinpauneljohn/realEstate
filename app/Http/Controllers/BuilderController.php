@@ -60,9 +60,11 @@ class BuilderController extends Controller
     {
         $builder = Builder::findOrFail($id);
         $members = User::role('builder member')->get();
+        $selected = $builder->users;
         return view('pages.builders.profile')->with([
             'builder'   => $builder,
-            'members'   => $members
+            'members'   => $members,
+            'selected'  => $selected
         ]);
     }
 

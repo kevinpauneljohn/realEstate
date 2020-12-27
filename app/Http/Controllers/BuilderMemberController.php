@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class BuilderMemberController extends Controller
 {
@@ -60,5 +62,36 @@ class BuilderMemberController extends Controller
             'user_id'       => $member,
             'builder_id'    => $builder
         ]);
+    }
+
+    public function member($id)
+    {
+        $members = Builder::findOrFail($id)->users;
+        return DataTables::of($members)
+            ->editColumn('name', function ($member){
+                return $member->fullName;
+            })
+            ->editColumn('role', function ($member){
+                return $member->getRoleNames();
+            })
+            ->addColumn('action', function ($member)
+            {
+                $action = "";
+                if(auth()->user()->can('view builder'))
+                {
+                    $action .= '<a href="'.route('builder.show',['builder' => $member->id]).'" class="btn btn-xs btn-success view-details" id="'.$member->id.'" title="View Details"><i class="fa fa-eye"></i> </a>';
+                }
+                if(auth()->user()->can('edit builder'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn" id="'.$member->id.'" data-toggle="modal" data-target="#edit-builder-modal" title="Edit Builder"><i class="fa fa-edit"></i></a>';
+                }
+                if(auth()->user()->can('delete lead'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-btn" id="'.$member->id.'" title="Delete Builder"><i class="fa fa-trash"></i></a>';
+                }
+                return $action;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

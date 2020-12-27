@@ -320,6 +320,7 @@ Route::put('/builders/{builder}','BuilderController@update')->name('builder.upda
 Route::delete('/builders/{builder}','BuilderController@destroy')->name('builder.destroy')->middleware(['auth','permission:delete builder']);
 
 Route::post('/add-member/builder','BuilderMemberController@addMember')->name('builder.member.add')->middleware(['auth','permission:add builder member']);
+Route::get('/builder/{builder}/member','BuilderMemberController@member')->name('builder.member.list')->middleware(['auth','permission:view builder member']);
 /*end of builders*/
 
 /*dream home guide projects*/
