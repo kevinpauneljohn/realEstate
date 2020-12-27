@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Builder;
+use App\Repositories\LabelerRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -10,7 +11,15 @@ use Yajra\DataTables\Facades\DataTables;
 
 class BuilderMemberController extends Controller
 {
-    private $validation;
+    private $validation,
+            $labeler_repository;
+
+    public function __construct(LabelerRepository $labelerRepository)
+    {
+        $this->labeler_repository = $labelerRepository;
+    }
+
+
     public function addMember(Request $request)
     {
         return $this->addMemberProcess($request);
@@ -72,26 +81,22 @@ class BuilderMemberController extends Controller
                 return $member->fullName;
             })
             ->editColumn('role', function ($member){
-                return $member->getRoleNames();
+                return $this->labeler_repository->role($member->getRoleNames());
             })
             ->addColumn('action', function ($member)
             {
                 $action = "";
-                if(auth()->user()->can('view builder'))
+                if(auth()->user()->can('view builder member'))
                 {
                     $action .= '<a href="'.route('builder.show',['builder' => $member->id]).'" class="btn btn-xs btn-success view-details" id="'.$member->id.'" title="View Details"><i class="fa fa-eye"></i> </a>';
                 }
-                if(auth()->user()->can('edit builder'))
-                {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn" id="'.$member->id.'" data-toggle="modal" data-target="#edit-builder-modal" title="Edit Builder"><i class="fa fa-edit"></i></a>';
-                }
-                if(auth()->user()->can('delete lead'))
+                if(auth()->user()->can('delete builder member'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-btn" id="'.$member->id.'" title="Delete Builder"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['role','action'])
             ->make(true);
     }
 }

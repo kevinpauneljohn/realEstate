@@ -142,7 +142,7 @@ class BuilderController extends Controller
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-primary edit-btn" id="'.$builder->id.'" data-toggle="modal" data-target="#edit-builder-modal" title="Edit Builder"><i class="fa fa-edit"></i></a>';
                 }
-                if(auth()->user()->can('delete lead'))
+                if(auth()->user()->can('delete builder'))
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-btn" id="'.$builder->id.'" title="Delete Builder"><i class="fa fa-trash"></i></a>';
                 }

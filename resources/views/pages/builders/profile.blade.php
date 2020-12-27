@@ -30,7 +30,7 @@
                             <button type="button" class="btn btn-default btn-sm" data-target="#builder-member-modal" data-toggle="modal">Add member</button>
                         @endcan
 
-                            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="margin-top:10px;">
                                 <table id="member-list" class="table table-bordered table-striped" role="grid">
                                     <thead>
                                     <tr role="row">

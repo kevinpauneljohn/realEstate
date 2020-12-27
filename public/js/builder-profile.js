@@ -18,7 +18,7 @@ $(document).on('submit','#builder-member-form',function(form){
         'type' : 'POST',
         'data' : data,
         beforeSend: function(){
-            $('#builder-member-form input, #builder-member-form select').attr('disabled',true).val('Adding...');
+            $('.member-btn').attr('disabled',true).val('Adding...');
         },
         success: function(result){
 
@@ -36,10 +36,11 @@ $(document).on('submit','#builder-member-form',function(form){
                 element.find('.error-'+key).remove();
                 element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
             });
+            $('.member-btn').attr('disabled',false).val('Add');
         },error: function(xhr,status,error){
             console.log(xhr, status, error);
+            $('.member-btn').attr('disabled',false).val('Add');
         }
     });
-    $('#builder-member-form input, #builder-member-form select').attr('disabled',false).val('Add');
     clear_errors('members');
 });
