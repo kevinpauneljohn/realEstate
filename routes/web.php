@@ -313,10 +313,13 @@ Route::get('/documentation/{id}','DocumentationController@document_list')->name(
 /*builders*/
 Route::get('/builders','BuilderController@index')->name('builder.index')->middleware(['auth','permission:view builder']);
 Route::post('/builders','BuilderController@store')->name('builder.store')->middleware(['auth','permission:add builder']);
+Route::get('/builders/{builder}','BuilderController@show')->name('builder.show')->middleware(['auth','permission:view builder']);
 Route::get('/builders-list','BuilderController@builderList')->name('builder.list')->middleware(['auth','permission:view builder']);
 Route::get('/builders/{builder}/edit','BuilderController@edit')->name('builder.edit')->middleware(['auth','permission:edit builder']);
 Route::put('/builders/{builder}','BuilderController@update')->name('builder.update')->middleware(['auth','permission:edit builder']);
 Route::delete('/builders/{builder}','BuilderController@destroy')->name('builder.destroy')->middleware(['auth','permission:delete builder']);
+
+Route::post('/add-member/builder','BuilderMemberController@addMember')->name('builder.member.add')->middleware(['auth','permission:add builder member']);
 /*end of builders*/
 
 /*dream home guide projects*/

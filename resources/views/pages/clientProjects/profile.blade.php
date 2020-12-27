@@ -226,7 +226,7 @@
 @stop
 
 @section('js')
-    @can('view user')
+    @can('view client payment')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/dhg-project.js')}}"></script>
         <script>

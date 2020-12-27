@@ -247,37 +247,82 @@ class UserController extends Controller
             $user->username = $request->username;
             $user->password = bcrypt($request->password);
 
-            if(auth()->user()->hasRole('super admin'))
+            if($this->checkIfBuilder($request) === true)
             {
-                ///save directly to users table if the user is a super admin
-                $user->save();
-
-                //assign role to a user
-                $this->setRole($user,$request);
-
-                //connect the user to its up line
-                //event(new CreateNetworkEvent($user->id));
-
-                //set the user rank based on his points
-                event(new UserRankPointsEvent($user,0,0));
-
-                //send initial 500 dream coins on the user's dream wallet
-                $this->walletRepository->setMoney(
-                    $user->id,
-                    User::where('username','kevinpauneljohn')->first()->id,
-                    500,'Initial incentives can be cashed out if there is a reservation',
-                    true,false,'incentive','for-approval'
-                );
-
-                return response()->json(['success' => true]);
+                return $this->saveBuilder($user);
             }else{
-
-                //save the user request to threshold for approval
-                $result = event(new UserRequestEvent($request));
-                return response()->json(['success' => true,'message' => 'User Create successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
+                return $this->agentFunction($user, $request);
             }
         }
         return response()->json($validator->errors());
+    }
+
+    //this will do another action if the user was detected as agent
+    private function agentFunction($user, $request)
+    {
+        if(auth()->user()->hasRole('super admin'))
+        {
+            ///save directly to users table if the user is a super admin
+            $user->save();
+
+            //assign role to a user
+            $this->setRole($user,$request);
+
+            //connect the user to its up line
+            //event(new CreateNetworkEvent($user->id));
+
+            //set the user rank based on his points
+            event(new UserRankPointsEvent($user,0,0));
+
+            //send initial 500 dream coins on the user's dream wallet
+            $this->walletRepository->setMoney(
+                $user->id,
+                User::where('username','kevinpauneljohn')->first()->id,
+                500,'Initial incentives can be cashed out if there is a reservation',
+                true,false,'incentive','for-approval'
+            );
+
+            return response()->json(['success' => true]);
+        }else{
+
+            //save the user request to threshold for approval
+            $result = event(new UserRequestEvent($request));
+            return response()->json(['success' => true,'message' => 'User Create successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
+        }
+    }
+
+    //this will check if the user role is builder
+    private function checkIfBuilder($request)
+    {
+        if($this->checkRole($request) === true)
+        {
+
+            foreach ($request->role as $role)
+            {
+                if($role === 'builder admin' || $role === 'builder member')
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    ///save the user if its a builder
+    private function saveBuilder($user)
+    {
+        $user->save();
+        return response()->json(['success' => true]);
+    }
+
+    ///this will check if the role was not empty
+    private function checkRole($request)
+    {
+        if($request->role !== null)
+        {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -290,14 +335,21 @@ class UserController extends Controller
      * */
     protected function setRole($user, $request)
     {
-        if($request->role !== null)
+//        if($request->role !== null)
+//        {
+//            foreach ($request->role as $role)
+//            {
+//                $user->assignRole($role);
+//            }
+//        }
+
+        if($this->checkRole($request) === true)
         {
             foreach ($request->role as $role)
             {
                 $user->assignRole($role);
             }
         }
-
         return $this;
     }
 

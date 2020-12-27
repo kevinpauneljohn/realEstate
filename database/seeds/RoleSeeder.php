@@ -20,6 +20,8 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'referral']);
         Role::create(['name' => 'architect']);
         Role::create(['name' => 'client']);
+        Role::create(['name' => 'builder admin']);
+        Role::create(['name' => 'builder member']);
 
         Permission::create(['name' => 'add role']);
         Permission::create(['name' => 'view role']);
@@ -143,5 +145,11 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view client payment']);
         Permission::create(['name' => 'edit client payment']);
         Permission::create(['name' => 'delete client payment']);
+
+        //added Dec. 27, 2020 permission for builder member module
+        Permission::create(['name' => 'add builder member']);
+        Permission::create(['name' => 'view builder member']);
+        Permission::create(['name' => 'edit builder member']);
+        Permission::create(['name' => 'delete builder member']);
     }
 }

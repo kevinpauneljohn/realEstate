@@ -194,4 +194,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ClientProjects::class,'architect_id');
     }
+
+    public function builders()
+    {
+        return $this->belongsToMany(Builder::class);
+    }
 }

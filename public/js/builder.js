@@ -140,3 +140,4 @@ $(document).on('submit','#edit-builder-form',function(form){
     });
     clear_errors('edit_name');
 });
+

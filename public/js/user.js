@@ -165,10 +165,10 @@ $(document).on('submit','#user-form',function(form){
                 element.after('<p class="text-danger">'+value+'</p>');
             });
 
-            $('.add-user-btn').val('Save').attr('disabled',false);
         },error: function(xhr, status, error){
             console.log(xhr);
         }
     });
+    $('.add-user-btn').val('Save').attr('disabled',false);
 });
 

@@ -20,4 +20,9 @@ class Builder extends Model
     {
         return $this->hasMany(ClientProjects::class,'builder_id');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

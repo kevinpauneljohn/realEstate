@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Builder;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -53,6 +54,16 @@ class BuilderController extends Controller
             }
         }
         return response()->json($validator->errors());
+    }
+
+    public function show($id)
+    {
+        $builder = Builder::findOrFail($id);
+        $members = User::role('builder member')->get();
+        return view('pages.builders.profile')->with([
+            'builder'   => $builder,
+            'members'   => $members
+        ]);
     }
 
     /**
@@ -123,7 +134,7 @@ class BuilderController extends Controller
                 $action = "";
                 if(auth()->user()->can('view builder'))
                 {
-                    $action .= '<button class="btn btn-xs btn-info view-details" id="'.$builder->id.'" data-toggle="modal" data-target="#lead-details" title="View Details"><i class="fa fa-info-circle"></i> </button>';
+                    $action .= '<a href="'.route('builder.show',['builder' => $builder->id]).'" class="btn btn-xs btn-success view-details" id="'.$builder->id.'" title="View Details"><i class="fa fa-eye"></i> </a>';
                 }
                 if(auth()->user()->can('edit builder'))
                 {
