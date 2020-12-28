@@ -40,7 +40,7 @@ class BuilderMemberController extends Controller
         return $query;
     }
 
-    //
+    //save the member to the builder
     private function saveMember()
     {
         if($this->validation->passes())
@@ -77,7 +77,7 @@ class BuilderMemberController extends Controller
         return $this;
     }
 
-    //this will check id the user is already a member of a builder
+    //this will check if the user is already a member of a builder
     private function checkIfMemberExists()
     {
         $exists = $this->query($this->member_id, $this->builder_id)->count();
