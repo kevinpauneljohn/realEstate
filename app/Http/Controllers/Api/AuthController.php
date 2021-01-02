@@ -34,10 +34,7 @@ class AuthController extends Controller
 //                $token->expires_at = Carbon::now()->addWeeks(1);
 //                $token->save();
 //            }
-            return response()->json([
-                'user' => \auth()->user(),
-                'roles' => \auth()->user()->getRoleNames(),
-            ]);
+            return \auth()->user();
 
         }else{
             return response()->json(['message' => 'invalid credentials', 'success' => false]);
