@@ -19,15 +19,14 @@ class AuthController extends Controller
      * */
     public function authenticate(Request $request)
     {
-        return $request->all();
-//        $request->validate([
-//            'email'      => 'required',
-//            'password'      => 'required',
-//        ]);
-//
-//
-//        if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password]))
-//        {
+        $request->validate([
+            'email'      => 'required',
+            'password'      => 'required',
+        ]);
+
+
+        if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password]))
+        {
 //            $tokenRequest = $request->user()->createToken('Personal Access Token');
 //            $token = $tokenRequest->token;
 //            if($request->remember_me)
@@ -35,17 +34,14 @@ class AuthController extends Controller
 //                $token->expires_at = Carbon::now()->addWeeks(1);
 //                $token->save();
 //            }
-//            return response()->json([
-//                'user' => \auth()->user(),
-//                'access_token' => $tokenRequest->accessToken,
-//                'token_type' => 'Bearer',
-//                'expires_at' => Carbon::parse($tokenRequest->token->expires_at)->toDateTimeString(),
-//                'roles' => \auth()->user()->getRoleNames(),
-//                'success' => true,
-//            ]);
-//        }else{
-//            return response()->json(['message' => 'invalid credentials', 'success' => false]);
-//        }
+            return response()->json([
+                'user' => \auth()->user(),
+                'roles' => \auth()->user()->getRoleNames(),
+            ]);
+
+        }else{
+            return response()->json(['message' => 'invalid credentials', 'success' => false]);
+        }
 
     }
 }
