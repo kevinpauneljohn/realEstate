@@ -130,7 +130,7 @@
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/AuthController.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="325">
-                  <caret line="36" column="35" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="35" />
+                  <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
                 </state>
               </provider>
             </entry>
@@ -686,21 +686,7 @@
       <workItem from="1609515769034" duration="2111000" />
       <workItem from="1609566543284" duration="6395000" />
       <workItem from="1609590933645" duration="11000" />
-      <workItem from="1609591646611" duration="1586000" />
-    </task>
-    <task id="LOCAL-00570" summary="rank module">
-      <created>1592071453657</created>
-      <option name="number" value="00570" />
-      <option name="presentableId" value="LOCAL-00570" />
-      <option name="project" value="LOCAL" />
-      <updated>1592071453657</updated>
-    </task>
-    <task id="LOCAL-00571" summary="rank module">
-      <created>1592071583235</created>
-      <option name="number" value="00571" />
-      <option name="presentableId" value="LOCAL-00571" />
-      <option name="project" value="LOCAL" />
-      <updated>1592071583235</updated>
+      <workItem from="1609591646611" duration="2592000" />
     </task>
     <task id="LOCAL-00572" summary="task module">
       <created>1592074891091</created>
@@ -1031,11 +1017,25 @@
       <option name="project" value="LOCAL" />
       <updated>1609595953044</updated>
     </task>
-    <option name="localTasksCounter" value="619" />
+    <task id="LOCAL-00619" summary="DHG builder profile module">
+      <created>1609596079551</created>
+      <option name="number" value="00619" />
+      <option name="presentableId" value="LOCAL-00619" />
+      <option name="project" value="LOCAL" />
+      <updated>1609596079551</updated>
+    </task>
+    <task id="LOCAL-00620" summary="login api module">
+      <created>1609596892629</created>
+      <option name="number" value="00620" />
+      <option name="presentableId" value="LOCAL-00620" />
+      <option name="project" value="LOCAL" />
+      <updated>1609596892629</updated>
+    </task>
+    <option name="localTasksCounter" value="621" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1960528000" />
+    <option name="totallyTimeSpent" value="1961534000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1130,7 +1130,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added cron job for requests priority update" />
     <MESSAGE value="lead management - view module" />
     <MESSAGE value="canned message - view module" />
     <MESSAGE value="added check commission middleware for validating the commission rate existence" />
@@ -1155,7 +1154,8 @@
     <MESSAGE value="DHG projects module" />
     <MESSAGE value="DHG client payment module" />
     <MESSAGE value="DHG builder profile module" />
-    <option name="LAST_COMMIT_MESSAGE" value="DHG builder profile module" />
+    <MESSAGE value="login api module" />
+    <option name="LAST_COMMIT_MESSAGE" value="login api module" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/Providers/AppServiceProvider.php">
@@ -1530,7 +1530,7 @@
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/AuthController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
-          <caret line="36" column="35" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="35" />
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
         </state>
       </provider>
     </entry>

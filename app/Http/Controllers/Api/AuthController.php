@@ -35,7 +35,7 @@ class AuthController extends Controller
 //                $token->save();
 //            }
 
-            return \auth()->user();
+            return \auth()->user()->getAuthPassword();
 
         }else{
             return response()->json(['message' => 'invalid credentials', 'success' => false]);
