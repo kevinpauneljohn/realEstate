@@ -343,4 +343,6 @@ Route::put('/client-payment/{id}','ClientPaymentController@update')->name('clien
 Route::delete('/client-payment/{id}','ClientPaymentController@destroy')->name('client.payment.destroy')->middleware(['auth','permission:delete client payment']);
 /*end dream home client payment*/
 
+Route::get('/developers','DevelopersController@index')->name('developers.index')->middleware(['auth','role:super admin']);
+
 
