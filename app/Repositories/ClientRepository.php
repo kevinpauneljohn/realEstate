@@ -5,11 +5,12 @@ namespace App\Repositories;
 
 
 use App\AdminAccessToken;
+use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 
-class ClientRepository
+class ClientRepository implements AccessTokenClientInterface
 {
     public $response, $request,
             $token;
@@ -19,8 +20,8 @@ class ClientRepository
     {
         $this->request = $request;
         $this->access_token = AdminAccessToken::where('key','privilege');
+        $this->token = $this->access_token->first();
         $this->checkIfAccessTokenExists()->checkIfAccessTokenExpired();
-
     }
 
     /**
@@ -34,20 +35,20 @@ class ClientRepository
         $count = $this->access_token->count();
         if($count < 1)
         {
-            $this->saveAdminAccessToken();
+            $this->saveAccessToken();
         }
         return $this;
     }
 
     private function checkIfAccessTokenExpired()
     {
-        $expiry_date = $this->access_token->first()->expires_in;
+        $expiry_date = $this->token->expires_in;
         $date_now = Carbon::now();
 
         if($expiry_date < $date_now)
         {
             //this will update the access token and expiry date
-            $this->saveAdminAccessToken();
+            $this->saveAccessToken();
         }
         return $this;
     }
@@ -72,9 +73,9 @@ class ClientRepository
 
 
     //save access token through cookie
-    public function saveAdminAccessToken()
+    private function saveAccessToken()
     {
-        $this->requestToken();//load request token to get the value of response
+        $this->requestToken();//load request token to get the value of response when needed only
 
         AdminAccessToken::updateOrCreate(
             ['key' => 'privilege'],
@@ -86,10 +87,17 @@ class ClientRepository
     }
 
 
+    //will return the access_token only
     public function getAccessToken()
     {
-        $token = $this->access_token->first();
-        return $token->expires_in;
+        return $this->token->access_token;
+    }
+
+    //return the expiry date of the access token
+    public function getAccessTokenExpiry()
+    {
+        // TODO: Implement getAccessTokenExpiry() method.
+        return $this->token->expires_in;
     }
 
 }

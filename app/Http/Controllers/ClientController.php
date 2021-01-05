@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\AdminAccessToken;
-use App\Repositories\ClientRepository;
+use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClientController extends Controller
 {
-    private $client_repository;
+    private $client_repository, $access_token;
 
-    public function __construct(ClientRepository $clientRepository)
+
+    public function __construct(AccessTokenClientInterface $accessTokenClient)
     {
-        $this->client_repository = $clientRepository;
+        $this->client_repository = $accessTokenClient;
+        $this->access_token = $this->client_repository;
     }
 
     public function index(Request $request)
@@ -41,7 +41,6 @@ class ClientController extends Controller
 //            return $this->client_repository->getAccessToken();
 //
 //        }
-//
 //        return response()->json($validation->errors());
         return $this->client_repository->getAccessToken();
     }
