@@ -4,17 +4,52 @@
 namespace App\Repositories;
 
 
-use http\Client\Response;
+use App\AdminAccessToken;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 
 class ClientRepository
 {
-    public $response, $request;
+    public $response, $request,
+            $token;
+    private $access_token;
 
     public function __construct(Request $request)
     {
         $this->request = $request;
+        $this->access_token = AdminAccessToken::where('key','privilege');
+        $this->checkIfAccessTokenExists()->checkIfAccessTokenExpired();
+
+    }
+
+    /**
+     * Jan. 05, 2021
+     * @author john kevin paunel
+     * check if there is already available access token in admin_access_token table
+     *
+     * */
+    private function checkIfAccessTokenExists()
+    {
+        $count = $this->access_token->count();
+        if($count < 1)
+        {
+            $this->saveAdminAccessToken();
+        }
+        return $this;
+    }
+
+    private function checkIfAccessTokenExpired()
+    {
+        $expiry_date = $this->access_token->first()->expires_in;
+        $date_now = Carbon::now();
+
+        if($expiry_date < $date_now)
+        {
+            //this will update the access token and expiry date
+            $this->saveAdminAccessToken();
+        }
+        return $this;
     }
 
     /**
@@ -32,24 +67,29 @@ class ClientRepository
             'scope' => 'create-client view-client edit-client delete-client',
         ]);
 
-        $this->response = $this->response->json();
-        return $this;
+        return $this->response->json();
     }
 
 
     //save access token through cookie
-    public function saveAdminAccessToken($message)
+    public function saveAdminAccessToken()
     {
-        return \response($message)->withCookie(cookie(
-            'hello',
-            $this->response['access_token'],
-            $this->response['expires_in']
-        ));
+        $this->requestToken();//load request token to get the value of response
+
+        AdminAccessToken::updateOrCreate(
+            ['key' => 'privilege'],
+            [
+                'access_token'  => $this->response['access_token'],
+                'expires_in'    => Carbon::now()->addSeconds($this->response['expires_in']),
+            ]
+        );
     }
 
-//    public function getCookieToken(){
-//        $this->requestToken()->saveAccessToken();
-//        $value = $this->request->cookie('name');
-//        echo $value;
-//    }
+
+    public function getAccessToken()
+    {
+        $token = $this->access_token->first();
+        return $token->expires_in;
+    }
+
 }

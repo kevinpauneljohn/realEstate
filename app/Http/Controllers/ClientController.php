@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AdminAccessToken;
 use App\Repositories\ClientRepository;
 use App\User;
 use Illuminate\Http\Request;
@@ -20,32 +21,29 @@ class ClientController extends Controller
 
     public function index(Request $request)
     {
-       //return $this->client_repository->re();
         return view('pages.clients.index');
-        //return $request->cookie('token');
 
     }
 
     public function store(Request $request)
     {
-        $validation = Validator::make($request->all(),[
-            'firstname'     => 'required',
-            'lastname'      => 'required',
-            'address'       => 'required',
-            'username'      => 'required|unique:users,username',
-            'password'      => 'required|confirmed'
-        ]);
-
-        if($validation->passes())
-        {
-            //this will create user through API call in dream home guide
-//            $response = $this->client_repository->requestToken();
-//            return response()->json(['success' => true],200)
-//                ->withCookie(\cookie('token',$response['access_token'],$response['expires_in']));
-            return $this->client_repository->requestToken()->saveAccessToken(['success' => true]);
-        }
-
-        return response()->json($validation->errors());
+//        $validation = Validator::make($request->all(),[
+//            'firstname'     => 'required',
+//            'lastname'      => 'required',
+//            'address'       => 'required',
+//            'username'      => 'required|unique:users,username',
+//            'password'      => 'required|confirmed'
+//        ]);
+//
+//        if($validation->passes())
+//        {
+//            //this will create user through API call in dream home guide
+//            return $this->client_repository->getAccessToken();
+//
+//        }
+//
+//        return response()->json($validation->errors());
+        return $this->client_repository->getAccessToken();
     }
 
     public function client_list()

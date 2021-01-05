@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccessTokenModelsTable extends Migration
+class CreateAdminAccessTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateAccessTokenModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('access_token_models', function (Blueprint $table) {
+        Schema::create('admin_access_tokens', function (Blueprint $table) {
             $table->id();
             $table->text('access_token');
-            $table->string('expires_in');
+            $table->dateTime('expires_in');
             $table->text('description')->nullable();
+            $table->string('key')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateAccessTokenModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('access_token_models');
+        Schema::dropIfExists('admin_access_tokens');
     }
 }
