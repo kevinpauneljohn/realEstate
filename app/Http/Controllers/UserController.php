@@ -250,6 +250,8 @@ class UserController extends Controller
             if($this->checkIfBuilder($request) === true)
             {
                 return $this->saveBuilder($user);
+            }elseif ($this->checkIfClient($request) === true){
+
             }else{
                 return $this->agentFunction($user, $request);
             }
@@ -267,9 +269,6 @@ class UserController extends Controller
 
             //assign role to a user
             $this->setRole($user,$request);
-
-            //connect the user to its up line
-            //event(new CreateNetworkEvent($user->id));
 
             //set the user rank based on his points
             event(new UserRankPointsEvent($user,0,0));
@@ -308,6 +307,29 @@ class UserController extends Controller
         return false;
     }
 
+    //this will check if the user role is builder
+    private function checkIfClient($request)
+    {
+        if($this->checkRole($request) === true)
+        {
+
+            foreach ($request->role as $role)
+            {
+                if($role === 'client')
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    ///save the client to dhg.dream-homeseller.com
+    private function saveClient($client)
+    {
+
+    }
+
     ///save the user if its a builder
     private function saveBuilder($user)
     {
@@ -335,14 +357,6 @@ class UserController extends Controller
      * */
     protected function setRole($user, $request)
     {
-//        if($request->role !== null)
-//        {
-//            foreach ($request->role as $role)
-//            {
-//                $user->assignRole($role);
-//            }
-//        }
-
         if($this->checkRole($request) === true)
         {
             foreach ($request->role as $role)
@@ -353,22 +367,6 @@ class UserController extends Controller
         return $this;
     }
 
-//    /**
-//     * March 21, 2020
-//     * @author john kevin paunel
-//     * set user to downlines table
-//     * @param string $user
-//     * @return mixed
-//     * */
-//    public function setDownline($user)
-//    {
-//        $downline = new Downline();
-//        $downline->user_id = auth()->user()->id;
-//        $downline->downline_id = $user->id;
-//        $downline->save();
-//
-//        return $this;
-//    }
 
     /**
      * March 09, 2020

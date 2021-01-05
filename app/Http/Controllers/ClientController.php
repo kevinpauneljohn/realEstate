@@ -2,16 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\ClientRepository;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClientController extends Controller
 {
-    public function index()
+    private $client_repository;
+
+    public function __construct(ClientRepository $clientRepository)
     {
+        $this->client_repository = $clientRepository;
+    }
+
+    public function index(Request $request)
+    {
+       //return $this->client_repository->re();
         return view('pages.clients.index');
+        //return $request->cookie('token');
+
     }
 
     public function store(Request $request)
@@ -26,22 +38,13 @@ class ClientController extends Controller
 
         if($validation->passes())
         {
-            $user = new User();
-            $user->firstname = $request->firstname;
-            $user->lastname = $request->lastname;
-            $user->address = $request->address;
-            $user->username = $request->username;
-            $user->password = bcrypt($request->password);
-            $user->assignRole('client');
-
-            if($user->save())
-            {
-                $accessToken = User::find($user->id);
-                $accessToken->api_token = $user->createToken('authToken')->accessToken;
-                $accessToken->save();
-                return response()->json(['success' => true,'message' => 'Client successfully added!']);
-            }
+            //this will create user through API call in dream home guide
+//            $response = $this->client_repository->requestToken();
+//            return response()->json(['success' => true],200)
+//                ->withCookie(\cookie('token',$response['access_token'],$response['expires_in']));
+            return $this->client_repository->requestToken()->saveAccessToken(['success' => true]);
         }
+
         return response()->json($validation->errors());
     }
 

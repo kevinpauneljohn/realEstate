@@ -10,15 +10,15 @@ $(document).on('submit','#client-form',function(form){
             $('.submit-contact-btn').val('Saving ... ').attr('disabled',true);
         },success: function (result) {
             //console.log(result);
-            if(result.success === true)
-            {
-                toastr.success(result.message);
-                $('#client-form').trigger('reset');
-                $('#add-client-modal').modal('toggle');
-
-                let table = $('#client-list').DataTable();
-                table.ajax.reload();
-            }
+            // if(result.success === true)
+            // {
+            //     toastr.success(result.message);
+            //     $('#client-form').trigger('reset');
+            //     $('#add-client-modal').modal('toggle');
+            //
+            //     let table = $('#client-list').DataTable();
+            //     table.ajax.reload();
+            // }
 
             $.each(result, function (key, value) {
                 let element = $('.'+key);

@@ -24,18 +24,10 @@ class AuthController extends Controller
             'password'      => 'required',
         ]);
 
-
         if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password]))
         {
-//            $tokenRequest = $request->user()->createToken('Personal Access Token');
-//            $token = $tokenRequest->token;
-//            if($request->remember_me)
-//            {
-//                $token->expires_at = Carbon::now()->addWeeks(1);
-//                $token->save();
-//            }
-
-            return \auth()->user()->getAuthPassword();
+            $user = \auth()->user();
+            return response()->json(['user' => $user, 'roles' => $user->getRoleNames()]);
 
         }else{
             return response()->json(['message' => 'invalid credentials', 'success' => false]);

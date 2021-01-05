@@ -34,10 +34,6 @@
 @section('content')
 
     @if(!auth()->user()->hasAnyRole('architect|client'))
-        @php
-        $_SESSION['test'] = 'test';
-        echo $_SESSION['test'];
-        @endphp
     <div class="row">
         <div class="col-lg-8">
             <div class="row">
