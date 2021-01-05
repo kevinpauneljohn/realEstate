@@ -20,12 +20,12 @@ $(document).on('submit','#client-form',function(form){
             //     table.ajax.reload();
             // }
 
-            // $.each(result, function (key, value) {
-            //     let element = $('.'+key);
-            //
-            //     element.find('.error-'+key).remove();
-            //     element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-            // });
+            $.each(result, function (key, value) {
+                let element = $('.'+key);
+
+                element.find('.error-'+key).remove();
+                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            });
             $('.submit-contact-btn').val('Save').attr('disabled',false);
         },error: function(xhr, status, error){
             console.log(xhr);

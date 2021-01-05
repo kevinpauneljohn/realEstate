@@ -86,15 +86,23 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-lg-4 username">
+                                    <div class="col-lg-6 username">
                                         <label>Username</label>
                                         <input type="text" name="username" id="username" class="form-control">
                                     </div>
-                                    <div class="col-lg-4 password">
+                                    <div class="col-lg-6 email">
+                                        <label>Email</label>
+                                        <input type="text" name="email" id="email" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-6 password">
                                         <label>Password</label>
                                         <input type="password" name="password" id="password" class="form-control">
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <label>Password Confirmation</label>
                                         <input type="password" name="password_confirmation" class="form-control">
                                     </div>

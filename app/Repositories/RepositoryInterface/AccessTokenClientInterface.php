@@ -11,4 +11,6 @@ interface AccessTokenClientInterface
     public function getAccessToken();
 
     public function getAccessTokenExpiry();
+
+    public function setHttpHeader();
 }

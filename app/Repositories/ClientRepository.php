@@ -3,7 +3,6 @@
 
 namespace App\Repositories;
 
-
 use App\AdminAccessToken;
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use Carbon\Carbon;
@@ -20,8 +19,8 @@ class ClientRepository implements AccessTokenClientInterface
     {
         $this->request = $request;
         $this->access_token = AdminAccessToken::where('key','privilege');
-        $this->token = $this->access_token->first();
         $this->checkIfAccessTokenExists()->checkIfAccessTokenExpired();
+
     }
 
     /**
@@ -42,7 +41,7 @@ class ClientRepository implements AccessTokenClientInterface
 
     private function checkIfAccessTokenExpired()
     {
-        $expiry_date = $this->token->expires_in;
+        $expiry_date = $this->access_token->first()->expires_in;
         $date_now = Carbon::now();
 
         if($expiry_date < $date_now)
@@ -75,7 +74,7 @@ class ClientRepository implements AccessTokenClientInterface
     //save access token through cookie
     private function saveAccessToken()
     {
-        $this->requestToken();//load request token to get the value of response when needed only
+        $this->requestToken();//load request token to get the value of response
 
         AdminAccessToken::updateOrCreate(
             ['key' => 'privilege'],
@@ -90,14 +89,25 @@ class ClientRepository implements AccessTokenClientInterface
     //will return the access_token only
     public function getAccessToken()
     {
-        return $this->token->access_token;
+        return $this->access_token->first()->access_token;
     }
 
-    //return the expiry date of the access token
     public function getAccessTokenExpiry()
     {
         // TODO: Implement getAccessTokenExpiry() method.
-        return $this->token->expires_in;
+        return $this->access_token->first()->expires_in;
     }
+
+    //set the http header to make an action on the DHG server
+    public function setHttpHeader()
+    {
+
+        return Http::withHeaders([
+            'content-type' => 'application/json',
+            'Accept'        => 'application/json',
+            'Authorization' => 'Bearer '.$this->getAccessToken()
+        ]);
+    }
+
 
 }

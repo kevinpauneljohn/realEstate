@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
+use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,13 +11,17 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ClientController extends Controller
 {
-    private $client_repository, $access_token;
+    private $access_token,
+            $client;
 
 
-    public function __construct(AccessTokenClientInterface $accessTokenClient)
+    public function __construct(
+        AccessTokenClientInterface $accessTokenClient,
+        DhgClientInterFace $dhgClientInterFace
+    )
     {
-        $this->client_repository = $accessTokenClient;
-        $this->access_token = $this->client_repository;
+        $this->access_token = $accessTokenClient;
+        $this->client = $dhgClientInterFace;
     }
 
     public function index(Request $request)
@@ -27,22 +32,7 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
-//        $validation = Validator::make($request->all(),[
-//            'firstname'     => 'required',
-//            'lastname'      => 'required',
-//            'address'       => 'required',
-//            'username'      => 'required|unique:users,username',
-//            'password'      => 'required|confirmed'
-//        ]);
-//
-//        if($validation->passes())
-//        {
-//            //this will create user through API call in dream home guide
-//            return $this->client_repository->getAccessToken();
-//
-//        }
-//        return response()->json($validation->errors());
-        return $this->client_repository->getAccessToken();
+        return $this->client->create($request->all());
     }
 
     public function client_list()
