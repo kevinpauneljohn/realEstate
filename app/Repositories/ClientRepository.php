@@ -6,13 +6,15 @@ namespace App\Repositories;
 use App\AdminAccessToken;
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use Carbon\Carbon;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 
 class ClientRepository implements AccessTokenClientInterface
 {
     public $response, $request,
-            $token;
+            $token,
+            $requestResponse; //this variable will be used for instantiating the model action (eg. create, edit,delete,view)
     private $access_token;
 
     public function __construct(Request $request)
@@ -107,6 +109,20 @@ class ClientRepository implements AccessTokenClientInterface
             'Accept'        => 'application/json',
             'Authorization' => 'Bearer '.$this->getAccessToken()
         ]);
+    }
+
+    //this will check if the request is unauthenticated and will return true if it is
+    protected function tokenUnauthenticated()
+    {
+        if(array_key_exists('message',$this->requestResponse))
+        {
+            //it means the token was revoked or purged from the server
+            //that's why we will update the save access token from our database
+            $this->saveAccessToken();
+            return true;
+        }
+        //the token from our database is active that's
+        return false;
     }
 
 

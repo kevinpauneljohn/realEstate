@@ -36,6 +36,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        if ($exception instanceof CustomException) {
+            //
+        }
+
         parent::report($exception);
     }
 

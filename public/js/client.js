@@ -19,20 +19,21 @@ $(document).on('submit','#client-form',function(form){
             //     let table = $('#client-list').DataTable();
             //     table.ajax.reload();
             // }
-
-            $.each(result, function (key, value) {
-                let element = $('.'+key);
-
-                element.find('.error-'+key).remove();
-                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-            });
             $('.submit-contact-btn').val('Save').attr('disabled',false);
+            // $.each(result, function (key, value) {
+            //     let element = $('.'+key);
+            //
+            //     element.find('.error-'+key).remove();
+            //     element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            // });
+
         },error: function(xhr, status, error){
             console.log(xhr);
+            $('.submit-contact-btn').val('Save').attr('disabled',false);
         }
     });
 
-    clear_errors('firstname','lastname','address','username','password');
+    clear_errors('firstname','lastname','address','username','password','email');
 });
 
 $(document).on('click','.edit-client-btn',function(){

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'api_base_url'      => 'http://127.0.0.1:8000',
-    'client_id'         => 4,
-    'client_secret'     => 'qvR1ks7miykoFfkvftmm0ftV01KtozV1yFES2AZK'
+    'api_base_url'      => env('DHG_APP_URL'),
+    'client_id'         => env('DHG_APP_ID'),
+    'client_secret'     => env('DHG_APP_SECRET')
 ];
