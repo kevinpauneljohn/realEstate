@@ -10,4 +10,6 @@ interface DhgClientInterFace
 
     public function view();
 
+    public function viewById(string $client);
+
 }

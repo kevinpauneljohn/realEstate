@@ -22,7 +22,7 @@
             <div class="card card-widget widget-user">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-info">
-                    <h3 class="widget-user-username">{{$client->fullname}}</h3>
+                    <h3 class="widget-user-username">{{ucfirst($client['firstname'])}} {{ucfirst($client['lastname'])}}</h3>
                 </div>
                 <div class="widget-user-image">
                     <img class="img-circle elevation-2" src="{{asset('images/avatar.png')}}" alt="User Avatar">
@@ -138,7 +138,7 @@
         <div class="modal fade" id="add-checklist-modal">
             <form role="form" id="checklist-form" class="form-submit" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="client" value="{{$client->id}}">
+                <input type="hidden" name="client" value="{{$client['id']}}">
                 <input type="hidden" name="architect" value="{{auth()->user()->id}}">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -180,7 +180,7 @@
         <div class="modal fade" id="add-documentation-modal">
             <form role="form" id="documentation-form" class="form-submit">
                 @csrf
-                <input type="hidden" name="client" value="{{$client->id}}">
+                <input type="hidden" name="client" value="{{$client['id']}}">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -265,7 +265,7 @@
                 $('#client-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('checklist.client',['client' => $client->id]) !!}',
+                    ajax: '{!! route('checklist.client',['client' => $client['id']]) !!}',
                     columns: [
                         { data: 'title', name: 'title'},
                         { data: 'description', name: 'description'},
@@ -279,7 +279,7 @@
             $('#documentation-list').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('document.list',['id' => $client->id]) !!}',
+                ajax: '{!! route('document.list',['id' => $client['id']]) !!}',
                 columns: [
                     { data: 'image', name: 'image'},
                     { data: 'title', name: 'title'},

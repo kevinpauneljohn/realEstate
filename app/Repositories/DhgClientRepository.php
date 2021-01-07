@@ -47,6 +47,15 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('view');
     }
 
+    public function viewById($client)
+    {
+        $this->client = $client;
+
+        $this->requestResponse = $this->setHttpHeader()
+        ->get(config('dreamhomeguide.api_base_url').'/api/users/'.$client)->json();
+        return $this->runMethod('viewById');
+    }
+
     //if the request is unauthenticated callback the method again
     //this will return the api response if successful
     private function runMethod($method)
@@ -60,6 +69,9 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
                     break;
                 case "view":
                     return $this->view();
+                    break;
+                case "viewById":
+                    return $this->viewById($this->client);
                     break;
             }
         }

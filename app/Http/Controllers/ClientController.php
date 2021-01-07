@@ -36,7 +36,6 @@ class ClientController extends Controller
 
     public function client_list()
     {
-        //$clients = User::role('client')->get();
         $clients = $this->client->view();
         return DataTables::of($clients)
             ->addColumn('fullname',function($client){
@@ -50,7 +49,7 @@ class ClientController extends Controller
                 $action = "";
                 if(auth()->user()->can('view client'))
                 {
-                    $action .= '<a  class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i></a>';
+                    $action .= '<a href="'.route('client.show',['client' => $collection['id']]).'" class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i></a>';
                 }
                 if(auth()->user()->can('edit client'))
                 {
@@ -69,8 +68,10 @@ class ClientController extends Controller
 
     public function show($id)
     {
+        $client = collect($this->client->viewById($id))->toArray();
+
         return view('pages.clients.profile')->with([
-            'client'    => User::find($id)
+            'client'    => $client
         ]);
     }
 
