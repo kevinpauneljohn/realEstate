@@ -10,7 +10,6 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
 {
     public $serverResponse,
             $client;
-    private $method;
 
     public function __construct(Request $request)
     {
@@ -27,29 +26,29 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
     public function create($client)
     {
         $this->client = $client; //this is the request client instance
-        $this->method = 'create'; //this will instantiate what method was being requested
 
         $response = $this->setHttpHeader()
             ->post(config('dreamhomeguide.api_base_url').'/api/users',$this->client);
-        //$result = json_decode((string) $response->getBody(), true);
-        $this->requestResponse = $response->json();
 
-        return $this->requestProceed();
+        $this->requestResponse = $response->json();
+        return $this->runMethod('create');
     }
 
-    //the request method will proceed if the token submitted was valid from the server
-    public function requestProceed()
+    //if the request is unauthenticated callback the method again
+    private function runMethod($method)
     {
         if($this->tokenUnauthenticated() === true)
         {
-          switch ($this->method)
+            switch ($method)
             {
-                case 'create':
-                    $this->create($this->client);
+                case "create":
+                    return $this->create($this->client);
                     break;
             }
         }
         return $this->requestResponse;
     }
+
+
 
 }

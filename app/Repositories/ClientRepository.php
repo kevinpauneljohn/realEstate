@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Request;
 class ClientRepository implements AccessTokenClientInterface
 {
     public $response, $request,
-            $token,
+            $token, $runMethod,$method,
             $requestResponse; //this variable will be used for instantiating the model action (eg. create, edit,delete,view)
     private $access_token;
 
@@ -118,12 +118,14 @@ class ClientRepository implements AccessTokenClientInterface
         {
             //it means the token was revoked or purged from the server
             //that's why we will update the save access token from our database
-            $this->saveAccessToken();
-            return true;
+            if($this->requestResponse['message'] === 'Unauthenticated.')
+            {
+                $this->saveAccessToken();
+                return true;
+            }
         }
-        //the token from our database is active that's
+        //the token from our database is active
         return false;
     }
-
 
 }
