@@ -34,7 +34,21 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('create');
     }
 
+    /**
+     * Jan. 07, 2021
+     * @author john kevin paunel
+     * view all the created client
+     * @return DhgClientRepository view
+     * */
+    public function view()
+    {
+        $this->requestResponse = $this->setHttpHeader()
+            ->get(config('dreamhomeguide.api_base_url').'/api/users')->json();
+        return $this->runMethod('view');
+    }
+
     //if the request is unauthenticated callback the method again
+    //this will return the api response if successful
     private function runMethod($method)
     {
         if($this->tokenUnauthenticated() === true)
@@ -43,6 +57,9 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
             {
                 case "create":
                     return $this->create($this->client);
+                    break;
+                case "view":
+                    return $this->view();
                     break;
             }
         }

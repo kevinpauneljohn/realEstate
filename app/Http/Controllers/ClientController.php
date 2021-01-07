@@ -27,7 +27,6 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         return view('pages.clients.index');
-
     }
 
     public function store(Request $request)
@@ -37,25 +36,29 @@ class ClientController extends Controller
 
     public function client_list()
     {
-        $clients = User::role('client')->get();
+        //$clients = User::role('client')->get();
+        $clients = $this->client->view();
         return DataTables::of($clients)
             ->addColumn('fullname',function($client){
-                return $client->fullname;
+                $collection = collect($client)->toArray();
+                $fullname = ucfirst($collection['firstname']).' '.ucfirst($collection['lastname']);
+                return $fullname;
             })
             ->addColumn('action', function ($client)
             {
+                $collection = collect($client)->toArray();
                 $action = "";
                 if(auth()->user()->can('view client'))
                 {
-                    $action .= '<a href="'.route('client.show',['client' => $client->id]).'" class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i></a>';
+                    $action .= '<a  class="btn btn-xs btn-success edit-user-btn"><i class="fa fa-eye"></i></a>';
                 }
                 if(auth()->user()->can('edit client'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-client-btn" id="'.$client->id.'" data-toggle="modal" data-target="#edit-client-modal"><i class="fa fa-edit"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-client-btn" id="'.$collection['id'].'" data-toggle="modal" data-target="#edit-client-modal"><i class="fa fa-edit"></i></a>';
                 }
                 if(auth()->user()->can('delete client'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-user-btn" id="'.$client->id.'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-user-btn" id="'.$collection['id'].'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
