@@ -4,14 +4,9 @@
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientPaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientPaymentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/CheckPassword.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/CheckPassword.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/ClientRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/ClientRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/DhgClientRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DhgClientRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/DhgClientInterFace.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/DhgClientInterFace.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/clients/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/clients/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <ignored path="app/Repositories/RepositoryInterface/ClientRepositoryInterface.php" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,17 +36,14 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.15817694">
+    <splitter split-orientation="horizontal" split-proportion="0.5996425">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Repositories/ClientRepository.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="17">
-                  <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
-                  <folding>
-                    <element signature="e#37#62#0#PHP" expanded="true" />
-                  </folding>
+                <state relative-caret-position="119">
+                  <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
                 </state>
               </provider>
             </entry>
@@ -59,8 +51,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="243">
-                  <caret line="96" column="25" lean-forward="true" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
+                <state relative-caret-position="-267">
+                  <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
                   <folding>
                     <element signature="e#40#108#0#PHP" expanded="true" />
                   </folding>
@@ -68,11 +60,20 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/clients/index.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="240">
+                <state relative-caret-position="750">
                   <caret line="272" column="81" selection-start-line="272" selection-start-column="81" selection-end-line="272" selection-end-column="81" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/Repositories/RepositoryInterface/DhgClientInterFace.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="170">
+                  <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
                 </state>
               </provider>
             </entry>
@@ -99,11 +100,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/Repositories/DhgClientRepository.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="408">
-                  <caret line="87" column="56" lean-forward="true" selection-start-line="87" selection-start-column="56" selection-end-line="87" selection-end-column="56" />
+                <state relative-caret-position="289">
+                  <caret line="89" column="31" lean-forward="true" selection-start-line="89" selection-start-column="31" selection-end-line="89" selection-end-column="31" />
                   <folding>
                     <element signature="e#37#97#0#PHP" expanded="true" />
                   </folding>
@@ -111,16 +112,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://D:/Flarepoint-crm/public/js/app.js">
-              <provider selected="true" editor-type-id="text-editor" />
-            </entry>
-          </file>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/js/client.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="314">
-                  <caret line="94" column="9" lean-forward="true" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="9" />
+                  <caret line="94" column="9" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="9" />
                 </state>
               </provider>
             </entry>
@@ -142,7 +138,7 @@
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientPaymentController.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="158">
-                  <caret line="131" column="11" lean-forward="true" selection-start-line="131" selection-start-column="11" selection-end-line="131" selection-end-column="11" />
+                  <caret line="131" column="11" selection-start-line="131" selection-start-column="11" selection-end-line="131" selection-end-column="11" />
                   <folding>
                     <element signature="e#40#62#0#PHP" expanded="true" />
                   </folding>
@@ -262,16 +258,16 @@
         <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/app/Exceptions/Handler.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/clients/profile.blade.php" />
-        <option value="$PROJECT_DIR$/app/Repositories/ClientRepository.php" />
         <option value="$PROJECT_DIR$/app/Traits/RemovePrefix.php" />
         <option value="$PROJECT_DIR$/public/js/client.js" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/app/Repositories/RepositoryInterface/DhgClientInterFace.php" />
-        <option value="$PROJECT_DIR$/app/Repositories/DhgClientRepository.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" />
         <option value="$PROJECT_DIR$/app/Repositories/CheckPassword.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ClientPaymentController.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/clients/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/Repositories/RepositoryInterface/DhgClientInterFace.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" />
+        <option value="$PROJECT_DIR$/app/Repositories/DhgClientRepository.php" />
+        <option value="$PROJECT_DIR$/app/Repositories/ClientRepository.php" />
       </list>
     </option>
   </component>
@@ -674,14 +670,7 @@
       <workItem from="1609655328815" duration="4326000" />
       <workItem from="1609665827427" duration="23814000" />
       <workItem from="1609852174841" duration="70464000" />
-      <workItem from="1610103953750" duration="6101000" />
-    </task>
-    <task id="LOCAL-00582" summary="login api authentication">
-      <created>1596191215877</created>
-      <option name="number" value="00582" />
-      <option name="presentableId" value="LOCAL-00582" />
-      <option name="project" value="LOCAL" />
-      <updated>1596191215878</updated>
+      <workItem from="1610103953750" duration="7630000" />
     </task>
     <task id="LOCAL-00583" summary="login api authentication">
       <created>1596297626137</created>
@@ -1019,11 +1008,18 @@
       <option name="project" value="LOCAL" />
       <updated>1610027733703</updated>
     </task>
-    <option name="localTasksCounter" value="631" />
+    <task id="LOCAL-00631" summary="admin save access token module">
+      <created>1610110745973</created>
+      <option name="number" value="00631" />
+      <option name="presentableId" value="LOCAL-00631" />
+      <option name="project" value="LOCAL" />
+      <updated>1610110745974</updated>
+    </task>
+    <option name="localTasksCounter" value="632" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2073547000" />
+    <option name="totallyTimeSpent" value="2075076000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1420,23 +1416,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repositories/ClientRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
-          <folding>
-            <element signature="e#37#62#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repositories/RepositoryInterface/DhgClientInterFace.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/project.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -1455,20 +1434,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="96" column="25" lean-forward="true" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
-          <folding>
-            <element signature="e#40#108#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/client.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="314">
-          <caret line="94" column="9" lean-forward="true" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="9" />
+          <caret line="94" column="9" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1488,7 +1457,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/clients/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
+        <state relative-caret-position="750">
           <caret line="272" column="81" selection-start-line="272" selection-start-column="81" selection-end-line="272" selection-end-column="81" />
         </state>
       </provider>
@@ -1496,25 +1465,51 @@
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientPaymentController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="158">
-          <caret line="131" column="11" lean-forward="true" selection-start-line="131" selection-start-column="11" selection-end-line="131" selection-end-column="11" />
+          <caret line="131" column="11" selection-start-line="131" selection-start-column="11" selection-end-line="131" selection-end-column="11" />
           <folding>
             <element signature="e#40#62#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://D:/Flarepoint-crm/public/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3570" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Repositories/RepositoryInterface/DhgClientInterFace.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-267">
+          <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+          <folding>
+            <element signature="e#40#108#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Repositories/DhgClientRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="87" column="56" lean-forward="true" selection-start-line="87" selection-start-column="56" selection-end-line="87" selection-end-column="56" />
+        <state relative-caret-position="289">
+          <caret line="89" column="31" lean-forward="true" selection-start-line="89" selection-start-column="31" selection-end-line="89" selection-end-column="31" />
           <folding>
             <element signature="e#37#97#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Flarepoint-crm/public/js/app.js">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/app/Repositories/ClientRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

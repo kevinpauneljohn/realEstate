@@ -6,7 +6,6 @@ namespace App\Repositories;
 use App\AdminAccessToken;
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 

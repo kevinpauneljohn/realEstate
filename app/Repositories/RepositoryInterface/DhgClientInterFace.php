@@ -8,7 +8,7 @@ interface DhgClientInterFace
 {
     public function create(array $client);
 
-    public function view();
+    public function viewAll();
 
     public function viewById(string $client);
 

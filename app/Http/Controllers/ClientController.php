@@ -36,7 +36,7 @@ class ClientController extends Controller
 
     public function client_list()
     {
-        $clients = $this->client->view();
+        $clients = $this->client->viewAll();
         return DataTables::of($clients)
             ->addColumn('fullname',function($client){
                 $collection = collect($client)->toArray();

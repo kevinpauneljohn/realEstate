@@ -42,11 +42,11 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
      * view all the created client
      * @return DhgClientRepository view
      * */
-    public function view()
+    public function viewAll()
     {
         $this->requestResponse = $this->setHttpHeader()
             ->get(config('dreamhomeguide.api_base_url').'/api/users')->json();
-        return $this->runMethod('view');
+        return $this->runMethod('viewAll');
     }
 
     public function viewById($client)
@@ -87,8 +87,8 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
                 case "create":
                     return $this->create($this->client);
                     break;
-                case "view":
-                    return $this->view();
+                case "viewAll":
+                    return $this->viewAll();
                     break;
                 case "viewById":
                     return $this->viewById($this->client);
