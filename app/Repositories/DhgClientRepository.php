@@ -4,12 +4,14 @@ namespace App\Repositories;
 
 
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
+use App\Traits\RemovePrefix;
 use Illuminate\Support\Facades\Request;
 
 class DhgClientRepository extends ClientRepository implements DhgClientInterFace
 {
+    use RemovePrefix;
     public $serverResponse,
-            $client;
+            $client, $id;
 
     public function __construct(Request $request)
     {
@@ -21,7 +23,7 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
      * @author john kevin paunel
      * Create new user client to DHG server
      * @param array $client
-     * @return mixed
+     * @return $this->runMethod
      * */
     public function create($client)
     {
@@ -56,6 +58,24 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('viewById');
     }
 
+    public function updateById($clients, $id)
+    {
+        $this->client = $this->editArrayKeys('edit_','',$clients);//trait remove prefix method
+        $this->id = $id;
+
+        $this->requestResponse = $this->setHttpHeader()
+            ->put(config('dreamhomeguide.api_base_url').'/api/users/'.$id,$this->client)->json();
+        return $this->runMethod('updateById');
+    }
+
+    public function removeById($id)
+    {
+        $this->id = $id;
+        $this->requestResponse = $this->setHttpHeader()
+            ->delete(config('dreamhomeguide.api_base_url').'/api/users/'.$id)->json();
+        return $this->runMethod('removeById');
+    }
+
     //if the request is unauthenticated callback the method again
     //this will return the api response if successful
     private function runMethod($method)
@@ -72,6 +92,12 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
                     break;
                 case "viewById":
                     return $this->viewById($this->client);
+                    break;
+                case "updateById":
+                    return $this->updateById($this->client, $this->id);
+                    break;
+                case "removeById":
+                    return $this->removeById($this->id);
                     break;
             }
         }

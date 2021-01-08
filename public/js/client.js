@@ -9,16 +9,16 @@ $(document).on('submit','#client-form',function(form){
         beforeSend: function () {
             $('.submit-contact-btn').val('Saving ... ').attr('disabled',true);
         },success: function (result) {
-            console.log(result);
-            // if(result.success === true)
-            // {
-            //     toastr.success(result.message);
-            //     $('#client-form').trigger('reset');
-            //     $('#add-client-modal').modal('toggle');
-            //
-            //     let table = $('#client-list').DataTable();
-            //     table.ajax.reload();
-            // }
+
+            if(result.success === true)
+            {
+                toastr.success(result.message);
+                $('#client-form').trigger('reset');
+                $('#add-client-modal').modal('toggle');
+
+                let table = $('#client-list').DataTable();
+                table.ajax.reload();
+            }
             $('.submit-contact-btn').val('Save').attr('disabled',false);
             $.each(result, function (key, value) {
                 let element = $('.'+key);
@@ -69,11 +69,9 @@ $(document).on('submit','#edit-client-form',function(form){
             $('#edit-client-form input, #edit-client-form textarea').attr('disabled',true);
             $('.submit-edit-client-btn').val('Saving ...');
         },success: function(result){
-
             if(result.success === true)
             {
                 toastr.success(result.message);
-                $('#edit-client-form').trigger('reset');
                 $('#edit-client-modal').modal('toggle');
 
                 let table = $('#client-list').DataTable();
@@ -84,10 +82,10 @@ $(document).on('submit','#edit-client-form',function(form){
             }
 
             $.each(result, function (key, value) {
-                let element = $('.'+key);
+                let element = $('.edit_'+key);
 
-                element.find('.error-'+key).remove();
-                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                element.find('.error-edit_'+key).remove();
+                element.append('<p class="text-danger error-edit_'+key+'">'+value+'</p>');
             });
 
             $('#edit-client-form input, #edit-client-form textarea').attr('disabled',false);
@@ -96,6 +94,7 @@ $(document).on('submit','#edit-client-form',function(form){
             console.log(xhr);
         }
     });
+    clear_errors('edit_firstname','edit_lastname','edit_address');
 });
 
 

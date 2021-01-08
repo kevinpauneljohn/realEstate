@@ -141,7 +141,7 @@ class ClientPaymentController extends Controller
 
         if($validation->passes())
         {
-            return response()->json($this->check_password->checkPassword(auth()->user()->username, $request->password));
+            return response()->json($this->check_password->checkPassword(auth()->user()->username, $request->password,''));
         }
         return response()->json($validation->errors());
     }

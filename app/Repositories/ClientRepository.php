@@ -58,7 +58,7 @@ class ClientRepository implements AccessTokenClientInterface
      * Jan. 04, 2021
      * @author john kevin paunel
      * Client Credentials Grant Tokens for super admin
-     *
+     * @return $this->response->json
      * */
     public function requestToken()
     {

@@ -16,12 +16,12 @@ class CheckPassword
      * @param string $password
      * @return array
      * */
-    public function checkPassword($username, $password)
+    public function checkPassword($username, $password, $errorMessage)
     {
         if(Auth::attempt(['username' => $username, 'password' => $password]))
         {
             return ["success" => true];
         }
-        return ["success" => false, 'message' => 'You are not allowed to update the payment'];
+        return ["success" => false, 'message' => $errorMessage];
     }
 }

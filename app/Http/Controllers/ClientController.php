@@ -43,6 +43,11 @@ class ClientController extends Controller
                 $fullname = ucfirst($collection['firstname']).' '.ucfirst($collection['lastname']);
                 return $fullname;
             })
+            ->addColumn('user_address',function($client){
+                $collection = collect($client)->toArray();
+                $address = ucfirst($collection['address']);
+                return $address;
+            })
             ->addColumn('action', function ($client)
             {
                 $collection = collect($client)->toArray();
@@ -57,7 +62,7 @@ class ClientController extends Controller
                 }
                 if(auth()->user()->can('delete client'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-user-btn" id="'.$collection['id'].'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-client-btn" id="'.$collection['id'].'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
@@ -85,8 +90,7 @@ class ClientController extends Controller
      * */
     public function edit($id)
     {
-        $client = User::find($id);
-        return $client;
+        return $this->client->viewById($id);
     }
 
     /**
@@ -99,31 +103,11 @@ class ClientController extends Controller
      * */
     public function update(Request $request,$id)
     {
-        $validator = Validator::make($request->all(),[
-            'edit_firstname'    => 'required',
-            'edit_lastname'     => 'required',
-            'edit_address'      => 'required',
-        ],[
-           'edit_firstname' => 'First name is required',
-           'edit_lasstname' => 'Last name is required',
-           'edit_address'   => 'Address is required',
-        ]);
+        return $this->client->updateById($request->all(), $id);
+    }
 
-        if($validator->passes())
-        {
-            $client = User::find($id);
-            $client->firstname = $request->edit_firstname;
-            $client->middlename = $request->edit_middlename;
-            $client->lastname = $request->edit_lastname;
-            $client->address = $request->edit_address;
-
-            if($client->isDirty())
-            {
-                $client->save();
-                return response()->json(['success' => true,'message' => 'Client details successfully updated!']);
-            }
-            return response()->json(['success' => false,'message' => 'No changes occurred!']);
-        }
-        return response()->json($validator->errors());
+    public function destroy($id)
+    {
+        return $this->client->removeById($id);
     }
 }

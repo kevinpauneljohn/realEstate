@@ -303,6 +303,7 @@ Route::get('/clients-list','ClientController@client_list')->name('client.list')-
 Route::get('/client/{client}','ClientController@show')->name('client.show')->middleware(['auth','permission:view client']);
 Route::get('/client-info/{client}','ClientController@edit')->name('client.edit')->middleware(['auth','permission:view client']);
 Route::put('/clients/{client}','ClientController@update')->name('client.update')->middleware(['auth','permission:edit client']);
+Route::delete('/clients/{client}','ClientController@destroy')->name('client.destroy')->middleware(['auth','permission:delete client']);
 
 Route::post('/check-list','CheckListController@store')->name('checklist.store')->middleware(['auth','permission:add checklist']);
 Route::get('/check-list/{client}','CheckListController@check_list')->name('checklist.client')->middleware(['auth','permission:view checklist']);

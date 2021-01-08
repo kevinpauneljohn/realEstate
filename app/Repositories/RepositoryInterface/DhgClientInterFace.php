@@ -12,4 +12,8 @@ interface DhgClientInterFace
 
     public function viewById(string $client);
 
+    public function updateById(array $client, string $id);
+
+    public function removeById(string $id);
+
 }

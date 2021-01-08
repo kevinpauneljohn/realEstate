@@ -126,29 +126,6 @@
         <!--end contacts modal-->
     @endcan
 
-    @can('view contacts')
-        <!--edit contacts modal-->
-        <div class="modal fade" id="view-contacts-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">View Contact Details</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-        </div>
-        <!--end edit contacts modal-->
-    @endcan
 
     @can('edit client')
         <!--edit contacts modal-->
@@ -204,6 +181,36 @@
         <!--end edit contacts modal-->
     @endcan
 
+    @can('view client')
+        <div class="modal fade" id="sign-in-password-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <form id="sign-in-form">
+                        @csrf
+                    <div class="modal-header">
+                        <h6 class="modal-title">Sign-in your password for security</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                            <div class="form-group password">
+                                <input type="password" class="form-control" name="password" id="password" required>
+                            </div>
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary send-pw-btn" value="Send">
+                    </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+    @endcan
+
 @stop
 
 @section('css')
@@ -230,7 +237,7 @@
                 ajax: '{!! route('client.list') !!}',
                 columns: [
                     { data: 'fullname', name: 'fullname'},
-                    { data: 'address', name: 'address'},
+                    { data: 'user_address', name: 'user_address'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 responsive:true,
@@ -238,4 +245,91 @@
             });
         });
     </script>
+    @can('delete client')
+        <script>
+            $(document).on('click','.delete-client-btn',function(){
+                rowId = this.id;
+                $('#sign-in-password-modal').modal('toggle');
+            });
+
+            $(document).on('submit','#sign-in-form',function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
+
+                $.ajax({
+                    'url'   : '/admin/credential',
+                    'type'  : 'POST',
+                    'data'  : data,
+                    beforeSend: function(){
+                        $('.send-pw-btn').val('Sending ... ').attr('disabled',true);
+                    },success: function(result){
+                        console.log(result);
+                        if(result.success === true)
+                        {
+                            $('#sign-in-form').trigger('reset');
+                            $('#sign-in-password-modal').modal('toggle');
+                           deleteClient();
+                        }else if(result.success === false){
+                            toastr.error("You're not allowed to remove the client");
+                        }
+
+                        $.each(result, function (key, value) {
+                            let element = $('.'+key);
+
+                            element.find('.'+key).remove();
+                            element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                        });
+
+                        $('.send-pw-btn').val('Send').attr('disabled',false);
+                    },error: function(xhr,status,error){
+                        console.log(xhr);
+                    }
+                });
+            });
+
+
+            function deleteClient()
+            {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/clients/'+rowId,
+                            'type' : 'DELETE',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            'data' : {'_method':'DELETE','id' : rowId},
+                            beforeSend: function(){
+
+                            },success: function(output){
+
+                                if(output.success === true){
+                                    Swal.fire(
+                                        'Deleted!',
+                                        output.message,
+                                        'success'
+                                    );
+
+                                    let table = $('#client-list').DataTable();
+                                    table.ajax.reload();
+                                }else{
+                                    toastr.error(output.message);
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }
+                });
+            }
+        </script>
+    @endcan
 @stop
