@@ -1,16 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Clients')
+@section('title', 'DHG Users')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Clients</h1>
+            <h1 class="m-0 text-dark">DHG Users</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Clients</li>
+                <li class="breadcrumb-item active">DHG Users</li>
             </ol>
         </div><!-- /.col -->
     </div>
@@ -32,6 +32,7 @@
                         <tr role="row">
                             <th>Full Name</th>
                             <th>Address</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -40,6 +41,7 @@
                         <tr>
                             <th>Full Name</th>
                             <th>Address</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                         </tfoot>
@@ -108,9 +110,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group remarks">
-                                <label>Remarks</label>
-                                <textarea class="form-control" name="remarks" id="remarks"></textarea>
+                            <div class="row">
+                                <div class="col-lg-6 role">
+                                    <label for="role">Role</label>
+                                    <select class="select2 form-control" name="role" id="role" style="width: 100%;">
+                                        <option value=""></option>
+                                        <option value="client">Client</option>
+                                        <option value="architect">Architect</option>
+                                        <option value="builder admin">Builder Admin</option>
+                                        <option value="builder member">Builder Member</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group remarks">
+                                        <label>Remarks</label>
+                                        <textarea class="form-control" name="remarks" id="remarks"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -237,13 +253,17 @@
                 ajax: '{!! route('client.list') !!}',
                 columns: [
                     { data: 'fullname', name: 'fullname'},
-                    { data: 'user_address', name: 'user_address'},
+                    { data: 'address', name: 'address'},
+                    { data: 'roles', name: 'roles'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 responsive:true,
                 order:[0,'asc']
             });
         });
+
+        //Initialize Select2 Elements
+        $('.select2').select2();
     </script>
     @can('delete client')
         <script>

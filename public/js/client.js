@@ -9,7 +9,7 @@ $(document).on('submit','#client-form',function(form){
         beforeSend: function () {
             $('.submit-contact-btn').val('Saving ... ').attr('disabled',true);
         },success: function (result) {
-
+            console.log(result);
             if(result.success === true)
             {
                 toastr.success(result.message);
@@ -33,7 +33,7 @@ $(document).on('submit','#client-form',function(form){
         }
     });
 
-    clear_errors('firstname','lastname','address','username','password','email');
+    clear_errors('firstname','lastname','address','username','password','email','role');
 });
 
 $(document).on('click','.edit-client-btn',function(){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
+use App\Traits\Labeler;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ClientController extends Controller
 {
+    use Labeler;
+
     private $access_token,
             $client;
 
@@ -39,14 +42,12 @@ class ClientController extends Controller
         $clients = $this->client->viewAll();
         return DataTables::of($clients)
             ->addColumn('fullname',function($client){
-                $collection = collect($client)->toArray();
-                $fullname = ucfirst($collection['firstname']).' '.ucfirst($collection['lastname']);
+
+                $fullname = ucfirst($client['firstname']).' '.ucfirst($client['lastname']);
                 return $fullname;
             })
-            ->addColumn('user_address',function($client){
-                $collection = collect($client)->toArray();
-                $address = ucfirst($collection['address']);
-                return $address;
+            ->editColumn('roles',function($client){
+                return $this->roleColor($client['roles'][0]['name']);
             })
             ->addColumn('action', function ($client)
             {
@@ -64,9 +65,13 @@ class ClientController extends Controller
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-client-btn" id="'.$collection['id'].'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i></a>';
                 }
+                if(auth()->user()->can('edit client'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs bg-purple edit-client-btn" id="'.$collection['id'].'" data-toggle="modal" data-target="#edit-client-modal"><i class="fa fa-user-edit"></i></a>';
+                }
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['roles','action'])
             ->make(true);
     }
 
