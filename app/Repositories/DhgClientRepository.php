@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Request;
 class DhgClientRepository extends ClientRepository implements DhgClientInterFace
 {
     use RemovePrefix;
-    public $serverResponse,
-            $client, $id;
 
     public function __construct(Request $request)
     {

@@ -56,7 +56,7 @@
         <div class="modal fade" id="add-new-builder-modal">
             <form role="form" id="add-builder-form" class="form-submit">
                 @csrf
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Add New Builder</h4>
@@ -65,31 +65,17 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
-                                {{--First Column--}}
-                                <div class="col-lg-6">
-                                    <div class="form-group name">
-                                        <label for="name">Builder Name</label>
-                                        <input type="text" name="name" class="form-control" id="name">
-                                    </div>
-                                    <div class="form-group address">
-                                        <label for="address">Address</label>
-                                        <textarea class="form-control" name="address" id="address"></textarea>
-                                    </div>
-                                    <div class="form-group description">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="description" class="form-control" placeholder="Place some text here"></textarea>
-                                    </div>
-                                </div>
-                                {{--End of First Column--}}
-                                {{--Second Column--}}
-                                <div class="col-lg-6">
-                                    <div class="form-group remarks">
-                                        <label for="remarks">Remarks</label>
-                                        <textarea name="remarks" id="remarks" class="form-control" data-min-height="150" placeholder="Place some text here"></textarea>
-                                    </div>
-                                </div>
-                                {{--End of Second Column--}}
+                            <div class="form-group name">
+                                <label for="name">Builder Name</label>
+                                <input type="text" name="name" class="form-control" id="name">
+                            </div>
+                            <div class="form-group address">
+                                <label for="address">Address</label>
+                                <textarea class="form-control" name="address" id="address"></textarea>
+                            </div>
+                            <div class="form-group description">
+                                <label for="description">Description</label>
+                                <textarea name="description" id="description" class="form-control" placeholder="Place some text here"></textarea>
                             </div>
 
                         </div>
@@ -122,31 +108,17 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
-                                {{--First Column--}}
-                                <div class="col-lg-6">
-                                    <div class="form-group edit_name">
-                                        <label for="edit_name">Builder Name</label>
-                                        <input type="text" name="edit_name" class="form-control" id="edit_name">
-                                    </div>
-                                    <div class="form-group edit_address">
-                                        <label for="edit_address">Address</label>
-                                        <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
-                                    </div>
-                                    <div class="form-group edit_description">
-                                        <label for="edit_description">Description</label>
-                                        <textarea name="description" id="edit_description" class="form-control" placeholder="Place some text here"></textarea>
-                                    </div>
-                                </div>
-                                {{--End of First Column--}}
-                                {{--Second Column--}}
-                                <div class="col-lg-6">
-                                    <div class="form-group edit_remarks">
-                                        <label for="edit_remarks">Remarks</label>
-                                        <textarea name="edit_remarks" id="edit_remarks" class="form-control" data-min-height="150" placeholder="Place some text here"></textarea>
-                                    </div>
-                                </div>
-                                {{--End of Second Column--}}
+                            <div class="form-group edit_name">
+                                <label for="edit_name">Builder Name</label>
+                                <input type="text" name="edit_name" class="form-control" id="edit_name">
+                            </div>
+                            <div class="form-group edit_address">
+                                <label for="edit_address">Address</label>
+                                <textarea class="form-control" name="edit_address" id="edit_address"></textarea>
+                            </div>
+                            <div class="form-group edit_description">
+                                <label for="edit_description">Description</label>
+                                <textarea name="edit_description" id="edit_description" class="form-control" placeholder="Place some text here"></textarea>
                             </div>
 
                         </div>
@@ -162,6 +134,37 @@
         </div>
         <!--end add builder modal-->
     @endcan
+
+    @can('view client')
+        <div class="modal fade" id="sign-in-password-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <form id="sign-in-form">
+                        @csrf
+                        <div class="modal-header">
+                            <h6 class="modal-title">Sign-in your password for security</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group password">
+                                <input type="password" class="form-control" name="password" id="password" required>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary send-pw-btn" value="Send">
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+    @endcan
+    <div id="generate-script"></div>
 
 @stop
 
@@ -217,6 +220,60 @@
             });
             //Initialize Select2 Elements
             $('.select2').select2();
+
+
+            $(document).on('click','.delete-btn',function(){
+                rowId = this.id;
+
+                Swal.fire({
+                    title: 'Input your password for security',
+                    input: 'password',
+                    inputAttributes: {
+                        autocapitalize: 'off',
+                        name: 'password'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Send',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (login) => {
+                        // return fetch('/admin/credential',{
+                        //     method: 'POST',
+                        return fetch('/builders/'+rowId,{
+                            method: 'DELETE',
+                            headers: {
+                                'Accept': 'application/json, text/plain, */*',
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                            },
+                            body: "password=" +encodeURIComponent(login)
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    console.log(result.value.success);
+                    if (result.value.success === true) {
+                        $('#builder-list').DataTable().ajax.reload();
+                        Swal.fire(
+                            'Deleted!',
+                            'Builder has been deleted.',
+                            'success'
+                        );
+                    }
+                }).catch((error) => {
+
+                })
+            });
         </script>
     @endcan
 @stop

@@ -47,60 +47,30 @@ $(document).on('submit','#add-builder-form',function(form){
         }
     });
 
-    clear_errors('name');
+    clear_errors('name','address');
 });
 
 $(document).on('click','.edit-btn',function () {
     rowId = this.id;
-    $.get('/builders/'+rowId+'/edit',function (data) {
-        let parentElm = '#edit-builder-form';
+    let parentElm = '#edit-builder-form';
 
-        $(parentElm+' #edit_name').val(data.name);
-        $(parentElm+' #edit_name').val(data.name);
-        $(parentElm+' #edit_name').val(data.name);
-        $(parentElm+' #edit_remarks').val(data.remarks);
-    });
-});
-
-$(document).on('click','.delete-btn',function(){
-    rowId = this.id;
-
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.value) {
-
-            $.ajax({
-                'url' : '/builders/'+rowId,
-                'type' : 'DELETE',
-                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                'data' : {'_method':'DELETE'},
-                beforeSend: function(){
-
-                },success: function(output){
-                    //console.log(output);
-                    if(output.success === true){
-                        $('#builder-list').DataTable().ajax.reload();
-                        Swal.fire(
-                            'Deleted!',
-                            'Builder has been deleted.',
-                            'success'
-                        );
-                    }
-                },error: function(xhr, status, error){
-                    console.log(xhr);
-                }
-            });
-
+    $.ajax({
+        'url' : '/builders/'+rowId+'/edit',
+        'type' : 'GET',
+        beforeSend: function(){
+            $(parentElm+' input, '+parentElm+' textarea').attr('disabled',true);
+        },success: function(data){
+            $(parentElm+' #edit_name').val(data.name);
+            $(parentElm+' #edit_address').val(data.address);
+            $(parentElm+' #edit_description').val(data.description);
+            $(parentElm+' input, '+parentElm+' textarea').attr('disabled',false);
+        },error: function (xhr, status, error) {
+            console.log(xhr)
         }
     });
 });
+
+
 
 $(document).on('submit','#edit-builder-form',function(form){
     form.preventDefault();
@@ -114,8 +84,6 @@ $(document).on('submit','#edit-builder-form',function(form){
         beforeSend: function () {
             $('.builder-form-btn').attr('disabled',true).val('Saving...');
         },success: function(result){
-            //console.log(result);
-
             if(result.success === true)
             {
                 toastr.success(result.message);
@@ -127,10 +95,10 @@ $(document).on('submit','#edit-builder-form',function(form){
                 toastr.error(result.message);
             }
             $.each(result, function (key, value) {
-                let element = $('.'+key);
+                let element = $('.edit_'+key);
 
-                element.find('.error-'+key).remove();
-                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                element.find('.error-edit_'+key).remove();
+                element.append('<p class="text-danger error-edit_'+key+'">'+value+'</p>');
             });
 
             $('.builder-form-btn').attr('disabled',false).val('Save');
@@ -138,6 +106,6 @@ $(document).on('submit','#edit-builder-form',function(form){
             console.log(xhr, status, error);
         }
     });
-    clear_errors('edit_name');
+    clear_errors('edit_name','edit_address');
 });
 

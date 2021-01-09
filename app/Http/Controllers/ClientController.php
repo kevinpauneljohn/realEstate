@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Traits\Labeler;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClientController extends Controller

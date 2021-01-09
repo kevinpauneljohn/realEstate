@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Request;
 class ClientRepository implements AccessTokenClientInterface
 {
     public $response, $request,
-            $token, $runMethod,$method,
+            $token, $runMethod,$method, $client, $id,
             $requestResponse; //this variable will be used for instantiating the model action (eg. create, edit,delete,view)
     private $access_token;
 
