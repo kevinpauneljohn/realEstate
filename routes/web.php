@@ -297,6 +297,7 @@ Route::get('/tasks/overview/{id}','ScrumController@overview')->name('tasks.overv
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);
 
+Route::put('/clients/update-role/{client}','ClientController@updateRole')->name('client.update.role')->middleware(['auth','permission:edit client']);
 Route::get('/clients','ClientController@index')->name('client.index')->middleware(['auth','permission:view client']);
 Route::post('/clients','ClientController@store')->name('client.store')->middleware(['auth','permission:add client']);
 Route::get('/clients-list','ClientController@client_list')->name('client.list')->middleware(['auth','permission:view client']);

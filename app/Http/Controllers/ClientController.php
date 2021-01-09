@@ -63,11 +63,11 @@ class ClientController extends Controller
                 }
                 if(auth()->user()->can('delete client'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-client-btn" id="'.$collection['id'].'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i></a>';
+                    $action .= '<button type="button" value="delete-client" class="btn btn-xs btn-danger delete-client-btn" id="'.$collection['id'].'" onclick="showSignInPassword(this.id,this.value)"><i class="fa fa-trash"></i></button>';
                 }
                 if(auth()->user()->can('edit client'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs bg-purple edit-client-btn" id="'.$collection['id'].'" data-toggle="modal" data-target="#edit-client-modal"><i class="fa fa-user-edit"></i></a>';
+                    $action .= '<button type="button" value="edit-role" class="btn btn-xs bg-purple edit-role-btn" id="'.$collection['id'].'" onclick="showSignInPassword(this.id,this.value)"><i class="fa fa-user-edit"></i></button>';
                 }
                 return $action;
             })
@@ -114,5 +114,10 @@ class ClientController extends Controller
     public function destroy($id)
     {
         return $this->client->removeById($id);
+    }
+
+    public function updateRole(Request $request,$id)
+    {
+        return $this->client->updateRoleById($request->all(),$id);
     }
 }

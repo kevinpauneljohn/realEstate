@@ -76,6 +76,15 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('removeById');
     }
 
+    public function updateRoleById($clients, $id)
+    {
+        $this->client = $clients;
+        $this->id = $id;
+        $this->requestResponse = $this->setHttpHeader()
+            ->put(config('dreamhomeguide.api_base_url').'/api/users/update-role/'.$id, $this->client)->json();
+        return $this->runMethod('updateRoleById');
+    }
+
     //if the request is unauthenticated callback the method again
     //this will return the api response if successful
     private function runMethod($method)
@@ -98,6 +107,9 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
                     break;
                 case "removeById":
                     return $this->removeById($this->id);
+                    break;
+                case "updateRoleById":
+                    return $this->updateRoleById($this->client,$this->id);
                     break;
             }
         }

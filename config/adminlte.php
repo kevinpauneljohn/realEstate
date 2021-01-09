@@ -310,7 +310,7 @@ return [
             'can'     => 'view builder',
             'submenu'   => [
                 [
-                    'text'    => 'Clients',
+                    'text'    => 'Users',
                     'icon'    => 'fas fa-user-tag',
                     'can'     => 'view client',
                     'route'   => 'client.index',

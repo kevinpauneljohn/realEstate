@@ -16,4 +16,6 @@ interface DhgClientInterFace
 
     public function removeById(string $id);
 
+    public function updateRoleById(array $client, string $id);
+
 }

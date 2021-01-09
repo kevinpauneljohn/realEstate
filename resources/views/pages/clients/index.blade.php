@@ -226,6 +226,44 @@
             </div>
         </div>
     @endcan
+    <div id="generate-script"></div>
+
+{{--    @can('edit client')--}}
+{{--        <div class="modal fade" id="edit-role-modal">--}}
+{{--            <div class="modal-dialog modal-sm">--}}
+{{--                <div class="modal-content">--}}
+{{--                    <form id="edit-role-form">--}}
+{{--                        @csrf--}}
+{{--                        <div class="modal-header">--}}
+{{--                            <h6 class="modal-title">Update Role</h6>--}}
+{{--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                                <span aria-hidden="true">×</span>--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+{{--                        <div class="modal-body">--}}
+
+{{--                            <div class="form-group role">--}}
+{{--                                <label id="client-name"></label>--}}
+{{--                                <select class="select2 form-control" name="role" id="role" style="width: 100%;">--}}
+{{--                                    <option value=""></option>--}}
+{{--                                    <option value="client">Client</option>--}}
+{{--                                    <option value="architect">Architect</option>--}}
+{{--                                    <option value="builder admin">Builder Admin</option>--}}
+{{--                                    <option value="builder member">Builder Member</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+
+{{--                        </div>--}}
+{{--                        <div class="modal-footer justify-content-between">--}}
+{{--                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+{{--                            <input type="submit" class="btn btn-primary role-btn" value="Save">--}}
+{{--                        </div>--}}
+{{--                    </form>--}}
+{{--                </div>--}}
+{{--                <!-- /.modal-content -->--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    @endcan--}}
 
 @stop
 
@@ -265,12 +303,90 @@
         //Initialize Select2 Elements
         $('.select2').select2();
     </script>
+    @can('edit client')
+        <script>
+            let action;
+
+            let runAction;
+
+            function showSignInPassword(id,value)
+            {
+                rowId = id;
+                runAction = value;
+                $('#sign-in-password-modal').modal('toggle');
+            }
+
+            function runMethod()
+            {
+                if(runAction === "delete-client")
+                {
+                    deleteClient();
+                }else if(runAction === "edit-role")
+                {
+                    editRole();
+                }
+            }
+
+            function editRole()
+            {
+                $('#edit-role-modal').modal('toggle');
+                $.ajax({
+                    'url' : '/client-info/'+rowId,
+                    'type' : 'GET',
+                    beforeSend: function(){
+                        $('#client-full-name').remove();
+                        $('#edit-role-form input, #edit-role-form select').attr('disabled',true);
+                        $('.role-btn').val('Saving ... ');
+                    },success: function(result){
+                        $('#client-name').append('<span id="client-full-name">'+result.firstname+' '+result.lastname+'</span>');
+                        $('#edit-role-form #role').val(result.role).change();
+
+                        $('#edit-role-form input, #edit-role-form select').attr('disabled',false);
+                        $('.role-btn').val('Save');
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            }
+
+            $(document).on('submit','#edit-role-form',function(form){
+                form.preventDefault();
+
+                let data = $(this).serializeArray();
+
+                $.ajax({
+                    'url' : '/clients/update-role/'+rowId,
+                    'headers' : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    'type' : 'PUT',
+                    'data' : data,
+                    beforeSend: function(){
+                        $('#edit-role-form input, #edit-role-form select').attr('disabled',true);
+                        $('.role-btn').val('Saving ... ');
+                    },
+                    success: function (result) {
+                        if(result.success === true)
+                        {
+                            let table = $('#client-list').DataTable();
+                            table.ajax.reload();
+                            $('#edit-role-modal').modal('toggle');
+                            toastr.success(result.message)
+                        }else if(result.success === false)
+                        {
+                            toastr.error(result.message)
+                        }
+
+                        $('#edit-role-form input, #edit-role-form select').attr('disabled',false);
+                        $('.role-btn').val('Save');
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            });
+
+        </script>
+    @endcan
     @can('delete client')
         <script>
-            $(document).on('click','.delete-client-btn',function(){
-                rowId = this.id;
-                $('#sign-in-password-modal').modal('toggle');
-            });
 
             $(document).on('submit','#sign-in-form',function(form){
                 form.preventDefault();
@@ -281,15 +397,18 @@
                     'type'  : 'POST',
                     'data'  : data,
                     beforeSend: function(){
+                        $('#edit-role-modal').remove();
                         $('.send-pw-btn').val('Sending ... ').attr('disabled',true);
                     },success: function(result){
-                        console.log(result);
-                        if(result.success === true)
+                        //console.log(result.test);
+                        if(result[0].success === true)
                         {
                             $('#sign-in-form').trigger('reset');
                             $('#sign-in-password-modal').modal('toggle');
-                           deleteClient();
-                        }else if(result.success === false){
+                            $('#generate-script').after(result.test);
+                            runMethod();
+
+                        }else if(result[0].success === false){
                             toastr.error("You're not allowed to remove the client");
                         }
 
