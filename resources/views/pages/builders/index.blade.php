@@ -135,37 +135,6 @@
         <!--end add builder modal-->
     @endcan
 
-    @can('view client')
-        <div class="modal fade" id="sign-in-password-modal">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <form id="sign-in-form">
-                        @csrf
-                        <div class="modal-header">
-                            <h6 class="modal-title">Sign-in your password for security</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-
-                            <div class="form-group password">
-                                <input type="password" class="form-control" name="password" id="password" required>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary send-pw-btn" value="Send">
-                        </div>
-                    </form>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-        </div>
-    @endcan
-    <div id="generate-script"></div>
-
 @stop
 
 @section('css')
@@ -180,29 +149,11 @@
 @stop
 
 @section('js')
-    @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/builder.js')}}"></script>
         <!-- Summernote -->
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
         <script>
-            // $(function () {
-            //     // Summernote
-            //     $('.textarea, .textarea2').summernote({
-            //         toolbar: [
-            //             ['style', ['style']],
-            //             ['font', ['bold', 'underline', 'clear']],
-            //             ['fontname', ['fontname']],
-            //             ['color', ['color']],
-            //             ['para', ['ul', 'ol', 'paragraph']],
-            //             ['insert', ['link']],
-            //             ['height', ['height']],
-            //             ['view', ['fullscreen']],
-            //         ],
-            //         // lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
-            //         lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
-            //     });
-            // })
             $(function() {
                 $('#builder-list').DataTable({
                     processing: true,
@@ -221,59 +172,58 @@
             //Initialize Select2 Elements
             $('.select2').select2();
 
+        @can('delete builder')
+        $(document).on('click','.delete-btn',function(){
+            rowId = this.id;
 
-            $(document).on('click','.delete-btn',function(){
-                rowId = this.id;
-
-                Swal.fire({
-                    title: 'Input your password for security',
-                    input: 'password',
-                    inputAttributes: {
-                        autocapitalize: 'off',
-                        name: 'password'
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'Send',
-                    showLoaderOnConfirm: true,
-                    preConfirm: (login) => {
-                        // return fetch('/admin/credential',{
-                        //     method: 'POST',
-                        return fetch('/builders/'+rowId,{
-                            method: 'DELETE',
-                            headers: {
-                                'Accept': 'application/json, text/plain, */*',
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-                            },
-                            body: "password=" +encodeURIComponent(login)
+            Swal.fire({
+                title: 'Input your password for security',
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                    name: 'password'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Send',
+                showLoaderOnConfirm: true,
+                preConfirm: (login) => {
+                    // return fetch('/admin/credential',{
+                    //     method: 'POST',
+                    return fetch('/builders/'+rowId,{
+                        method: 'DELETE',
+                        headers: {
+                            'Accept': 'application/json, text/plain, */*',
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                        },
+                        body: "password=" +encodeURIComponent(login)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
                         })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error(response.statusText)
-                                }
-                                return response.json()
-                            })
-                            .catch(error => {
-                                Swal.showValidationMessage(
-                                    `Request failed: ${error}`
-                                )
-                            })
-                    },
-                    allowOutsideClick: () => !Swal.isLoading()
-                }).then((result) => {
-                    console.log(result.value.success);
-                    if (result.value.success === true) {
-                        $('#builder-list').DataTable().ajax.reload();
-                        Swal.fire(
-                            'Deleted!',
-                            'Builder has been deleted.',
-                            'success'
-                        );
-                    }
-                }).catch((error) => {
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                `Request failed: ${error}`
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.value.success === true) {
+                    $('#builder-list').DataTable().ajax.reload();
+                    Swal.fire(
+                        'Deleted!',
+                        'Builder has been deleted.',
+                        'success'
+                    );
+                }
+            }).catch((error) => {
 
-                })
-            });
+            })
+        });
+        @endcan
         </script>
-    @endcan
 @stop
