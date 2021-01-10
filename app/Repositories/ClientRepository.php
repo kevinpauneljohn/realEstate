@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Request;
 class ClientRepository implements AccessTokenClientInterface
 {
     public $response, $request,
-            $token, $runMethod,$method, $client, $id,
+            $token, $runMethod,$method, $client, $id, $role, $url,
             $requestResponse; //this variable will be used for instantiating the model action (eg. create, edit,delete,view)
     private $access_token;
 
@@ -21,7 +21,7 @@ class ClientRepository implements AccessTokenClientInterface
         $this->request = $request;
         $this->access_token = AdminAccessToken::where('key','privilege');
         $this->checkIfAccessTokenExists()->checkIfAccessTokenExpired();
-
+        $this->url = config('dreamhomeguide.api_base_url').'/api';
     }
 
     /**

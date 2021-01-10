@@ -43,6 +43,7 @@ $(document).on('submit','#add-project-form',function(form){
         beforeSend: function(){
             $('.dhg-project-form-btn').attr('disabled',true).val('Saving...');
         },success: function(result){
+            console.log(result);
             if(result.success === true)
             {
                 $('#add-project-form').trigger('reset');
@@ -68,6 +69,7 @@ $(document).on('submit','#add-project-form',function(form){
             $('.dhg-project-form-btn').attr('disabled',false).val('Save');
         }
     });
+    clear_errors('client','architect','builder','agent','address','lot_price','house_price');
 });
 
 $(document).on('click','.edit-btn', function(){

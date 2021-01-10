@@ -18,4 +18,6 @@ interface DhgClientInterFace
 
     public function updateRoleById(array $client, string $id);
 
+    public function viewByRole($role);
+
 }

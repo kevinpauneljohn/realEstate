@@ -77,34 +77,34 @@
                                     <div class="form-group client">
                                         <label for="client">Client</label><span class="required">*</span>
                                         <select class="select2" name="client" id="client" data-placeholder="Select a client" style="width: 100%;">
-                                            <option></option>
+                                            <option value=""></option>
                                             @foreach($clients as $client)
-                                                <option value="{{$client->id}}">{{ucwords($client->firstname.' '.$client->lastname)}}</option>
+                                                <option value="{{$client['id']}}">{{ucwords($client['firstname'].' '.$client['lastname'])}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group architect">
                                         <label for="architect">Architect</label>
                                         <select class="select2" name="architect" id="architect" data-placeholder="Select an architect" style="width: 100%;">
-                                            <option></option>
+                                            <option value=""></option>
                                             @foreach($architects as $architect)
-                                                <option value="{{$architect->id}}">{{ucwords($architect->firstname.' '.$architect->lastname)}}</option>
+                                                <option value="{{$architect['id']}}">{{ucwords($architect['firstname'].' '.$architect['lastname'])}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group builder">
                                         <label for="builder">Builder</label>
                                         <select class="select2" name="builder" id="builder" data-placeholder="Select a builder" style="width: 100%;">
-                                            <option></option>
+                                            <option value=""></option>
                                             @foreach($builders as $builder)
-                                                <option value="{{$builder->id}}">{{ucwords($builder->name)}}</option>
+                                                <option value="{{$builder['id']}}">{{ucwords($builder['name'])}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group agent">
                                         <label for="agent">Agent</label>
                                         <select class="select2" name="agent" id="agent" data-placeholder="Select an agent" style="width: 100%;">
-                                            <option></option>
+                                            <option value=""></option>
                                             @foreach($agents as $agent)
                                                 <option value="{{$agent->id}}">{{ucwords($agent->firstname.' '.$agent->lastname)}}</option>
                                             @endforeach
@@ -170,7 +170,7 @@
                                         <select class="select2" name="edit_client" id="edit_client" data-placeholder="Select a client" style="width: 100%;">
                                             <option></option>
                                             @foreach($clients as $client)
-                                                <option value="{{$client->id}}">{{ucwords($client->firstname.' '.$client->lastname)}}</option>
+                                                <option value="{{$client['id']}}">{{ucwords($client['firstname'].' '.$client['lastname'])}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -179,7 +179,7 @@
                                         <select class="select2" name="edit_architect" id="edit_architect" data-placeholder="Select an architect" style="width: 100%;">
                                             <option></option>
                                             @foreach($architects as $architect)
-                                                <option value="{{$architect->id}}">{{ucwords($architect->firstname.' '.$architect->lastname)}}</option>
+                                                <option value="{{$architect['id']}}">{{ucwords($architect['firstname'].' '.$architect['lastname'])}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -188,7 +188,7 @@
                                         <select class="select2" name="edit_builder" id="edit_builder" data-placeholder="Select a builder" style="width: 100%;">
                                             <option></option>
                                             @foreach($builders as $builder)
-                                                <option value="{{$builder->id}}">{{ucwords($builder->name)}}</option>
+                                                <option value="{{$builder['id']}}">{{ucwords($builder['name'])}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -275,7 +275,7 @@
                     // lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
                     lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
                 });
-            })
+            });
             $(function() {
                 $('#project-list').DataTable({
                     processing: true,

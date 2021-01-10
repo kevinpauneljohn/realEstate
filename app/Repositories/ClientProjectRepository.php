@@ -22,7 +22,7 @@ class ClientProjectRepository extends ClientRepository implements DhgClientProje
      * @param int $clientProjects
      * @return mixed
     */
-    public function setClientProjectCode($clientProjects)
+    public function setCode($clientProjects)
     {
         $num_padded = sprintf("%05d", $clientProjects);
         return 'dhg-'.$num_padded;
@@ -32,8 +32,17 @@ class ClientProjectRepository extends ClientRepository implements DhgClientProje
     {
         // TODO: Implement viewAll() method.
         $this->requestResponse = $this->setHttpHeader()
-            ->get(config('dreamhomeguide.api_base_url').'/api/builders')->json();
+            ->get($this->url.'/projects')->json();
         return $this->runMethod('viewAll');
+    }
+
+    public function create($request)
+    {
+        $this->client = $request;
+        // TODO: Implement create() method.
+        $this->requestResponse = $this->setHttpHeader()
+            ->post($this->url.'/projects',$this->client)->json();
+        return $this->runMethod('create');
     }
 
     private function runMethod($method)
@@ -44,6 +53,9 @@ class ClientProjectRepository extends ClientRepository implements DhgClientProje
             {
                 case "viewAll":
                     return $this->viewAll();
+                    break;
+                case "create":
+                    return $this->create($this->client);
                     break;
 //                case "viewById":
 //                    return $this->viewById($this->client);

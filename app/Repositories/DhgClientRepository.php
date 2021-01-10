@@ -83,6 +83,15 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('updateRoleById');
     }
 
+    public function viewByRole($role)
+    {
+        // TODO: Implement viewByRole() method.
+        $this->role = $role;
+        $this->requestResponse = $this->setHttpHeader()
+            ->get(config('dreamhomeguide.api_base_url').'/api/users/view-by-role/'.$this->role)->json();
+        return $this->runMethod('viewByRole');
+    }
+
     //if the request is unauthenticated callback the method again
     //this will return the api response if successful
     private function runMethod($method)
@@ -108,6 +117,9 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
                     break;
                 case "updateRoleById":
                     return $this->updateRoleById($this->client,$this->id);
+                    break;
+                case "viewByRole":
+                    return $this->viewByRole($this->role);
                     break;
             }
         }
