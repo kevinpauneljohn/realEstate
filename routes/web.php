@@ -334,6 +334,7 @@ Route::get('/dhg-projects-list','ClientProjectController@dhgProjectList')->name(
 Route::get('/dhg-projects/{project}/edit','ClientProjectController@edit')->name('dhg.project.edit')->middleware(['auth','permission:edit dhg project']);
 Route::put('/dhg-projects/{project}','ClientProjectController@update')->name('dhg.project.update')->middleware(['auth','permission:edit dhg project']);
 Route::delete('/dhg-projects/{project}','ClientProjectController@destroy')->name('dhg.project.destroy')->middleware(['auth','permission:delete dhg project']);
+Route::post('/dhg-project-access','ClientProjectController@checkCredentialForDelete')->name('dhg.project.check.access')->middleware(['auth','permission:delete dhg project']);
 /*end dream home guide projects*/
 
 /*dream home client payment*/

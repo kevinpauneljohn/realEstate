@@ -17,19 +17,21 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ClientProjectController extends Controller
 {
-    private $project, $client, $builder, $credential;
+    private $project, $client, $builder, $credential, $request;
 
     public function __construct(
         DhgClientProjectInterface $project,
         DhgClientInterFace $dhgClientInterFace,
         BuilderInterface $builder,
-        CheckCredentialInterface $checkCredential
+        CheckCredentialInterface $checkCredential,
+        Request $request
     ){
 
         $this->client = $dhgClientInterFace;
         $this->builder = $builder;
         $this->project = $project;
         $this->credential = $checkCredential;
+        $this->request = $request;
     }
 
     public function index()
@@ -76,28 +78,44 @@ class ClientProjectController extends Controller
         return $this->project->viewById($id);
     }
 
+    public function isAuthenticated()
+    {
+        return $this->credential->checkPassword(auth()->user()->username, $this->request->password);
+    }
+
     /**
      * Dec. 14, 2020
      * @author john kevin paunel
      * update the client project model
-     * @param Request $request
+     *
      * @param int $id
      * @return mixed
     */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $credential = $this->credential->checkPassword(auth()->user()->username,$request->password);
-        if($credential === true)
+        if($this->isAuthenticated() === true)
         {
-            return $this->project->updateById($request->all(),$id);
+            return $this->project->updateById($this->request->all(),$id);
         }
         return response()->json(['success' => false, 'message' => 'Unauthorized access'],401);
     }
 
     public function destroy($id)
     {
-        ClientProjects::findOrFail($id)->delete();
-        return response()->json(['success' => true, 'message' => 'Project successfully deleted!']);
+        if($this->isAuthenticated() === true)
+        {
+            return $this->project->removeById($id);
+        }
+        return response()->json(['success' => false, 'message' => 'Unauthorized access', 'isAccess' => $this->request->password],401);
+    }
+
+    public function checkCredentialForDelete()
+    {
+        if($this->isAuthenticated() === true)
+        {
+            return response()->json(['success' => true, 'access' => $this->request->password],201);
+        }
+        return response()->json(['success' => false],401);
     }
 
 

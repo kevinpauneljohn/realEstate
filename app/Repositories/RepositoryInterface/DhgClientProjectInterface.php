@@ -9,6 +9,7 @@ interface DhgClientProjectInterface
     public function setCode($clientProjects);
     public function viewAll();
     public function viewById($id);
+    public function removeById($id);
     public function updateById($request, $id);
     public function create($request);
 }

@@ -62,6 +62,15 @@ class ClientProjectRepository extends ClientRepository implements DhgClientProje
         return $this->runMethod('updateById');
     }
 
+    public function removeById($id)
+    {
+        // TODO: Implement deleteById() method.
+        $this->id = $id;
+        $this->requestResponse = $this->setHttpHeader()
+            ->delete($this->url.'/projects/'.$this->id)->json();
+        return $this->runMethod('deleteById');
+    }
+
     private function runMethod($method)
     {
         if($this->tokenUnauthenticated() === true)
@@ -80,9 +89,9 @@ class ClientProjectRepository extends ClientRepository implements DhgClientProje
                 case "updateById":
                     return $this->updateById($this->client, $this->id);
                     break;
-//                case "removeById":
-//                    return $this->removeById($this->id);
-//                    break;
+                case "removeById":
+                    return $this->removeById($this->id);
+                    break;
 //                case "updateRoleById":
 //                    return $this->updateRoleById($this->client,$this->id);
 //                    break;

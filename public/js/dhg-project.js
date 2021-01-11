@@ -17,7 +17,8 @@ $(document).on('click','.edit-project', function () {
         'url' : '/dhg-projects/'+projectRowId+'/edit',
         'type' : 'GET',
         beforeSend: function () {
-            $('#edit-project-form input, #edit-project-form textarea').attr('disabled',true);
+            $('#edit-project-form input, #edit-project-form textarea, #edit-project-form select').attr('disabled',true);
+            $('#edit-project-form .textarea').summernote('disable');
         },success: function (res) {
             $('#edit_client').val(res.user_id).change();
             $('#edit_architect').val(res.architect_id).change();
@@ -27,9 +28,10 @@ $(document).on('click','.edit-project', function () {
             $('#edit_lot_price').val(res.lot_price);
             $('#edit_house_price').val(res.house_price);
             $('#edit_description').summernote('code',res.description);
+            $('#edit-project-form input, #edit-project-form textarea, #edit-project-form select').attr('disabled',false);
+            $('#edit-project-form .textarea').summernote('enable');
         }
     });
-    $('#edit-project-form input, #edit-project-form textarea').attr('disabled',false);
 });
 
 $(document).on('submit','#add-project-form',function(form){
@@ -170,46 +172,6 @@ $(document).on('submit','#edit-client-payment-form', function(form){
 });
 
 
-
-$(document).on('click','.delete-btn',function(){
-    let id = this.id;
-
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.value) {
-
-            $.ajax({
-                'url' : '/dhg-projects/'+id,
-                'type' : 'DELETE',
-                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                'data' : {'_method':'DELETE'},
-                beforeSend: function(){
-
-                },success: function(output){
-                    if(output.success === true){
-                        $('#project-list').DataTable().ajax.reload();
-
-                        Swal.fire(
-                            'Deleted!',
-                            output.message,
-                            'success'
-                        );
-                    }
-                },error: function(xhr, status, error){
-                    console.log(xhr);
-                }
-            });
-
-        }
-    });
-});
 
 $(document).on('submit','#add-client-payment-form',function(form){
     form.preventDefault();
