@@ -6,6 +6,7 @@ use App\Builder;
 use App\ClientProjects;
 use App\Repositories\ClientProjectRepository;
 use App\Repositories\RepositoryInterface\BuilderInterface;
+use App\Repositories\RepositoryInterface\CheckCredentialInterface;
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Repositories\RepositoryInterface\DhgClientProjectInterface;
 use App\User;
@@ -16,17 +17,19 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ClientProjectController extends Controller
 {
-    private $project, $client, $builder;
+    private $project, $client, $builder, $credential;
 
     public function __construct(
         DhgClientProjectInterface $project,
         DhgClientInterFace $dhgClientInterFace,
-        BuilderInterface $builder
+        BuilderInterface $builder,
+        CheckCredentialInterface $checkCredential
     ){
 
         $this->client = $dhgClientInterFace;
         $this->builder = $builder;
         $this->project = $project;
+        $this->credential = $checkCredential;
     }
 
     public function index()
@@ -70,7 +73,7 @@ class ClientProjectController extends Controller
 
     public function edit($id)
     {
-        return ClientProjects::findOrFail($id);
+        return $this->project->viewById($id);
     }
 
     /**
@@ -83,40 +86,12 @@ class ClientProjectController extends Controller
     */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[
-            'edit_client'        => 'required',
-            'edit_agent'         => 'required',
-            'edit_address'       => 'required',
-            'edit_description'   => 'required'
-        ],[
-          'edit_client.required' => 'Client field is required',
-          'edit_agent.required' => 'Agent field is required',
-          'edit_address.required' => 'Address field is required',
-          'edit_description.required' => 'Description field is required',
-        ]);
-
-        if($validator->passes())
+        $credential = $this->credential->checkPassword(auth()->user()->username,$request->password);
+        if($credential === true)
         {
-            $project = ClientProjects::findOrFail($id);
-            $project->created_by = auth()->user()->id;
-            $project->user_id = $request->edit_client;
-            $project->agent_id = $request->edit_agent;
-            $project->address = $request->edit_address;
-            $project->lot_price = $request->edit_lot_price;
-            $project->house_price = $request->edit_house_price;
-            $project->description = $request->edit_description;
-            $project->architect_id = $request->edit_architect;
-            $project->builder_id = $request->edit_builder;
-
-            if($project->isDirty())
-            {
-                $project->save();
-                return response()->json(['success' => true, 'message' => 'Project successfully updated!']);
-            }else{
-                return response()->json(['success' => false,'change' => false, 'message' => 'No changes occurred!']);
-            }
+            return $this->project->updateById($request->all(),$id);
         }
-        return response()->json($validator->errors());
+        return response()->json(['success' => false, 'message' => 'Unauthorized access'],401);
     }
 
     public function destroy($id)

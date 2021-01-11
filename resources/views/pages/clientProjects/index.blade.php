@@ -253,7 +253,7 @@
 @stop
 
 @section('js')
-    @can('view user')
+    @can('view dhg project')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/dhg-project.js')}}"></script>
         <!-- Summernote -->
@@ -296,6 +296,77 @@
             });
             //Initialize Select2 Elements
             $('.select2').select2();
+
+
+            @can('edit dhg project')
+            $(document).on('submit','#edit-project-form', function (form) {
+                form.preventDefault();
+
+                let data = $(this).serialize();
+                Swal.fire({
+                    title: 'Input your password for security',
+                    input: 'password',
+                    inputAttributes: {
+                        autocapitalize: 'off',
+                        name: 'password'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Send',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (login) => {
+                        return fetch('/dhg-projects/'+rowId,{
+                            method: 'PUT',
+                            headers: {
+                                'Accept': 'application/json, text/plain, */*',
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                            },
+                            body: data+`&password=${login}`
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if(result.value.success === true)
+                    {
+                        toastr.success(result.value.message);
+
+                        $('#project-list').DataTable().ajax.reload();
+
+                        $('#edit-project-modal').modal('toggle').then(()=>{
+                            return Swal.fire(
+                                'updated!',
+                                'Project has been successfully updated.',
+                                'success'
+                            );
+                        });
+
+                    }else if(result.value.success === false && result.value.change === false)
+                    {
+                        toastr.warning(result.value.message);
+                    }
+                    $.each(result.value, function (key, value) {
+                        let element = $('.edit_'+key);
+
+                        element.find('.error-edit_'+key).remove();
+                        element.append('<p class="text-danger error-edit_'+key+'">'+value+'</p>');
+                    });
+                }).catch((error) => {
+
+                });
+                clear_errors('edit_client','edit_agent','edit_address','edit_description');
+            });
+            @endcan
         </script>
     @endcan
 @stop

@@ -36,6 +36,13 @@ class ClientProjectRepository extends ClientRepository implements DhgClientProje
         return $this->runMethod('viewAll');
     }
 
+    public function viewById($id)
+    {
+        $this->id = $id;
+        $this->requestResponse = $this->setHttpHeader()
+            ->get($this->url.'/projects/'.$this->id.'/edit')->json();
+        return $this->runMethod('viewById');
+    }
     public function create($request)
     {
         $this->client = $request;
@@ -43,6 +50,16 @@ class ClientProjectRepository extends ClientRepository implements DhgClientProje
         $this->requestResponse = $this->setHttpHeader()
             ->post($this->url.'/projects',$this->client)->json();
         return $this->runMethod('create');
+    }
+
+    public function updateById($request, $id)
+    {
+        // TODO: Implement updateById() method.
+        $this->client = $request;
+        $this->id = $id;
+        $this->requestResponse = $this->setHttpHeader()
+            ->put($this->url.'/projects/'.$this->id,$this->client)->json();
+        return $this->runMethod('updateById');
     }
 
     private function runMethod($method)
@@ -57,12 +74,12 @@ class ClientProjectRepository extends ClientRepository implements DhgClientProje
                 case "create":
                     return $this->create($this->client);
                     break;
-//                case "viewById":
-//                    return $this->viewById($this->client);
-//                    break;
-//                case "updateById":
-//                    return $this->updateById($this->client, $this->id);
-//                    break;
+                case "viewById":
+                    return $this->viewById($this->id);
+                    break;
+                case "updateById":
+                    return $this->updateById($this->client, $this->id);
+                    break;
 //                case "removeById":
 //                    return $this->removeById($this->id);
 //                    break;

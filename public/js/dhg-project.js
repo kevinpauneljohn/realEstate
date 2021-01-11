@@ -19,12 +19,13 @@ $(document).on('click','.edit-project', function () {
         beforeSend: function () {
             $('#edit-project-form input, #edit-project-form textarea').attr('disabled',true);
         },success: function (res) {
-
             $('#edit_client').val(res.user_id).change();
             $('#edit_architect').val(res.architect_id).change();
             $('#edit_builder').val(res.builder_id).change();
             $('#edit_agent').val(res.agent_id).change();
             $('#edit_address').val(res.address).change();
+            $('#edit_lot_price').val(res.lot_price);
+            $('#edit_house_price').val(res.house_price);
             $('#edit_description').summernote('code',res.description);
         }
     });
@@ -168,47 +169,6 @@ $(document).on('submit','#edit-client-payment-form', function(form){
     });
 });
 
-
-$(document).on('submit','#edit-project-form', function (form) {
-    form.preventDefault();
-
-    let data = $(this).serializeArray();
-
-    $.ajax({
-        'url' : '/dhg-projects/'+rowId,
-        'type' : 'PUT',
-        'data' : data,
-        beforeSend: function(){
-            $('.dhg-project-form-btn').attr('disabled',true).val('Saving...');
-        },success: function(result){
-
-            if(result.success === true)
-            {
-                toastr.success(result.message);
-
-                $('#project-list').DataTable().ajax.reload();
-
-                $('#edit-project-modal').modal('toggle');
-            }else if(result.success === false && result.change === false)
-            {
-                toastr.warning(result.message);
-            }
-            $.each(result, function (key, value) {
-                let element = $('.'+key);
-
-                element.find('.error-'+key).remove();
-                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-            });
-
-            $('.dhg-project-form-btn').attr('disabled',false).val('Save');
-        },error: function(xhr,status,error){
-            console.log(xhr, status, error);
-            $('.dhg-project-form-btn').attr('disabled',false).val('Save');
-        }
-    });
-
-    clear_errors('edit_client','edit_agent','edit_address','edit_description');
-});
 
 
 $(document).on('click','.delete-btn',function(){
