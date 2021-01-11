@@ -374,6 +374,13 @@
                 let id = this.id;
                 let access;
 
+                $tr = $(this).closest('tr');
+
+                let data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+
                 Swal.fire({
                     title: 'Input your password for security',
                     input: 'password',
@@ -409,11 +416,10 @@
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
-                    console.log(result);
                     if(result.value.success === true)
                     {
                         Swal.fire({
-                            title: 'Are you sure?',
+                            title: `Delete?&nbsp;<a href="#">#${data[0]}</a>`,
                             text: "You won't be able to revert this!",
                             type: 'warning',
                             showCancelButton: true,
@@ -431,7 +437,6 @@
                                     beforeSend: function(){
 
                                     },success: function(output){
-                                        console.log(output);
                                         if(output.success === true){
                                             $('#project-list').DataTable().ajax.reload();
 
