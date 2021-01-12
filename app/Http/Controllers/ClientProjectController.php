@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Builder;
-use App\ClientProjects;
-use App\Repositories\ClientProjectRepository;
 use App\Repositories\RepositoryInterface\BuilderInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialInterface;
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Repositories\RepositoryInterface\DhgClientProjectInterface;
+use App\Repositories\RepositoryInterface\PaymentInterFace;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClientProjectController extends Controller
 {
-    private $project, $client, $builder, $credential, $request;
+    private $project, $client, $builder, $credential, $request, $payment;
 
     public function __construct(
         DhgClientProjectInterface $project,
         DhgClientInterFace $dhgClientInterFace,
         BuilderInterface $builder,
         CheckCredentialInterface $checkCredential,
+        PaymentInterFace $paymentInterFace,
         Request $request
     ){
 
@@ -32,6 +29,7 @@ class ClientProjectController extends Controller
         $this->project = $project;
         $this->credential = $checkCredential;
         $this->request = $request;
+        $this->payment = $paymentInterFace;
     }
 
     public function index()
@@ -66,10 +64,11 @@ class ClientProjectController extends Controller
 
     public function show($id)
     {
-        $clientProject = ClientProjects::findOrFail($id);
+        $project = $this->project->viewById($id);
         return view('pages.clientProjects.profile')->with([
-            'client_project'    => $clientProject,
-            'project_code'      => $this->project->setCode($id)
+            'project'    => $project,
+            'project_code'      => $this->project->setCode($id),
+            'payments'      => $this->payment->viewAll($id)
         ]);
     }
 

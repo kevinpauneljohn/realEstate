@@ -4,15 +4,18 @@ namespace App\Providers;
 
 use App\Lead;
 use App\Repositories\BuilderRepository;
+use App\Repositories\ClientPaymentRepository;
 use App\Repositories\ClientProjectRepository;
 use App\Repositories\ClientRepository;
 use App\Repositories\DhgClientRepository;
+use App\Repositories\PaymentRepository;
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use App\Repositories\RepositoryInterface\BuilderInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialRepository;
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Repositories\RepositoryInterface\DhgClientProjectInterface;
+use App\Repositories\RepositoryInterface\PaymentInterFace;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
@@ -48,7 +51,12 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(
             CheckCredentialInterface::class,
-                    CheckCredentialRepository::class
+            CheckCredentialRepository::class
+        );
+
+        $this->app->bind(
+          PaymentInterFace::class,
+          PaymentRepository::class
         );
     }
 

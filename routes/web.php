@@ -338,6 +338,7 @@ Route::post('/dhg-project-access','ClientProjectController@checkCredentialForDel
 /*end dream home guide projects*/
 
 /*dream home client payment*/
+Route::get('/client-payment/{payment}/edit','ClientPaymentController@edit')->name('client.payment.edit')->middleware(['auth','permission:view client payment|edit client payment']);
 Route::get('/client-payment/{project}','ClientPaymentController@clientPaymentList')->name('client.payment.list')->middleware(['auth','permission:view payment']);
 Route::post('/client-payment','ClientPaymentController@store')->name('client.payment.store')->middleware(['auth','permission:add payment']);
 Route::get('/client-payment/edit/layout/{id}','ClientPaymentController@paymentModal')->name('client.edit.payment.modal')->middleware(['auth','permission:edit client payment']);

@@ -75,69 +75,69 @@ $(document).on('submit','#add-project-form',function(form){
     clear_errors('client','architect','builder','agent','address','lot_price','house_price');
 });
 
-$(document).on('click','.edit-btn', function(){
-    rowId = this.id;
-    $('input[name=payment_id]').val(rowId);
-});
+// $(document).on('click','.edit-btn', function(){
+//     rowId = this.id;
+//     $('input[name=payment_id]').val(rowId);
+// });
 
-$(document).on('submit','#check-admin-credential-form',function (form) {
-    form.preventDefault();
-
-    let data = $(this).serializeArray();
-    $.ajax({
-        'url' : '/admin/credential',
-        'type' : 'POST',
-        'data' : data,
-        beforeSend: function(){
-            $('.check-admin-credential-form-btn').attr('disabled',true).val('Sending...');
-        },
-        success: function (result) {
-            if(result.success === true)
-            {
-                callModal();
-            }else if(result.success === false){
-                toastr.warning(result.message);
-            }
-
-            $.each(result, function (key, value) {
-                let element = $('.'+key);
-
-                element.find('.error-'+key).remove();
-                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-            });
-            $('.check-admin-credential-form-btn').attr('disabled',false).val('Send');
-        },error: function(xhr,status,error){
-
-            if(xhr.responseJSON.message === "CSRF token mismatch.")
-            {
-                toastr.info('Session expired. Reloading Page Now...');
-                setTimeout(function(){
-                    location.reload();
-                }, 3500);
-            }
-        }
-    });
-    clear_errors('password');
-});
-
-function callModal()
-{
-    $.ajax({
-        'url' : '/client-payment/edit/layout/'+rowId,
-        'type' : 'GET',
-        beforeSend: function(){
-          $('.edit-client-modal-container').remove();
-        },
-        success: function (modal) {
-            $(modal).insertAfter('.wrapper');
-            $('#check-admin-credential-modal').modal('toggle');
-            $('#edit-client-payment-modal').modal();
-            $('#check-admin-credential-form').trigger('reset');
-
-            $('#edit-client-payment-form .modal-content').prepend('<input type="hidden" name="payment_id" value="'+rowId+'">');
-        }
-    });
-}
+// $(document).on('submit','#check-admin-credential-form',function (form) {
+//     form.preventDefault();
+//
+//     let data = $(this).serializeArray();
+//     $.ajax({
+//         'url' : '/admin/credential',
+//         'type' : 'POST',
+//         'data' : data,
+//         beforeSend: function(){
+//             $('.check-admin-credential-form-btn').attr('disabled',true).val('Sending...');
+//         },
+//         success: function (result) {
+//             if(result.success === true)
+//             {
+//                 callModal();
+//             }else if(result.success === false){
+//                 toastr.warning(result.message);
+//             }
+//
+//             $.each(result, function (key, value) {
+//                 let element = $('.'+key);
+//
+//                 element.find('.error-'+key).remove();
+//                 element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+//             });
+//             $('.check-admin-credential-form-btn').attr('disabled',false).val('Send');
+//         },error: function(xhr,status,error){
+//
+//             if(xhr.responseJSON.message === "CSRF token mismatch.")
+//             {
+//                 toastr.info('Session expired. Reloading Page Now...');
+//                 setTimeout(function(){
+//                     location.reload();
+//                 }, 3500);
+//             }
+//         }
+//     });
+//     clear_errors('password');
+// });
+//
+// function callModal()
+// {
+//     $.ajax({
+//         'url' : '/client-payment/edit/layout/'+rowId,
+//         'type' : 'GET',
+//         beforeSend: function(){
+//           $('.edit-client-modal-container').remove();
+//         },
+//         success: function (modal) {
+//             $(modal).insertAfter('.wrapper');
+//             $('#check-admin-credential-modal').modal('toggle');
+//             $('#edit-client-payment-modal').modal();
+//             $('#check-admin-credential-form').trigger('reset');
+//
+//             $('#edit-client-payment-form .modal-content').prepend('<input type="hidden" name="payment_id" value="'+rowId+'">');
+//         }
+//     });
+// }
 
 $(document).on('submit','#edit-client-payment-form', function(form){
     form.preventDefault();
@@ -173,41 +173,7 @@ $(document).on('submit','#edit-client-payment-form', function(form){
 
 
 
-$(document).on('submit','#add-client-payment-form',function(form){
-    form.preventDefault();
 
-    let data = $(this).serializeArray();
-
-    $.ajax({
-        'url'  : '/client-payment',
-        'type' : 'POST',
-        'data' : data,
-        beforeSend: function(){
-            $('.dhg-client-project-form-btn').attr('disabled',true).val('Saving...');
-        },
-        success: function (result) {
-
-            if(result.success === true)
-            {
-                $('#add-client-payment-form').trigger('reset');
-                $('#payment-list').DataTable().ajax.reload();
-                $('#add-new-client-payment').modal('toggle');
-            }
-
-            $.each(result, function (key, value) {
-                let element = $('.'+key);
-
-                element.find('.error-'+key).remove();
-                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-            });
-
-            $('.dhg-client-project-form-btn').attr('disabled',false).val('Save');
-        },error: function(xhr, status, error){
-            console.log(xhr);
-        }
-    });
-    clear_errors('date_received','amount','description','remarks');
-});
 
 $(document).on('click','.delete-payment-btn', function () {
     rowId = this.id;

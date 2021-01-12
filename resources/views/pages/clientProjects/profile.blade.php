@@ -85,18 +85,18 @@
                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                         <h3 class="text-primary"><i class="fas fa-code"></i> {!! $project_code !!}</h3>
                         <p class="text-muted">
-                            {!! $client_project->description !!}
+                            {!! $project['description'] !!}
                         </p>
                         <br>
                         <div class="text-muted">
                             <p class="text-sm">Client Name
-                                <b class="d-block">{{$client_project->client->fullName}}</b>
+                                <b class="d-block">{{$project['client']['firstname']}} {{$project['client']['lastname']}}</b>
                             </p>
                             <p class="text-sm">Architect
-                                <b class="d-block">{{$client_project->architect->fullName}}</b>
+                                <b class="d-block">{{$project['architect']['firstname']}} {{$project['architect']['lastname']}}</b>
                             </p>
                             <p class="text-sm">Builder
-                                <b class="d-block">{{$client_project->builder->name}}</b>
+                                <b class="d-block">{{$project['builder']['name']}}</b>
                             </p>
                         </div>
 
@@ -137,7 +137,7 @@
         <div class="modal fade" id="add-new-client-payment">
             <form role="form" id="add-client-payment-form" class="form-submit">
                 @csrf
-                <input type="hidden" name="dhg_project_id" value="{{$client_project->id}}">
+                <input type="hidden" name="project_id" value="{{$project['id']}}">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -181,21 +181,35 @@
 
     @can('edit client payment')
         <!--add new payment modal-->
-        <div class="modal fade" id="check-admin-credential-modal">
-            <form role="form" id="check-admin-credential-form" class="form-submit">
-                @csrf
+        <div class="modal fade" id="edit-payment-modal">
+            <form role="form" id="edit-payment-form" class="form-submit">
+                @method('PUT')
                 <input type="hidden" name="payment_id">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h6 class="modal-title">For Safety and Security <br/> Please, Enter your password</h6>
+                            <h6 class="modal-title">Edit Payment</h6>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group password">
-                                <input type="password" name="password" class="form-control" id="password">
+                            <div class="form-group edit_date_received">
+                                <label for="edit_date_received">Date of Payment</label>
+                                <input type="date" name="edit_date_received" class="form-control" id="edit_date_received">
+                            </div>
+
+                            <div class="form-group edit_amount">
+                                <label for="edit_amount">Amount</label>
+                                <input type="number" name="edit_amount" class="form-control" id="edit_amount" step="any" min="0">
+                            </div>
+                            <div class="form-group edit_description">
+                                <label for="edit_description">Description</label>
+                                <textarea name="edit_description" class="form-control" id="edit_description"></textarea>
+                            </div>
+                            <div class="form-group edit_remarks">
+                                <label for="edit_remarks">Remarks</label>
+                                <textarea name="edit_remarks" class="form-control" id="edit_remarks"></textarea>
                             </div>
 
                         </div>
@@ -234,11 +248,11 @@
                 $('#payment-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('client.payment.list',['project' => $client_project->id]) !!}',
+                    ajax: '{!! route('client.payment.list',['project' => $project['id']]) !!}',
                     columns: [
                         { data: 'date_received', name: 'date_received'},
                         { data: 'amount', name: 'amount'},
-                        { data: 'details', name: 'details'},
+                        { data: 'description', name: 'description'},
                         { data: 'remarks', name: 'remarks'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
@@ -246,6 +260,65 @@
                     order:[0,'asc']
                 });
             });
+
+            @can('add client payment')
+            $(document).on('submit','#add-client-payment-form',function(form){
+                form.preventDefault();
+
+                let data = $(this).serializeArray();
+
+                $.ajax({
+                    'url'  : '/client-payment',
+                    'type' : 'POST',
+                    'data' : data,
+                    beforeSend: function(){
+                        $('.dhg-client-project-form-btn').attr('disabled',true).val('Saving...');
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        if(result.success === true)
+                        {
+                            $('#add-client-payment-form').trigger('reset');
+                            $('#payment-list').DataTable().ajax.reload();
+                            $('#add-new-client-payment').modal('toggle');
+                        }
+
+                        $.each(result, function (key, value) {
+                            let element = $('.'+key);
+
+                            element.find('.error-'+key).remove();
+                            element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                        });
+
+                        $('.dhg-client-project-form-btn').attr('disabled',false).val('Save');
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+                clear_errors('date_received','amount','description','remarks');
+            });
+            @endcan
+
+            @can('edit client payment')
+                $(document).on('click','.edit-btn',function () {
+                    rowId = this.id;
+
+                    $.ajax({
+                        url: `/client-payment/${rowId}/edit`,
+                        type: 'GET',
+                        beforeSend: function(){
+                            $('#edit-payment-form input, #edit-payment-form textarea').attr('disabled',true);
+                        },
+                        success: function (response,status,xhr) {
+                            $('#edit_date_received').val(response.date_received);
+                            $('#edit_amount').val(response.amount);
+                            $('#edit_description').val(response.description);
+                            $('#edit_remarks').val(response.remarks);
+                            $('#edit-payment-form input, #edit-payment-form textarea').attr('disabled',false);
+                        }
+                    });
+            });
+            @endcan
         </script>
     @endcan
 @stop

@@ -17,7 +17,7 @@ class CreateClientPaymentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_project_id');
             $table->timestamp('date_received');
-            $table->decimal('amount',8,2);
+            $table->decimal('amount',13,2);
             $table->text('details')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();
