@@ -63,6 +63,16 @@ class BuilderRepository extends ClientRepository implements BuilderInterface
         return $this->runMethod('deleteById');
     }
 
+    public function addMember(array $member)
+    {
+        // TODO: Implement addMember() method.
+        $this->client = $member;
+
+        $this->requestResponse = $this->setHttpHeader()
+            ->post($this->url.'/builders/member',$this->client)->json();
+        return $this->runMethod('addMember');
+    }
+
     private function runMethod($method)
     {
         if($this->tokenUnauthenticated() === true)
@@ -83,6 +93,9 @@ class BuilderRepository extends ClientRepository implements BuilderInterface
                     break;
                 case "deleteById":
                     return $this->deleteById($this->id);
+                    break;
+                case "addMember":
+                    return $this->addMember($this->client);
                     break;
             }
         }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Builder;
 use App\Repositories\RepositoryInterface\BuilderInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialInterface;
+use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,17 +13,19 @@ use Yajra\DataTables\Facades\DataTables;
 
 class BuilderController extends Controller
 {
-    private $builder, $credential, $pass, $request;
+    private $builder, $credential, $pass, $request, $user;
 
     public function __construct(
         BuilderInterface $builder,
         CheckCredentialInterface $checkCredential,
+        DhgClientInterFace $dhgClientInterFace,
         Request $request
     )
     {
         $this->builder = $builder;
         $this->credential = $checkCredential;
         $this->request = $request;
+        $this->user = $dhgClientInterFace;
     }
 
     /**
@@ -52,14 +55,21 @@ class BuilderController extends Controller
 
     public function show($id)
     {
-        $builder = Builder::findOrFail($id);
-        $members = User::role('builder member')->get();
-        $selected = $builder->users;
+        $builder = $this->builder->viewById($id);
+        $members = $this->user->viewByRole('builder member');
+        $selected = $builder['users'];
+
+//        $data = array();
+//        foreach ($members as $key => $value)
+//        {
+//            $data[$key] = $value['firstname'];
+//        }
         return view('pages.builders.profile')->with([
             'builder'   => $builder,
             'members'   => $members,
             'selected'  => $selected
         ]);
+//        return $data;
     }
 
     /**

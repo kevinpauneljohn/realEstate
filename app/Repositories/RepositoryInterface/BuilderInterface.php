@@ -15,4 +15,6 @@ interface BuilderInterface
     public function updateById($request, $id);
 
     public function deleteById($id);
+
+    public function addMember(array $member);
 }

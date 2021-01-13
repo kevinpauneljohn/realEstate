@@ -64,7 +64,7 @@
         <div class="modal fade" id="builder-member-modal">
             <form role="form" id="builder-member-form" class="form-submit">
                 @csrf
-                <input type="hidden" name="builder" value="{{$builder->id}}">
+                <input type="hidden" name="builder" value="{{$builder['id']}}">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -74,15 +74,13 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            @php $ctr = 0; @endphp
                             <div class="form-group members">
                                 <label for="edit_client">Select Members</label><span class="required">*</span>
                                 <select class="select2" name="members[]" id="members" multiple="multiple" data-placeholder="Select a member" style="width: 100%;">
                                     <option></option>
 
-                                    @foreach($members as $member)
-                                        <option value="{{$member->id}}"{{ empty($selected[$ctr]) ? '' : ' disabled'}}>{{ucwords($member->firstname.' '.$member->lastname)}}</option>
-                                        @php $ctr++; @endphp
+                                    @foreach($members as $key => $value)
+                                        <option value="{{$value['id']}}"{{ empty($selected[$key]) ? '' : ' disabled'}}>{{ucwords($value['firstname'].' '.$value['lastname'])}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -121,7 +119,7 @@
                 $('#member-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('builder.member.list',['builder' => $builder->id]) !!}',
+                    ajax: '{!! route('builder.member.list',['builder' => $builder['id']]) !!}',
                     columns: [
                         { data: 'name', name: 'name'},
                         { data: 'role', name: 'role'},
@@ -130,6 +128,61 @@
                     responsive:true,
                     order:[0,'asc']
                 });
+            });
+
+
+            function clear_errors()
+            {
+                let i;
+                for (i = 0; i < arguments.length; i++) {
+
+                    if($('#'+arguments[i]).val().length > 0){
+                        $('.'+arguments[i]).closest('div.'+arguments[i]).removeClass('has-error').find('.text-danger').remove();
+                    }
+                }
+            }
+            $(document).on('submit','#builder-member-form',function(form){
+                form.preventDefault();
+
+                let data = $(this).serializeArray();
+                console.log(data);
+
+                $.ajax({
+                    'url' : '/add-member/builder',
+                    'type' : 'POST',
+                    'data' : data,
+                    beforeSend: function(){
+                        $('.member-btn').attr('disabled',true).val('Adding...');
+                    },
+                    success: function(result){
+                        if(result.success === true)
+                        {
+                            toastr.success(result.message);
+                            $('#builder-member-form select').val('').change();
+                            $('#member-list').DataTable().ajax.reload();
+                            $('#builder-member-modal').modal('toggle');
+                        }else if(result.success === false)
+                        {
+                            toastr.warning(result.message);
+                        }
+
+                        $.each(result, function (key, value) {
+                            let element = $('.'+key);
+
+                            element.find('.error-'+key).remove();
+                            element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                        });
+                        $('.member-btn').attr('disabled',false).val('Add');
+                    },error: function(xhr,status,error){
+                        if(xhr.responseJSON.message === 'CSRF token mismatch.')
+                        {
+                            location.reload();
+                        }
+                        console.log(xhr, status, error);
+                        $('.member-btn').attr('disabled',false).val('Add');
+                    }
+                });
+                clear_errors('members');
             });
         </script>
     @endcan

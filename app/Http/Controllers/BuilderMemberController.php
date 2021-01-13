@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Builder;
 use App\Repositories\LabelerRepository;
+use App\Repositories\RepositoryInterface\BuilderInterface;
+use App\Repositories\RepositoryInterface\DhgClientInterFace;
+use App\Traits\Labeler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -11,24 +14,34 @@ use Yajra\DataTables\Facades\DataTables;
 
 class BuilderMemberController extends Controller
 {
+    use Labeler;
     private $validation,
             $labeler_repository,
             $member_id,
             $builder_id,
             $remove,
-            $data;
+            $data,
+            $member,
+            $user;
 
-    public function __construct(LabelerRepository $labelerRepository)
+    public function __construct(
+        LabelerRepository $labelerRepository,
+        BuilderInterface $builder,
+        DhgClientInterFace $dhgClientInterFace
+    )
     {
         $this->labeler_repository = $labelerRepository;
+        $this->member = $builder;
+        $this->user = $dhgClientInterFace;
     }
 
 
     public function addMember(Request $request)
     {
         //instantiate data variable with requests
-        $this->data = $request;
-        return $this->validation()->saveMember();
+//        $this->data = $request;
+//        return $this->validation()->saveMember();
+        return $this->member->addMember($request->all());
     }
 
     private function query($member_id, $builder_id)
@@ -108,24 +121,24 @@ class BuilderMemberController extends Controller
 
     public function member($id)
     {
-        $members = Builder::findOrFail($id)->users;
-        return DataTables::of($members)
+        $members = $this->member->viewById($id);
+        return DataTables::of($members['users'])
             ->editColumn('name', function ($member){
-                return $member->fullName;
+                return ucfirst($member['firstname']).' '.ucfirst($member['lastname']);
             })
             ->editColumn('role', function ($member){
-                return $this->labeler_repository->role($member->getRoleNames());
+                return $member['roles'][0]['name'];
             })
             ->addColumn('action', function ($member)
             {
                 $action = "";
                 if(auth()->user()->can('view builder member'))
                 {
-                    $action .= '<a href="'.route('builder.show',['builder' => $member->id]).'" class="btn btn-xs btn-success view-details" id="'.$member->id.'" title="View Details"><i class="fa fa-eye"></i> </a>';
+                    $action .= '<a href="'.route('builder.show',['builder' => $member['id']]).'" class="btn btn-xs btn-success view-details" id="'.$member['id'].'" title="View Details"><i class="fa fa-eye"></i> </a>';
                 }
                 if(auth()->user()->can('delete builder member'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-btn" id="'.$member->id.'_'.$member->pivot->builder_id.'" title="Delete Builder"><i class="fa fa-trash"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-btn" id="'.$member['id'].'_'.$member['pivot']['builder_id'].'" title="Delete Builder"><i class="fa fa-trash"></i></a>';
                 }
                 return $action;
             })
