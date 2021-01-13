@@ -74,13 +74,13 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group members">
+                            <div class="form-group members" id="member-dropdown">
                                 <label for="edit_client">Select Members</label><span class="required">*</span>
                                 <select class="select2" name="members[]" id="members" multiple="multiple" data-placeholder="Select a member" style="width: 100%;">
                                     <option></option>
 
                                     @foreach($members as $key => $value)
-                                        <option value="{{$value['id']}}"{{ empty($selected[$key]) ? '' : ' disabled'}}>{{ucwords($value['firstname'].' '.$value['lastname'])}}</option>
+                                        <option value="{{$value['id']}}"{{ $value['selected'] === false ? '' : ' disabled'}} id="member-{{$value['id']}}">{{ucwords($value['firstname'].' '.$value['lastname'])}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -115,6 +115,7 @@
         <script src="{{asset('js/builder-profile.js')}}"></script>
 
         <script>
+            $("#members").select2();
             $(function() {
                 $('#member-list').DataTable({
                     processing: true,
@@ -145,7 +146,6 @@
                 form.preventDefault();
 
                 let data = $(this).serializeArray();
-                console.log(data);
 
                 $.ajax({
                     'url' : '/add-member/builder',
@@ -158,9 +158,11 @@
                         if(result.success === true)
                         {
                             toastr.success(result.message);
-                            $('#builder-member-form select').val('').change();
+
+                            $('#members').load(location.href+' #members option');
                             $('#member-list').DataTable().ajax.reload();
                             $('#builder-member-modal').modal('toggle');
+
                         }else if(result.success === false)
                         {
                             toastr.warning(result.message);
