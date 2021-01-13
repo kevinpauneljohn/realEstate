@@ -38,9 +38,6 @@ class BuilderMemberController extends Controller
 
     public function addMember(Request $request)
     {
-        //instantiate data variable with requests
-//        $this->data = $request;
-//        return $this->validation()->saveMember();
         return $this->member->addMember($request->all());
     }
 
@@ -156,7 +153,7 @@ class BuilderMemberController extends Controller
      * */
     public function destroy($id)
     {
-        return $this->separate($id)->removeMember()->removeResponse();
+        return $this->separate($id)->removeMember();
     }
 
     //separate the string by "_" to get the member id and builder id
@@ -172,18 +169,13 @@ class BuilderMemberController extends Controller
     //remove the selected member id from the builder
     private function removeMember()
     {
-        $this->remove = $this->query($this->member_id, $this->builder_id)->delete();
+        $member = collect([
+            'member'    => $this->member_id,
+            'builder'    => $this->builder_id
+        ]);
+        $this->remove = $this->member->removeMember($member->all());
 
-        return $this;
+        return $this->remove;
     }
 
-    //will return the appropriate response depending on the action occurred
-    private function removeResponse()
-    {
-        if($this->remove)
-        {
-            return response()->json(['success' => true, 'message' => 'Member successfully removed']);
-        }
-        return response()->json(['success' => false, 'message' => 'An error occurred']);
-    }
 }

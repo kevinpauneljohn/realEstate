@@ -17,4 +17,6 @@ interface BuilderInterface
     public function deleteById($id);
 
     public function addMember(array $member);
+
+    public function removeMember($request);
 }
