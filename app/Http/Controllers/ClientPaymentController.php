@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ClientPayment;
 use App\Repositories\CheckPassword;
+use App\Repositories\RepositoryInterface\CheckCredentialInterface;
 use App\Repositories\RepositoryInterface\PaymentInterFace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,16 +13,19 @@ use Yajra\DataTables\Facades\DataTables;
 class ClientPaymentController extends Controller
 {
 
-    private $check_password,
-            $payment;
+    private $credential,
+            $payment,
+            $request;
 
     public function __construct(
-        CheckPassword $checkPassword,
-        PaymentInterFace $paymentInterFace
+        CheckCredentialInterface $checkCredential,
+        PaymentInterFace $paymentInterFace,
+        Request $request
     )
     {
-        $this->check_password = $checkPassword;
+        $this->credential = $checkCredential;
         $this->payment = $paymentInterFace;
+        $this->request = $request;
     }
 
 
@@ -41,25 +45,11 @@ class ClientPaymentController extends Controller
 
     public function update(Request $request, $id)
     {
-
-        if($this->validation($request)->passes())
+        if($this->isAuthenticated() === true)
         {
-            $client_payment = ClientPayment::findOrFail($id);
-
-            $client_payment->date_received = $request->date_received;
-            $client_payment->amount = $request->amount;
-            $client_payment->details = $request->description;
-            $client_payment->remarks = $request->remarks;
-
-            if($client_payment->isDirty())
-            {
-                $client_payment->save();
-                return response()->json(['success' => true, 'message' => 'Payment successfully updated!', $client_payment]);
-            }else{
-                return response()->json(['success' => false, 'message' => 'No changes occurred',$client_payment]);
-            }
+            return $this->payment->updateById($this->request->all(), $id);
         }
-        return response()->json($this->validation($request)->errors());
+        return response()->json(['success' => false, 'message' => 'Unauthorized access'],401);
     }
 
     public function destroy($id)
@@ -81,7 +71,7 @@ class ClientPaymentController extends Controller
         $client_payments = $this->payment->viewAll($id);
         return DataTables::of($client_payments)
             ->editColumn('date_received', function ($client_payment){
-                return $client_payment['date_received'];
+                return date('Y-m-d', strtotime($client_payment['date_received']));;
             })
             ->editColumn('amount', function ($client_payment){
                 return number_format($client_payment['amount'],2);
@@ -105,6 +95,11 @@ class ClientPaymentController extends Controller
             })
             ->rawColumns(['id','user_id','action'])
             ->make(true);
+    }
+
+    public function isAuthenticated()
+    {
+        return $this->credential->checkPassword(auth()->user()->username, $this->request->password);
     }
 
     /**
@@ -143,4 +138,5 @@ class ClientPaymentController extends Controller
     {
         return $this->payment->viewById($id);
     }
+
 }

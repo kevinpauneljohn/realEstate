@@ -297,8 +297,12 @@
             //Initialize Select2 Elements
             $('.select2').select2();
 
-
             @can('edit dhg project')
+
+            $(document).on('click','.edit-project',function(){
+                rowId = this.id;
+            });
+
             $(document).on('submit','#edit-project-form', function (form) {
                 form.preventDefault();
 
@@ -337,6 +341,7 @@
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
+                   console.log(result)
                     if(result.value.success === true)
                     {
                         toastr.success(result.value.message);

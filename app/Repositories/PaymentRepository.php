@@ -42,6 +42,16 @@ class PaymentRepository extends ClientRepository implements PaymentInterFace
         return $this->runMethod('viewById');
     }
 
+    public function updateById($request, $id)
+    {
+        // TODO: Implement updateById() method.
+        $this->client = $request;
+        $this->id = $id;
+        $this->requestResponse = $this->setHttpHeader()
+            ->put($this->url.'/payments/'.$this->id,$this->client)->json();
+        return $this->runMethod('updateById');
+    }
+
     private function runMethod($method)
     {
         if($this->tokenUnauthenticated() === true)
@@ -57,9 +67,9 @@ class PaymentRepository extends ClientRepository implements PaymentInterFace
                 case "viewById":
                     return $this->viewById($this->id);
                     break;
-//                case "updateById":
-//                    return $this->updateById($this->client,$this->id);
-//                    break;
+                case "updateById":
+                    return $this->updateById($this->client,$this->id);
+                    break;
 //                case "deleteById":
 //                    return $this->deleteById($this->id);
 //                    break;

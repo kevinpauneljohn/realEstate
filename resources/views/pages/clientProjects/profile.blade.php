@@ -183,8 +183,7 @@
         <!--add new payment modal-->
         <div class="modal fade" id="edit-payment-modal">
             <form role="form" id="edit-payment-form" class="form-submit">
-                @method('PUT')
-                <input type="hidden" name="payment_id">
+                <input type="hidden" name="project_id" value="{{$project['id']}}">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -317,7 +316,72 @@
                             $('#edit-payment-form input, #edit-payment-form textarea').attr('disabled',false);
                         }
                     });
-            });
+                });
+
+                $(document).on('submit','#edit-payment-form',function (form) {
+                    form.preventDefault();
+
+                    let data = $(this).serialize();
+                    Swal.fire({
+                        title: 'Input your password for security',
+                        input: 'password',
+                        inputAttributes: {
+                            autocapitalize: 'off',
+                            name: 'password'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Send',
+                        showLoaderOnConfirm: true,
+                        preConfirm: (login) => {
+                            return fetch('/client-payment/'+rowId,{
+                                method: 'PUT',
+                                headers: {
+                                    'Accept': 'application/json, text/plain, */*',
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                                },
+                                body: data+`&password=${login}`
+                            })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(response.statusText)
+                                    }
+                                    return response.json()
+                                })
+                                .catch(error => {
+                                    Swal.showValidationMessage(
+                                        `Request failed: ${error}`
+                                    )
+                                })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if(result.value.success === true)
+                        {
+                            $('#payment-list').DataTable().ajax.reload();
+
+                            $('#edit-payment-modal').modal('toggle');
+                            Swal.fire(
+                                'updated!',
+                                'Project has been successfully updated.',
+                                'success'
+                            );
+
+                        }else if(result.value.success === false && result.value.changed === false)
+                        {
+                            toastr.warning(result.value.message);
+                        }
+                        $.each(result.value, function (key, value) {
+                            let element = $('.edit_'+key);
+
+                            element.find('.error-edit_'+key).remove();
+                            element.append('<p class="text-danger error-edit_'+key+'">'+value+'</p>');
+                        });
+                    }).catch((error) => {
+
+                    });
+                    clear_errors('edit_date_received','edit_amount','edit_description');
+                });
             @endcan
         </script>
     @endcan
