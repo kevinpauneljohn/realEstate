@@ -13,6 +13,7 @@ use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use App\Repositories\RepositoryInterface\BuilderInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialRepository;
+use App\Repositories\RepositoryInterface\ClientPaymentInterface;
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Repositories\RepositoryInterface\DhgClientProjectInterface;
 use App\Repositories\RepositoryInterface\PaymentInterFace;
@@ -57,6 +58,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
           PaymentInterFace::class,
           PaymentRepository::class
+        );
+
+        $this->app->bind(
+            ClientPaymentInterface::class,
+            ClientPaymentRepository::class
         );
     }
 

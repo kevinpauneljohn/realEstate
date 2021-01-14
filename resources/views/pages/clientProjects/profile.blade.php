@@ -384,5 +384,100 @@
                 });
             @endcan
         </script>
+
+        @can('delete client payment')
+            <script>
+                $(document).on('click','.delete-payment-btn',function(){
+                    let id = this.id;
+                    let access;
+
+                    $tr = $(this).closest('tr');
+
+                    let data = $tr.children("td").map(function () {
+                        return $(this).text();
+                    }).get();
+
+
+                    Swal.fire({
+                        title: 'Input your password for security',
+                        input: 'password',
+                        inputAttributes: {
+                            autocapitalize: 'off',
+                            name: 'password'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Send',
+                        showLoaderOnConfirm: true,
+                        preConfirm: (login) => {
+                            access = login;
+                            return fetch('/client-payment-access',{
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json, text/plain, */*',
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                                },
+                                body: `password=${login}`
+                            })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(response.statusText)
+                                    }
+                                    return response.json()
+                                })
+                                .catch(error => {
+                                    Swal.showValidationMessage(
+                                        `Request failed: ${error}`
+                                    )
+                                })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if(result.value.success === true)
+                        {
+                            Swal.fire({
+                                title: `Delete?&nbsp;<a href="#">#${data[0]}</a>`,
+                                text: "You won't be able to revert this!",
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, delete it!'
+                            }).then((result) => {
+                                if (result.value) {
+
+                                    $.ajax({
+                                        'url' : '/client-payment/'+id,
+                                        'type' : 'DELETE',
+                                        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                        'data' : {'password':access},
+                                        beforeSend: function(){
+
+                                        },success: function(output){
+                                            console.log(output.success);
+                                            if(output.success === true){
+                                                $('#payment-list').DataTable().ajax.reload();
+
+                                                Swal.fire(
+                                                    'Deleted!',
+                                                    output.message,
+                                                    'success'
+                                                );
+                                            }
+                                        },error: function(xhr, status, error){
+                                            console.log(xhr);
+                                        }
+                                    });
+
+                                }
+                            });
+                        }
+
+                    }).catch((error) => {
+
+                    });
+                });
+            </script>
+        @endcan
     @endcan
 @stop

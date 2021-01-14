@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\ClientPayment;
-use App\Repositories\CheckPassword;
 use App\Repositories\RepositoryInterface\CheckCredentialInterface;
 use App\Repositories\RepositoryInterface\PaymentInterFace;
 use Illuminate\Http\Request;
@@ -54,9 +53,7 @@ class ClientPaymentController extends Controller
 
     public function destroy($id)
     {
-        $client_payment = ClientPayment::findOrFail($id);
-        $client_payment->delete();
-        return response()->json(['success' => true, 'message' => 'Client Payment Successfully Deleted!']);
+        return $this->payment->removeById($id);
     }
 
     /**
@@ -137,6 +134,15 @@ class ClientPaymentController extends Controller
     public function edit($id)
     {
         return $this->payment->viewById($id);
+    }
+
+    public function checkCredentialForDelete()
+    {
+        if($this->isAuthenticated() === true)
+        {
+            return response()->json(['success' => true, 'access' => $this->request->password],201);
+        }
+        return response()->json(['success' => false],401);
     }
 
 }

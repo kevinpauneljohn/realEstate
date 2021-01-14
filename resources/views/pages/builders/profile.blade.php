@@ -166,8 +166,9 @@
                             beforeSend: function(){
 
                             },success: function(output){
-                                console.log(output);
+
                                 if(output.success === true){
+                                    $('#members').load(location.href+' #members option');
                                     $('#member-list').DataTable().ajax.reload();
                                     Swal.fire(
                                         'Deleted!',

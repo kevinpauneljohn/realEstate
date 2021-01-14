@@ -52,6 +52,15 @@ class PaymentRepository extends ClientRepository implements PaymentInterFace
         return $this->runMethod('updateById');
     }
 
+    public function removeById($id)
+    {
+        // TODO: Implement removeById() method.
+        $this->id = $id;
+        $this->requestResponse = $this->setHttpHeader()
+            ->delete($this->url.'/payments/'.$this->id)->json();
+        return $this->runMethod('removeById');
+    }
+
     private function runMethod($method)
     {
         if($this->tokenUnauthenticated() === true)
@@ -70,9 +79,9 @@ class PaymentRepository extends ClientRepository implements PaymentInterFace
                 case "updateById":
                     return $this->updateById($this->client,$this->id);
                     break;
-//                case "deleteById":
-//                    return $this->deleteById($this->id);
-//                    break;
+                case "removeById":
+                    return $this->removeById($this->id);
+                    break;
             }
         }
         return $this->requestResponse;
