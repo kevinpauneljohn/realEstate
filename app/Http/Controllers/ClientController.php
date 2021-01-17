@@ -7,6 +7,7 @@ use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Traits\Labeler;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Http;
 
 class ClientController extends Controller
 {
@@ -38,6 +39,7 @@ class ClientController extends Controller
     public function client_list()
     {
         $clients = $this->client->viewAll();
+//        return $clients;
         return DataTables::of($clients)
             ->addColumn('fullname',function($client){
 

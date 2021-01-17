@@ -54,8 +54,8 @@ class ClientRepository implements AccessTokenClientInterface
     }
 
     /**
-     * Jan. 04, 2021
      * @author john kevin paunel
+     * Jan. 04, 2021
      * Client Credentials Grant Tokens for super admin
      * @return $this->response->json
      * */
@@ -65,9 +65,8 @@ class ClientRepository implements AccessTokenClientInterface
             'grant_type' => 'client_credentials',
             'client_id' => config('dreamhomeguide.client_id'),
             'client_secret' => config('dreamhomeguide.client_secret'),
-            'scope' => 'create-client view-client edit-client delete-client',
+            'scope' => 'create-user view-user delete-user edit-user create-project view-project edit-project delete-project create-builder view-builder edit-builder delete-builder create-payment view-payment edit-payment delete-payment',
         ]);
-
         return $this->response->json();
     }
 

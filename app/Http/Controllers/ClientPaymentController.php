@@ -78,7 +78,7 @@ class ClientPaymentController extends Controller
                 $action = "";
                 if(auth()->user()->can('view dhg project'))
                 {
-                    $action .= '<a href="'.route("dhg.project.show",["project" => $client_payment['id']]).'" class="btn btn-xs btn-success view-details" id="'.$client_payment['id'].'" title="View Details"><i class="fa fa-eye"></i> </a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-success view-details" id="'.$client_payment['id'].'" title="View Details"><i class="fa fa-eye"></i> </a>';
                 }
                 if(auth()->user()->can('edit dhg project'))
                 {

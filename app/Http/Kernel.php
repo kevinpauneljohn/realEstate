@@ -70,7 +70,6 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'checkLid' => \App\Http\Middleware\RequestLid::class,
         'checkCommission' => \App\Http\Middleware\CheckCommission::class,
-        'cors' => \App\Http\Middleware\Cors::class
     ];
 
     /**
