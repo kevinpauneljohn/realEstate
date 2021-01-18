@@ -125,7 +125,7 @@ class ClientPaymentController extends Controller
         if($validation->passes())
         {
             $path = base_path() . '/resources/views/pages/clients/edit.blade.php';
-            return response()->json([$this->check_password->checkPassword(auth()->user()->username, $request->password,''),
+            return response()->json([$this->credential->checkPassword(auth()->user()->username, $request->password,''),
                 'test' => \Illuminate\Support\Facades\File::get($path)]);
         }
         return response()->json($validation->errors());

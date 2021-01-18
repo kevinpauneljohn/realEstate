@@ -9,7 +9,6 @@ $(document).on('submit','#client-form',function(form){
         beforeSend: function () {
             $('.submit-contact-btn').val('Saving ... ').attr('disabled',true);
         },success: function (result) {
-            console.log(result);
             if(result.success === true)
             {
                 toastr.success(result.message);

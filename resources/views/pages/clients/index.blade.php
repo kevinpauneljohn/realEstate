@@ -226,7 +226,42 @@
             </div>
         </div>
     @endcan
-    <div id="generate-script"></div>
+
+    @can('edit client')
+        <div class="modal fade" id="edit-role-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <form id="edit-role-form">
+                        <div class="modal-header">
+                            <h6 class="modal-title">Update Role</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group role">
+                                <label id="client-name"></label>
+                                <select class="select2 form-control" name="role" id="role" style="width: 100%;">
+                                    <option value=""></option>
+                                    <option value="client">Client</option>
+                                    <option value="architect">Architect</option>
+                                    <option value="builder admin">Builder Admin</option>
+                                    <option value="builder member">Builder Member</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary role-btn" value="Save">
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+    @endcan
 
 @stop
 
@@ -268,31 +303,9 @@
     </script>
     @can('edit client')
         <script>
-            let action;
 
-            let runAction;
-
-            function showSignInPassword(id,value)
-            {
-                rowId = id;
-                runAction = value;
-                $('#sign-in-password-modal').modal('toggle');
-            }
-
-            function runMethod()
-            {
-                if(runAction === "delete-client")
-                {
-                    deleteClient();
-                }else if(runAction === "edit-role")
-                {
-                    editRole();
-                }
-            }
-
-            function editRole()
-            {
-                $('#edit-role-modal').modal('toggle');
+            $(document).on('click','.edit-role-btn',function () {
+                rowId = this.id;
                 $.ajax({
                     'url' : '/client-info/'+rowId,
                     'type' : 'GET',
@@ -302,7 +315,7 @@
                         $('.role-btn').val('Saving ... ');
                     },success: function(result){
                         $('#client-name').append('<span id="client-full-name">'+result.firstname+' '+result.lastname+'</span>');
-                        $('#edit-role-form #role').val(result.role).change();
+                        $('#edit-role-form #role').val(result.roles[0]['name']).change();
 
                         $('#edit-role-form input, #edit-role-form select').attr('disabled',false);
                         $('.role-btn').val('Save');
@@ -310,39 +323,75 @@
                         console.log(xhr);
                     }
                 });
-            }
+            });
+
 
             $(document).on('submit','#edit-role-form',function(form){
                 form.preventDefault();
 
-                let data = $(this).serializeArray();
+                let data = $(this).serialize();
 
-                $.ajax({
-                    'url' : '/clients/update-role/'+rowId,
-                    'headers' : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    'type' : 'PUT',
-                    'data' : data,
-                    beforeSend: function(){
-                        $('#edit-role-form input, #edit-role-form select').attr('disabled',true);
-                        $('.role-btn').val('Saving ... ');
+
+                Swal.fire({
+                    title: 'Input your password for security',
+                    input: 'password',
+                    inputAttributes: {
+                        autocapitalize: 'off',
+                        name: 'password'
                     },
-                    success: function (result) {
-                        if(result.success === true)
-                        {
-                            let table = $('#client-list').DataTable();
-                            table.ajax.reload();
-                            $('#edit-role-modal').modal('toggle');
-                            toastr.success(result.message)
-                        }else if(result.success === false)
-                        {
-                            toastr.error(result.message)
-                        }
+                    showCancelButton: true,
+                    confirmButtonText: 'Send',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (login) => {
+                        return fetch('/clients/update-role/'+rowId,{
+                            method: 'PUT',
+                            headers: {
+                                'Accept': 'application/json, text/plain, */*',
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                            },
+                            body: data+`&password=${login}`
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if(result.value.success === true)
+                    {
+                        toastr.success(result.value.message);
 
-                        $('#edit-role-form input, #edit-role-form select').attr('disabled',false);
-                        $('.role-btn').val('Save');
-                    },error: function(xhr, status, error){
-                        console.log(xhr);
+                        $('#client-list').DataTable().ajax.reload();
+
+                        $('#edit-role-modal').modal('toggle').then(()=>{
+                            return Swal.fire(
+                                'updated!',
+                                'Project has been successfully updated.',
+                                'success'
+                            );
+                        });
+
+                    }else if(result.value.success === false && result.value.change === false)
+                    {
+                        toastr.warning(result.value.message);
                     }
+                    $.each(result.value, function (key, value) {
+                        let element = $('.edit_'+key);
+
+                        element.find('.error-edit_'+key).remove();
+                        element.append('<p class="text-danger error-edit_'+key+'">'+value+'</p>');
+                    });
+                }).catch((error) => {
+
                 });
             });
 
@@ -351,87 +400,95 @@
     @can('delete client')
         <script>
 
-            $(document).on('submit','#sign-in-form',function(form){
-                form.preventDefault();
-                let data = $(this).serializeArray();
+            $(document).on('click','.delete-client-btn',function(){
+                let id = this.id;
+                let access;
 
-                $.ajax({
-                    'url'   : '/admin/credential',
-                    'type'  : 'POST',
-                    'data'  : data,
-                    beforeSend: function(){
-                        $('#edit-role-modal').remove();
-                        $('.send-pw-btn').val('Sending ... ').attr('disabled',true);
-                    },success: function(result){
-                        //console.log(result.test);
-                        if(result[0].success === true)
-                        {
-                            $('#sign-in-form').trigger('reset');
-                            $('#sign-in-password-modal').modal('toggle');
-                            $('#generate-script').after(result.test);
-                            runMethod();
+                $tr = $(this).closest('tr');
 
-                        }else if(result[0].success === false){
-                            toastr.error("You're not allowed to remove the client");
-                        }
-
-                        $.each(result, function (key, value) {
-                            let element = $('.'+key);
-
-                            element.find('.'+key).remove();
-                            element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-                        });
-
-                        $('.send-pw-btn').val('Send').attr('disabled',false);
-                    },error: function(xhr,status,error){
-                        console.log(xhr);
-                    }
-                });
-            });
+                let data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
 
 
-            function deleteClient()
-            {
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
+                    title: 'Input your password for security',
+                    input: 'password',
+                    inputAttributes: {
+                        autocapitalize: 'off',
+                        name: 'password'
+                    },
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-
-                        $.ajax({
-                            'url' : '/clients/'+rowId,
-                            'type' : 'DELETE',
-                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            'data' : {'_method':'DELETE','id' : rowId},
-                            beforeSend: function(){
-
-                            },success: function(output){
-
-                                if(output.success === true){
-                                    Swal.fire(
-                                        'Deleted!',
-                                        output.message,
-                                        'success'
-                                    );
-
-                                    let table = $('#client-list').DataTable();
-                                    table.ajax.reload();
-                                }else{
-                                    toastr.error(output.message);
+                    confirmButtonText: 'Send',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (login) => {
+                        access = login;
+                        return fetch('/dhg-project-access',{
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json, text/plain, */*',
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                            },
+                            body: `password=${login}`
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
                                 }
-                            },error: function(xhr, status, error){
-                                console.log(xhr);
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if(result.value.success === true)
+                    {
+                        Swal.fire({
+                            title: `Delete?&nbsp;<a href="#">#${data[0]}</a>`,
+                            text: "You won't be able to revert this!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.value) {
+
+                                $.ajax({
+                                    'url' : '/clients/'+id,
+                                    'type' : 'DELETE',
+                                    'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                    'data' : {'password':access},
+                                    beforeSend: function(){
+
+                                    },success: function(output){
+                                        if(output.success === true){
+                                            $('#client-list').DataTable().ajax.reload();
+
+                                            Swal.fire(
+                                                'Deleted!',
+                                                output.message,
+                                                'success'
+                                            );
+                                        }
+                                    },error: function(xhr, status, error){
+                                        console.log(xhr);
+                                    }
+                                });
+
                             }
                         });
-
                     }
+
+                }).catch((error) => {
+
                 });
-            }
+            });
         </script>
     @endcan
 @stop

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
+use App\Repositories\RepositoryInterface\CheckCredentialInterface;
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Traits\Labeler;
 use Illuminate\Http\Request;
@@ -14,16 +15,29 @@ class ClientController extends Controller
     use Labeler;
 
     private $access_token,
-            $client;
+            $client,
+            $request,
+            $credential;
 
 
+    /**
+     * ClientController constructor.
+     * @param AccessTokenClientInterface $accessTokenClient
+     * @param DhgClientInterFace $dhgClientInterFace
+     * @param CheckCredentialInterface $checkCredential
+     * @param $request
+     *
+     */
     public function __construct(
         AccessTokenClientInterface $accessTokenClient,
-        DhgClientInterFace $dhgClientInterFace
+        DhgClientInterFace $dhgClientInterFace,
+        CheckCredentialInterface $checkCredential,Request $request
     )
     {
         $this->access_token = $accessTokenClient;
         $this->client = $dhgClientInterFace;
+        $this->request = $request;
+        $this->credential = $checkCredential;
     }
 
     public function index(Request $request)
@@ -47,7 +61,11 @@ class ClientController extends Controller
                 return $fullname;
             })
             ->editColumn('roles',function($client){
-                return $this->roleColor($client['roles'][0]['name']);
+                if(isset($client['roles'][0]))
+                {
+                    return $this->roleColor($client['roles'][0]['name']);
+                }
+                return "";
             })
             ->addColumn('action', function ($client)
             {
@@ -63,11 +81,11 @@ class ClientController extends Controller
                 }
                 if(auth()->user()->can('delete client'))
                 {
-                    $action .= '<button type="button" value="delete-client" class="btn btn-xs btn-danger delete-client-btn" id="'.$collection['id'].'" onclick="showSignInPassword(this.id,this.value)"><i class="fa fa-trash"></i></button>';
+                    $action .= '<button type="button" value="delete-client" class="btn btn-xs btn-danger delete-client-btn" id="'.$collection['id'].'"><i class="fa fa-trash"></i></button>';
                 }
                 if(auth()->user()->can('edit client'))
                 {
-                    $action .= '<button type="button" value="edit-role" class="btn btn-xs bg-purple edit-role-btn" id="'.$collection['id'].'" onclick="showSignInPassword(this.id,this.value)"><i class="fa fa-user-edit"></i></button>';
+                    $action .= '<button type="button" value="edit-role" class="btn btn-xs bg-purple edit-role-btn" id="'.$collection['id'].'" data-toggle="modal" data-target="#edit-role-modal"><i class="fa fa-user-edit"></i></button>';
                 }
                 return $action;
             })
@@ -111,13 +129,35 @@ class ClientController extends Controller
         return $this->client->updateById($request->all(), $id);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function destroy($id)
     {
-        return $this->client->removeById($id);
+        if($this->isAuthenticated() === true)
+        {
+            return $this->client->removeById($id);
+        }
+        return response()->json(['success' => false, 'message' => 'Unauthorized access', 'isAccess' => $this->request->password],401);
     }
 
     public function updateRole(Request $request,$id)
     {
-        return $this->client->updateRoleById($request->all(),$id);
+        if($this->isAuthenticated() === true)
+        {
+            return $this->client->updateRoleById($request->all(),$id);
+        }
+        return response()->json(['success' => false, 'message' => 'Unauthorized access'],401);
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function isAuthenticated()
+    {
+        return $this->credential->checkPassword(auth()->user()->username, $this->request->password);
+    }
+
 }
