@@ -140,9 +140,9 @@ class BuilderController extends Controller
      * Dec. 13, 2020
      * @author john kevin paunel
      * soft delete the builder model
-     * @param int $id
-     * @return mixed
-    */
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         //this will check first if the user requesting knows his password
