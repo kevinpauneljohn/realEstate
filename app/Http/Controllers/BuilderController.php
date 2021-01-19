@@ -155,5 +155,10 @@ class BuilderController extends Controller
         return response()->json(['success' => false, 'message' => 'Unauthorized access'],419);
     }
 
+    public function test()
+    {
+        
+    }
+
 
 }
