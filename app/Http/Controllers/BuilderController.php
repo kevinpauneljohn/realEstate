@@ -50,6 +50,8 @@ class BuilderController extends Controller
      * */
     public function store(Request $request)
     {
+        $active = collect(['is_active' => true]);
+        $request = $active->merge($request->all());
         return $this->builder->create($request->all());
     }
 

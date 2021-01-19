@@ -47,6 +47,10 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('viewAll');
     }
 
+    /**
+     * @param string $client
+     * @return DhgClientRepository|mixed
+     */
     public function viewById($client)
     {
         $this->client = $client;
@@ -56,6 +60,11 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('viewById');
     }
 
+    /**
+     * @param array $clients
+     * @param string $id
+     * @return DhgClientRepository|mixed
+     */
     public function updateById($clients, $id)
     {
         $this->client = $this->editArrayKeys('edit_','',$clients);//trait remove prefix method
@@ -66,6 +75,10 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('updateById');
     }
 
+    /**
+     * @param string $id
+     * @return DhgClientRepository|mixed
+     */
     public function removeById($id)
     {
         $this->id = $id;
@@ -74,6 +87,11 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('removeById');
     }
 
+    /**
+     * @param array $clients
+     * @param string $id
+     * @return DhgClientRepository|mixed
+     */
     public function updateRoleById($clients, $id)
     {
         $this->client = $clients;
@@ -83,6 +101,10 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('updateRoleById');
     }
 
+    /**
+     * @param $role
+     * @return DhgClientRepository|mixed
+     */
     public function viewByRole($role)
     {
         // TODO: Implement viewByRole() method.
@@ -92,8 +114,13 @@ class DhgClientRepository extends ClientRepository implements DhgClientInterFace
         return $this->runMethod('viewByRole');
     }
 
-    //if the request is unauthenticated callback the method again
-    //this will return the api response if successful
+
+    /**
+     * if the request is unauthenticated callback the method again
+     * this will return the api response if successful
+     * @param $method
+     * @return DhgClientRepository|mixed
+     */
     private function runMethod($method)
     {
         if($this->tokenUnauthenticated() === true)

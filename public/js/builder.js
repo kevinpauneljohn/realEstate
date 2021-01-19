@@ -23,7 +23,7 @@ $(document).on('submit','#add-builder-form',function(form){
         beforeSend: function(){
             $('.builder-form-btn').attr('disabled',true).val('Saving...');
         },success: function(result){
-
+            console.log(result);
             if(result.success === true)
             {
                 $('#add-builder-form').trigger('reset');

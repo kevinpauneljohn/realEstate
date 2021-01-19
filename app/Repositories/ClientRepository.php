@@ -40,6 +40,9 @@ class ClientRepository implements AccessTokenClientInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     private function checkIfAccessTokenExpired()
     {
         $expiry_date = $this->access_token->first()->expires_in;
@@ -71,7 +74,10 @@ class ClientRepository implements AccessTokenClientInterface
     }
 
 
-    //save access token through cookie
+    /**
+     *save access token through cookie
+     * @return void
+     */
     private function saveAccessToken()
     {
         $this->requestToken();//load request token to get the value of response
@@ -86,30 +92,43 @@ class ClientRepository implements AccessTokenClientInterface
     }
 
 
-    //will return the access_token only
+    /**
+     * will return the access_token only
+     * @return mixed
+     */
     public function getAccessToken()
     {
         return $this->access_token->first()->access_token;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAccessTokenExpiry()
     {
         // TODO: Implement getAccessTokenExpiry() method.
         return $this->access_token->first()->expires_in;
     }
 
-    //set the http header to make an action on the DHG server
+    /**
+     * set the http header to make an action on the DHG server
+     * @return \Illuminate\Http\Client\PendingRequest
+     */
     public function setHttpHeader()
     {
 
-        return Http::withHeaders([
+        return Http::withHeaders(array(
             'content-type' => 'application/json',
             'Accept'        => 'application/json',
             'Authorization' => 'Bearer '.$this->getAccessToken()
-        ]);
+        ));
     }
 
-    //this will check if the request is unauthenticated and will return true if it is
+
+    /**
+     * this will check if the request is unauthenticated and will return true if it is
+     * @return bool
+     */
     protected function tokenUnauthenticated()
     {
         if(array_key_exists('message',$this->requestResponse))
