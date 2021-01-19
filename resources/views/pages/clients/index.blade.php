@@ -310,7 +310,7 @@
                     'url' : '/client-info/'+rowId,
                     'type' : 'GET',
                     beforeSend: function(){
-                        $('#client-full-name').remove();
+                        $('#client-full-name, #edit-role-form .error-role').remove();
                         $('#edit-role-form input, #edit-role-form select').attr('disabled',true);
                         $('.role-btn').val('Saving ... ');
                     },success: function(result){
@@ -330,7 +330,6 @@
                 form.preventDefault();
 
                 let data = $(this).serialize();
-
 
                 Swal.fire({
                     title: 'Input your password for security',
@@ -385,9 +384,9 @@
                         toastr.warning(result.value.message);
                     }
                     $.each(result.value, function (key, value) {
-                        let element = $('.edit_'+key);
+                        let element = $('.'+key);
 
-                        element.find('.error-edit_'+key).remove();
+                        element.find('.error-'+key).remove();
                         element.append('<p class="text-danger error-edit_'+key+'">'+value+'</p>');
                     });
                 }).catch((error) => {
