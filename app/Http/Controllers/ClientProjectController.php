@@ -34,16 +34,22 @@ class ClientProjectController extends Controller
 
     public function index()
     {
+//        $builder = $this->project->viewAll();
+//        foreach ($builder as $key => $value)
+//        {
+//            echo $value['builder']['name'];
+//        }
+//        //return $builder;
         # this variable retrieve all user whose role is NOT A CLIENT
         $agents = User::whereHas('roles', function ($query) {
             return $query->where('name','!=', 'client');
         })->get();
-
+//        return $this->client->viewByRole('client');
+//
         return view('pages.clientProjects.index')->with([
             'clients'    => $this->client->viewByRole('client'),
             'builders'   => $this->builder->viewAll(),
             'agents'     => $agents,
-            'architects'  => $this->client->viewByRole('architect')
         ]);
     }
 
@@ -126,27 +132,21 @@ class ClientProjectController extends Controller
     public function dhgProjectList()
     {
         $dhg_projects = $this->project->viewAll();
-//        return $dhg_projects;
+        //return $dhg_projects;
         return DataTables::of($dhg_projects)
             ->editColumn('id', function($dhg_project){
                 return '<a href="#">'.$this->project->setCode($dhg_project['id']).'</a>';
                 //return $dhg_project['id'];
             })
             ->editColumn('date_started', function($dhg_project){
-                return $dhg_project['date_started'];
-            })
-            ->editColumn('created_by', function ($dhg_project){
-                return $dhg_project['created_by'];
+                return $dhg_project['date_created'];
             })
             ->editColumn('user_id', function ($dhg_project){
-                return $dhg_project['client']['firstname'].' '.$dhg_project['client']['lastname'];
+                return $dhg_project['user']['firstname'].' '.$dhg_project['user']['lastname'];
             })
             ->editColumn('agent_id', function ($dhg_project){
 
                 return "";
-            })
-            ->editColumn('architect_id', function ($dhg_project){
-                return $dhg_project['architect']['firstname'].' '.$dhg_project['architect']['lastname'];;
             })
             ->editColumn('builder_id', function ($dhg_project){
                 return $dhg_project['builder']['name'];

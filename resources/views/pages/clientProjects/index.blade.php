@@ -33,7 +33,6 @@
                             <th>Project Code</th>
                             <th>Date Started</th>
                             <th>Client Name</th>
-                            <th>Architect</th>
                             <th>Builder</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -45,7 +44,6 @@
                             <th>Project Code</th>
                             <th>Date Started</th>
                             <th>Client Name</th>
-                            <th>Architect</th>
                             <th>Builder</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -80,15 +78,6 @@
                                             <option value=""></option>
                                             @foreach($clients as $client)
                                                 <option value="{{$client['id']}}">{{ucwords($client['firstname'].' '.$client['lastname'])}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group architect">
-                                        <label for="architect">Architect</label>
-                                        <select class="select2" name="architect" id="architect" data-placeholder="Select an architect" style="width: 100%;">
-                                            <option value=""></option>
-                                            @foreach($architects as $architect)
-                                                <option value="{{$architect['id']}}">{{ucwords($architect['firstname'].' '.$architect['lastname'])}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -171,15 +160,6 @@
                                             <option></option>
                                             @foreach($clients as $client)
                                                 <option value="{{$client['id']}}">{{ucwords($client['firstname'].' '.$client['lastname'])}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group edit_architect">
-                                        <label for="edit_architect">Architect</label>
-                                        <select class="select2" name="edit_architect" id="edit_architect" data-placeholder="Select an architect" style="width: 100%;">
-                                            <option></option>
-                                            @foreach($architects as $architect)
-                                                <option value="{{$architect['id']}}">{{ucwords($architect['firstname'].' '.$architect['lastname'])}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -285,7 +265,6 @@
                         { data: 'id', name: 'id'},
                         { data: 'date_started', name: 'date_started'},
                         { data: 'user_id', name: 'user_id'},
-                        { data: 'architect_id', name: 'architect_id'},
                         { data: 'builder_id', name: 'builder_id'},
                         { data: 'status', name: 'status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}

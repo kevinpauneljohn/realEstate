@@ -104,22 +104,14 @@ class ClientProjectRepository extends ClientRepository implements DhgClientProje
             {
                 case "viewAll":
                     return $this->viewAll();
-                    break;
                 case "create":
                     return $this->create($this->client);
-                    break;
                 case "viewById":
                     return $this->viewById($this->id);
-                    break;
                 case "updateById":
                     return $this->updateById($this->client, $this->id);
-                    break;
                 case "removeById":
                     return $this->removeById($this->id);
-                    break;
-//                case "updateRoleById":
-//                    return $this->updateRoleById($this->client,$this->id);
-//                    break;
             }
         }
         return $this->requestResponse;

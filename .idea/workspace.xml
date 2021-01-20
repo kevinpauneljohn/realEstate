@@ -34,10 +34,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="dream home guide builder module">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/BuilderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/BuilderRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientProjectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientProjectController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/ClientProjectRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/ClientProjectRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/ClientRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/ClientRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/builder.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/builder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/clientProjects/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/clientProjects/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -454,14 +453,7 @@
       <workItem from="1611040303553" duration="1539000" />
       <workItem from="1611042069564" duration="296000" />
       <workItem from="1611042381262" duration="1719000" />
-      <workItem from="1611047298599" duration="12793000" />
-    </task>
-    <task id="LOCAL-00610" summary="DHG client payment module">
-      <created>1609062350698</created>
-      <option name="number" value="00610" />
-      <option name="presentableId" value="LOCAL-00610" />
-      <option name="project" value="LOCAL" />
-      <updated>1609062350699</updated>
+      <workItem from="1611047298599" duration="19083000" />
     </task>
     <task id="LOCAL-00611" summary="DHG client payment module">
       <created>1609066348510</created>
@@ -799,7 +791,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611109771549</updated>
     </task>
-    <option name="localTasksCounter" value="659" />
+    <task id="LOCAL-00659" summary="dream home guide builder module">
+      <created>1611115426935</created>
+      <option name="number" value="00659" />
+      <option name="presentableId" value="LOCAL-00659" />
+      <option name="project" value="LOCAL" />
+      <updated>1611115426937</updated>
+    </task>
+    <option name="localTasksCounter" value="660" />
     <servers />
   </component>
   <component name="TodoView">
@@ -893,22 +892,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611098465734" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1611107159133">
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1611183023630">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611107159133" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1611107159133">
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611183023630" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1611183023629">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611107159133" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1611107159132">
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611183023629" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1611183023629">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611107159132" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1611107159133">
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611183023629" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1611183023630">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611107159133" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611183023630" />
     <state x="612" y="115" key="RollbackChangesDialog" timestamp="1611040467068">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
