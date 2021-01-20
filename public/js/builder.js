@@ -65,7 +65,7 @@ $(document).on('click','.edit-btn',function () {
             $(parentElm+' #edit_description').val(data.description);
             $(parentElm+' input, '+parentElm+' textarea').attr('disabled',false);
         },error: function (xhr, status, error) {
-            console.log(xhr)
+            console.log(xhr);
         }
     });
 });
@@ -83,7 +83,7 @@ $(document).on('submit','#edit-builder-form',function(form){
         'data' : data,
         beforeSend: function () {
             $('.builder-form-btn').attr('disabled',true).val('Saving...');
-        },success: function(result){
+        },success: function(result, status, xhr){
             if(result.success === true)
             {
                 toastr.success(result.message);

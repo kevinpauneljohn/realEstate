@@ -78,9 +78,9 @@ class BuilderController extends Controller
      * December 13, 2020
      * @author john kevin paunel
      * get the builder model if the edit button was clicked
-     * @param int $id
+     * @param $id
      * @return mixed
-    */
+     */
     public function edit($id)
     {
         return $this->builder->viewById($id);
@@ -95,7 +95,7 @@ class BuilderController extends Controller
      * @param int $id
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
         return $this->builder->updateById($request->all(),$id);
     }
@@ -153,11 +153,6 @@ class BuilderController extends Controller
             return $this->builder->deleteById($id);
         }
         return response()->json(['success' => false, 'message' => 'Unauthorized access'],419);
-    }
-
-    public function test()
-    {
-        
     }
 
 

@@ -129,7 +129,7 @@ class ClientRepository implements AccessTokenClientInterface
      * this will check if the request is unauthenticated and will return true if it is
      * @return bool
      */
-    protected function tokenUnauthenticated()
+    protected function tokenUnauthenticated(): bool
     {
         if(array_key_exists('message',$this->requestResponse))
         {
