@@ -152,7 +152,7 @@ class BuilderController extends Controller
             //if true will return the delete api call for builder
             return $this->builder->deleteById($id);
         }
-        return response()->json(['success' => false, 'message' => 'Unauthorized access'],419);
+        return response()->json(['success' => false, 'message' => 'Unauthorized access'],401);
     }
 
 

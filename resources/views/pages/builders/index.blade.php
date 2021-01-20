@@ -187,8 +187,6 @@
                 confirmButtonText: 'Send',
                 showLoaderOnConfirm: true,
                 preConfirm: (login) => {
-                    // return fetch('/admin/credential',{
-                    //     method: 'POST',
                     return fetch('/builders/'+rowId,{
                         method: 'DELETE',
                         headers: {

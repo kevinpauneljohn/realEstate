@@ -32,16 +32,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="dream home guide user module">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/laravel-plugin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/realEstate.iml" afterDir="false" />
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="dream home guide builder module">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BuilderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BuilderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/BuilderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/BuilderRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/ClientRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/ClientRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/builder.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/builder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/builders/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/builders/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -492,14 +486,7 @@
       <workItem from="1611040303553" duration="1539000" />
       <workItem from="1611042069564" duration="296000" />
       <workItem from="1611042381262" duration="1719000" />
-      <workItem from="1611047298599" duration="5744000" />
-    </task>
-    <task id="LOCAL-00607" summary="DHG client payment module">
-      <created>1608959761295</created>
-      <option name="number" value="00607" />
-      <option name="presentableId" value="LOCAL-00607" />
-      <option name="project" value="LOCAL" />
-      <updated>1608959761295</updated>
+      <workItem from="1611047298599" duration="7200000" />
     </task>
     <task id="LOCAL-00608" summary="DHG client payment module">
       <created>1608972442523</created>
@@ -837,7 +824,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611037889574</updated>
     </task>
-    <option name="localTasksCounter" value="656" />
+    <task id="LOCAL-00656" summary="dream home guide builder module">
+      <created>1611104873691</created>
+      <option name="number" value="00656" />
+      <option name="presentableId" value="LOCAL-00656" />
+      <option name="project" value="LOCAL" />
+      <updated>1611104873692</updated>
+    </task>
+    <option name="localTasksCounter" value="657" />
     <servers />
   </component>
   <component name="TodoView">
@@ -879,7 +873,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added check commission middleware for validating the commission rate existence" />
     <MESSAGE value="added threshold notification using pusher" />
     <MESSAGE value="updated the sales module" />
     <MESSAGE value="computations module" />
@@ -904,7 +897,8 @@
     <MESSAGE value="login api module" />
     <MESSAGE value="admin save access token module" />
     <MESSAGE value="dream home guide user module" />
-    <option name="LAST_COMMIT_MESSAGE" value="dream home guide user module" />
+    <MESSAGE value="dream home guide builder module" />
+    <option name="LAST_COMMIT_MESSAGE" value="dream home guide builder module" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="67" key="#CLI_Interpreters" timestamp="1611038428602">
@@ -931,6 +925,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611098465734" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1611107159133">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611107159133" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1611107159133">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611107159133" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1611107159132">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611107159132" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1611107159133">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611107159133" />
     <state x="612" y="115" key="RollbackChangesDialog" timestamp="1611040467068">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -939,9 +949,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611040721950" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1611037894170">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1611104874210">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611037894170" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611104874210" />
   </component>
 </project>
