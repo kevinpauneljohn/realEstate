@@ -11,30 +11,41 @@ use Illuminate\Support\Facades\Request;
 class BuilderRepository extends ClientRepository implements BuilderInterface
 {
     use RemovePrefix;
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-    }
 
+    /**
+     * view all created and active builders
+     * @return mixed
+     */
     public function viewAll()
     {
         // TODO: Implement viewAll() method.
         $this->requestResponse = $this->setHttpHeader()
             ->get(config('dreamhomeguide.api_base_url').'/api/builders')->json();
 
-        return $this->runMethod('viewAll');
+        return $this->runAction('viewAll');
     }
 
+    /**
+     * create new builder
+     * @param $request
+     * @return mixed
+     */
     public function create($request)
     {
         // TODO: Implement create() method.
         $this->client = $request;
         $this->requestResponse = $this->setHttpHeader()
             ->post(config('dreamhomeguide.api_base_url').'/api/builders',$this->client)->json();
-        return $this->runMethod('create');
+        return $this->runAction('create');
 
     }
 
+    /**
+     * updated the specified builder
+     * @param $request
+     * @param $id
+     * @return mixed
+     */
     public function updateById($request, $id)
     {
         // TODO: Implement updateById() method.
@@ -43,24 +54,34 @@ class BuilderRepository extends ClientRepository implements BuilderInterface
 
         $this->requestResponse = $this->setHttpHeader()
             ->put(config('dreamhomeguide.api_base_url').'/api/builders/'.$this->id, $this->client)->json();
-        return $this->runMethod('updateById');
+        return $this->runAction('updateById');
     }
 
+    /**
+     * view the specified builder
+     * @param $id
+     * @return mixed
+     */
     public function viewById($id)
     {
         $this->id = $id;
         $this->requestResponse = $this->setHttpHeader()
             ->get(config('dreamhomeguide.api_base_url').'/api/builders/'.$this->id)->json();
-        return $this->runMethod('viewById');
+        return $this->runAction('viewById');
     }
 
+    /**
+     * remove or soft delete specified builder
+     * @param $id
+     * @return mixed
+     */
     public function deleteById($id)
     {
         // TODO: Implement deleteById() method.
         $this->id = $id;
         $this->requestResponse = $this->setHttpHeader()
             ->delete(config('dreamhomeguide.api_base_url').'/api/builders/'.$this->id)->json();
-        return $this->runMethod('deleteById');
+        return $this->runAction('deleteById');
     }
 
     public function addMember(array $member)
@@ -70,7 +91,7 @@ class BuilderRepository extends ClientRepository implements BuilderInterface
 
         $this->requestResponse = $this->setHttpHeader()
             ->post($this->url.'/builders/member',$this->client)->json();
-        return $this->runMethod('addMember');
+        return $this->runAction('addMember');
     }
 
     public function removeMember($request)
@@ -78,10 +99,17 @@ class BuilderRepository extends ClientRepository implements BuilderInterface
         $this->client = $request;
         $this->requestResponse = $this->setHttpHeader()
             ->delete($this->url.'/builders/members/remove',$this->client)->json();
-        return $this->runMethod('removeMember');
+        return $this->runAction('removeMember');
     }
 
-    private function runMethod($method)
+
+    /**
+     * this method will automatically request to create another access token
+     * if the current token was revoked or deleted from the provider
+     * @param $method //this is the method name you are invoking
+     * @return mixed
+     */
+    private function runAction($method)
     {
         if($this->tokenUnauthenticated() === true)
         {
@@ -89,25 +117,18 @@ class BuilderRepository extends ClientRepository implements BuilderInterface
             {
                 case "viewAll":
                     return $this->viewAll();
-                    break;
                 case "create":
                     return $this->create($this->client);
-                    break;
                 case "viewById":
                     return $this->viewById($this->id);
-                    break;
                 case "updateById":
                     return $this->updateById($this->client,$this->id);
-                    break;
                 case "deleteById":
                     return $this->deleteById($this->id);
-                    break;
                 case "addMember":
                     return $this->addMember($this->client);
-                    break;
                 case "removeMember":
                     return $this->removeMember($this->client);
-                    break;
             }
         }
         return $this->requestResponse;
