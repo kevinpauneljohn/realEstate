@@ -35,11 +35,6 @@ class BuilderRepository extends ClientRepository implements BuilderInterface
 
     }
 
-    /**
-     * @param $request
-     * @param $id
-     * @return mixed
-     */
     public function updateById($request, $id)
     {
         // TODO: Implement updateById() method.
@@ -51,15 +46,11 @@ class BuilderRepository extends ClientRepository implements BuilderInterface
         return $this->runMethod('updateById');
     }
 
-    /**
-     * @param $id
-     * @return mixed
-     */
     public function viewById($id)
     {
         $this->id = $id;
         $this->requestResponse = $this->setHttpHeader()
-            ->get(config('dreamhomeguide.api_base_url').'/api/builders/'.$this->id.'/edit')->json();
+            ->get(config('dreamhomeguide.api_base_url').'/api/builders/'.$this->id)->json();
         return $this->runMethod('viewById');
     }
 
@@ -72,10 +63,6 @@ class BuilderRepository extends ClientRepository implements BuilderInterface
         return $this->runMethod('deleteById');
     }
 
-    /**
-     * @param array $member
-     * @return mixed
-     */
     public function addMember(array $member)
     {
         // TODO: Implement addMember() method.

@@ -34,8 +34,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="dream home guide builder module">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BuilderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BuilderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/builders/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/builders/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/BuilderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/BuilderRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,40 +69,6 @@
         <option value="JavaScript File" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>isD</find>
-      <find>delete</find>
-      <find>select</find>
-      <find>select2</find>
-      <find>profile</find>
-      <find>profile(</find>
-      <find>project-model-units</find>
-      <find>dhg-projects</find>
-      <find>upline</find>
-      <find>multiple</find>
-      <find>token</find>
-      <find>$this-&gt;request</find>
-      <find>console.log</find>
-      <find>getR</find>
-      <find>client-info</find>
-      <find>$serverResponse</find>
-      <find>$this-&gt;access_token</find>
-      <find>/admin/credential</find>
-      <find>edit-project</find>
-      <find>dhg-project-access</find>
-      <find>client.payment.list</find>
-      <find>edit-btn</find>
-      <find>builderList</find>
-      <find>member</find>
-      <find>add-member</find>
-      <find>query</find>
-      <find>requestToken</find>
-      <find>client-in</find>
-      <find>update-role</find>
-      <find>builder.list</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -486,14 +451,7 @@
       <workItem from="1611040303553" duration="1539000" />
       <workItem from="1611042069564" duration="296000" />
       <workItem from="1611042381262" duration="1719000" />
-      <workItem from="1611047298599" duration="7200000" />
-    </task>
-    <task id="LOCAL-00608" summary="DHG client payment module">
-      <created>1608972442523</created>
-      <option name="number" value="00608" />
-      <option name="presentableId" value="LOCAL-00608" />
-      <option name="project" value="LOCAL" />
-      <updated>1608972442524</updated>
+      <workItem from="1611047298599" duration="8954000" />
     </task>
     <task id="LOCAL-00609" summary="DHG client payment module">
       <created>1608988777592</created>
@@ -831,7 +789,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611104873692</updated>
     </task>
-    <option name="localTasksCounter" value="657" />
+    <task id="LOCAL-00657" summary="dream home guide builder module">
+      <created>1611107990213</created>
+      <option name="number" value="00657" />
+      <option name="presentableId" value="LOCAL-00657" />
+      <option name="project" value="LOCAL" />
+      <updated>1611107990213</updated>
+    </task>
+    <option name="localTasksCounter" value="658" />
     <servers />
   </component>
   <component name="TodoView">
@@ -953,5 +918,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611104874210" />
+    <state x="538" y="220" key="com.jetbrains.php.test.PhpNewTestDialog" timestamp="1611108707654">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="538" y="220" key="com.jetbrains.php.test.PhpNewTestDialog/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1611108707654" />
   </component>
 </project>
