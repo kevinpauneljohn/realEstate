@@ -10,29 +10,7 @@ function clear_errors()
     }
 }
 
-$(document).on('click','.edit-project', function () {
-    projectRowId = this.id;
 
-    $.ajax({
-        'url' : '/dhg-projects/'+projectRowId+'/edit',
-        'type' : 'GET',
-        beforeSend: function () {
-            $('#edit-project-form input, #edit-project-form textarea, #edit-project-form select').attr('disabled',true);
-            $('#edit-project-form .textarea').summernote('disable');
-        },success: function (res) {
-            $('#edit_client').val(res.user_id).change();
-            $('#edit_architect').val(res.architect_id).change();
-            $('#edit_builder').val(res.builder_id).change();
-            $('#edit_agent').val(res.agent_id).change();
-            $('#edit_address').val(res.address).change();
-            $('#edit_lot_price').val(res.lot_price);
-            $('#edit_house_price').val(res.house_price);
-            $('#edit_description').summernote('code',res.description);
-            $('#edit-project-form input, #edit-project-form textarea, #edit-project-form select').attr('disabled',false);
-            $('#edit-project-form .textarea').summernote('enable');
-        }
-    });
-});
 
 $(document).on('submit','#add-project-form',function(form){
     form.preventDefault();
@@ -72,7 +50,7 @@ $(document).on('submit','#add-project-form',function(form){
             $('.dhg-project-form-btn').attr('disabled',false).val('Save');
         }
     });
-    clear_errors('client','architect','builder','agent','address','lot_price','house_price');
+    clear_errors('client','builder','address','lot_price','house_price','lot_area','floor_area','date_created');
 });
 
 // $(document).on('click','.edit-btn', function(){

@@ -72,6 +72,10 @@
                             <div class="row">
                                 {{--First Column--}}
                                 <div class="col-lg-6">
+                                    <div class="form-group date_created">
+                                        <label for="date_created">Date Created</label><span class="required">*</span>
+                                        <input type="date" name="date_created" class="form-control" id="date_created">
+                                    </div>
                                     <div class="form-group client">
                                         <label for="client">Client</label><span class="required">*</span>
                                         <select class="select2" name="client" id="client" data-placeholder="Select a client" style="width: 100%;">
@@ -90,18 +94,17 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group agent">
-                                        <label for="agent">Agent</label>
-                                        <select class="select2" name="agent" id="agent" data-placeholder="Select an agent" style="width: 100%;">
-                                            <option value=""></option>
-                                            @foreach($agents as $agent)
-                                                <option value="{{$agent->id}}">{{ucwords($agent->firstname.' '.$agent->lastname)}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
                                     <div class="form-group address">
                                         <label for="address">Address</label><span class="required">*</span>
                                         <textarea name="address" id="address" class="form-control" placeholder="Place some text here"></textarea>
+                                    </div>
+                                    <div class="form-group lot_area">
+                                        <label for="lot_area">Lot Area</label>
+                                        <input type="number" min="0" name="lot_area" id="lot_area" step="any" class="form-control">
+                                    </div>
+                                    <div class="form-group floor_area">
+                                        <label for="floor_area">Floor Area</label>
+                                        <input type="number" min="0" name="floor_area" id="floor_area" step="any" class="form-control">
                                     </div>
                                 </div>
                                 {{--End of First Column--}}
@@ -154,6 +157,10 @@
                             <div class="row">
                                 {{--First Column--}}
                                 <div class="col-lg-6">
+                                    <div class="form-group edit_date_created">
+                                        <label for="edit_date_created">Date Created</label><span class="required">*</span>
+                                        <input type="date" name="edit_date_created" class="form-control" id="edit_date_created">
+                                    </div>
                                     <div class="form-group edit_client">
                                         <label for="edit_client">Client</label><span class="required">*</span>
                                         <select class="select2" name="edit_client" id="edit_client" data-placeholder="Select a client" style="width: 100%;">
@@ -172,18 +179,17 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group edit_agent">
-                                        <label for="edit_agent">Agent</label>
-                                        <select class="select2" name="edit_agent" id="edit_agent" data-placeholder="Select an agent" style="width: 100%;">
-                                            <option></option>
-                                            @foreach($agents as $agent)
-                                                <option value="{{$agent->id}}">{{ucwords($agent->firstname.' '.$agent->lastname)}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
                                     <div class="form-group edit_address">
                                         <label for="edit_address">Address</label><span class="required">*</span>
                                         <textarea name="edit_address" id="edit_address" class="form-control" placeholder="Place some text here"></textarea>
+                                    </div>
+                                    <div class="form-group edit_lot_area">
+                                        <label for="edit_lot_area">Lot Area</label>
+                                        <input type="number" min="0" name="edit_lot_area" id="edit_lot_area" step="any" class="form-control">
+                                    </div>
+                                    <div class="form-group edit_floor_area">
+                                        <label for="edit_floor_area">Floor Area</label>
+                                        <input type="number" min="0" name="edit_floor_area" id="edit_floor_area" step="any" class="form-control">
                                     </div>
                                 </div>
                                 {{--End of First Column--}}
@@ -278,10 +284,30 @@
 
             @can('edit dhg project')
 
-            $(document).on('click','.edit-project',function(){
+            $(document).on('click','.edit-project', function () {
                 rowId = this.id;
-            });
 
+                $.ajax({
+                    'url' : '/dhg-projects/'+rowId+'/edit',
+                    'type' : 'GET',
+                    beforeSend: function () {
+                        $('#edit-project-form input, #edit-project-form textarea, #edit-project-form select').attr('disabled',true);
+                        $('#edit-project-form .textarea').summernote('disable');
+                    },success: function (res) {
+                        $('#edit_date_created').val(res.date_created).change();
+                        $('#edit_client').val(res.user_id).change();
+                        $('#edit_builder').val(res.builder_id).change();
+                        $('#edit_address').val(res.address).change();
+                        $('#edit_lot_area').val(res.lot_area);
+                        $('#edit_floor_area').val(res.floor_area);
+                        $('#edit_lot_price').val(res.lot_price);
+                        $('#edit_house_price').val(res.house_price);
+                        $('#edit_description').summernote('code',res.description);
+                        $('#edit-project-form input, #edit-project-form textarea, #edit-project-form select').attr('disabled',false);
+                        $('#edit-project-form .textarea').summernote('enable');
+                    }
+                });
+            });
             $(document).on('submit','#edit-project-form', function (form) {
                 form.preventDefault();
 
@@ -320,7 +346,6 @@
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
-                   console.log(result)
                     if(result.value.success === true)
                     {
                         toastr.success(result.value.message);
@@ -335,7 +360,7 @@
                             );
                         });
 
-                    }else if(result.value.success === false && result.value.change === false)
+                    }else if(result.value.success === false)
                     {
                         toastr.warning(result.value.message);
                     }
@@ -348,7 +373,7 @@
                 }).catch((error) => {
 
                 });
-                clear_errors('edit_client','edit_agent','edit_address','edit_description');
+                clear_errors('edit_client','edit_address','edit_builder');
             });
             @endcan
 
