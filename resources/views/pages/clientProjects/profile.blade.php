@@ -90,10 +90,7 @@
                         <br>
                         <div class="text-muted">
                             <p class="text-sm">Client Name
-                                <b class="d-block">{{$project['client']['firstname']}} {{$project['client']['lastname']}}</b>
-                            </p>
-                            <p class="text-sm">Architect
-                                <b class="d-block">{{$project['architect']['firstname']}} {{$project['architect']['lastname']}}</b>
+                                <b class="d-block">{{$project['user']['firstname']}} {{$project['user']['lastname']}}</b>
                             </p>
                             <p class="text-sm">Builder
                                 <b class="d-block">{{$project['builder']['name']}}</b>
@@ -244,20 +241,20 @@
         <script src="{{asset('js/dhg-project.js')}}"></script>
         <script>
             $(function() {
-                $('#payment-list').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: '{!! route('client.payment.list',['project' => $project['id']]) !!}',
-                    columns: [
-                        { data: 'date_received', name: 'date_received'},
-                        { data: 'amount', name: 'amount'},
-                        { data: 'description', name: 'description'},
-                        { data: 'remarks', name: 'remarks'},
-                        { data: 'action', name: 'action', orderable: false, searchable: false}
-                    ],
-                    responsive:true,
-                    order:[0,'asc']
-                });
+                {{--$('#payment-list').DataTable({--}}
+                {{--    processing: true,--}}
+                {{--    serverSide: true,--}}
+                {{--    ajax: '{!! route('client.payment.list',['project' => $project['id']]) !!}',--}}
+                {{--    columns: [--}}
+                {{--        { data: 'date_received', name: 'date_received'},--}}
+                {{--        { data: 'amount', name: 'amount'},--}}
+                {{--        { data: 'description', name: 'description'},--}}
+                {{--        { data: 'remarks', name: 'remarks'},--}}
+                {{--        { data: 'action', name: 'action', orderable: false, searchable: false}--}}
+                {{--    ],--}}
+                {{--    responsive:true,--}}
+                {{--    order:[0,'asc']--}}
+                {{--});--}}
             });
 
             @can('add client payment')

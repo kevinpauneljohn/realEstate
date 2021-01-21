@@ -34,22 +34,9 @@ class ClientProjectController extends Controller
 
     public function index()
     {
-//        $builder = $this->project->viewAll();
-//        foreach ($builder as $key => $value)
-//        {
-//            echo $value['builder']['name'];
-//        }
-//        //return $builder;
-        # this variable retrieve all user whose role is NOT A CLIENT
-        $agents = User::whereHas('roles', function ($query) {
-            return $query->where('name','!=', 'client');
-        })->get();
-//        return $this->client->viewByRole('client');
-//
         return view('pages.clientProjects.index')->with([
             'clients'    => $this->client->viewByRole('client'),
             'builders'   => $this->builder->viewAll(),
-            'agents'     => $agents,
         ]);
     }
 
@@ -74,7 +61,7 @@ class ClientProjectController extends Controller
         return view('pages.clientProjects.profile')->with([
             'project'    => $project,
             'project_code'      => $this->project->setCode($id),
-            'payments'      => $this->payment->viewAll($id)
+//            'payments'      => $this->payment->viewAll($id)
         ]);
     }
 
