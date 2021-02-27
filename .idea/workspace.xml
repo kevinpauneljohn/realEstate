@@ -33,7 +33,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="dream home guide project module">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kevin.php" beforeDir="false" afterPath="$PROJECT_DIR$/kevin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -467,14 +466,7 @@
       <workItem from="1612146362471" duration="721000" />
       <workItem from="1612164874847" duration="311000" />
       <workItem from="1612249678831" duration="727000" />
-      <workItem from="1614424596121" duration="1721000" />
-    </task>
-    <task id="LOCAL-00615" summary="DHG builder profile module">
-      <created>1609099363550</created>
-      <option name="number" value="00615" />
-      <option name="presentableId" value="LOCAL-00615" />
-      <option name="project" value="LOCAL" />
-      <updated>1609099363551</updated>
+      <workItem from="1614424596121" duration="2302000" />
     </task>
     <task id="LOCAL-00616" summary="DHG builder profile module">
       <created>1609168671759</created>
@@ -812,7 +804,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614425782342</updated>
     </task>
-    <option name="localTasksCounter" value="664" />
+    <task id="LOCAL-00664" summary="dream home guide project module">
+      <created>1614426334757</created>
+      <option name="number" value="00664" />
+      <option name="presentableId" value="LOCAL-00664" />
+      <option name="project" value="LOCAL" />
+      <updated>1614426334757</updated>
+    </task>
+    <option name="localTasksCounter" value="665" />
     <servers />
   </component>
   <component name="TodoView">
