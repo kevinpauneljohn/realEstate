@@ -32,7 +32,7 @@
 @stop
 
 @section('content')
-    @if(request()->getHost() === "porl.dream-homeseller.com")
+    @if(request()->getHost() == "porl.dream-homeseller.com")
     true
     @else
         not true
