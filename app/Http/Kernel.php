@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Cors;
+use App\Http\Middleware\RedirectToNewPortal;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Passport\Http\Middleware\CreateFreshApiToken;
 
@@ -22,6 +23,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Fruitcake\Cors\HandleCors::class,
+        RedirectToNewPortal::class,
     ];
 
     /**
