@@ -32,7 +32,7 @@
 @stop
 
 @section('content')
-
+{{request()->getHost()}}
     @if(!auth()->user()->hasAnyRole('architect|client'))
     <div class="row">
         <div class="col-lg-8">
