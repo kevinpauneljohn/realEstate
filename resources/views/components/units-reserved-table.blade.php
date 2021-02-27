@@ -6,6 +6,7 @@
                 <th>Date Reserved</th>
                 <th>Project</th>
                 <th>Model Unit</th>
+                <th>Phase/blk/lot</th>
                 <th>Total Contract Price</th>
                 <th>Financing</th>
                 <th>Requirements</th>
@@ -19,6 +20,7 @@
                 <th>Date Reserved</th>
                 <th>Project</th>
                 <th>Model Unit</th>
+                <th>Phase/blk/lot</th>
                 <th>Total Contract Price</th>
                 <th>Financing</th>
                 <th>Requirements</th>

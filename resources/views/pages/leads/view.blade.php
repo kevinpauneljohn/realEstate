@@ -879,6 +879,7 @@
                         { data: 'reservation_date', name: 'reservation_date'},
                         { data: 'project_id', name: 'project_id'},
                         { data: 'model_unit_id', name: 'model_unit_id'},
+                        { data: 'location', name: 'location'},
                         { data: 'total_contract_price', name: 'total_contract_price'},
                         { data: 'financing', name: 'financing'},
                         { data: 'requirements', name: 'requirements'},

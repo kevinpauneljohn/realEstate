@@ -448,6 +448,12 @@ class LeadController extends Controller
             ->addColumn('requirements', function($lead){
                 return "";
             })
+            ->addColumn('location', function($sale){
+                $phase = 'Phase '.$sale->phase.' ';
+                $block = 'Blk '.$sale->block.' ';
+                $lot = 'Lot '.$sale->lot.' ';
+                return $phase.''.$block.''.$lot;
+            })
             ->editColumn('status', function($lead){
                 return $this->leadRepository->setStatusBadge(ucfirst($lead->status));
             })
