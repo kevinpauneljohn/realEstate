@@ -32,7 +32,11 @@
 @stop
 
 @section('content')
-{{request()->getHost()}}
+    @if(request()->getHost() === "porl.dream-homeseller.com")
+    true
+    @else
+        not true
+        @endif
     @if(!auth()->user()->hasAnyRole('architect|client'))
     <div class="row">
         <div class="col-lg-8">
