@@ -8,6 +8,7 @@ use App\Repositories\ClientPaymentRepository;
 use App\Repositories\ClientProjectRepository;
 use App\Repositories\ClientRepository;
 use App\Repositories\DhgClientRepository;
+use App\Repositories\Leads;
 use App\Repositories\PaymentRepository;
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
 use App\Repositories\RepositoryInterface\BuilderInterface;
@@ -16,7 +17,10 @@ use App\Repositories\RepositoryInterface\CheckCredentialRepository;
 use App\Repositories\RepositoryInterface\ClientPaymentInterface;
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Repositories\RepositoryInterface\DhgClientProjectInterface;
+use App\Repositories\RepositoryInterface\LeadInterface;
 use App\Repositories\RepositoryInterface\PaymentInterFace;
+use App\Repositories\RepositoryInterface\SalesInterface;
+use App\Repositories\Sales;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
@@ -63,6 +67,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ClientPaymentInterface::class,
             ClientPaymentRepository::class
+        );
+
+        $this->app->bind(
+            SalesInterface::class,
+            Sales::class
+        );
+
+        $this->app->bind(
+            LeadInterface::class,
+            Leads::class
         );
     }
 

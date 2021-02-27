@@ -7,6 +7,7 @@ use App\Events\UserRankPointsEvent;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
+use App\Repositories\RepositoryInterface\SalesInterface;
 use App\Repositories\SalesRepository;
 use App\Repositories\ThresholdRepository;
 use App\Requirement;
@@ -24,12 +25,17 @@ use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
 {
-    private $thresholdRepository, $salesRepository;
+    private $thresholdRepository, $salesRepository, $sales;
 
-    public function __construct(ThresholdRepository $thresholdRepository, SalesRepository $salesRepository)
+    public function __construct(
+        ThresholdRepository $thresholdRepository,
+        SalesRepository $salesRepository,
+        SalesInterface $sales
+    )
     {
         $this->thresholdRepository = $thresholdRepository;
         $this->salesRepository = $salesRepository;
+        $this->sales = $sales;
     }
 
     /**
@@ -254,6 +260,8 @@ class SalesController extends Controller
                 {
                     $action .= '<button class="btn btn-xs btn-default view-request-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-request" title="View all requests #"><i class="fa fa-ticket-alt"></i></button>';
                 }
+
+                $action .= '<a href="'.route('leads.show',['lead' => $sale->lead_id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$sale->id.'" title="Create Client Account"><i class="fa fa-user-alt"></i></a>';
                 return $action;
             })
             ->rawColumns(['action','status','request_status'])
@@ -689,4 +697,5 @@ class SalesController extends Controller
         }
         return response()->json($validator->errors());
     }
+
 }

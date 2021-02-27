@@ -9,7 +9,9 @@ use App\LeadNote;
 use App\LogTouch;
 use App\Project;
 use App\Repositories\LeadRepository;
+use App\Repositories\RepositoryInterface\LeadInterface;
 use App\WebsiteLink;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
@@ -18,11 +20,15 @@ use Yajra\DataTables\DataTables;
 class LeadController extends Controller
 {
 
-    public $leadRepository;
+    public $leadRepository, $leads;
 
-    public function __construct(LeadRepository $leadRepository)
+    public function __construct(
+        LeadRepository $leadRepository,
+        LeadInterface $lead
+    )
     {
         $this->leadRepository = $leadRepository;
+        $this->leads = $lead;
     }
 
     /**
@@ -208,11 +214,10 @@ class LeadController extends Controller
         return $this;
     }
 
+
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
@@ -225,6 +230,7 @@ class LeadController extends Controller
             'activity_logs' => LogTouch::where('lead_id',$id),
             'website_links' => WebsiteLink::where('lead_id',$id),
             'label' => $this->leadRepository,
+            'reserved'  => $this->leads->viewReservedUnits($id)
         ]);
     }
 
@@ -423,4 +429,40 @@ class LeadController extends Controller
         //event(new UpdateLeadGeneralStatusEvent());
     }
 
+    public function reserved($id)
+    {
+        $leads = $this->leads->viewReservedUnits($id);
+        return DataTables::of($leads)
+            ->editColumn('reservation_date', function($lead){
+                return Carbon::parse($lead->reservation_date)->format('M d, Y');
+            })
+            ->editColumn('project_id', function($sale){
+                return $sale->project->name;
+            })
+            ->editColumn('model_unit_id', function($sale){
+                return ucwords($sale->modelUnit->name);
+            })
+            ->editColumn('total_contract_price', function($lead){
+                return '&#8369; '.number_format($lead->total_contract_price);
+            })
+            ->addColumn('requirements', function($lead){
+                return "";
+            })
+            ->editColumn('status', function($lead){
+                return $this->leadRepository->setStatusBadge(ucfirst($lead->status));
+            })
+            ->addColumn('action', function($lead){
+                $action = "";
+                if(auth()->user()->can('edit lead'))
+                {
+                    if($lead->lead_status !== 'Reserved')
+                    {
+                        $action .= '<button class="btn btn-xs btn-info set-status" id="'.$lead->id.'" title="View Details" data-toggle="modal" data-target="#set-status"><i class="fa fa-eye"></i></button>';
+                    }
+                }
+                return $action;
+            })
+            ->rawColumns(['action','status','total_contract_price'])
+            ->make(true);
+    }
 }

@@ -199,4 +199,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Builder::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
+     */
+    public function dhsClientLead(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
+    {
+        return $this->hasOneThrough(Lead::class, DhsClient::class);
+    }
 }

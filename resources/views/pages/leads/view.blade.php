@@ -99,7 +99,7 @@
                 <div class="card-header p-0 pt-1 border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#lea-remarks" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Remarks</a>
+                            <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#lead-remarks" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Remarks</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#lead-notes" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Notes <span class="note-count">({{$leadNotes->count()}})</span></a>
@@ -110,11 +110,16 @@
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill" href="#activity-logs" role="tab" aria-controls="custom-tabs-two-settings" aria-selected="false">Activity Logs</a>
                         </li>
+                        @if($lead->lead_status === "Reserved")
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill" href="#reserved-units" role="tab" aria-controls="custom-tabs-two-settings" aria-selected="false">Reserved Units</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-two-tabContent">
-                        <div class="tab-pane fade show active" id="lea-remarks" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                        <div class="tab-pane fade show active" id="lead-remarks" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
                             {!! $lead->remarks !!}
                         </div>
                         <div class="tab-pane fade" id="lead-notes" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
@@ -229,6 +234,11 @@
                                 <!-- /.col -->
                             </div>
                         </div>
+                        @if($lead->lead_status === "Reserved")
+                            <div class="tab-pane fade show" id="reserved-units" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                                <x-units-reserved-table lead="{{$lead->id}}"></x-units-reserved-table>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <!-- /.card -->
@@ -714,6 +724,9 @@
         .note-lists{
             margin-top:20px;
         }
+        #reserved-unit td {
+            padding: 10px!important;
+        }
     </style>
 @stop
 
@@ -856,6 +869,25 @@
 
                 clear_errors('status','notes');
                 ///
+            });
+            $(function() {
+                $('#reserved-unit').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('lead.reserved.units',['lead_id' => $lead->id]) !!}',
+                    columns: [
+                        { data: 'reservation_date', name: 'reservation_date'},
+                        { data: 'project_id', name: 'project_id'},
+                        { data: 'model_unit_id', name: 'model_unit_id'},
+                        { data: 'total_contract_price', name: 'total_contract_price'},
+                        { data: 'financing', name: 'financing'},
+                        { data: 'requirements', name: 'requirements'},
+                        { data: 'status', name: 'status'},
+                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'desc']
+                });
             });
         </script>
     @endcan

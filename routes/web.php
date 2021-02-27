@@ -81,6 +81,7 @@ Route::post('/leads/status','LeadController@getLeadStatus')->name('leads.status'
 Route::post('/leads/mark','LeadController@markAsImportant')->name('leads.important')->middleware('auth','permission:view lead');
 Route::post('/leads/status/update','LeadController@updateLeadStatus')->name('leads.status.update')->middleware('auth','permission:edit lead');
 Route::get('/lead/general/update','LeadController@generalLeadStatusUpdate')->name('lead.status.general.update');
+Route::get('/reserved/{lead_id}',[\App\Http\Controllers\LeadController::class,'reserved'])->name('lead.reserved.units')->middleware(['auth','permission:view sales']);
 
 /*Log touches*/
 Route::post('/logs','LogTouchController@store')->name('logs.store')->middleware('auth','permission:edit lead');
