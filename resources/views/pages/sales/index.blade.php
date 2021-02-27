@@ -96,7 +96,6 @@
                         <th>Project</th>
                         <th>Model Unit</th>
                         <th>Total Contract Price</th>
-                        <th>Discount</th>
                         <th>Financing</th>
                         <th>Rate</th>
                         <th>Sale Status</th>
@@ -112,7 +111,6 @@
                         <th>Project</th>
                         <th>Model Unit</th>
                         <th>Total Contract Price</th>
-                        <th>Discount</th>
                         <th>Financing</th>
                         <th>Rate</th>
                         <th>Sale Status</th>
@@ -579,7 +577,6 @@
                     { data: 'project', name: 'project'},
                     { data: 'model_unit', name: 'model_unit'},
                     { data: 'total_contract_price', name: 'total_contract_price'},
-                    { data: 'discount', name: 'discount'},
                     { data: 'financing', name: 'financing'},
                     { data: 'commission_rate', name: 'commission_rate'},
                     { data: 'status', name: 'status'},

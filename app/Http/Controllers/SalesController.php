@@ -186,9 +186,6 @@ class SalesController extends Controller
             ->editColumn('total_contract_price',function($sale){
                 return number_format($sale->total_contract_price);
             })
-            ->editColumn('discount',function($sale){
-                return number_format($sale->discount);
-            })
             ->addColumn('request_status',function($sale){
                 $threshold = Threshold::where([
                     ['storage_name','=','sales'],
@@ -235,15 +232,15 @@ class SalesController extends Controller
                 $action = "";
                 if(auth()->user()->can('view sales'))
                 {
-                    $action .= '<button class="btn btn-xs btn-success view-sales-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-sales-details" title="View"><i class="fa fa-eye"></i></button>';
+                    $action .= '<button class="btn btn-xs btn-default view-sales-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-sales-details" title="View"><i class="fa fa-eye"></i></button>';
                 }
                 if(auth()->user()->can('edit sales'))
                 {
-                    $action .= '<button class="btn btn-xs btn-primary edit-sales-btn" id="'.$sale->id.'" data-target="#edit-sales-modal" data-toggle="modal" title="Edit"><i class="fa fa-edit"></i></button>';
+                    $action .= '<button class="btn btn-xs btn-default edit-sales-btn" id="'.$sale->id.'" data-target="#edit-sales-modal" data-toggle="modal" title="Edit"><i class="fa fa-edit"></i></button>';
                 }
                 if(auth()->user()->can('delete sales'))
                 {
-                    $action .= '<button class="btn btn-xs btn-danger delete-sale-btn" id="'.$sale->id.'" title="Delete"><i class="fa fa-trash"></i></button>';
+                    $action .= '<button class="btn btn-xs btn-default delete-sale-btn" id="'.$sale->id.'" title="Delete"><i class="fa fa-trash"></i></button>';
                 }
 //                if(auth()->user()->can('upload requirements'))
 //                {
@@ -251,11 +248,11 @@ class SalesController extends Controller
 //                }
                 if(auth()->user()->can('edit sales'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-warning update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';
+                    $action .= '<a href="#" class="btn btn-xs btn-default update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';
                 }
                 if(auth()->user()->can('view request'))
                 {
-                    $action .= '<button class="btn btn-xs bg-fuchsia view-request-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-request" title="View all requests #"><i class="fa fa-ticket-alt"></i></button>';
+                    $action .= '<button class="btn btn-xs btn-default view-request-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-request" title="View all requests #"><i class="fa fa-ticket-alt"></i></button>';
                 }
                 return $action;
             })

@@ -11,6 +11,7 @@ function clear_errors()
     }
 }
 
+
 $(document).on('submit','#add-builder-form',function(form){
     form.preventDefault();
 

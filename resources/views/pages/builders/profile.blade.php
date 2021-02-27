@@ -80,7 +80,7 @@
                                     <option></option>
 
                                     @foreach($members as $key => $value)
-                                        <option value="{{$value['id']}}"{{ $value['selected'] === false ? '' : ' disabled'}} id="member-{{$value['id']}}">{{ucwords($value['firstname'].' '.$value['lastname'])}}</option>
+                                        <option value="{{$value['id']}}" id="member-{{$value['id']}}">{{ucwords($value['firstname'].' '.$value['lastname'])}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -197,6 +197,7 @@
                         $('.member-btn').attr('disabled',true).val('Adding...');
                     },
                     success: function(result){
+                        console.log(result);
                         if(result.success === true)
                         {
                             toastr.success(result.message);

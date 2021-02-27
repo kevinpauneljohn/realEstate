@@ -19,20 +19,15 @@ class BuilderMemberController extends Controller
             $labeler_repository,
             $member_id,
             $builder_id,
-            $remove,
             $data,
             $member,
             $user;
 
     public function __construct(
-        LabelerRepository $labelerRepository,
-        BuilderInterface $builder,
-        DhgClientInterFace $dhgClientInterFace
+        BuilderInterface $builder
     )
     {
-        $this->labeler_repository = $labelerRepository;
         $this->member = $builder;
-        $this->user = $dhgClientInterFace;
     }
 
 
@@ -41,13 +36,17 @@ class BuilderMemberController extends Controller
         return $this->member->addMember($request->all());
     }
 
-    private function query($member_id, $builder_id)
+    /**
+     * @param $member_id
+     * @param $builder_id
+     * @return \Illuminate\Database\Query\Builder
+     */
+    private function query($member_id, $builder_id): \Illuminate\Database\Query\Builder
     {
-        $query = DB::table('builder_user')->where([
+        return DB::table('builder_user')->where([
             ['user_id','=',$member_id],
             ['builder_id','=',$builder_id],
         ]);
-        return $query;
     }
 
     //save the member to the builder
