@@ -462,7 +462,16 @@ class LeadController extends Controller
             })
             ->addColumn('action', function($sale){
                 $action = "";
-                $action .= '<button class="btn btn-xs btn-info view-reserved-unit" id="'.$sale->id.'" title="View Details" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i></button>';
+                $action .= '<div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                   Action
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item view-reserved-unit" href="#" id="'.$sale->id.'" title="View Details" data-toggle="modal" data-target="#view-sales-details">View</a>
+                                  <a class="dropdown-item view-requirements" href="#" id="'.$sale->id.'" title="View Requirements" data-toggle="modal" data-target="#view-requirements">Add Requirements</a>
+                                </div>
+                              </div>';
+
                 return $action;
             })
             ->rawColumns(['action','status','total_contract_price'])

@@ -18,4 +18,13 @@ class Template extends Model
     {
         return $this->hasMany(Sales::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function clientRequirements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClientRequirement::class);
+    }
+
 }

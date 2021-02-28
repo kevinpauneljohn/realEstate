@@ -352,4 +352,8 @@ Route::post('/client-payment-access','ClientPaymentController@checkCredentialFor
 
 Route::get('/developers','DevelopersController@index')->name('developers.index')->middleware(['auth','role:super admin']);
 
+Route::get('/client-requirements/sales/{sales_id}',[\App\Http\Controllers\ClientRequirementsController::class,'salesRequirements']);
+Route::resource('client-requirements','ClientRequirementsController');
+
+
 

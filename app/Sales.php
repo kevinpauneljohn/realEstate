@@ -41,4 +41,12 @@ class Sales extends Model
     {
         return $this->belongsTo(ModelUnit::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function clientRequirements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClientRequirement::class);
+    }
 }

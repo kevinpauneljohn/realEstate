@@ -597,7 +597,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update Reminder</h4>
+                            <h4 class="modal-title">Reserved Unit Details</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -645,6 +645,40 @@
                     <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
+
+    @can('view requirements')
+        <div class="modal fade" id="view-requirements">
+            <div class="modal-dialog modal-lg">
+                <form>
+                    @csrf
+                    <input type="hidden" name="id" id="template-id">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Requirements</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="template">Add Template</label>
+                            <select class="form-control template" name="template">
+                                <option> -- Select -- </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+                </form>
+            </div>
+            <!-- /.modal-dialog -->
         </div>
         <!--end add new schedule modal-->
     @endcan
@@ -1042,6 +1076,26 @@
                     return '<span class="badge badge-success right role-badge">Paid</span>';
                 }
             }
+
+            $(document).on('click','.view-requirements',function(){
+                salesId = this.id;
+                $.ajax({
+                    'url' : '/client-requirements/sales/'+salesId,
+                    'type' : 'GET',
+                    beforeSend: function(){
+                        $('#view-requirements').find('.template option').remove();
+                    },success: function (response){
+                        console.log(response);
+                        $('#template-id').val(salesId);
+                        $('#view-requirements').find('.template').append('<option> -- Select -- </option>');
+                        $.each(response.templates,function(key, value){
+                            $('#view-requirements').find('.template').append('<option value="'+value.id+'">'+value.name+'</option>');
+                        })
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            });
         </script>
     @endcan
 

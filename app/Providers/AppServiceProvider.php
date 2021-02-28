@@ -7,6 +7,7 @@ use App\Repositories\BuilderRepository;
 use App\Repositories\ClientPaymentRepository;
 use App\Repositories\ClientProjectRepository;
 use App\Repositories\ClientRepository;
+use App\Repositories\ClientRequirementRepository;
 use App\Repositories\DhgClientRepository;
 use App\Repositories\Leads;
 use App\Repositories\PaymentRepository;
@@ -15,6 +16,7 @@ use App\Repositories\RepositoryInterface\BuilderInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialRepository;
 use App\Repositories\RepositoryInterface\ClientPaymentInterface;
+use App\Repositories\RepositoryInterface\ClientRequirementInterface;
 use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Repositories\RepositoryInterface\DhgClientProjectInterface;
 use App\Repositories\RepositoryInterface\LeadInterface;
@@ -77,6 +79,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             LeadInterface::class,
             Leads::class
+        );
+
+        $this->app->bind(
+            ClientRequirementInterface::class,
+            ClientRequirementRepository::class
         );
     }
 
