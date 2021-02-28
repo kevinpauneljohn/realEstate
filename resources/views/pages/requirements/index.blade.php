@@ -54,7 +54,7 @@
         <div class="modal fade" id="add-new-requirements-modal">
             <form role="form" id="add-requirements-form" class="form-submit">
                 @csrf
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Add New Requirements</h4>
@@ -110,7 +110,7 @@
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="updateRequirementId" id="updateRequirementId">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Update Requirements</h4>
