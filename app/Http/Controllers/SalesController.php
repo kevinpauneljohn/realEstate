@@ -38,10 +38,10 @@ class SalesController extends Controller
         $this->sales = $sales;
     }
 
+
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -79,10 +79,11 @@ class SalesController extends Controller
         ]);
     }
 
+
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Request $request)
     {
@@ -93,11 +94,11 @@ class SalesController extends Controller
         ]);
     }
 
+
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -296,11 +297,11 @@ class SalesController extends Controller
         }
     }
 
+
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -545,8 +546,7 @@ class SalesController extends Controller
      * */
     public function model_unit_details($id)
     {
-        $model_unit = ModelUnit::findOrFail($id);
-        return $model_unit;
+        return ModelUnit::findOrFail($id);
     }
 
     /**
@@ -562,24 +562,20 @@ class SalesController extends Controller
         return response()->json(['template' => $template, 'requirements' => $template->requirements]);
     }
 
+
     /**
      * April 10, 2020
      * @author john kevin paunel
      * save the requirements of template to sales table
      * @param Request $request
-     * @return Response
-     * */
-    public function save_requirements_template(Request $request)
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function save_requirements_template(Request $request): \Illuminate\Http\JsonResponse
     {
         $sales = Sales::findOrFail($request->salesId);
         $sales->template_id = $request->template;
 
-        if($sales->save())
-        {
-            return response()->json(['success' => true]);
-        }else{
-            return response()->json(['success' => false]);
-        }
+        return $sales->save() ? response()->json(['success' => true]) : response()->json(['success' => false]);
     }
 
     /**
@@ -679,21 +675,16 @@ class SalesController extends Controller
                 $this->thresholdRepository->saveThreshold('update',$request->reason,$data,$extra_data,'sales',$request->updateSaleId,'pending',$priority);
 
                 return response()->json(['success' => true,'message' => 'Status update request sent! <br/><strong>Please wait for the admin approval</strong>']);
-            }else{
-                //update the sale status directly at the sales table
-                $sale = Sales::find($request->updateSaleId);
-                $sale->status = $request->status;
-
-                if($sale->isDirty('status'))
-                {
-                    if($sale->save())
-                    {
-                        return response()->json(['success' => true, 'message' => 'Sale Status Successfully Updated!']);
-                    }
-                }
-                return response()->json(['success' => false, 'message' => 'No Changes Occurred!']);
-
             }
+
+            //update the sale status directly at the sales table
+            $sale = Sales::find($request->updateSaleId);
+            $sale->status = $request->status;
+
+            if($sale->isDirty('status') && $sale->save()) {
+                return response()->json(['success' => true, 'message' => 'Sale Status Successfully Updated!']);
+            }
+            return response()->json(['success' => false, 'message' => 'No Changes Occurred!']);
         }
         return response()->json($validator->errors());
     }

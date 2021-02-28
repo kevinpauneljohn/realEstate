@@ -12,4 +12,9 @@ class Sales implements SalesInterface
     {
         return \App\Sales::findOrFail($sales_id);
     }
+
+    public function viewById($sales_id)
+    {
+        return auth()->user()->sales->where('id',$sales_id)->first();
+    }
 }

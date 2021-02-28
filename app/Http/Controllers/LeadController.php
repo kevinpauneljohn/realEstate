@@ -10,6 +10,7 @@ use App\LogTouch;
 use App\Project;
 use App\Repositories\LeadRepository;
 use App\Repositories\RepositoryInterface\LeadInterface;
+use App\Repositories\RepositoryInterface\SalesInterface;
 use App\WebsiteLink;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,15 +21,17 @@ use Yajra\DataTables\DataTables;
 class LeadController extends Controller
 {
 
-    public $leadRepository, $leads;
+    public $leadRepository, $leads, $sales;
 
     public function __construct(
         LeadRepository $leadRepository,
-        LeadInterface $lead
+        LeadInterface $lead,
+        SalesInterface $sales
     )
     {
         $this->leadRepository = $leadRepository;
         $this->leads = $lead;
+        $this->sales = $sales;
     }
 
     /**
@@ -457,18 +460,21 @@ class LeadController extends Controller
             ->editColumn('status', function($lead){
                 return $this->leadRepository->setStatusBadge(ucfirst($lead->status));
             })
-            ->addColumn('action', function($lead){
+            ->addColumn('action', function($sale){
                 $action = "";
-                if(auth()->user()->can('edit lead'))
-                {
-                    if($lead->lead_status !== 'Reserved')
-                    {
-                        $action .= '<button class="btn btn-xs btn-info set-status" id="'.$lead->id.'" title="View Details" data-toggle="modal" data-target="#set-status"><i class="fa fa-eye"></i></button>';
-                    }
-                }
+                $action .= '<button class="btn btn-xs btn-info view-reserved-unit" id="'.$sale->id.'" title="View Details" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i></button>';
                 return $action;
             })
             ->rawColumns(['action','status','total_contract_price'])
             ->make(true);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function reservedUnits($id)
+    {
+        return $this->sales->viewById($id);
     }
 }

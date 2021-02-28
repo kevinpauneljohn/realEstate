@@ -592,6 +592,63 @@
         <!--end add new schedule modal-->
     @endcan
 
+    @can('view sales')
+        <div class="modal fade" id="view-sales-details">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Reminder</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <table class="table table-bordered table-hover">
+                                        <tbody>
+                                        <tr><td>Status</td><td id="sale-status"></td></tr>
+                                        <tr><td>Date Of Reservation</td><td id="reservation-date"></td></tr>
+                                        <tr><td>Buyer's Name</td><td id="buyer-name"></td></tr>
+                                        <tr><td>Contact Number</td><td id="contact-number"></td></tr>
+                                        <tr><td>Email</td><td id="email-address"></td></tr>
+                                        <tr><td>Commission Rate</td><td id="commission-rate"></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-7">
+                                    <table class="table table-bordered table-hover">
+                                        <tbody>
+                                        <tr><td>Project</td><td id="project-name"></td></tr>
+                                        <tr><td>Model Unit</td><td id="model-unit-name"></td></tr>
+                                        <tr><td>Lot Area</td><td id="lot-area"></td></tr>
+                                        <tr><td>Floor Area</td><td id="floor-area"></td></tr>
+                                        <tr><td>Phase / Block / Lot</td><td id="location"></td></tr>
+                                        <tr><td>Total Contract Price</td><td id="total-contract-price"></td></tr>
+                                        <tr><td>Discount</td><td id="discount-amount"></td></tr>
+                                        <tr><td>Processing Fee</td><td id="processing-fee"></td></tr>
+                                        <tr><td>Reservation Fee</td><td id="reservation-fee"></td></tr>
+                                        <tr><td>Equity</td><td id="equity-amount"></td></tr>
+                                        <tr><td>Loanable Amount</td><td id="loanable-amount"></td></tr>
+                                        <tr><td>Financing Terms</td><td id="financing-terms"></td></tr>
+                                        <tr><td>Equity/Down Payment Terms</td><td id="dp-terms"></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
+
     @can('edit lead')
         @if($lead->lead_status !== 'Reserved')
             <!--add new schedule modal-->
@@ -606,7 +663,6 @@
                                 <h4 class="modal-title">Change Lead Status</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
-                                </button>
                                 </button>
                             </div>
                             <div class="modal-body">
@@ -890,6 +946,102 @@
                     order:[0,'desc']
                 });
             });
+
+            <!-- new script -->
+            let viewSalesBtn = $('.view-reserved-unit');
+            let salesId;
+
+            $(document).on('click','.view-reserved-unit',function(){
+                salesId = this.id;
+                $.ajax({
+                    'url' : '/sales/'+salesId,
+                    'type' : 'GET',
+                    beforeSend: function (request, settings) {
+                        $('.image-loader').show();
+                        $('.sales-details').hide();
+                    },
+                    success: function(result){
+                        $('.image-loader').hide();
+                        $('.sales-details').show();
+
+                        let tcp = parseInt(result.sales.total_contract_price);
+                        let discountAmount = parseInt(result.sales.discount);
+                        let pf = parseInt(result.sales.processing_fee);
+                        let rf = parseInt(result.sales.reservation_fee);
+                        let equity = parseInt(result.sales.equity);
+                        let loan_amount = parseInt(result.sales.loanable_amount);
+                        let email = "", contactNumber = "", phase ="", block ="",lot ="", lot_area = "", floor_area = "", equity_terms = "";
+
+                        if(result.leads.email != null)
+                        {
+                            email = result.leads.email;
+                        }
+                        if(result.leads.mobileNo != null)
+                        {
+                            contactNumber = result.leads.mobileNo;
+                        }
+                        if(result.sales.phase != null)
+                        {
+                            phase = result.sales.phase;
+                        }
+                        if(result.sales.block != null)
+                        {
+                            block = result.sales.block;
+                        }
+                        if(result.sales.lot != null)
+                        {
+                            lot = result.sales.lot;
+                        }
+                        if(result.model_unit.lot_area != null)
+                        {
+                            lot_area = result.model_unit.lot_area;
+                        }
+                        if(result.model_unit.floor_area != null)
+                        {
+                            floor_area = result.model_unit.floor_area;
+                        }
+                        if(result.sales.terms != null)
+                        {
+                            equity_terms = result.sales.terms;
+                        }
+
+                        $('#sale-status').html('<strong>'+statusLabel(result.sales.status)+'</strong>');
+                        $('#reservation-date').html('<strong>'+result.sales.reservation_date+'</strong>');
+                        $('#buyer-name').html('<strong>'+result.leads.firstname+' '+result.leads.lastname+'</strong>');
+                        $('#contact-number').html('<strong>'+contactNumber+'</strong>');
+                        $('#email-address').html('<strong>'+email+'</strong>');
+                        $('#commission-rate').html('<strong>'+result.sales.commission_rate+'%</strong>');
+                        $('#project-name').html('<strong>'+result.project.name+'</strong>');
+                        $('#model-unit-name').html('<strong>'+result.model_unit.name+'</strong>');
+                        $('#lot-area').html('<strong>'+lot_area+'</strong>');
+                        $('#floor-area').html('<strong>'+floor_area+'</strong>');
+                        $('#location').html('<strong>Phase: '+phase+' Block:'+block+' Lot:'+lot+'</strong>');
+                        $('#total-contract-price').html('<strong>&#8369; '+tcp.toLocaleString()+'</strong>');
+                        $('#discount-amount').html('<strong>&#8369; '+discountAmount.toLocaleString()+'</strong>');
+                        $('#processing-fee').html('<strong>&#8369; '+pf.toLocaleString()+'</strong>');
+                        $('#reservation-fee').html('<strong>&#8369; '+rf.toLocaleString()+'</strong>');
+                        $('#equity-amount').html('<strong>&#8369; '+equity.toLocaleString()+'</strong>');
+                        $('#loanable-amount').html('<strong>&#8369; '+loan_amount.toLocaleString()+'</strong>');
+                        $('#financing-terms').html('<strong>'+result.sales.financing+'</strong>');
+                        $('#dp-terms').html('<strong>'+equity_terms+'</strong>');
+
+                    }
+                });
+            });
+
+            function statusLabel(status)
+            {
+                if(status == 'reserved')
+                {
+                    return '<span class="badge badge-info right role-badge">Reserved</span>';
+                }else if(status == 'cancelled')
+                {
+                    return '<span class="badge badge-danger right role-badge">Cancelled</span>';
+                }else if(status == 'paid')
+                {
+                    return '<span class="badge badge-success right role-badge">Paid</span>';
+                }
+            }
         </script>
     @endcan
 

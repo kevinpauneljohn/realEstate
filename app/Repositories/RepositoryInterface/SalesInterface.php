@@ -11,4 +11,12 @@ interface SalesInterface
      * @return mixed
      */
     public function profile($sales_id);
+
+    /**
+     * view a specified sales
+     * @param $sales_id
+     * @param $lead_id
+     * @return mixed
+     */
+    public function viewById($sales_id);
 }

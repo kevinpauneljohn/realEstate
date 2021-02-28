@@ -17,4 +17,5 @@ interface LeadInterface
      * @return mixed
      */
     public function viewById($lead_id);
+
 }

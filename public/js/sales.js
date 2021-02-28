@@ -69,25 +69,6 @@ function submitform(url , type , data , reload = true, elementAttr, consoleLog =
     });
 }
 
-// $(document).ready(function () {
-//
-//     $('#add-sales-form').submit(function (form) {
-//         form.preventDefault();
-//
-//         let data = $(this).serializeArray();
-//         submitform(
-//             '/sales',
-//             'POST',
-//             data,
-//             false,
-//             '',
-//             true,
-//             'You do not have commission rate yes <strong>Please approach your up line regarding this</strong>'
-//         );
-//         //clear_errors('reservation_date','buyer','project','model_unit','total_contract_price','financing');
-//     })
-// });
-
 $(document).on('submit','#add-sales-form',function(form){
     form.preventDefault();
     let data = $(this).serializeArray();
@@ -246,7 +227,7 @@ $(document).on('click','.view-sales-btn',function(){
             $('#loanable-amount').html('<strong>&#8369; '+loan_amount.toLocaleString()+'</strong>');
             $('#financing-terms').html('<strong>'+result.sales.financing+'</strong>');
             $('#dp-terms').html('<strong>'+equity_terms+'</strong>');
-            
+
         }
     });
 });

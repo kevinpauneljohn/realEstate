@@ -18,4 +18,5 @@ class Leads implements LeadInterface
     {
         return Lead::findOrFail($lead_id);
     }
+
 }
