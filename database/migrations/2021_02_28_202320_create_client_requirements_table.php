@@ -17,7 +17,8 @@ class CreateClientRequirementsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('sales_id');
             $table->unsignedBigInteger('template_id')->nullable();
-            $table->string('additional')->nullable();
+            $table->string('requirements')->nullable();
+            $table->string('drive_link')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
