@@ -468,7 +468,7 @@ class LeadController extends Controller
                                 </button>
                                 <div class="dropdown-menu">
                                   <a class="dropdown-item view-reserved-unit" href="#" id="'.$sale->id.'" title="View Details" data-toggle="modal" data-target="#view-sales-details">View</a>
-                                  <a class="dropdown-item view-requirements" href="#" id="'.$sale->id.'" title="View Requirements" data-toggle="modal" data-target="#view-requirements">Add Requirements</a>
+                                  <a class="dropdown-item view-requirements" href="#" id="'.$sale->id.'" title="View Requirements" data-toggle="modal" data-target="#view-requirements">Manage Requirements</a>
                                 </div>
                               </div>';
 

@@ -68,7 +68,12 @@ class ClientRequirementsController extends Controller
                 'requirements'  => json_encode($this->requirementTemplate($template))
             ];
             $client = $this->clientRequirements->save(new ClientRequirement(),$data);
-            return response(['success' => true, 'message' => 'Requirements successfully added!', 'requirements' => json_decode($client->requirements)]);
+            return response([
+                'success' => true,
+                'message' => 'Requirements successfully added!',
+                'requirements' => json_decode($client->requirements),
+                'title' => Template::findOrFail($client->template_id)->name
+            ]);
         }
         return response($validation->errors(),403);
     }
@@ -154,9 +159,14 @@ class ClientRequirementsController extends Controller
      */
     public function salesRequirements($sales_id)
     {
+        $client = $this->clientRequirements->viewSpecifiedSale($sales_id);
         if($this->checkSalesRequirements($sales_id))
         {
-            return json_decode($this->clientRequirements->viewSpecifiedSale($sales_id)->requirements);
+            return response([
+                'success' => true,
+                'requirements' => json_decode($client->requirements),
+                'title' => Template::find($client->template_id)->name
+            ]);
         }
         return response(['requirements' => false, 'templates' => Template::all()]);
     }

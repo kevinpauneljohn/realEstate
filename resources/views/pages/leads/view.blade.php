@@ -652,7 +652,7 @@
     @can('view requirements')
         <div class="modal fade" id="view-requirements">
             <div class="modal-dialog modal-lg">
-                <form id="requirements-form">
+                <form>
                     @csrf
                     <input type="hidden" name="sales_id" id="sales-id">
                 <div class="modal-content">
@@ -1084,6 +1084,7 @@
                         console.log(response);
                         if(response.requirements === false)
                         {
+                            $(document).find('#view-requirements form').attr('id','requirements-form');
                             $('#view-requirements').find('.modal-body').html(`<div class="form-group template">
                             <label for="template">Add Template</label>
                             <select class="form-control" name="template" id="template">
@@ -1092,10 +1093,13 @@
                         </div>`);
                             $.each(response.templates,function(key, value){
                                 $('#view-requirements').find('#template').append('<option value="'+value.id+'">'+value.name+'</option>');
-                            })
+                            });
                         }else{
-                            $('#view-requirements').find('.modal-body').html(`<table class="table table-bordered table-hover"></table>`)
-                            $.each(response, function(key, value){
+                            $(document).find('#view-requirements form').attr('id','manage-requirements-form');
+                            $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover">
+                                <tr><th></th><th>Available</th></tr>
+                            </table>`)
+                            $.each(response.requirements, function(key, value){
                                 $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
                                     '<td width="10%"><input class="form-control" type="checkbox" id="'+value.id+'" name="'+key+'" value="false"></td></tr>');
                             });
@@ -1117,11 +1121,13 @@
                     beforeSend: function(){
 
                     },success: function(response){
+                        $('#sales-id').val(salesId);
                         console.log(response);
                         if(response.success === true)
                         {
+                            $(document).find('#view-requirements form').attr('id','manage-requirements-form');
                             $('#view-requirements').find('.modal-body .template').remove();
-                            $('#view-requirements').find('.modal-body').html(`<table class="table table-bordered table-hover"></table>`)
+                            $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover"><tr><th></th><th>Available</th></tr></table>`)
                             $.each(response.requirements, function(key, value){
                                 $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
                                     '<td width="10%"><input class="form-control" type="checkbox" id="'+value.id+'" name="'+key+'" value="false"></td></tr>');
