@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\ClientRequirement;
 use App\Repositories\RepositoryInterface\ClientRequirementInterface;
+use App\Requirement;
 use App\Template;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClientRequirementsController extends Controller
 {
@@ -52,7 +55,42 @@ class ClientRequirementsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(),[
+            'template' => 'required'
+        ]);
+
+        if($validation->passes())
+        {
+            $template = $request->input('template');
+            $data = [
+                'sales_id'  => $request->input('sales_id'),
+                'template_id'   => $template,
+                'requirements'  => json_encode($this->requirementTemplate($template))
+            ];
+            $client = $this->clientRequirements->save(new ClientRequirement(),$data);
+            return response(['success' => true, 'message' => 'Requirements successfully added!', 'requirements' => json_decode($client->requirements)]);
+        }
+        return response($validation->errors(),403);
+    }
+
+    /**
+     * @param $template_id
+     * @return array
+     */
+    public function requirementTemplate($template_id): array
+    {
+        $templates = Requirement::where('template_id',$template_id)->get();
+        $requirements = array();
+
+        foreach ($templates as $key => $value)
+        {
+            $collection = collect($value);
+
+            $merged = $collection->merge(['exists' => false]);
+
+            $requirements[$key] = $merged->all();
+        }
+        return $requirements;
     }
 
     /**
@@ -118,7 +156,7 @@ class ClientRequirementsController extends Controller
     {
         if($this->checkSalesRequirements($sales_id))
         {
-            return $this->clientRequirements->viewBySales($sales_id);
+            return json_decode($this->clientRequirements->viewSpecifiedSale($sales_id)->requirements);
         }
         return response(['requirements' => false, 'templates' => Template::all()]);
     }

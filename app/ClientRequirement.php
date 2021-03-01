@@ -9,6 +9,10 @@ class ClientRequirement extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'sales_id','template_id','requirements','drive_link'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -24,4 +28,5 @@ class ClientRequirement extends Model
     {
         return $this->belongsTo(Sales::class);
     }
+
 }

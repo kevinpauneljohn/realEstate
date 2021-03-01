@@ -652,23 +652,18 @@
     @can('view requirements')
         <div class="modal fade" id="view-requirements">
             <div class="modal-dialog modal-lg">
-                <form>
+                <form id="requirements-form">
                     @csrf
-                    <input type="hidden" name="id" id="template-id">
+                    <input type="hidden" name="sales_id" id="sales-id">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Requirements</h4>
+                        <h4 class="modal-title">Requirements</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="template">Add Template</label>
-                            <select class="form-control template" name="template">
-                                <option> -- Select -- </option>
-                            </select>
-                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1083,19 +1078,89 @@
                     'url' : '/client-requirements/sales/'+salesId,
                     'type' : 'GET',
                     beforeSend: function(){
-                        $('#view-requirements').find('.template option').remove();
+                        $('#view-requirements').find('#template option').remove();
                     },success: function (response){
+                        $('#sales-id').val(salesId);
                         console.log(response);
-                        $('#template-id').val(salesId);
-                        $('#view-requirements').find('.template').append('<option> -- Select -- </option>');
-                        $.each(response.templates,function(key, value){
-                            $('#view-requirements').find('.template').append('<option value="'+value.id+'">'+value.name+'</option>');
-                        })
+                        if(response.requirements === false)
+                        {
+                            $('#view-requirements').find('.modal-body').html(`<div class="form-group template">
+                            <label for="template">Add Template</label>
+                            <select class="form-control" name="template" id="template">
+                                <option value=""> -- Select -- </option>
+                            </select>
+                        </div>`);
+                            $.each(response.templates,function(key, value){
+                                $('#view-requirements').find('#template').append('<option value="'+value.id+'">'+value.name+'</option>');
+                            })
+                        }else{
+                            $('#view-requirements').find('.modal-body').html(`<table class="table table-bordered table-hover"></table>`)
+                            $.each(response, function(key, value){
+                                $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
+                                    '<td width="10%"><input class="form-control" type="checkbox" id="'+value.id+'" name="'+key+'" value="false"></td></tr>');
+                            });
+                        }
                     },error: function(xhr, status, error){
                         console.log(xhr);
                     }
                 });
             });
+
+            $(document).on('submit','#requirements-form',function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
+
+                $.ajax({
+                    'url' : '{{route('client-requirements.store')}}',
+                    'type' : 'POST',
+                    'data' : data,
+                    beforeSend: function(){
+
+                    },success: function(response){
+                        console.log(response);
+                        if(response.success === true)
+                        {
+                            $('#view-requirements').find('.modal-body .template').remove();
+                            $('#view-requirements').find('.modal-body').html(`<table class="table table-bordered table-hover"></table>`)
+                            $.each(response.requirements, function(key, value){
+                                $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
+                                    '<td width="10%"><input class="form-control" type="checkbox" id="'+value.id+'" name="'+key+'" value="false"></td></tr>');
+                            });
+                            customMessage('success',response.message);
+                        }
+                    },error: function(xhr, status, error){
+                        let validation = JSON.parse(xhr.responseText);
+                        console.log(validation);
+                        $.each(validation, function (key, value) {
+                            let element = $('.'+key);
+
+                            element.find('.error-'+key).remove();
+                            element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                        });
+                    }
+                });
+                clear_errors('template');
+            });
+
+            function customMessage(icon, message)
+            {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: icon,
+                    title: message
+                })
+            }
         </script>
     @endcan
 

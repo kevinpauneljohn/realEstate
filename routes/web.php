@@ -152,25 +152,12 @@ Route::get('/upline-commission/{project}','CommissionController@getUpLineCommiss
 
 Route::get('/test',function(){
 
-//    $users = User::all();
-//
-//    foreach ($users as $user)
-//    {
-//        if($user->sales->count() > 0)
-//        {
-//            $discounted_price = $user->sales[0]->total_contract_price - $user->sales[0]->discount;
-//            echo $user->username.' - '.($discounted_price / 100000).'<br/>';
-//        }
-//    }
-//    $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
-//
-//    return auth()->user()->userRankPoint;
-    return User::role('client')->get();
+    return \App\ClientRequirement::all()->first()->requirements;
 
 })->middleware(['auth']);
 
 Route::post('/test',function(Request $request){
-    dd($request->file('thing'));
+
 })->name('test');
 
 /*change password*/
