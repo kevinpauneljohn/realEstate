@@ -20,7 +20,6 @@ class CreateClientRequirementsTable extends Migration
             $table->text('requirements')->nullable();
             $table->string('drive_link')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('sales_id')->references('id')->on('sales');
             $table->foreign('template_id')->references('id')->on('templates');
