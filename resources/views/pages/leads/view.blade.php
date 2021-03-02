@@ -655,6 +655,7 @@
                 <form>
                     @csrf
                     <input type="hidden" name="sales_id" id="sales-id">
+
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Requirements</h4>
@@ -1108,7 +1109,7 @@
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
                             $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover">
                                 <tr><th></th><th>Available</th></tr>
-                            </table>`)
+                            </table><div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link"></div>`)
                             $.each(response.requirements, function(key, value){
                                 if(value.exists === true)
                                 {
@@ -1117,7 +1118,7 @@
                                     isChecked = "";
                                 }
                                 $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
-                                    '<td width="10%"><input class="form-control requirement-btn" type="checkbox" id="'+value.id+'" name="'+key+'" value="'+value.id+'" '+isChecked+'></td></tr>');
+                                    '<td width="10%"><input class="form-control requirement-btn" type="checkbox" id="'+value.id+'" value="'+value.id+'" '+isChecked+'></td></tr>');
                             });
                         }
                     },error: function(xhr, status, error){
@@ -1165,10 +1166,11 @@
                         {
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
                             $('#view-requirements').find('.modal-body .template').remove();
-                            $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover"><tr><th></th><th>Available</th></tr></table>`)
+                            $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover"><tr><th></th><th>Available</th></tr></table>
+<div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link"></div>`)
                             $.each(response.requirements, function(key, value){
                                 $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
-                                    '<td width="10%"><input class="form-control requirement-btn" type="checkbox" id="'+value.id+'" name="'+key+'" value="'+value.id+'"></td></tr>');
+                                    '<td width="10%"><input class="form-control requirement-btn" type="checkbox" id="'+value.id+'" value="'+value.id+'"></td></tr>');
                             });
                             customMessage('success',response.message);
                         }
