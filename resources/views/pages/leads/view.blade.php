@@ -663,7 +663,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-
+                        <div class="text-center">
+                            <div class="spinner-grow text-muted"></div>
+                            <div class="spinner-grow text-primary"></div>
+                            <div class="spinner-grow text-success"></div>
+                            <div class="spinner-grow text-info"></div>
+                            <div class="spinner-grow text-warning"></div>
+                            <div class="spinner-grow text-danger"></div>
+                            <div class="spinner-grow text-secondary"></div>
+                            <div class="spinner-grow text-dark"></div>
+                            <div class="spinner-grow text-light"></div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1081,6 +1091,7 @@
                         $('#view-requirements').find('#template option').remove();
                     },success: function (response){
                         $('#sales-id').val(salesId);
+                        let isChecked = "";
                         console.log(response);
                         if(response.requirements === false)
                         {
@@ -1100,8 +1111,14 @@
                                 <tr><th></th><th>Available</th></tr>
                             </table>`)
                             $.each(response.requirements, function(key, value){
+                                if(value.exists === true)
+                                {
+                                    isChecked = "checked";
+                                }else{
+                                    isChecked = "";
+                                }
                                 $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
-                                    '<td width="10%"><input class="form-control" type="checkbox" id="'+value.id+'" name="'+key+'" value="false"></td></tr>');
+                                    '<td width="10%"><input class="form-control requirement-btn" type="checkbox" id="'+value.id+'" name="'+key+'" value="'+value.id+'" '+isChecked+'></td></tr>');
                             });
                         }
                     },error: function(xhr, status, error){
@@ -1130,7 +1147,7 @@
                             $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover"><tr><th></th><th>Available</th></tr></table>`)
                             $.each(response.requirements, function(key, value){
                                 $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
-                                    '<td width="10%"><input class="form-control" type="checkbox" id="'+value.id+'" name="'+key+'" value="false"></td></tr>');
+                                    '<td width="10%"><input class="form-control requirement-btn" type="checkbox" id="'+value.id+'" name="'+key+'" value="'+value.id+'"></td></tr>');
                             });
                             customMessage('success',response.message);
                         }
@@ -1167,6 +1184,36 @@
                     title: message
                 })
             }
+
+            $(document).on('click','.requirement-btn',function(){
+                let id = this.id;
+                // console.log(id+' '+salesId+' '+$(this).prop('checked'));
+                let availabilty = 0;
+                if($(this).prop('checked'))
+                {
+                    availabilty = 1;
+                }
+                let data = {
+                    'sales_id' : salesId,
+                    'id' : id,
+                    'exists' : availabilty
+                }
+
+                $.ajax({
+                    'url' : '/client-requirements/check-document',
+                    'type' : 'PUT',
+                    'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    'data' : data,
+                    beforeSend: function(){
+
+                    },success: function(response){
+                        console.log(response);
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+
+            });
         </script>
     @endcan
 

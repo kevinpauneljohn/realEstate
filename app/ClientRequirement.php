@@ -13,6 +13,10 @@ class ClientRequirement extends Model
         'sales_id','template_id','requirements','drive_link'
     ];
 
+    protected $casts = [
+        'requirements' => 'array'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

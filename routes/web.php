@@ -152,7 +152,11 @@ Route::get('/upline-commission/{project}','CommissionController@getUpLineCommiss
 
 Route::get('/test',function(){
 
-    return \App\ClientRequirement::all()->first()->requirements;
+    $collection = collect(json_decode(\App\ClientRequirement::where('sales_id',1)->first()->requirements));
+
+    $filtered = $collection->where('id', 1);
+
+    return $filtered->toArray();
 
 })->middleware(['auth']);
 
@@ -340,6 +344,7 @@ Route::post('/client-payment-access','ClientPaymentController@checkCredentialFor
 Route::get('/developers','DevelopersController@index')->name('developers.index')->middleware(['auth','role:super admin']);
 
 Route::get('/client-requirements/sales/{sales_id}',[\App\Http\Controllers\ClientRequirementsController::class,'salesRequirements']);
+Route::put('/client-requirements/check-document',[\App\Http\Controllers\ClientRequirementsController::class,'checkDocument']);
 Route::resource('client-requirements','ClientRequirementsController');
 
 
