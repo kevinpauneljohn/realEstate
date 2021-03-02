@@ -649,7 +649,7 @@
         <!--end add new schedule modal-->
     @endcan
 
-    @can('view requirements')
+    @can('view client requirements')
         <div class="modal fade" id="view-requirements">
             <div class="modal-dialog modal-lg">
                 <form>

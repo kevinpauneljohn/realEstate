@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ClientRequirement extends Model
 {
-    use SoftDeletes;
 
     protected $fillable = [
         'sales_id','template_id','requirements','drive_link'
