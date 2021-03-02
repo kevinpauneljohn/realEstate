@@ -180,6 +180,7 @@ Route::put('/save-requirements-template','SalesController@save_requirements_temp
 Route::get('/upload-requirements/{sale}','SalesController@requirements')->name('sales.upload.requirements')->middleware(['auth','permission:upload requirements']);
 Route::post('/upload-requirements-image','SalesController@upload_requirements')->name('requirements.image.upload')->middleware(['auth','permission:upload requirements']);
 Route::post('/template/{template}','RequirementController@show')->name('requirements.show')->middleware(['auth','permission:view requirement template']);
+Route::get('/requirement-template/{template_id}',[\App\Http\Controllers\RequirementTemplateController::class,'show'])->name('requirement.template.show')->middleware(['auth','permission:view client requirements']);
 
 
 /*thresholds*/

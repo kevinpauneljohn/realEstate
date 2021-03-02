@@ -677,7 +677,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
+                        <button type="submit" class="btn btn-primary submit-form-btn">Save</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -1092,7 +1092,6 @@
                     },success: function (response){
                         $('#sales-id').val(salesId);
                         let isChecked = "";
-                        console.log(response);
                         if(response.requirements === false)
                         {
                             $(document).find('#view-requirements form').attr('id','requirements-form');
@@ -1127,6 +1126,28 @@
                 });
             });
 
+            $(document).on('change','#template',function(){
+                let value = this.value;
+                $.ajax({
+                    'url' : '/requirement-template/'+value,
+                    'type' : 'GET',
+                    beforeSend: function(){
+                        $('#view-requirements').find('table').remove();
+                        $('#template').attr('disabled',true);
+                    },success: function(response){
+                        $('#view-requirements').find('.modal-body').append(`<table class="table-bordered"></table>`)
+
+                        $.each(response,function (key, value){
+                            $('#view-requirements').find('table').append(`<tr><td>${value.description}</td></tr>`);
+                        });
+
+                        $('#template').attr('disabled',false);
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            });
+
             $(document).on('submit','#requirements-form',function(form){
                 form.preventDefault();
                 let data = $(this).serializeArray();
@@ -1136,10 +1157,10 @@
                     'type' : 'POST',
                     'data' : data,
                     beforeSend: function(){
-
+                        $('form').find('#template').attr('disabled',true);
+                    $('form').find('.submit-form-btn').attr('disabled',true).html('<span class="spinner-border spinner-border-sm"></span> Saving ...');
                     },success: function(response){
                         $('#sales-id').val(salesId);
-                        console.log(response);
                         if(response.success === true)
                         {
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
@@ -1151,9 +1172,11 @@
                             });
                             customMessage('success',response.message);
                         }
+                        $('form').find('#template').attr('disabled',false);
+                        $('form').find('.submit-form-btn').attr('disabled',false).html('Save');
                     },error: function(xhr, status, error){
                         let validation = JSON.parse(xhr.responseText);
-                        console.log(validation);
+                        // console.log(validation);
                         $.each(validation, function (key, value) {
                             let element = $('.'+key);
 
@@ -1205,9 +1228,10 @@
                     'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     'data' : data,
                     beforeSend: function(){
-
+                        $('#view-requirements').find('input[type=checkbox]').attr('disabled',true);
                     },success: function(response){
                         console.log(response);
+                        $('#view-requirements').find('input[type=checkbox]').attr('disabled',false);
                     },error: function(xhr, status, error){
                         console.log(xhr);
                     }

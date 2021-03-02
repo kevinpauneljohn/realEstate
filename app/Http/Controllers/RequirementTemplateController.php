@@ -57,7 +57,7 @@ class RequirementTemplateController extends Controller
      */
     public function show($id)
     {
-        //
+        return Template::find($id)->requirements;
     }
 
     /**
