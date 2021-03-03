@@ -1109,7 +1109,7 @@
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
                             $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover">
                                 <tr><th></th><th>Available</th></tr>
-                            </table><div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link"></div>`)
+                            </table><div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>`)
                             $.each(response.requirements, function(key, value){
                                 if(value.exists === true)
                                 {
@@ -1167,7 +1167,7 @@
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
                             $('#view-requirements').find('.modal-body .template').remove();
                             $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover"><tr><th></th><th>Available</th></tr></table>
-<div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link"></div>`)
+<div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>`)
                             $.each(response.requirements, function(key, value){
                                 $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
                                     '<td width="10%"><input class="form-control requirement-btn" type="checkbox" id="'+value.id+'" value="'+value.id+'"></td></tr>');
@@ -1239,6 +1239,24 @@
                     }
                 });
 
+            });
+
+            $(document).on('submit','#manage-requirements-form',function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
+
+                $.ajax({
+                    'url' : '/requirement/save-drive',
+                    'type' : 'POST',
+                    'data' : data,
+                    beforeSend: function(){
+                        $('#manage-requirements-form').find('input').attr('disabled',true);
+                    },success: function(response){
+                        console.log(response);
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
             });
         </script>
     @endcan

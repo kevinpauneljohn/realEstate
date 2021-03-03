@@ -22,8 +22,9 @@ class ClientRequirementsController extends Controller
         $this->middleware('permission:view client requirements')->only('index');
         $this->middleware('permission:view client requirements')->only('salesRequirements');
         $this->middleware('permission:add client requirements')->only('store');
-        $this->middleware('permission:edit client requirements')->only('edit');
+        $this->middleware('permission:edit client requirements|add client requirements')->only('edit');
         $this->middleware('permission:edit client requirements')->only('update');
+        $this->middleware('permission:edit client requirements')->only('saveDriveLink');
         $this->middleware('permission:edit client requirements')->only('checkDocument');
         $this->middleware('permission:delete client requirements')->only('destroy');
 
@@ -170,7 +171,8 @@ class ClientRequirementsController extends Controller
                 'success' => true,
                 'requirements' => $client->requirements,
 //                'requirements' => json_decode($client->requirements),
-                'title' => Template::find($client->template_id)->name
+                'title' => Template::find($client->template_id)->name,
+                'drive_link' => $client->drive_link
             ]);
         }
         return response(['requirements' => false, 'templates' => Template::all()]);
@@ -195,5 +197,11 @@ class ClientRequirementsController extends Controller
         }
 
         return ClientRequirement::where('sales_id',$request->input('sales_id'))->update(['requirements' => collect($data)->toJson()]);
+    }
+
+
+    public function saveDriveLink(Request $request)
+    {
+        return $this->clientRequirements->saveDrive($request->all());
     }
 }
