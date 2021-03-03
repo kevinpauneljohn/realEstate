@@ -1109,7 +1109,7 @@
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
                             $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover">
                                 <tr><th></th><th>Available</th></tr>
-                            </table><div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>`)
+                            </table><div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>${((response.drive_link !== null)) ? '<a href="'+response.drive_link+'" class="btn btn-default btn-sm" target="_blank">Access</a>' : ''}`)
                             $.each(response.requirements, function(key, value){
                                 if(value.exists === true)
                                 {
@@ -1167,7 +1167,8 @@
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
                             $('#view-requirements').find('.modal-body .template').remove();
                             $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover"><tr><th></th><th>Available</th></tr></table>
-<div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>`)
+                                <div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>
+                            ${((response.drive_link !== null)) ? '<a href="'+response.drive_link+'" class="btn btn-default btn-sm" target="_blank">Access</a>' : ''}`);
                             $.each(response.requirements, function(key, value){
                                 $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
                                     '<td width="10%"><input class="form-control requirement-btn" type="checkbox" id="'+value.id+'" value="'+value.id+'"></td></tr>');
