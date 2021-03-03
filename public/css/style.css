@@ -82,9 +82,9 @@ table td{
     font-size:16px!important;
 }
 
-.lead-details-table{
-    table-layout:fixed!important;
-}
+/*.lead-details-table{*/
+/*    table-layout:fixed!important;*/
+/*}*/
 .lead-details-table td{
     word-wrap: break-word;
 }

@@ -290,15 +290,15 @@
     <link rel="stylesheet" href="{{asset('vendor/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
-    <style type="text/css">
-        table{
-            table-layout:fixed!important;
-        }
-        table td{
-            word-wrap: break-word;
-        }
+{{--    <style type="text/css">--}}
+{{--        table{--}}
+{{--            table-layout:fixed!important;--}}
+{{--        }--}}
+{{--        table td{--}}
+{{--            word-wrap: break-word;--}}
+{{--        }--}}
 
-    </style>
+{{--    </style>--}}
 @stop
 
 @section('js')
