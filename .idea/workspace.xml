@@ -34,8 +34,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="dream home guide project module">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/ClientRequirementRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/ClientRequirementRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -482,14 +482,7 @@
       <workItem from="1614658330128" duration="590000" />
       <workItem from="1614693029471" duration="12426000" />
       <workItem from="1614732473545" duration="623000" />
-      <workItem from="1614783455386" duration="5166000" />
-    </task>
-    <task id="LOCAL-00641" summary="dream home guide user module">
-      <created>1610403368999</created>
-      <option name="number" value="00641" />
-      <option name="presentableId" value="LOCAL-00641" />
-      <option name="project" value="LOCAL" />
-      <updated>1610403368999</updated>
+      <workItem from="1614783455386" duration="5883000" />
     </task>
     <task id="LOCAL-00642" summary="dream home guide user module">
       <created>1610455425812</created>
@@ -827,7 +820,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614787954690</updated>
     </task>
-    <option name="localTasksCounter" value="690" />
+    <task id="LOCAL-00690" summary="dream home guide project module">
+      <created>1614789792485</created>
+      <option name="number" value="00690" />
+      <option name="presentableId" value="LOCAL-00690" />
+      <option name="project" value="LOCAL" />
+      <updated>1614789792485</updated>
+    </task>
+    <option name="localTasksCounter" value="691" />
     <servers />
   </component>
   <component name="TodoView">

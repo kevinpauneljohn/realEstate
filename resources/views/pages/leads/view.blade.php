@@ -1251,8 +1251,15 @@
                     'data' : data,
                     beforeSend: function(){
                         $('#manage-requirements-form').find('input').attr('disabled',true);
+                        $('form').find('.submit-form-btn').attr('disabled',true).html('<span class="spinner-border spinner-border-sm"></span> Saving ...');
                     },success: function(response){
                         console.log(response);
+                        if(response.success === true)
+                        {
+                            customMessage('success',response.message);
+                        }
+                        $('#manage-requirements-form').find('input').attr('disabled',false);
+                        $('form').find('.submit-form-btn').attr('disabled',false).html('Save');
                     },error: function(xhr, status, error){
                         console.log(xhr);
                     }
