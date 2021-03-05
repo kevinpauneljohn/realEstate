@@ -21,7 +21,9 @@ use App\Repositories\RepositoryInterface\DhgClientInterFace;
 use App\Repositories\RepositoryInterface\DhgClientProjectInterface;
 use App\Repositories\RepositoryInterface\LeadInterface;
 use App\Repositories\RepositoryInterface\PaymentInterFace;
+use App\Repositories\RepositoryInterface\RequirementsInterface;
 use App\Repositories\RepositoryInterface\SalesInterface;
+use App\Repositories\RequirementsRepository;
 use App\Repositories\Sales;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -84,6 +86,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ClientRequirementInterface::class,
             ClientRequirementRepository::class
+        );
+
+        $this->app->bind(
+            RequirementsInterface::class,
+            RequirementsRepository::class
         );
     }
 

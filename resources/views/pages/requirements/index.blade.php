@@ -192,6 +192,54 @@
             });
             //Initialize Select2 Elements
             $('.select2').select2();
+
+            $(document).on('click','.duplicate-requirements-btn',function(){
+                let id = this.id;
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+
+                Swal.fire({
+                    title: 'Duplicate?',
+                    text: data[0],
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, duplicate it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/duplicate/'+id,
+                            'type' : 'POST',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            beforeSend: function(){
+
+                            },success: function(output){
+                                console.log(output);
+                                if(output.success === true){
+                                    let table = $('#requirements-list').DataTable();
+                                    table.ajax.reload();
+
+                                    Swal.fire(
+                                        'Duplicated!',
+                                        'Requirements template has been duplicated.',
+                                        'success'
+                                    );
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }
+                });
+            });
         </script>
     @endcan
 @stop

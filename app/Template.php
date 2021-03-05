@@ -9,6 +9,8 @@ class Template extends Model
 {
     use SoftDeletes;
 
+    public $fillable = ['id','name','type'];
+
     public function requirements()
     {
         return $this->hasMany(Requirement::class);

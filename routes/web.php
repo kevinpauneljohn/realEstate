@@ -151,7 +151,13 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-    return User::whereHas("roles", function($q){ $q->where("name", "super admin"); })->first();
+    $collection = collect([1, 2, 3, 4]);
+
+    $filtered = $collection->filter(function ($value, $key) {
+        return $value > 2;
+    });
+
+    return $filtered->all();
 })->middleware(['auth']);
 
 Route::post('/test',function(Request $request){
@@ -176,6 +182,7 @@ Route::post('/upload-requirements-image','SalesController@upload_requirements')-
 Route::post('/template/{template}','RequirementController@show')->name('requirements.show')->middleware(['auth','permission:view requirement template']);
 Route::post('/requirement/save-drive',[\App\Http\Controllers\ClientRequirementsController::class,'saveDriveLink'])->name('requirements.save.drive')->middleware(['auth','permission:edit client requirements|add client requirements']);
 Route::get('/requirement-template/{template_id}',[\App\Http\Controllers\RequirementTemplateController::class,'show'])->name('requirement.template.show')->middleware(['auth','permission:view client requirements']);
+Route::post('/duplicate/{template_id}',[\App\Http\Controllers\RequirementController::class,'duplicate'])->name('duplicate.requirements')->middleware(['auth','permission:duplicate requirements']);
 
 
 /*thresholds*/

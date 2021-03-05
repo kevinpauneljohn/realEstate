@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
+use App\Repositories\RepositoryInterface\RequirementsInterface;
 use App\Requirement;
 use App\Template;
 use Illuminate\Http\Request;
@@ -14,6 +15,15 @@ use Yajra\DataTables\DataTables;
 
 class RequirementController extends Controller
 {
+    public $requirements;
+
+    public function __construct(
+        RequirementsInterface $requirements
+    )
+    {
+        $this->requirements = $requirements;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +41,10 @@ class RequirementController extends Controller
             ->addColumn('action', function ($template)
             {
                 $action = "";
+                if(auth()->user()->can('duplicate requirements'))
+                {
+                    $action .= '<button class="btn btn-xs btn-info duplicate-requirements-btn" id="'.$template->id.'" title="Duplicate"><i class="fa fa-copy"></i></button>';
+                }
                 if(auth()->user()->can('view requirements'))
                 {
                     $action .= '<button class="btn btn-xs btn-success view-sales-btn" id="'.$template->id.'" data-toggle="modal" data-target="#view-sales-details"><i class="fa fa-eye"></i></button>';
@@ -187,6 +201,11 @@ class RequirementController extends Controller
             );
         }
         return $this;
+    }
+
+    public function duplicate($template_id)
+    {
+        return response(['success' => true, $this->requirements->duplicate([$template_id])]);
     }
 
     /**
