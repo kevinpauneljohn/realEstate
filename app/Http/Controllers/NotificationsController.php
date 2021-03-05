@@ -5,12 +5,21 @@ namespace App\Http\Controllers;
 use App\Lead;
 use App\Notification;
 use App\Requirement;
+use App\Services\AccountManagerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Yajra\DataTables\DataTables;
 
 class NotificationsController extends Controller
 {
+    public $accountManagement;
+
+    public function __construct(
+        AccountManagerService $accountManagerService
+    )
+    {
+        $this->accountManagement = $accountManagerService;
+    }
     public function notify()
     {
         Artisan::call('reminder:set');
@@ -24,7 +33,7 @@ class NotificationsController extends Controller
 
     public function notifications_list()
     {
-        $notifications = Notification::where('user_id',auth()->user()->id)->limit(100)->orderBy('id','desc')->get();
+        $notifications = Notification::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->limit(100)->orderBy('id','desc')->get();
 
         return DataTables::of($notifications)
             ->setRowClass(function ($notifications){
