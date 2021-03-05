@@ -99,6 +99,7 @@ class DashboardController extends Controller
             'current_year' => now()->format('Y'),
             'current_balance' => Wallet::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['status','!=','completed']])->sum('amount'),
             'ranks' => Rank::all(),
+            'user' => $this->accountManagement->checkIfUserIsAccountManager()
         ]);
     }
 
