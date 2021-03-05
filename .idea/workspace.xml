@@ -32,17 +32,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="dream home guide project module">
-      <change afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/RequirementsInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repositories/RequirementsRepository.php" afterDir="false" />
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="added a duplicate functionality for the requirements template">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RequirementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RequirementController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/RoleSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/RoleSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/requirements/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/requirements/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -490,14 +482,7 @@
       <workItem from="1614693029471" duration="12426000" />
       <workItem from="1614732473545" duration="623000" />
       <workItem from="1614783455386" duration="7656000" />
-      <workItem from="1614903758349" duration="20751000" />
-    </task>
-    <task id="LOCAL-00657" summary="dream home guide builder module">
-      <created>1611107990213</created>
-      <option name="number" value="00657" />
-      <option name="presentableId" value="LOCAL-00657" />
-      <option name="project" value="LOCAL" />
-      <updated>1611107990213</updated>
+      <workItem from="1614903758349" duration="21391000" />
     </task>
     <task id="LOCAL-00658" summary="dream home guide builder module">
       <created>1611109771548</created>
@@ -835,7 +820,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614934438236</updated>
     </task>
-    <option name="localTasksCounter" value="706" />
+    <task id="LOCAL-00706" summary="added a duplicate functionality for the requirements template">
+      <created>1614945579912</created>
+      <option name="number" value="00706" />
+      <option name="presentableId" value="LOCAL-00706" />
+      <option name="project" value="LOCAL" />
+      <updated>1614945579913</updated>
+    </task>
+    <option name="localTasksCounter" value="707" />
     <servers />
   </component>
   <component name="TodoView">
@@ -877,7 +869,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated the sales module" />
     <MESSAGE value="computations module" />
     <MESSAGE value="contact list module" />
     <MESSAGE value="wallet module" />
@@ -902,6 +893,7 @@
     <MESSAGE value="dream home guide user module" />
     <MESSAGE value="dream home guide builder module" />
     <MESSAGE value="dream home guide project module" />
-    <option name="LAST_COMMIT_MESSAGE" value="dream home guide project module" />
+    <MESSAGE value="added a duplicate functionality for the requirements template" />
+    <option name="LAST_COMMIT_MESSAGE" value="added a duplicate functionality for the requirements template" />
   </component>
 </project>

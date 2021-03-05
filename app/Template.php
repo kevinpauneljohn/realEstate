@@ -4,12 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Template extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
 
     public $fillable = ['id','name','type'];
+
+    protected static $logAttributes = ['id','name','type'];
 
     public function requirements()
     {
