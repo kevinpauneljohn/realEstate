@@ -33,8 +33,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="dream home guide project module">
-      <change afterPath="$PROJECT_DIR$/app/Services/AccountManagerService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -483,14 +481,7 @@
       <workItem from="1614693029471" duration="12426000" />
       <workItem from="1614732473545" duration="623000" />
       <workItem from="1614783455386" duration="7656000" />
-      <workItem from="1614903758349" duration="7387000" />
-    </task>
-    <task id="LOCAL-00646" summary="dream home guide user module">
-      <created>1610581192571</created>
-      <option name="number" value="00646" />
-      <option name="presentableId" value="LOCAL-00646" />
-      <option name="project" value="LOCAL" />
-      <updated>1610581192571</updated>
+      <workItem from="1614903758349" duration="7471000" />
     </task>
     <task id="LOCAL-00647" summary="dream home guide user module">
       <created>1610584452182</created>
@@ -828,7 +819,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614916277683</updated>
     </task>
-    <option name="localTasksCounter" value="695" />
+    <task id="LOCAL-00695" summary="dream home guide project module">
+      <created>1614917238022</created>
+      <option name="number" value="00695" />
+      <option name="presentableId" value="LOCAL-00695" />
+      <option name="project" value="LOCAL" />
+      <updated>1614917238022</updated>
+    </task>
+    <option name="localTasksCounter" value="696" />
     <servers />
   </component>
   <component name="TodoView">

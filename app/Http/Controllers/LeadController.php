@@ -51,7 +51,7 @@ class LeadController extends Controller
             'total_warm_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Warm']])->count(),
             'total_cold_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Cold']])->count(),
             'total_qualified_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Qualified']])->count(),
-            'total_for_tripping_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->user()->id],['lead_status','=','For tripping']])->count(),
+            'total_for_tripping_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','For tripping']])->count(),
             'total_inquiry_only_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Inquiry Only']])->count(),
             'total_not_interested_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Not Interested Anymore']])->count(),
             'total_reserved_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Reserved']])->count(),
