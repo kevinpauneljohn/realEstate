@@ -5,10 +5,63 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Sales extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
+
+    protected $fillable = [
+        'id',
+        'reservation_date',
+        'user_id',
+        'lead_id',
+        'project_id',
+        'model_unit_id',
+        'lot_area',
+        'floor_area',
+        'phase',
+        'block',
+        'lot',
+        'total_contract_price',
+        'discount',
+        'processing_fee',
+        'reservation_fee',
+        'equity',
+        'loanable_amount',
+        'financing',
+        'terms',
+        'details',
+        'commission_rate',
+        'status',
+        'template_id',
+    ];
+
+    protected static $logAttributes = [
+        'id',
+        'reservation_date',
+        'user_id',
+        'lead_id',
+        'project_id',
+        'model_unit_id',
+        'lot_area',
+        'floor_area',
+        'phase',
+        'block',
+        'lot',
+        'total_contract_price',
+        'discount',
+        'processing_fee',
+        'reservation_fee',
+        'equity',
+        'loanable_amount',
+        'financing',
+        'terms',
+        'details',
+        'commission_rate',
+        'status',
+        'template_id',
+    ];
 
     protected $dates = ['reservation_date'];
 

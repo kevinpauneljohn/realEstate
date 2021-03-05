@@ -34,7 +34,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="dream home guide project module">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Commission.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Commission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Contact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/LeadActivity.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/LeadActivity.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/LeadNote.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/LeadNote.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Project.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Sales.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Sales.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -482,14 +487,7 @@
       <workItem from="1614693029471" duration="12426000" />
       <workItem from="1614732473545" duration="623000" />
       <workItem from="1614783455386" duration="7656000" />
-      <workItem from="1614903758349" duration="8817000" />
-    </task>
-    <task id="LOCAL-00650" summary="dream home guide user module">
-      <created>1611014106183</created>
-      <option name="number" value="00650" />
-      <option name="presentableId" value="LOCAL-00650" />
-      <option name="project" value="LOCAL" />
-      <updated>1611014106183</updated>
+      <workItem from="1614903758349" duration="9889000" />
     </task>
     <task id="LOCAL-00651" summary="dream home guide user module">
       <created>1611014442434</created>
@@ -827,7 +825,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614918736293</updated>
     </task>
-    <option name="localTasksCounter" value="699" />
+    <task id="LOCAL-00699" summary="dream home guide project module">
+      <created>1614919048178</created>
+      <option name="number" value="00699" />
+      <option name="presentableId" value="LOCAL-00699" />
+      <option name="project" value="LOCAL" />
+      <updated>1614919048178</updated>
+    </task>
+    <option name="localTasksCounter" value="700" />
     <servers />
   </component>
   <component name="TodoView">
