@@ -151,13 +151,7 @@ Route::get('/commissions-list/{user}','CommissionController@commission_list')->n
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
 Route::get('/test',function(){
-
-    $collection = collect(json_decode(\App\ClientRequirement::where('sales_id',1)->first()->requirements));
-
-    $filtered = $collection->where('id', 1);
-
-    return $filtered->toArray();
-
+    return User::whereHas("roles", function($q){ $q->where("name", "super admin"); })->first();
 })->middleware(['auth']);
 
 Route::post('/test',function(Request $request){

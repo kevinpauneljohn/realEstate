@@ -11,6 +11,7 @@ use App\Project;
 use App\Repositories\LeadRepository;
 use App\Repositories\RepositoryInterface\LeadInterface;
 use App\Repositories\RepositoryInterface\SalesInterface;
+use App\User;
 use App\WebsiteLink;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ use Yajra\DataTables\DataTables;
 class LeadController extends Controller
 {
 
+    private $superAdmin;
     public $leadRepository, $leads, $sales;
 
     public function __construct(
@@ -32,6 +34,8 @@ class LeadController extends Controller
         $this->leadRepository = $leadRepository;
         $this->leads = $lead;
         $this->sales = $sales;
+
+        $this->superAdmin = User::whereHas("roles", function($q){ $q->where("name", "super admin"); })->first();
     }
 
 
@@ -53,6 +57,19 @@ class LeadController extends Controller
         ]);
     }
 
+    /**
+     * if the logged in user is an account manager will return all the leads of the super admin
+     * if the logged in user is not an account manager will return
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    private function checkIfUserIsAccountManager()
+    {
+        if(auth()->user()->hasRole('account manager'))
+        {
+            return $this->superAdmin;
+        }
+        return auth()->user();
+    }
 
     /**
      * Feb. 18, 2020
@@ -63,7 +80,7 @@ class LeadController extends Controller
      */
     public function lead_list()
     {
-        $leads = Lead::where('user_id',auth()->user()->id)->get();
+        $leads = Lead::where('user_id',$this->checkIfUserIsAccountManager()->id)->get();
         return DataTables::of($leads)
             ->editColumn('date_inquired',function($lead){
                 ///
