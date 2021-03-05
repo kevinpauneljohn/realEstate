@@ -7,6 +7,7 @@ use App\Lead;
 use App\LeadActivity;
 use App\Repositories\TimeRepository;
 use App\Requirement;
+use App\Services\AccountManagerService;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,9 +17,15 @@ class LeadActivityController extends Controller
 {
     public $timeRepository;
 
-    public function __construct(TimeRepository $timeRepository)
+    public $accountmanagement;
+
+    public function __construct(
+        TimeRepository $timeRepository,
+        AccountManagerService $accountManagerService
+    )
     {
         $this->timeRepository = $timeRepository;
+        $this->accountmanagement = $accountManagerService;
     }
 
     /**
@@ -39,7 +46,7 @@ class LeadActivityController extends Controller
     public function lead_activity_list($id)
     {
         $leadActivities = LeadActivity::where([
-            ['user_id','=',auth()->user()->id],
+            ['user_id','=',$this->accountmanagement->checkIfUserIsAccountManager()->id],
             ['lead_id','=',$id],
         ])->get();
         return DataTables::of($leadActivities)
@@ -122,7 +129,7 @@ class LeadActivityController extends Controller
     {
         $schedule = LeadActivity::where([
             ['schedule','=',$date],
-            ['user_id','=',auth()->user()->id],
+            ['user_id','=',$this->accountmanagement->checkIfUserIsAccountManager()->id],
         ])->get();
 
         return $schedule;
@@ -160,7 +167,7 @@ class LeadActivityController extends Controller
             if($activityCount <= 50)
             {
                 $leadActivity = new LeadActivity();
-                $leadActivity->user_id = auth()->user()->id;
+                $leadActivity->user_id = $this->accountmanagement->checkIfUserIsAccountManager()->id;
                 $leadActivity->lead_id = $request->lead_id;
                 $leadActivity->details = $request->reminder_details;
                 $leadActivity->schedule = $request->reminder_date;
@@ -280,7 +287,7 @@ class LeadActivityController extends Controller
     public function getSchedule(Request $request)
     {
         $schedule = LeadActivity::whereDate('schedule','=',$request->date)
-            ->where('user_id','=',auth()->user()->id)
+            ->where('user_id','=',$this->accountmanagement->checkIfUserIsAccountManager()->id)
             ->where('status','=','pending')
             ->get();
         $data = collect($schedule);
