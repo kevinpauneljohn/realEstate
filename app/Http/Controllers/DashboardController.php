@@ -47,7 +47,7 @@ class DashboardController extends Controller
 
         $total_leads = Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->count();
         $total_cold_leads = Lead::where([
-            ['user_id','=',auth()->user()->id],
+            ['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],
             ['lead_status','=','Cold'],
         ])->count();
         $total_reserved_leads = Lead::where([
