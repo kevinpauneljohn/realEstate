@@ -11,6 +11,7 @@ use App\Project;
 use App\Repositories\LeadRepository;
 use App\Repositories\RepositoryInterface\LeadInterface;
 use App\Repositories\RepositoryInterface\SalesInterface;
+use App\Services\AccountManagerService;
 use App\User;
 use App\WebsiteLink;
 use Carbon\Carbon;
@@ -22,20 +23,21 @@ use Yajra\DataTables\DataTables;
 class LeadController extends Controller
 {
 
-    private $superAdmin;
+    private $accountManagement;
     public $leadRepository, $leads, $sales;
 
     public function __construct(
         LeadRepository $leadRepository,
         LeadInterface $lead,
-        SalesInterface $sales
+        SalesInterface $sales,
+        AccountManagerService $accountManagerService
     )
     {
         $this->leadRepository = $leadRepository;
         $this->leads = $lead;
         $this->sales = $sales;
 
-        $this->superAdmin = User::whereHas("roles", function($q){ $q->where("name", "super admin"); })->first();
+        $this->accountManagement = $accountManagerService;
     }
 
 
@@ -45,31 +47,18 @@ class LeadController extends Controller
     public function index()
     {
         return view('pages.leads.index')->with([
-            'total_hot_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Hot']])->count(),
-            'total_warm_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Warm']])->count(),
-            'total_cold_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Cold']])->count(),
-            'total_qualified_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Qualified']])->count(),
-            'total_for_tripping_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','For tripping']])->count(),
-            'total_inquiry_only_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Inquiry Only']])->count(),
-            'total_not_interested_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Not Interested Anymore']])->count(),
-            'total_reserved_leads' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','Reserved']])->count(),
-            'total_for_reservation' => Lead::where([['user_id','=',auth()->user()->id],['lead_status','=','For reservation']])->count(),
+            'total_hot_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Hot']])->count(),
+            'total_warm_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Warm']])->count(),
+            'total_cold_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Cold']])->count(),
+            'total_qualified_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Qualified']])->count(),
+            'total_for_tripping_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->user()->id],['lead_status','=','For tripping']])->count(),
+            'total_inquiry_only_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Inquiry Only']])->count(),
+            'total_not_interested_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Not Interested Anymore']])->count(),
+            'total_reserved_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Reserved']])->count(),
+            'total_for_reservation' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','For reservation']])->count(),
         ]);
     }
 
-    /**
-     * if the logged in user is an account manager will return all the leads of the super admin
-     * if the logged in user is not an account manager will return
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    private function checkIfUserIsAccountManager()
-    {
-        if(auth()->user()->hasRole('account manager'))
-        {
-            return $this->superAdmin;
-        }
-        return auth()->user();
-    }
 
     /**
      * Feb. 18, 2020
@@ -80,7 +69,7 @@ class LeadController extends Controller
      */
     public function lead_list()
     {
-        $leads = Lead::where('user_id',$this->checkIfUserIsAccountManager()->id)->get();
+        $leads = Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get();
         return DataTables::of($leads)
             ->editColumn('date_inquired',function($lead){
                 ///
@@ -193,7 +182,7 @@ class LeadController extends Controller
 
         $this->validate_field($request);
         $lead = new Lead();
-        $lead->user_id = auth()->user()->id;
+        $lead->user_id = $this->accountManagement->checkIfUserIsAccountManager()->id;
         $lead->date_inquired = $request->date_inquired;
         $lead->firstname = $request->firstname;
         $lead->middlename = $request->middlename;
@@ -246,7 +235,7 @@ class LeadController extends Controller
         return view('pages.leads.view')->with([
             'lead'  => Lead::where([
                 ['id','=',$id],
-                ['user_id','=',auth()->user()->id],
+                ['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],
             ])->firstOrFail(),
             'leadNotes' => LeadNote::where('lead_id',$id),
             'activity_logs' => LogTouch::where('lead_id',$id),
@@ -324,7 +313,7 @@ class LeadController extends Controller
         }
 
         $lead = Lead::findOrFail($id);
-        $lead->user_id = auth()->user()->id;
+        $lead->user_id = $this->accountManagement->checkIfUserIsAccountManager()->id;
         $lead->date_inquired = $request->date_inquired;
         $lead->firstname = $request->firstname;
         $lead->middlename = $request->middlename;
