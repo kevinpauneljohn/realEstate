@@ -6,6 +6,7 @@ use App\Lead;
 use App\Rank;
 use App\Repositories\SalesRepository;
 use App\Sales;
+use App\Services\AccountManagerService;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -16,10 +17,15 @@ class DashboardController extends Controller
 {
 
     public $salesRepository;
+    public $accountManagement;
 
-    public function __construct(SalesRepository $salesRepository)
+    public function __construct(
+        SalesRepository $salesRepository,
+        AccountManagerService $accountManagerService
+    )
     {
         $this->salesRepository = $salesRepository;
+        $this->accountManagement = $accountManagerService;
     }
 
     /**
@@ -34,18 +40,18 @@ class DashboardController extends Controller
         $period = isset($display_period) ? $display_period : 'week';
 
         $reminder = \App\Notification::where([
-            ['user_id','=',auth()->user()->id],
+            ['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],
             ['viewed','=',0],
             ['type','=','lead activity'],
         ]);
 
-        $total_leads = Lead::where('user_id',auth()->user()->id)->count();
+        $total_leads = Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->count();
         $total_cold_leads = Lead::where([
             ['user_id','=',auth()->user()->id],
             ['lead_status','=','Cold'],
         ])->count();
         $total_reserved_leads = Lead::where([
-            ['user_id','=',auth()->user()->id],
+            ['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],
             ['lead_status','=','Reserved'],
         ])->count();
 
@@ -54,7 +60,7 @@ class DashboardController extends Controller
             'report_type' => 'group_by_date',
             'model' => Lead::class,
             'conditions'            => [
-                ['name' => 'Total Leads ('.$total_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => '#d800ff'],
+                ['name' => 'Total Leads ('.$total_leads.')', 'condition' => 'user_id = "'.$this->accountManagement->checkIfUserIsAccountManager()->id.'"', 'color' => '#d800ff'],
 //                ['name' => 'Cold Leads ('.$total_cold_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Cold"','color' => '#007eff'],
 //                ['name' => 'Reserved Leads ('.$total_reserved_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
             ],
@@ -70,7 +76,7 @@ class DashboardController extends Controller
             'report_type' => 'group_by_date',
             'model' => Sales::class,
             'conditions'            => [
-                ['name' => 'Total Sales', 'condition' => 'user_id = "'.auth()->user()->id.'"', 'color' => 'green'],
+                ['name' => 'Total Sales', 'condition' => 'user_id = "'.$this->accountManagement->checkIfUserIsAccountManager()->id.'"', 'color' => 'green'],
 //                ['name' => 'Cold Leads ('.$total_cold_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Cold"','color' => '#007eff'],
 //                ['name' => 'Reserved Leads ('.$total_reserved_leads.')', 'condition' => 'user_id = "'.auth()->user()->id.'" AND lead_status = "Reserved"','color' => 'green'],
             ],
@@ -87,11 +93,11 @@ class DashboardController extends Controller
         return view('pages.dashboard',compact('leads','sales'))->with([
             'reminders' => $reminder,
             'display_period' => $period,
-            'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth(auth()->user()->id),
-            'total_sales'   => $this->salesRepository->getTotalSales(auth()->user()->id),
+            'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth($this->accountManagement->checkIfUserIsAccountManager()->id),
+            'total_sales'   => $this->salesRepository->getTotalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
             'current_month' => now()->format('F'),
             'current_year' => now()->format('Y'),
-            'current_balance' => Wallet::where([['user_id','=',auth()->user()->id],['status','!=','completed']])->sum('amount'),
+            'current_balance' => Wallet::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['status','!=','completed']])->sum('amount'),
             'ranks' => Rank::all(),
         ]);
     }
