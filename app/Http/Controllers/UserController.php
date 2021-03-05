@@ -17,6 +17,7 @@ use App\Repositories\WalletRepository;
 use App\Role;
 use App\Rules\checkIfPasswordMatch;
 use App\Sales;
+use App\Services\AccountManagerService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -24,15 +25,17 @@ use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
-    public $thresholdRepository, $userRepository, $walletRepository;
+    public $thresholdRepository, $userRepository, $walletRepository, $accountmanagement;
 
     public function __construct(ThresholdRepository $thresholdRepository,
                                 UserRepository $userRepository,
-                                WalletRepository $walletRepository)
+                                WalletRepository $walletRepository,
+                                AccountManagerService $accountManagerService)
     {
         $this->thresholdRepository = $thresholdRepository;
         $this->userRepository = $userRepository;
         $this->walletRepository = $walletRepository;
+        $this->accountmanagement = $accountManagerService;
     }
 
 
