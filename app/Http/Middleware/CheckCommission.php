@@ -3,10 +3,17 @@
 namespace App\Http\Middleware;
 
 use App\Commission;
+use App\Services\AccountManagerService;
 use Closure;
 
 class CheckCommission
 {
+    private $accountManagement;
+
+    public function __construct(AccountManagerService $accountManagerService)
+    {
+        $this->accountManagement = $accountManagerService;
+    }
     /**
      * Handle an incoming request.
      *
@@ -19,7 +26,7 @@ class CheckCommission
 
         $response = $next($request);
 
-        $user = auth()->user();
+        $user = $this->accountManagement->checkIfUserIsAccountManager();
         $commission = Commission::where('user_id',$user->id)->count();
         if($commission == 0 && !$user->hasRole('super admin'))
         {

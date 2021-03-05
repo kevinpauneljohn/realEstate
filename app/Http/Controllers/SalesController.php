@@ -13,6 +13,7 @@ use App\Repositories\ThresholdRepository;
 use App\Requirement;
 use App\SaleRequirement;
 use App\Sales;
+use App\Services\AccountManagerService;
 use App\Template;
 use App\Threshold;
 use App\User;
@@ -25,17 +26,19 @@ use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
 {
-    private $thresholdRepository, $salesRepository, $sales;
+    private $thresholdRepository, $salesRepository, $sales, $accountManagement;
 
     public function __construct(
         ThresholdRepository $thresholdRepository,
         SalesRepository $salesRepository,
-        SalesInterface $sales
+        SalesInterface $sales,
+        AccountManagerService $accountManagerService
     )
     {
         $this->thresholdRepository = $thresholdRepository;
         $this->salesRepository = $salesRepository;
         $this->sales = $sales;
+        $this->accountManagement = $accountManagerService;
     }
 
 
@@ -47,11 +50,11 @@ class SalesController extends Controller
     {
         //return $this->salesRepository->get_sales_request_count_in_threshold_for_attribute(5);
         return view('pages.sales.index')->with([
-            'leads' => Lead::where('user_id',auth()->user()->id)->get(),
+            'leads' => Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get(),
             'projects'   => Project::all(),
-            'total_units_sold' => User::findOrFail(auth()->user()->id)->sales()->where('status','!=','cancelled')->count(),
-            'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth(auth()->user()->id),
-            'total_sales'   => $this->salesRepository->getTotalSales(auth()->user()->id),
+            'total_units_sold' => User::findOrFail($this->accountManagement->checkIfUserIsAccountManager()->id)->sales()->where('status','!=','cancelled')->count(),
+            'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth($this->accountManagement->checkIfUserIsAccountManager()->id),
+            'total_sales'   => $this->salesRepository->getTotalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_cancelled'   => Sales::where('status','cancelled')->count(),
             'templates' => Template::all(),
         ]);
@@ -88,7 +91,7 @@ class SalesController extends Controller
     public function create(Request $request)
     {
         return view('pages.sales.addSales')->with([
-            'leads' => Lead::where('user_id',auth()->user()->id)->get(),
+            'leads' => Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get(),
             'projects' => Project::all(),
             'leadId' => $request->leadId
         ]);
@@ -128,10 +131,10 @@ class SalesController extends Controller
         if($validator->passes())
         {
             /*sales will be save if the commission rate is greater than 0*/
-            if($this->salesRepository->setCommissionRate($request->project,auth()->user()->id) > 0){
+            if($this->salesRepository->setCommissionRate($request->project,$this->accountManagement->checkIfUserIsAccountManager()->id) > 0){
                 $sales = new Sales();
                 $sales->reservation_date = $request->reservation_date;
-                $sales->user_id = auth()->user()->id;
+                $sales->user_id = $this->accountManagement->checkIfUserIsAccountManager()->id;
                 $sales->lead_id = $request->buyer;
                 $sales->project_id = $request->project;
                 $sales->model_unit_id = $request->model_unit;
@@ -157,12 +160,12 @@ class SalesController extends Controller
                     //add additional points based on sales price
                     $plusPoint = ($request->total_contract_price - $request->discount)/100000;
                     //$points = auth()->user()->userRankPoint->points + $plusPoint;
-                    $points = auth()->user()->userRankPoint->sales_points + $plusPoint;
+                    $points = $this->accountManagement->checkIfUserIsAccountManager()->userRankPoint->sales_points + $plusPoint;
 
                     ///check if the user has extra points
-                    $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
+                    $extra_points = $this->accountManagement->checkIfUserIsAccountManager()->userRankPoint == null ? 0 : $this->accountManagement->checkIfUserIsAccountManager()->userRankPoint->extra_points;
 
-                    event(new UserRankPointsEvent(auth()->user(), $points, $extra_points));
+                    event(new UserRankPointsEvent($this->accountManagement->checkIfUserIsAccountManager(), $points, $extra_points));
 
                     event(new UpdateLeadStatusEvent($sales->lead_id));
                     return response()->json(['success' => true, 'message' => 'Sales successfully added!']);
@@ -185,7 +188,7 @@ class SalesController extends Controller
      * */
     public function sales_list()
     {
-        $sales = Sales::where('user_id',auth()->user()->id)->get();
+        $sales = Sales::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get();
         return DataTables::of($sales)
 //            ->editColumn('reservation_date',function($sale){
 //                return $sale->reservation_date->format('M d, Y');
@@ -403,7 +406,7 @@ class SalesController extends Controller
 
         if($validator->passes())
         {
-            if(auth()->user()->hasRole('super admin'))
+            if($this->accountManagement->checkIfUserIsAccountManager()->hasRole('super admin'))
             {
                 $sale = $this->salesRepository->updateSales($request, $id);
             }else{
@@ -527,11 +530,11 @@ class SalesController extends Controller
             if($sale->delete())
             {
                 //update the user ranking and points
-                $total_points = $this->salesRepository->getTotalSales(auth()->user()->id) / 100000;
+                $total_points = $this->salesRepository->getTotalSales($this->accountManagement->checkIfUserIsAccountManager()->id) / 100000;
 
                 ///check if the user has extra points
-                $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
-                event(new UserRankPointsEvent(auth()->user(),$total_points,$extra_points));
+                $extra_points = $this->accountManagement->checkIfUserIsAccountManager()->userRankPoint == null ? 0 : $this->accountManagement->checkIfUserIsAccountManager()->userRankPoint->extra_points;
+                event(new UserRankPointsEvent($this->accountManagement->checkIfUserIsAccountManager(),$total_points,$extra_points));
                 return response()->json(['success' => true,'message' => 'Sales successfully deleted']);
             }
         }
@@ -635,7 +638,7 @@ class SalesController extends Controller
      * */
     public function updateSaleStatus(Request $request)
     {
-        $user = auth()->user();
+        $user = $this->accountManagement->checkIfUserIsAccountManager();
 
         $validator = Validator::make($request->all(),[
             'status'    => 'required',
