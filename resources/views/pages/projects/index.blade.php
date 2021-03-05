@@ -155,7 +155,7 @@
 @stop
 
 @section('js')
-    @can('view user')
+    @can('view project')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('js/project.js')}}"></script>
         <script>
