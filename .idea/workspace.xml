@@ -34,7 +34,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="added a duplicate functionality for the requirements template">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -482,14 +482,7 @@
       <workItem from="1614693029471" duration="12426000" />
       <workItem from="1614732473545" duration="623000" />
       <workItem from="1614783455386" duration="7656000" />
-      <workItem from="1614903758349" duration="21391000" />
-    </task>
-    <task id="LOCAL-00658" summary="dream home guide builder module">
-      <created>1611109771548</created>
-      <option name="number" value="00658" />
-      <option name="presentableId" value="LOCAL-00658" />
-      <option name="project" value="LOCAL" />
-      <updated>1611109771549</updated>
+      <workItem from="1614903758349" duration="23025000" />
     </task>
     <task id="LOCAL-00659" summary="dream home guide builder module">
       <created>1611115426935</created>
@@ -827,7 +820,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614945579913</updated>
     </task>
-    <option name="localTasksCounter" value="707" />
+    <task id="LOCAL-00707" summary="added a duplicate functionality for the requirements template">
+      <created>1614946062456</created>
+      <option name="number" value="00707" />
+      <option name="presentableId" value="LOCAL-00707" />
+      <option name="project" value="LOCAL" />
+      <updated>1614946062456</updated>
+    </task>
+    <option name="localTasksCounter" value="708" />
     <servers />
   </component>
   <component name="TodoView">
