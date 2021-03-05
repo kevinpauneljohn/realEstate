@@ -34,10 +34,9 @@ class LeadController extends Controller
         $this->sales = $sales;
     }
 
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -54,11 +53,14 @@ class LeadController extends Controller
         ]);
     }
 
+
     /**
      * Feb. 18, 2020
      * @author john kevin paunel
      * display all leads
-     * */
+     * @return mixed
+     * @throws \Exception
+     */
     public function lead_list()
     {
         $leads = Lead::where('user_id',auth()->user()->id)->get();

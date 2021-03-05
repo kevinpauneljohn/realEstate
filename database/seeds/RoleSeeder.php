@@ -22,6 +22,7 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'client']);
         Role::create(['name' => 'builder admin']);
         Role::create(['name' => 'builder member']);
+        Role::create(['name' => 'account manager']);
 
         Permission::create(['name' => 'add role']);
         Permission::create(['name' => 'view role']);

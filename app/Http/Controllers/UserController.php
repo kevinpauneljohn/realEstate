@@ -35,12 +35,10 @@ class UserController extends Controller
         $this->walletRepository = $walletRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         /*this will set the allowed role depending on the position the user has*/
@@ -52,6 +50,11 @@ class UserController extends Controller
                 ['name','!=','super admin'],
                 ['name','!=','admin'],
                 ['name','!=','manager'],
+                ['name','!=','client'],
+                ['name','!=','builder member'],
+                ['name','!=','builder admin'],
+                ['name','!=','architect'],
+                ['name','!=','account manager'],
             ])->get();
         }elseif (auth()->user()->hasRole('agent')){
             $roles = Role::where([
@@ -59,6 +62,11 @@ class UserController extends Controller
                 ['name','!=','admin'],
                 ['name','!=','manager'],
                 ['name','!=','agent'],
+                ['name','!=','client'],
+                ['name','!=','builder member'],
+                ['name','!=','builder admin'],
+                ['name','!=','architect'],
+                ['name','!=','account manager'],
             ])->get();
         }elseif (auth()->user()->hasRole('team leader')){
             $roles = Role::where([
@@ -66,10 +74,15 @@ class UserController extends Controller
                 ['name','!=','admin'],
                 ['name','!=','manager'],
                 ['name','!=','team leader'],
+                ['name','!=','client'],
+                ['name','!=','builder member'],
+                ['name','!=','builder admin'],
+                ['name','!=','architect'],
+                ['name','!=','account manager'],
             ])->get();
         }
         return view('pages.users.index')->with([
-            'roles' => $roles,
+            'roles' => auth()->user()->hasRole('account manager')? "" : $roles,
         ]);
     }
 
