@@ -213,6 +213,7 @@ $(document).on('click','.row-description-btn',function(){
 
 $(document).on('click','.edit-row-description-btn',function(){
     let value = this.value;
+    console.log(this.id);
 
     if(value == 'plus')
     {
@@ -230,7 +231,7 @@ $(document).on('click','.edit-row-description-btn',function(){
         {
             this.closest('.edit-row-description').remove();
         }else{
-            $('#input_'+this.id+', #plus_'+this.id+', #'+this.id).attr('disabled',true);
+            $('#edit-requirement-form').find('#input_'+this.id+', #plus_'+this.id+', #'+this.id).attr('disabled',true);
             $('#edit-requirement-form .modal-body').append('<input type="hidden" name="delete_requirements[]" value="'+this.id+'">');
             $('#update_description_'+this.id).remove()
         }
