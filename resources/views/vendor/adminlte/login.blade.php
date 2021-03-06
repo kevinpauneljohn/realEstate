@@ -112,7 +112,6 @@
 @stop
 
 @section('adminlte_js')
-    <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
     <script src="{{asset('js/formSubmit.js')}}"></script>
     <script>
         $(document).on('mouseenter','input[name=password], .show-password',function(){
@@ -124,7 +123,6 @@
         });
 
         $(document).on('click','.show-password',function(){
-            // $('input[name="password"]').prop('type','text');
             $('input[name="password"]').hasClass('show')
                 ? $('input[name="password"]').removeClass('show').addClass('hide').prop('type','password')
                 : $('input[name="password"]').removeClass('hide').addClass('show').prop('type','text')

@@ -32,9 +32,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="added a duplicate functionality for the requirements template">
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="add show password functionality to login page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/vendor/adminlte/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/adminlte/login.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -484,14 +483,8 @@
       <workItem from="1614732473545" duration="623000" />
       <workItem from="1614783455386" duration="7656000" />
       <workItem from="1614903758349" duration="23733000" />
-      <workItem from="1615027499923" duration="3468000" />
-    </task>
-    <task id="LOCAL-00660" summary="dream home guide builder module">
-      <created>1611183488687</created>
-      <option name="number" value="00660" />
-      <option name="presentableId" value="LOCAL-00660" />
-      <option name="project" value="LOCAL" />
-      <updated>1611183488688</updated>
+      <workItem from="1615027499923" duration="3997000" />
+      <workItem from="1615032990258" duration="78000" />
     </task>
     <task id="LOCAL-00661" summary="dream home guide builder module">
       <created>1611207963923</created>
@@ -829,7 +822,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614957517038</updated>
     </task>
-    <option name="localTasksCounter" value="709" />
+    <task id="LOCAL-00709" summary="add show password functionality to login page">
+      <created>1615031000451</created>
+      <option name="number" value="00709" />
+      <option name="presentableId" value="LOCAL-00709" />
+      <option name="project" value="LOCAL" />
+      <updated>1615031000451</updated>
+    </task>
+    <option name="localTasksCounter" value="710" />
     <servers />
   </component>
   <component name="TodoView">
@@ -871,7 +871,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="computations module" />
     <MESSAGE value="contact list module" />
     <MESSAGE value="wallet module" />
     <MESSAGE value="cash request module" />
@@ -896,6 +895,7 @@
     <MESSAGE value="dream home guide builder module" />
     <MESSAGE value="dream home guide project module" />
     <MESSAGE value="added a duplicate functionality for the requirements template" />
-    <option name="LAST_COMMIT_MESSAGE" value="added a duplicate functionality for the requirements template" />
+    <MESSAGE value="add show password functionality to login page" />
+    <option name="LAST_COMMIT_MESSAGE" value="add show password functionality to login page" />
   </component>
 </project>
