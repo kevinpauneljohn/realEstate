@@ -14,6 +14,9 @@
         .spinner{
             display:none;
         }
+        .show-password{
+            display: none;
+        }
     </style>
     @yield('css')
 @stop
@@ -77,6 +80,7 @@
                         <input type="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="{{ __('adminlte::adminlte.password') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
+                                <span class="fas fa-eye mb-md-n1 show-password" style="margin-right: 5px;cursor: pointer" title="Show password"></span>
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
@@ -110,6 +114,26 @@
 @section('adminlte_js')
     <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
     <script src="{{asset('js/formSubmit.js')}}"></script>
+    <script>
+        $(document).on('mouseenter','input[name=password], .show-password',function(){
+            $('.show-password').show();
+        });
+
+        $(document).on('mouseleave','input[name=password], .show-password',function(){
+            $('.show-password').hide();
+        });
+
+        $(document).on('click','.show-password',function(){
+            // $('input[name="password"]').prop('type','text');
+            $('input[name="password"]').hasClass('show')
+                ? $('input[name="password"]').removeClass('show').addClass('hide').prop('type','password')
+                : $('input[name="password"]').removeClass('hide').addClass('show').prop('type','text')
+
+            $('.show-password').hasClass('fa-eye')
+                ? $('.show-password').removeClass('fa-eye').addClass('fa-eye-slash').attr('title','Hide password')
+                : $('.show-password').removeClass('fa-eye-slash').addClass('fa-eye').attr('title','Show password')
+        });
+    </script>
     @stack('js')
     @yield('js')
 @stop

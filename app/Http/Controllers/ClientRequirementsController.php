@@ -77,7 +77,8 @@ class ClientRequirementsController extends Controller
                 'message' => 'Requirements successfully added!',
                 'requirements' => $client->requirements,
 //                'requirements' => json_decode($client->requirements),
-                'title' => Template::findOrFail($client->template_id)->name
+                'title' => Template::findOrFail($client->template_id)->name,
+                'drive_link' => $client->drive_link
             ]);
         }
         return response($validation->errors(),403);

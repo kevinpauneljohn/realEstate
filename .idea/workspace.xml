@@ -34,7 +34,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="added a duplicate functionality for the requirements template">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vendor/adminlte/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/adminlte/login.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -482,14 +483,8 @@
       <workItem from="1614693029471" duration="12426000" />
       <workItem from="1614732473545" duration="623000" />
       <workItem from="1614783455386" duration="7656000" />
-      <workItem from="1614903758349" duration="23025000" />
-    </task>
-    <task id="LOCAL-00659" summary="dream home guide builder module">
-      <created>1611115426935</created>
-      <option name="number" value="00659" />
-      <option name="presentableId" value="LOCAL-00659" />
-      <option name="project" value="LOCAL" />
-      <updated>1611115426937</updated>
+      <workItem from="1614903758349" duration="23733000" />
+      <workItem from="1615027499923" duration="3468000" />
     </task>
     <task id="LOCAL-00660" summary="dream home guide builder module">
       <created>1611183488687</created>
@@ -827,7 +822,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614946062456</updated>
     </task>
-    <option name="localTasksCounter" value="708" />
+    <task id="LOCAL-00708" summary="added a duplicate functionality for the requirements template">
+      <created>1614957517038</created>
+      <option name="number" value="00708" />
+      <option name="presentableId" value="LOCAL-00708" />
+      <option name="project" value="LOCAL" />
+      <updated>1614957517038</updated>
+    </task>
+    <option name="localTasksCounter" value="709" />
     <servers />
   </component>
   <component name="TodoView">
