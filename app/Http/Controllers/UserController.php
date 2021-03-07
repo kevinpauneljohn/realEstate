@@ -70,6 +70,7 @@ class UserController extends Controller
                 ['name','!=','builder admin'],
                 ['name','!=','architect'],
                 ['name','!=','account manager'],
+                ['name','!=','team leader'],
             ])->get();
         }elseif (auth()->user()->hasRole('team leader')){
             $roles = Role::where([
