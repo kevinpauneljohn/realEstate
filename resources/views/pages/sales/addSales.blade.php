@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-lg-4 phase">
-                                        <label for="phase">Phase</label>
+                                        <label for="phase">Phase</label> <i class="text-muted">(optional)</i>
                                         <input type="text" name="phase" id="phase" class="form-control" />
                                     </div>
                                     <div class="form-group col-lg-4 block_number">
@@ -126,7 +126,13 @@
                                 </div>
                                 <div class="form-group dp_terms">
                                     <label for="dp_terms">Equity / Down Payment Terms</label>
-                                    <input type="text" name="dp_terms" id="dp_terms" class="form-control">
+{{--                                    <input type="text" name="dp_terms" id="dp_terms" class="form-control">--}}
+                                    <select name="dp_terms" id="dp_terms" class="form-control">
+                                        <option value=""> -- Select Terms -- </option>
+                                        @for($months = 1; $months <= 60; $months++)
+                                            <option value="{{$months}}"> {{$months}} month/s</option>
+                                        @endfor
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="details">Details</label>

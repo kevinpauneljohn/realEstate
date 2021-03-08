@@ -168,7 +168,8 @@ class SalesController extends Controller
                     event(new UserRankPointsEvent($this->accountManagement->checkIfUserIsAccountManager(), $points, $extra_points));
 
                     event(new UpdateLeadStatusEvent($sales->lead_id));
-                    return response()->json(['success' => true, 'message' => 'Sales successfully added!']);
+                    return response()->json(['success' => true, 'message' => 'Sales successfully added!',
+                        'view' => route('leads.show',$sales->lead_id)]);
                 }
             }
 

@@ -87,7 +87,7 @@ $(document).on('submit','#add-sales-form',function(form){
                 $('#model_unit').html('<option value=""></option>');
                 let item = '<div class="callout callout-success">' +
                     '<h5>Sales successfully added!</h5>' +
-                    '<p><a href="#">View Sales Details here</a></p></div>';
+                    '<p><a href="'+result.view+'">View Sales Details here</a></p></div>';
                 $('#example1_wrapper').prepend(item);
                 $('#add-sales-form').trigger('reset');
                 toastr.success(result.message);
