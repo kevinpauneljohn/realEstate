@@ -245,28 +245,33 @@ class SalesController extends Controller
                 {
                     $action .= '<button class="btn btn-xs btn-default view-sales-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-sales-details" title="View"><i class="fa fa-eye"></i></button>';
                 }
-                if(auth()->user()->can('edit sales'))
+                if((auth()->user()->hasRole(['online warrior']) && $sale->lead->online_warrior_id === auth()->user()->id)
+                    || auth()->user()->hasRole(['super admin','account manager','admin','team leader','referral','manager','agent']))
                 {
-                    $action .= '<button class="btn btn-xs btn-default edit-sales-btn" id="'.$sale->id.'" data-target="#edit-sales-modal" data-toggle="modal" title="Edit"><i class="fa fa-edit"></i></button>';
-                }
-                if(auth()->user()->can('delete sales'))
-                {
-                    $action .= '<button class="btn btn-xs btn-default delete-sale-btn" id="'.$sale->id.'" title="Delete"><i class="fa fa-trash"></i></button>';
-                }
+                    if(auth()->user()->can('edit sales'))
+                    {
+                        $action .= '<button class="btn btn-xs btn-default edit-sales-btn" id="'.$sale->id.'" data-target="#edit-sales-modal" data-toggle="modal" title="Edit"><i class="fa fa-edit"></i></button>';
+                    }
+                    if(auth()->user()->can('delete sales'))
+                    {
+                        $action .= '<button class="btn btn-xs btn-default delete-sale-btn" id="'.$sale->id.'" title="Delete"><i class="fa fa-trash"></i></button>';
+                    }
 //                if(auth()->user()->can('upload requirements'))
 //                {
 //                    $action .= '<a href="'.route('sales.upload.requirements',['sale' => $sale->id]).'" class="btn btn-xs btn-info" title="Upload Requirements"><i class="fas fa-file-upload"></i></a>';
 //                }
-                if(auth()->user()->can('edit sales'))
-                {
-                    $action .= '<a href="#" class="btn btn-xs btn-default update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';
-                }
-                if(auth()->user()->can('view request'))
-                {
-                    $action .= '<button class="btn btn-xs btn-default view-request-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-request" title="View all requests #"><i class="fa fa-ticket-alt"></i></button>';
+                    if(auth()->user()->can('edit sales'))
+                    {
+                        $action .= '<a href="#" class="btn btn-xs btn-default update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';
+                    }
+                    if(auth()->user()->can('view request'))
+                    {
+                        $action .= '<button class="btn btn-xs btn-default view-request-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-request" title="View all requests #"><i class="fa fa-ticket-alt"></i></button>';
+                    }
+
+                    $action .= '<a href="'.route('leads.show',['lead' => $sale->lead_id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$sale->id.'" title="Create Client Account"><i class="fa fa-user-alt"></i></a>';
                 }
 
-                $action .= '<a href="'.route('leads.show',['lead' => $sale->lead_id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$sale->id.'" title="Create Client Account"><i class="fa fa-user-alt"></i></a>';
                 return $action;
             })
             ->rawColumns(['action','status','request_status'])
