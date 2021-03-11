@@ -132,12 +132,14 @@
                                     <option value="Townhouse">Townhouse</option>
                                     <option value="Rowhouse">Rowhouse</option>
                                     <option value="Condominium">Condominium</option>
+                                    <option value="Lot">Lot</option>
                                 </select>
                             </div>
                             <div class="form-group floor_level">
                                 <label for="floor_level">Floor Level</label><span class="required">*</span>
                                 <select class="form-control" name="floor_level" id="floor_level">
                                     <option value=""> -- Select -- </option>
+                                    <option value="Lot">Lot</option>
                                     <option value="Bungalow">Bungalow</option>
                                     <option value="Two-storey">Two-storey</option>
                                     <option value="Three-storey">Three-storey</option>
@@ -149,13 +151,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group lot_area">
                                         <label for="lot_area">Lot Area</label><span class="required">*</span>
-                                        <input type="number" name="lot_area" class="form-control" id="lot_area" step="0.1">
+                                        <input type="number" name="lot_area" class="form-control" id="lot_area" step="any">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group floor_area">
                                         <label for="floor_area">Floor Area</label><span class="required">*</span>
-                                        <input type="number" name="floor_area" class="form-control" id="floor_area" step="0.1">
+                                        <input type="number" name="floor_area" class="form-control" id="floor_area" step="any">
                                     </div>
                                 </div>
                             </div>

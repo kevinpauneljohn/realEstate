@@ -90,6 +90,7 @@
                                         <label for="house_type">House Type</label><span class="required">*</span>
                                         <select name="house_type" id="house_type" class="form-control select2" style="width: 100%;">
                                             <option value=""> -- Select -- </option>
+                                            <option value="Lot">Lot</option>
                                             <option value="Single-attached">Single-attached</option>
                                             <option value="Single-detached">Single-detached</option>
                                             <option value="Bungalow">Bungalow</option>
