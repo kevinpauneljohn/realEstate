@@ -1100,7 +1100,7 @@
                             $(document).find('#view-requirements form').attr('id','requirements-form');
                             $('#view-requirements').find('.modal-body').html(`<div class="form-group template">
                             <label for="template">Add Template</label>
-                            <select class="form-control" name="template" id="template">
+                            <select class="form-control select2" name="template" id="template">
                                 <option value=""> -- Select -- </option>
                             </select>
                         </div>`);
