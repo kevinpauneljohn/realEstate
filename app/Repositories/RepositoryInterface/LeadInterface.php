@@ -26,4 +26,11 @@ interface LeadInterface
      */
     public function assignLeadsToWarrior($lead_id, $warrior_id);
 
+    /**
+     * @param $leads
+     * @param array $rawColumns
+     * @return mixed
+     */
+    public function leadsTable($leads, array $rawColumns);
+
 }

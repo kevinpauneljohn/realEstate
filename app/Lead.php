@@ -86,7 +86,7 @@ class Lead extends Model
 
     public function warrior(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(User::class,'online_warrior_id');
+        return $this->hasOne(User::class,'id','online_warrior_id');
     }
 
 

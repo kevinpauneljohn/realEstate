@@ -298,7 +298,7 @@ return [
                 ],
                 [
                     'text' => 'Assigned To Me',
-                    'route'  => 'leads.create',
+                    'route'  => 'assigned.leads.mine',
                     'icon_color'  => 'red',
                     'can'  => 'view assigned lead',
                 ],

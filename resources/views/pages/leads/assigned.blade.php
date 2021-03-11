@@ -1,16 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Leads')
+@section('title', 'Assigned Leads')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Leads</h1>
+            <h1 class="m-0 text-dark">Assigned To Me</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Leads</li>
+                <li class="breadcrumb-item"><a href="{{route('leads.index')}}">Lead</a></li>
+                <li class="breadcrumb-item active">Assigned To Me</li>
             </ol>
         </div><!-- /.col -->
     </div>
@@ -246,24 +247,24 @@
                             <div class="form-group status">
                                 <label for="status">Status</label><span class="required">*</span>
                                 <select class="change-status form-control" name="status" id="status">
-                                @php
-                                $status = array('Hot','Warm','Cold','Qualified','Not qualified','For tripping','For reservation','Inquiry Only','Not Interested Anymore');
-                                $data = '';
+                                    @php
+                                        $status = array('Hot','Warm','Cold','Qualified','Not qualified','For tripping','For reservation','Inquiry Only','Not Interested Anymore');
+                                        $data = '';
 
-                                    foreach ($status as $stats)
-                                    {
+                                            foreach ($status as $stats)
+                                            {
 
-                                    if($stats === 'Hot' || $stats === 'Warm' || $stats === 'Cold')
-                                    {
-                                    $disabled = "disabled";
-                                    }else{
-                                    $disabled = "";
-                                    }
+                                            if($stats === 'Hot' || $stats === 'Warm' || $stats === 'Cold')
+                                            {
+                                            $disabled = "disabled";
+                                            }else{
+                                            $disabled = "";
+                                            }
 
-                                    $data.= '<option value="'.$stats.'" '.$disabled.'>'.$stats.'</option>';
-                                    }
-                                echo $data;
-                                @endphp
+                                            $data.= '<option value="'.$stats.'" '.$disabled.'>'.$stats.'</option>';
+                                            }
+                                        echo $data;
+                                    @endphp
                                 </select>
                             </div>
                             <div class="form-group notes">
@@ -295,15 +296,15 @@
     <link rel="stylesheet" href="{{asset('vendor/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
-{{--    <style type="text/css">--}}
-{{--        table{--}}
-{{--            table-layout:fixed!important;--}}
-{{--        }--}}
-{{--        table td{--}}
-{{--            word-wrap: break-word;--}}
-{{--        }--}}
+    {{--    <style type="text/css">--}}
+    {{--        table{--}}
+    {{--            table-layout:fixed!important;--}}
+    {{--        }--}}
+    {{--        table td{--}}
+    {{--            word-wrap: break-word;--}}
+    {{--        }--}}
 
-{{--    </style>--}}
+    {{--    </style>--}}
 @stop
 
 @section('js')
@@ -318,7 +319,7 @@
                 $('#leads-list').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('leads.list') !!}',
+                    ajax: '{!! route('assigned.leads.list') !!}',
                     columns: [
                         { data: 'date_inquired', name: 'date_inquired'},
                         { data: 'fullname', name: 'fullname'},
@@ -328,7 +329,7 @@
                         { data: 'important', name: 'important'},
                         { data: 'lead_status', name: 'lead_status'},
                         { data: 'last_contacted', name: 'last_contacted'},
-                        @if(auth()->user()->hasRole(['super admin','admin','account manager','online warrior'])) { data: 'assigned_to', name: 'assigned_to'}, @endif
+                            @if(auth()->user()->hasRole(['super admin','admin','account manager','online warrior'])) { data: 'assigned_to', name: 'assigned_to'}, @endif
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
@@ -378,40 +379,40 @@
                 let warrior = this.value;
                 let id = this.id;
 
-                    Swal.fire({
-                        title: 'Assign Leads to '+$(this).children("option").filter(":selected").text(),
-                        text: "You won't be able to revert this!",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Assign it!'
-                    }).then((result) => {
-                        if (result.value) {
+                Swal.fire({
+                    title: 'Assign Leads to '+$(this).children("option").filter(":selected").text(),
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Assign it!'
+                }).then((result) => {
+                    if (result.value) {
 
-                            $.ajax({
-                                'url': '/assign-leads',
-                                'type' : 'POST',
-                                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                                'data' : {'id' : id, 'online_warrior_id' : warrior},
-                                beforeSend: function(){
+                        $.ajax({
+                            'url': '/assign-leads',
+                            'type' : 'POST',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            'data' : {'id' : id, 'online_warrior_id' : warrior},
+                            beforeSend: function(){
 
-                                },success: function(output){
-                                    if(output.success === true){
-                                        customMessage('success',output.message);
-                                    }else{
-                                        toastr.error(output.message);
-                                    }
-                                },error: function(xhr, status, error){
-                                    console.log(xhr);
+                            },success: function(output){
+                                if(output.success === true){
+                                    customMessage('success',output.message);
+                                }else{
+                                    toastr.error(output.message);
                                 }
-                            });
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
 
-                        }else{
-                            let table = $('#leads-list').DataTable();
-                            table.ajax.reload();
-                        }
-                    });
+                    }else{
+                        let table = $('#leads-list').DataTable();
+                        table.ajax.reload();
+                    }
+                });
 
 
             })

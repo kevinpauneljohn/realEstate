@@ -70,82 +70,13 @@ class LeadController extends Controller
     public function lead_list()
     {
         $leads = Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get();
-        return DataTables::of($leads)
-            ->editColumn('date_inquired',function($lead){
-                ///
-                return $lead->date_inquired->format('M d, Y');
-            })
-            ->addColumn('last_contacted',function($lead){
-                if($lead->LogTouches->count() > 0){
-                    return $lead->LogTouches->pluck('date')->last()->diffForHumans();
-                }
-            })
-            ->addColumn('fullname',function($lead){
-                $lead = '<a href="'.route("leads.show",["lead" => $lead->id]).'">'.$lead->fullname.'</a>';
-                return $lead;
-            })
-            ->editColumn('mobileNo',function($lead){
-                return '<a href="tel:'.$lead->mobileNo.'">'.$lead->mobileNo.'</a>';
-            })
-            ->editColumn('email',function($lead){
-                return '<a href="mailto:'.$lead->email.'">'.$lead->email.'</a>';
-            })
-            ->editColumn('important',function($lead){
-                if($lead->important === 1)
-                {
-                    return '<div align="center"><img src="'.asset('/images/filled-star.svg').'" class="star" height="25"></div>';
-                }
-                return "";
-            })
-            ->editColumn('lead_status', function($lead){
-                return $this->leadRepository->setStatusBadge($lead->lead_status);
-            })
-            ->editColumn('assigned_to', function($lead){
+        return $this->leads->leadsTable($leads,['action','lead_status','fullname','important','email','mobileNo','assigned_to']);
+    }
 
-                if(auth()->user()->hasRole(['admin','account manager','super admin']))
-                {
-                    $action = '<select class="form-control select2 assigned_to" id="'.$lead->id.'">';
-                    $action .= '<option value=""></option>';
-                    foreach (User::whereHas("roles",function($role){$role->where("name","online warrior");})->get() as $warrior){
-                        $selected = $lead->online_warrior_id === $warrior->id? "selected" :"";
-                        $action .= '<option value="'.$warrior->id.'" '.$selected.'>'.$warrior->username.'</option>';
-                    }
-                    $action .= '</select>';
-                    return $action;
-                }
-                return $lead->online_warrior_id;
-
-            })
-            ->addColumn('action', function ($lead)
-            {
-                $action = "";
-                if(auth()->user()->can('view lead'))
-                {
-                    $action .= '<button class="btn btn-xs btn-info view-details" id="'.$lead->id.'" data-toggle="modal" data-target="#lead-details" title="View Details"><i class="fa fa-info-circle"></i> </button>';
-                }
-                if(auth()->user()->can('view lead'))
-                {
-                    $action .= '<a href="'.route("leads.show",["lead" => $lead->id]).'" class="btn btn-xs btn-success view-btn" id="'.$lead->id.'" title="Manage Leads"><i class="fas fa-folder-open"></i></a>';
-                }
-                if(auth()->user()->can('edit lead'))
-                {
-                    $action .= '<a href="'.route("leads.edit",["lead" => $lead->id]).'" class="btn btn-xs btn-primary view-btn" id="'.$lead->id.'" title="Edit Leads"><i class="fa fa-edit"></i></a>';
-                }
-                if(auth()->user()->can('delete lead') && $lead->sales()->count() < 1)
-                {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-lead-btn" id="'.$lead->id.'" title="Delete Leads"><i class="fa fa-trash"></i></a>';
-                }
-                if(auth()->user()->can('edit lead'))
-                {
-                    if($lead->lead_status !== 'Reserved')
-                    {
-                        $action .= '<button class="btn btn-xs bg-yellow set-status" id="'.$lead->id.'" title="Change Status" data-toggle="modal" data-target="#set-status"><i class="fa fa-thermometer-three-quarters"></i></button>';
-                    }
-                }
-                return $action;
-            })
-            ->rawColumns(['action','lead_status','fullname','important','email','mobileNo','assigned_to'])
-            ->make(true);
+    public function assignedLeadList()
+    {
+        $leads = Lead::where('online_warrior_id',auth()->user()->id)->get();
+        return $this->leads->leadsTable($leads,['action','lead_status','fullname','important','email','mobileNo','assigned_to']);
     }
 
     public function downLine_lead_list($user)
@@ -167,10 +98,9 @@ class LeadController extends Controller
             ->make(true);
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -180,10 +110,8 @@ class LeadController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
@@ -217,6 +145,10 @@ class LeadController extends Controller
 
         if($lead->save())
         {
+            //if the user who added new leads is an online warrior it will be automatically assigned to him
+            if(auth()->user()->hasRole('online warrior')){
+                $this->leads->assignLeadsToWarrior($lead->id, auth()->user()->id);
+            }
             return redirect(route('leads.edit',['lead'  => $lead->id]))->with(['success' => true,'message' => 'Leads Successfully Added!']);
         }
         return back()->withErrors()->withInput();
@@ -518,5 +450,20 @@ class LeadController extends Controller
             return response(['success' => true, 'message' => 'Successfully assigned leads!']);
         }
         return response(['success' => false, 'message' => 'An error occurred!']);
+    }
+
+    public function assignedPage()
+    {
+        return view('pages.leads.assigned')->with([
+                'total_hot_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Hot']])->count(),
+                'total_warm_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Warm']])->count(),
+                'total_cold_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Cold']])->count(),
+                'total_qualified_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Qualified']])->count(),
+                'total_for_tripping_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','For tripping']])->count(),
+                'total_inquiry_only_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Inquiry Only']])->count(),
+                'total_not_interested_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Not Interested Anymore']])->count(),
+                'total_reserved_leads' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','Reserved']])->count(),
+                'total_for_reservation' => Lead::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['lead_status','=','For reservation']])->count(),
+            ]);
     }
 }

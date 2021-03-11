@@ -67,23 +67,25 @@ Route::delete('/users/{user}','UserController@destroy')->name('users.destroy')->
 Route::get('/users/downline/{upline}','UserController@downLines')->name('users.down.lines')->middleware(['auth','permission:view down lines']);
 
 /*leads*/
+Route::get('/assigned-to-me',[\App\Http\Controllers\LeadController::class,'assignedPage'])->name('assigned.leads.mine')->middleware(['auth','permission:view assigned lead']);
 Route::post('/assign-leads',[\App\Http\Controllers\LeadController::class,'assignTo'])->name('assign.leads')->middleware(['auth','permission:assign leads']);
 Route::get('/leads','LeadController@index')->name('leads.index')->middleware(['auth','permission:view lead']);
 Route::get('/leads-list','LeadController@lead_list')->name('leads.list')->middleware(['auth','permission:view lead']);
+Route::get('/assigned-leads-list','LeadController@assignedLeadList')->name('assigned.leads.list')->middleware(['auth','permission:view lead|view assigned lead']);
 Route::get('/leads-list/{user}','LeadController@downLine_lead_list')->name('user.leads.list')->middleware(['auth','permission:view down line leads']);
 Route::get('/leads/create','LeadController@create')->name('leads.create')->middleware(['auth','permission:add lead']);
 Route::post('/leads/save','LeadController@store')->name('leads.store')->middleware(['auth','permission:add lead']);
-Route::get('/leads/{lead}','LeadController@show')->name('leads.show')->middleware(['auth','permission:view lead']);
-Route::get('/leads/{lead}/edit','LeadController@edit')->name('leads.edit')->middleware(['auth','permission:edit lead']);
-Route::put('/leads/{lead}','LeadController@update')->name('leads.update')->middleware(['auth','permission:edit lead']);
-Route::delete('/leads/{lead}','LeadController@destroy')->name('leads.destroy')->middleware(['auth','permission:delete lead']);
+Route::get('/leads/{lead}','LeadController@show')->name('leads.show')->middleware(['auth','permission:view lead','onlyAssignedLeads']);
+Route::get('/leads/{lead}/edit','LeadController@edit')->name('leads.edit')->middleware(['auth','permission:edit lead','onlyAssignedLeads']);
+Route::put('/leads/{lead}','LeadController@update')->name('leads.update')->middleware(['auth','permission:edit lead','onlyAssignedLeads']);
+Route::delete('/leads/{lead}','LeadController@destroy')->name('leads.destroy')->middleware(['auth','permission:delete lead','onlyAssignedLeads']);
 Route::post('/leads/get','LeadController@getLeads')->name('leads.get')->middleware(['auth','permission:view lead']);
 Route::post('/leads/status','LeadController@getLeadStatus')->name('leads.status')->middleware('auth','permission:view lead');
 Route::post('/leads/mark','LeadController@markAsImportant')->name('leads.important')->middleware('auth','permission:view lead');
 Route::post('/leads/status/update','LeadController@updateLeadStatus')->name('leads.status.update')->middleware('auth','permission:edit lead');
 Route::get('/lead/general/update','LeadController@generalLeadStatusUpdate')->name('lead.status.general.update');
-Route::get('/reserved/{lead_id}',[\App\Http\Controllers\LeadController::class,'reserved'])->name('lead.reserved.units')->middleware(['auth','permission:view sales']);
-Route::get('/reserved-units/{lead_id}',[\App\Http\Controllers\LeadController::class,'reservedUnits'])->name('reserved.units')->middleware(['auth','permission:view sales']);
+Route::get('/reserved/{lead_id}',[\App\Http\Controllers\LeadController::class,'reserved'])->name('lead.reserved.units')->middleware(['auth','permission:view sales','onlyAssignedLeads']);
+Route::get('/reserved-units/{lead_id}',[\App\Http\Controllers\LeadController::class,'reservedUnits'])->name('reserved.units')->middleware(['auth','permission:view sales','onlyAssignedLeads']);
 
 /*Log touches*/
 Route::post('/logs','LogTouchController@store')->name('logs.store')->middleware('auth','permission:edit lead');
