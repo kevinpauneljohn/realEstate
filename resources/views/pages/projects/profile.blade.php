@@ -214,12 +214,14 @@
                                     <option value="Townhouse">Townhouse</option>
                                     <option value="Rowhouse">Rowhouse</option>
                                     <option value="Condominium">Condominium</option>
+                                    <option value="Lot">Lot</option>
                                 </select>
                             </div>
                             <div class="form-group edit_floor_level">
                                 <label for="edit_floor_level">Floor Level</label><span class="required">*</span>
                                 <select class="form-control" name="edit_floor_level" id="edit_floor_level">
                                     <option value=""> -- Select -- </option>
+                                    <option value="Lot">Lot</option>
                                     <option value="Bungalow">Bungalow</option>
                                     <option value="Two-storey">Two-storey</option>
                                     <option value="Three-storey">Three-storey</option>
