@@ -367,14 +367,13 @@ class SalesController extends Controller
         return $merge->all();
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'edit_reservation_date'  => 'required',
@@ -502,10 +501,10 @@ class SalesController extends Controller
                             'sales',$request->updateSalesId,'pending',$priority);
 
                         return response()->json(['success' => true, 'message' => 'Request for update sent<br/>Please wait for the admin approvel']);
-                    }else{
-                        //update directly to sales table without saving the request to the threshold
-                        $sale = $this->salesRepository->updateSales($request, $id);
                     }
+
+                        //update directly to sales table without saving the request to the threshold
+                    $sale = $this->salesRepository->updateSales($request, $id);
 
                 }else{
                     return response()->json(['success' => false, 'message' => 'No Changes Occurred!']);

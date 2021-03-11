@@ -296,6 +296,12 @@ return [
                     'icon_color'  => 'red',
                     'can'  => 'view lead',
                 ],
+                [
+                    'text' => 'Assigned To Me',
+                    'route'  => 'leads.create',
+                    'icon_color'  => 'red',
+                    'can'  => 'view assigned lead',
+                ],
             ],
         ],
         [

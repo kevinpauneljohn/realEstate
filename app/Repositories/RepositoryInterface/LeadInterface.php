@@ -18,4 +18,12 @@ interface LeadInterface
      */
     public function viewById($lead_id);
 
+    /**
+     * assign leads to warrior
+     * @param $lead_id
+     * @param $warrior_id
+     * @return mixed
+     */
+    public function assignLeadsToWarrior($lead_id, $warrior_id);
+
 }

@@ -207,4 +207,9 @@ class User extends Authenticatable
     {
         return $this->hasOneThrough(Lead::class, DhsClient::class);
     }
+
+    public function lead(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Lead::class,'online_warrior_id');
+    }
 }

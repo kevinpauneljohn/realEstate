@@ -23,7 +23,7 @@ class Lead extends Model
         'status',
         'income_range',
         'point_of_contact',
-        'remarks','lead_status'
+        'remarks','lead_status','online_warrior_id'
     ];
 
     protected static $logAttributes = [
@@ -39,7 +39,7 @@ class Lead extends Model
         'income_range',
         'point_of_contact',
         'remarks',
-        'lead_status'
+        'lead_status','online_warrior_id'
     ];
 
     protected $dates = [
@@ -79,9 +79,15 @@ class Lead extends Model
         return "{$firstname} {$middlename} {$lastname}";
     }
 
-    public function websiteLinks()
+    public function websiteLinks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(WebsiteLink::class);
     }
+
+    public function warrior(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(User::class,'online_warrior_id');
+    }
+
 
 }

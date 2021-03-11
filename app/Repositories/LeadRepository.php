@@ -9,25 +9,27 @@ use App\User;
 
 class LeadRepository
 {
+
     /**
      * @since May 04, 2020
      * @author john kevin paunel
-     * @param string $leadId
-     * @return object
-     * */
+     * @param $leadId
+     * @return mixed
+     */
     public function getLeadById($leadId)
     {
         return Lead::findOrFail($leadId);
     }
 
+
     /**
      * @since May 05, 2020
      * @author john kevin paunel
      * transform the user_id to user fullname and lead id to lead fullname
-     * @param string $leadId
-     * @return object
-     * */
-    public function getTransformedLeadById($leadId)
+     * @param $leadId
+     * @return array
+     */
+    public function getTransformedLeadById($leadId): array
     {
         $collection = collect($this->getLeadById($leadId));
 
@@ -47,14 +49,15 @@ class LeadRepository
         return $collection->all();
     }
 
+
     /**
      * @since May 05, 2020
      * @author john kevin paunel
      * update the lead status
-     * @param string $id
-     * @param string $status
+     * @param $id
+     * @param $status
      * @return array
-     * */
+     */
     public function updateStatus($id, $status)
     {
         $lead = Lead::findOrFail($id);
@@ -105,14 +108,15 @@ class LeadRepository
         return $icon;
     }
 
+
     /**
      * @since May 11, 2020
      * @author john kevin paunel
      * set the timeline icon label
-     * @param string $action
+     * @param $action
      * @return string
-     * */
-    public function getDateClassLabel($action)
+     */
+    public function getDateClassLabel($action): string
     {
         $icon = "";
         if($action === 'Phone Call')
@@ -149,7 +153,7 @@ class LeadRepository
      * @param string $status
      * @return string
      * */
-    public function setStatusBadge($status)
+    public function setStatusBadge($status): string
     {
         $badge = "";
         if($status === 'Hot')
@@ -194,6 +198,5 @@ class LeadRepository
         }
         return $badge;
     }
-
 
 }

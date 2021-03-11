@@ -23,6 +23,7 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'builder admin']);
         Role::create(['name' => 'builder member']);
         Role::create(['name' => 'account manager']);
+        Role::create(['name' => 'online warrior']);
 
         Permission::create(['name' => 'add role']);
         Permission::create(['name' => 'view role']);
@@ -153,5 +154,8 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view builder member']);
         Permission::create(['name' => 'edit builder member']);
         Permission::create(['name' => 'delete builder member']);
+
+        Permission::create(['name' => 'view assigned lead'])->syncRoles(['online warrior','account manager','admin']);
+        Permission::create(['name' => 'assign leads'])->syncRoles(['account manager','admin']);
     }
 }

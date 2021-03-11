@@ -19,4 +19,11 @@ class Leads implements LeadInterface
         return Lead::findOrFail($lead_id);
     }
 
+    public function assignLeadsToWarrior($lead_id, $warrior_id)
+    {
+        $lead = Lead::find($lead_id);
+        $lead->online_warrior_id = !empty($warrior_id) ? $warrior_id : null;
+        return $lead->save();
+    }
+
 }

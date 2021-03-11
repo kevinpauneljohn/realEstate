@@ -144,6 +144,9 @@
                         <th>Important</th>
                         <th>Lead Status</th>
                         <th>Last Contacted</th>
+                        @if(auth()->user()->hasRole(['super admin','admin','account manager','online warrior']))
+                            <th>Assigned To</th>
+                        @endif
                         <th width="13%">Action</th>
                     </tr>
                     </thead>
@@ -158,6 +161,9 @@
                         <th>Important</th>
                         <th>Lead Status</th>
                         <th>Last Contacted</th>
+                        @if(auth()->user()->hasRole(['super admin','admin','account manager','online warrior']))
+                            <th>Assigned To</th>
+                        @endif
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -322,6 +328,7 @@
                         { data: 'important', name: 'important'},
                         { data: 'lead_status', name: 'lead_status'},
                         { data: 'last_contacted', name: 'last_contacted'},
+                        @if(auth()->user()->hasRole(['super admin','admin','account manager','online warrior'])) { data: 'assigned_to', name: 'assigned_to'}, @endif
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
@@ -340,6 +347,80 @@
                 }
             })
 
+
+
         </script>
     @endcan
+
+    @if(auth()->user()->hasRole(['admin','account manager','super admin']))
+        <script>
+            function customMessage(icon, message)
+            {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: icon,
+                    title: message
+                })
+            }
+
+            $(document).on('change','.assigned_to',function(){
+                let warrior = this.value;
+                let id = this.id;
+
+                if(warrior !== "")
+                {
+                    Swal.fire({
+                        title: 'Assign Leads to '+$(this).children("option").filter(":selected").text(),
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, Assign it!'
+                    }).then((result) => {
+                        if (result.value) {
+
+                            $.ajax({
+                                'url': '/assign-leads',
+                                'type' : 'POST',
+                                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                'data' : {'id' : id, 'online_warrior_id' : warrior},
+                                beforeSend: function(){
+
+                                },success: function(output){
+                                    if(output.success === true){
+                                        customMessage('success',output.message);
+                                    }else{
+                                        toastr.error(output.message);
+                                    }
+                                },error: function(xhr, status, error){
+                                    console.log(xhr);
+                                }
+                            });
+
+                        }else{
+                            let table = $('#leads-list').DataTable();
+                            table.ajax.reload();
+                        }
+                    });
+                }else{
+                    let table = $('#leads-list').DataTable();
+                    table.ajax.reload();
+                }
+
+
+            })
+        </script>
+    @endif
 @stop

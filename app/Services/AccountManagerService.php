@@ -23,7 +23,7 @@ class AccountManagerService
      */
     public function checkIfUserIsAccountManager(): ?\Illuminate\Contracts\Auth\Authenticatable
     {
-        if(auth()->user()->hasRole('account manager'))
+        if(auth()->user()->hasRole(['account manager','online warrior']))
         {
             return $this->superAdmin;
         }

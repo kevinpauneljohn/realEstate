@@ -67,6 +67,7 @@ Route::delete('/users/{user}','UserController@destroy')->name('users.destroy')->
 Route::get('/users/downline/{upline}','UserController@downLines')->name('users.down.lines')->middleware(['auth','permission:view down lines']);
 
 /*leads*/
+Route::post('/assign-leads',[\App\Http\Controllers\LeadController::class,'assignTo'])->name('assign.leads')->middleware(['auth','permission:assign leads']);
 Route::get('/leads','LeadController@index')->name('leads.index')->middleware(['auth','permission:view lead']);
 Route::get('/leads-list','LeadController@lead_list')->name('leads.list')->middleware(['auth','permission:view lead']);
 Route::get('/leads-list/{user}','LeadController@downLine_lead_list')->name('user.leads.list')->middleware(['auth','permission:view down line leads']);

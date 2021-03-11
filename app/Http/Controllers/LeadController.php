@@ -100,6 +100,22 @@ class LeadController extends Controller
             ->editColumn('lead_status', function($lead){
                 return $this->leadRepository->setStatusBadge($lead->lead_status);
             })
+            ->editColumn('assigned_to', function($lead){
+
+                if(auth()->user()->hasRole(['admin','account manager','super admin']))
+                {
+                    $action = '<select class="form-control select2 assigned_to" id="'.$lead->id.'">';
+                    $action .= '<option value=""></option>';
+                    foreach (User::whereHas("roles",function($role){$role->where("name","online warrior");})->get() as $warrior){
+                        $selected = $lead->online_warrior_id === $warrior->id? "selected" :"";
+                        $action .= '<option value="'.$warrior->id.'" '.$selected.'>'.$warrior->username.'</option>';
+                    }
+                    $action .= '</select>';
+                    return $action;
+                }
+                return $lead->online_warrior_id;
+
+            })
             ->addColumn('action', function ($lead)
             {
                 $action = "";
@@ -128,7 +144,7 @@ class LeadController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action','lead_status','fullname','important','email','mobileNo'])
+            ->rawColumns(['action','lead_status','fullname','important','email','mobileNo','assigned_to'])
             ->make(true);
     }
 
@@ -493,5 +509,14 @@ class LeadController extends Controller
     public function reservedUnits($id)
     {
         return $this->sales->viewById($id);
+    }
+
+    public function assignTo(Request $request)
+    {
+        if($this->leads->assignLeadsToWarrior($request->input('id'),$request->input('online_warrior_id')))
+        {
+            return response(['success' => true, 'message' => 'Successfully assigned leads!']);
+        }
+        return response(['success' => false, 'message' => 'An error occurred!']);
     }
 }
