@@ -102,7 +102,7 @@
                                         <select name="priority" class="form-control select2" id="priority" style="width: 100%">
                                             <option value=""></option>
                                             @foreach($priorities as $priority)
-                                                <option value="{{$priority->id}}">{{$priority->name}} - {{$priority->days}} day/s</option>
+                                                <option value="{{$priority->id}}">{{$priority->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

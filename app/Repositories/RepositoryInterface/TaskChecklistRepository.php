@@ -4,6 +4,7 @@
 namespace App\Repositories\RepositoryInterface;
 
 
+use App\Task;
 use App\TaskChecklist;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -22,11 +23,15 @@ class TaskChecklistRepository implements TaskChecklistInterface
             ->addColumn('action',function($checklist){
                 $action = "";
                 $checked = $checklist->status === "completed" ? "checked":"";
-                if(auth()->user()->can('view checklist'))
+                if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($checklist->task->assigned_to === auth()->user()->id && auth()->user()->can('view checklist')))
                 {
                     $action .= '<input type="checkbox" class="form-control check-list-box" value="'.$checklist->id.'" '.$checked.'>';
+                }else{
+                    $action .= '<input type="checkbox" class="form-control" value="'.$checklist->id.'" '.$checked.' disabled>';
                 }
                 return $action;
+//                return auth()->user()->task;
+//                return $checklist->task;
             })
             ->rawColumns(['action'])
             ->make(true);

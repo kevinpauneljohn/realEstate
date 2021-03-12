@@ -215,7 +215,7 @@ class User extends Authenticatable
 
     public function task()
     {
-        return $this->belongsTo(Task::class,'assigned_to');
+        return $this->belongsTo(Task::class,'id','assigned_to');
     }
     public function taskCreated()
     {

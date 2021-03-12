@@ -26,4 +26,9 @@ class Task extends Model
     {
         return $this->belongsTo(Priority::class);
     }
+
+    public function checklists()
+    {
+        return $this->hasMany(TaskChecklist::class);
+    }
 }

@@ -32,8 +32,9 @@
                                 <p>{{ucfirst($task->description)}}</p>
                             </div>
                             <div class="post">
-                                <button type="button" class="btn btn-default btn-xs create-checklist mb-md-2" data-toggle="modal" data-target="#checklist">Create Checklist</button>
-
+                                @if((auth()->user()->hasRole(['super admin','admin','account manager'])) && auth()->user()->can('view checklist'))
+                                    <button type="button" class="btn btn-default btn-xs create-checklist mb-md-2" data-toggle="modal" data-target="#checklist">Create Checklist</button>
+                                @endif
                                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
                                     <table id="check-list" class="table table-bordered table-hover" role="grid">
@@ -81,7 +82,7 @@
                                 @endforeach
                             </select>
                         @else
-                            {{$task->user->fullname}}
+                            {{$task->user->fullname ?? ''}}
                         @endif
 
                     </p>
@@ -220,26 +221,28 @@
                 }
             });
         });
+        @if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($task->assigned_to === auth()->user()->id && auth()->user()->can('view checklist')))
+            $(document).on('click','.check-list-box',function(){
+                let value = this.value;
 
-        $(document).on('click','.check-list-box',function(){
-            let value = this.value;
-
-            $.ajax({
-                'url' : '/task-checklist/'+value,
-                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                'type' : 'PUT',
-                beforeSend: function(){
-                    $('#check-list').find('input').attr('disabled',true);
-                },success: function (response){
-                    if(response.success === true)
-                    {
-                        customAlert('success',response.message);
+                $.ajax({
+                    'url' : '/task-checklist/'+value,
+                    'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    'type' : 'PUT',
+                    beforeSend: function(){
+                        $('#check-list').find('input').attr('disabled',true);
+                    },success: function (response){
+                        if(response.success === true)
+                        {
+                            customAlert('success',response.message);
+                        }
+                        $('#check-list').find('input').attr('disabled',false);
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
                     }
-                    $('#check-list').find('input').attr('disabled',false);
-                },error: function(xhr, status, error){
-                    console.log(xhr);
-                }
+                });
             });
-        });
+        @endif
+
     </script>
 @stop
