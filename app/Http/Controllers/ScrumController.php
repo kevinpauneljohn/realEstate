@@ -41,7 +41,7 @@ class ScrumController extends Controller
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $validation = Validator::make($request->all(),[
-            'title'         => 'required',
+            'title'         => 'required|max:300',
             'description'   => 'required|max:10000',
             'due_date'   => 'required|date',
             'priority'   => 'required',

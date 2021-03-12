@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group description">
                                 <label for="description">Description</label><span class="required">*</span>
-                                <textarea class="form-control" id="description" name="description"></textarea>
+                                <textarea class="form-control" id="description" name="description" style="min-height:300px;"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
