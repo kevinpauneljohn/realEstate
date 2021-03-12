@@ -26,4 +26,11 @@ interface TaskInterface
      * @return mixed
      */
     public function getTask($task_id);
+
+    /**
+     * @param $assignee_id
+     * @param $task_id
+     * @return mixed
+     */
+    public function setAssignee($assignee_id, $task_id);
 }

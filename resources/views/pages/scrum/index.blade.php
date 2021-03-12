@@ -75,12 +75,18 @@
 
                     <p class="text-muted">
                         @if(auth()->user()->id === $task->created_by || auth()->user()->hasRole(['super admin','admin','account manager']))
-                            <select class="form-control select" id="assigned_to">
-                                <option value=""></option>
-                                @foreach($agents as $agent)
-                                    <option value="{{$agent->id}}" @if($agent->fullname === $task->user->fullname) selected @endif>{{$agent->fullname}}</option>
-                                @endforeach
-                            </select>
+                            <form id="update-assignee">
+                                @csrf
+                                @method('put')
+                                <input type="hidden" name="task_id" value="{{$task->id}}">
+                                <select class="form-control select" id="assigned_to" name="assigned_id">
+                                    <option value=""></option>
+                                    @foreach($agents as $agent)
+                                        <option value="{{$agent->id}}" @if(!empty($task->user->fullname) && $agent->fullname === $task->user->fullname) selected @endif>{{$agent->fullname}}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-xs" style="width: 100%">update</button>
+                            </form>
                         @else
                             {{$task->user->fullname ?? ''}}
                         @endif
@@ -159,6 +165,30 @@
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
     <script>
+
+        $(document).on('submit','#update-assignee',function(form){
+            form.preventDefault();
+            let data = $(this).serializeArray();
+            $.ajax({
+                'url' : '{{route('tasks.update.agent')}}',
+                'type' : 'PUT',
+                'data' : data,
+                beforeSend: function(){
+                    $('#update-assignee').find('select, button').attr('disabled',true);
+                    $('#update-assignee').find('button').text('updating ...');
+                },success: function(response){
+                    console.log(response);
+                    if(response.success === true)
+                    {
+                        $('#update-assignee').find('select, button').attr('disabled',false);
+                        $('#update-assignee').find('button').text('update');
+                        customAlert('success',response.message);
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+        })
 
         $(function() {
             $('#check-list').DataTable({

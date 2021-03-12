@@ -20,6 +20,7 @@ $(document).on('submit','#task-form',function(form){
                 toastr.success(result.message);
 
                 $('#add-task-modal').modal('toggle');
+                $('#assign_to, #priority').val([]).trigger('change');
             }
 
             $.each(result, function (key, value) {

@@ -32,5 +32,10 @@ interface TaskChecklistInterface
      */
     public function getChecklist($checklist_id);
 
+    /**
+     * @param $checklist_id
+     * @return mixed
+     */
     public function update($checklist_id);
+
 }

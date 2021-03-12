@@ -27,4 +27,11 @@ class TaskRepository implements TaskInterface
     {
         return Task::findOrFail($task_id);
     }
+
+    public function setAssignee($assignee_id, $task_id)
+    {
+        $task = $this->getTask($task_id);
+        $task->assigned_to = $assignee_id;
+        return $task->save();
+    }
 }

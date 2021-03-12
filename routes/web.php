@@ -286,6 +286,7 @@ Route::get('/contest','ContestController@index')->name('contest.index')->middlew
 Route::get('/contest-list','ContestController@contest_list')->name('contest.list')->middleware(['auth','permission:view contest']);
 Route::post('/contest','ContestController@store')->name('contest.index')->middleware(['auth','permission:add contest']);
 
+Route::put('/tasks/agent','ScrumController@updateAgent')->name('tasks.update.agent')->middleware(['auth','permission:view task|edit task']);
 Route::get('/tasks','ScrumController@index')->name('tasks.index')->middleware(['auth','permission:view task']);
 Route::post('/tasks','ScrumController@store')->name('tasks.store')->middleware(['auth','permission:add task']);
 Route::get('/tasks-list','ScrumController@task_list')->name('tasks.list')->middleware(['auth','permission:view task']);

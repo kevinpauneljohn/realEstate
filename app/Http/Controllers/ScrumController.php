@@ -187,11 +187,28 @@ class ScrumController extends Controller
         return response()->json($validation->errors());
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function overview($id)
     {
         return view('pages.scrum.index',[
             'task'  => $this->task->getTask($id),
             'agents' => $this->task->getAgents($this->agents)
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function updateAgent(Request $request)
+    {
+        if($this->task->setAssignee($request->input('assigned_id'), $request->input('task_id')))
+        {
+            return response(['success' => true, 'message' => 'Assignee successfully updated!']);
+        }
+        return response(['success' => false, 'message' => 'An error occurred!'],400);
     }
 }
