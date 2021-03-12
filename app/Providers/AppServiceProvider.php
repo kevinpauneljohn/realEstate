@@ -23,8 +23,10 @@ use App\Repositories\RepositoryInterface\LeadInterface;
 use App\Repositories\RepositoryInterface\PaymentInterFace;
 use App\Repositories\RepositoryInterface\RequirementsInterface;
 use App\Repositories\RepositoryInterface\SalesInterface;
+use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Repositories\RequirementsRepository;
 use App\Repositories\Sales;
+use App\Repositories\TaskRepository;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
@@ -91,6 +93,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             RequirementsInterface::class,
             RequirementsRepository::class
+        );
+
+        $this->app->bind(
+            TaskInterface::class,
+            TaskRepository::class
         );
     }
 
