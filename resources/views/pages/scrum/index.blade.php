@@ -177,7 +177,6 @@
                     $('#update-assignee').find('select, button').attr('disabled',true);
                     $('#update-assignee').find('button').text('updating ...');
                 },success: function(response){
-                    console.log(response);
                     if(response.success === true)
                     {
                         $('#update-assignee').find('select, button').attr('disabled',false);
@@ -235,7 +234,6 @@
                 beforeSend: function(){
                     checklistForm.find('input, textarea').attr('disabled',true);
                 },success: function (response){
-                    console.log(response);
                     if(response.success === true)
                     {
                         customAlert('success',response.message);
