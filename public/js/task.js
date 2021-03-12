@@ -33,7 +33,7 @@ $(document).on('submit','#task-form',function(form){
             console.log(xhr);
         }
     });
-    clear_errors('title','description','priority','collaborator');
+    clear_errors('title','description','due_date','priority');
 });
 
 $(document).on('click','.edit-task-btn',function(){

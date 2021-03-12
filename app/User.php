@@ -212,4 +212,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Lead::class,'online_warrior_id');
     }
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class,'assigned_to');
+    }
+    public function taskCreated()
+    {
+        return $this->belongsTo(Task::class,'created_by');
+    }
 }

@@ -30,11 +30,13 @@
                     <thead>
                     <tr role="row">
                         <th>Task #</th>
+                        <th>Due Date</th>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Priority</th>
+                        <th>Assigned To</th>
                         <th>Creator</th>
                         <th>Date Created</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -42,11 +44,13 @@
                     <tfoot>
                     <tr>
                         <th>Task #</th>
+                        <th>Due Date</th>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Priority</th>
+                        <th>Assigned To</th>
                         <th>Creator</th>
                         <th>Date Created</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -78,86 +82,38 @@
                                 <textarea class="form-control" id="description" name="description"></textarea>
                             </div>
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group priority">
-                                        <label for="priority">Priority</label><span class="required">*</span>
-                                        <select class="form-control" name="priority" id="priority">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($priorities as $priority)
-                                                <option value="{{$priority->id}}">{{$priority->name}}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="col-lg-6">
+                                    <div class="form-group due_date">
+                                        <label for="due_date">Due Date</label>
+                                        <input type="date" name="due_date" class="form-control" id="due_date">
                                     </div>
                                 </div>
-                                <div class="col-lg-8">
-                                    <div class="form-group collaborator">
-                                        <label for="collaborator">Collaborator</label><span class="required">*</span>
-                                        <select class="form-control select2" multiple="multiple" name="collaborator[]" id="collaborator" style="width: 100%">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id}}">{{$user->fullname}}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="time">Time</label>
+                                        <input type="time" name="time" class="form-control" id="time">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary submit-task-btn" value="Save">
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-        <!--end add new roles modal-->
-    @endcan
-
-    @can('edit task')
-        <!--add new roles modal-->
-        <div class="modal fade" id="edit-task-modal">
-            <form role="form" id="edit-task-form">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="taskId" id="taskId">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Edit Task</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group edit_title">
-                                <label for="edit_title">Title</label><span class="required">*</span>
-                                <input type="text" name="edit_title" id="edit_title" class="form-control">
-                            </div>
-                            <div class="form-group edit_description">
-                                <label for="edit_description">Description</label><span class="required">*</span>
-                                <textarea class="form-control" id="edit_description" name="edit_description"></textarea>
                             </div>
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group edit_priority">
-                                        <label for="edit_priority">Priority</label><span class="required">*</span>
-                                        <select class="form-control" name="edit_priority" id="edit_priority">
-                                            <option value=""> -- Select -- </option>
+                                <div class="col-lg-6">
+                                    <div class="form-group priority">
+                                        <label for="priority">Priority</label>
+                                        <select name="priority" class="form-control select2" id="priority" style="width: 100%">
+                                            <option value=""></option>
                                             @foreach($priorities as $priority)
-                                                <option value="{{$priority->id}}">{{$priority->name}}</option>
+                                                <option value="{{$priority->id}}">{{$priority->name}} - {{$priority->days}} day/s</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-8">
-                                    <div class="form-group edit_collaborator">
-                                        <label for="edit_collaborator">Collaborator</label><span class="required">*</span>
-                                        <select class="form-control select2" multiple="multiple" name="edit_collaborator[]" id="edit_collaborator" style="width: 100%">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id}}">{{$user->fullname}}</option>
+                                <div class="col-lg-6">
+                                    <div class="form-group assign_to">
+                                        <label for="assign_to">Assign To</label>
+                                        <select name="assign_to" class="form-control select2" id="assign_to" style="width: 100%">
+                                            <option value=""></option>
+                                            @foreach($agents as $agent)
+                                                <option value="{{$agent->id}}">{{$agent->username}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -205,11 +161,13 @@
                 ajax: '{!! route('tasks.list') !!}',
                 columns: [
                     { data: 'id', name: 'id'},
-                    { data: 'name', name: 'name'},
-                    { data: 'description', name: 'description'},
+                    { data: 'due_date', name: 'due_date'},
+                    { data: 'title', name: 'title'},
                     { data: 'priority_id', name: 'priority_id'},
-                    { data: 'user_id', name: 'user_id'},
+                    { data: 'assigned_to', name: 'assigned_to'},
+                    { data: 'created_by', name: 'created_by'},
                     { data: 'created_at', name: 'created_at'},
+                    { data: 'status', name: 'status'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 responsive:true,

@@ -19,10 +19,16 @@ class CreateTasksTable extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('status');
+            $table->date('due_date');
+            $table->time('time')->nullable();
+            $table->uuid('assigned_to')->nullable();
+            $table->unsignedBigInteger('priority_id');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('assigned_to')->references('id')->on('users');
+            $table->foreign('priority_id')->references('id')->on('priorities');
         });
     }
 

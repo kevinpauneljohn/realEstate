@@ -22,4 +22,9 @@ class Priority extends Model
     {
         return $this->hasMany(Threshold::class);
     }
+
+    public function task()
+    {
+        return $this->hasOne(Task::class);
+    }
 }

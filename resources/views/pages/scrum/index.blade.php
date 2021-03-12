@@ -5,202 +5,130 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Tasks Profile</h1>
+            <h1 class="m-0 text-dark">Task Profile</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Tasks</li>
+                <li class="breadcrumb-item"><a href="{{route('tasks.index')}}">Tasks</a> </li>
+                <li class="breadcrumb-item active">Task Profile</li>
             </ol>
         </div><!-- /.col -->
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card card-primary">
-                <div class="card-header">
-                    @can('add task')
-                        <button type="button" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#add-task-modal">Create Child Task</button>
-                    @endcan
-                </div>
-            </div>
-        </div>
     </div>
 @stop
 
 @section('content')
     <div class="row">
-        <section class="col-lg-2 connectedSortable ui-sortable">
-            <div class="card card-purple">
+        <div class="col-lg-9">
+            <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">Back Log</h3>
+                    <h3 class="card-title">Request Title: <span class="text-info">{{ucwords($task->title)}}</span></h3>
                 </div>
-            </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="post">
+                                <h5 class="text-bold">Description</h5>
+                                <p>{{ucfirst($task->description)}}</p>
+                            </div>
+                            <div class="post">
+                                <button type="button" class="btn btn-default btn-xs create-checklist mb-md-2" data-toggle="modal" data-target="#checklist">Create Checklist</button>
 
-        </section>
-        <section class="col-lg-2 connectedSortable ui-sortable">
-            <div class="card card-yellow">
-                <div class="card-header">
-                    <h3 class="card-title">To Do</h3>
-                </div>
-            </div>
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
-            @foreach($childTasks as $childTask)
-                <div class="card collapsed-card">
-                    <div class="card-header ui-sortable-handle" style="cursor: move;">
-                        <h3 class="card-title">
-                            <i class="ion ion-clipboard mr-1"></i>
-                            {{ucfirst($childTask->title)}}
-                        </h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-default btn-xs" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                                    <table id="check-list" class="table table-bordered table-hover" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>Description</th>
+                                            <th width="13%">Action</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tfoot>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <p>{{substr(ucfirst($childTask->description), 0, 150)}} ... <a href="#" id="{{$childTask->id}}" class="read-more" data-toggle="modal" data-target="#read-more-modal">Read More</a></p>
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer clearfix">
-                        <span class="text-muted">Assigned To: </span><span class="text-success">@if($childTask->assignee_id != null) {{\App\User::find($childTask->assignee_id)->fullname}} @endif</span>
-                    </div>
-                </div>
-            @endforeach
-        </section>
-        <section class="col-lg-2 connectedSortable ui-sortable">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">In-progress</h3>
                 </div>
             </div>
-        </section>
-        <section class="col-lg-2 connectedSortable ui-sortable">
-            <div class="card card-pink">
-                <div class="card-header">
-                    <h3 class="card-title">Resolved</h3>
-                </div>
-            </div>
-        </section>
-        <section class="col-lg-2 connectedSortable ui-sortable">
-            <div class="card card-success">
-                <div class="card-header">
-                    <h3 class="card-title">Closed</h3>
-                </div>
-            </div>
-        </section>
-        <section class="col-lg-2 connectedSortable ui-sortable">
+        </div>
+        <div class="col-lg-3">
+            <div class="card card-default">
+                <div class="card-body">
+                    <strong><i class="fas fa-user mr-1"></i> Requester</strong>
 
-        </section>
+                    <p class="text-muted">
+                        {{$task->creator->fullname}}
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fas fa-user-circle mr-1"></i> Assigned To</strong>
+
+                    <p class="text-muted">
+                        @if(auth()->user()->id === $task->created_by || auth()->user()->hasRole(['super admin','admin','account manager']))
+                            <select class="form-control select" id="assigned_to">
+                                <option value=""></option>
+                                @foreach($agents as $agent)
+                                    <option value="{{$agent->id}}" @if($agent->fullname === $task->user->fullname) selected @endif>{{$agent->fullname}}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            {{$task->user->fullname}}
+                        @endif
+
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fas fa-calendar-check mr-1"></i> Due Date</strong>
+
+                    <p class="text-muted">
+                        {{\Carbon\Carbon::parse($task->due_date)->format('M d, Y')}} - {{\Carbon\Carbon::parse($task->time)->format('g:i A')}}
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fas fa-info-circle mr-1"></i> Priority</strong>
+
+                    <p class="text-muted">{{$task->priority->name}}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    @can('view task')
-        <!--add new roles modal-->
-        <div class="modal fade" id="read-more-modal">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title"></h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <p class="description"></p>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card card-default">
-                                        <div class="card-body box-profile">
-                                            <ul class="list-group list-group-unbordered mb-3">
-                                                <li class="list-group-item">
-                                                    <b>Date Created</b> <a class="float-right date-created"></a>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <b>Created By</b> <a class="float-right created-by"></a>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <b>Assigned To</b> <a href="#" class="float-right user-name"></a>
-                                                    <select class="float-right user-name">
-                                                        <option value=""> -- Select -- </option>
-                                                        @foreach($users as $user)
-                                                            <option value="{{$user->id}}">{{$user->fullname}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <b>Due Date</b> <a class="float-right deadline"></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-        </div>
-        <!--end add new roles modal-->
-    @endcan
-
-    @can('add task')
-        <!--add new roles modal-->
-        <div class="modal fade" id="add-task-modal">
-            <form role="form" id="task-form">
+    @can('add checklist')
+        <div class="modal fade" id="checklist">
+            <form role="form" id="checklist-form">
                 @csrf
-                <input type="hidden" name="taskId" id="taskId" value="{{$id}}">
+                <input type="hidden" name="task_id" value="{{$task->id}}">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New Task</h4>
+                            <h4 class="modal-title">Add Checklist</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group title">
-                                <label for="title">Title</label><span class="required">*</span>
-                                <input type="text" name="title" id="title" class="form-control">
-                            </div>
-                            <div class="form-group description">
-                                <label for="description">Description</label><span class="required">*</span>
-                                <textarea class="form-control" id="description" name="description"></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group priority">
-                                        <label for="priority">Priority</label><span class="required">*</span>
-                                        <select class="form-control" name="priority" id="priority">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($priorities as $priority)
-                                                <option value="{{$priority->id}}">{{$priority->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="form-group assignee">
-                                        <label for="assignee">Assign To</label><span class="required">*</span>
-                                        <select class="form-control select2" name="assignee" id="assignee" style="width: 100%">
-                                            <option value=""> -- Select -- </option>
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id}}">{{$user->fullname}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <table class="checklist-table">
+                                <tr class="table-row-0">
+                                    <td><textarea class="form-control" name="checklist[]"></textarea></td>
+                                    <td><button type="button" class="btn btn-danger btn-xs remove" id="0" title="remove"><i class="fas fa-trash"></i></button></td>
+                                </tr>
+                            </table>
+                            <button type="button" class="btn btn-default btn-sm add-row">Add Row</button>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary submit-task-btn" value="Save">
+                            <input type="submit" class="btn btn-primary submit-checklist-btn" value="Save">
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -208,7 +136,6 @@
                 <!-- /.modal-dialog -->
             </form>
         </div>
-        <!--end add new roles modal-->
     @endcan
 
 @stop
@@ -229,31 +156,90 @@
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
     <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-    <script src="{{asset('js/validation.js')}}"></script>
-    <script src="{{asset('js/childTask.js')}}"></script>
-    <script src="{{asset('/vendor/jquery-ui/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('js/custom-alert.js')}}"></script>
     <script>
+
         $(function() {
+            $('#check-list').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('checklist.display',$task->id) !!}',
+                columns: [
+                    { data: 'description', name: 'description'},
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                ],
+                responsive:true,
+                order:[0,'desc'],
+                pageLength: 25
+            });
+        });
 
-            'use strict'
 
-            // Make the dashboard widgets sortable Using jquery UI
-            $('.connectedSortable').sortable({
-                placeholder         : 'sort-highlight',
-                connectWith         : '.connectedSortable',
-                handle              : '.card-header, .nav-tabs',
-                forcePlaceholderSize: true,
-                zIndex              : 999999
-            })
-            $('.connectedSortable .card-header, .connectedSortable .nav-tabs-custom').css('cursor', 'move')
+        let checklistTable = $('.checklist-table');
+        let checklistForm = $('#checklist-form');
 
-            // jQuery UI sortable for the todo list
-            $('.todo-list').sortable({
-                placeholder         : 'sort-highlight',
-                handle              : '.handle',
-                forcePlaceholderSize: true,
-                zIndex              : 999999
-            })
+        $(document).on('click','.add-row',function(){
+            let tr = checklistTable.find('tr').length;
+
+            checklistTable.append(`<tr class="table-row-${tr}">
+                                    <td><textarea class="form-control" name="checklist[]"></textarea></td>
+                                    <td><button type="button" class="btn btn-danger btn-xs remove" id="${tr}" title="remove"><i class="fas fa-trash"></i></button></td>
+                                </tr>`)
+        });
+
+        $(document).on('click','.remove',function(){
+            let id = this.id;
+            checklistTable.find('.table-row-'+id).remove();
+        });
+
+        $(document).on('submit','#checklist-form',function(form){
+            form.preventDefault();
+
+            let data = $(this).serializeArray();
+
+            $.ajax({
+                'url' : '{{route('task-checklist.store')}}',
+                'type' : 'POST',
+                'data' : data,
+                beforeSend: function(){
+                    checklistForm.find('input, textarea').attr('disabled',true);
+                },success: function (response){
+                    console.log(response);
+                    if(response.success === true)
+                    {
+                        customAlert('success',response.message);
+                        checklistTable.find('tr').remove();
+                        $('#checklist').modal('toggle');
+
+                        let table = $('#check-list').DataTable();
+                        table.ajax.reload();
+                    }
+                    checklistForm.find('input, textarea').attr('disabled',false);
+                },error: function(xhr, status, error){
+                    console.log(xhr)
+                }
+            });
+        });
+
+        $(document).on('click','.check-list-box',function(){
+            let value = this.value;
+
+            $.ajax({
+                'url' : '/task-checklist/'+value,
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'type' : 'PUT',
+                beforeSend: function(){
+                    $('#check-list').find('input').attr('disabled',true);
+                },success: function (response){
+                    if(response.success === true)
+                    {
+                        customAlert('success',response.message);
+                    }
+                    $('#check-list').find('input').attr('disabled',false);
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
         });
     </script>
 @stop

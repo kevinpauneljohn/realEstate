@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\ChildTask;
 use App\Priority;
+use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,41 +16,60 @@ use Illuminate\Support\Facades\Validator;
 
 class ScrumController extends Controller
 {
+    private $task;
+    private $agents;
+
+    public function __construct(
+        TaskInterface $task
+    )
+    {
+        $this->task = $task;
+        $this->agents = ['admin','account manager','online warrior'];
+    }
     public function index()
     {
         $priorities = Priority::all();
         $users = User::all();
-        return view('pages.scrum.task',compact('priorities','users'));
+        $agents = $this->task->getAgents($this->agents);
+        return view('pages.scrum.task',compact('priorities','users','agents','priorities'));
     }
 
-    public function store(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $validation = Validator::make($request->all(),[
             'title'         => 'required',
             'description'   => 'required|max:10000',
-            'priority'      => 'required',
-            'collaborator'  => 'required'
+            'due_date'   => 'required|date',
+            'priority'   => 'required',
         ]);
 
         if($validation->passes())
         {
-            $task = new Task();
-            $task->name = $request->title;
-            $task->description = $request->description;
-            $task->priority_id = $request->priority;
-            $task->user_id = auth()->user()->id;
-            $task->status = 'pending';
-            $task->save();
 
-            foreach ($request->collaborator as $value)
+            $task = [
+                'created_by'    => auth()->user()->id,
+                'title'    => $request->input('title'),
+                'description'    => $request->input('description'),
+                'due_date'    => $request->input('due_date'),
+                'status'    => 'pending',
+                'time'    => $request->input('time'),
+                'assigned_to'    => $request->input('assign_to'),
+                'priority_id'    => $request->input('priority'),
+            ];
+
+            if($taskCreated = $this->task->create($task))
             {
-                DB::table('task_user')->insert([
-                    ['task_id' => $task->id, 'user_id' => $value]
-                ]);
+                activity('task')
+                    ->causedBy(auth()->user()->id)
+                    ->performedOn(Task::find($taskCreated->id))
+                    ->withProperties($task)->log('created');
+                return response()->json(['success' => true, 'message' => 'Task successfully added!']);
             }
-
-
-            return response()->json(['success' => true, 'message' => 'Task successfully added!']);
+            return response()->json(['success' => false, 'message' => 'An error occurred'],400);
         }
         return response()->json($validation->errors());
     }
@@ -57,17 +79,25 @@ class ScrumController extends Controller
     {
         $tasks = Task::all();
         return DataTables::of($tasks)
-            ->editColumn('priority_id',function($task){
-                $priority = Priority::find($task->priority_id);
-                return '<span class="badge" style="background-color:'.$priority->color.'">'.$priority->name.'</span>';
-            })
             ->editColumn('id',function($task){
                 $request = str_pad($task->id, 5, '0', STR_PAD_LEFT);
                 return '<a href="'.route('requests.show',['request' => $task->id]).'"><span style="color:#007bff">#'.$request.'</span></a>';
             })
-            ->editColumn('user_id',function($task){
-                $creator = User::find($task->user_id);
-                return $creator->fullname;
+            ->editColumn('created_by',function($task){
+                return $task->creator->fullname;
+            })
+            ->editColumn('priority_id',function($task){
+                return '<span class="right badge" style="color:white;background-color: '.$task->priority->color.'">'.$task->priority->name.'</span>';
+            })
+            ->editColumn('description',function($task){
+                return Str::of($task->description)->limit(50);
+            })
+            ->editColumn('due_date',function($task){
+                return Carbon::parse($task->due_date)->format('M d, Y').' - '.Carbon::parse($task->time)->format('g:i A');
+
+            })
+            ->editColumn('assigned_to',function($task){
+                return $task->user->fullname ?? "";
             })
             ->editColumn('created_at',function($task){
                 return $task->created_at->format('M d, Y g:i A');
@@ -159,9 +189,9 @@ class ScrumController extends Controller
 
     public function overview($id)
     {
-        $users = Task::find($id)->users;
-        $priorities = Priority::all();
-        $childTasks = ChildTask::where('task_id',$id)->get();
-        return view('pages.scrum.index',compact('priorities','users','id','childTasks'));
+        return view('pages.scrum.index',[
+            'task'  => $this->task->getTask($id),
+            'agents' => $this->task->getAgents($this->agents)
+        ]);
     }
 }
