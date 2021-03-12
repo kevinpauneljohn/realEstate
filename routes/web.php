@@ -354,8 +354,8 @@ Route::get('/client-requirements/sales/{sales_id}',[\App\Http\Controllers\Client
 Route::put('/client-requirements/check-document',[\App\Http\Controllers\ClientRequirementsController::class,'checkDocument']);
 Route::resource('client-requirements','ClientRequirementsController');
 
-Route::resource('task-checklist','TaskCheckListController');
 Route::get('/task-checklist/{task_id}/display',[\App\Http\Controllers\TaskChecklistController::class,'displayChecklist'])->name('checklist.display');
+Route::resource('task-checklist','TaskChecklistController');
 
 
 
