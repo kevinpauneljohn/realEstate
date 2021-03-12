@@ -6,6 +6,7 @@ use App\ChildTask;
 use App\Priority;
 use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
+use App\TaskChecklist;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -207,6 +208,13 @@ class ScrumController extends Controller
     {
         if($this->task->setAssignee($request->input('assigned_id'), $request->input('task_id')))
         {
+            activity('task agent')
+                ->causedBy(auth()->user()->id)
+                ->performedOn(Task::find($request->input('task_id')))
+                ->withProperties([
+                    'assigned_id' => $request->input('assigned_id'),
+                    'task_id' => $request->input('task_id')
+                ])->log('updated the agent');
             return response(['success' => true, 'message' => 'Assignee successfully updated!']);
         }
         return response(['success' => false, 'message' => 'An error occurred!'],400);

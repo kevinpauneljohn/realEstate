@@ -355,6 +355,7 @@ Route::put('/client-requirements/check-document',[\App\Http\Controllers\ClientRe
 Route::resource('client-requirements','ClientRequirementsController');
 
 Route::get('/task-checklist/{task_id}/display',[\App\Http\Controllers\TaskChecklistController::class,'displayChecklist'])->name('checklist.display');
+Route::put('/task-checklist/{checklist_id}/update/checklist',[\App\Http\Controllers\TaskChecklistController::class,'updateChecklist'])->name('checklist.update');
 Route::resource('task-checklist','TaskChecklistController');
 
 

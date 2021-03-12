@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\RepositoryInterface\TaskChecklistInterface;
+use App\TaskChecklist;
 use Illuminate\Http\Request;
 
 class TaskChecklistController extends Controller
@@ -15,6 +16,7 @@ class TaskChecklistController extends Controller
         $this->middleware('auth');
         $this->middleware('permission:add checklist')->only('store');
         $this->middleware('permission:view checklist')->only('displayChecklist');
+        $this->middleware('permission:edit checklist')->only('updateChecklist');
         $this->taskChecklist = $taskChecklist;
     }
 
@@ -40,8 +42,12 @@ class TaskChecklistController extends Controller
             }
         }
 
-        if($this->taskChecklist->create($checklist))
+        if($taskChecklist = $this->taskChecklist->create($checklist))
         {
+            activity('task checklist')
+                ->causedBy(auth()->user()->id)
+                ->performedOn(new TaskChecklist())
+                ->withProperties($checklist)->log('created');
             return response(['success' => true,'message' => 'Checklist successfully created!']);
         }
         return response(['success' => false,'message' => 'An error occurred'],400);
@@ -59,6 +65,38 @@ class TaskChecklistController extends Controller
             return response(['success' => true, 'message' => 'Checklist successfully updated!']);
         }
         return response(['success' => false, 'message' => 'An error occurred!']);
+    }
+
+
+    public function updateChecklist(Request $request, $id)
+    {
+        if(!empty($request->input('checklist')))
+        {
+            $checkList = TaskChecklist::find($id);
+            $checkList->description = $request->input('checklist');
+            if($checkList->isDirty() && $checkList->save()) {
+                return response(['success' => true, 'message' => 'Checklist successfully updated!']);
+            }
+            return response(['success' => false, 'message' => 'No changes occurred!']);
+        }
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $checklist = $this->taskChecklist->getChecklist($id)->first();
+        if($this->taskChecklist->getChecklist($id)->delete())
+        {
+            activity('task checklist')
+                ->causedBy(auth()->user()->id)
+                ->performedOn(new TaskChecklist())
+                ->withProperties($checklist)->log('deleted');
+            return response(['success' => true, 'message' => 'Successfully deleted!']);
+        }
+        return response(['success' => false, 'message' => 'An error occurred!'],400);
     }
 
     public function displayChecklist($task_id)

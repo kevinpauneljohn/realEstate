@@ -41,6 +41,7 @@
                                         <thead>
                                         <tr role="row">
                                             <th>Description</th>
+                                            <th width="13%">Completed</th>
                                             <th width="13%">Action</th>
                                         </tr>
                                         </thead>
@@ -48,6 +49,7 @@
                                         <tfoot>
                                         <tr>
                                             <th>Description</th>
+                                            <th>Completed</th>
                                             <th>Action</th>
                                         </tr>
                                         </tfoot>
@@ -145,6 +147,36 @@
         </div>
     @endcan
 
+    @can('edit checklist')
+        <div class="modal fade" id="edit-checklist">
+            <form role="form" id="edit-checklist-form">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="task_id" value="{{$task->id}}">
+                <input type="hidden" name="checklist_id">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Checklist</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea class="form-control" name="checklist" style="min-height: 300px;"></textarea>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary submit-checklist-btn" value="Save">
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+    @endcan
+
 @stop
 
 @section('css')
@@ -165,7 +197,7 @@
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
     <script>
-
+        let rowId;
         $(document).on('submit','#update-assignee',function(form){
             form.preventDefault();
             let data = $(this).serializeArray();
@@ -196,6 +228,7 @@
                 ajax: '{!! route('checklist.display',$task->id) !!}',
                 columns: [
                     { data: 'description', name: 'description'},
+                    { data: 'completed', name: 'completed', orderable: false, searchable: false},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 responsive:true,
@@ -272,5 +305,87 @@
             });
         @endif
 
+        @can('delete checklist')
+            $(document).on('click','.delete',function(){
+                let id = this.id;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/task-checklist/'+id,
+                            'type' : 'DELETE',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            'data' : {'_method':'DELETE','id' : id},
+                            beforeSend: function(){
+
+                            },success: function(output){
+                                if(output.success === true){
+                                    customAlert('success',output.message);
+                                }
+                                let table = $('#check-list').DataTable();
+                                table.ajax.reload();
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }
+                });
+        });
+        @endcan
+
+        @can('edit checklist')
+
+            $(document).on('click','.edit',function(){
+                rowId = this.id;
+                let tr = $(this).closest('tr');
+
+                let data = tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+                $('#edit-checklist-form').find('input[name=checklist_id]').val(rowId);
+                $('#edit-checklist-form').find('textarea[name=checklist]').val(data[0]);
+            });
+
+            $(document).on('submit','#edit-checklist-form',function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
+                $.ajax({
+                    'url' : '/task-checklist/'+rowId+'/update/checklist',
+                    'type' : 'PUT',
+                    'data' : data,
+                    beforeSend: function(){
+                        $('#edit-checklist-form').find('input,textarea').attr('disabled',true);
+                        $('#edit-checklist-form').find('input[type=submit]').val('Saving...');
+                    },success: function(output){
+                        console.log(output);
+                        if(output.success === true){
+                            customAlert('success',output.message);
+
+                            $('#edit-checklist').modal('toggle');
+                            let table = $('#check-list').DataTable();
+                            table.ajax.reload();
+                        }else if(output.success === false){
+                            customAlert('warning',output.message);
+                        }
+
+                        $('#edit-checklist-form').find('input,textarea').attr('disabled',false);
+                        $('#edit-checklist-form').find('input[type=submit]').val('Save');
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            })
+        @endcan
     </script>
 @stop

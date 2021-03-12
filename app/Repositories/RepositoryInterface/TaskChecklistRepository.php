@@ -13,14 +13,15 @@ class TaskChecklistRepository implements TaskChecklistInterface
 {
     public function create(array $checklist): bool
     {
-        return DB::table('task_checklists')->insert($checklist);
+//        return DB::table('task_checklists')->insert($checklist);
+        return TaskChecklist::insert($checklist);
     }
 
 
     public function checklists($task_id)
     {
         return DataTables::of($this->getChecklistByTaskId($task_id)->get())
-            ->addColumn('action',function($checklist){
+            ->addColumn('completed',function($checklist){
                 $action = "";
                 $checked = $checklist->status === "completed" ? "checked":"";
                 if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($checklist->task->assigned_to === auth()->user()->id && auth()->user()->can('view checklist')))
@@ -33,7 +34,20 @@ class TaskChecklistRepository implements TaskChecklistInterface
 //                return auth()->user()->task;
 //                return $checklist->task;
             })
-            ->rawColumns(['action'])
+            ->addColumn('action',function($checklist){
+                $action = "";
+
+                if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($checklist->task->assigned_to === auth()->user()->id && auth()->user()->can('edit checklist')))
+                {
+                    $action .= '<button class="btn btn-default btn-xs edit" id="'.$checklist->id.'" data-toggle="modal" data-target="#edit-checklist"><i class="fas fa-edit"></i></button>';
+                    $action .= '<button class="btn btn-default btn-xs delete" id="'.$checklist->id.'"><i class="fas fa-trash"></i></button>';
+                }
+                $action .= '<button class="btn btn-info btn-xs log-action" id="'.$checklist->id.'" title="log action taken"><i class="far fa-address-book"></i></button>';
+                return $action;
+//                return auth()->user()->task;
+//                return $checklist->task;
+            })
+            ->rawColumns(['completed','action'])
             ->make(true);
     }
 
@@ -51,5 +65,10 @@ class TaskChecklistRepository implements TaskChecklistInterface
     public function getChecklist($checklist_id)
     {
         return TaskChecklist::where('id',$checklist_id);
+    }
+
+    public function updateChecklist($checklist_id,array $checklist)
+    {
+        return $this->getChecklist($checklist_id)->update($checklist);
     }
 }
