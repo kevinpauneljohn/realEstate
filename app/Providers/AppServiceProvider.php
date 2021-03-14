@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Lead;
+use App\Repositories\ActionTakenRepository;
 use App\Repositories\BuilderRepository;
 use App\Repositories\ClientPaymentRepository;
 use App\Repositories\ClientProjectRepository;
@@ -12,6 +13,7 @@ use App\Repositories\DhgClientRepository;
 use App\Repositories\Leads;
 use App\Repositories\PaymentRepository;
 use App\Repositories\RepositoryInterface\AccessTokenClientInterface;
+use App\Repositories\RepositoryInterface\ActionTakenInterface;
 use App\Repositories\RepositoryInterface\BuilderInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialInterface;
 use App\Repositories\RepositoryInterface\CheckCredentialRepository;
@@ -105,6 +107,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             TaskChecklistInterface::class,
             TaskChecklistRepository::class
+        );
+
+        $this->app->bind(
+            ActionTakenInterface::class,
+            ActionTakenRepository::class
         );
     }
 

@@ -1,0 +1,48 @@
+<?php
+
+
+namespace App\Repositories;
+
+
+use App\ActionTaken;
+use App\Repositories\RepositoryInterface\ActionTakenInterface;
+use Yajra\DataTables\Facades\DataTables;
+
+class ActionTakenRepository implements ActionTakenInterface
+{
+    public function create(array $action)
+    {
+        return ActionTaken::create($action);
+    }
+
+    public function displayActions($checklist_id)
+    {
+        $actionTaken =$this->getActionTakenByChecklist($checklist_id)->get();
+        return DataTables::of($actionTaken)
+            ->addColumn('action-button',function($checklist){
+                $action = "";
+
+                return $action;
+//                return auth()->user()->task;
+//                return $checklist->task;
+            })
+        ->rawColumns(['completed','action-button'])
+        ->make(true);
+    }
+
+    public function getActionTakenByChecklist($checklist_id)
+    {
+        return ActionTaken::where('task_checklist_id',$checklist_id);
+    }
+
+    public function update($action_taken, $action_taken_id): bool
+    {
+        $actionTaken = ActionTaken::find($action_taken_id);
+        $actionTaken->action = nl2br($action_taken);
+        if($actionTaken->isDirty())
+        {
+            return $actionTaken->save();
+        }
+        return false;
+    }
+}

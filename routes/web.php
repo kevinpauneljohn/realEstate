@@ -358,5 +358,9 @@ Route::get('/task-checklist/{task_id}/display',[\App\Http\Controllers\TaskCheckl
 Route::put('/task-checklist/{checklist_id}/update/checklist',[\App\Http\Controllers\TaskChecklistController::class,'updateChecklist'])->name('checklist.update');
 Route::resource('task-checklist','TaskChecklistController');
 
+Route::get('/action-taken/{checklist_id}/display',[\App\Http\Controllers\ActionTakenController::class,'actionTakenList'])->name('action.taken.display');
+Route::resource('action-taken','ActionTakenController');
+
+
 
 

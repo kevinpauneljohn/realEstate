@@ -75,6 +75,10 @@ class TaskChecklistController extends Controller
             $checkList = TaskChecklist::find($id);
             $checkList->description = $request->input('checklist');
             if($checkList->isDirty() && $checkList->save()) {
+                activity('task checklist')
+                    ->causedBy(auth()->user()->id)
+                    ->performedOn($checkList)
+                    ->withProperties($checkList)->log('updated');
                 return response(['success' => true, 'message' => 'Checklist successfully updated!']);
             }
             return response(['success' => false, 'message' => 'No changes occurred!']);

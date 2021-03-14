@@ -37,12 +37,12 @@ class TaskChecklistRepository implements TaskChecklistInterface
             ->addColumn('action',function($checklist){
                 $action = "";
 
+                $action .= '<button class="btn btn-info btn-xs log-action" id="'.$checklist->id.'" title="log action taken" data-toggle="modal" data-target="#action-taken"><i class="far fa-address-book"></i></button>';
                 if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($checklist->task->assigned_to === auth()->user()->id && auth()->user()->can('edit checklist')))
                 {
                     $action .= '<button class="btn btn-default btn-xs edit" id="'.$checklist->id.'" data-toggle="modal" data-target="#edit-checklist"><i class="fas fa-edit"></i></button>';
                     $action .= '<button class="btn btn-default btn-xs delete" id="'.$checklist->id.'"><i class="fas fa-trash"></i></button>';
                 }
-                $action .= '<button class="btn btn-info btn-xs log-action" id="'.$checklist->id.'" title="log action taken"><i class="far fa-address-book"></i></button>';
                 return $action;
 //                return auth()->user()->task;
 //                return $checklist->task;

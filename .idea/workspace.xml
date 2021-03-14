@@ -33,10 +33,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="task module and checklist module">
+      <change afterPath="$PROJECT_DIR$/app/Repositories/ActionTakenRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/ActionTakenInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskChecklistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskChecklistController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskChecklistInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskChecklistInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskChecklistRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskChecklistRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/TaskChecklist.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/TaskChecklist.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" afterDir="false" />
@@ -494,14 +495,9 @@
       <workItem from="1615128401642" duration="5439000" />
       <workItem from="1615167529793" duration="2329000" />
       <workItem from="1615380689549" duration="2466000" />
-      <workItem from="1615425469088" duration="59737000" />
-    </task>
-    <task id="LOCAL-00679" summary="dream home guide project module">
-      <created>1614502791489</created>
-      <option name="number" value="00679" />
-      <option name="presentableId" value="LOCAL-00679" />
-      <option name="project" value="LOCAL" />
-      <updated>1614502791489</updated>
+      <workItem from="1615425469088" duration="63739000" />
+      <workItem from="1615616939030" duration="866000" />
+      <workItem from="1615685478473" duration="13078000" />
     </task>
     <task id="LOCAL-00680" summary="dream home guide project module">
       <created>1614528935244</created>
@@ -839,7 +835,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615554284477</updated>
     </task>
-    <option name="localTasksCounter" value="728" />
+    <task id="LOCAL-00728" summary="task module and checklist module">
+      <created>1615563622070</created>
+      <option name="number" value="00728" />
+      <option name="presentableId" value="LOCAL-00728" />
+      <option name="project" value="LOCAL" />
+      <updated>1615563622070</updated>
+    </task>
+    <option name="localTasksCounter" value="729" />
     <servers />
   </component>
   <component name="TodoView">

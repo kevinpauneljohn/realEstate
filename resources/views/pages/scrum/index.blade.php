@@ -177,6 +177,39 @@
         </div>
     @endcan
 
+    <div class="modal fade" id="action-taken">
+
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Action Taken</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group action">
+                            <form role="form" id="action-taken-form">
+                                @csrf
+                                <input type="hidden" name="checklist_id">
+                            <textarea class="form-control" name="action" style="min-height: 200px;" id="action"></textarea>
+                            <input type="submit" class="btn btn-primary submit-checklist-btn" value="Save">
+                            </form>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 action-timeline"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+    </div>
+
 @stop
 
 @section('css')
@@ -387,5 +420,130 @@
                 });
             })
         @endcan
+
+        $(document).on('click','.log-action',function(){
+            rowId = this.id;
+            $('#action-taken-form').find('input[name=checklist_id]').val(rowId);
+
+            $.ajax({
+                'url' : '/action-taken/'+rowId+'/display',
+                'type' : 'GET',
+                beforeSend: function(){
+                    $('#action-taken-form').find("textarea").val("");
+                },success: function(response){
+                    // console.log(response);
+                    $('.action-timeline').html('<div class="timeline"></div>');
+
+                    $.each(response, function(key, value){
+                        $('.action-timeline').find('.timeline').append(`
+                                <div class="time-label">
+                                    <span class="bg-cyan">${moment(value.created_at).format('dddd, MMMM Do YYYY')}</span>
+                                </div>
+
+                                <div>
+                                    <i class="fas fa-check-circle bg-success"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fas fa-clock"></i> ${moment(value.created_at).format('ddd, hA')}</span>
+
+                                        <div class="timeline-body" id="action-taken-${value.id}">${value.action}</div>
+                                        <div class="timeline-footer" id="action-btn-${value.id}">
+                                            <button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${value.id}">Edit</button>
+                                            <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${value.id}">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                               `);
+                    });
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+        });
+
+        let actionContent;
+        $(document).on('click','.edit-action-taken',function(){
+            rowId = this.value;
+            $('.action-timeline').find('#action-btn-'+rowId).remove();
+            actionContent = $('.action-timeline').find('#action-taken-'+rowId).text();
+            $('.action-timeline').find('#action-taken-'+rowId).html('<form method="post" class="edit-action-form"><input type="hidden" name="action_taken_id" value="'+rowId+'"><input type="hidden" name="_token" value="{{csrf_token()}}"><textarea class="form-control" name="action_taken" id="'+rowId+'" style="min-height: 150px;">'+actionContent+'</textarea>' +
+                '<button type="button" class="btn btn-default btn-xs cancel" value="'+rowId+'">Cancel</button> <button type="submit" class="btn btn-default btn-xs save" value="'+rowId+'">Save</button></form>');
+        });
+
+        $(document).on('click','.cancel',function(){
+            let id = this.value;
+
+            $('.action-timeline').find('#action-taken-'+id)
+                .html(`<div class="timeline-body" id="action-taken-${id}">${actionContent}</div>
+                    <div class="timeline-footer" id="action-btn-${id}">
+                        <button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${id}">Edit</button>
+                        <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${id}">Delete</button>
+                    </div>`);
+        });
+
+        $(document).on('submit','.edit-action-form', function(form){
+            form.preventDefault();
+            let data = $(this).serializeArray();
+            let id = $('input[name=action_taken_id]').val();
+            $.ajax({
+                'url' : '/action-taken/'+id,
+                'type' : 'PUT',
+                'data' : data,
+                beforeSend: function(){
+                    $('.edit-action-form').find('button,textarea').attr('disabled',true);
+                    $('.edit-action-form').find('button .save').text('Saving...');
+                },success: function(output){
+                    console.log(output);
+                    if(output.success === true){
+                        actionContent = output.actionContent;
+                        customAlert('success',output.message);
+
+                        $('.action-timeline').find('#action-taken-'+id)
+                            .html(`<div class="timeline-body" id="action-taken-${id}">${actionContent}</div>
+                            <div class="timeline-footer" id="action-btn-${id}">
+                                <button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${id}">Edit</button>
+                                <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${id}">Delete</button>
+                            </div>`);
+                    }else if(output.success === false){
+                        customAlert('warning',output.message);
+                    }
+
+                    $('.edit-action-form').find('button,textarea').attr('disabled',false);
+                    $('.edit-action-form').find('button .save').text('Save');
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+        });
+
+        $(document).on('submit','#action-taken-form',function(form){
+            form.preventDefault();
+
+            let data = $(this).serializeArray();
+            $.ajax({
+                'url' : '{{route('action-taken.store')}}',
+                'type' : 'POST',
+                'data' : data,
+                beforeSend: function(){
+                    $('#action-taken-form').find('input,textarea').attr('disabled',true);
+                    $('#action-taken-form').find('input[type=submit]').val('Saving...');
+                },success: function(output){
+                    console.log(output);
+                    if(output.success === true){
+                        customAlert('success',output.message);
+
+                        $('#action-taken').modal('toggle');
+                        // let table = $('#check-list').DataTable();
+                        // table.ajax.reload();
+                    }else if(output.success === false){
+                        customAlert('warning',output.message);
+                    }
+
+                    $('#action-taken-form').find('input,textarea').attr('disabled',false);
+                    $('#action-taken-form').find('input[type=submit]').val('Save');
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+        })
     </script>
 @stop
