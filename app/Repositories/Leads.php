@@ -72,7 +72,7 @@ class Leads implements LeadInterface
                 {
                     $action = '<select class="form-control select2 assigned_to" id="'.$lead->id.'">';
                     $action .= '<option value=""></option>';
-                    foreach (User::whereHas("roles",function($role){$role->where("name","online warrior");})->get() as $warrior){
+                    foreach (User::whereHas("roles",function($role){$role->where("name","online warrior")->orWhere("name","account manager");})->get() as $warrior){
                         $selected = $lead->online_warrior_id === $warrior->id? "selected" :"";
                         $action .= '<option value="'.$warrior->id.'" '.$selected.'>'.$warrior->username.'</option>';
                     }

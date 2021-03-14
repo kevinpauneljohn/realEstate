@@ -399,6 +399,8 @@
                                 },success: function(output){
                                     if(output.success === true){
                                         customMessage('success',output.message);
+                                        let table = $('#leads-list').DataTable();
+                                        table.ajax.reload();
                                     }else{
                                         toastr.error(output.message);
                                     }
@@ -412,8 +414,6 @@
                             table.ajax.reload();
                         }
                     });
-
-
             })
         </script>
     @endif

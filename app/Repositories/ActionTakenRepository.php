@@ -44,15 +44,20 @@ class ActionTakenRepository implements ActionTakenInterface
     {
         $actionTaken = $this->getAction($action_taken_id);
         $actionTaken->action = nl2br($action_taken);
-        if($actionTaken->isDirty())
+        if($actionTaken->isDirty() && $actionTaken->user_id === auth()->user()->id)
         {
             return $actionTaken->save();
         }
         return false;
     }
 
-    public function destroy($action_taken_id)
+    public function destroy($action_taken_id): bool
     {
-        return $this->getAction($action_taken_id)->delete();
+        $action = $this->getAction($action_taken_id);
+        if($action->user_id === auth()->user()->id)
+        {
+            return $action->delete();
+        }
+        return false;
     }
 }

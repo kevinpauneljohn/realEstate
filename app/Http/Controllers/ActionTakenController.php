@@ -122,7 +122,7 @@ class ActionTakenController extends Controller
         {
             return response(['success' => true, 'message' => 'Action taken successfully deleted!']);
         }
-        return response(['success' => false, 'message' => 'An error occurred!'],400);
+        return response(['success' => false, 'message' => 'You area not allowed to delete this action!'],400);
     }
 
     public function actionTakenList($checklist_id)

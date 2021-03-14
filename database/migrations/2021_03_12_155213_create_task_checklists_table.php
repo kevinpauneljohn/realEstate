@@ -19,6 +19,7 @@ class CreateTaskChecklistsTable extends Migration
             $table->text('description');
             $table->string('status');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('task_id')->references('id')->on('tasks');
         });
