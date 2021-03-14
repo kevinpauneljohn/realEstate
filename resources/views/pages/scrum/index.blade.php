@@ -230,7 +230,7 @@
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
     <script>
-        let rowId;
+        let checklist_id; //checklist_id
         $(document).on('submit','#update-assignee',function(form){
             form.preventDefault();
             let data = $(this).serializeArray();
@@ -378,15 +378,14 @@
         @can('edit checklist')
 
             $(document).on('click','.edit',function(){
-                rowId = this.id;
+            checklist_id = this.id;
                 let tr = $(this).closest('tr');
 
                 let data = tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
 
-                console.log(data);
-                $('#edit-checklist-form').find('input[name=checklist_id]').val(rowId);
+                $('#edit-checklist-form').find('input[name=checklist_id]').val(checklist_id);
                 $('#edit-checklist-form').find('textarea[name=checklist]').val(data[0]);
             });
 
@@ -394,14 +393,13 @@
                 form.preventDefault();
                 let data = $(this).serializeArray();
                 $.ajax({
-                    'url' : '/task-checklist/'+rowId+'/update/checklist',
+                    'url' : '/task-checklist/'+checklist_id+'/update/checklist',
                     'type' : 'PUT',
                     'data' : data,
                     beforeSend: function(){
                         $('#edit-checklist-form').find('input,textarea').attr('disabled',true);
                         $('#edit-checklist-form').find('input[type=submit]').val('Saving...');
                     },success: function(output){
-                        console.log(output);
                         if(output.success === true){
                             customAlert('success',output.message);
 
@@ -421,50 +419,58 @@
             })
         @endcan
 
-        $(document).on('click','.log-action',function(){
-            rowId = this.id;
-            $('#action-taken-form').find('input[name=checklist_id]').val(rowId);
+            function displayActionTaken()
+            {
+                $.ajax({
+                    'url' : '/action-taken/'+checklist_id+'/display',
+                    'type' : 'GET',
+                    beforeSend: function(){
+                        $('#action-taken-form').find("textarea").val("");
+                    },success: function(response){
+                        $('.action-timeline').html('<div class="timeline"></div>');
 
-            $.ajax({
-                'url' : '/action-taken/'+rowId+'/display',
-                'type' : 'GET',
-                beforeSend: function(){
-                    $('#action-taken-form').find("textarea").val("");
-                },success: function(response){
-                    // console.log(response);
-                    $('.action-timeline').html('<div class="timeline"></div>');
-
-                    $.each(response, function(key, value){
-                        $('.action-timeline').find('.timeline').append(`
-                                <div class="time-label">
+                        $.each(response, function(key, value){
+                            let action = value.is_creator === true ? `<button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${value.id}">Edit</button>
+                                <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${value.id}">Delete</button>` : ``;
+                            $('.action-timeline').find('.timeline').append(`
+                                <div class="time-label label-${value.id}">
                                     <span class="bg-cyan">${moment(value.created_at).format('dddd, MMMM Do YYYY')}</span>
                                 </div>
 
-                                <div>
+                                <div class="timeline-content-${value.id}">
                                     <i class="fas fa-check-circle bg-success"></i>
                                     <div class="timeline-item">
                                         <span class="time"><i class="fas fa-clock"></i> ${moment(value.created_at).format('ddd, hA')}</span>
+                                        <h3 class="timeline-header"><a href="#">Creator</a> ${value.creator}</h3>
 
                                         <div class="timeline-body" id="action-taken-${value.id}">${value.action}</div>
-                                        <div class="timeline-footer" id="action-btn-${value.id}">
-                                            <button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${value.id}">Edit</button>
-                                            <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${value.id}">Delete</button>
-                                        </div>
+                                        <div class="timeline-footer" id="action-btn-${value.id}">${action}</div>
                                     </div>
                                 </div>
                                `);
-                    });
-                },error: function(xhr, status, error){
-                    console.log(xhr);
-                }
-            });
+                        });
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            }
+
+        $(document).on('click','.log-action',function(){
+            checklist_id = this.id;
+            $('#action-taken-form').find('input[name=checklist_id]').val(checklist_id);
+
+            displayActionTaken();
         });
 
         let actionContent;
+        let actionContentHtml;
+        let rowId;
         $(document).on('click','.edit-action-taken',function(){
             rowId = this.value;
             $('.action-timeline').find('#action-btn-'+rowId).remove();
+            actionContentHtml = $('.action-timeline').find('#action-taken-'+rowId).html();
             actionContent = $('.action-timeline').find('#action-taken-'+rowId).text();
+
             $('.action-timeline').find('#action-taken-'+rowId).html('<form method="post" class="edit-action-form"><input type="hidden" name="action_taken_id" value="'+rowId+'"><input type="hidden" name="_token" value="{{csrf_token()}}"><textarea class="form-control" name="action_taken" id="'+rowId+'" style="min-height: 150px;">'+actionContent+'</textarea>' +
                 '<button type="button" class="btn btn-default btn-xs cancel" value="'+rowId+'">Cancel</button> <button type="submit" class="btn btn-default btn-xs save" value="'+rowId+'">Save</button></form>');
         });
@@ -473,7 +479,7 @@
             let id = this.value;
 
             $('.action-timeline').find('#action-taken-'+id)
-                .html(`<div class="timeline-body" id="action-taken-${id}">${actionContent}</div>
+                .html(`<div class="timeline-body" id="action-taken-${id}">${actionContentHtml}</div>
                     <div class="timeline-footer" id="action-btn-${id}">
                         <button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${id}">Edit</button>
                         <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${id}">Delete</button>
@@ -492,7 +498,6 @@
                     $('.edit-action-form').find('button,textarea').attr('disabled',true);
                     $('.edit-action-form').find('button .save').text('Saving...');
                 },success: function(output){
-                    console.log(output);
                     if(output.success === true){
                         actionContent = output.actionContent;
                         customAlert('success',output.message);
@@ -527,13 +532,29 @@
                     $('#action-taken-form').find('input,textarea').attr('disabled',true);
                     $('#action-taken-form').find('input[type=submit]').val('Saving...');
                 },success: function(output){
-                    console.log(output);
                     if(output.success === true){
                         customAlert('success',output.message);
+                        $('#action-taken-form').find('textarea[name=action]').val("");
+                            $('.action-timeline').find('.timeline').append(`
+                                <div class="time-label label-${output.action.id}">
+                                    <span class="bg-cyan">${moment(output.action.created_at).format('dddd, MMMM Do YYYY')}</span>
+                                </div>
 
-                        $('#action-taken').modal('toggle');
-                        // let table = $('#check-list').DataTable();
-                        // table.ajax.reload();
+                                <div class="timeline-content-${output.action.id}">
+                                    <i class="fas fa-check-circle bg-success"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fas fa-clock"></i> ${moment(output.action.created_at).format('ddd, hA')}</span>
+                                        <h3 class="timeline-header"><a href="#">Creator</a> ${output.creator}</h3>
+
+                                        <div class="timeline-body" id="action-taken-${output.action.id}">${output.action.action}</div>
+                                        <div class="timeline-footer" id="action-btn-${output.action.id}">
+                                            <button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${output.action.id}">Edit</button>
+                                            <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${output.action.id}">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                               `);
+
                     }else if(output.success === false){
                         customAlert('warning',output.message);
                     }
@@ -545,5 +566,41 @@
                 }
             });
         })
+
+        $(document).on('click','.delete-action-taken',function(){
+            rowId = this.value;
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+
+                    $.ajax({
+                        'url' : '/action-taken/'+rowId,
+                        'type' : 'DELETE',
+                        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(output){
+                            if(output.success === true){
+                                customAlert('success',output.message);
+
+                                $('.timeline').find('.label-'+rowId+', .timeline-content-'+rowId).remove();
+
+                            }else if(output.success === false){
+                                customAlert('warning',output.message);
+                            }
+                        },error: function(xhr, status, error){
+                            console.log(xhr);
+                        }
+                    });
+
+                }
+            });
+
+        });
     </script>
 @stop

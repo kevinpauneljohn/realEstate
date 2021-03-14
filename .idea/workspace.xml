@@ -33,15 +33,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="task module and checklist module">
-      <change afterPath="$PROJECT_DIR$/app/Repositories/ActionTakenRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/ActionTakenInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskChecklistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskChecklistController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskChecklistRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskChecklistRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/TaskChecklist.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/TaskChecklist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ActionTaken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/ActionTaken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ActionTakenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ActionTakenController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/ActionTakenRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/ActionTakenRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/ActionTakenInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/ActionTakenInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_13_000150_create_action_takens_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_13_000150_create_action_takens_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -497,14 +496,7 @@
       <workItem from="1615380689549" duration="2466000" />
       <workItem from="1615425469088" duration="63739000" />
       <workItem from="1615616939030" duration="866000" />
-      <workItem from="1615685478473" duration="13078000" />
-    </task>
-    <task id="LOCAL-00680" summary="dream home guide project module">
-      <created>1614528935244</created>
-      <option name="number" value="00680" />
-      <option name="presentableId" value="LOCAL-00680" />
-      <option name="project" value="LOCAL" />
-      <updated>1614528935245</updated>
+      <workItem from="1615685478473" duration="22619000" />
     </task>
     <task id="LOCAL-00681" summary="dream home guide project module">
       <created>1614571489264</created>
@@ -842,7 +834,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615563622070</updated>
     </task>
-    <option name="localTasksCounter" value="729" />
+    <task id="LOCAL-00729" summary="task module and checklist module">
+      <created>1615702826716</created>
+      <option name="number" value="00729" />
+      <option name="presentableId" value="LOCAL-00729" />
+      <option name="project" value="LOCAL" />
+      <updated>1615702826716</updated>
+    </task>
+    <option name="localTasksCounter" value="730" />
     <servers />
   </component>
   <component name="TodoView">

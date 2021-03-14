@@ -221,4 +221,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Task::class,'created_by');
     }
+
+    public function actions()
+    {
+        return $this->hasMany(ActionTaken::class);
+    }
 }

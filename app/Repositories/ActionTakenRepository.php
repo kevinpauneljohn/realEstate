@@ -35,14 +35,24 @@ class ActionTakenRepository implements ActionTakenInterface
         return ActionTaken::where('task_checklist_id',$checklist_id);
     }
 
+    public function getAction($action_taken_id)
+    {
+        return ActionTaken::find($action_taken_id);
+    }
+
     public function update($action_taken, $action_taken_id): bool
     {
-        $actionTaken = ActionTaken::find($action_taken_id);
+        $actionTaken = $this->getAction($action_taken_id);
         $actionTaken->action = nl2br($action_taken);
         if($actionTaken->isDirty())
         {
             return $actionTaken->save();
         }
         return false;
+    }
+
+    public function destroy($action_taken_id)
+    {
+        return $this->getAction($action_taken_id)->delete();
     }
 }

@@ -17,9 +17,11 @@ class CreateActionTakensTable extends Migration
             $table->id();
             $table->unsignedBigInteger('task_checklist_id');
             $table->text('action');
+            $table->uuid('user_id');
             $table->timestamps();
 
             $table->foreign('task_checklist_id')->references('id')->on('task_checklists');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

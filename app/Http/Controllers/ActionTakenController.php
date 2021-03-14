@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\RepositoryInterface\ActionTakenInterface;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -52,11 +53,15 @@ class ActionTakenController extends Controller
         {
             $action = [
                 'task_checklist_id' => $request->input('checklist_id'),
-                'action' => nl2br($request->input('action'))
+                'action' => nl2br($request->input('action')),
+                'user_id' => auth()->user()->id
             ];
-            if($this->actionTaken->create($action))
+            if($action = $this->actionTaken->create($action))
             {
-                return response(['success' => true, 'message' => 'Action successfully created!']);
+                return response(['success' => true, 'message' => 'Action successfully created!',
+                    'action' => $action,
+                    'creator' => User::find($action->user_id)->fullname
+                ]);
             }
             return response(['success' => false, 'message' => 'An error occurred!'],400);
         }
@@ -113,11 +118,26 @@ class ActionTakenController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($this->actionTaken->destroy($id))
+        {
+            return response(['success' => true, 'message' => 'Action taken successfully deleted!']);
+        }
+        return response(['success' => false, 'message' => 'An error occurred!'],400);
     }
 
     public function actionTakenList($checklist_id)
     {
-        return $this->actionTaken->getActionTakenByChecklist($checklist_id)->get();
+        $actions = array();
+        foreach ($this->actionTaken->getActionTakenByChecklist($checklist_id)->get() as $key => $value)
+        {
+            $collection = collect($value);
+
+            $merged = $collection->merge(['is_creator' => $value['user_id'] === auth()->user()->getAuthIdentifier(),
+                'creator' => User::find($value['user_id'])->fullname
+            ]);
+
+            $actions[$key] = $merged->all();
+        }
+        return $actions;
     }
 }
