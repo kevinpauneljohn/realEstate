@@ -85,7 +85,7 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
-    @if(auth()->user()->hasRole(['super admin','admin','account manager','online warrior']))
+    @if(auth()->check() && auth()->user()->hasRole(['super admin','admin','account manager','online warrior']))
         <script src="{{ asset('js/real-time-notif.js') }}"></script>
     @endif
 </body>
