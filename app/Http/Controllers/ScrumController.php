@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ChildTask;
+use App\Events\TaskEvent;
 use App\Priority;
 use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
@@ -46,6 +47,7 @@ class ScrumController extends Controller
             'description'   => 'required|max:10000',
             'due_date'   => 'required|date',
             'priority'   => 'required',
+            'assign_to'   => 'required',
         ]);
 
         if($validation->passes())
@@ -64,6 +66,12 @@ class ScrumController extends Controller
 
             if($taskCreated = $this->task->create($task))
             {
+                event(new TaskEvent([
+                    'assigned' => $taskCreated->user !== null ? $taskCreated->user->fullname : "nobody",
+                    'title' => $taskCreated->title,
+                    'priority' => $taskCreated->priority->name,
+                    'ticket' => str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT)
+                ]));
                 activity('task')
                     ->causedBy(auth()->user()->id)
                     ->performedOn(Task::find($taskCreated->id))
@@ -79,49 +87,13 @@ class ScrumController extends Controller
     public function task_list()
     {
         $tasks = Task::all();
-        return DataTables::of($tasks)
-            ->editColumn('id',function($task){
-                $request = str_pad($task->id, 5, '0', STR_PAD_LEFT);
-                return '<a href="'.route('requests.show',['request' => $task->id]).'"><span style="color:#007bff">#'.$request.'</span></a>';
-            })
-            ->editColumn('created_by',function($task){
-                return $task->creator->fullname;
-            })
-            ->editColumn('priority_id',function($task){
-                return '<span class="right badge" style="color:white;background-color: '.$task->priority->color.'">'.$task->priority->name.'</span>';
-            })
-            ->editColumn('description',function($task){
-                return Str::of($task->description)->limit(50);
-            })
-            ->editColumn('due_date',function($task){
-                return Carbon::parse($task->due_date)->format('M d, Y').' - '.Carbon::parse($task->time)->format('g:i A');
+        return $this->task->displayTasks($tasks);
+    }
 
-            })
-            ->editColumn('assigned_to',function($task){
-                return $task->user->fullname ?? "";
-            })
-            ->editColumn('created_at',function($task){
-                return $task->created_at->format('M d, Y g:i A');
-            })
-            ->addColumn('action',function($task){
-                $action = "";
-
-                if(auth()->user()->can('view checklist'))
-                {
-                    $action .= '<a href="'.route('tasks.overview',['id' => $task->id]).'" class="btn btn-xs btn-success" title="View"><i class="fas fa-eye"></i></a>';
-                }
-                if(auth()->user()->can('edit checklist'))
-                {
-                    $action .= '<button type="button" class="btn btn-xs btn-primary edit-task-btn" title="Edit" id="'.$task->id.'" data-toggle="modal" data-target="#edit-task-modal"><i class="fas fa-edit"></i></button>';
-                }
-                if(auth()->user()->can('delete checklist'))
-                {
-                    $action .= '<button type="button" class="btn btn-xs btn-danger delete-rank-btn" title="Delete" id="'.$task->id.'"><i class="fas fa-trash"></i></button>';
-                }
-                return $action;
-            })
-            ->rawColumns(['action','id','priority_id'])
-            ->make(true);
+    public function myTaskList()
+    {
+        $tasks = $this->task->getAssignedTasks(auth()->user()->id);
+        return $this->task->displayTasks($tasks);
     }
 
     /**
@@ -206,17 +178,35 @@ class ScrumController extends Controller
      */
     public function updateAgent(Request $request)
     {
-        if($this->task->setAssignee($request->input('assigned_id'), $request->input('task_id')))
+        if($taskUpdated = $this->task->setAssignee($request->input('assigned_id'), $request->input('task_id')))
         {
+            $task = Task::where([
+                ['id','=',$request->input('task_id')],
+                ['assigned_to','=',$request->input('assigned_id')],
+            ])->first();
+            event(new TaskEvent([
+                'assigned' => $task->user !== null ? $task->user->fullname : "nobody",
+                'title' => $task->title,
+                'priority' => $task->priority->name,
+                'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT)
+            ]));
             activity('task agent')
                 ->causedBy(auth()->user()->id)
                 ->performedOn(Task::find($request->input('task_id')))
                 ->withProperties([
                     'assigned_id' => $request->input('assigned_id'),
-                    'task_id' => $request->input('task_id')
+                    'task_id' => $request->input('task_id'),
                 ])->log('updated the agent');
             return response(['success' => true, 'message' => 'Assignee successfully updated!']);
         }
         return response(['success' => false, 'message' => 'An error occurred!'],400);
+    }
+
+    public function myTasks()
+    {
+        $priorities = Priority::all();
+        $users = User::all();
+        $agents = $this->task->getAgents($this->agents);
+        return view('pages.scrum.mytask',compact('priorities','users','agents','priorities'));
     }
 }

@@ -34,7 +34,7 @@ $(document).on('submit','#task-form',function(form){
             console.log(xhr);
         }
     });
-    clear_errors('title','description','due_date','priority');
+    clear_errors('title','description','due_date','priority','assign_to');
 });
 
 $(document).on('click','.edit-task-btn',function(){

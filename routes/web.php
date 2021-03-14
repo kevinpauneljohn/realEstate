@@ -290,9 +290,11 @@ Route::put('/tasks/agent','ScrumController@updateAgent')->name('tasks.update.age
 Route::get('/tasks','ScrumController@index')->name('tasks.index')->middleware(['auth','permission:view task']);
 Route::post('/tasks','ScrumController@store')->name('tasks.store')->middleware(['auth','permission:add task']);
 Route::get('/tasks-list','ScrumController@task_list')->name('tasks.list')->middleware(['auth','permission:view task']);
+Route::get('/my-tasks-list','ScrumController@myTaskList')->name('my.tasks.list')->middleware(['auth','permission:view task']);
 Route::get('/tasks/{id}','ScrumController@show')->name('tasks.show')->middleware(['auth','permission:view task']);
 Route::put('/tasks/{id}','ScrumController@update')->name('tasks.update')->middleware(['auth','permission:view task|edit task']);
 Route::get('/tasks/overview/{id}','ScrumController@overview')->name('tasks.overview')->middleware(['auth','permission:view task']);
+Route::get('/my-tasks',[\App\Http\Controllers\ScrumController::class,'myTasks'])->name('task.mine')->middleware(['auth','permission:view task']);
 
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);

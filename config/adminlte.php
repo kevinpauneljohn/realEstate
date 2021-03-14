@@ -308,7 +308,18 @@ return [
             'text'    => 'Tasks',
             'icon'    => 'fas fa-thumbtack',
             'can'     => 'view task',
-            'route'   => 'tasks.index',
+            'submenu'   => [
+                [
+                    'text'    => 'All Tasks',
+                    'can'     => 'view task',
+                    'route'   => 'tasks.index',
+                ],
+                [
+                    'text'    => 'My Tasks',
+                    'can'     => 'view task',
+                    'route'   => 'task.mine',
+                ]
+            ]
         ],
         [
             'text'    => 'Dream Home Guide',
@@ -500,7 +511,27 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => 'https://js.pusher.com/6.0/pusher.min.js',
+                    'location' => 'https://js.pusher.com/7.0/pusher.min.js',
+                ],
+            ],
+        ],
+        'real-time-notif' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/real-time-notif.js',
+                ],
+            ],
+        ],
+        'responsive-voice' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://code.responsivevoice.org/responsivevoice.js?key=uC3LLI3C',
                 ],
             ],
         ],

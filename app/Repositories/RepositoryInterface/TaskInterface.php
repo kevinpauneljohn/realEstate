@@ -33,4 +33,16 @@ interface TaskInterface
      * @return mixed
      */
     public function setAssignee($assignee_id, $task_id);
+
+    /**
+     * @param $tasks
+     * @return mixed
+     */
+    public function displayTasks($tasks);
+
+    /**
+     * @param $user_id
+     * @return mixed
+     */
+    public function getAssignedTasks($user_id);
 }

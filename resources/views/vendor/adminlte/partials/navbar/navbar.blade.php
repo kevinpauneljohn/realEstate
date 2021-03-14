@@ -18,6 +18,36 @@
 
     <ul class="navbar-nav ml-auto reminder-notification">
 
+        @can('view task')
+            @php
+                $task = \App\Task::where('assigned_to',auth()->user()->id)->count();
+            @endphp
+            <li class="nav-item dropdown my-task-notification">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="fas fa-tasks"></i>
+                    @if($task > 0)
+                        <span class="right badge bg-danger">{{$task}}</span>
+                    @endif
+
+                </a>
+                <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">My Tasks</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <div class="media-body">
+                                <h6 align="center" class="text-muted">
+                                    <span class="text-bold text-success">{{$task}}</span> tasks
+                                </h6>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <a href="{{route('task.mine')}}" class="dropdown-item dropdown-footer">View my tasks</a>
+                </div>
+            </li>
+        @endcan
         @if(!auth()->user()->hasAnyRole('architect|client'))
             @role('super admin')
             <li class="nav-item dropdown">
