@@ -65,6 +65,10 @@
         <div class="col-lg-3">
             <div class="card card-default">
                 <div class="card-body">
+                    <strong><i class="fas fa-ticket-alt"></i> Task # <span class="text-primary text-bold">{{str_pad($task->id, 5, '0', STR_PAD_LEFT)}}</span></strong>
+
+
+                    <hr>
                     <strong><i class="fas fa-user mr-1"></i> Requester</strong>
 
                     <p class="text-muted">

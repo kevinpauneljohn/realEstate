@@ -515,16 +515,6 @@ return [
                 ],
             ],
         ],
-        'real-time-notif' => [
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => 'js/real-time-notif.js',
-                ],
-            ],
-        ],
         'responsive-voice' => [
             'active' => true,
             'files' => [
