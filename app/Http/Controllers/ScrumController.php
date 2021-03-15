@@ -26,7 +26,7 @@ class ScrumController extends Controller
     )
     {
         $this->task = $task;
-        $this->agents = ['admin','account manager','online warrior'];
+        $this->agents = ['admin','account manager','online warrior','super admin'];
     }
     public function index()
     {
@@ -105,12 +105,7 @@ class ScrumController extends Controller
      * */
     public function show($id)
     {
-        $task = Task::find($id);
-        $collection = collect($task);
-
-        $merged = $collection->merge(['collaborator' => $task->users->pluck('id')]);
-
-        return $merged->all();
+        return $this->task->getTask($id);
     }
 
     public function update(Request $request, $id)

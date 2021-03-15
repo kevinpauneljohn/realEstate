@@ -9,7 +9,6 @@ use App\Task;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class TaskRepository implements TaskInterface

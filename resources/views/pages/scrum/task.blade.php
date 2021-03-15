@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-header">
             @can('add task')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
+                <button type="button" class="btn bg-gradient-primary btn-sm add-new-task" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
             @endcan
 
         </div>
@@ -113,7 +113,7 @@
                                         <select name="assign_to" class="form-control select2" id="assign_to" style="width: 100%">
                                             <option value=""></option>
                                             @foreach($agents as $agent)
-                                                <option value="{{$agent->id}}">{{$agent->username}}</option>
+                                                <option value="{{$agent->id}}">{{$agent->fullname}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -182,6 +182,39 @@
 
         //Initialize Select2 Elements
         $('.select2').select2();
+        @can('view task')
+            $(document).on('click','.add-new-task',function(){
+                $('#add-task-modal').find('.modal-title').text("Add New Task");
+                $('#add-task-modal').find('form').attr('id','task-form').find('input[name=task_id]').remove();
+            });
+        @endcan
+
+        @can('edit task')
+            let taskModal = $('#add-task-modal');
+            $(document).on('click','.edit-task-btn',function(){
+                let id = this.id;
+
+                taskModal.find('input[name=task_id], .text-danger').remove();
+                taskModal.find('.modal-title').text("Edit Task");
+                taskModal.find('form').attr('id','edit-task-form').prepend('<input type="hidden" name="task_id" value="'+id+'">');
+                $('#add-task-modal').modal('toggle');
+                $.ajax({
+                    'url' : '/tasks/'+id,
+                    'type' : 'GET',
+                    beforeSend: function(){
+
+                    },success: function(result){
+
+                        console.log(result)
+
+
+
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            });
+        @endcan
     </script>
 @stop
 

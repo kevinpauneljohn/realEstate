@@ -37,27 +37,6 @@ $(document).on('submit','#task-form',function(form){
     clear_errors('title','description','due_date','priority','assign_to');
 });
 
-$(document).on('click','.edit-task-btn',function(){
-    let id = this.id;
-
-    $.ajax({
-        'url' : '/tasks/'+id,
-        'type' : 'GET',
-        beforeSend: function(){
-            $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',true);
-        },success: function(result){
-            $('#taskId').val(id);
-            $('#edit_title').val(result.name);
-            $('#edit_description').val(result.description);
-            $('#edit_priority').val(result.priority_id);
-            $('#edit_collaborator').val(result.collaborator).change();
-
-            $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
-        },error: function(xhr, status, error){
-            console.log(xhr);
-        }
-    });
-});
 
 $(document).on('submit','#edit-task-form',function(form){
     form.preventDefault();
