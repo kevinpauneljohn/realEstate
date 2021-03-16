@@ -70,7 +70,8 @@ class ScrumController extends Controller
                     'assigned' => $taskCreated->user !== null ? $taskCreated->user->fullname : "nobody",
                     'title' => $taskCreated->title,
                     'priority' => $taskCreated->priority->name,
-                    'ticket' => str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT)
+                    'ticket' => str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT),
+                    'action' => 'task created'
                 ]));
                 activity('task')
                     ->causedBy(auth()->user()->id)
@@ -110,49 +111,40 @@ class ScrumController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $validation = Validator::make($request->all(),[
-            'edit_title'         => 'required',
-            'edit_description'   => 'required|max:10000',
-            'edit_priority'      => 'required',
-            'edit_collaborator'  => 'required'
-        ],[
-            'edit_title.required'                => 'Title field is required',
-            'edit_description.required'          => 'Description field is required',
-            'edit_priority.required'             => 'Priority field is required',
-            'edit_collaborator.required'         => 'Collaborator field is required'
+            'title'         => 'required|max:300',
+            'description'   => 'required|max:10000',
+            'due_date'   => 'required|date',
+            'priority'   => 'required',
+            'assign_to'   => 'required',
         ]);
 
         if($validation->passes())
         {
-            $changeCtr = 0;
-            $task = Task::find($id);
-            $task->name = $request->edit_title;
-            $task->description = $request->edit_description;
-            $task->priority_id = $request->edit_priority;
-            if($task->isDirty())
+            $data = [
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'due_date' => $request->input('due_date'),
+                'time' => $request->input('time'),
+                'assigned_to' => $request->input('assign_to'),
+                'priority_id' => $request->input('priority'),
+            ];
+
+            if($taskCreated = $this->task->update($id, $data))
             {
-                $task->save();
-                $changeCtr = 1;
+                event(new TaskEvent([
+                    'assigned' => $taskCreated->user !== null ? $taskCreated->user->fullname : "nobody",
+                    'title' => $taskCreated->title,
+                    'priority' => $taskCreated->priority->name,
+                    'ticket' => str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT),
+                    'action' => 'task updated'
+                ]));
+
+                return response(['success' => true, 'message' => 'Task successfully updated!', $taskCreated]);
             }
-
-            ///update the task user table
-            DB::table('task_user')->where('task_id','=',$task->id)->delete();
-                $collaborator = collect($request->edit_collaborator);
-                if($collaborator->count() > 0)
-                {
-                    foreach ($request->edit_collaborator as $value)
-                    {
-                        DB::table('task_user')->insert([
-                            ['task_id' => $task->id, 'user_id' => $value]
-                        ]);
-                    }
-                }
-
-                return response()->json(['success' => true, 'message' => 'Task successfully updated!']);
-
+            return response(['success' => false, 'message' => 'No changes occurred!']);
         }
-        return response()->json($validation->errors());
+        return response($validation->errors());
     }
 
     /**
@@ -183,7 +175,8 @@ class ScrumController extends Controller
                 'assigned' => $task->user !== null ? $task->user->fullname : "nobody",
                 'title' => $task->title,
                 'priority' => $task->priority->name,
-                'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT)
+                'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
+                'action' => 'task agent updated'
             ]));
             activity('task agent')
                 ->causedBy(auth()->user()->id)

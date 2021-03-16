@@ -21,6 +21,13 @@ interface TaskInterface
     public function create(array $task);
 
     /**
+     * @param $task_id
+     * @param array $data
+     * @return mixed
+     */
+    public function update($task_id, array $data);
+
+    /**
      * get a specified task
      * @param $task_id
      * @return mixed

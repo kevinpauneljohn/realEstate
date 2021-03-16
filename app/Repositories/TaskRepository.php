@@ -30,6 +30,19 @@ class TaskRepository implements TaskInterface
         return Task::findOrFail($task_id);
     }
 
+    public function update($task_id, array $data)
+    {
+        $task = $this->getTask($task_id);
+        $task->fill($data);
+        if($task->isDirty())
+        {
+            $task->save();
+            return $task;
+        }
+        return false;
+
+    }
+
     public function setAssignee($assignee_id, $task_id)
     {
         $task = $this->getTask($task_id);
