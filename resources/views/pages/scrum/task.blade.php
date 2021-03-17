@@ -152,6 +152,7 @@
     <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
+    <script src="{{asset('js/validation.js')}}"></script>
     <script src="{{asset('js/task.js')}}"></script>
     <script>
         $(function() {
@@ -187,6 +188,45 @@
                 $('#add-task-modal').find('.modal-title').text("Add New Task");
                 $('#add-task-modal').find('form').attr('id','task-form').find('input[name=task_id]').remove();
             });
+
+        $(document).on('submit','#task-form',function(form){
+            form.preventDefault();
+
+            let data = $(this).serializeArray();
+
+            $.ajax({
+                'url' : '/tasks',
+                'type' : 'POST',
+                'data' : data,
+                beforeSend: function(){
+                    $('.submit-task-btn').val('Saving ...').attr('disabled',true);
+                },success: function(result){
+
+                    if(result.success === true)
+                    {
+                        let table = $('#task-list').DataTable();
+                        table.ajax.reload();
+                        $('#task-form').trigger('reset');
+                        $('#task-form #collaborator').empty();
+                        toastr.success(result.message);
+
+                        $('#add-task-modal').modal('toggle');
+                        $('#assign_to, #priority').val([]).trigger('change');
+                    }
+
+                    $.each(result, function (key, value) {
+                        let element = $('.'+key);
+
+                        element.find('.error-'+key).remove();
+                        element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                    });
+                    $('.submit-task-btn').val('Save').attr('disabled',false);
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+            clear_errors('title','description','due_date','priority','assign_to');
+        });
         @endcan
 
         @can('edit task')
@@ -220,81 +260,42 @@
         $(document).on('submit','#edit-task-form',function(form){
             form.preventDefault();
 
-            let formData = $(this).serializeArray();
-            console.log('test '+formData);
-            // $.ajax({
-            //     'url' : '/tasks/'+data[0].value,
-            //     'type' : 'PUT',
-            //     'data' : data,
-            //     beforeSend: function(){
-            //         $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',true);
-            //     },success: function(result){
-            //         console.log(result);
-            //         if(result.success === true)
-            //         {
-            //             customAlert('success',result.message);
-            //             let table = $('#task-list').DataTable();
-            //             table.ajax.reload();
-            //             $('#edit-task-modal').modal('toggle');
-            //         }else if(result.success === false)
-            //         {
-            //             customAlert('warning',result.message);
-            //         }
-            //
-            //         $.each(result, function (key, value) {
-            //             let element = $('.'+key);
-            //
-            //             element.find('.error-'+key).remove();
-            //             element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-            //         });
-            //
-            //         $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
-            //     },error: function(xhr, status, error){
-            //         console.log(xhr);
-            //     }
-            // });
+            let data = $(this).serializeArray();
+            console.log(data);
+            $.ajax({
+                'url' : '/tasks/'+data[0].value,
+                'type' : 'PUT',
+                'data' : data,
+                beforeSend: function(){
+                    $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',true);
+                },success: function(result){
+                    console.log(result);
+                    if(result.success === true)
+                    {
+                        customAlert('success',result.message);
+                        let table = $('#task-list').DataTable();
+                        table.ajax.reload();
+                        $('#edit-task-modal').modal('toggle');
+                    }else if(result.success === false)
+                    {
+                        customAlert('warning',result.message);
+                    }
+
+                    $.each(result, function (key, value) {
+                        let element = $('.'+key);
+
+                        element.find('.error-'+key).remove();
+                        element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                    });
+
+                    $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
             clear_errors('title','description','due_date','priority','assign_to');
         });
         @endcan
-
-        // $(document).on('submit','#task-form',function(form){
-        //     form.preventDefault();
-        //
-        //     let data = $(this).serializeArray();
-        //
-        //     $.ajax({
-        //         'url' : '/tasks',
-        //         'type' : 'POST',
-        //         'data' : data,
-        //         beforeSend: function(){
-        //             $('.submit-task-btn').val('Saving ...').attr('disabled',true);
-        //         },success: function(result){
-        //
-        //             if(result.success === true)
-        //             {
-        //                 let table = $('#task-list').DataTable();
-        //                 table.ajax.reload();
-        //                 $('#task-form').trigger('reset');
-        //                 $('#task-form #collaborator').empty();
-        //                 toastr.success(result.message);
-        //
-        //                 $('#add-task-modal').modal('toggle');
-        //                 $('#assign_to, #priority').val([]).trigger('change');
-        //             }
-        //
-        //             $.each(result, function (key, value) {
-        //                 let element = $('.'+key);
-        //
-        //                 element.find('.error-'+key).remove();
-        //                 element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-        //             });
-        //             $('.submit-task-btn').val('Save').attr('disabled',false);
-        //         },error: function(xhr, status, error){
-        //             console.log(xhr);
-        //         }
-        //     });
-        //     clear_errors('title','description','due_date','priority','assign_to');
-        // });
     </script>
 @stop
 

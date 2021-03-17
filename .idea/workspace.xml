@@ -33,6 +33,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="task module and checklist module">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -491,14 +492,7 @@
       <workItem from="1615616939030" duration="866000" />
       <workItem from="1615685478473" duration="25517000" />
       <workItem from="1615719157300" duration="14260000" />
-      <workItem from="1615897494356" duration="22495000" />
-    </task>
-    <task id="LOCAL-00697" summary="dream home guide project module">
-      <created>1614917626428</created>
-      <option name="number" value="00697" />
-      <option name="presentableId" value="LOCAL-00697" />
-      <option name="project" value="LOCAL" />
-      <updated>1614917626428</updated>
+      <workItem from="1615897494356" duration="23197000" />
     </task>
     <task id="LOCAL-00698" summary="dream home guide project module">
       <created>1614918736293</created>
@@ -836,7 +830,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615969331500</updated>
     </task>
-    <option name="localTasksCounter" value="746" />
+    <task id="LOCAL-00746" summary="task module and checklist module">
+      <created>1615969469471</created>
+      <option name="number" value="00746" />
+      <option name="presentableId" value="LOCAL-00746" />
+      <option name="project" value="LOCAL" />
+      <updated>1615969469471</updated>
+    </task>
+    <option name="localTasksCounter" value="747" />
     <servers />
   </component>
   <component name="TodoView">
