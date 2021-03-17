@@ -223,38 +223,38 @@
 
             let data = $('#edit-task-form').serializeArray();
             console.log(data);
-            $.ajax({
-                'url' : '/tasks/'+data[0].value,
-                'type' : 'PUT',
-                'data' : data,
-                beforeSend: function(){
-                    $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',true);
-                },success: function(result){
-                    console.log(result);
-                    if(result.success === true)
-                    {
-                        customAlert('success',result.message);
-                        let table = $('#task-list').DataTable();
-                        table.ajax.reload();
-                        $('#edit-task-modal').modal('toggle');
-                    }else if(result.success === false)
-                    {
-                        customAlert('warning',result.message);
-                    }
-
-                    $.each(result, function (key, value) {
-                        let element = $('.'+key);
-
-                        element.find('.error-'+key).remove();
-                        element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-                    });
-
-                    $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
-                },error: function(xhr, status, error){
-                    console.log(xhr);
-                }
-            });
-            clear_errors('title','description','due_date','priority','assign_to');
+            // $.ajax({
+            //     'url' : '/tasks/'+data[0].value,
+            //     'type' : 'PUT',
+            //     'data' : data,
+            //     beforeSend: function(){
+            //         $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',true);
+            //     },success: function(result){
+            //         console.log(result);
+            //         if(result.success === true)
+            //         {
+            //             customAlert('success',result.message);
+            //             let table = $('#task-list').DataTable();
+            //             table.ajax.reload();
+            //             $('#edit-task-modal').modal('toggle');
+            //         }else if(result.success === false)
+            //         {
+            //             customAlert('warning',result.message);
+            //         }
+            //
+            //         $.each(result, function (key, value) {
+            //             let element = $('.'+key);
+            //
+            //             element.find('.error-'+key).remove();
+            //             element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+            //         });
+            //
+            //         $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
+            //     },error: function(xhr, status, error){
+            //         console.log(xhr);
+            //     }
+            // });
+            // clear_errors('title','description','due_date','priority','assign_to');
         });
         @endcan
     </script>
