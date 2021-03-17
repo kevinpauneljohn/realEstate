@@ -221,7 +221,7 @@
         $(document).on('submit','#edit-task-form',function(form){
             form.preventDefault();
 
-            let data = $(this).serializeArray();
+            let data = $('#edit-task-form').serializeArray();
             console.log(data);
             $.ajax({
                 'url' : '/tasks/'+data[0].value,
