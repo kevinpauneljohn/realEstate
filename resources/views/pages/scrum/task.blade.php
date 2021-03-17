@@ -20,8 +20,15 @@
     <div class="card">
         <div class="card-header">
             @can('add task')
-                <button type="button" class="btn bg-gradient-primary btn-sm add-new-task" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
+                <button type="button" class="btn bg-gradient-primary btn-sm add-new-task mr-1" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
             @endcan
+
+            <select class="select2" name="statusChange" style="width: 150px;">
+                <option value="">All</option>
+                <option value="pending" @if(\Illuminate\Support\Facades\Session::get('status') === 'pending') selected @endif>Pending</option>
+                <option value="on-going" @if(\Illuminate\Support\Facades\Session::get('status') === 'on-going') selected @endif>On-going</option>
+                <option value="completed" @if(\Illuminate\Support\Facades\Session::get('status') === 'completed') selected @endif>Completed</option>
+            </select>
 
         </div>
         <div class="card-body">
@@ -295,6 +302,25 @@
             clear_errors('title','description','due_date','priority','assign_to');
         });
         @endcan
+
+        $(document).on('change','select[name=statusChange]',function(){
+            let value = this.value;
+            $.ajax({
+                'url' : '{{route('display.task.change')}}',
+                'type' : 'POST',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {
+                    'status' : value
+                },beforeSend: function(){
+
+                },success: function(response){
+                    let table = $('#task-list').DataTable();
+                    table.ajax.reload();
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+        });
     </script>
 @stop
 

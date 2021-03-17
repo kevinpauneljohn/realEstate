@@ -10,6 +10,7 @@ use App\Task;
 use App\TaskChecklist;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
@@ -87,7 +88,13 @@ class ScrumController extends Controller
 
     public function task_list()
     {
-        $tasks = Task::all();
+        $status =\session('status');
+        if(!isset($status))
+        {
+            $tasks = Task::all();
+        }else{
+            $tasks = Task::where('status',$status)->get();
+        }
         return $this->task->displayTasks($tasks);
     }
 
@@ -95,6 +102,20 @@ class ScrumController extends Controller
     {
         $tasks = $this->task->getAssignedTasks(auth()->user()->id);
         return $this->task->displayTasks($tasks);
+    }
+
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function changeDisplayTask(Request $request): void
+    {
+        \session(['status' => $request->input('status')]);
+    }
+
+    public function changeDisplayMyTask(Request $request): void
+    {
+        \session(['statusMyTask' => $request->input('status')]);
     }
 
     /**

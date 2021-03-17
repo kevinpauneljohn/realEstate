@@ -124,7 +124,14 @@ class TaskRepository implements TaskInterface
 
     public function getAssignedTasks($user_id)
     {
-        return Task::where('assigned_to',$user_id)->get();
+        $status =\session('statusMyTask');
+        if(!isset($status))
+        {
+            $tasks = Task::where('assigned_to',$user_id)->get();
+        }else{
+            $tasks = Task::where('status',$status)->where('assigned_to',$user_id)->get();
+        }
+        return $tasks;
     }
 
     public function reopen($task_id, $remarks)

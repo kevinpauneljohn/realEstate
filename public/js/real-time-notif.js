@@ -25,6 +25,6 @@ channel.bind('my-event', function(data) {
     $('.main-section .task-action-button').load(window.location.href+' .task-action-button');
 
     $('.reminder-notification').find('.my-task-notification').load(window.location.href+' .my-task-notification');
-    let table = $('#task-list, #check-list').DataTable();
+    let table = $('#task-list, #check-list, #remarks-list').DataTable();
     table.ajax.reload();
 });
