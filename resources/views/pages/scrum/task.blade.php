@@ -152,7 +152,6 @@
     <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
-    <script src="{{asset('js/validation.js')}}"></script>
     <script src="{{asset('js/task.js')}}"></script>
     <script>
         $(function() {
@@ -218,44 +217,44 @@
                 });
             });
 
-        // $(document).on('submit','#edit-task-form',function(form){
-        //     form.preventDefault();
-        //
-        //     let formData = $(this).serialize();
-        //     console.log('test '+formData);
-            // $.ajax({
-            //     'url' : '/tasks/'+data[0].value,
-            //     'type' : 'PUT',
-            //     'data' : data,
-            //     beforeSend: function(){
-            //         $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',true);
-            //     },success: function(result){
-            //         console.log(result);
-            //         if(result.success === true)
-            //         {
-            //             customAlert('success',result.message);
-            //             let table = $('#task-list').DataTable();
-            //             table.ajax.reload();
-            //             $('#edit-task-modal').modal('toggle');
-            //         }else if(result.success === false)
-            //         {
-            //             customAlert('warning',result.message);
-            //         }
-            //
-            //         $.each(result, function (key, value) {
-            //             let element = $('.'+key);
-            //
-            //             element.find('.error-'+key).remove();
-            //             element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-            //         });
-            //
-            //         $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
-            //     },error: function(xhr, status, error){
-            //         console.log(xhr);
-            //     }
-            // });
-            // clear_errors('title','description','due_date','priority','assign_to');
-        // });
+        $(document).on('submit','#edit-task-form',function(form){
+            form.preventDefault();
+
+            let formData = $(this).serializeArray();
+            console.log('test '+formData);
+            $.ajax({
+                'url' : '/tasks/'+data[0].value,
+                'type' : 'PUT',
+                'data' : data,
+                beforeSend: function(){
+                    $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',true);
+                },success: function(result){
+                    console.log(result);
+                    if(result.success === true)
+                    {
+                        customAlert('success',result.message);
+                        let table = $('#task-list').DataTable();
+                        table.ajax.reload();
+                        $('#edit-task-modal').modal('toggle');
+                    }else if(result.success === false)
+                    {
+                        customAlert('warning',result.message);
+                    }
+
+                    $.each(result, function (key, value) {
+                        let element = $('.'+key);
+
+                        element.find('.error-'+key).remove();
+                        element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                    });
+
+                    $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+            clear_errors('title','description','due_date','priority','assign_to');
+        });
         @endcan
 
         // $(document).on('submit','#task-form',function(form){
