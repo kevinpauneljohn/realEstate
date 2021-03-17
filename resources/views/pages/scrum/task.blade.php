@@ -222,6 +222,7 @@
             form.preventDefault();
 
             let data = $(this).serializeArray();
+            console.log(data);
             $.ajax({
                 'url' : '/tasks/'+data[0].value,
                 'type' : 'PUT',
