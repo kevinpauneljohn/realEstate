@@ -19,7 +19,11 @@ channel.bind('my-event', function(data) {
     {
         read = "task number "+parseInt(data.message.ticket)+" was assigned to "+data.message.assigned;
     }
+
     responsiveVoice.speak(read);
+
+    $('.main-section .task-action-button').load(window.location.href+' .task-action-button');
+
     $('.reminder-notification').find('.my-task-notification').load(window.location.href+' .my-task-notification');
     let table = $('#task-list').DataTable();
     table.ajax.reload();

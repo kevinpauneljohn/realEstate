@@ -226,4 +226,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ActionTaken::class);
     }
+
+    public function testRemarks()
+    {
+        return $this->hasMany(TaskRemark::class);
+    }
 }

@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
+use App\TaskRemark;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -47,6 +48,9 @@ class TaskRepository implements TaskInterface
     {
         $task = $this->getTask($task_id);
         $task->assigned_to = $assignee_id;
+
+        //set the status to pending if it was assigned to an agent and open if there are no agents assigned
+        $task->status = !empty($assignee_id) ? "pending" : "open";
         return $task->save();
     }
 
@@ -97,8 +101,40 @@ class TaskRepository implements TaskInterface
             ->make(true);
     }
 
+    public function displayRemarks($task_id)
+    {
+        $taskRemarks = TaskRemark::where('task_id',$task_id)->get();
+        return DataTables::of($taskRemarks)
+            ->addColumn('task',function($remarks){
+                $action = '';
+                $action .= '<h6 class="text-info">'.$remarks->user->fullname.'</h6>';
+                $action .= '<span class="text-muted">'.Carbon::parse($remarks->created_at)->format('Y, M d g:i:a').'</span>';
+                $action .= '<p class="text-bold">'.$remarks->remarks.'</p>';
+
+                return $action;
+            })
+            ->addColumn('action',function($remarks){
+                $action = "";
+                return $action;
+            })
+            ->rawColumns(['action','task'])
+            ->make(true);
+
+    }
+
     public function getAssignedTasks($user_id)
     {
         return Task::where('assigned_to',$user_id)->get();
     }
+
+    public function reopen($task_id, $remarks)
+    {
+        $taskRemarks = new TaskRemark();
+        $taskRemarks->user_id = auth()->user()->id;
+        $taskRemarks->remarks = $remarks;
+        $taskRemarks->task_id = $task_id;
+        $taskRemarks->save();
+        return $taskRemarks;
+    }
+
 }

@@ -295,6 +295,9 @@ Route::get('/tasks/{id}','ScrumController@show')->name('tasks.show')->middleware
 Route::put('/tasks/{id}','ScrumController@update')->name('tasks.update')->middleware(['auth','permission:view task|edit task']);
 Route::get('/tasks/overview/{id}','ScrumController@overview')->name('tasks.overview')->middleware(['auth','permission:view task']);
 Route::get('/my-tasks',[\App\Http\Controllers\ScrumController::class,'myTasks'])->name('task.mine')->middleware(['auth','permission:view task']);
+Route::put('/start-tasks/{task}',[\App\Http\Controllers\ScrumController::class,'changeTaskStatus'])->name('task.start')->middleware(['auth','permission:view task']);
+Route::post('/reopen-task',[\App\Http\Controllers\ScrumController::class,'reopenTask'])->name('task.reopen')->middleware(['auth','permission:view task']);
+Route::get('/display-remarks/{task_id}',[\App\Http\Controllers\ScrumController::class,'displayRemarks'])->name('remarks.display')->middleware(['auth','permission:view task']);
 
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);

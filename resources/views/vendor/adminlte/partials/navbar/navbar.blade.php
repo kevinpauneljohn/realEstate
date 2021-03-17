@@ -20,7 +20,7 @@
 
         @can('view task')
             @php
-                $task = \App\Task::where('assigned_to',auth()->user()->id)->count();
+                $task = \App\Task::where('assigned_to',auth()->user()->id)->where('status','!=','completed')->count();
             @endphp
             <li class="nav-item dropdown my-task-notification">
                 <a class="nav-link" data-toggle="dropdown" href="#">

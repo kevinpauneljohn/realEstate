@@ -58,7 +58,7 @@ class ScrumController extends Controller
                 'title'    => $request->input('title'),
                 'description'    => $request->input('description'),
                 'due_date'    => $request->input('due_date'),
-                'status'    => 'pending',
+                'status'    => !empty($request->input('assign_to')) ? 'pending' : 'open',
                 'time'    => $request->input('time'),
                 'assigned_to'    => $request->input('assign_to'),
                 'priority_id'    => $request->input('priority'),
@@ -124,6 +124,7 @@ class ScrumController extends Controller
             $data = [
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
+                'status' => !empty($request->input('assign_to')) ? 'pending' : 'open',
                 'due_date' => $request->input('due_date'),
                 'time' => $request->input('time'),
                 'assigned_to' => $request->input('assign_to'),
@@ -139,6 +140,11 @@ class ScrumController extends Controller
                     'ticket' => str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT),
                     'action' => 'task updated'
                 ]));
+
+                activity('task updated')
+                    ->causedBy(auth()->user()->id)
+                    ->performedOn($taskCreated)
+                    ->withProperties($taskCreated)->log('updated the agent');
 
                 return response(['success' => true, 'message' => 'Task successfully updated!', $taskCreated]);
             }
@@ -196,5 +202,88 @@ class ScrumController extends Controller
         $users = User::all();
         $agents = $this->task->getAgents($this->agents);
         return view('pages.scrum.mytask',compact('priorities','users','agents','priorities'));
+    }
+
+    public function changeTaskStatus($id)
+    {
+        $task = $this->task->getTask($id);
+        if($task->assigned_to === auth()->user()->id)
+        {
+            $task->status = $this->setStatus($task->status);
+            if($task->save())
+            {
+                event(new TaskEvent([
+                    'assigned' => $task !== null ? $task->user->fullname : "nobody",
+                    'title' => $task->title,
+                    'priority' => $task->priority->name,
+                    'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
+                    'action' => 'task updated'
+                ]));
+
+                activity('task updated')
+                    ->causedBy(auth()->user()->id)
+                    ->performedOn($task)
+                    ->withProperties($task)->log('task status updated');
+                return response(['success' => true,
+                    'message' => 'Task ' . $this->setStatus($task->status)
+                ]);
+            }
+            return response(['success' => false, 'message' => 'An error occurred'],400);
+        }
+        return response(['success' => false, 'message' => 'You are not allowed to access this action'],403);
+    }
+
+    /**
+     * set the task status
+     * @param $status
+     * @return string
+     */
+    private function setStatus($status): string
+    {
+        switch ($status)
+        {
+            case $status === "pending":
+                return "on-going";
+            case $status === "on-going":
+                return "completed";
+            default:
+                return "";
+        }
+    }
+
+    public function reopenTask(Request $request)
+    {
+        $validation = Validator::make($request->all(),[
+           'remarks' => 'required|max:1000',
+        ]);
+
+        if($validation->passes())
+        {
+            if($this->task->reopen($request->input('task_id'),$request->input('remarks')))
+            {
+                $task = $this->task->update($request->input('task_id'),['status' => 'pending']);
+
+                event(new TaskEvent([
+                    'assigned' => $task !== null ? $task->user->fullname : "nobody",
+                    'title' => $task->title,
+                    'priority' => $task->priority->name,
+                    'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
+                    'action' => 'task updated'
+                ]));
+
+                activity('task updated')
+                    ->causedBy(auth()->user()->id)
+                    ->performedOn($task)
+                    ->withProperties($task)->log('task status reopened');
+                return response(['success' => true, 'message' => 'Task Reopen']);
+            }
+            return response(['success' => false, 'message' => 'An error occurred!'],400);
+        }
+        return response($validation->errors());
+    }
+
+    public function displayRemarks($id)
+    {
+        return $this->task->displayRemarks($id);
     }
 }

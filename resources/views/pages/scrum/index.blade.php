@@ -20,9 +20,10 @@
 @section('content')
     <div class="row">
         <div class="col-lg-9">
-            <div class="card card-default">
+            <div class="card card-default main-section">
                 <div class="card-header">
                     <h3 class="card-title">Request Title: <span class="text-info">{{ucwords($task->title)}}</span></h3>
+                    <span class="float-right task-action-button"><x-task-action-button id="{{$task->id}}"></x-task-action-button> </span>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -112,6 +113,18 @@
                     <strong><i class="fas fa-info-circle mr-1"></i> Priority</strong>
 
                     <p class="text-muted">{{$task->priority->name}}</p>
+                </div>
+            </div>
+
+            <div class="card card-default">
+                <div class="card-body">
+                    <table id="remarks-list" class="table table-bordered table-striped" role="grid">
+                        <thead>
+                        <tr role="row">
+                            <th>Remarks</th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -223,6 +236,14 @@
     <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <style>
+        #remarks-list_length, #remarks-list_filter, .dataTables_info{
+            display:none;
+        }
+        .dataTables_wrapper {
+            overflow-x: hidden;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -605,6 +626,68 @@
                 }
             });
 
+        });
+
+        $(document).on('click','button[name=start_task]',function(){
+            let id = this.value;
+            $.ajax({
+                'url' : '/start-tasks/'+id,
+                'type' : 'PUT',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                beforeSend: function(){
+                    $('.task-action-button').find('button').attr('disabled',true);
+                },success: function(response){
+                    console.log(response);
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+        });
+
+        $(document).on('submit','#set-status-form',function(form){
+            form.preventDefault();
+            let data = $(this).serializeArray();
+
+            $.ajax({
+                'url' : '{{route('task.reopen')}}',
+                'type' : 'POST',
+                'data' : data,
+                beforeSend: function(){
+
+                },success: function (response){
+                    console.log(response);
+
+                    if(response.success === true)
+                    {
+                        customAlert('success',response.message);
+                        $('#set-status-form').trigger('reset');
+                        $('#set-status').modal('toggle');
+                    }
+
+                    $.each(response, function (key, value) {
+                        let element = $('.'+key);
+
+                        element.find('.error-'+key).remove();
+                        element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                    });
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+        });
+
+        $(function() {
+            $('#remarks-list').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('remarks.display',$task->id) !!}',
+                columns: [
+                    { data: 'task', name: 'task', orderable: false, searchable: false},
+                    // { data: 'action', name: 'action', orderable: false, searchable: false}
+                ],
+                responsive:true,
+                order:[0,'desc']
+            });
         });
     </script>
 @stop

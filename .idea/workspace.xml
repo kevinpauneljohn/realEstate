@@ -37,9 +37,11 @@
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/TaskRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/TaskRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/real-time-notif.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/real-time-notif.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/task.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/task.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vendor/adminlte/partials/navbar/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/adminlte/partials/navbar/navbar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -497,14 +499,7 @@
       <workItem from="1615616939030" duration="866000" />
       <workItem from="1615685478473" duration="25517000" />
       <workItem from="1615719157300" duration="14260000" />
-      <workItem from="1615897494356" duration="4947000" />
-    </task>
-    <task id="LOCAL-00687" summary="dream home guide project module">
-      <created>1614706281677</created>
-      <option name="number" value="00687" />
-      <option name="presentableId" value="LOCAL-00687" />
-      <option name="project" value="LOCAL" />
-      <updated>1614706281677</updated>
+      <workItem from="1615897494356" duration="20021000" />
     </task>
     <task id="LOCAL-00688" summary="dream home guide project module">
       <created>1614707025533</created>
@@ -842,7 +837,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615776953297</updated>
     </task>
-    <option name="localTasksCounter" value="736" />
+    <task id="LOCAL-00736" summary="task module and checklist module">
+      <created>1615903150834</created>
+      <option name="number" value="00736" />
+      <option name="presentableId" value="LOCAL-00736" />
+      <option name="project" value="LOCAL" />
+      <updated>1615903150835</updated>
+    </task>
+    <option name="localTasksCounter" value="737" />
     <servers />
   </component>
   <component name="TodoView">

@@ -48,8 +48,21 @@ interface TaskInterface
     public function displayTasks($tasks);
 
     /**
+     * @param $task_id
+     * @return mixed
+     */
+    public function displayRemarks($task_id);
+
+    /**
      * @param $user_id
      * @return mixed
      */
     public function getAssignedTasks($user_id);
+
+    /**
+     * @param $task_id
+     * @param $remarks
+     * @return mixed
+     */
+    public function reopen($task_id, $remarks);
 }
