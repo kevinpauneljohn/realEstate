@@ -27,11 +27,13 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <textarea class="form-control" name="remarks" style="min-height: 300px;"></textarea>
+                            <div class="form-group remarks">
+                                <textarea class="form-control" name="remarks" id="remarks" style="min-height: 300px;"></textarea>
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary submit-checklist-btn" value="Update Status">
+                            <input type="submit" class="btn btn-primary remarks-btn" value="Update Status">
                         </div>
                     </div>
                     <!-- /.modal-content -->

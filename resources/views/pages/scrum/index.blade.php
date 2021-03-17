@@ -653,7 +653,7 @@
                 'type' : 'POST',
                 'data' : data,
                 beforeSend: function(){
-
+                    $('#set-status-form').find('.remarks-btn').val('Updating ...').attr('disabled',true);
                 },success: function (response){
                     console.log(response);
 
@@ -662,6 +662,9 @@
                         customAlert('success',response.message);
                         $('#set-status-form').trigger('reset');
                         $('#set-status').modal('toggle');
+
+                        let table = $('#remarks-list').DataTable();
+                        table.ajax.reload();
                     }
 
                     $.each(response, function (key, value) {
@@ -670,10 +673,13 @@
                         element.find('.error-'+key).remove();
                         element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
                     });
+
+                    $('#set-status-form').find('.remarks-btn').val('Update Status').attr('disabled',false);
                 },error: function(xhr, status, error){
                     console.log(xhr);
                 }
             });
+            clear_errors('remarks');
         });
 
         $(function() {

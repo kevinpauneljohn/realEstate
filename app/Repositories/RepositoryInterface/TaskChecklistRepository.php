@@ -23,10 +23,14 @@ class TaskChecklistRepository implements TaskChecklistInterface
         return DataTables::of($this->getChecklistByTaskId($task_id)->get())
             ->addColumn('completed',function($checklist){
                 $action = "";
+
                 $checked = $checklist->status === "completed" ? "checked":"";
                 if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($checklist->task->assigned_to === auth()->user()->id && auth()->user()->can('view checklist')))
                 {
-                    $action .= '<input type="checkbox" class="form-control check-list-box" value="'.$checklist->id.'" '.$checked.'>';
+                    if($checklist->task->status === "on-going" || $checklist->task->status === "completed")
+                    {
+                        $action .= '<input type="checkbox" class="form-control check-list-box" value="'.$checklist->id.'" '.$checked.'>';
+                    }
                 }else{
                     $action .= '<input type="checkbox" class="form-control" value="'.$checklist->id.'" '.$checked.' disabled>';
                 }
@@ -37,15 +41,16 @@ class TaskChecklistRepository implements TaskChecklistInterface
             ->addColumn('action',function($checklist){
                 $action = "";
 
-                $action .= '<button class="btn btn-info btn-xs log-action" id="'.$checklist->id.'" title="log action taken" data-toggle="modal" data-target="#action-taken"><i class="far fa-address-book"></i></button>';
-                if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($checklist->task->assigned_to === auth()->user()->id && auth()->user()->can('edit checklist')))
+                if($checklist->task->status === "on-going" || $checklist->task->status === "completed")
                 {
-                    $action .= '<button class="btn btn-default btn-xs edit" id="'.$checklist->id.'" data-toggle="modal" data-target="#edit-checklist"><i class="fas fa-edit"></i></button>';
-                    $action .= '<button class="btn btn-default btn-xs delete" id="'.$checklist->id.'"><i class="fas fa-trash"></i></button>';
+                    $action .= '<button class="btn btn-info btn-xs log-action" id="'.$checklist->id.'" title="log action taken" data-toggle="modal" data-target="#action-taken"><i class="far fa-address-book"></i></button>';
+                    if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($checklist->task->assigned_to === auth()->user()->id && auth()->user()->can('edit checklist')))
+                    {
+                        $action .= '<button class="btn btn-default btn-xs edit" id="'.$checklist->id.'" data-toggle="modal" data-target="#edit-checklist"><i class="fas fa-edit"></i></button>';
+                        $action .= '<button class="btn btn-default btn-xs delete" id="'.$checklist->id.'"><i class="fas fa-trash"></i></button>';
+                    }
                 }
                 return $action;
-//                return auth()->user()->task;
-//                return $checklist->task;
             })
             ->rawColumns(['completed','action'])
             ->make(true);

@@ -153,7 +153,6 @@
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
     <script src="{{asset('js/validation.js')}}"></script>
-    <script src="{{asset('js/task.js')}}"></script>
     <script>
         $(function() {
             $('#task-list').DataTable({
