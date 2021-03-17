@@ -491,14 +491,7 @@
       <workItem from="1615616939030" duration="866000" />
       <workItem from="1615685478473" duration="25517000" />
       <workItem from="1615719157300" duration="14260000" />
-      <workItem from="1615897494356" duration="22359000" />
-    </task>
-    <task id="LOCAL-00696" summary="dream home guide project module">
-      <created>1614917321163</created>
-      <option name="number" value="00696" />
-      <option name="presentableId" value="LOCAL-00696" />
-      <option name="project" value="LOCAL" />
-      <updated>1614917321163</updated>
+      <workItem from="1615897494356" duration="22495000" />
     </task>
     <task id="LOCAL-00697" summary="dream home guide project module">
       <created>1614917626428</created>
@@ -836,7 +829,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615969259878</updated>
     </task>
-    <option name="localTasksCounter" value="745" />
+    <task id="LOCAL-00745" summary="task module and checklist module">
+      <created>1615969331500</created>
+      <option name="number" value="00745" />
+      <option name="presentableId" value="LOCAL-00745" />
+      <option name="project" value="LOCAL" />
+      <updated>1615969331500</updated>
+    </task>
+    <option name="localTasksCounter" value="746" />
     <servers />
   </component>
   <component name="TodoView">

@@ -252,7 +252,7 @@
             //     },error: function(xhr, status, error){
             //         console.log(xhr);
             //     }
-            });
+            // });
             clear_errors('title','description','due_date','priority','assign_to');
         });
         @endcan
