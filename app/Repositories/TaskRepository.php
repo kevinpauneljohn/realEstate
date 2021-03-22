@@ -59,7 +59,7 @@ class TaskRepository implements TaskInterface
         return DataTables::of($tasks)
             ->editColumn('id',function($task){
                 $request = str_pad($task->id, 5, '0', STR_PAD_LEFT);
-                return '<a href="'.route('requests.show',['request' => $task->id]).'"><span style="color:#007bff">#'.$request.'</span></a>';
+                return '<a href="'.route('tasks.overview',$task->id).'"><span style="color:#007bff">#'.$request.'</span></a>';
             })
             ->editColumn('created_by',function($task){
                 return $task->creator->fullname;
