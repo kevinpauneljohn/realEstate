@@ -459,7 +459,7 @@
                                         <h3 class="timeline-header"><a href="#">Creator</a> ${value.creator}</h3>
 
                                         <div class="timeline-body" id="action-taken-${value.id}">${value.action}</div>
-                                        @role("super admin")<div class="timeline-footer" id="action-btn-${value.id}">${action}</div>@endrole
+                                        @if(auth()->user()->hasRole(["super admin"]))<div class="timeline-footer" id="action-btn-${value.id}">${action}</div>@endif
                                     </div>
                                 </div>
                                `);
@@ -504,6 +504,7 @@
                     </div>`);
         });
 
+        @if(auth()->user()->hasRole(["super admin"]))
         $(document).on('submit','.edit-action-form', function(form){
             form.preventDefault();
             let data = $(this).serializeArray();
@@ -537,6 +538,7 @@
                 }
             });
         });
+        @endif
 
         $(document).on('submit','#action-taken-form',function(form){
             form.preventDefault();
@@ -571,7 +573,7 @@
             });
         })
 
-        @role("super admin");
+        @if(auth()->user()->hasRole(["super admin"]))
         $(document).on('click','.delete-action-taken',function(){
             rowId = this.value;
             Swal.fire({
@@ -607,7 +609,7 @@
             });
 
         });
-        @endrole
+        @endif
 
         $(document).on('click','button[name=start_task]',function(){
             let id = this.value;
