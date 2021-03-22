@@ -30,7 +30,7 @@
                         <div class="col-12">
                             <div class="post">
                                 <h5 class="text-bold">Description</h5>
-                                <p>{{ucfirst($task->description)}}</p>
+                                <p>{!! ucfirst($task->description) !!}</p>
                             </div>
                             <div class="post">
                                 @if((auth()->user()->hasRole(['super admin','admin','account manager'])) && auth()->user()->can('view checklist'))
