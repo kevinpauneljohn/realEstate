@@ -35,6 +35,12 @@ interface TaskInterface
     public function getTask($task_id);
 
     /**
+     * @param $task_id
+     * @return mixed
+     */
+    public function delete($task_id);
+
+    /**
      * @param $assignee_id
      * @param $task_id
      * @return mixed

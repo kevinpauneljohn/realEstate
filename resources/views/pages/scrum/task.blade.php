@@ -379,6 +379,45 @@
                 }
             });
         });
+
+        @if(auth()->user()->can('delete task'))
+                $(document).on('click','.delete-task-btn',function(){
+                    let id = this.id;
+                    console.log(id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+
+                    $.ajax({
+                        'url' : '/tasks/'+id,
+                        'type' : 'DELETE',
+                        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(output){
+                            if(output.success === true){
+                                customAlert('success',output.message);
+                                let table = $('#task-list').DataTable();
+                                table.ajax.reload();
+
+                            }else if(output.success === false){
+                                customAlert('warning',output.message);
+                            }
+                        },error: function(xhr, status, error){
+                            console.log(xhr);
+                            customAlert('error',"Task Constraints, There's an existing checklist created!");
+                        }
+                    });
+
+                }
+            });
+                });
+            @endif
     </script>
 @stop
 

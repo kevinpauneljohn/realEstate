@@ -301,6 +301,7 @@ Route::get('/my-tasks',[\App\Http\Controllers\ScrumController::class,'myTasks'])
 Route::put('/start-tasks/{task}',[\App\Http\Controllers\ScrumController::class,'changeTaskStatus'])->name('task.start')->middleware(['auth','permission:view task']);
 Route::post('/reopen-task',[\App\Http\Controllers\ScrumController::class,'reopenTask'])->name('task.reopen')->middleware(['auth','permission:view task']);
 Route::get('/display-remarks/{task_id}',[\App\Http\Controllers\ScrumController::class,'displayRemarks'])->name('remarks.display')->middleware(['auth','permission:view task']);
+Route::delete('/tasks/{task_id}',[\App\Http\Controllers\ScrumController::class,'destroy'])->name('tasks.destroy')->middleware(['auth','permission:delete task']);
 
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);

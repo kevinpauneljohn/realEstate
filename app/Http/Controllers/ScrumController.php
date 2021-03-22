@@ -176,6 +176,25 @@ class ScrumController extends Controller
         return response($validation->errors());
     }
 
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+        if($this->task->delete($id))
+        {
+            event(new TaskEvent([
+                'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
+                'action' => 'task deleted'
+            ]));
+
+            activity('task')
+                ->causedBy(auth()->user()->id)
+                ->performedOn($task)
+                ->withProperties($task)->log('<span class="text-info">'.auth()->user()->fullname.'</span> deleted the task');
+            return response(['success' => true, 'message' => 'Task successfully deleted!']);
+        }
+        return response(['success' => false, 'message' => 'You are not allowed to delete this task!']);
+    }
+
     /**
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
