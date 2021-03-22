@@ -65,4 +65,12 @@ interface TaskInterface
      * @return mixed
      */
     public function reopen($task_id, $remarks);
+
+    /**
+     * @param $status
+     * @return mixed
+     */
+    public function getTaskStatusCount($status);
+
+    public function getMyTaskStatusCount($user_id, $status);
 }

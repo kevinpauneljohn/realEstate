@@ -34,7 +34,13 @@ class ScrumController extends Controller
         $priorities = Priority::all();
         $users = User::all();
         $agents = $this->task->getAgents($this->agents);
-        return view('pages.scrum.task',compact('priorities','users','agents','priorities'));
+        $status = [
+            'open' => $this->task->getTaskStatusCount('open'),
+            'pending' => $this->task->getTaskStatusCount('pending'),
+            'ongoing' => $this->task->getTaskStatusCount('on-going'),
+            'completed' => $this->task->getTaskStatusCount('completed'),
+        ];
+        return view('pages.scrum.task',compact('priorities','users','agents','priorities','status'));
     }
 
     /**
@@ -222,7 +228,13 @@ class ScrumController extends Controller
         $priorities = Priority::all();
         $users = User::all();
         $agents = $this->task->getAgents($this->agents);
-        return view('pages.scrum.mytask',compact('priorities','users','agents','priorities'));
+        $status = [
+            'open' => $this->task->getMyTaskStatusCount(auth()->user()->id,'open'),
+            'pending' => $this->task->getMyTaskStatusCount(auth()->user()->id,'pending'),
+            'ongoing' => $this->task->getMyTaskStatusCount(auth()->user()->id,'on-going'),
+            'completed' => $this->task->getMyTaskStatusCount(auth()->user()->id,'completed'),
+        ];
+        return view('pages.scrum.mytask',compact('priorities','users','agents','priorities','status'));
     }
 
     public function changeTaskStatus($id)
@@ -307,4 +319,6 @@ class ScrumController extends Controller
     {
         return $this->task->displayRemarks($id);
     }
+
+
 }

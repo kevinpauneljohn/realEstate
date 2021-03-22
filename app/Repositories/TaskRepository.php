@@ -134,7 +134,7 @@ class TaskRepository implements TaskInterface
         return $tasks;
     }
 
-    public function reopen($task_id, $remarks)
+    public function reopen($task_id, $remarks): TaskRemark
     {
         $taskRemarks = new TaskRemark();
         $taskRemarks->user_id = auth()->user()->id;
@@ -142,6 +142,17 @@ class TaskRepository implements TaskInterface
         $taskRemarks->task_id = $task_id;
         $taskRemarks->save();
         return $taskRemarks;
+    }
+
+    public function getTaskStatusCount($status)
+    {
+        return Task::where('status',$status)->count();
+    }
+
+    public function getMyTaskStatusCount($user_id, $status)
+    {
+        return Task::where('assigned_to',$user_id)
+            ->where('status',$status)->count();
     }
 
 }
