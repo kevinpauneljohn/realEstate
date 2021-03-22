@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\RepositoryInterface\ActionTakenInterface;
+use App\Repositories\RepositoryInterface\TaskChecklistInterface;
+use App\Repositories\RepositoryInterface\TaskInterface;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,12 +12,20 @@ use Illuminate\Support\Facades\Validator;
 class ActionTakenController extends Controller
 {
     private $actionTaken;
+    private $task;
+    private $taskChecklist;
 
-    public function __construct(ActionTakenInterface $actionTaken)
+    public function __construct(
+        ActionTakenInterface $actionTaken,
+        TaskInterface $task,
+        TaskChecklistInterface $taskChecklist
+    )
     {
         $this->middleware('auth');
 
         $this->actionTaken = $actionTaken;
+        $this->task = $task;
+        $this->taskChecklist = $taskChecklist;
     }
 
     /**
@@ -58,6 +68,7 @@ class ActionTakenController extends Controller
             ];
             if($action = $this->actionTaken->create($action))
             {
+                $this->taskChecklist->update($request->input('checklist_id'));
                 return response(['success' => true, 'message' => 'Action successfully created!',
                     'action' => $action,
                     'creator' => User::find($action->user_id)->fullname

@@ -34,7 +34,7 @@ class TaskChecklistController extends Controller
                 $checklist[$key] =
                     [
                         'task_id' => $request->input('task_id'),
-                        'description' => $value,
+                        'description' => nl2br($value),
                         'status' => 'pending',
                         'created_at' => now(),
                         'updated_at' => now(),
@@ -73,7 +73,7 @@ class TaskChecklistController extends Controller
         if(!empty($request->input('checklist')))
         {
             $checkList = TaskChecklist::find($id);
-            $checkList->description = $request->input('checklist');
+            $checkList->description = nl2br($request->input('checklist'));
             if($checkList->isDirty() && $checkList->save()) {
                 activity('task checklist')
                     ->causedBy(auth()->user()->id)

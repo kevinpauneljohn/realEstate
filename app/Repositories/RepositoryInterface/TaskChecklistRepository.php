@@ -52,7 +52,7 @@ class TaskChecklistRepository implements TaskChecklistInterface
                 }
                 return $action;
             })
-            ->rawColumns(['completed','action'])
+            ->rawColumns(['completed','action','description'])
             ->make(true);
     }
 

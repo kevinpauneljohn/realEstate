@@ -340,26 +340,16 @@
                 }
             });
         });
+
         @if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($task->assigned_to === auth()->user()->id && auth()->user()->can('view checklist')))
             $(document).on('click','.check-list-box',function(){
-                let value = this.value;
+                $('#action-taken-form').show();
+                checklist_id = this.value;
 
-                $.ajax({
-                    'url' : '/task-checklist/'+value,
-                    'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    'type' : 'PUT',
-                    beforeSend: function(){
-                        $('#check-list').find('input').attr('disabled',true);
-                    },success: function (response){
-                        if(response.success === true)
-                        {
-                            customAlert('success',response.message);
-                        }
-                        $('#check-list').find('input').attr('disabled',false);
-                    },error: function(xhr, status, error){
-                        console.log(xhr);
-                    }
-                });
+                displayActionTaken();
+
+            $('#action-taken-form').find('input[name=checklist_id]').val(checklist_id);
+                $('#action-taken').modal('toggle');
             });
         @endif
 
@@ -469,11 +459,12 @@
                                         <h3 class="timeline-header"><a href="#">Creator</a> ${value.creator}</h3>
 
                                         <div class="timeline-body" id="action-taken-${value.id}">${value.action}</div>
-                                        <div class="timeline-footer" id="action-btn-${value.id}">${action}</div>
+                                        @role("super admin")<div class="timeline-footer" id="action-btn-${value.id}">${action}</div>@endrole
                                     </div>
                                 </div>
                                `);
                         });
+
                     },error: function(xhr, status, error){
                         console.log(xhr);
                     }
@@ -482,14 +473,15 @@
 
         $(document).on('click','.log-action',function(){
             checklist_id = this.id;
-            $('#action-taken-form').find('input[name=checklist_id]').val(checklist_id);
-
+            $('#action-taken-form').hide();
             displayActionTaken();
         });
 
         let actionContent;
         let actionContentHtml;
         let rowId;
+
+        @if(auth()->user()->hasRole(["super admin"]))
         $(document).on('click','.edit-action-taken',function(){
             rowId = this.value;
             $('.action-timeline').find('#action-btn-'+rowId).remove();
@@ -499,6 +491,7 @@
             $('.action-timeline').find('#action-taken-'+rowId).html('<form method="post" class="edit-action-form"><input type="hidden" name="action_taken_id" value="'+rowId+'"><input type="hidden" name="_token" value="{{csrf_token()}}"><textarea class="form-control" name="action_taken" id="'+rowId+'" style="min-height: 150px;">'+actionContent+'</textarea>' +
                 '<button type="button" class="btn btn-default btn-xs cancel" value="'+rowId+'">Cancel</button> <button type="submit" class="btn btn-default btn-xs save" value="'+rowId+'">Save</button></form>');
         });
+            @endif
 
         $(document).on('click','.cancel',function(){
             let id = this.value;
@@ -557,29 +550,15 @@
                     $('#action-taken-form').find('input,textarea').attr('disabled',true);
                     $('#action-taken-form').find('input[type=submit]').val('Saving...');
                 },success: function(output){
+                    console.log(output);
                     if(output.success === true){
                         customAlert('success',output.message);
                         $('#action-taken-form').find('textarea[name=action]').val("");
-                            $('.action-timeline').find('.timeline').append(`
-                                <div class="time-label label-${output.action.id}">
-                                    <span class="bg-cyan">${moment(output.action.created_at).format('dddd, MMMM Do YYYY')}</span>
-                                </div>
 
-                                <div class="timeline-content-${output.action.id}">
-                                    <i class="fas fa-check-circle bg-success"></i>
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fas fa-clock"></i> ${moment(output.action.created_at).format('ddd, hA')}</span>
-                                        <h3 class="timeline-header"><a href="#">Creator</a> ${output.creator}</h3>
+                        $('#action-taken').modal('toggle');
 
-                                        <div class="timeline-body" id="action-taken-${output.action.id}">${output.action.action}</div>
-                                        <div class="timeline-footer" id="action-btn-${output.action.id}">
-                                            <button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${output.action.id}">Edit</button>
-                                            <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${output.action.id}">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                               `);
-
+                        let table = $('#check-list').DataTable();
+                        table.ajax.reload();
                     }else if(output.success === false){
                         customAlert('warning',output.message);
                     }
@@ -592,6 +571,7 @@
             });
         })
 
+        @role("super admin");
         $(document).on('click','.delete-action-taken',function(){
             rowId = this.value;
             Swal.fire({
@@ -627,6 +607,7 @@
             });
 
         });
+        @endrole
 
         $(document).on('click','button[name=start_task]',function(){
             let id = this.value;
@@ -694,6 +675,11 @@
                 responsive:true,
                 order:[0,'desc']
             });
+        });
+
+        $('#action-taken').on('hidden.bs.modal',function(){
+            let table = $('#check-list').DataTable();
+            table.ajax.reload();
         });
     </script>
 @stop
