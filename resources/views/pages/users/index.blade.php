@@ -228,6 +228,44 @@
             </div>
             <!--end delete user modal-->
         @endcan
+
+        @can('change password')
+
+            <div class="modal fade" id="change-password-modal">
+                <form role="form" id="change-password-form" class="form-submit">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="userId" id="userId">
+                    <div class="modal-dialog">
+                        <div class="modal-content bg-default">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Change Password</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="user">User: <span class="user-name"></span></p>
+                                <div class="form-group change_password">
+                                    <label for="change_password">Password</label>
+                                    <input type="password" name="change_password" class="form-control" id="change_password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Confirm Password</label>
+                                    <input type="password" name="change_password_confirmation" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Change</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </form>
+            </div>
+        @endcan
     @endif
 
 @stop
@@ -246,6 +284,8 @@
 @section('js')
     @can('view user')
         <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+        <script src="{{asset('js/validation.js')}}"></script>
+        <script src="{{asset('js/custom-alert.js')}}"></script>
         <script src="{{asset('js/user.js')}}"></script>
         <script>
             $(function() {
@@ -268,6 +308,57 @@
             });
             //Initialize Select2 Elements
             $('.select2').select2();
+        </script>
+    @endcan
+
+    @can('change password')
+        <script>
+            let changePasswordForm = $('#change-password-form');
+            $(document).on('click','.change-password-btn',function(){
+                let id = this.id;
+
+                changePasswordForm.find('input[name=userId]').val(id);
+
+                let tr = $(this).closest('tr');
+
+                let data = tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                $('.user-name').html('<strong class="text-info">'+data[0]+'</strong>');
+            });
+
+            $(document).on('submit','#change-password-form',function(form){
+                form.preventDefault();
+
+                let data = $(this).serializeArray();
+                console.log(data);
+                $.ajax({
+                    'url' : '{{route('change.password')}}',
+                    'type' : 'PUT',
+                    'data' : data,
+                    beforeSend: function (){
+                        changePasswordForm.find('input, button').attr("disabled",true);
+                    },success: function(response){
+                        if(response.success === true)
+                        {
+                            customAlert("success",response.message);
+                            $('#change-password-modal').modal('toggle');
+                            $('#change-password-form').trigger('reset');
+                        }
+                        $.each(response, function (key, value) {
+                            let element = $('.'+key);
+
+                            element.find('.error-'+key).remove();
+                            element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                        });
+                        changePasswordForm.find('input, button').attr("disabled",false);
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+                clear_errors("change_password");
+            });
         </script>
     @endcan
 @stop

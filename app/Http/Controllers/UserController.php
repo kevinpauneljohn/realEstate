@@ -204,6 +204,10 @@ class UserController extends Controller
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-user-btn" id="'.$user->id.'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i></a>';
                 }
+                if(auth()->user()->can('change password'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs bg-warning change-password-btn" id="'.$user->id.'" data-toggle="modal" data-target="#change-password-modal"><i class="fa fa-key"></i></a>';
+                }
                 return $action;
             })
             ->rawColumns(['fullname','roles','action'])
@@ -550,5 +554,24 @@ class UserController extends Controller
             }
         }
         return response()->json($validator->errors());
+    }
+
+    public function userChangePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'change_password'  => ['required','confirmed'],
+        ]);
+
+        if($validator->passes())
+        {
+            $user = User::find($request->input('userId'));
+            $user->password = bcrypt($request->input('change_password'));
+            if($user->save())
+            {
+                return response(['success' => true, 'message' => 'Password has changed!']);
+            }
+            return response(['success' => false, 'message' => 'An error occurred!']);
+        }
+        return response($validator->errors());
     }
 }

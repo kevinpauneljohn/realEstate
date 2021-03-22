@@ -162,5 +162,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'add checklist'])->syncRoles(['account manager','admin']);
         Permission::create(['name' => 'edit checklist'])->syncRoles(['account manager','admin']);
         Permission::create(['name' => 'delete checklist'])->syncRoles(['account manager','admin']);
+
+        Permission::create(['name' => 'change password']);
     }
 }

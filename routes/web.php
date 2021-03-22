@@ -65,6 +65,7 @@ Route::get('/users/{user}/commissions','UserController@commissions')->name('user
 Route::put('/users/{user}','UserController@update')->name('users.update')->middleware(['auth','permission:edit user']);
 Route::delete('/users/{user}','UserController@destroy')->name('users.destroy')->middleware('auth','permission:delete user');
 Route::get('/users/downline/{upline}','UserController@downLines')->name('users.down.lines')->middleware(['auth','permission:view down lines']);
+Route::put('/user/change-password',[\App\Http\Controllers\UserController::class,'userChangePassword'])->name('change.password')->middleware(['auth','permission:change password']);
 
 /*leads*/
 Route::get('/assigned-to-me',[\App\Http\Controllers\LeadController::class,'assignedPage'])->name('assigned.leads.mine')->middleware(['auth','permission:view assigned lead']);
