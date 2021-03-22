@@ -63,7 +63,7 @@ class ScrumController extends Controller
             $task = [
                 'created_by'    => auth()->user()->id,
                 'title'    => $request->input('title'),
-                'description'    => $request->input('description'),
+                'description'    => nl2br($request->input('description')),
                 'due_date'    => $request->input('due_date'),
                 'status'    => !empty($request->input('assign_to')) ? 'pending' : 'open',
                 'time'    => $request->input('time'),
@@ -150,7 +150,7 @@ class ScrumController extends Controller
         {
             $data = [
                 'title' => $request->input('title'),
-                'description' => $request->input('description'),
+                'description' => nl2br($request->input('description')),
                 'status' => !empty($request->input('assign_to')) ? 'pending' : 'open',
                 'due_date' => $request->input('due_date'),
                 'time' => $request->input('time'),
