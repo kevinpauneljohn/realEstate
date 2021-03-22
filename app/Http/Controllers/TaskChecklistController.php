@@ -44,10 +44,10 @@ class TaskChecklistController extends Controller
 
         if($taskChecklist = $this->taskChecklist->create($checklist))
         {
-            activity('task checklist')
+            activity('task')
                 ->causedBy(auth()->user()->id)
                 ->performedOn(new TaskChecklist())
-                ->withProperties($checklist)->log('created');
+                ->withProperties($checklist)->log('<span class="text-info">'.auth()->user()->fullname.'</span> Created a checklist');
             return response(['success' => true,'message' => 'Checklist successfully created!']);
         }
         return response(['success' => false,'message' => 'An error occurred'],400);
@@ -75,10 +75,10 @@ class TaskChecklistController extends Controller
             $checkList = TaskChecklist::find($id);
             $checkList->description = nl2br($request->input('checklist'));
             if($checkList->isDirty() && $checkList->save()) {
-                activity('task checklist')
+                activity('task')
                     ->causedBy(auth()->user()->id)
                     ->performedOn($checkList)
-                    ->withProperties($checkList)->log('updated');
+                    ->withProperties($checkList)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated a checklist');
                 return response(['success' => true, 'message' => 'Checklist successfully updated!']);
             }
             return response(['success' => false, 'message' => 'No changes occurred!']);
@@ -94,10 +94,10 @@ class TaskChecklistController extends Controller
         $checklist = $this->taskChecklist->getChecklist($id)->first();
         if($this->taskChecklist->getChecklist($id)->delete())
         {
-            activity('task checklist')
+            activity('task')
                 ->causedBy(auth()->user()->id)
                 ->performedOn(new TaskChecklist())
-                ->withProperties($checklist)->log('deleted');
+                ->withProperties($checklist)->log('<span class="text-info">'.auth()->user()->fullname.'</span> deleted a checklist');
             return response(['success' => true, 'message' => 'Successfully deleted!']);
         }
         return response(['success' => false, 'message' => 'An error occurred!'],400);

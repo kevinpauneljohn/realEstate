@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ActionTaken;
 use App\Repositories\RepositoryInterface\ActionTakenInterface;
 use App\Repositories\RepositoryInterface\TaskChecklistInterface;
 use App\Repositories\RepositoryInterface\TaskInterface;
@@ -69,6 +70,11 @@ class ActionTakenController extends Controller
             if($action = $this->actionTaken->create($action))
             {
                 $this->taskChecklist->update($request->input('checklist_id'));
+                activity('task')
+                    ->causedBy(auth()->user()->id)
+                    ->performedOn($action)
+                    ->withProperties($action)->log('<span class="text-info">'.auth()->user()->fullname.'</span> added an action taken');
+
                 return response(['success' => true, 'message' => 'Action successfully created!',
                     'action' => $action,
                     'creator' => User::find($action->user_id)->fullname
@@ -114,6 +120,10 @@ class ActionTakenController extends Controller
         {
             if($actionContent =$this->actionTaken->update($request->input('action_taken'),$id))
             {
+                activity('task')
+                    ->causedBy(auth()->user()->id)
+                    ->performedOn(ActionTaken::find($id))
+                    ->withProperties(ActionTaken::find($id))->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
                 return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => nl2br($request->input('action_taken'))]);
             }
             return response(['success' =>false, 'message' => 'No changes occurred!']);
@@ -129,8 +139,13 @@ class ActionTakenController extends Controller
      */
     public function destroy($id)
     {
+        $action = ActionTaken::find($id);
         if($this->actionTaken->destroy($id))
         {
+            activity('task')
+                ->causedBy(auth()->user()->id)
+                ->performedOn($action)
+                ->withProperties($action)->log('<span class="text-info">'.auth()->user()->fullname.'</span> deleted an action taken');
             return response(['success' => true, 'message' => 'Action taken successfully deleted!']);
         }
         return response(['success' => false, 'message' => 'You area not allowed to delete this action!'],400);

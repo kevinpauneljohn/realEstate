@@ -62,6 +62,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card card-default">
+                <div class="card-header">
+                    <span class="card-title">Activity Logs</span>
+                </div>
+                <div class="card-body">
+
+                </div>
+            </div>
         </div>
         <div class="col-lg-3">
             <div class="card card-default">

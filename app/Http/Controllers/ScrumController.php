@@ -7,14 +7,10 @@ use App\Events\TaskEvent;
 use App\Priority;
 use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
-use App\TaskChecklist;
 use App\User;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
-use Yajra\DataTables\DataTables;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Models\Activity;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ScrumController extends Controller
@@ -83,7 +79,7 @@ class ScrumController extends Controller
                 activity('task')
                     ->causedBy(auth()->user()->id)
                     ->performedOn(Task::find($taskCreated->id))
-                    ->withProperties($task)->log('created');
+                    ->withProperties($task)->log('<span class="text-info">'.auth()->user()->fullname.'</span> created the task');
                 return response()->json(['success' => true, 'message' => 'Task successfully added!']);
             }
             return response()->json(['success' => false, 'message' => 'An error occurred'],400);
@@ -168,10 +164,10 @@ class ScrumController extends Controller
                     'action' => 'task updated'
                 ]));
 
-                activity('task updated')
+                activity('task')
                     ->causedBy(auth()->user()->id)
                     ->performedOn($taskCreated)
-                    ->withProperties($taskCreated)->log('updated the agent');
+                    ->withProperties($taskCreated)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated the task details');
 
                 return response(['success' => true, 'message' => 'Task successfully updated!', $taskCreated]);
             }
@@ -188,9 +184,10 @@ class ScrumController extends Controller
     {
         return view('pages.scrum.index',[
             'task'  => $this->task->getTask($id),
-            'agents' => $this->task->getAgents($this->agents)
+            'agents' => $this->task->getAgents($this->agents),
         ]);
     }
+
 
     /**
      * @param Request $request
@@ -200,6 +197,8 @@ class ScrumController extends Controller
     {
         if($taskUpdated = $this->task->setAssignee($request->input('assigned_id'), $request->input('task_id')))
         {
+            $assigned_user = User::find($request->input('assigned_id'));
+
             $task = Task::where([
                 ['id','=',$request->input('task_id')],
                 ['assigned_to','=',$request->input('assigned_id')],
@@ -211,13 +210,13 @@ class ScrumController extends Controller
                 'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
                 'action' => 'task agent updated'
             ]));
-            activity('task agent')
+            activity('task')
                 ->causedBy(auth()->user()->id)
                 ->performedOn(Task::find($request->input('task_id')))
                 ->withProperties([
                     'assigned_id' => $request->input('assigned_id'),
                     'task_id' => $request->input('task_id'),
-                ])->log('updated the agent');
+                ])->log('<span class="text-info">'.auth()->user()->fullname.'</span> assigned the task to '.$assigned_user->fullname);
             return response(['success' => true, 'message' => 'Assignee successfully updated!']);
         }
         return response(['success' => false, 'message' => 'An error occurred!'],400);
@@ -253,10 +252,10 @@ class ScrumController extends Controller
                     'action' => 'task updated'
                 ]));
 
-                activity('task updated')
+                activity('task')
                     ->causedBy(auth()->user()->id)
                     ->performedOn($task)
-                    ->withProperties($task)->log('task status updated');
+                    ->withProperties($task)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated the task status');
                 return response(['success' => true,
                     'message' => 'Task ' . $this->setStatus($task->status)
                 ]);
@@ -304,10 +303,10 @@ class ScrumController extends Controller
                     'action' => 'task updated'
                 ]));
 
-                activity('task updated')
+                activity('task')
                     ->causedBy(auth()->user()->id)
                     ->performedOn($task)
-                    ->withProperties($task)->log('task status reopened');
+                    ->withProperties($task)->log('<span class="text-info">'.auth()->user()->fullname.'</span> reopened the task');
                 return response(['success' => true, 'message' => 'Task Reopen']);
             }
             return response(['success' => false, 'message' => 'An error occurred!'],400);
