@@ -12,7 +12,7 @@
     @endif
 @elseif($tasks->status === "completed")
     @if(auth()->user()->hasRole(['super admin','admin','account manager']))
-        <button type="button" class="btn btn-xs btn-warning" value="{{$tasks->id}}" data-toggle="modal" data-target="#set-status">Re-open</button>
+        Status: <span class="text-success">Completed</span> <i>Do you want to </i><button type="button" class="btn btn-xs btn-warning" value="{{$tasks->id}}" data-toggle="modal" data-target="#set-status">Re-open</button>?
 
         <div class="modal fade" id="set-status">
             <form role="form" id="set-status-form">
