@@ -369,17 +369,17 @@ Route::resource('task-checklist','TaskChecklistController');
 
 Route::get('/action-taken/{checklist_id}/display',[\App\Http\Controllers\ActionTakenController::class,'actionTakenList'])->name('action.taken.display');
 Route::resource('action-taken','ActionTakenController');
+Route::get('test', function () {
 
-Route::get('send-mail', function () {
-
-    $details = [
-        'title' => 'Mail from ItSolutionStuff.com',
-        'body' => 'This is for testing email using smtp'
+    $user = [
+        'name' => 'Harsukh Makwana',
+        'info' => 'Laravel & Python Devloper'
     ];
 
-    \Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($details));
+    \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
 
-    dd("Email is Sent.");
+    dd("success");
+
 });
 
 
