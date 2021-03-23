@@ -35,8 +35,7 @@
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="task module and checklist module">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/mytask.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/mytask.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -500,14 +499,7 @@
       <workItem from="1616370642136" duration="23786000" />
       <workItem from="1616400286459" duration="27000" />
       <workItem from="1616428729069" duration="2965000" />
-      <workItem from="1616490608040" duration="2456000" />
-    </task>
-    <task id="LOCAL-00712" summary="add show password functionality to login page">
-      <created>1615129947367</created>
-      <option name="number" value="00712" />
-      <option name="presentableId" value="LOCAL-00712" />
-      <option name="project" value="LOCAL" />
-      <updated>1615129947374</updated>
+      <workItem from="1616490608040" duration="5328000" />
     </task>
     <task id="LOCAL-00713" summary="add show password functionality to login page">
       <created>1615169595119</created>
@@ -845,7 +837,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616395995382</updated>
     </task>
-    <option name="localTasksCounter" value="761" />
+    <task id="LOCAL-00761" summary="task module and checklist module">
+      <created>1616493787156</created>
+      <option name="number" value="00761" />
+      <option name="presentableId" value="LOCAL-00761" />
+      <option name="project" value="LOCAL" />
+      <updated>1616493787156</updated>
+    </task>
+    <option name="localTasksCounter" value="762" />
     <servers />
   </component>
   <component name="TodoView">

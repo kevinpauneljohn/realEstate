@@ -284,6 +284,7 @@ class ScrumController extends Controller
         return response(['success' => false, 'message' => 'You are not allowed to access this action'],403);
     }
 
+
     /**
      * set the task status
      * @param $status
