@@ -378,8 +378,6 @@ Route::get('test', function () {
 
     \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
 
-    dd("success");
-
 });
 
 
