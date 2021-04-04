@@ -33,7 +33,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="task module and checklist module">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jjj.php" beforeDir="false" afterPath="$PROJECT_DIR$/jjj.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,6 +223,7 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -502,13 +503,7 @@
       <workItem from="1616490608040" duration="7628000" />
       <workItem from="1616872658568" duration="13516000" />
       <workItem from="1617511119260" duration="129000" />
-    </task>
-    <task id="LOCAL-00718" summary="model unit frontend">
-      <created>1615463317149</created>
-      <option name="number" value="00718" />
-      <option name="presentableId" value="LOCAL-00718" />
-      <option name="project" value="LOCAL" />
-      <updated>1615463317149</updated>
+      <workItem from="1617542232833" duration="195000" />
     </task>
     <task id="LOCAL-00719" summary="model unit frontend">
       <created>1615463587655</created>
@@ -846,7 +841,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616498226728</updated>
     </task>
-    <option name="localTasksCounter" value="767" />
+    <task id="LOCAL-00767" summary="test">
+      <created>1617542287887</created>
+      <option name="number" value="00767" />
+      <option name="presentableId" value="LOCAL-00767" />
+      <option name="project" value="LOCAL" />
+      <updated>1617542287892</updated>
+    </task>
+    <option name="localTasksCounter" value="768" />
     <servers />
   </component>
   <component name="TodoView">
@@ -888,7 +890,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="cash request module" />
     <MESSAGE value="dashboard display" />
     <MESSAGE value="rank module" />
     <MESSAGE value="user rank points module fix" />
@@ -913,6 +914,7 @@
     <MESSAGE value="model unit frontend" />
     <MESSAGE value="task module" />
     <MESSAGE value="task module and checklist module" />
-    <option name="LAST_COMMIT_MESSAGE" value="task module and checklist module" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
 </project>
