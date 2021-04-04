@@ -78,5 +78,15 @@ interface TaskInterface
      */
     public function getTaskStatusCount($status);
 
+    /**
+     * @param $user_id
+     * @param $status
+     * @return mixed
+     */
     public function getMyTaskStatusCount($user_id, $status);
+
+    /**
+     * @return mixed
+     */
+    public function updateTaskStatus();
 }

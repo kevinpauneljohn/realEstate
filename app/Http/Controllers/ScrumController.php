@@ -8,6 +8,7 @@ use App\Priority;
 use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
 use App\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Http\Request;
@@ -337,6 +338,12 @@ class ScrumController extends Controller
     public function displayRemarks($id)
     {
         return $this->task->displayRemarks($id);
+    }
+
+    public function taskStatus(): string
+    {
+        Artisan::call('taskStatus:update');
+        return Artisan::output();
     }
 
 

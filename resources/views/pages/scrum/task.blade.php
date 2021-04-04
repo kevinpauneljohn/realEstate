@@ -150,7 +150,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group due_date">
                                         <label for="due_date">Due Date</label>
-                                        <input type="date" name="due_date" class="form-control" id="due_date" min="{{now()->format('Y-m-d')}}">
+                                        <input type="date" name="due_date" class="form-control" id="due_date">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

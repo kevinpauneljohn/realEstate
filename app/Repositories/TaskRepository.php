@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Priority;
 use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
 use App\TaskRemark;
@@ -164,5 +165,44 @@ class TaskRepository implements TaskInterface
             return $task->delete();
         }
         return false;
+    }
+
+    public function updateTaskStatus(): string
+    {
+        $tasks = $this->getAllTaskExcept(['completed']);
+//        $data = array();
+        foreach ($tasks as $key => $task)
+        {
+            $dueDate = Carbon::parse($task->due_date.' '.$task->time);
+//            $data[$key] = now().' ---- '.$task->due_date.' '.$task->priority->name.' ---- '.now()->diffInDays($dueDate, false);
+            if(now()->diffInDays($dueDate, false) >= $this->getPriority('Low')->days)
+            {
+                $this->update($task->id,['priority_id' => $this->getPriority('Low')->id]);
+            }
+            elseif(now()->diffInDays($dueDate, false) >= $this->getPriority('Normal')->days)
+            {
+                $this->update($task->id,['priority_id' => $this->getPriority('Normal')->id]);
+            }
+            elseif(now()->diffInDays($dueDate, false) >= $this->getPriority('Warning')->days)
+            {
+                $this->update($task->id,['priority_id' => $this->getPriority('Warning')->id]);
+            }
+            elseif(now()->diffInDays($dueDate, false) >= $this->getPriority('Critical')->days)
+            {
+                $this->update($task->id,['priority_id' => $this->getPriority('Critical')->id]);
+            }
+        }
+        return 'task status: updated!';
+//        return $data;
+    }
+
+    private function getPriority($title)
+    {
+        return Priority::where('name',$title)->first();
+    }
+
+    private function getAllTaskExcept(array $status)
+    {
+        return Task::whereNotIn('status',$status)->get();
     }
 }

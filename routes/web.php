@@ -154,19 +154,20 @@ Route::post('/commissions','CommissionController@store')->name('commissions.stor
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
 
-Route::get('/test',function(){
-    $collection = collect([1, 2, 3, 4]);
+//Route::get('/test',function(){
+//    $collection = collect([1, 2, 3, 4]);
+//
+//    $filtered = $collection->filter(function ($value, $key) {
+//        return $value > 2;
+//    });
+//
+//    return $filtered->all();
+//})->middleware(['auth']);
 
-    $filtered = $collection->filter(function ($value, $key) {
-        return $value > 2;
-    });
+//Route::post('/test',function(Request $request){
+//
+//})->name('test');
 
-    return $filtered->all();
-})->middleware(['auth']);
-
-Route::post('/test',function(Request $request){
-
-})->name('test');
 
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
@@ -302,6 +303,7 @@ Route::put('/start-tasks/{task}',[\App\Http\Controllers\ScrumController::class,'
 Route::post('/reopen-task',[\App\Http\Controllers\ScrumController::class,'reopenTask'])->name('task.reopen')->middleware(['auth','permission:view task']);
 Route::get('/display-remarks/{task_id}',[\App\Http\Controllers\ScrumController::class,'displayRemarks'])->name('remarks.display')->middleware(['auth','permission:view task']);
 Route::delete('/tasks/{task_id}',[\App\Http\Controllers\ScrumController::class,'destroy'])->name('tasks.destroy')->middleware(['auth','permission:delete task']);
+Route::get('/task-status/update',[\App\Http\Controllers\ScrumController::class,'taskStatus']);
 
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);
@@ -369,18 +371,19 @@ Route::resource('task-checklist','TaskChecklistController');
 
 Route::get('/action-taken/{checklist_id}/display',[\App\Http\Controllers\ActionTakenController::class,'actionTakenList'])->name('action.taken.display');
 Route::resource('action-taken','ActionTakenController');
-Route::get('test', function () {
-
-    $user = [
-        'name' => 'Harsukh Makwana',
-        'info' => 'Laravel & Python Devloper'
-    ];
-
-    \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
-
-});
+//Route::get('test', function () {
+//
+//    $user = [
+//        'name' => 'Harsukh Makwana',
+//        'info' => 'Laravel & Python Devloper'
+//    ];
+//
+//    \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
+//
+//});
 
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');
 Route::resource('staycation','Staycation\StaycationClientController');
+
 
 
