@@ -89,4 +89,8 @@ interface TaskInterface
      * @return mixed
      */
     public function updateTaskStatus();
+
+    public function getPriority($title);
+
+    public function getAllTaskExcept(array $status);
 }

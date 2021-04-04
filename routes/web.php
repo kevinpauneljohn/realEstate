@@ -168,7 +168,6 @@ Route::get('/upline-commission/{project}','CommissionController@getUpLineCommiss
 //
 //})->name('test');
 
-
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
 Route::put('/change-password','UserController@changePasswordValidate')->name('users.change.password.update')->middleware(['auth']);
@@ -384,6 +383,5 @@ Route::resource('action-taken','ActionTakenController');
 
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');
 Route::resource('staycation','Staycation\StaycationClientController');
-
 
 

@@ -39,7 +39,7 @@ class TaskStatus extends Command
      *
      * @return string
      */
-    public function handle(): string
+    public function handle()
     {
         return $this->task->updateTaskStatus();
 //        return 0;

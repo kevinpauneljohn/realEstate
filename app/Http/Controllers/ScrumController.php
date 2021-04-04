@@ -340,10 +340,11 @@ class ScrumController extends Controller
         return $this->task->displayRemarks($id);
     }
 
-    public function taskStatus(): string
+    public function taskStatus()
     {
         Artisan::call('taskStatus:update');
         return Artisan::output();
+//        return $this->task->updateTaskStatus();
     }
 
 
