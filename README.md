@@ -6,8 +6,8 @@ Requirements
 
 Note: Follow the installation steps in LARAVEL 7 - https://laravel.com/docs/7.x/installation
 
-#Installation Guidelines
 
+#Installation Guidelines
 1. open CLI/CMD
 2. go to drive D
 3. run: git clone https://github.com/kevinpauneljohn/realEstate.git
