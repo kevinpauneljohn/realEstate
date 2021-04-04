@@ -33,8 +33,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="added task status update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/TaskRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/TaskRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -506,13 +505,6 @@
       <workItem from="1617511119260" duration="129000" />
       <workItem from="1617542232833" duration="195000" />
     </task>
-    <task id="LOCAL-00723" summary="task module and checklist module">
-      <created>1615550151651</created>
-      <option name="number" value="00723" />
-      <option name="presentableId" value="LOCAL-00723" />
-      <option name="project" value="LOCAL" />
-      <updated>1615550151651</updated>
-    </task>
     <task id="LOCAL-00724" summary="task module and checklist module">
       <created>1615552663368</created>
       <option name="number" value="00724" />
@@ -849,7 +841,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617558513406</updated>
     </task>
-    <option name="localTasksCounter" value="772" />
+    <task id="LOCAL-00772" summary="added task status update">
+      <created>1617559169403</created>
+      <option name="number" value="00772" />
+      <option name="presentableId" value="LOCAL-00772" />
+      <option name="project" value="LOCAL" />
+      <updated>1617559169403</updated>
+    </task>
+    <option name="localTasksCounter" value="773" />
     <servers />
   </component>
   <component name="TodoView">
