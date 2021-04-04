@@ -32,8 +32,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="task module and checklist module">
-      <change beforePath="$PROJECT_DIR$/jjj.php" beforeDir="false" afterPath="$PROJECT_DIR$/jjj.php" afterDir="false" />
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="deleted the test file">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -505,20 +506,6 @@
       <workItem from="1617511119260" duration="129000" />
       <workItem from="1617542232833" duration="195000" />
     </task>
-    <task id="LOCAL-00719" summary="model unit frontend">
-      <created>1615463587655</created>
-      <option name="number" value="00719" />
-      <option name="presentableId" value="LOCAL-00719" />
-      <option name="project" value="LOCAL" />
-      <updated>1615463587655</updated>
-    </task>
-    <task id="LOCAL-00720" summary="task module">
-      <created>1615509827602</created>
-      <option name="number" value="00720" />
-      <option name="presentableId" value="LOCAL-00720" />
-      <option name="project" value="LOCAL" />
-      <updated>1615509827602</updated>
-    </task>
     <task id="LOCAL-00721" summary="task module and checklist module">
       <created>1615547337642</created>
       <option name="number" value="00721" />
@@ -848,7 +835,21 @@
       <option name="project" value="LOCAL" />
       <updated>1617542287892</updated>
     </task>
-    <option name="localTasksCounter" value="768" />
+    <task id="LOCAL-00768" summary="task module and checklist module">
+      <created>1617542790123</created>
+      <option name="number" value="00768" />
+      <option name="presentableId" value="LOCAL-00768" />
+      <option name="project" value="LOCAL" />
+      <updated>1617542790123</updated>
+    </task>
+    <task id="LOCAL-00769" summary="deleted the test file">
+      <created>1617542919346</created>
+      <option name="number" value="00769" />
+      <option name="presentableId" value="LOCAL-00769" />
+      <option name="project" value="LOCAL" />
+      <updated>1617542919346</updated>
+    </task>
+    <option name="localTasksCounter" value="770" />
     <servers />
   </component>
   <component name="TodoView">
@@ -890,7 +891,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="dashboard display" />
     <MESSAGE value="rank module" />
     <MESSAGE value="user rank points module fix" />
     <MESSAGE value="dream home guide module" />
@@ -913,8 +913,9 @@
     <MESSAGE value="add show password functionality to login page" />
     <MESSAGE value="model unit frontend" />
     <MESSAGE value="task module" />
-    <MESSAGE value="task module and checklist module" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="task module and checklist module" />
+    <MESSAGE value="deleted the test file" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted the test file" />
   </component>
 </project>
