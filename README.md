@@ -1,3 +1,4 @@
+Preferred IDE: Phpstorm 2019+
 
 Requirements
 1. Composer - https://getcomposer.org/
