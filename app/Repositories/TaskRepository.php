@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Events\TaskEvent;
 use App\Priority;
 use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
@@ -191,6 +192,15 @@ class TaskRepository implements TaskInterface
             {
                 $this->update($task->id,['priority_id' => $this->getPriority('Critical')->id]);
             }
+
+            event(new TaskEvent([
+                'assigned' => $task !== null ? $task->user->fullname : "nobody",
+                'title' => $task->title,
+                'priority' => $task->priority->name,
+                'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
+                'action' => 'task updated'
+            ]));
+
         }
 //        return 'task status: updated!';
         return $data;
