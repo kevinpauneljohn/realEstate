@@ -1,3 +1,5 @@
+#Installation Guidelines
+
 1. open CLI/CMD
 2. go to drive D
 3. type: git clone https://github.com/kevinpauneljohn/realEstate.git
