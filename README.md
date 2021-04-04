@@ -1,3 +1,11 @@
+
+Requirements
+1. Composer - https://getcomposer.org/
+2. node package manager - https://nodejs.org/en/
+
+
+Note: Follow the installation steps in LARAVEL 7
+
 #Installation Guidelines
 
 1. open CLI/CMD
