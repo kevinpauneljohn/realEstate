@@ -1,3 +1,13 @@
+
+Requirements
+1. Composer - https://getcomposer.org/
+2. node package manager - https://nodejs.org/en/
+
+
+Note: Follow the installation steps in LARAVEL 7 - https://laravel.com/docs/7.x/installation
+
+
+#Installation Guidelines
 1. open CLI/CMD
 2. go to drive D
 3. run: git clone https://github.com/kevinpauneljohn/realEstate.git
@@ -15,4 +25,6 @@
 14. from your cli, you will see: Laravel development server started: http://127.0.0.1:8000
     access the "http://127.0.0.1:8000" in your browser
 15. username: kevinpauneljohn password: 123
+ 
+
  
