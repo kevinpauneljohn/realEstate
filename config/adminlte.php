@@ -347,6 +347,23 @@ return [
             ],
         ],
         [
+            'text'    => 'JJ Stay Cation',
+            'icon'    => 'fas fa-thumbtack',
+            'can'     => 'view staycation client',
+            'submenu'   => [
+                [
+                    'text'    => 'All Tasks',
+                    'can'     => 'view staycation client',
+                    'route'   => 'tasks.index',
+                ],
+                [
+                    'text'    => 'My Tasks',
+                    'can'     => 'view staycation client',
+                    'route'   => 'task.mine',
+                ]
+            ]
+        ],
+        [
             'text'    => 'Settings',
             'icon'    => 'fas fa-cogs',
             'can'     => 'view settings',

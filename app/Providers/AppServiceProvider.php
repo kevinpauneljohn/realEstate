@@ -25,11 +25,13 @@ use App\Repositories\RepositoryInterface\LeadInterface;
 use App\Repositories\RepositoryInterface\PaymentInterFace;
 use App\Repositories\RepositoryInterface\RequirementsInterface;
 use App\Repositories\RepositoryInterface\SalesInterface;
+use App\Repositories\RepositoryInterface\StaycationInterface;
 use App\Repositories\RepositoryInterface\TaskChecklistInterface;
 use App\Repositories\RepositoryInterface\TaskChecklistRepository;
 use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Repositories\RequirementsRepository;
 use App\Repositories\Sales;
+use App\Repositories\StaycationRepository;
 use App\Repositories\TaskRepository;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -112,6 +114,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ActionTakenInterface::class,
             ActionTakenRepository::class
+        );
+
+        $this->app->bind(
+            StaycationInterface::class,
+            StaycationRepository::class
         );
     }
 

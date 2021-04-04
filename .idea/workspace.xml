@@ -33,8 +33,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="task module and checklist module">
+      <change afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/StaycationInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/StaycationRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/staycation/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/realEstate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/realEstate.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Mail/MyTestMail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/MyTestMail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/RoleSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/RoleSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -211,6 +221,8 @@
       <path value="$PROJECT_DIR$/vendor/psr/http-client" />
       <path value="$PROJECT_DIR$/vendor/fruitcake/laravel-cors" />
       <path value="$PROJECT_DIR$/vendor/asm89/stack-cors" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/acaronlex/laravel-calendar" />
     </include_path>
   </component>
   <component name="ProjectId" id="1nH9KnLc1219SSSjF1dire9K9qW" />
@@ -499,14 +511,9 @@
       <workItem from="1616370642136" duration="23786000" />
       <workItem from="1616400286459" duration="27000" />
       <workItem from="1616428729069" duration="2965000" />
-      <workItem from="1616490608040" duration="6986000" />
-    </task>
-    <task id="LOCAL-00717" summary="model unit frontend">
-      <created>1615463240400</created>
-      <option name="number" value="00717" />
-      <option name="presentableId" value="LOCAL-00717" />
-      <option name="project" value="LOCAL" />
-      <updated>1615463240400</updated>
+      <workItem from="1616490608040" duration="7628000" />
+      <workItem from="1616872658568" duration="13516000" />
+      <workItem from="1617511119260" duration="129000" />
     </task>
     <task id="LOCAL-00718" summary="model unit frontend">
       <created>1615463317149</created>
@@ -844,7 +851,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616497810744</updated>
     </task>
-    <option name="localTasksCounter" value="766" />
+    <task id="LOCAL-00766" summary="task module and checklist module">
+      <created>1616498226728</created>
+      <option name="number" value="00766" />
+      <option name="presentableId" value="LOCAL-00766" />
+      <option name="project" value="LOCAL" />
+      <updated>1616498226728</updated>
+    </task>
+    <option name="localTasksCounter" value="767" />
     <servers />
   </component>
   <component name="TodoView">
