@@ -2,8 +2,8 @@
 
 1. open CLI/CMD
 2. go to drive D
-3. type: git clone https://github.com/kevinpauneljohn/realEstate.git
-4. type: cd realEstate
+3. run: git clone https://github.com/kevinpauneljohn/realEstate.git
+4. run: cd realEstate
 5. run: npm install
 6. run: composer install
 7. copy everything from the .env.example to .env file
@@ -17,4 +17,6 @@
 14. from your cli, you will see: Laravel development server started: http://127.0.0.1:8000
     access the "http://127.0.0.1:8000" in your browser
 15. username: kevinpauneljohn password: 123
+ 
+
  
