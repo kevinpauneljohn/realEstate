@@ -94,7 +94,7 @@ class ScrumController extends Controller
         $status =\session('status');
         if(!isset($status))
         {
-            $tasks = Task::all();
+            $tasks = Task::whereNotIn('status',['completed']);
         }else{
             $tasks = Task::where('status',$status)->get();
         }
