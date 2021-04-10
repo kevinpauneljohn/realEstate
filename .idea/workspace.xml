@@ -32,9 +32,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="added task status update">
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="task list display">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/computation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/computation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -505,14 +505,8 @@
       <workItem from="1616872658568" duration="13516000" />
       <workItem from="1617511119260" duration="129000" />
       <workItem from="1617542232833" duration="195000" />
-      <workItem from="1617588002696" duration="293000" />
-    </task>
-    <task id="LOCAL-00725" summary="task module and checklist module">
-      <created>1615552885799</created>
-      <option name="number" value="00725" />
-      <option name="presentableId" value="LOCAL-00725" />
-      <option name="project" value="LOCAL" />
-      <updated>1615552885799</updated>
+      <workItem from="1617588002696" duration="1025000" />
+      <workItem from="1618077767226" duration="1035000" />
     </task>
     <task id="LOCAL-00726" summary="task module and checklist module">
       <created>1615553499274</created>
@@ -850,7 +844,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617559539972</updated>
     </task>
-    <option name="localTasksCounter" value="774" />
+    <task id="LOCAL-00774" summary="task list display">
+      <created>1617588363569</created>
+      <option name="number" value="00774" />
+      <option name="presentableId" value="LOCAL-00774" />
+      <option name="project" value="LOCAL" />
+      <updated>1617588363585</updated>
+    </task>
+    <option name="localTasksCounter" value="775" />
     <servers />
   </component>
   <component name="TodoView">
@@ -892,7 +893,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="user rank points module fix" />
     <MESSAGE value="dream home guide module" />
     <MESSAGE value="update the passport" />
     <MESSAGE value="login api authentication" />
@@ -917,6 +917,7 @@
     <MESSAGE value="task module and checklist module" />
     <MESSAGE value="deleted the test file" />
     <MESSAGE value="added task status update" />
-    <option name="LAST_COMMIT_MESSAGE" value="added task status update" />
+    <MESSAGE value="task list display" />
+    <option name="LAST_COMMIT_MESSAGE" value="task list display" />
   </component>
 </project>

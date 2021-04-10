@@ -80,6 +80,7 @@ $(document).on('click','.edit-computation-btn',function(){
             $('.form-submit').removeAttr('id').attr('id','edit-computation-form').prepend('<input type="hidden" name="_method" value="PUT"><input type="hidden" name="id" value="'+id+'">');
             $('#edit-computation-form input,#edit-computation-form select,#edit-computation-form textarea').attr('disabled',true);
         },success: function(result){
+            console.log(result);
 
             $('#project').val(result.details.project_id);
             $('#unit_type').val(result.details.location_type).change();
@@ -92,13 +93,16 @@ $(document).on('click','.edit-computation-btn',function(){
                 return content;
             });
             $('.model_unit').html('<label for="model_unit">Model Unit</label><span class="required">*</span><select class="form-control" id="model_unit" name="model_unit" style="width: 100%;"><option value=""> -- Select -- </option></select>');
-            let selected = "";
+            let selected;
             $.each(result.modelUnit, function(key, value){
                 if(result.details.model_unit_id === value.id)
                 {
                     selected = "selected";
+                }else{
+                    selected = "";
                 }
                 $('#model_unit').append('<option value="'+value.id+'" class="model-unit" '+selected+'>'+value.name+'</option>');
+                console.log(result.details.model_unit_id === value.id);
             });
             $('#edit-computation-form input,#edit-computation-form select,#edit-computation-form textarea').attr('disabled',false);
         },error: function(xhr,status,error){
