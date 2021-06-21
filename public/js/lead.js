@@ -65,23 +65,25 @@ $(document).on('click','.view-details',function(){
             $('.image-loader').show();
             $('.lead-details-table').remove();
         },success: function(result){
+            console.log(result);
             let mobile = result.mobileNo != null? result.mobileNo:"",
                 landline = result.landline != null? result.landline:"",
                 email = result.email != null? result.email:"",
                 status = result.status != null? result.status:"",
-                income_range = result.income_range != null? result.income_range:"";
+                income_range = result.income_range != null? result.income_range:"",
+                remarks = result.remarks != null? result.remarks:"";
 
             $('#lead-details .modal-body').append('<table class="table table-bordered table-hover lead-details-table">' +
                 '<tr><td>Status</td><td>'+result.lead_status+'</td></tr>' +
                 '<tr><td>Date Inquired</td><td>'+dateToYMD(new Date(result.date_inquired))+'</td></tr>' +
                 '<tr><td>Full Name</td><td>'+result.id+'</td></tr>' +
-                '<tr><td>Mobile Phone</td><td>'+mobile+'</td></tr>' +
+                '<tr><td>Mobile Phone</td><td><a href="tel:'+mobile+'">'+mobile+'</a></td></tr>' +
                 '<tr><td>Land line</td><td>'+landline+'</td></tr>' +
-                '<tr><td>Email</td><td>'+email+'</td></tr>' +
+                '<tr><td>Email</td><td><a href="mailto:'+email+'">'+email+'</a></td></tr>' +
                 '<tr><td>Civil Status</td><td>'+status+'</td></tr>' +
                 '<tr><td>Income Range</td><td>'+income_range+'</td></tr>' +
                 '<tr><td>Project Interested</td><td>'+result.project+'</td></tr>' +
-                '<tr><td colspan="2"><strong>Remarks</strong><p>'+result.remarks+'</p></td></tr></table>');
+                '<tr><td colspan="2"><strong>Remarks</strong><p>'+remarks+'</p></td></tr></table>');
 
             $('.image-loader').hide();
         },error: function(xhr,status,error){

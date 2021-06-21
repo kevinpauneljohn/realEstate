@@ -32,10 +32,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="task list display">
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="leads feature update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/lead.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/lead.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/assigned.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/assigned.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -510,14 +510,7 @@
       <workItem from="1618077767226" duration="2099000" />
       <workItem from="1618852064923" duration="217000" />
       <workItem from="1620997816315" duration="4817000" />
-      <workItem from="1624286179419" duration="1352000" />
-    </task>
-    <task id="LOCAL-00728" summary="task module and checklist module">
-      <created>1615563622070</created>
-      <option name="number" value="00728" />
-      <option name="presentableId" value="LOCAL-00728" />
-      <option name="project" value="LOCAL" />
-      <updated>1615563622070</updated>
+      <workItem from="1624286179419" duration="2324000" />
     </task>
     <task id="LOCAL-00729" summary="task module and checklist module">
       <created>1615702826716</created>
@@ -855,7 +848,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624287269627</updated>
     </task>
-    <option name="localTasksCounter" value="777" />
+    <task id="LOCAL-00777" summary="leads feature update">
+      <created>1624287577339</created>
+      <option name="number" value="00777" />
+      <option name="presentableId" value="LOCAL-00777" />
+      <option name="project" value="LOCAL" />
+      <updated>1624287577340</updated>
+    </task>
+    <option name="localTasksCounter" value="778" />
     <servers />
   </component>
   <component name="TodoView">
@@ -897,7 +897,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="dream home guide module" />
     <MESSAGE value="update the passport" />
     <MESSAGE value="login api authentication" />
     <MESSAGE value="client module" />
@@ -922,6 +921,7 @@
     <MESSAGE value="deleted the test file" />
     <MESSAGE value="added task status update" />
     <MESSAGE value="task list display" />
-    <option name="LAST_COMMIT_MESSAGE" value="task list display" />
+    <MESSAGE value="leads feature update" />
+    <option name="LAST_COMMIT_MESSAGE" value="leads feature update" />
   </component>
 </project>
