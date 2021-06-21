@@ -40,7 +40,7 @@ $(document).on('click','.delete-lead-btn',function () {
                         );
 
                         let table = $('#leads-list').DataTable();
-                        table.ajax.reload();
+                        table.ajax.reload(null, false);
                     }else{
                         toastr.error(output.message);
                     }
@@ -129,7 +129,7 @@ $(document).on('submit','#change-status-form',function(form){
             {
                 $('#change-status-form').trigger('reset');
                 let table = $('#leads-list').DataTable();
-                table.ajax.reload();
+                table.ajax.reload(null, false);
                 toastr.success(result.message);
                 $('#set-status').modal('toggle');
 

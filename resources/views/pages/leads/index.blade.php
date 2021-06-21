@@ -411,7 +411,7 @@
 
                         }else{
                             let table = $('#leads-list').DataTable();
-                            table.ajax.reload();
+                            table.ajax.reload(null, false);
                         }
                     });
             })
