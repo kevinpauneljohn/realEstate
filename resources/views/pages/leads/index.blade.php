@@ -400,7 +400,7 @@
                                     if(output.success === true){
                                         customMessage('success',output.message);
                                         let table = $('#leads-list').DataTable();
-                                        table.ajax.reload();
+                                        table.ajax.reload(null, false);
                                     }else{
                                         toastr.error(output.message);
                                     }
