@@ -44,7 +44,7 @@
                             <img class="star" src="@if($lead->important === 0) {{asset('/images/empty-star.svg')}} @else {{asset('/images/filled-star.svg')}} @endif" height="25" data-toggle="tooltip" title="@if($lead->important === 0) Mark as important @else Unmarked important @endif">
                                 <div class="profile-details">
                                     <table>
-                                        <tr><td><strong>Address </strong></td><td>: {{$lead->address}}</td></tr>
+                                        <tr><td width="25%"><strong>Address </strong></td><td>: {{$lead->address}}</td></tr>
                                         <tr><td><strong>Email </strong></td><td>: <a href="mailto:{{$lead->email}}" data-toggle="tooltip" data-placement="right" title="Click to send email">{{$lead->email}}</a></td></tr>
                                         <tr><td><strong>Phone </strong></td><td>: <a href="tel:{{$lead->mobileNo}}" data-toggle="tooltip" data-placement="right" title="Click to call client">{{$lead->mobileNo}}</a></td></tr>
                                         <tr><td><strong>Land line </strong></td><td>: <a href="tel:{{$lead->landline}}">{{$lead->landline}}</a></td></tr>
@@ -812,10 +812,10 @@
         .star:hover{
             cursor:pointer;
         }
-        .lead-profile table{
-            width:0px!important;
-            padding:0px!important;
-        }
+        /*.lead-profile table{*/
+        /*    width:0px!important;*/
+        /*    padding:0px!important;*/
+        /*}*/
         .right-status i{
             color:#0cc60c;
         }

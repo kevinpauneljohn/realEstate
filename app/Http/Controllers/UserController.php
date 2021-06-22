@@ -48,7 +48,7 @@ class UserController extends Controller
         if(auth()->user()->hasRole('super admin'))
         {
             $roles = Role::where('name','!=','super admin')->get();
-        }elseif (auth()->user()->hasRole('manager')){
+        }elseif (auth()->user()->hasRole(['manager','admin'])){
             $roles = Role::where([
                 ['name','!=','super admin'],
                 ['name','!=','admin'],
