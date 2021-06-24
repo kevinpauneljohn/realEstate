@@ -98,13 +98,8 @@
             <div class="card card-primary card-outline card-tabs">
                 <div class="card-header p-0 pt-1 border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                        @if($lead->lead_status === "Reserved")
-                            <li class="nav-item">
-                                <a class="nav-link @if($lead->lead_status === "Reserved") active @endif" id="custom-tabs-two-settings-tab" data-toggle="pill" href="#reserved-units" role="tab" aria-controls="custom-tabs-two-settings" aria-selected="false">Reserved Units</a>
-                            </li>
-                        @endif
                         <li class="nav-item">
-                            <a class="nav-link @if($lead->lead_status !== "Reserved") active @endif" id="custom-tabs-two-home-tab" data-toggle="pill" href="#lead-remarks" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Remarks</a>
+                            <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#lead-remarks" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Remarks</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#lead-notes" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Notes <span class="note-count">({{$leadNotes->count()}})</span></a>
@@ -120,12 +115,7 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-two-tabContent">
-                        @if($lead->lead_status === "Reserved")
-                            <div class="tab-pane fade show @if($lead->lead_status === "Reserved") active @endif" id="reserved-units" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                                <x-units-reserved-table lead="{{$lead->id}}"></x-units-reserved-table>
-                            </div>
-                        @endif
-                        <div class="tab-pane fade show @if($lead->lead_status !== "Reserved") active @endif" id="lead-remarks" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                        <div class="tab-pane fade show active " id="lead-remarks" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
                             {!! $lead->remarks !!}
                         </div>
                         <div class="tab-pane fade" id="lead-notes" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
@@ -231,10 +221,10 @@
                                                 </div>
                                                 <!-- END timeline item -->
                                         @endforeach
+                                            <div>
+                                                <i class="fas fa-clock bg-gray"></i>
+                                            </div>
                                     @endif
-                                        <div>
-                                            <i class="fas fa-clock bg-gray"></i>
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- /.col -->
@@ -245,6 +235,18 @@
                 </div>
                 <!-- /.card -->
             </div>
+
+
+            @if($lead->lead_status === "Reserved")
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3>Reserved Units</h3>
+                    </div>
+                    <div class="card-body">
+                        <x-units-reserved-table lead="{{$lead->id}}"></x-units-reserved-table>
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="col-lg-3">
             <div class="row">
@@ -1093,6 +1095,7 @@
                     beforeSend: function(){
                         $('#view-requirements').find('#template option').remove();
                     },success: function (response){
+                        console.log(response);
                         $('#sales-id').val(salesId);
                         let isChecked = "";
                         if(response.requirements === false)
@@ -1163,6 +1166,7 @@
                         $('form').find('#template').attr('disabled',true);
                     $('form').find('.submit-form-btn').attr('disabled',true).html('<span class="spinner-border spinner-border-sm"></span> Saving ...');
                     },success: function(response){
+                        console.log(response);
                         $('#sales-id').val(salesId);
                         if(response.success === true)
                         {
@@ -1235,7 +1239,9 @@
                     beforeSend: function(){
                         $('#view-requirements').find('input[type=checkbox]').attr('disabled',true);
                     },success: function(response){
-                        console.log(response);
+                        let table = $('#reserved-unit').DataTable();
+                        table.ajax.reload(null, false);
+
                         $('#view-requirements').find('input[type=checkbox]').attr('disabled',false);
                     },error: function(xhr, status, error){
                         console.log(xhr);

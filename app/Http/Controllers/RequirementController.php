@@ -134,8 +134,7 @@ class RequirementController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $template = Requirement::where('template_id',$id)->get();
-        return $template;
+        return Requirement::where('template_id',$id)->get();
     }
 
     /**

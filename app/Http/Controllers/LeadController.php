@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ClientRequirement;
 use App\Events\UpdateLeadGeneralStatusEvent;
 use App\Lead;
 use App\LeadActivity;
@@ -9,9 +10,11 @@ use App\LeadNote;
 use App\LogTouch;
 use App\Project;
 use App\Repositories\LeadRepository;
+use App\Repositories\RepositoryInterface\ClientRequirementInterface;
 use App\Repositories\RepositoryInterface\LeadInterface;
 use App\Repositories\RepositoryInterface\SalesInterface;
 use App\Services\AccountManagerService;
+use App\Template;
 use App\User;
 use App\WebsiteLink;
 use Carbon\Carbon;
@@ -24,13 +27,14 @@ class LeadController extends Controller
 {
 
     private $accountManagement;
-    public $leadRepository, $leads, $sales;
+    public $leadRepository, $leads, $sales, $clientRequirements;
 
     public function __construct(
         LeadRepository $leadRepository,
         LeadInterface $lead,
         SalesInterface $sales,
-        AccountManagerService $accountManagerService
+        AccountManagerService $accountManagerService,
+        ClientRequirementInterface $clientRequirement
     )
     {
         $this->leadRepository = $leadRepository;
@@ -38,6 +42,7 @@ class LeadController extends Controller
         $this->sales = $sales;
 
         $this->accountManagement = $accountManagerService;
+        $this->clientRequirements = $clientRequirement;
     }
 
 
@@ -404,8 +409,9 @@ class LeadController extends Controller
             ->editColumn('total_contract_price', function($lead){
                 return '&#8369; '.number_format($lead->total_contract_price);
             })
-            ->addColumn('requirements', function($lead){
-                return "";
+            ->addColumn('requirements', function($sale){
+                return '<a href="#" class="view-requirements" id="'.$sale->id.'" title="View Requirements" data-toggle="modal" data-target="#view-requirements">'.$this->clientRequirements->getClientRequirementsCount($sale->id).'</a>';
+//                return $this->clientRequirements->viewSpecifiedSale($sale->id)['template_id'];
             })
             ->addColumn('location', function($sale){
                 $phase = 'Phase '.$sale->phase.' ';
@@ -430,7 +436,7 @@ class LeadController extends Controller
 
                 return $action;
             })
-            ->rawColumns(['action','status','total_contract_price'])
+            ->rawColumns(['action','status','total_contract_price','requirements'])
             ->make(true);
     }
 

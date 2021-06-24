@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\ClientRequirement;
 use App\Repositories\RepositoryInterface\ClientRequirementInterface;
+use App\Requirement;
 
 class ClientRequirementRepository implements ClientRequirementInterface
 {
@@ -50,5 +51,25 @@ class ClientRequirementRepository implements ClientRequirementInterface
     private function salesExists($sales_id): bool
     {
         return $this->view($sales_id)->count() > 0;
+    }
+
+    public function getClientRequirementsCount($sales_id): string
+    {
+        $TotalRequirements = Requirement::where('template_id',$this->viewSpecifiedSale($sales_id)['template_id'])->count();
+        return $this->getSubmittedRequirements($sales_id).'/'.$TotalRequirements;
+
+    }
+
+    public function getSubmittedRequirements($sales_id): int
+    {
+        $exists = 0;
+        foreach ($this->viewSpecifiedSale($sales_id)->requirements as $requirement)
+        {
+            if($requirement['exists'] === true)
+            {
+                $exists++;
+            }
+        }
+        return $exists;
     }
 }
