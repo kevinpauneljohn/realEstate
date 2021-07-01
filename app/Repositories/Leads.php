@@ -38,8 +38,7 @@ class Leads implements LeadInterface
     {
         return DataTables::of($leads)
             ->editColumn('date_inquired',function($lead){
-                ///
-                return $lead->date_inquired->format('M d, Y');
+                return $lead->date_inquired->format('Y-m-d');
             })
             ->addColumn('last_contacted',function($lead){
                 if($lead->LogTouches->count() > 0){

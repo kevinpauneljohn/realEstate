@@ -7,12 +7,18 @@ namespace App\Repositories;
 use App\Events\UserRankPointsEvent;
 use App\Project;
 use App\Sales;
+use App\Services\AccountManagerService;
 use App\Threshold;
 use App\User;
 use App\UserRankPoint;
 
 class SalesRepository
 {
+    private $accountManagerService;
+    public function __construct(AccountManagerService $accountManagerService)
+    {
+        $this->accountManagerService = $accountManagerService;
+    }
     /**
      * @since April 23, 2020
      * @author john kevin paunel
@@ -138,7 +144,8 @@ class SalesRepository
         $sales->financing = $request->edit_financing;
         $sales->terms = $request->edit_dp_terms;
         $sales->details = $request->edit_details;
-        $sales->commission_rate = $this->setCommissionRate($request->edit_project,auth()->user()->id);
+//        $sales->commission_rate = $this->setCommissionRate($request->edit_project,auth()->user()->id);
+        $sales->commission_rate = $this->setCommissionRate($request->edit_project,$this->accountManagerService->checkIfUserIsAccountManager()->id);
 
         if($sales->isDirty())
         {
@@ -243,7 +250,7 @@ class SalesRepository
         {
             $user = User::find($key);
 
-            if(!$user->hasRole('super admin'))
+            if(!$user->hasRole(['super admin','account manager','online warrior']))
             {
                 /*this will check if the project id is available on users commissions table project id column*/
                 if($user->commissions()->where('project_id','=',$project_id)->count() > 0)

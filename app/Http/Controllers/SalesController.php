@@ -90,8 +90,12 @@ class SalesController extends Controller
      */
     public function create(Request $request)
     {
+        ///if the user is an online warrior or account manager, it will only get the assigned leads to him
+        $leads = auth()->user()->hasRole(['account manager','online warrior'])
+            ? Lead::where('online_warrior_id',auth()->user()->id)->get() : Lead::where('user_id',auth()->user()->id)->get();
+
         return view('pages.sales.addSales')->with([
-            'leads' => Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get(),
+            'leads' => $leads,
             'projects' => Project::all(),
             'leadId' => $request->leadId
         ]);

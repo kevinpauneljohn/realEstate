@@ -1179,6 +1179,8 @@
                                 $('#view-requirements').find('.table').append('<tr><td>'+value.description+'</td>' +
                                     '<td width="10%"><input class="form-control requirement-btn" type="checkbox" id="'+value.id+'" value="'+value.id+'"></td></tr>');
                             });
+                            let table = $('#reserved-unit').DataTable();
+                            table.ajax.reload(null, false);
                             customMessage('success',response.message);
                         }
                         $('form').find('#template').attr('disabled',false);
