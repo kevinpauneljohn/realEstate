@@ -56,7 +56,7 @@ class ClientRequirementRepository implements ClientRequirementInterface
     public function getClientRequirementsCount($sales_id): string
     {
         $TotalRequirements = Requirement::where('template_id',$this->viewSpecifiedSale($sales_id)['template_id'])->count();
-        return $this->getSubmittedRequirements($sales_id).'/'.$TotalRequirements;
+        return $TotalRequirements > 0 ? $this->getSubmittedRequirements($sales_id).'/'.$TotalRequirements : "none";
 
     }
 
