@@ -1089,19 +1089,33 @@
 
             $(document).on('click','.view-requirements',function(){
                 salesId = this.id;
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data[1]);
+
                 $.ajax({
                     'url' : '/client-requirements/sales/'+salesId,
                     'type' : 'GET',
                     beforeSend: function(){
                         $('#view-requirements').find('#template option').remove();
                     },success: function (response){
-                        // console.log(response);
+
+
                         $('#sales-id').val(salesId);
                         let isChecked = "";
                         if(response.requirements === false)
                         {
                             $(document).find('#view-requirements form').attr('id','requirements-form');
-                            $('#view-requirements').find('.modal-body').html(`<div class="form-group template">
+                            $('#view-requirements').find('.modal-body').html(`
+                            <table><tr><td>Project: <span class="text-success">${data[1]}</span></td>
+                            <td>Model Unit: <span class="text-success">${data[2]}</span></td>
+                            <td>Block & Lot: <span class="text-success">${data[3]}</span></td></tr></table>
+                            <div class="form-group template">
                             <label for="template">Add Template</label>
                             <select class="form-control select2" name="template" id="template">
                                 <option value=""> -- Select -- </option>
@@ -1112,7 +1126,14 @@
                             });
                         }else{
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
-                            $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover">
+                            $('#view-requirements').find('.modal-body').html(`
+
+                            <h5 class="text-info" style="float: left;">${response.title}</h5>
+                            <button type="button" class="btn btn-default btn-xs remove-requirements" id="${salesId}" style="float: right;position: relative" title="Remove"><i class="fas fa-trash"></i></button>
+                            <table><tr><td>Project: <span class="text-success">${data[1]}</span></td>
+                            <td>Model Unit: <span class="text-success">${data[2]}</span></td>
+                            <td>Block & Lot: <span class="text-success">${data[3]}</span></td></tr></table>
+                            <table class="table table-bordered table-hover">
                                 <tr><th></th><th>Available</th></tr>
                             </table><div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>${((response.drive_link !== null)) ? '<a href="'+response.drive_link+'" class="btn btn-default btn-sm" target="_blank">Access</a>' : ''}`)
                             $.each(response.requirements, function(key, value){
@@ -1276,6 +1297,13 @@
                     }
                 });
             });
+
+
+            $(document).on('click','.remove-requirements',function(){
+                let id = this.id;
+                console.log(id);
+            });
+
         </script>
     @endcan
 

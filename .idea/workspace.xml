@@ -34,7 +34,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="leads feature update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/real-time-notif.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/real-time-notif.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -514,14 +514,7 @@
       <workItem from="1624545127128" duration="6732000" />
       <workItem from="1625132749669" duration="107000" />
       <workItem from="1625133185866" duration="14223000" />
-      <workItem from="1625221129464" duration="642000" />
-    </task>
-    <task id="LOCAL-00734" summary="task module and checklist module">
-      <created>1615733863040</created>
-      <option name="number" value="00734" />
-      <option name="presentableId" value="LOCAL-00734" />
-      <option name="project" value="LOCAL" />
-      <updated>1615733863040</updated>
+      <workItem from="1625221129464" duration="4130000" />
     </task>
     <task id="LOCAL-00735" summary="task module and checklist module">
       <created>1615776953297</created>
@@ -859,7 +852,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625157184918</updated>
     </task>
-    <option name="localTasksCounter" value="783" />
+    <task id="LOCAL-00783" summary="leads feature update">
+      <created>1625221817350</created>
+      <option name="number" value="00783" />
+      <option name="presentableId" value="LOCAL-00783" />
+      <option name="project" value="LOCAL" />
+      <updated>1625221817350</updated>
+    </task>
+    <option name="localTasksCounter" value="784" />
     <servers />
   </component>
   <component name="TodoView">
