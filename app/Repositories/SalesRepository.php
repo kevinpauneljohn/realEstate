@@ -256,7 +256,7 @@ class SalesRepository
                 if($user->commissions()->where('project_id','=',$project_id)->count() > 0)
                 {
                     /*if the commission was set to a specific project and it matches the sales project id*/
-                    $user_rate = $user->commissions()->where('project_id','=',1)->first()->commission_rate;
+                    $user_rate = $user->commissions()->where('project_id','=',$project_id)->first()->commission_rate;
                 }else{
                     $user_rate =  $user->commissions()->where('project_id','=',null)->first()->commission_rate;/*get the user commission rate*/
                 }
@@ -265,7 +265,7 @@ class SalesRepository
                 or equal to the user's commission rate*/
                 if($user_rate >= $rate)
                 {
-                    $rate = $rate - 1;
+                    --$rate;
                 }elseif($user_rate <= 0){
                     $rate = 0; /* commission rate is zero and will return an error message to the user*/
                 }else{

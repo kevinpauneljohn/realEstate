@@ -34,6 +34,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="leads feature update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/SalesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/SalesRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -515,6 +516,8 @@
       <workItem from="1625132749669" duration="107000" />
       <workItem from="1625133185866" duration="14223000" />
       <workItem from="1625221129464" duration="4130000" />
+      <workItem from="1625293596240" duration="5947000" />
+      <workItem from="1625671006986" duration="1717000" />
     </task>
     <task id="LOCAL-00735" summary="task module and checklist module">
       <created>1615776953297</created>

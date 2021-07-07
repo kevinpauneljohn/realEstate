@@ -1127,12 +1127,12 @@
                         }else{
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
                             $('#view-requirements').find('.modal-body').html(`
-
-                            <h5 class="text-info" style="float: left;">${response.title}</h5>
-                            <button type="button" class="btn btn-default btn-xs remove-requirements" id="${salesId}" style="float: right;position: relative" title="Remove"><i class="fas fa-trash"></i></button>
                             <table><tr><td>Project: <span class="text-success">${data[1]}</span></td>
                             <td>Model Unit: <span class="text-success">${data[2]}</span></td>
                             <td>Block & Lot: <span class="text-success">${data[3]}</span></td></tr></table>
+                            <h5 class="text-info" style="float: left;">${response.title}</h5>
+                            <button type="button" class="btn btn-default btn-xs remove-requirements" id="${salesId}" style="float: right;position: relative" title="Remove"><i class="fas fa-trash"></i></button>
+
                             <table class="table table-bordered table-hover">
                                 <tr><th></th><th>Available</th></tr>
                             </table><div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>${((response.drive_link !== null)) ? '<a href="'+response.drive_link+'" class="btn btn-default btn-sm" target="_blank">Access</a>' : ''}`)
@@ -1159,13 +1159,13 @@
                     'url' : '/requirement-template/'+value,
                     'type' : 'GET',
                     beforeSend: function(){
-                        $('#view-requirements').find('table').remove();
+                        $('#view-requirements').find('.requirement-list').remove();
                         $('#template').attr('disabled',true);
                     },success: function(response){
-                        $('#view-requirements').find('.modal-body').append(`<table class="table-bordered"></table>`)
+                        $('#view-requirements').find('.modal-body').append(`<table class="table-bordered requirement-list"></table>`)
 
                         $.each(response,function (key, value){
-                            $('#view-requirements').find('table').append(`<tr><td>${value.description}</td></tr>`);
+                            $('#view-requirements').find('.requirement-list').append(`<tr><td>${value.description}</td></tr>`);
                         });
 
                         $('#template').attr('disabled',false);
@@ -1192,8 +1192,11 @@
                         if(response.success === true)
                         {
                             $(document).find('#view-requirements form').attr('id','manage-requirements-form');
-                            $('#view-requirements').find('.modal-body .template').remove();
-                            $('#view-requirements').find('.modal-body').html(`<h5 class="text-info">${response.title}</h5><table class="table table-bordered table-hover"><tr><th></th><th>Available</th></tr></table>
+                            $('#view-requirements').find('.modal-body .template,.modal-body .requirement-list').remove();
+                            $('#view-requirements').find('.modal-body').append(`
+                            <h5 class="text-info" style="float: left;">${response.title}</h5>
+                            <button type="button" class="btn btn-default btn-xs remove-requirements" id="${salesId}" style="float: right;position: relative" title="Remove"><i class="fas fa-trash"></i></button>
+                            <table class="table table-bordered table-hover"><tr><th></th><th>Available</th></tr></table>
                                 <div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>
                             ${((response.drive_link !== null)) ? '<a href="'+response.drive_link+'" class="btn btn-default btn-sm" target="_blank">Access</a>' : ''}`);
                             $.each(response.requirements, function(key, value){
