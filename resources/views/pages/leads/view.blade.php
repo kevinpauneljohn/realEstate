@@ -831,6 +831,11 @@
         .extra-requirements, .extra-requirement-btn{
 
         }
+
+        #view-requirements table td{
+            max-width: 370px;
+            word-wrap: break-word;
+        }
     </style>
 @stop
 
@@ -1091,24 +1096,17 @@
                 }
             }
 
-            $(document).on('click','.view-requirements',function(){
-                salesId = this.id;
-
-                $tr = $(this).closest('tr');
-
-                var data = $tr.children("td").map(function () {
-                    return $(this).text();
-                }).get();
-
-
+            let projectLabel;
+            function displayListOfRequirements(data, sales_id)
+            {
                 $.ajax({
-                    'url' : '/client-requirements/sales/'+salesId,
+                    'url' : '/client-requirements/sales/'+sales_id,
                     'type' : 'GET',
                     beforeSend: function(){
                         $('#view-requirements').find('#php option').remove();
                     },success: function (response){
 
-                        $('#sales-id').val(salesId);
+                        $('#sales-id').val(sales_id);
                         let isChecked = "";
                         if(response.requirements === false)
                         {
@@ -1155,6 +1153,18 @@
                         console.log(xhr);
                     }
                 });
+            }
+
+            $(document).on('click','.view-requirements',function(){
+                salesId = this.id;
+
+                $tr = $(this).closest('tr');
+
+                projectLabel = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                displayListOfRequirements(projectLabel, salesId);
             });
 
             $(document).on('change','#template',function(){
@@ -1302,6 +1312,10 @@
                         }
                         let table = $('#reserved-unit').DataTable();
                         table.ajax.reload(null, false);
+
+                        // $('#manage-requirements-form').find('.modal-body').html("");
+                        displayListOfRequirements(projectLabel,salesId);
+
                         $('#manage-requirements-form').find('input').attr('disabled',false);
                         $('form').find('.submit-form-btn').attr('disabled',false).html('Save');
                     },error: function(xhr, status, error){
@@ -1358,7 +1372,7 @@
 
                 $('#view-requirements').find('.list-of-requirements')
                     .append('<tr><td>' +
-                        '<textarea name="extraRequirements[]" class="extra-requirements form-control" style="width:94%;float;float: right;border-radius: unset;"></textarea>' +
+                        '<textarea name="extraRequirements[]" class="extra-requirements form-control" maxlength="200" style="width:94%;float;float: right;border-radius: unset;"></textarea>' +
                         '<button type="button" class="btn btn-default btn-xs" style="float: right; width: 5%;">x</td>' +
                         '<td><input class="form-control extra-requirement-btn" type="checkbox" disabled="disabled"></td></tr>');
             });
