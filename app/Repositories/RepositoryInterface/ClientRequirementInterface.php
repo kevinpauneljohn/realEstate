@@ -40,14 +40,6 @@ interface ClientRequirementInterface
      */
     public function saveDrive(array $data);
 
-
-    /**
-     * get total submitted client requirements over complete number of must submit requirements
-     * @param $sales_id
-     * @return mixed
-     */
-    public function getClientRequirementsCount($sales_id);
-
     /**
      * get total count of submitted requirements
      * @param $sales_id

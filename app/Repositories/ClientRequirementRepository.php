@@ -35,11 +35,13 @@ class ClientRequirementRepository implements ClientRequirementInterface
         $sales_id = $data['sales_id'];
         if($this->salesExists($sales_id))
         {
-            if($this->view($sales_id)->update(['drive_link' => $data['drive_link']]))
-            {
-                return response(['success' => true, 'message' => 'Form successfully updated!']);
-            }
-            return response(['success' => false, 'message' => 'An error occurred'],400);
+//            return $this->view($sales_id)->first()->requirements;
+            return $data;
+//            if($this->view($sales_id)->update(['drive_link' => $data['drive_link']]))
+//            {
+//                return response(['success' => true, 'message' => 'Form successfully updated!']);
+//            }
+//            return response(['success' => false, 'message' => 'An error occurred'],400);
         }
         return response(['success' => false, 'message' => 'An error occurred'],404);
     }
@@ -53,23 +55,23 @@ class ClientRequirementRepository implements ClientRequirementInterface
         return $this->view($sales_id)->count() > 0;
     }
 
-    public function getClientRequirementsCount($sales_id): string
-    {
-        $TotalRequirements = Requirement::where('template_id',$this->viewSpecifiedSale($sales_id)['template_id'])->count();
-        return $TotalRequirements > 0 ? $this->getSubmittedRequirements($sales_id).'/'.$TotalRequirements : "none";
 
-    }
-
-    public function getSubmittedRequirements($sales_id): int
+    public function getSubmittedRequirements($sales_id)
     {
-        $exists = 0;
-        foreach ($this->viewSpecifiedSale($sales_id)->requirements as $requirement)
+        if($this->view($sales_id)->count() > 0 )
         {
-            if($requirement['exists'] === true)
+            $submitted = 0;
+            $totalRequirements = 0;
+            foreach ($this->viewSpecifiedSale($sales_id)->requirements as $requirement)
             {
-                $exists++;
+                $totalRequirements++;
+                if($requirement['exists'] === true)
+                {
+                    $submitted++;
+                }
             }
+            return $submitted.'/'.$totalRequirements;
         }
-        return $exists;
+        return "none";
     }
 }

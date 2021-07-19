@@ -827,6 +827,10 @@
         #reserved-unit td {
             padding: 10px!important;
         }
+
+        .extra-requirements, .extra-requirement-btn{
+
+        }
     </style>
 @stop
 
@@ -1096,7 +1100,6 @@
                     return $(this).text();
                 }).get();
 
-                console.log(data[1]);
 
                 $.ajax({
                     'url' : '/client-requirements/sales/'+salesId,
@@ -1104,7 +1107,6 @@
                     beforeSend: function(){
                         $('#view-requirements').find('#php option').remove();
                     },success: function (response){
-
 
                         $('#sales-id').val(salesId);
                         let isChecked = "";
@@ -1133,9 +1135,11 @@
                             <h5 class="text-info" style="float: left;">${response.title}</h5>
                             <button type="button" class="btn btn-default btn-xs remove-requirements" id="${salesId}" style="float: right;position: relative" title="Remove"><i class="fas fa-trash"></i></button>
 
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-bordered table-hover list-of-requirements">
                                 <tr><th></th><th>Available</th></tr>
-                            </table><div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>${((response.drive_link !== null)) ? '<a href="'+response.drive_link+'" class="btn btn-default btn-sm" target="_blank">Access</a>' : ''}`)
+                            </table>
+                            <button type="button" class="btn btn-default btn-xs add-requirements-btn" title="Add extra requirement" value="${salesId}"><i class="fas fa-plus"></i></button>
+                            <div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>${((response.drive_link !== null)) ? '<a href="'+response.drive_link+'" class="btn btn-default btn-sm" target="_blank">Access</a>' : ''}`)
                             $.each(response.requirements, function(key, value){
                                 if(value.exists === true)
                                 {
@@ -1288,7 +1292,7 @@
                         $('#manage-requirements-form').find('input').attr('disabled',true);
                         $('form').find('.submit-form-btn').attr('disabled',true).html('<span class="spinner-border spinner-border-sm"></span> Saving ...');
                     },success: function(response){
-                        // console.log(response);
+                        console.log(response);
                         if(response.success === true)
                         {
                             customMessage('success',response.message);
@@ -1345,6 +1349,16 @@
                 });
             });
 
+            $(document).on('click','.add-requirements-btn',function(){
+                let id = this.value;
+                console.log(id);
+
+                $('#view-requirements').find('.list-of-requirements')
+                    .append('<tr><td>' +
+                        '<textarea name="extraRequirements[]" class="extra-requirements form-control" style="width:94%;float;float: right;border-radius: unset;"></textarea>' +
+                        '<button class="btn btn-default btn-xs" style="float: right; width: 5%;">x</td>' +
+                        '<td><input class="form-control extra-requirement-btn" type="checkbox" disabled="disabled"></td></tr>');
+            });
         </script>
     @endcan
 
