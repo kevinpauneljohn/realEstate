@@ -32,11 +32,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="updated the SalesRepository.php line 259 issue. The project ID was set specifically as 1 that's why it doesn't change the project ID">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/realEstate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/realEstate.iml" afterDir="false" />
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/ClientRequirementRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/ClientRequirementRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/acaronlex/laravel-calendar/" />
@@ -68,14 +66,14 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.3361409">
+    <splitter split-orientation="horizontal" split-proportion="0.80606955">
       <split-first>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="220">
-                  <caret line="148" column="59" selection-start-line="148" selection-start-column="59" selection-end-line="148" selection-end-column="59" />
+                <state relative-caret-position="1406">
+                  <caret line="149" column="110" selection-start-line="148" selection-start-column="8" selection-end-line="149" selection-end-column="110" />
                 </state>
               </provider>
             </entry>
@@ -90,28 +88,10 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ComputationController.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1377">
-                  <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Repositories/RepositoryInterface/ClientRequirementInterface.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="136">
-                  <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Repositories/ClientRequirementRepository.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-119">
-                  <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+                <state relative-caret-position="474">
+                  <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
                 </state>
               </provider>
             </entry>
@@ -119,8 +99,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/routes/web.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="243">
-                  <caret line="364" column="17" selection-start-line="364" selection-start-column="17" selection-end-line="364" selection-end-column="36" />
+                <state relative-caret-position="209">
+                  <caret line="87" column="117" selection-start-line="87" selection-start-column="98" selection-end-line="87" selection-end-column="117" />
                 </state>
               </provider>
             </entry>
@@ -128,11 +108,20 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-2487">
-                  <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
+                <state relative-caret-position="600">
+                  <caret line="433" column="38" selection-start-line="433" selection-start-column="38" selection-end-line="433" selection-end-column="38" />
                   <folding>
                     <element signature="n#style#0;n#span#0;n#h6#0;n#!!top" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/app/Repositories/ClientRequirementRepository.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="442">
+                  <caret line="94" column="18" selection-start-line="94" selection-start-column="18" selection-end-line="94" selection-end-column="18" />
                 </state>
               </provider>
             </entry>
@@ -144,28 +133,14 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="205">
-                  <caret line="1331" lean-forward="true" selection-start-line="1331" selection-end-line="1331" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/resources/views/pages/requirements/index.blade.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-87">
-                  <caret line="208" column="33" lean-forward="true" selection-start-line="208" selection-start-column="33" selection-end-line="208" selection-end-column="33" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/js/leadNotes.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-2703">
+                <state relative-caret-position="515">
+                  <caret line="1303" column="55" selection-start-line="1303" selection-start-column="55" selection-end-line="1303" selection-end-column="55" />
                   <folding>
-                    <element signature="n#style#0;n#span#0;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
-                    <element signature="n#style#0;n#span#0;n#span#1;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#textarea#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#textarea#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#textarea#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#button#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#button#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -189,6 +164,13 @@
       <find>leads</find>
       <find>clientRe</find>
       <find>requirement</find>
+      <find>lead.reserved.units</find>
+      <find>clientRequirements</find>
+      <find>reserved</find>
+      <find>#view-requirements</find>
+      <find>mana</find>
+      <find>manage-requirements-form</find>
+      <find>requirements-form</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -208,7 +190,10 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" />
+        <option value="$PROJECT_DIR$/app/Repositories/RepositoryInterface/ClientRequirementInterface.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" />
+        <option value="$PROJECT_DIR$/app/Repositories/ClientRequirementRepository.php" />
       </list>
     </option>
   </component>
@@ -385,13 +370,8 @@
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Repositories" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -425,13 +405,13 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\realEstateV2\realEstate\" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\realEstatev3\realEstate" />
       <recent name="D:\realEstateV2\realEstate" />
       <recent name="D:\realEstateV2\realEstate\vendor" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\realEstateV2\realEstate\" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -724,21 +704,7 @@
       <workItem from="1626532165143" duration="1221000" />
       <workItem from="1626540801289" duration="28000" />
       <workItem from="1626566350059" duration="633000" />
-      <workItem from="1626662877649" duration="3204000" />
-    </task>
-    <task id="LOCAL-00736" summary="task module and checklist module">
-      <created>1615903150834</created>
-      <option name="number" value="00736" />
-      <option name="presentableId" value="LOCAL-00736" />
-      <option name="project" value="LOCAL" />
-      <updated>1615903150835</updated>
-    </task>
-    <task id="LOCAL-00737" summary="task module and checklist module">
-      <created>1615963723915</created>
-      <option name="number" value="00737" />
-      <option name="presentableId" value="LOCAL-00737" />
-      <option name="project" value="LOCAL" />
-      <updated>1615963723915</updated>
+      <workItem from="1626662877649" duration="20528000" />
     </task>
     <task id="LOCAL-00738" summary="task module and checklist module">
       <created>1615964388900</created>
@@ -1069,11 +1035,25 @@
       <option name="project" value="LOCAL" />
       <updated>1625673283770</updated>
     </task>
-    <option name="localTasksCounter" value="785" />
+    <task id="LOCAL-00785" summary="updated the SalesRepository.php line 259 issue. The project ID was set specifically as 1 that's why it doesn't change the project ID">
+      <created>1626666976491</created>
+      <option name="number" value="00785" />
+      <option name="presentableId" value="LOCAL-00785" />
+      <option name="project" value="LOCAL" />
+      <updated>1626666976492</updated>
+    </task>
+    <task id="LOCAL-00786" summary="updated the client submitted requirements count">
+      <created>1626696110997</created>
+      <option name="number" value="00786" />
+      <option name="presentableId" value="LOCAL-00786" />
+      <option name="project" value="LOCAL" />
+      <updated>1626696110997</updated>
+    </task>
+    <option name="localTasksCounter" value="787" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6052000" />
+    <option name="totallyTimeSpent" value="23376000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1088,7 +1068,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12348993" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09328859" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1100,7 +1080,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.82719547" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -1145,7 +1125,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="login api authentication" />
     <MESSAGE value="client module" />
     <MESSAGE value="login api for Dream Home Guide" />
     <MESSAGE value="add builder page and functionality" />
@@ -1170,7 +1149,8 @@
     <MESSAGE value="task list display" />
     <MESSAGE value="leads feature update" />
     <MESSAGE value="updated the SalesRepository.php line 259 issue. The project ID was set specifically as 1 that's why it doesn't change the project ID" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated the SalesRepository.php line 259 issue. The project ID was set specifically as 1 that's why it doesn't change the project ID" />
+    <MESSAGE value="updated the client submitted requirements count" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated the client submitted requirements count" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.env">
@@ -1180,62 +1160,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2487">
-          <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#h6#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repositories/RepositoryInterface/ClientRequirementInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repositories/ClientRequirementRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-119">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="364" column="17" selection-start-line="364" selection-start-column="17" selection-end-line="364" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ComputationController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1377">
           <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/ClientRequirement.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="148" column="59" selection-start-line="148" selection-start-column="59" selection-end-line="148" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/requirements/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-87">
-          <caret line="208" column="33" lean-forward="true" selection-start-line="208" selection-start-column="33" selection-end-line="208" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -1249,10 +1177,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/requirements/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-73">
+          <caret line="208" column="33" lean-forward="true" selection-start-line="208" selection-start-column="33" selection-end-line="208" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="87" column="117" selection-start-line="87" selection-start-column="98" selection-end-line="87" selection-end-column="117" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/ClientRequirement.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="433" column="38" selection-start-line="433" selection-start-column="38" selection-end-line="433" selection-end-column="38" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#h6#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientRequirementsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1406">
+          <caret line="149" column="110" selection-start-line="148" selection-start-column="8" selection-end-line="149" selection-end-column="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Repositories/RepositoryInterface/ClientRequirementInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="474">
+          <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="1331" lean-forward="true" selection-start-line="1331" selection-end-line="1331" />
+        <state relative-caret-position="515">
+          <caret line="1303" column="55" selection-start-line="1303" selection-start-column="55" selection-end-line="1303" selection-end-column="55" />
+          <folding>
+            <element signature="n#style#0;n#textarea#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Repositories/ClientRequirementRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="94" column="18" selection-start-line="94" selection-start-column="18" selection-end-line="94" selection-end-column="18" />
         </state>
       </provider>
     </entry>

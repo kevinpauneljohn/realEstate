@@ -1200,7 +1200,8 @@
                             $('#view-requirements').find('.modal-body').append(`
                             <h5 class="text-info" style="float: left;">${response.title}</h5>
                             <button type="button" class="btn btn-default btn-xs remove-requirements" id="${salesId}" style="float: right;position: relative" title="Remove"><i class="fas fa-trash"></i></button>
-                            <table class="table table-bordered table-hover"><tr><th></th><th>Available</th></tr></table>
+                            <table class="table table-bordered table-hover list-of-requirements"><tr><th></th><th>Available</th></tr></table>
+                            <button type="button" class="btn btn-default btn-xs add-requirements-btn" title="Add extra requirement" value="${salesId}"><i class="fas fa-plus"></i></button>
                                 <div class="form-group"><label>Google Drive Link</label><input type="url" class="form-control" name="drive_link" id="drive_link" value="${(response.drive_link !== null) ? response.drive_link : ''}"></div>
                             ${((response.drive_link !== null)) ? '<a href="'+response.drive_link+'" class="btn btn-default btn-sm" target="_blank">Access</a>' : ''}`);
                             $.each(response.requirements, function(key, value){
@@ -1222,6 +1223,8 @@
                             element.find('.error-'+key).remove();
                             element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
                         });
+                        $('form').find('#template').attr('disabled',false);
+                        $('form').find('.submit-form-btn').attr('disabled',false).html('Save');
                     }
                 });
                 clear_errors('template');
@@ -1297,6 +1300,8 @@
                         {
                             customMessage('success',response.message);
                         }
+                        let table = $('#reserved-unit').DataTable();
+                        table.ajax.reload(null, false);
                         $('#manage-requirements-form').find('input').attr('disabled',false);
                         $('form').find('.submit-form-btn').attr('disabled',false).html('Save');
                     },error: function(xhr, status, error){
@@ -1327,7 +1332,6 @@
                             beforeSend: function(){
 
                             },success: function(output){
-                                console.log(output);
                                 if(output.success === true){
                                     let table = $('#reserved-unit').DataTable();
                                     table.ajax.reload(null, false);
@@ -1351,12 +1355,11 @@
 
             $(document).on('click','.add-requirements-btn',function(){
                 let id = this.value;
-                console.log(id);
 
                 $('#view-requirements').find('.list-of-requirements')
                     .append('<tr><td>' +
                         '<textarea name="extraRequirements[]" class="extra-requirements form-control" style="width:94%;float;float: right;border-radius: unset;"></textarea>' +
-                        '<button class="btn btn-default btn-xs" style="float: right; width: 5%;">x</td>' +
+                        '<button type="button" class="btn btn-default btn-xs" style="float: right; width: 5%;">x</td>' +
                         '<td><input class="form-control extra-requirement-btn" type="checkbox" disabled="disabled"></td></tr>');
             });
         </script>
