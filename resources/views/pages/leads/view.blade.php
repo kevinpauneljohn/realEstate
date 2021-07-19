@@ -1102,7 +1102,7 @@
                     'url' : '/client-requirements/sales/'+salesId,
                     'type' : 'GET',
                     beforeSend: function(){
-                        $('#view-requirements').find('#template option').remove();
+                        $('#view-requirements').find('#php option').remove();
                     },success: function (response){
 
 
@@ -1304,7 +1304,45 @@
 
             $(document).on('click','.remove-requirements',function(){
                 let id = this.id;
-                console.log(id);
+
+                Swal.fire({
+                    title: 'Remove Requirements?',
+                    text: 'You won\'t be able to revert this!',
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, remove it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/client-requirements/'+id,
+                            'type' : 'DELETE',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            beforeSend: function(){
+
+                            },success: function(output){
+                                console.log(output);
+                                if(output.success === true){
+                                    let table = $('#reserved-unit').DataTable();
+                                    table.ajax.reload(null, false);
+
+                                    $('#view-requirements').modal('toggle');
+
+                                    Swal.fire(
+                                        'Removed!',
+                                        'Client Requirements Successfully Removed!',
+                                        'success'
+                                    );
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }
+                });
             });
 
         </script>

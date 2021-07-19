@@ -146,7 +146,8 @@ class ClientRequirementsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        ClientRequirement::where('sales_id',$id)->delete();
+        return response()->json(['success' => true, 'message' => 'Client Requirements successfully removed']);
     }
 
     /**
