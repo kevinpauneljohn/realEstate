@@ -833,7 +833,7 @@
         }
 
         #view-requirements table td{
-            max-width: 370px;
+            phpmax-width: 370px;
             word-wrap: break-word;
         }
     </style>
