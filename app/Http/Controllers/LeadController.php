@@ -412,6 +412,9 @@ class LeadController extends Controller
             ->addColumn('requirements', function($sale){
                 return '<a href="#" class="view-requirements" id="'.$sale->id.'" title="View Requirements" data-toggle="modal" data-target="#view-requirements">'.$this->clientRequirements->getSubmittedRequirements($sale->id).'</a>';
             })
+            ->addColumn('payments', function(){
+                return "";
+            })
             ->addColumn('location', function($sale){
                 $phase = 'Phase '.$sale->phase.' ';
                 $block = 'Blk '.$sale->block.' ';

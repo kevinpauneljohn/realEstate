@@ -795,7 +795,7 @@
         }
         .lead-profile table td:nth-child(2)
         {
-            font-size:16px;
+            /*font-size:16px;*/
             word-wrap: break-word;
         }
         .lead-profile table td:nth-child(1)
@@ -992,6 +992,7 @@
                         { data: 'total_contract_price', name: 'total_contract_price'},
                         { data: 'financing', name: 'financing'},
                         { data: 'requirements', name: 'requirements'},
+                        { data: 'payments', name: 'payments'},
                         { data: 'status', name: 'status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],

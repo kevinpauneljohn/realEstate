@@ -5,11 +5,12 @@
             <tr role="row">
                 <th>Date Reserved</th>
                 <th>Project</th>
-                <th>Model Unit</th>
+                <th>Model</th>
                 <th>Phase/blk/lot</th>
-                <th>Total Contract Price</th>
+                <th width="50px;">TCP</th>
                 <th>Financing</th>
                 <th>Requirements</th>
+                <th>Payments</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -19,11 +20,12 @@
             <tr>
                 <th>Date Reserved</th>
                 <th>Project</th>
-                <th>Model Unit</th>
+                <th>Model</th>
                 <th>Phase/blk/lot</th>
-                <th>Total Contract Price</th>
+                <th>TCP</th>
                 <th>Financing</th>
                 <th>Requirements</th>
+                <th>Payments</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
