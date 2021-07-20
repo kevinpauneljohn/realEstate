@@ -370,16 +370,16 @@ Route::resource('task-checklist','TaskChecklistController');
 
 Route::get('/action-taken/{checklist_id}/display',[\App\Http\Controllers\ActionTakenController::class,'actionTakenList'])->name('action.taken.display');
 Route::resource('action-taken','ActionTakenController');
-//Route::get('test', function () {
-//
-//    $user = [
-//        'name' => 'Harsukh Makwana',
-//        'info' => 'Laravel & Python Devloper'
-//    ];
-//
-//    \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
-//
-//});
+Route::get('test', function () {
+
+    $user = [
+        'name' => 'Harsukh Makwana',
+        'info' => 'Laravel & Python Devloper'
+    ];
+
+    \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
+
+});
 
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');
 Route::resource('staycation','Staycation\StaycationClientController');
