@@ -701,4 +701,30 @@ class SalesController extends Controller
         return response()->json($validator->errors());
     }
 
+
+    public function savePaymentDate(Request $request)
+    {
+        $sales = $this->salesRepository->viewSale($request->input('sales_id'));
+        $dates = $this->salesRepository->setPaymentDueDate($request->input('sales_id'),$request->input('payment_date'));
+        if(Sales::find($request->input('sales_id'))->update(['date_of_payment' => $dates,'payment_amount' => $request->input('payment_amount')]))
+        {
+            return response()->json([
+                'success' => true,
+                'message' => 'Due date successfully set',
+                'dates' => $dates,
+                'payment' => number_format($request->input('payment_amount'),2),
+            ]);
+        }
+
+    }
+
+    public function getSalesDueDate($salesId)
+    {
+        $sales = $this->salesRepository->viewSale($salesId);
+        return response()->json([
+            'schedule' => $sales->date_of_payment !== null ? $sales->date_of_payment : "",
+            'payment' => number_format($sales->payment_amount,2),
+        ]);
+    }
+
 }

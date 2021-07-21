@@ -693,6 +693,53 @@
         <!--end add new schedule modal-->
     @endcan
 
+    @can('add sales')
+        <div class="modal fade" id="view-payments">
+            <div class="modal-dialog">
+                <form>
+                    @csrf
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Requirements</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+{{--                            <div class="text-center">--}}
+{{--                                <div class="spinner-grow text-muted"></div>--}}
+{{--                                <div class="spinner-grow text-primary"></div>--}}
+{{--                                <div class="spinner-grow text-success"></div>--}}
+{{--                                <div class="spinner-grow text-info"></div>--}}
+{{--                                <div class="spinner-grow text-warning"></div>--}}
+{{--                                <div class="spinner-grow text-danger"></div>--}}
+{{--                                <div class="spinner-grow text-secondary"></div>--}}
+{{--                                <div class="spinner-grow text-dark"></div>--}}
+{{--                                <div class="spinner-grow text-light"></div>--}}
+{{--                            </div>--}}
+                            <div class="form-group payment_date">
+                                <label for="payment_date">Select Payment Date</label>
+                                <input type="text" name="payment_date" id="payment_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false" value="{{today()->format('Y-m-d')}}" autocomplete="off">
+                            </div>
+                            <div class="form-group payment_amount">
+                                <label for="payment_amount">Set Monthly Payment Manually</label>
+                                <input type="number" name="payment_amount" min="0" id="payment_amount" class="form-control" autocomplete="off" step="any">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit-form-btn">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </form>
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!--end add new schedule modal-->
+    @endcan
+
     @can('edit lead')
         @if($lead->lead_status !== 'Reserved')
             <!--add new schedule modal-->
@@ -1377,6 +1424,71 @@
                         '<button type="button" class="btn btn-default btn-xs" style="float: right; width: 5%;">x</td>' +
                         '<td><input class="form-control extra-requirement-btn" type="checkbox" disabled="disabled"></td></tr>');
             });
+
+            $(document).on('click','.view-payments',function(){
+                let id = this.id;
+
+                $('#view-payments').find('#sales-id, .due-dates').remove();
+                $('#view-payments').find('form').addClass('save-payment-date').append('<input type="hidden" name="sales_id" id="sales-id" value="'+id+'">');
+
+                $.ajax({
+                    'url' : '/sales/due-date/'+id,
+                    'type' : 'GET',
+                    beforeSend: function(){
+
+                    },success: function(result){
+                        // console.log(result);
+                        $('#payment_date').val(result.schedule[0]);
+                        $('#view-payments').find('#payment_amount').val(result.payment).change();
+                        $('.save-payment-date').find('.payment_amount').after('<table class="due-dates table table-bordered"></table>');
+                        $.each(result.schedule, function(key, value){
+                            let date = new Date(value);
+                            key++;
+                            $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td><td>'+result.payment+'</td></tr>');
+
+                        });
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            });
+
+            $(document).on('submit','.save-payment-date',function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
+
+                $.ajax({
+                    'url' : '/sales/payment-date/'+data[2].value,
+                    'type': 'PUT',
+                    'data': data,
+                    beforeSend: function(){
+                        $('.save-payment-date').find('.submit-form-btn').attr('disabled',true).text('Saving...');
+                    },success: function(result){
+                        console.log(result);
+                        $('#view-payments').find('.due-dates').remove();
+                        if(result.success === true)
+                        {
+                            $('.save-payment-date').find('.payment_amount').after('<table class="due-dates table table-bordered"></table>');
+                            $.each(result.dates, function(key, value){
+                                let date = new Date(value);
+                                key++;
+                                $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td><td>'+result.payment+'</td></tr>');
+
+                            });
+                        }
+
+                        $('.save-payment-date').find('.submit-form-btn').attr('disabled',false).text('Save');
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            });
+
+
+            $('#payment_date').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd',
+            }).datepicker("setDate", new Date());
         </script>
     @endcan
 

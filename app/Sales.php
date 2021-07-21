@@ -31,6 +31,9 @@ class Sales extends Model
         'loanable_amount',
         'financing',
         'terms',
+        'payment_amount',
+        'reminder',
+        'date_of_payment',
         'details',
         'commission_rate',
         'status',
@@ -57,6 +60,7 @@ class Sales extends Model
         'loanable_amount',
         'financing',
         'terms',
+        'payment_amount',
         'details',
         'commission_rate',
         'status',
@@ -64,6 +68,9 @@ class Sales extends Model
     ];
 
     protected $dates = ['reservation_date'];
+    protected $casts = [
+        'date_of_payment' => 'array'
+    ];
 
     public function getReservationDateAttribute($value)
     {
@@ -101,5 +108,10 @@ class Sales extends Model
     public function clientRequirements(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ClientRequirement::class);
+    }
+
+    public function getLocationAttribute()
+    {
+        return "Phase {$this->phase}, Block {$this->block}, Lot {$this->lot}";
     }
 }

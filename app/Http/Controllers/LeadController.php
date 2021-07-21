@@ -412,8 +412,8 @@ class LeadController extends Controller
             ->addColumn('requirements', function($sale){
                 return '<a href="#" class="view-requirements" id="'.$sale->id.'" title="View Requirements" data-toggle="modal" data-target="#view-requirements">'.$this->clientRequirements->getSubmittedRequirements($sale->id).'</a>';
             })
-            ->addColumn('payments', function(){
-                return "";
+            ->addColumn('payments', function($sale){
+                return '<a href="#" class="view-payments" id="'.$sale->id.'" title="View Payments" data-toggle="modal" data-target="#view-payments">'.$sale->terms.'</a>';
             })
             ->addColumn('location', function($sale){
                 $phase = 'Phase '.$sale->phase.' ';
@@ -438,7 +438,7 @@ class LeadController extends Controller
 
                 return $action;
             })
-            ->rawColumns(['action','status','total_contract_price','requirements'])
+            ->rawColumns(['action','status','total_contract_price','requirements','payments'])
             ->make(true);
     }
 
