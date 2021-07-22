@@ -387,6 +387,7 @@ Route::get('test', function () {
         foreach (\App\Sales::all() as $sale){
 //            echo $sale->id.'<br/>';
         }
+        return 'test';
 });
 
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');
