@@ -346,24 +346,4 @@ class SalesRepository
         return Sales::where('id',$id)->first();
     }
 
-    /**
-     * set all the due date by first payment date and terms
-     * @param $sales_id
-     * @param $firstPayment
-     * @return array
-     */
-    public function setPaymentDueDate($sales_id, $firstPayment)
-    {
-        $terms = $this->viewSale($sales_id)->terms;
-        $dueDates = array();
-
-        $date = explode("-",$firstPayment);
-
-        for ($month = 0; $month < $terms; $month++)
-        {
-            $dueDates[$month] = Carbon::create($date[0], $date[1], $date[2], 0, 0, 0)->addMonthsNoOverflow($month)->format('Y-m-d');
-        }
-        return $dueDates;
-
-    }
 }

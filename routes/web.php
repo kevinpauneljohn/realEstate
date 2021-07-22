@@ -147,7 +147,7 @@ Route::put('/sale-status-update','SalesController@updateSaleStatus')->name('sale
 Route::put('/sales/{sale}','SalesController@update')->name('sales.update')->middleware(['auth','permission:edit sales','checkCommission']);
 Route::get('/add-sales','SalesController@create')->name('sales.create')->middleware(['auth','permission:add sales','checkCommission']);
 Route::delete('/sales/{sale}','SalesController@destroy')->name('sales.destroy')->middleware(['auth','permission:delete sales']);
-Route::put('/sales/payment-date/{sale}',[\App\Http\Controllers\SalesController::class,'savePaymentDate'])->name('sales.save.payment.date')->middleware(['auth','permission:add sales|edit sales']);
+Route::post('/sales/payment-date/{sale}',[\App\Http\Controllers\SalesController::class,'savePaymentDate'])->name('sales.save.payment.date')->middleware(['auth','permission:add sales|edit sales']);
 Route::get('/sales/due-date/{sale}',[\App\Http\Controllers\SalesController::class,'getSalesDueDate'])->name('sales.due.date')->middleware(['auth','permission:view sales']);
 
 /*commissions*/
@@ -379,11 +379,14 @@ Route::get('test', function () {
         'info' => 'sample email reminder'
     ];
 //
-    \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
+//    \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
 //    return \Carbon\Carbon::create(2018, 1, 31, 0, 0, 0)-
 //    $sales = \App\Sales::find(46);
 //    return $sales->location;
 
+        foreach (\App\Sales::all() as $sale){
+//            echo $sale->id.'<br/>';
+        }
 });
 
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');

@@ -701,7 +701,7 @@
 
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Requirements</h4>
+                            <h4 class="modal-title">Payment Schedule</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -1438,13 +1438,14 @@
 
                     },success: function(result){
                         // console.log(result);
+                        let amount = parseFloat(result.payment);
                         $('#payment_date').val(result.schedule[0]);
-                        $('#view-payments').find('#payment_amount').val(result.payment).change();
+                        $('#view-payments').find('#payment_amount').val(result.payment);
                         $('.save-payment-date').find('.payment_amount').after('<table class="due-dates table table-bordered"></table>');
                         $.each(result.schedule, function(key, value){
                             let date = new Date(value);
                             key++;
-                            $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td><td>'+result.payment+'</td></tr>');
+                            $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td><td>'+amount.toLocaleString('en-US')+'</td></tr>');
 
                         });
                     },error: function(xhr, status, error){
@@ -1458,8 +1459,8 @@
                 let data = $(this).serializeArray();
 
                 $.ajax({
-                    'url' : '/sales/payment-date/'+data[2].value,
-                    'type': 'PUT',
+                    'url' : '/sales/payment-date/'+data[3].value,
+                    'type': 'POST',
                     'data': data,
                     beforeSend: function(){
                         $('.save-payment-date').find('.submit-form-btn').attr('disabled',true).text('Saving...');
@@ -1477,11 +1478,20 @@
                             });
                         }
 
+
+                        $.each(result, function (key, value) {
+                            let element = $('.'+key);
+
+                            element.find('.error-'+key).remove();
+                            element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                        });
+
                         $('.save-payment-date').find('.submit-form-btn').attr('disabled',false).text('Save');
                     },error: function(xhr, status, error){
                         console.log(xhr);
                     }
                 });
+                clear_errors('payment_date','payment_amount');
             });
 
 

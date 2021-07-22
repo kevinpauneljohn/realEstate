@@ -6,6 +6,7 @@ use App\Events\UpdateLeadStatusEvent;
 use App\Events\UserRankPointsEvent;
 use App\Lead;
 use App\ModelUnit;
+use App\PaymentReminder;
 use App\Project;
 use App\Repositories\RepositoryInterface\SalesInterface;
 use App\Repositories\SalesRepository;
@@ -14,11 +15,11 @@ use App\Requirement;
 use App\SaleRequirement;
 use App\Sales;
 use App\Services\AccountManagerService;
+use App\Services\PaymentReminderService;
 use App\Template;
 use App\Threshold;
 use App\User;
 use App\UserRankPoint;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -26,19 +27,21 @@ use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
 {
-    private $thresholdRepository, $salesRepository, $sales, $accountManagement;
+    private $thresholdRepository, $salesRepository, $sales, $accountManagement, $paymentReminder;
 
     public function __construct(
         ThresholdRepository $thresholdRepository,
         SalesRepository $salesRepository,
         SalesInterface $sales,
-        AccountManagerService $accountManagerService
+        AccountManagerService $accountManagerService,
+        PaymentReminderService $paymentReminder
     )
     {
         $this->thresholdRepository = $thresholdRepository;
         $this->salesRepository = $salesRepository;
         $this->sales = $sales;
         $this->accountManagement = $accountManagerService;
+        $this->paymentReminder = $paymentReminder;
     }
 
 
@@ -704,18 +707,24 @@ class SalesController extends Controller
 
     public function savePaymentDate(Request $request)
     {
-        $sales = $this->salesRepository->viewSale($request->input('sales_id'));
-        $dates = $this->salesRepository->setPaymentDueDate($request->input('sales_id'),$request->input('payment_date'));
-        if(Sales::find($request->input('sales_id'))->update(['date_of_payment' => $dates,'payment_amount' => $request->input('payment_amount')]))
-        {
-            return response()->json([
-                'success' => true,
-                'message' => 'Due date successfully set',
-                'dates' => $dates,
-                'payment' => number_format($request->input('payment_amount'),2),
-            ]);
-        }
+        $validation = Validator::make($request->all(),[
+            'payment_date' => 'required|date',
+            'payment_amount' => 'required'
+        ]);
 
+        if($validation->passes())
+        {
+            if($this->paymentReminder->savePaymentSchedule($request->input('sales_id'),$request->input('payment_date'), $request->input('payment_amount')))
+            {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Due date successfully set',
+//                'dates' => $dates,
+                    'payment' => number_format($request->input('payment_amount'),2),
+                ]);
+            }
+        }
+        return response()->json($validation->errors());
     }
 
     public function getSalesDueDate($salesId)
@@ -723,7 +732,7 @@ class SalesController extends Controller
         $sales = $this->salesRepository->viewSale($salesId);
         return response()->json([
             'schedule' => $sales->date_of_payment !== null ? $sales->date_of_payment : "",
-            'payment' => number_format($sales->payment_amount,2),
+            'payment' => $sales->payment_amount,
         ]);
     }
 
