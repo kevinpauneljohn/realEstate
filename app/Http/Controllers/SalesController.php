@@ -714,12 +714,14 @@ class SalesController extends Controller
 
         if($validation->passes())
         {
-            if($this->paymentReminder->savePaymentSchedule($request->input('sales_id'),$request->input('payment_date'), $request->input('payment_amount')))
+            $salesId = $request->input('sales_id');
+            $firstPayment = $request->input('payment_date');
+            if($saveSchedule = $this->paymentReminder->savePaymentSchedule($salesId, $firstPayment, $request->input('payment_amount')))
             {
                 return response()->json([
                     'success' => true,
                     'message' => 'Due date successfully set',
-//                'dates' => $dates,
+                    'dates' => $this->paymentReminder->scheduleFormatter($salesId, $firstPayment),
                     'payment' => number_format($request->input('payment_amount'),2),
                 ]);
             }
@@ -729,11 +731,7 @@ class SalesController extends Controller
 
     public function getSalesDueDate($salesId)
     {
-        $sales = $this->salesRepository->viewSale($salesId);
-        return response()->json([
-            'schedule' => $sales->date_of_payment !== null ? $sales->date_of_payment : "",
-            'payment' => $sales->payment_amount,
-        ]);
+        return $this->paymentReminder->viewSalesReminder($salesId)->get();
     }
 
 }

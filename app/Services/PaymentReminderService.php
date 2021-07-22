@@ -65,8 +65,31 @@ class PaymentReminderService
                 'completed' => false,
                 'schedule' => Carbon::create($date[0], $date[1], $date[2], 0, 0, 0)->addMonthsNoOverflow($month)->format('Y-m-d'),
                 'amount' => $amount !== null ? $amount : 0.00,
+                'created_at' => now(),
+                'updated_at' => now()
             );
         }
         return PaymentReminder::insert($dueDates);
+    }
+
+
+    /**
+     * this method will get all the schedule of payment
+     * @param $sales_id
+     * @param $firstPayment
+     * @return array
+     */
+    public function scheduleFormatter($sales_id, $firstPayment)
+    {
+        $dueDates = array();
+
+        $terms = $this->sales->viewSale($sales_id)->terms;
+        $date = explode("-",$firstPayment);
+        for ($month = 0; $month < $terms; $month++)
+        {
+            $dueDates[$month] = Carbon::create($date[0], $date[1], $date[2], 0, 0, 0)->addMonthsNoOverflow($month)->format('Y-m-d');
+        }
+
+        return $dueDates;
     }
 }

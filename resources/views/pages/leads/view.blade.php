@@ -1426,9 +1426,10 @@
             });
 
             $(document).on('click','.view-payments',function(){
-                let id = this.id;
+                let id = this.id,
+                    schedule, amount = "";
 
-                $('#view-payments').find('#sales-id, .due-dates').remove();
+                $('#view-payments').find('#sales-id, .due-dates, .text-danger').remove();
                 $('#view-payments').find('form').addClass('save-payment-date').append('<input type="hidden" name="sales_id" id="sales-id" value="'+id+'">');
 
                 $.ajax({
@@ -1437,15 +1438,18 @@
                     beforeSend: function(){
 
                     },success: function(result){
-                        // console.log(result);
-                        let amount = parseFloat(result.payment);
-                        $('#payment_date').val(result.schedule[0]);
-                        $('#view-payments').find('#payment_amount').val(result.payment);
+                        if(result.length > 0)
+                        {
+                            schedule = result[0].schedule;
+                            amount = result[0].amount;
+                        }
+                        $('#payment_date').val(schedule);
+                        $('#view-payments').find('#payment_amount').val(amount);
                         $('.save-payment-date').find('.payment_amount').after('<table class="due-dates table table-bordered"></table>');
-                        $.each(result.schedule, function(key, value){
-                            let date = new Date(value);
+                        $.each(result, function(key, value){
+                            let date = new Date(value.schedule);
                             key++;
-                            $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td><td>'+amount.toLocaleString('en-US')+'</td></tr>');
+                            $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td><td>'+parseFloat(value.amount).toLocaleString('en-US')+'</td></tr>');
 
                         });
                     },error: function(xhr, status, error){
@@ -1465,7 +1469,7 @@
                     beforeSend: function(){
                         $('.save-payment-date').find('.submit-form-btn').attr('disabled',true).text('Saving...');
                     },success: function(result){
-                        console.log(result);
+
                         $('#view-payments').find('.due-dates').remove();
                         if(result.success === true)
                         {
