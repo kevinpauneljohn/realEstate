@@ -408,4 +408,6 @@ Route::get('test', function () {
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');
 Route::resource('staycation','Staycation\StaycationClientController');
 
+Route::get('/payment-reminder','PaymentReminderController');
+
 
