@@ -374,17 +374,14 @@ Route::get('/action-taken/{checklist_id}/display',[\App\Http\Controllers\ActionT
 Route::resource('action-taken','ActionTakenController');
 Route::get('test', function () {
 
-    $user = [
-        'name' => 'kevin paunel',
-        'info' => 'sample email reminder'
-    ];
-//
 //    \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
 //    return \Carbon\Carbon::create(2018, 1, 31, 0, 0, 0)-
 //    $sales = \App\Sales::find(46);
 //    return $sales->location;
-//        $month = now()->month;
-//        foreach (\App\PaymentReminder::whereMonth('schedule',$month)->where('completed',false)->get() as $reminder){
+        $month = now()->month;
+        $display = array();
+        $x = 0;
+        foreach (\App\PaymentReminder::whereMonth('schedule',$month)->where('completed',false)->get() as $reminder){
 //            if(today()->diffInDays($reminder->schedule, false) === 5)
 //            {
 //                echo today()->day.' 5 day before true<br/>';
@@ -398,11 +395,13 @@ Route::get('test', function () {
 //                    \App\PaymentReminder::where('schedule',today()->format('Y-m-d'))->update(['completed' => true]);
 //                }
 //            }
-////            echo 'Schedule: '.$reminder->schedule.' - '.$reminder->amount.' Date Today: '.now()->format('Y-m-d').'  = '.today()->diffInDays($reminder->schedule, false).'<br/>';
-////            return $reminder->sales->lead;
-//        }
-    \Illuminate\Support\Facades\Artisan::call('reminder:run');
-    return \Illuminate\Support\Facades\Artisan::output();
+//            echo 'Schedule: '.$reminder->schedule.' - '.$reminder->amount.' Date Today: '.now()->format('Y-m-d').'  = '.today()->diffInDays($reminder->schedule, false).'<br/>';
+            $display[$x] = $reminder->sales->project->name;
+            $x++;
+        }
+        return $display;
+//    \Illuminate\Support\Facades\Artisan::call('reminder:run');
+//    return \Illuminate\Support\Facades\Artisan::output();
 });
 
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');
