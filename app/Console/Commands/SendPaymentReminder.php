@@ -50,19 +50,19 @@ class SendPaymentReminder extends Command
                 //this will remind the client of their payment 5 days before their due date
                 if($clientEmail !== null)
                 {
-                    Mail::to($clientEmail)->send(new MyTestMail($reminder));
+                    Mail::to($clientEmail)->bcc($reminder->sales->user->email)->send(new MyTestMail($reminder));
                 }
             }elseif (today()->diffInDays($reminder->schedule, false) === 1){
                 //this will remind the client of their payment 1 day before their due date
                 if($clientEmail !== null)
                 {
-                    Mail::to($clientEmail)->send(new MyTestMail($reminder));
+                    Mail::to($clientEmail)->bcc($reminder->sales->user->email)->send(new MyTestMail($reminder));
                 }
             }elseif (today()->diffInDays($reminder->schedule, false) === 0){
                 //this will remind the client of their payment today
                 if($clientEmail !== null)
                 {
-                    Mail::to($clientEmail)->send(new MyTestMail($reminder));
+                    Mail::to($clientEmail)->bcc($reminder->sales->user->email)->send(new MyTestMail($reminder));
                 }
 
                 if(today()->format('Y-m-d') === $reminder->schedule)
