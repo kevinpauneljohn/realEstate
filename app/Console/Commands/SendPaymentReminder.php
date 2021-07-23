@@ -42,19 +42,34 @@ class SendPaymentReminder extends Command
     {
         $month = now()->month; /// get current month which will be use to retrieve reminders of the month
 
-        foreach (PaymentReminder::whereMonth('schedule', $month)->get() as $reminder)
+        foreach (PaymentReminder::whereMonth('schedule', $month)->where('completed',false)->get() as $reminder)
         {
             $clientEmail = $reminder->sales->lead->email;
             if(today()->diffInDays($reminder->scedule,false) === 5)
             {
                 //this will remind the client of their payment 5 days before their due date
-                Mail::to($clientEmail)->send(new MyTestMail($reminder));
+                if($clientEmail !== null)
+                {
+                    Mail::to($clientEmail)->send(new MyTestMail($reminder));
+                }
             }elseif (today()->diffInDays($reminder->schedule, false) === 1){
                 //this will remind the client of their payment 1 day before their due date
-                Mail::to($clientEmail)->send(new MyTestMail($reminder));
+                if($clientEmail !== null)
+                {
+                    Mail::to($clientEmail)->send(new MyTestMail($reminder));
+                }
             }elseif (today()->diffInDays($reminder->schedule, false) === 0){
                 //this will remind the client of their payment today
-                Mail::to($clientEmail)->send(new MyTestMail($reminder));
+                if($clientEmail !== null)
+                {
+                    Mail::to($clientEmail)->send(new MyTestMail($reminder));
+                }
+
+                if(today()->format('Y-m-d') === $reminder->schedule)
+                {
+                    ///if the current date is matched to the payment schedule it will update the completed column to true
+                    PaymentReminder::where('schedule',today()->format('Y-m-d'))->update(['completed' => true]);
+                }
             }
         }
         return true;
