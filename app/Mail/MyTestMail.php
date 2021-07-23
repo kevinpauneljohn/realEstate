@@ -11,12 +11,12 @@ class MyTestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $reminder;
 
 
-    public function __construct($user)
+    public function __construct($reminder)
     {
-        $this->user = $user;
+        $this->reminder = $reminder;
     }
 
     /**
@@ -26,7 +26,7 @@ class MyTestMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mail from ItSolutionStuff.com')
+        return $this->subject('Dream Home Seller Payment Reminder')
             ->view('emails.myTestMail');
     }
 }

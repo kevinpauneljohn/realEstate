@@ -383,11 +383,21 @@ Route::get('test', function () {
 //    return \Carbon\Carbon::create(2018, 1, 31, 0, 0, 0)-
 //    $sales = \App\Sales::find(46);
 //    return $sales->location;
-
-        foreach (\App\Sales::all() as $sale){
-//            echo $sale->id.'<br/>';
-        }
-        return 'test';
+//        $month = now()->month;
+//        foreach (\App\PaymentReminder::whereMonth('schedule',$month)->get() as $reminder){
+//            if(today()->diffInDays($reminder->schedule, false) === 5)
+//            {
+////                echo today()->day.' 5 day before true<br/>';
+//            }elseif (today()->diffInDays($reminder->schedule, false) === 1){
+////                echo today()->day.' 1 day before true<br/>';
+//            }elseif (today()->diffInDays($reminder->schedule, false) === 0){
+////                echo 'today => true<br/>';
+//            }
+////            echo 'Schedule: '.$reminder->schedule.' - '.$reminder->amount.' Date Today: '.now()->format('Y-m-d').'  = '.today()->diffInDays($reminder->schedule, false).'<br/>';
+//            return $reminder->sales->lead;
+//        }
+    \Illuminate\Support\Facades\Artisan::call('reminder:run');
+    return \Illuminate\Support\Facades\Artisan::output();
 });
 
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');

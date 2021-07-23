@@ -106,6 +106,11 @@ class Sales extends Model
         return $this->hasMany(ClientRequirement::class);
     }
 
+    public function paymentReminders()
+    {
+        return $this->hasMany(PaymentReminder::class);
+    }
+
     public function getLocationAttribute()
     {
         return "Phase {$this->phase}, Block {$this->block}, Lot {$this->lot}";
