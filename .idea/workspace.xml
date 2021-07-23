@@ -34,7 +34,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/acaronlex/laravel-calendar/" />
     <ignored path="$PROJECT_DIR$/vendor/symfony/http-client-contracts/" />
@@ -65,7 +65,7 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.85433716">
+    <splitter split-orientation="horizontal" split-proportion="0.22176759">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -96,6 +96,15 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/Mail/MyTestMail.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-79">
+                  <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PaymentReminderController.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="255">
@@ -110,8 +119,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/web.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="527">
-                  <caret line="410" column="60" lean-forward="true" selection-start-line="410" selection-start-column="60" selection-end-line="410" selection-end-column="60" />
+                <state relative-caret-position="138">
+                  <caret line="398" column="58" selection-start-line="398" selection-start-column="58" selection-end-line="398" selection-end-column="58" />
                 </state>
               </provider>
             </entry>
@@ -171,7 +180,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/Console/Commands/SendPaymentReminder.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="321">
@@ -183,11 +192,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+                <state relative-caret-position="187">
+                  <caret line="11" column="122" selection-start-line="11" selection-start-column="122" selection-end-line="11" selection-end-column="122" />
                 </state>
               </provider>
             </entry>
@@ -279,12 +288,12 @@
         <option value="$PROJECT_DIR$/database/migrations/2021_07_20_182142_add_payment_date_to_sales_table.php" />
         <option value="$PROJECT_DIR$/app/Sales.php" />
         <option value="$PROJECT_DIR$/app/PaymentReminder.php" />
-        <option value="$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php" />
         <option value="$PROJECT_DIR$/app/Mail/MyTestMail.php" />
         <option value="$PROJECT_DIR$/config/mail.php" />
         <option value="$PROJECT_DIR$/app/Console/Commands/SendPaymentReminder.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PaymentReminderController.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php" />
       </list>
     </option>
   </component>
@@ -450,19 +459,30 @@
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="Mail" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="emails" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
@@ -803,21 +823,7 @@
       <workItem from="1626754161592" duration="43971000" />
       <workItem from="1626941436634" duration="5710000" />
       <workItem from="1627015057767" duration="11972000" />
-      <workItem from="1627080580954" duration="596000" />
-    </task>
-    <task id="LOCAL-00753" summary="task module and checklist module">
-      <created>1616386445308</created>
-      <option name="number" value="00753" />
-      <option name="presentableId" value="LOCAL-00753" />
-      <option name="project" value="LOCAL" />
-      <updated>1616386445308</updated>
-    </task>
-    <task id="LOCAL-00754" summary="task module and checklist module">
-      <created>1616386730690</created>
-      <option name="number" value="00754" />
-      <option name="presentableId" value="LOCAL-00754" />
-      <option name="project" value="LOCAL" />
-      <updated>1616386730690</updated>
+      <workItem from="1627080580954" duration="1669000" />
     </task>
     <task id="LOCAL-00755" summary="task module and checklist module">
       <created>1616386884318</created>
@@ -1148,11 +1154,25 @@
       <option name="project" value="LOCAL" />
       <updated>1627055709844</updated>
     </task>
-    <option name="localTasksCounter" value="802" />
+    <task id="LOCAL-00802" summary="setup the payment reminder">
+      <created>1627081207451</created>
+      <option name="number" value="00802" />
+      <option name="presentableId" value="LOCAL-00802" />
+      <option name="project" value="LOCAL" />
+      <updated>1627081207451</updated>
+    </task>
+    <task id="LOCAL-00803" summary="setup the payment reminder">
+      <created>1627082139355</created>
+      <option name="number" value="00803" />
+      <option name="presentableId" value="LOCAL-00803" />
+      <option name="project" value="LOCAL" />
+      <updated>1627082139355</updated>
+    </task>
+    <option name="localTasksCounter" value="804" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89290000" />
+    <option name="totallyTimeSpent" value="90363000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1180,7 +1200,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3286119" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.34560907" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.34560907" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1224,7 +1244,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="client module" />
     <MESSAGE value="login api for Dream Home Guide" />
     <MESSAGE value="add builder page and functionality" />
     <MESSAGE value="update the builders functionality&#10;completed the update and delete functionality in builder.js&#10;&#10;so far so good! :)" />
@@ -1249,7 +1268,8 @@
     <MESSAGE value="leads feature update" />
     <MESSAGE value="updated the SalesRepository.php line 259 issue. The project ID was set specifically as 1 that's why it doesn't change the project ID" />
     <MESSAGE value="updated the client submitted requirements count" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated the client submitted requirements count" />
+    <MESSAGE value="setup the payment reminder" />
+    <option name="LAST_COMMIT_MESSAGE" value="setup the payment reminder" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/Repositories/RepositoryInterface/ClientRequirementInterface.php">
@@ -1501,13 +1521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/PaymentReminder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="12019">
@@ -1549,13 +1562,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/sales.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5151">
@@ -1567,23 +1573,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6596">
           <caret line="407" column="14" selection-start-line="407" selection-start-column="14" selection-end-line="407" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Console/Commands/SendPaymentReminder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="64" column="78" selection-start-line="64" selection-start-column="78" selection-end-line="64" selection-end-column="78" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Mail/MyTestMail.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
         </state>
       </provider>
     </entry>
@@ -1604,10 +1593,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/PaymentReminder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Mail/MyTestMail.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-79">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Console/Commands/SendPaymentReminder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="64" column="78" selection-start-line="64" selection-start-column="78" selection-end-line="64" selection-end-column="78" />
+          <folding>
+            <element signature="e#40#64#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="410" column="60" lean-forward="true" selection-start-line="410" selection-start-column="60" selection-end-line="410" selection-end-column="60" />
+        <state relative-caret-position="138">
+          <caret line="398" column="58" selection-start-line="398" selection-start-column="58" selection-end-line="398" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="122" selection-start-line="11" selection-start-column="122" selection-end-line="11" selection-end-column="122" />
         </state>
       </provider>
     </entry>
