@@ -11,13 +11,12 @@
 <p>
     On behalf of Dream Home Seller team, we would like to give you a friendly reminder regarding your payment details indicated below.
 </p>
-<h4>PROJECT: {{$reminder->sales->project->name}}</h4>
-<h4>MODEL UNIT: {{$reminder->sales->modelUnit->name}}</h4>
-<h4>PHASE/BLOCK/LOT: Phase: {{$reminder->sales->phase}}, Block: {{$reminder->sales->block}}, Lot: {{$reminder->sales->lot}}</h4>
-<h4>FINANCING: {{$reminder->sales->financing}}</h4>
-<br/>
-<h4 style="color:cornflowerblue;">DUE DATE: {{\Carbon\Carbon::create($reminder->schedule)->format('Y-M-d')}}</h4>
-<h4 style="color:cornflowerblue;">DUE AMOUNT: PHP {{$reminder->amount}}</h4>
+<strong>PROJECT: {{$reminder->sales->project->name}}</strong><br/>
+<strong>MODEL UNIT: {{$reminder->sales->modelUnit->name}}</strong><br/>
+<strong>PHASE/BLOCK/LOT: Phase: {{$reminder->sales->phase}}, Block: {{$reminder->sales->block}}, Lot: {{$reminder->sales->lot}}</strong><br/>
+<strong>FINANCING: {{$reminder->sales->financing}}</strong><br/>
+<strong style="color:cornflowerblue;">DUE DATE: {{\Carbon\Carbon::create($reminder->schedule)->format('M-d-Y')}}</strong>
+<strong style="color:cornflowerblue;">DUE AMOUNT: PHP {{$reminder->amount}}</strong>
 
 <br/><br/>
 <p>
