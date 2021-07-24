@@ -1425,12 +1425,14 @@
                         '<td><input class="form-control extra-requirement-btn" type="checkbox" disabled="disabled"></td></tr>');
             });
 
+
+            let schedule, amount = "";
             $(document).on('click','.view-payments',function(){
-                let id = this.id,
-                    schedule, amount = "";
+                let id = this.id;
 
                 $('#view-payments').find('#sales-id, .due-dates, .text-danger').remove();
                 $('#view-payments').find('form').addClass('save-payment-date').append('<input type="hidden" name="sales_id" id="sales-id" value="'+id+'">');
+                $('.save-payment-date').find('.submit-form-btn').attr('disabled',true);
 
                 $.ajax({
                     'url' : '/sales/due-date/'+id,
@@ -1469,10 +1471,15 @@
                     beforeSend: function(){
                         $('.save-payment-date').find('.submit-form-btn').attr('disabled',true).text('Saving...');
                     },success: function(result){
+                        console.log(result.dates[0]);
+                        schedule = result.dates[0];
+                        amount = result.payment;
 
                         $('#view-payments').find('.due-dates').remove();
                         if(result.success === true)
                         {
+                            customMessage('success',result.message);
+
                             $('.save-payment-date').find('.payment_amount').after('<table class="due-dates table table-bordered"></table>');
                             $.each(result.dates, function(key, value){
                                 let date = new Date(value);
@@ -1490,12 +1497,22 @@
                             element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
                         });
 
-                        $('.save-payment-date').find('.submit-form-btn').attr('disabled',false).text('Save');
+                        $('.save-payment-date').find('.submit-form-btn').text('Save');
                     },error: function(xhr, status, error){
                         console.log(xhr);
                     }
                 });
                 clear_errors('payment_date','payment_amount');
+            });
+
+            $(document).on('change','#payment_date, #payment_amount',function(){
+                let disabled = true;
+                if($('#payment_date').val() !== schedule || $('#payment_amount').val() !== amount)
+                {
+                    console.log(true+' '+schedule+' '+$('#payment_date').val());
+                    disabled = false;
+                }
+                $('.save-payment-date').find('.submit-form-btn').attr('disabled',disabled);
             });
 
 
