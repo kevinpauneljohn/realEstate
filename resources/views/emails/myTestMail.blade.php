@@ -18,7 +18,7 @@
 <strong style="color:cornflowerblue;">DUE DATE: {{\Carbon\Carbon::create($reminder->schedule)->format('M-d-Y')}}</strong>
 <strong style="color:cornflowerblue;">DUE AMOUNT: PHP {{$reminder->amount}}</strong>
 
-<br/><br/>
+<br/>
 <p>
     If you already settled your payment, please, disregard this notice or if you have any concerns you may contact your sales agent on the details below.<br/>
     <strong>SALES AGENT           : {{$reminder->sales->user->fullname}}</strong><br/>
