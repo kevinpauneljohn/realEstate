@@ -32,7 +32,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="setup the payment reminder">
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php" afterDir="false" />
     </list>
@@ -130,8 +130,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="193">
-                  <caret line="20" column="10" lean-forward="true" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+                <state relative-caret-position="40">
+                  <caret line="11" column="138" selection-start-line="11" selection-start-column="138" selection-end-line="11" selection-end-column="138" />
                   <folding>
                     <element signature="n#style#0;n#h4#4;n#body#0;n#html#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#h4#5;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -765,21 +765,7 @@
       <workItem from="1626941436634" duration="5710000" />
       <workItem from="1627015057767" duration="11972000" />
       <workItem from="1627080580954" duration="7218000" />
-      <workItem from="1627127117243" duration="2828000" />
-    </task>
-    <task id="LOCAL-00759" summary="task module and checklist module">
-      <created>1616395907968</created>
-      <option name="number" value="00759" />
-      <option name="presentableId" value="LOCAL-00759" />
-      <option name="project" value="LOCAL" />
-      <updated>1616395907968</updated>
-    </task>
-    <task id="LOCAL-00760" summary="task module and checklist module">
-      <created>1616395995382</created>
-      <option name="number" value="00760" />
-      <option name="presentableId" value="LOCAL-00760" />
-      <option name="project" value="LOCAL" />
-      <updated>1616395995382</updated>
+      <workItem from="1627127117243" duration="3934000" />
     </task>
     <task id="LOCAL-00761" summary="task module and checklist module">
       <created>1616493787156</created>
@@ -1110,11 +1096,25 @@
       <option name="project" value="LOCAL" />
       <updated>1627137221126</updated>
     </task>
-    <option name="localTasksCounter" value="808" />
+    <task id="LOCAL-00808" summary="setup the payment reminder">
+      <created>1627137645065</created>
+      <option name="number" value="00808" />
+      <option name="presentableId" value="LOCAL-00808" />
+      <option name="project" value="LOCAL" />
+      <updated>1627137645065</updated>
+    </task>
+    <task id="LOCAL-00809" summary="setup the payment reminder">
+      <created>1627137820765</created>
+      <option name="number" value="00809" />
+      <option name="presentableId" value="LOCAL-00809" />
+      <option name="project" value="LOCAL" />
+      <updated>1627137820765</updated>
+    </task>
+    <option name="localTasksCounter" value="810" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98740000" />
+    <option name="totallyTimeSpent" value="99846000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1568,8 +1568,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/emails/myTestMail.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="20" column="10" lean-forward="true" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+        <state relative-caret-position="40">
+          <caret line="11" column="138" selection-start-line="11" selection-start-column="138" selection-end-line="11" selection-end-column="138" />
           <folding>
             <element signature="n#style#0;n#h4#4;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h4#5;n#body#0;n#html#0;n#!!top" expanded="true" />

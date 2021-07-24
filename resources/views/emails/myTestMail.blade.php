@@ -9,13 +9,13 @@
 <p><strong>Hi {{$reminder->sales->lead->fullname}},</strong></p>
 
 <p>
-    On behalf of Dream Home Seller team, we would like to give you a friendly reminder regarding your payment details indicated below.
+    On behalf of the Dream Home Seller team, we would like to give you a friendly reminder regarding your payment details indicated below.
 </p>
 <strong>PROJECT: {{$reminder->sales->project->name}}</strong><br/>
 <strong>MODEL UNIT: {{$reminder->sales->modelUnit->name}}</strong><br/>
 <strong>PHASE/BLOCK/LOT: Phase: {{$reminder->sales->phase}}, Block: {{$reminder->sales->block}}, Lot: {{$reminder->sales->lot}}</strong><br/>
 <strong>FINANCING: {{$reminder->sales->financing}}</strong><br/>
-<strong style="color:cornflowerblue;">DUE DATE: {{\Carbon\Carbon::create($reminder->schedule)->format('M-d-Y')}}</strong>
+<strong style="color:cornflowerblue;">DUE DATE: {{\Carbon\Carbon::create($reminder->schedule)->format('M-d-Y')}}</strong><br/>
 <strong style="color:cornflowerblue;">DUE AMOUNT: PHP {{$reminder->amount}}</strong>
 
 <br/>
