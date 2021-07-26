@@ -1440,10 +1440,14 @@
                     beforeSend: function(){
 
                     },success: function(result){
+                        console.log(length);
                         if(result.length > 0)
                         {
                             schedule = result[0].schedule;
                             amount = result[0].amount;
+                        }else{
+                            schedule = "";
+                            amount = "";
                         }
                         $('#payment_date').val(schedule);
                         $('#view-payments').find('#payment_amount').val(amount);
@@ -1471,9 +1475,9 @@
                     beforeSend: function(){
                         $('.save-payment-date').find('.submit-form-btn').attr('disabled',true).text('Saving...');
                     },success: function(result){
-                        console.log(result.dates[0]);
-                        schedule = result.dates[0];
-                        amount = result.payment;
+                        // console.log(result.dates[0]);
+                        // schedule = result.dates[0];
+                        // amount = result.payment;
 
                         $('#view-payments').find('.due-dates').remove();
                         if(result.success === true)
@@ -1509,7 +1513,7 @@
                 let disabled = true;
                 if($('#payment_date').val() !== schedule || $('#payment_amount').val() !== amount)
                 {
-                    console.log(true+' '+schedule+' '+$('#payment_date').val());
+                    // console.log(true+' '+schedule+' '+$('#payment_date').val());
                     disabled = false;
                 }
                 $('.save-payment-date').find('.submit-form-btn').attr('disabled',disabled);

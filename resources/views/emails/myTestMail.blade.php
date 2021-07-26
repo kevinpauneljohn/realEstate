@@ -16,7 +16,7 @@
 <strong>PHASE/BLOCK/LOT: Phase: {{$reminder->sales->phase}}, Block: {{$reminder->sales->block}}, Lot: {{$reminder->sales->lot}}</strong><br/>
 <strong>FINANCING: {{$reminder->sales->financing}}</strong><br/>
 <strong style="color:cornflowerblue;">DUE DATE: {{\Carbon\Carbon::create($reminder->schedule)->format('M-d-Y')}}</strong><br/>
-<strong style="color:cornflowerblue;">DUE AMOUNT: PHP {{$reminder->amount}}</strong>
+<strong style="color:cornflowerblue;">DUE AMOUNT: PHP {{number_format($reminder->amount,2)}}</strong>
 
 <br/>
 <p>
