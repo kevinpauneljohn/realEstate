@@ -152,12 +152,15 @@ class SalesRepository
         {
             $sales->save();
             //update the rank and points
-            $total_points = $this->getTotalSales(auth()->user()->id) / 100000;
+//            $total_points = $this->getTotalSales(auth()->user()->id) / 100000;
+            $total_points = $this->getTotalSales($this->accountManagerService->checkIfUserIsAccountManager()->id) / 100000;
 
             ///check if the user has extra points
-            $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
+//            $extra_points = auth()->user()->userRankPoint == null ? 0 : auth()->user()->userRankPoint->extra_points;
+            $extra_points = $this->accountManagerService->checkIfUserIsAccountManager()->userRankPoint == null ? 0 : $this->accountManagerService->checkIfUserIsAccountManager()->userRankPoint->extra_points;
 
-            event(new UserRankPointsEvent(auth()->user(),$total_points,$extra_points));
+//            event(new UserRankPointsEvent(auth()->user(),$total_points,$extra_points));
+            event(new UserRankPointsEvent($this->accountManagerService->checkIfUserIsAccountManager(),$total_points,$extra_points));
             return ['success' => true, 'message' => 'Sales Successfully Updated!', $sales];
         }
 
@@ -176,7 +179,8 @@ class SalesRepository
         $threshold = Threshold::where([
             ['storage_name','=','sales'],
             ['storage_id','=',$salesId],
-            ['user_id','=',auth()->user()->id],
+//            ['user_id','=',auth()->user()->id],
+            ['user_id','=',$this->accountManagerService->checkIfUserIsAccountManager()->id],
             ['status','=','pending'],
             ['data->status','!=',null],
         ])->count();
@@ -196,7 +200,8 @@ class SalesRepository
         $threshold = Threshold::where([
             ['storage_name','=','sales'],
             ['storage_id','=',$salesId],
-            ['user_id','=',auth()->user()->id],
+//            ['user_id','=',auth()->user()->id],
+            ['user_id','=',$this->accountManagerService->checkIfUserIsAccountManager()->id],
             ['status','=','pending'],
             ['extra_data->action','=','Update the sales attribute'],
         ])->count();
@@ -332,7 +337,8 @@ class SalesRepository
      * */
     public function getCurrentUserTotalPoints()
     {
-        $total_points = UserRankPoint::where('user_id',auth()->user()->id);
+//        $total_points = UserRankPoint::where('user_id',auth()->user()->id);
+        $total_points = UserRankPoint::where('user_id',$this->accountManagerService->checkIfUserIsAccountManager()->id);
         return $total_points->first()->sales_points + $total_points->first()->extra_points;
     }
 

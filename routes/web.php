@@ -149,26 +149,13 @@ Route::get('/add-sales','SalesController@create')->name('sales.create')->middlew
 Route::delete('/sales/{sale}','SalesController@destroy')->name('sales.destroy')->middleware(['auth','permission:delete sales']);
 Route::post('/sales/payment-date/{sale}',[\App\Http\Controllers\SalesController::class,'savePaymentDate'])->name('sales.save.payment.date')->middleware(['auth','permission:add sales|edit sales']);
 Route::get('/sales/due-date/{sale}',[\App\Http\Controllers\SalesController::class,'getSalesDueDate'])->name('sales.due.date')->middleware(['auth','permission:view sales']);
+Route::get('/sales-edit/{sale}',[\App\Http\Controllers\SalesController::class,'editSales'])->name('sales.edit.data')->middleware(['auth','permission:view sales|edit sales']);
 
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commissions']);
 Route::post('/commissions','CommissionController@store')->name('commissions.store')->middleware(['auth','permission:add commissions']);
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
-
-//Route::get('/test',function(){
-//    $collection = collect([1, 2, 3, 4]);
-//
-//    $filtered = $collection->filter(function ($value, $key) {
-//        return $value > 2;
-//    });
-//
-//    return $filtered->all();
-//})->middleware(['auth']);
-
-//Route::post('/test',function(Request $request){
-//
-//})->name('test');
 
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
@@ -372,37 +359,7 @@ Route::resource('task-checklist','TaskChecklistController');
 
 Route::get('/action-taken/{checklist_id}/display',[\App\Http\Controllers\ActionTakenController::class,'actionTakenList'])->name('action.taken.display');
 Route::resource('action-taken','ActionTakenController');
-Route::get('test', function () {
-
-//    \Illuminate\Support\Facades\Mail::to('johnkevinpaunel@gmail.com')->send(new \App\Mail\MyTestMail($user));
-//    return \Carbon\Carbon::create(2018, 1, 31, 0, 0, 0)-
-//    $sales = \App\Sales::find(46);
-//    return $sales->location;
-        $month = now()->month;
-        $display = array();
-        $x = 0;
-        foreach (\App\PaymentReminder::whereMonth('schedule',$month)->where('completed',false)->get() as $reminder){
-//            if(today()->diffInDays($reminder->schedule, false) === 5)
-//            {
-//                echo today()->day.' 5 day before true<br/>';
-//            }elseif (today()->diffInDays($reminder->schedule, false) === 1){
-//                echo today()->day.' 1 day before true<br/>';
-//            }elseif (today()->diffInDays($reminder->schedule, false) === 0){
-//                echo 'today => true '.today()->format('Y-m-d').'<br/>'.$reminder->schedule.'<br/>';
-//                if(today()->format('Y-m-d') === $reminder->schedule)
-//                {
-//                    echo 'match';
-//                    \App\PaymentReminder::where('schedule',today()->format('Y-m-d'))->update(['completed' => true]);
-//                }
-//            }
-//            echo 'Schedule: '.$reminder->schedule.' - '.$reminder->amount.' Date Today: '.now()->format('Y-m-d').'  = '.today()->diffInDays($reminder->schedule, false).'<br/>';
-            $display[$x] = $reminder->sales->project->name;
-            $x++;
-        }
-        return $display;
-//    \Illuminate\Support\Facades\Artisan::call('reminder:run');
-//    return \Illuminate\Support\Facades\Artisan::output();
-});
+Route::get('test', [\App\Http\Controllers\SalesController::class,'test']);
 
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');
 Route::resource('staycation','Staycation\StaycationClientController');

@@ -186,6 +186,12 @@ class SalesController extends Controller
         return response()->json($validator->errors());
     }
 
+    public function test()
+    {
+//        return auth()->user()->userRankPoint;
+        return Sales::find(33);
+    }
+
 
 
 
@@ -379,6 +385,22 @@ class SalesController extends Controller
         return $merge->all();
     }
 
+    public function editSales($id)
+    {
+        $sales = $this->salesRepository->getSalesById($id);
+        ///if the user is an online warrior or account manager, it will only get the assigned leads to him
+        $leads = auth()->user()->hasRole(['account manager','online warrior'])
+            ? Lead::where('online_warrior_id',auth()->user()->id)->get() : Lead::where('user_id',auth()->user()->id)->get();
+
+        return view('pages.sales.editSales')->with([
+            'leads' => $leads,
+            'projects' => Project::all(),
+            'modelUnits' => ModelUnit::where('project_id',$sales->project->id)->get(),
+            'leadId' => $sales->lead->id,
+            'sales'  => $sales
+        ]);
+    }
+
 
     /**
      * @param Request $request
@@ -427,7 +449,7 @@ class SalesController extends Controller
                 {
                     return response()->json(['success' => false, 'message' => 'You have a current sales details update request!']);
                 }
-                $commissionRate = $this->salesRepository->setCommissionRate($request->edit_project,auth()->user()->id);
+                $commissionRate = $this->salesRepository->setCommissionRate($request->edit_project,$this->accountManagement->checkIfUserIsAccountManager()->id);
                 $priority = $this->thresholdRepository->getThresholdPriority('update sales attribute');
 
                 //this will instantiate the sales attribute to check if there are changes in the model
