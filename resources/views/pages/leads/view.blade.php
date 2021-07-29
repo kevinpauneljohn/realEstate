@@ -707,17 +707,6 @@
                             </button>
                         </div>
                         <div class="modal-body">
-{{--                            <div class="text-center">--}}
-{{--                                <div class="spinner-grow text-muted"></div>--}}
-{{--                                <div class="spinner-grow text-primary"></div>--}}
-{{--                                <div class="spinner-grow text-success"></div>--}}
-{{--                                <div class="spinner-grow text-info"></div>--}}
-{{--                                <div class="spinner-grow text-warning"></div>--}}
-{{--                                <div class="spinner-grow text-danger"></div>--}}
-{{--                                <div class="spinner-grow text-secondary"></div>--}}
-{{--                                <div class="spinner-grow text-dark"></div>--}}
-{{--                                <div class="spinner-grow text-light"></div>--}}
-{{--                            </div>--}}
                             <div class="form-group payment_date">
                                 <label for="payment_date">Select Payment Date</label>
                                 <input type="text" name="payment_date" id="payment_date" class="form-control datemask" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false" value="{{today()->format('Y-m-d')}}" autocomplete="off">
@@ -1426,36 +1415,41 @@
             });
 
 
-            let schedule, amount = "";
+            let schedule, amount, editAmountBtn = "";
             $(document).on('click','.view-payments',function(){
-                let id = this.id;
+                // let id = this.id;
+                salesId = this.id;
+                $('.edit-amount-form').find('.due-amount').attr('disabled',true);
+                $('.edit-amount-form').find('#payment_date, #payment_amount').attr('disabled',false);
 
                 $('#view-payments').find('#sales-id, .due-dates, .text-danger').remove();
-                $('#view-payments').find('form').addClass('save-payment-date').append('<input type="hidden" name="sales_id" id="sales-id" value="'+id+'">');
+                $('#view-payments').find('form').addClass('save-payment-date').append('<input type="hidden" name="sales_id" id="sales-id" value="'+salesId+'">');
                 $('.save-payment-date').find('.submit-form-btn').attr('disabled',true);
 
                 $.ajax({
-                    'url' : '/sales/due-date/'+id,
+                    'url' : '/sales/due-date/'+salesId,
                     'type' : 'GET',
                     beforeSend: function(){
-
+                        $('.save-payment-date').find('.due-amount-action-btn').remove();
                     },success: function(result){
-                        console.log(length);
+                        // console.log(result);
                         if(result.length > 0)
                         {
                             schedule = result[0].schedule;
                             amount = result[0].amount;
+                            editAmountBtn = '<button type="button" class="btn btn-xs btn-default edit-amount due-amount-action-btn">Edit Amount</button>';
                         }else{
                             schedule = "";
                             amount = "";
                         }
                         $('#payment_date').val(schedule);
                         $('#view-payments').find('#payment_amount').val(amount);
-                        $('.save-payment-date').find('.payment_amount').after('<table class="due-dates table table-bordered"></table>');
+                        $('.save-payment-date').find('.payment_amount').after(editAmountBtn+'<table class="due-dates table table-bordered"></table>');
                         $.each(result, function(key, value){
                             let date = new Date(value.schedule);
                             key++;
-                            $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td><td>'+parseFloat(value.amount).toLocaleString('en-US')+'</td></tr>');
+                            $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td><td>' +
+                                '<input type="number" name="amountDue['+value.id+']" class="form-control due-amount" value="'+value.amount+'" step="any" disabled="disabled"></td></tr>');
 
                         });
                     },error: function(xhr, status, error){
@@ -1464,31 +1458,32 @@
                 });
             });
 
+
             $(document).on('submit','.save-payment-date',function(form){
                 form.preventDefault();
                 let data = $(this).serializeArray();
 
                 $.ajax({
-                    'url' : '/sales/payment-date/'+data[3].value,
+                    'url' : '/sales/payment-date/'+salesId,
                     'type': 'POST',
                     'data': data,
                     beforeSend: function(){
+                        $('.save-payment-date').find('.due-amount-action-btn').remove();
                         $('.save-payment-date').find('.submit-form-btn').attr('disabled',true).text('Saving...');
                     },success: function(result){
-                        // console.log(result.dates[0]);
-                        // schedule = result.dates[0];
-                        // amount = result.payment;
+                        console.log(result);
 
                         $('#view-payments').find('.due-dates').remove();
                         if(result.success === true)
                         {
                             customMessage('success',result.message);
 
-                            $('.save-payment-date').find('.payment_amount').after('<table class="due-dates table table-bordered"></table>');
-                            $.each(result.dates, function(key, value){
-                                let date = new Date(value);
+                            $('.save-payment-date').find('.payment_amount').after('<button type="button" class="btn btn-xs btn-default edit-amount due-amount-action-btn">Edit Amount</button><table class="due-dates table table-bordered"></table>');
+                            $.each(result.payment, function(key, value){
+                                let date = new Date(value.schedule);
                                 key++;
-                                $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td><td>'+result.payment+'</td></tr>');
+                                $('.save-payment-date').find('.due-dates').append('<tr><td>'+key+'</td><td>'+moment(date).format('MMMM-D-YYYY')+'</td>' +
+                                    '<td><input type="number" name="amountDue['+value.id+']" class="form-control due-amount" value="'+value.amount+'" step="any" disabled="disabled"></td></tr>');
 
                             });
                         }
@@ -1509,6 +1504,49 @@
                 clear_errors('payment_date','payment_amount');
             });
 
+            $(document).on('submit','.edit-amount-form',function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
+                // console.log(data);
+
+                $.ajax({
+                    'url' : '/sales-edit-amount/'+salesId,
+                    'type': 'PUT',
+                    'data': data,
+                    beforeSend: function(){
+                        $('.edit-amount-form').find('.edit-amount').remove();
+                        $('.edit-amount-form').find('.submit-form-btn').attr('disabled',true).text('Saving...');
+                    },success: function(result){
+                        console.log(result);
+                        if(result.success === true)
+                        {
+                            customMessage('success',result.message);
+                        }
+
+
+                        $('.edit-amount-form').find('.submit-form-btn').attr('disabled',false).text('Save');
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
+                    }
+                });
+            });
+
+            $(document).on('click','.edit-amount',function(){
+                $('.save-payment-date').find('.due-amount, .submit-form-btn').attr('disabled',false);
+                $('.save-payment-date').find('#payment_date, #payment_amount').attr('disabled',true);
+                $(this).closest('form').removeAttr('class').addClass('edit-amount-form');
+
+                $(this).removeClass('edit-amount btn-default').addClass('cancel-edit-amount btn-danger').text('Cancel');
+            });
+
+            $(document).on('click','.cancel-edit-amount',function(){
+                $('.edit-amount-form').find('.due-amount, .submit-form-btn').attr('disabled',true);
+                $('.edit-amount-form').find('#payment_date, #payment_amount').attr('disabled',false);
+
+                $(this).removeClass('cancel-edit-amount btn-danger').addClass('edit-amount btn-default').text('Edit Amount');
+                $(this).closest('form').removeAttr('class').addClass('save-payment-date');
+            });
+
             $(document).on('change','#payment_date, #payment_amount',function(){
                 let disabled = true;
                 if($('#payment_date').val() !== schedule || $('#payment_amount').val() !== amount)
@@ -1518,6 +1556,7 @@
                 }
                 $('.save-payment-date').find('.submit-form-btn').attr('disabled',disabled);
             });
+
 
 
             $('#payment_date').datepicker({

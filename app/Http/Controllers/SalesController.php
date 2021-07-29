@@ -743,12 +743,27 @@ class SalesController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'Due date successfully set',
-                    'dates' => $this->paymentReminder->scheduleFormatter($salesId, $firstPayment),
-                    'payment' => number_format($request->input('payment_amount'),2),
+                    'payment' => $saveSchedule,
+//                    'payment' => number_format($request->input('payment_amount'),2),
                 ]);
             }
         }
         return response()->json($validation->errors());
+    }
+
+    public function updateDueAmount(Request $request, $salesId)
+    {
+        $data = [];
+        if(array_key_exists("amountDue",$request->all()))
+        {
+            foreach ($request->input('amountDue') as $key => $value)
+            {
+                $data[$key] = $value;
+                $this->paymentReminder->updatePaymentDueAmount($key, $value);
+            }
+            return response()->json(['success' => true, 'message' => 'Due Amount Successfully Updated!', 'data' => $data]);
+        }
+        return response()->json(['success' => false, 'message' => 'Error occurred!']);
     }
 
     public function getSalesDueDate($salesId)

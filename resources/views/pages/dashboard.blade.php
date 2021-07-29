@@ -130,7 +130,7 @@
                                                 <td>
                                                     <a href="{{route('leads.show',['lead' => $remind->data->lead_id])}}">
                                                         <div class="media">
-                                                            <img src="http://crm.dream-homeseller.com/images/avatar-sm.png" class="user-image img-circle elevation-2" height="40" style="margin:0px 10px 10px 10px;">
+                                                            <img src="{{asset('/images/avatar-sm.png')}}" class="user-image img-circle elevation-2" height="40" style="margin:0px 10px 10px 10px;">
                                                             <div class="media-body">
                                                                 <h3 class="dropdown-item-title">
                                                                     {{$remind->data->category}} to <span class="text-muted">{{ucfirst($remind->data->client_name)}}</span>

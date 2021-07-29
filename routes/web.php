@@ -150,6 +150,7 @@ Route::delete('/sales/{sale}','SalesController@destroy')->name('sales.destroy')-
 Route::post('/sales/payment-date/{sale}',[\App\Http\Controllers\SalesController::class,'savePaymentDate'])->name('sales.save.payment.date')->middleware(['auth','permission:add sales|edit sales']);
 Route::get('/sales/due-date/{sale}',[\App\Http\Controllers\SalesController::class,'getSalesDueDate'])->name('sales.due.date')->middleware(['auth','permission:view sales']);
 Route::get('/sales-edit/{sale}',[\App\Http\Controllers\SalesController::class,'editSales'])->name('sales.edit.data')->middleware(['auth','permission:view sales|edit sales']);
+Route::put('/sales-edit-amount/{sale}',[\App\Http\Controllers\SalesController::class,'updateDueAmount'])->name('sales.edit.amount')->middleware(['auth','permission:view sales|edit sales']);
 
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commissions']);

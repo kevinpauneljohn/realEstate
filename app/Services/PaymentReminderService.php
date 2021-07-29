@@ -69,7 +69,22 @@ class PaymentReminderService
                 'updated_at' => now()
             );
         }
-        return PaymentReminder::insert($dueDates);
+        PaymentReminder::insert($dueDates);
+        return $this->viewSalesReminder($sales_id)->get();
+    }
+
+
+    /**
+     * update the amount due
+     * @param $amountId
+     * @param $amount
+     * @return mixed
+     */
+    public function updatePaymentDueAmount($amountId, $amount)
+    {
+        $paymentReminder = PaymentReminder::find($amountId);
+        $paymentReminder->amount = $amount;
+        return $paymentReminder->save();
     }
 
 
