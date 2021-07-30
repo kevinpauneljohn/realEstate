@@ -384,5 +384,3 @@ Route::get('/sample',function(){
 Route::get('/sms-reminder',function(Request $request){
     return $request->all();
 });
-
-

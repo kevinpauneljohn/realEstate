@@ -52,15 +52,14 @@ class SalesController extends Controller
 //     */
     public function index()
     {
-//        return auth()->user()->sales;
-//        return $this->downLines->extractDownLines(auth()->user()->id);
+//        return $this->salesRepository->getTeamSales($this->accountManagement->checkIfUserIsAccountManager()->id);
         return view('pages.sales.index')->with([
             'leads' => Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get(),
             'projects'   => Project::all(),
             'total_units_sold' => User::findOrFail($this->accountManagement->checkIfUserIsAccountManager()->id)->sales()->where('status','!=','cancelled')->count(),
             'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth($this->accountManagement->checkIfUserIsAccountManager()->id),
 //            'total_sales'   => $this->salesRepository->getTotalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
-            'total_sales'   => $this->salesRepository->getTotalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
+            'total_team_sales'   => $this->salesRepository->getTeamSales($this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_cancelled'   => Sales::where('status','cancelled')->count(),
             'templates' => Template::all(),
         ]);

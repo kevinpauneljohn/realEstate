@@ -22,7 +22,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>&#8369; {{number_format($total_sales,2)}}</h3>
+                    <h3>&#8369; {{number_format($total_team_sales,2)}}</h3>
 
                     <p>Total sales for this year</p>
                 </div>

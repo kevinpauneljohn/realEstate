@@ -312,10 +312,37 @@ class SalesRepository
         return $total_sales;
     }
 
-//    public function getTeamSales()
-//    {
-//
-//    }
+    public function retrieve($downLineIds)
+    {
+        return Sales::whereIn('user_id',$downLineIds)->whereYear('reservation_date',now()->format('Y'))
+            ->where('status','!=','cancelled');
+    }
+
+    /**
+     * get the total sales of the team
+     * @param $userId
+     * @return mixed
+     */
+    public function getTeamSales($userId)
+    {
+        $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->concat([auth()->user()->id])->all();
+        $tcp = $this->retrieve($downLineIds)->sum('total_contract_price');
+        $discount = $this->retrieve($downLineIds)->sum('discount');
+        return $tcp - $discount;
+    }
+
+    /**
+     * get the total sales of all the down lines
+     * @param $userId
+     * @return mixed
+     */
+    public function getDownLineSales($userId)
+    {
+        $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->all();
+        $tcp = $this->retrieve($downLineIds)->sum('total_contract_price');
+        $discount = $this->retrieve($downLineIds)->sum('discount');
+        return $tcp - $discount;
+    }
 
     /**
      * May 31, 2020
