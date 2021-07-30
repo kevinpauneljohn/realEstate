@@ -6,7 +6,6 @@ use App\Events\UpdateLeadStatusEvent;
 use App\Events\UserRankPointsEvent;
 use App\Lead;
 use App\ModelUnit;
-use App\PaymentReminder;
 use App\Project;
 use App\Repositories\RepositoryInterface\SalesInterface;
 use App\Repositories\SalesRepository;
@@ -15,11 +14,11 @@ use App\Requirement;
 use App\SaleRequirement;
 use App\Sales;
 use App\Services\AccountManagerService;
+use App\Services\DownLineService;
 use App\Services\PaymentReminderService;
 use App\Template;
 use App\Threshold;
 use App\User;
-use App\UserRankPoint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -27,14 +26,15 @@ use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
 {
-    private $thresholdRepository, $salesRepository, $sales, $accountManagement, $paymentReminder;
+    private $thresholdRepository, $salesRepository, $sales, $accountManagement, $paymentReminder, $downLines;
 
     public function __construct(
         ThresholdRepository $thresholdRepository,
         SalesRepository $salesRepository,
         SalesInterface $sales,
         AccountManagerService $accountManagerService,
-        PaymentReminderService $paymentReminder
+        PaymentReminderService $paymentReminder,
+        DownLineService $downLineService
     )
     {
         $this->thresholdRepository = $thresholdRepository;
@@ -42,21 +42,24 @@ class SalesController extends Controller
         $this->sales = $sales;
         $this->accountManagement = $accountManagerService;
         $this->paymentReminder = $paymentReminder;
+        $this->downLines = $downLineService;
     }
 
 
-    /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
+//    /**
+//     * Display a listing of the resource.
+//     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+//     */
     public function index()
     {
-        //return $this->salesRepository->get_sales_request_count_in_threshold_for_attribute(5);
+//        return auth()->user()->sales;
+//        return $this->downLines->extractDownLines(auth()->user()->id);
         return view('pages.sales.index')->with([
             'leads' => Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get(),
             'projects'   => Project::all(),
             'total_units_sold' => User::findOrFail($this->accountManagement->checkIfUserIsAccountManager()->id)->sales()->where('status','!=','cancelled')->count(),
             'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth($this->accountManagement->checkIfUserIsAccountManager()->id),
+//            'total_sales'   => $this->salesRepository->getTotalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_sales'   => $this->salesRepository->getTotalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_cancelled'   => Sales::where('status','cancelled')->count(),
             'templates' => Template::all(),
@@ -751,7 +754,7 @@ class SalesController extends Controller
         return response()->json($validation->errors());
     }
 
-    public function updateDueAmount(Request $request, $salesId)
+    public function updateDueAmount(Request $request)
     {
         $data = [];
         if(array_key_exists("amountDue",$request->all()))

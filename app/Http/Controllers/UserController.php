@@ -58,19 +58,21 @@ class UserController extends Controller
                 ['name','!=','builder admin'],
                 ['name','!=','architect'],
                 ['name','!=','account manager'],
+                ['name','!=','online warrior'],
             ])->get();
         }elseif (auth()->user()->hasRole('agent')){
             $roles = Role::where([
                 ['name','!=','super admin'],
                 ['name','!=','admin'],
                 ['name','!=','manager'],
-                ['name','!=','agent'],
+//                ['name','!=','agent'],
                 ['name','!=','client'],
                 ['name','!=','builder member'],
                 ['name','!=','builder admin'],
                 ['name','!=','architect'],
                 ['name','!=','account manager'],
                 ['name','!=','team leader'],
+                ['name','!=','online warrior'],
             ])->get();
         }elseif (auth()->user()->hasRole('team leader')){
             $roles = Role::where([
@@ -83,6 +85,7 @@ class UserController extends Controller
                 ['name','!=','builder admin'],
                 ['name','!=','architect'],
                 ['name','!=','account manager'],
+                ['name','!=','online warrior'],
             ])->get();
         }
         return view('pages.users.index')->with([

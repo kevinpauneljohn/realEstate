@@ -18,10 +18,13 @@
 //Auth::routes();
 
 use App\Events\NotificationEvent;
+use App\Mail\MyTestMail;
+use App\PaymentReminder;
 use App\User;
 use App\UserRankPoint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
@@ -150,7 +153,7 @@ Route::delete('/sales/{sale}','SalesController@destroy')->name('sales.destroy')-
 Route::post('/sales/payment-date/{sale}',[\App\Http\Controllers\SalesController::class,'savePaymentDate'])->name('sales.save.payment.date')->middleware(['auth','permission:add sales|edit sales']);
 Route::get('/sales/due-date/{sale}',[\App\Http\Controllers\SalesController::class,'getSalesDueDate'])->name('sales.due.date')->middleware(['auth','permission:view sales']);
 Route::get('/sales-edit/{sale}',[\App\Http\Controllers\SalesController::class,'editSales'])->name('sales.edit.data')->middleware(['auth','permission:view sales|edit sales']);
-Route::put('/sales-edit-amount/{sale}',[\App\Http\Controllers\SalesController::class,'updateDueAmount'])->name('sales.edit.amount')->middleware(['auth','permission:view sales|edit sales']);
+Route::put('/sales-edit-amount',[\App\Http\Controllers\SalesController::class,'updateDueAmount'])->name('sales.edit.amount')->middleware(['auth','permission:view sales|edit sales']);
 
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commissions']);
@@ -366,5 +369,13 @@ Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\Staycati
 Route::resource('staycation','Staycation\StaycationClientController');
 
 Route::get('/payment-reminder','PaymentReminderController');
+
+Route::get('/sample',function(){
+    $month = now()->month;
+    foreach (PaymentReminder::whereMonth('schedule', $month)->where('completed',false)->get() as $reminder)
+    {
+        echo $reminder->sales->lead->email.'<br/>';
+    }
+});
 
 

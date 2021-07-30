@@ -1432,7 +1432,7 @@
                     beforeSend: function(){
                         $('.save-payment-date').find('.due-amount-action-btn').remove();
                     },success: function(result){
-                        // console.log(result);
+                        // console.log(result.length);
                         if(result.length > 0)
                         {
                             schedule = result[0].schedule;
@@ -1441,8 +1441,9 @@
                         }else{
                             schedule = "";
                             amount = "";
+                            editAmountBtn = "";
                         }
-                        $('#payment_date').val(schedule);
+                        $('#payment_date').datepicker("setDate", schedule).val(schedule);
                         $('#view-payments').find('#payment_amount').val(amount);
                         $('.save-payment-date').find('.payment_amount').after(editAmountBtn+'<table class="due-dates table table-bordered"></table>');
                         $.each(result, function(key, value){
@@ -1510,7 +1511,7 @@
                 // console.log(data);
 
                 $.ajax({
-                    'url' : '/sales-edit-amount/'+salesId,
+                    'url' : '/sales-edit-amount',
                     'type': 'PUT',
                     'data': data,
                     beforeSend: function(){
@@ -1562,7 +1563,7 @@
             $('#payment_date').datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd',
-            }).datepicker("setDate", new Date());
+            });
         </script>
     @endcan
 

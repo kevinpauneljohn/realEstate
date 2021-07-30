@@ -8,6 +8,7 @@ use App\Events\UserRankPointsEvent;
 use App\Project;
 use App\Sales;
 use App\Services\AccountManagerService;
+use App\Services\DownLineService;
 use App\Threshold;
 use App\User;
 use App\UserRankPoint;
@@ -15,10 +16,14 @@ use Carbon\Carbon;
 
 class SalesRepository
 {
-    private $accountManagerService;
-    public function __construct(AccountManagerService $accountManagerService)
+    private $accountManagerService, $downLine;
+    public function __construct(
+        AccountManagerService $accountManagerService,
+        DownLineService $downLineService
+    )
     {
         $this->accountManagerService = $accountManagerService;
+        $this->downLine = $downLineService;
     }
     /**
      * @since April 23, 2020
@@ -152,7 +157,7 @@ class SalesRepository
         {
             $sales->save();
             //update the rank and points
-//            $total_points = $this->getTotalSales(auth()->user()->id) / 100000;
+//            $total_points = $this->getTotalSales(auth()->user()->id) / 100000;getTotalSales
             $total_points = $this->getTotalSales($this->accountManagerService->checkIfUserIsAccountManager()->id) / 100000;
 
             ///check if the user has extra points
@@ -223,13 +228,14 @@ class SalesRepository
     }
 
     /**
+     * @param int $project_id
+     * @param $user_id
+     * @return mixed
      * @author john kevin paunel
      * set the agents commission rate
      * algorithm for getting the commission rate
      * returns the user's current sales commission rate
-     * @param int $project_id
-     * @return mixed
-     * */
+     */
     public function setCommissionRate($project_id,$user_id)
     {
         ///$user = auth()->user()->id;/*set the id of the current user*/
@@ -305,6 +311,11 @@ class SalesRepository
         }
         return $total_sales;
     }
+
+//    public function getTeamSales()
+//    {
+//
+//    }
 
     /**
      * May 31, 2020
