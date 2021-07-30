@@ -372,10 +372,13 @@ Route::get('/payment-reminder','PaymentReminderController');
 
 Route::get('/sample',function(){
     $month = now()->month;
-    foreach (PaymentReminder::whereMonth('schedule', $month)->where('completed',false)->get() as $reminder)
+    $data = [];
+    foreach (PaymentReminder::whereMonth('schedule', $month)->where('completed',false)->get() as $key => $reminder)
     {
-        echo $reminder->sales->lead->email.'<br/>';
+        $data[$key] = $reminder->sales !== null ? $reminder->sales->lead->email : null;
     }
+    // $reminder = PaymentReminder::whereMonth('schedule', $month)->where('completed',false)->first();
+    return $data;
 });
 
 

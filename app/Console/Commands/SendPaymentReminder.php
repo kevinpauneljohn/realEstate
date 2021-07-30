@@ -44,7 +44,8 @@ class SendPaymentReminder extends Command
 
         foreach (PaymentReminder::whereMonth('schedule', $month)->where('completed',false)->get() as $reminder)
         {
-            $clientEmail = $reminder->sales->lead->email;
+//            $clientEmail = $reminder->sales->lead->email;
+            $clientEmail = $reminder->sales !== null ? $reminder->sales->lead->email : null;
             if(today()->diffInDays($reminder->scedule,false) === 5)
             {
                 //this will remind the client of their payment 5 days before their due date
