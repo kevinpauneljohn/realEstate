@@ -312,10 +312,14 @@ class SalesRepository
         return $total_sales;
     }
 
+    public function getTotalUnitSold($userId)
+    {
+        return $this->retrieve($userId)->whereYear('reservation_date',now()->format('Y'))->count();
+    }
+
     public function retrieve($downLineIds)
     {
-        return Sales::whereIn('user_id',$downLineIds)->whereYear('reservation_date',now()->format('Y'))
-            ->where('status','!=','cancelled');
+        return Sales::whereIn('user_id',$downLineIds)->where('status','!=','cancelled');
     }
 
     /**
@@ -326,8 +330,8 @@ class SalesRepository
     public function getTeamSales($userId)
     {
         $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->concat([auth()->user()->id])->all();
-        $tcp = $this->retrieve($downLineIds)->sum('total_contract_price');
-        $discount = $this->retrieve($downLineIds)->sum('discount');
+        $tcp = $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'))->sum('total_contract_price');
+        $discount = $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'))->sum('discount');
         return $tcp - $discount;
     }
 
@@ -339,8 +343,8 @@ class SalesRepository
     public function getDownLineSales($userId)
     {
         $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->all();
-        $tcp = $this->retrieve($downLineIds)->sum('total_contract_price');
-        $discount = $this->retrieve($downLineIds)->sum('discount');
+        $tcp = $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'))->sum('total_contract_price');
+        $discount = $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'))->sum('discount');
         return $tcp - $discount;
     }
 
@@ -348,23 +352,15 @@ class SalesRepository
      * May 31, 2020
      * @author john kevin paunel
      * get the user total sales
-     * @param string $user_id
-     * @return string
-     * */
+     * @param $user_id
+     * @return mixed
+     */
     public function getTotalSalesThisMonth($user_id)
     {
-        $sales = User::findOrFail($user_id)->sales()
-            ->whereMonth('reservation_date',now()->format('m'))
-            ->where('status','!=','cancelled')->get();/*get all the user's sales*/
-        $total_sales = 0;/*initiate the total sales by 0*/
-
-        /*add all sales total contract price less the discount*/
-        foreach ($sales as $sale)
-        {
-            $difference = $sale->total_contract_price - $sale->discount;
-            $total_sales = $total_sales + $difference;
-        }
-        return $total_sales;
+        $sales = $this->retrieve($user_id)->whereMonth('reservation_date',now()->format('m'));
+        $tcp = $sales->sum('total_contract_price');
+        $discount = $sales->sum('discount');
+        return $tcp - $discount;
     }
 
     /**
