@@ -93,8 +93,8 @@ class DashboardController extends Controller
         return view('pages.dashboard',compact('leads','sales'))->with([
             'reminders' => $reminder,
             'display_period' => $period,
-            'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth($this->accountManagement->checkIfUserIsAccountManager()->id),
-            'total_sales'   => $this->salesRepository->getTotalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
+            'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth((array)$this->accountManagement->checkIfUserIsAccountManager()->id),
+            'total_sales'   => $this->salesRepository->getTeamSales((array)$this->accountManagement->checkIfUserIsAccountManager()->id),
             'current_month' => now()->format('F'),
             'current_year' => now()->format('Y'),
             'current_balance' => Wallet::where([['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],['status','!=','completed']])->sum('amount'),
