@@ -329,7 +329,7 @@ class SalesRepository
      */
     public function getTeamSales($userId)
     {
-        $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->concat([auth()->user()->id])->all();
+        $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->concat([$this->accountManagerService->checkIfUserIsAccountManager()->id])->all();
         $tcp = $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'))->sum('total_contract_price');
         $discount = $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'))->sum('discount');
         return $tcp - $discount;

@@ -200,9 +200,11 @@ class SalesController extends Controller
      * @author john kevin paunel
      * fetch all sales
      * */
-    public function sales_list()
+    public function salesList()
     {
-        $sales = Sales::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get();
+//        $sales = Sales::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get();
+        $userId = $this->accountManagement->checkIfUserIsAccountManager()->id;
+        $sales = Sales::whereIn('user_id',collect(collect($this->downLines->extractDownLines((array)$userId)->pluck('id'))->concat((array)$userId))->toArray())->get();
         return DataTables::of($sales)
 //            ->editColumn('reservation_date',function($sale){
 //                return $sale->reservation_date->format('M d, Y');
@@ -251,6 +253,9 @@ class SalesController extends Controller
             ->editColumn('status',function($sale){
                 return $this->statusLabel($sale->status);
             })
+            ->editColumn('agent',function($sale){
+                return $sale->user->fullname;
+            })
             ->addColumn('action', function ($sale)
             {
                 $action = "";
@@ -261,28 +266,27 @@ class SalesController extends Controller
                 if((auth()->user()->hasRole(['online warrior']) && $sale->lead->online_warrior_id === auth()->user()->id)
                     || auth()->user()->hasRole(['super admin','account manager','admin','team leader','referral','manager','agent']))
                 {
-                    if(auth()->user()->can('edit sales'))
+                    if(auth()->user()->can('edit sales')&& $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
                     {
                         $action .= '<button class="btn btn-xs btn-default edit-sales-btn" id="'.$sale->id.'" data-target="#edit-sales-modal" data-toggle="modal" title="Edit"><i class="fa fa-edit"></i></button>';
                     }
-                    if(auth()->user()->can('delete sales'))
+                    if(auth()->user()->can('delete sales') && $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
                     {
                         $action .= '<button class="btn btn-xs btn-default delete-sale-btn" id="'.$sale->id.'" title="Delete"><i class="fa fa-trash"></i></button>';
                     }
-//                if(auth()->user()->can('upload requirements'))
-//                {
-//                    $action .= '<a href="'.route('sales.upload.requirements',['sale' => $sale->id]).'" class="btn btn-xs btn-info" title="Upload Requirements"><i class="fas fa-file-upload"></i></a>';
-//                }
-                    if(auth()->user()->can('edit sales'))
+                    if(auth()->user()->can('edit sales') && $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
                     {
                         $action .= '<a href="#" class="btn btn-xs btn-default update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';
                     }
-                    if(auth()->user()->can('view request'))
+                    if(auth()->user()->can('view request') && $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
                     {
                         $action .= '<button class="btn btn-xs btn-default view-request-btn" id="'.$sale->id.'" data-toggle="modal" data-target="#view-request" title="View all requests #"><i class="fa fa-ticket-alt"></i></button>';
                     }
 
-                    $action .= '<a href="'.route('leads.show',['lead' => $sale->lead_id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$sale->id.'" title="Create Client Account"><i class="fa fa-user-alt"></i></a>';
+                    if($this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
+                    {
+                        $action .= '<a href="'.route('leads.show',['lead' => $sale->lead_id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$sale->id.'" title="Create Client Account"><i class="fa fa-user-alt"></i></a>';
+                    }
                 }
 
                 return $action;

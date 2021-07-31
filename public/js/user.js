@@ -140,7 +140,7 @@ $(document).on('submit','#user-form',function(form){
         'type' : 'POST',
         'data' : data,
         beforeSend: function () {
-            $('.add-user-btn').val('Saving ... ').attr('disabled',true);
+          $('#user-form').find('.add-user-btn').val('Saving ... ').attr('disabled',true);
         },success: function (result) {
             if(result.success === true)
             {
@@ -165,10 +165,10 @@ $(document).on('submit','#user-form',function(form){
                 element.after('<p class="text-danger">'+value+'</p>');
             });
 
+            $('#user-form').find('.add-user-btn').val('Save').attr('disabled',false);
         },error: function(xhr, status, error){
             console.log(xhr);
         }
     });
-    $('.add-user-btn').val('Save').attr('disabled',false);
 });
 

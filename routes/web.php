@@ -141,7 +141,7 @@ Route::post('/update-schedule-status','ScheduleController@updateStatus')->name('
 /*sales*/
 Route::get('/sales','SalesController@index')->name('sales.index')->middleware(['auth','permission:view sales','checkCommission']);
 Route::post('/sales','SalesController@store')->name('sales.store')->middleware(['auth','permission:add sales','checkCommission']);
-Route::get('/sales-list','SalesController@sales_list')->name('sales.list')->middleware(['auth','permission:view sales','checkCommission']);
+Route::get('/sales-list',[\App\Http\Controllers\SalesController::class,'salesList'])->name('sales.list')->middleware(['auth','permission:view sales','checkCommission']);
 Route::get('/user-sales-list/{id}','UserController@user_sales_list')->name('users.sales.list')->middleware(['auth','permission:view sales','checkCommission']);
 Route::get('/sales/{sale}','SalesController@show')->name('sales.show')->middleware(['auth','permission:view sales','checkCommission']);
 Route::get('/sales/edit/{sale}','SalesController@edit')->name('sales.edit')->middleware(['auth','permission:edit sales','checkCommission']);

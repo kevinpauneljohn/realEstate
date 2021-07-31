@@ -99,6 +99,7 @@
                         <th>Financing</th>
                         <th>Rate</th>
                         <th>Sale Status</th>
+                        <th>Agent</th>
                         <th>Request Count</th>
                         <th>Action</th>
                     </tr>
@@ -114,8 +115,9 @@
                         <th>Financing</th>
                         <th>Rate</th>
                         <th>Sale Status</th>
+                        <th>Agent</th>
                         <th width="3%">Request Count</th>
-                        <th>Action</th>
+                        <th width="12%">Action</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -587,6 +589,7 @@
                     { data: 'financing', name: 'financing'},
                     { data: 'commission_rate', name: 'commission_rate'},
                     { data: 'status', name: 'status'},
+                    { data: 'agent', name: 'agent'},
                     { data: 'request_status', name: 'request_status'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
