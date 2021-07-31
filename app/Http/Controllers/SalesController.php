@@ -99,7 +99,7 @@ class SalesController extends Controller
 
         return view('pages.sales.addSales')->with([
             'leads' => $leads,
-            'projects' => Project::all(),
+            'projects' => collect(Project::all())->sortBy('name'),
             'leadId' => $request->leadId
         ]);
     }

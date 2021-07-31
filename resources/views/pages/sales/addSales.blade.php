@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="form-group project">
                                     <label for="project">Project</label><span class="required">*</span>
-                                    <select name="project" id="project" class="form-control" style="width: 100%;">
+                                    <select name="project" id="project" class="form-control select2" style="width: 100%;">
                                         <option value=""> -- Select -- </option>
                                         @foreach($projects as $project)
                                             <option value="{{$project->id}}">{{$project->name}}</option>
