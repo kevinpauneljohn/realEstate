@@ -88,7 +88,7 @@
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
-                <table id="sales-list" class="table table-bordered table-striped" role="grid">
+                <table id="sales-list" class="table table-bordered table-hover" role="grid">
                     <thead>
                     <tr role="row">
                         <th width="5%">Date Reserved</th>
