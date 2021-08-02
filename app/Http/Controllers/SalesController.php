@@ -244,7 +244,7 @@ class SalesController extends Controller
                 return Lead::find($sale->lead_id)->email;
             })
             ->editColumn('commission_rate',function($sale){
-                if($sale->commission_rate != null)
+                if($sale->commission_rate != null && !auth()->user()->hasRole('online warrior'))
                 {
                     return $sale->commission_rate.'%';
                 }
@@ -331,7 +331,7 @@ class SalesController extends Controller
      */
     public function show($id)
     {
-        $sales = Sales::findOrFail($id);
+        $sales = auth()->user()->hasRole('online warrior') ? Sales::findOrFail($id)->makeHidden(['commission_rate']) : Sales::findOrFail($id);
         $lead = Lead::find($sales->lead_id);
         $project = Project::find($sales->project_id);
         $model_unit = ModelUnit::find($sales->model_unit_id);

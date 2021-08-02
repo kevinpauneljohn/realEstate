@@ -173,7 +173,7 @@ $(document).on('click','.view-sales-btn',function(){
             let rf = parseInt(result.sales.reservation_fee);
             let equity = parseInt(result.sales.equity);
             let loan_amount = parseInt(result.sales.loanable_amount);
-            let email = "", contactNumber = "", phase ="", block ="",lot ="", lot_area = "", floor_area = "", equity_terms = "";
+            let email = "", contactNumber = "", phase ="", block ="",lot ="", lot_area = "", floor_area = "", equity_terms = "",commission_rate = "";
 
             if(result.leads.email != null)
             {
@@ -207,13 +207,16 @@ $(document).on('click','.view-sales-btn',function(){
             {
                 equity_terms = result.sales.terms;
             }
-
+            if(result.sales.commission_rate !== undefined )
+            {
+                commission_rate = result.sales.commission_rate;
+            }
             $('#sale-status').html('<strong>'+statusLabel(result.sales.status)+'</strong>');
             $('#reservation-date').html('<strong>'+result.sales.reservation_date+'</strong>');
             $('#buyer-name').html('<strong>'+result.leads.firstname+' '+result.leads.lastname+'</strong>');
             $('#contact-number').html('<strong>'+contactNumber+'</strong>');
             $('#email-address').html('<strong>'+email+'</strong>');
-            $('#commission-rate').html('<strong>'+result.sales.commission_rate+'%</strong>');
+            $('#commission-rate').html('<strong>'+commission_rate+'%</strong>');
             $('#project-name').html('<strong>'+result.project.name+'</strong>');
             $('#model-unit-name').html('<strong>'+result.model_unit.name+'</strong>');
             $('#lot-area').html('<strong>'+lot_area+'</strong>');

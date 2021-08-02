@@ -32,17 +32,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="the payment reminder feature can now modify the due amount">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/realEstate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/realEstate.iml" afterDir="false" />
+    <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Lead.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lead.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/LeadActivity.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/LeadActivity.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/leadNotes.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/leadNotes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/sales.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/sales.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/acaronlex/laravel-calendar/" />
     <ignored path="$PROJECT_DIR$/vendor/symfony/http-client-contracts/" />
@@ -75,80 +68,42 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="326" column="7" lean-forward="true" selection-start-line="326" selection-start-column="7" selection-end-line="326" selection-end-column="7" />
+              <folding>
+                <element signature="e#40#77#0#PHP" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="209">
-              <caret line="81" column="66" selection-start-line="81" selection-start-column="57" selection-end-line="81" selection-end-column="66" />
+              <caret line="141" column="7" selection-start-line="141" selection-start-column="2" selection-end-line="141" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/adminlte.php">
+        <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="289" column="54" selection-start-line="289" selection-start-column="54" selection-end-line="289" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
-              <folding>
-                <element signature="e#40#82#0#PHP" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="-7499">
+              <caret line="128" column="54" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="54" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/pages/leadActivities/index.blade.php">
+        <entry file="file://$PROJECT_DIR$/public/js/sales.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-              <folding>
-                <element signature="e#757#788#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Downloads/AdminLTE-3.0.2/AdminLTE-3.0.2/pages/calendar.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-15880" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Events/LeadStatusForTrippingEvent.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="5" selection-start-column="5" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/LeadActivity.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="40" column="52" selection-start-line="40" selection-start-column="52" selection-end-line="40" selection-end-column="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Lead.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="60" column="58" selection-start-line="60" selection-start-column="58" selection-end-line="60" selection-end-column="58" />
+            <state relative-caret-position="413">
+              <caret line="218" column="65" selection-start-line="218" selection-start-column="65" selection-end-line="218" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -166,11 +121,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Buyer is required</find>
-      <find>noti</find>
-      <find>model_unit</find>
-      <find>details</find>
-      <find>length</find>
       <find>form</find>
       <find>click</find>
       <find>edit_dp_terms</find>
@@ -194,8 +144,13 @@
       <find>leads-activities</find>
       <find>new-reminder-form</find>
       <find>update-schedule-status</find>
-      <find>lead</find>
       <find>leads.sho</find>
+      <find>lead</find>
+      <find>#view-sales-details</find>
+      <find>view-sales-btn</find>
+      <find>view-sales-details</find>
+      <find>show(</find>
+      <find>commission_rate</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -231,7 +186,6 @@
         <option value="$PROJECT_DIR$/app/Services/AccountManagerService.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/sales/editSales.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/dashboard.blade.php" />
-        <option value="$PROJECT_DIR$/public/js/sales.js" />
         <option value="$PROJECT_DIR$/app/Services/PaymentReminderService.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/leads/view.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
@@ -241,20 +195,21 @@
         <option value="$PROJECT_DIR$/resources/views/pages/sales/addSales.blade.php" />
         <option value="$PROJECT_DIR$/public/js/user.js" />
         <option value="$PROJECT_DIR$/app/Repositories/SalesRepository.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" />
         <option value="$PROJECT_DIR$/public/js/leadNotes.js" />
         <option value="$PROJECT_DIR$/database/migrations/2021_08_02_114207_add_online_warrior_column_to_lead_activities_table.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/leadActivities.blade.php" />
-        <option value="$PROJECT_DIR$/config/adminlte.php" />
         <option value="$PROJECT_DIR$/app/Events/AmountWithdrawalRequestEvent.php" />
         <option value="$PROJECT_DIR$/app/Events/CalendarEvent.php" />
         <option value="$PROJECT_DIR$/composer.lock" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php" />
         <option value="$PROJECT_DIR$/app/LeadActivity.php" />
         <option value="$PROJECT_DIR$/app/Lead.php" />
+        <option value="$PROJECT_DIR$/config/adminlte.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/leadActivities/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" />
+        <option value="$PROJECT_DIR$/public/js/sales.js" />
       </list>
     </option>
   </component>
@@ -412,13 +367,12 @@
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Events" type="462c0819:PsiDirectoryNode" />
+              <item name="storage" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -764,21 +718,7 @@
       <workItem from="1627614618396" duration="25070000" />
       <workItem from="1627704923969" duration="1899000" />
       <workItem from="1627737283252" duration="3674000" />
-      <workItem from="1627841508535" duration="12031000" />
-    </task>
-    <task id="LOCAL-00773" summary="added task status update">
-      <created>1617559539972</created>
-      <option name="number" value="00773" />
-      <option name="presentableId" value="LOCAL-00773" />
-      <option name="project" value="LOCAL" />
-      <updated>1617559539972</updated>
-    </task>
-    <task id="LOCAL-00774" summary="task list display">
-      <created>1617588363569</created>
-      <option name="number" value="00774" />
-      <option name="presentableId" value="LOCAL-00774" />
-      <option name="project" value="LOCAL" />
-      <updated>1617588363585</updated>
+      <workItem from="1627841508535" duration="14975000" />
     </task>
     <task id="LOCAL-00775" summary="task list display">
       <created>1618078876292</created>
@@ -1109,11 +1049,25 @@
       <option name="project" value="LOCAL" />
       <updated>1627740389813</updated>
     </task>
-    <option name="localTasksCounter" value="822" />
+    <task id="LOCAL-00822" summary="the payment reminder feature can now modify the due amount">
+      <created>1627888733006</created>
+      <option name="number" value="00822" />
+      <option name="presentableId" value="LOCAL-00822" />
+      <option name="project" value="LOCAL" />
+      <updated>1627888733007</updated>
+    </task>
+    <task id="LOCAL-00823" summary="the payment reminder feature can now modify the due amount">
+      <created>1627889768228</created>
+      <option name="number" value="00823" />
+      <option name="presentableId" value="LOCAL-00823" />
+      <option name="project" value="LOCAL" />
+      <updated>1627889768228</updated>
+    </task>
+    <option name="localTasksCounter" value="824" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="179849000" />
+    <option name="totallyTimeSpent" value="182793000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1128,7 +1082,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1295302" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22214764" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1289,13 +1243,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/sales.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7939">
-          <caret line="467" selection-start-line="467" selection-end-line="467" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/dashboard.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1615">
@@ -1385,18 +1332,6 @@
     <entry file="file://$PROJECT_DIR$/resources/views/pages/users/index.blade.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="249" column="17" lean-forward="true" selection-start-line="249" selection-start-column="17" selection-end-line="249" selection-end-column="17" />
-          <folding>
-            <element signature="e#40#77#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/User.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1071">
@@ -1422,13 +1357,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="28" column="25" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="90" column="66" selection-start-line="90" selection-start-column="66" selection-end-line="90" selection-end-column="66" />
         </state>
       </provider>
     </entry>
@@ -1502,13 +1430,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="289" column="54" selection-start-line="289" selection-start-column="54" selection-end-line="289" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/acaronlex/laravel-calendar/src/Event.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1537,52 +1458,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Downloads/AdminLTE-3.0.2/AdminLTE-3.0.2/pages/calendar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15880" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/composer.lock">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="342" column="10" lean-forward="true" selection-start-line="342" selection-start-column="10" selection-end-line="342" selection-end-column="10" />
-          <folding>
-            <element signature="e#2225#3562#0" />
-            <element signature="e#3572#5387#0" />
-            <element signature="e#5397#7143#0" />
-            <element signature="e#7153#9296#0" />
-            <element signature="e#9306#10517#0" />
-            <element signature="e#10527#13938#0" />
-            <element signature="e#13948#17714#0" />
-            <element signature="e#17724#20396#0" />
-            <element signature="e#20406#23688#0" />
-            <element signature="e#23698#26376#0" />
-            <element signature="e#26386#28302#0" />
-            <element signature="e#28312#30395#0" />
-            <element signature="e#30405#32243#0" />
-            <element signature="e#32253#34016#0" />
-            <element signature="e#34026#36588#0" />
-            <element signature="e#34129#34319#0" />
-            <element signature="e#36598#39450#0" />
-            <element signature="e#39460#41137#0" />
-            <element signature="e#41147#43555#0" />
-            <element signature="e#43565#46122#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
-          <folding>
-            <element signature="e#40#82#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="81" column="66" selection-start-line="81" selection-start-column="57" selection-end-line="81" selection-end-column="66" />
+        <state relative-caret-position="-132704">
+          <caret line="342" column="10" selection-start-line="342" selection-start-column="10" selection-end-line="342" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -1593,6 +1477,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/adminlte.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="297" column="35" selection-start-line="297" selection-start-column="35" selection-end-line="297" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/LeadActivity.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -1600,18 +1491,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/AdminLTE-3.0.2/AdminLTE-3.0.2/pages/calendar.html">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-15880" />
+        <state relative-caret-position="309">
+          <caret line="40" column="30" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
+          <folding>
+            <element signature="e#40#82#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/leadActivities/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+        <state relative-caret-position="918">
+          <caret line="54" column="40" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
           <folding>
             <element signature="e#757#788#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="141" column="7" selection-start-line="141" selection-start-column="2" selection-end-line="141" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7499">
+          <caret line="128" column="54" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="326" column="7" lean-forward="true" selection-start-line="326" selection-start-column="7" selection-end-line="326" selection-end-column="7" />
+          <folding>
+            <element signature="e#40#77#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/sales.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="218" column="65" selection-start-line="218" selection-start-column="65" selection-end-line="218" selection-end-column="65" />
         </state>
       </provider>
     </entry>
