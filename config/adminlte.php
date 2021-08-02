@@ -244,17 +244,6 @@ return [
             'icon' => 'fa fa-tachometer-alt',
             'route'  => 'dashboard',
         ],
-//        [
-//            'text' => 'Announcement',
-//            'icon' => 'fa fa-bullhorn',
-//            'url'  => '#',
-//        ],
-//        [
-//            'text'    => 'Requests',
-//            'icon'    => 'fas fa-tasks',
-//            'route'   => 'thresholds.index',
-//            'can'     => 'view request',
-//        ],
         [
             'text'    => 'Users',
             'icon'    => 'fas fa-user',
@@ -302,6 +291,12 @@ return [
                     'icon_color'  => 'red',
                     'can'  => 'view assigned lead',
                 ],
+                [
+                    'text' => 'Schedule',
+                    'route'  => 'leads.schedule.display',
+                    'icon_color'  => 'red',
+                    'can'  => 'view assigned lead',
+                ],
             ],
         ],
         [
@@ -346,23 +341,6 @@ return [
                 ],
             ],
         ],
-//        [
-//            'text'    => 'JJ Stay Cation',
-//            'icon'    => 'fas fa-thumbtack',
-//            'can'     => 'view staycation client',
-//            'submenu'   => [
-//                [
-//                    'text'    => 'All Tasks',
-//                    'can'     => 'view staycation client',
-//                    'route'   => 'tasks.index',
-//                ],
-//                [
-//                    'text'    => 'My Tasks',
-//                    'can'     => 'view staycation client',
-//                    'route'   => 'task.mine',
-//                ]
-//            ]
-//        ],
         [
             'text'    => 'Settings',
             'icon'    => 'fas fa-cogs',

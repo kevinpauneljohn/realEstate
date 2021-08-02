@@ -35,7 +35,16 @@ class LeadActivityController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = LeadActivity::all();
+        return view('pages.leadActivities.index')->with([
+            'title' => 'Scheduled Activities',
+            'tasks' => $tasks
+        ]);
+    }
+
+    public function schedule()
+    {
+
     }
 
     /**
@@ -169,6 +178,7 @@ class LeadActivityController extends Controller
                 $leadActivity = new LeadActivity();
                 $leadActivity->user_id = $this->accountmanagement->checkIfUserIsAccountManager()->id;
                 $leadActivity->lead_id = $request->lead_id;
+                $leadActivity->online_warrior = auth()->user()->hasRole('online warrior') ? auth()->user()->id : null;
                 $leadActivity->details = $request->reminder_details;
                 $leadActivity->schedule = $request->reminder_date;
                 $leadActivity->start_date = $request->reminder_time;

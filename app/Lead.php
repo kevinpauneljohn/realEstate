@@ -58,7 +58,7 @@ class Lead extends Model
 
     public function LeadActivities()
     {
-        return $this->hasMany(LeadActivity::class);
+        return $this->hasMany(LeadActivity::class,'lead_id');
     }
 
     public function LogTouches()

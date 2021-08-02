@@ -183,7 +183,7 @@ $(document).on('submit','#new-reminder-form',function(form){
             if(result.success === true)
             {
                 let table = $('#reminder-list').DataTable();
-                table.ajax.reload();
+                table.ajax.reload(null, false);
 
                 $('#new-reminder').modal('toggle');
 
