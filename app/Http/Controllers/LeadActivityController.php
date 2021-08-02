@@ -35,10 +35,10 @@ class LeadActivityController extends Controller
      */
     public function index()
     {
-        $tasks = LeadActivity::all();
+        $tasks = LeadActivity::where('user_id',$this->accountmanagement->checkIfUserIsAccountManager()->id)->get();
         return view('pages.leadActivities.index')->with([
             'title' => 'Scheduled Activities',
-            'tasks' => $tasks
+            'tasks' => $tasks,
         ]);
     }
 

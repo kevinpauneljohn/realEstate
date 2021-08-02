@@ -295,7 +295,7 @@ return [
                     'text' => 'Schedule',
                     'route'  => 'leads.schedule.display',
                     'icon_color'  => 'red',
-                    'can'  => 'view assigned lead',
+                    'can'  => 'view lead',
                 ],
             ],
         ],

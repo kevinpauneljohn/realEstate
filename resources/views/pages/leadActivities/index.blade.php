@@ -17,6 +17,12 @@
 @stop
 
 @section('content')
+{{--@foreach($tasks as $task)--}}
+{{--    @php--}}
+{{--            $date = \Carbon\Carbon::createFromFormat('Y-m-d h:i a',$task->schedule->format('Y-m-d').' '.\Carbon\Carbon::create($task->start_date)->format('h:i a'));--}}
+{{--            @endphp--}}
+{{--    {{$task}}<br/>--}}
+{{--    @endforeach--}}
     <div id='calendar' class="container" style="background-color: white"></div>
 
 @stop
@@ -48,7 +54,7 @@
                             @php
                                 $date = \Carbon\Carbon::createFromFormat('Y-m-d h:i a',$task->schedule->format('Y-m-d').' '.\Carbon\Carbon::create($task->start_date)->format('h:i A'));
                             @endphp
-                            title : '{{ $task->category }} - Client: {{$task->lead->fullname}}',
+                            title : '{{ $task->category }} - Client: {{$task->lead !== null ? $task->lead->fullname : ""}}',
                             start : '{{ $date }}',
                             url : '{{ route('leads.show', $task->lead_id) }}'
                         },
