@@ -21,6 +21,7 @@ use App\Services\AccountManagerService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
@@ -401,7 +402,9 @@ class UserController extends Controller
      * */
     public function profile($id)
     {
+//        return Sales::whereIn('lead_id',collect(Lead::where('online_warrior_id',$id)->get())->pluck('id'))->count();
         $user = User::findOrFail($id);
+        $onlineWarriorLeads = Lead::where('online_warrior_id',$id);
 
         $rate_limit = 4;/* 4% is the user's max commission rate which is only the super admin can give*/
         /*if the use is not a super admin the commission rate that can be given will be based on the up line max rate*/
@@ -427,6 +430,9 @@ class UserController extends Controller
             'cold_leads' => Lead::where([['user_id','=',$id],['lead_status','=','Cold']])->count(),
             'tripping_leads' => Lead::where([['user_id','=',$id],['lead_status','=','For tripping']])->count(),
             'reserved_leads' => Lead::where([['user_id','=',$id],['lead_status','=','Reserved']])->count(),
+            'onlineWarrior' => $onlineWarriorLeads,
+            'onlineWarriorSales' => Sales::whereIn('lead_id',collect($onlineWarriorLeads->get())->pluck('id')),
+            'activities' => Activity::where('causer_id',$id)
         ]);
     }
 

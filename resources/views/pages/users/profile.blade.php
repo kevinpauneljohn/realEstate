@@ -59,106 +59,108 @@
             </div>
             <!-- /.col -->
             <div class="col-md-9">
-                <div class="card">
-                    <div class="card-body">
-                        @if($user->hasRole('client'))
-                        <!-- Client View -->
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#projects">Projects</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#payment">Payments</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#files">Files</a>
-                                </li>
-
-
-                            </ul>
-                            <div class="tab-content">
-                                <div id="projects" class="container tab-pane active"><br>
-                                    <table id="project-list" class="table table-bordered table-striped" role="grid">
-                                        <thead>
-                                        <tr role="row">
-                                            <th>Project Code</th>
-                                            <th>Date Stared</th>
-                                            <th>Description</th>
-                                            <th>Agent</th>
-                                            <th>Architect</th>
-                                            <th>Builder</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tfoot>
-                                        <tr>
-                                            <th>Project Code</th>
-                                            <th>Date Stared</th>
-                                            <th>Description</th>
-                                            <th>Agent</th>
-                                            <th>Architect</th>
-                                            <th>Builder</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
+            @if($user->hasRole('online warrior'))
+                <!-- Online warrior view -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="small-box bg-info">
+                                        <div class="inner text-center">
+                                            <h6>Total Leads</h6>
+                                            <p>{{$onlineWarrior->count()}}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div id="payment" class="container tab-pane"><br>
-                                    <table id="payments-list" class="table table-bordered table-striped" role="grid">
-                                        <thead>
-                                        <tr role="row">
-                                            <th>Date Received</th>
-                                            <th>Amount</th>
-                                            <th>Details</th>
-                                            <th>Time</th>
-                                            <th>Remarks</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tfoot>
-                                        <tr>
-                                            <th>Date Received</th>
-                                            <th>Amount</th>
-                                            <th>Details</th>
-                                            <th>Time</th>
-                                            <th>Remarks</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
+                                <div class="col-lg-4">
+                                    <div class="small-box bg-fuchsia">
+                                        <div class="inner text-center">
+                                            <h6>Total Leads Year {{now()->format('Y')}}</h6>
+                                            <p>{{$onlineWarrior->whereYear('created_at',now()->format('Y'))->count()}}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div id="files" class="container tab-pane fade"><br>
-                                    <table id="down-lines-list" class="table table-bordered table-hover" role="grid">
-                                        <thead>
-                                        <tr role="row">
-                                            <th>Full Name</th>
-                                            <th>Username</th>
-                                            <th>Email</th>
-                                            <th>Contact Number</th>
-                                            <th>Role</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tfoot>
-                                        <tr>
-                                            <th>Full Name</th>
-                                            <th>Username</th>
-                                            <th>Email</th>
-                                            <th>Contact Number</th>
-                                            <th>Role</th>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
+                                <div class="col-lg-4">
+                                    <div class="small-box bg-lime">
+                                        <div class="inner text-center">
+                                            <h6>Total Leads for the month of {{now()->format('F')}}</h6>
+                                            <p>{{$onlineWarrior->whereMonth('created_at',now()->format('m'))->count()}}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <!-- /.tab-content -->
-                        <!-- end client view -->
-                        @else
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="small-box bg-success">
+                                        <div class="inner text-center">
+                                            <h6>Total Sales</h6>
+                                            <p>{{$onlineWarriorSales->count()}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="small-box bg-purple">
+                                        <div class="inner text-center">
+                                            <h6>Total Sales Year {{now()->format('Y')}}</h6>
+                                            <p>{{$onlineWarriorSales->whereYear('created_at',now()->format('Y'))->count()}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="small-box bg-orange">
+                                        <div class="inner text-center">
+                                            <h6>Sales for the month of {{now()->format('F')}}</h6>
+                                            <p>{{$onlineWarriorSales->whereMonth('created_at',now()->format('m'))->count()}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-success"><i class="fas fa-key"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Total Login</span>
+                                            <span class="info-box-number">{{$activities->where('description','user logged in')->count()}}</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-info"><i class="fas fa-key"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Total Login This Month {{now()->format('F')}}</span>
+                                            <span class="info-box-number">{{$activities->where('description','user logged in')->whereMonth('created_at',now()->format('m'))->count()}}</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-purple"><i class="fas fa-key"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Total Login This Year {{now()->format('Y')}}</span>
+                                            <span class="info-box-number">{{$activities->where('description','user logged in')->whereYear('created_at',now()->format('Y'))->count()}}</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Online warrior view -->
+                @else
+                <div class="card">
+                    <div class="card-body">
+
                         <!-- non client view-->
                         <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
@@ -326,10 +328,10 @@
                                 </div>
                             </div>
                             <!-- /.tab-content -->
-                        @endif
 
                     </div><!-- /.card-body -->
                 </div>
+            @endif
                 <!-- /.nav-tabs-custom -->
             </div>
             <!-- /.col -->
