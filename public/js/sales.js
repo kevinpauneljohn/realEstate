@@ -233,6 +233,7 @@ $(document).on('click','.view-sales-btn',function(){
 
         }
     });
+
 });
 
 $(document).on('change','#model_unit',function(){
