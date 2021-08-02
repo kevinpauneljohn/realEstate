@@ -156,6 +156,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- End Online warrior view -->
                 @else
                 <div class="card">
