@@ -56,6 +56,11 @@ class Lead extends Model
         });
     }
 
+    public function scopeOnlineWarrior($query)
+    {
+        return auth()->user()->hasRole("online warrior") ? $query->where('online_warrior_id',auth()->user()->id) : $query;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

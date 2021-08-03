@@ -46,10 +46,9 @@ class SalesController extends Controller
     }
 
 
-//    /**
-//     * Display a listing of the resource.
-//     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-//     */
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('pages.sales.index')->with([
@@ -58,6 +57,7 @@ class SalesController extends Controller
             'total_units_sold' => $this->salesRepository->getTotalUnitSold((array)$this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth((array)$this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_team_sales'   => $this->salesRepository->getTeamSales($this->accountManagement->checkIfUserIsAccountManager()->id),
+            'personal_sales_this_year' => $this->salesRepository->getTotalPersonalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_cancelled'   => Sales::where('status','cancelled')->count(),
             'templates' => Template::all(),
         ]);
@@ -206,9 +206,9 @@ class SalesController extends Controller
         $userId = $this->accountManagement->checkIfUserIsAccountManager()->id;
         $sales = Sales::whereIn('user_id',collect(collect($this->downLines->extractDownLines((array)$userId)->pluck('id'))->concat((array)$userId))->toArray())->get();
         return DataTables::of($sales)
-//            ->editColumn('reservation_date',function($sale){
-//                return $sale->reservation_date->format('M d, Y');
-//            })
+            ->editColumn('reservation_date',function($sale){
+                return $sale->reservation_date;
+            })
             ->editColumn('total_contract_price',function($sale){
                 return number_format($sale->total_contract_price);
             })

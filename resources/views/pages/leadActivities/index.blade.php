@@ -17,12 +17,6 @@
 @stop
 
 @section('content')
-{{--@foreach($tasks as $task)--}}
-{{--    @php--}}
-{{--            $date = \Carbon\Carbon::createFromFormat('Y-m-d h:i a',$task->schedule->format('Y-m-d').' '.\Carbon\Carbon::create($task->start_date)->format('h:i a'));--}}
-{{--            @endphp--}}
-{{--    {{$task}}<br/>--}}
-{{--    @endforeach--}}
     <div id='calendar' class="container" style="background-color: white"></div>
 
 @stop

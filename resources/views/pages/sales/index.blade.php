@@ -19,62 +19,99 @@
 @section('content')
     <div class="row">
         <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>&#8369; {{number_format($total_team_sales,2)}}</h3>
+            <div class="info-box">
+                <span class="info-box-icon bg-success"><i class="fas fa-users"></i></span>
 
-                    <p>Total sales for this year</p>
+                <div class="info-box-content">
+                    <span class="info-box-text">Team Sales for this year {{now()->format('Y')}}</span>
+                    <span class="info-box-number"><h4>&#8369; {{number_format($total_team_sales,2)}}</h4></span>
                 </div>
-                <div class="icon">
-                    <i class="fa fa-money-bill"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <!-- /.info-box-content -->
             </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>&#8369; {{number_format($total_sales_this_month,2)}}</h3>
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fas fa-users-cog"></i></span>
 
-                    <p>Total sales for this month</p>
+                <div class="info-box-content">
+                    <span class="info-box-text">Team Sales for the month of {{now()->format('F')}}</span>
+                    <span class="info-box-number"><h4>&#8369; {{number_format($total_sales_this_month,2)}}</h4></span>
                 </div>
-                <div class="icon">
-                    <i class="fa fa-money-bill-alt"></i>
+                <!-- /.info-box-content -->
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fas fa-home"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Total Team Units Sold</span>
+                    <span class="info-box-number"><h4>{{$total_units_sold}}</h4></span>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <!-- /.info-box-content -->
             </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>{{$total_units_sold}}</h3>
+            <div class="info-box">
+                <span class="info-box-icon bg-danger"><i class="fas fa-house-damage"></i></span>
 
-                    <p>Total Units Sold</p>
+                <div class="info-box-content">
+                    <span class="info-box-text">Total Cancelled this year</span>
+                    <span class="info-box-number"><h4>{{$total_cancelled}}</h4></span>
                 </div>
-                <div class="icon">
-                    <i class="fa fa-home"></i>
+                <!-- /.info-box-content -->
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-purple"><i class="fas fa-user-check"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Personal Sales this year {{now()->format('Y')}}</span>
+                    <span class="info-box-number"><h4>&#8369; {{number_format($personal_sales_this_year,2)}}</h4></span>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <!-- /.info-box-content -->
             </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>{{$total_cancelled}}</h3>
+            <div class="info-box">
+                <span class="info-box-icon bg-orange"><i class="fas fa-user-check"></i></span>
 
-                    <p>Total Cancelled this year</p>
+                <div class="info-box-content">
+                    <span class="info-box-text">Team Sales for the month of {{now()->format('F')}}</span>
+                    <span class="info-box-number"><h4>&#8369; {{number_format($total_sales_this_month,2)}}</h4></span>
                 </div>
-                <div class="icon">
-                    <i class="fa fa-exclamation-triangle"></i>
+                <!-- /.info-box-content -->
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-fuchsia"><i class="fas fa-home"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Total Team Units Sold</span>
+                    <span class="info-box-number"><h4>{{$total_units_sold}}</h4></span>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <!-- /.info-box-content -->
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-gradient-teal"><i class="fas fa-house-damage"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Total Cancelled this year</span>
+                    <span class="info-box-number"><h4>{{$total_cancelled}}</h4></span>
+                </div>
+                <!-- /.info-box-content -->
             </div>
         </div>
         <!-- ./col -->

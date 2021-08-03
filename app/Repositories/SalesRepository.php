@@ -296,20 +296,12 @@ class SalesRepository
      * @param string $user_id
      * @return string
      * */
-    public function getTotalSales($user_id)
+    public function getTotalPersonalSales($user_id)
     {
-        $sales = User::findOrFail($user_id)->sales()
-            ->whereYear('reservation_date',now()->format('Y'))
-            ->where('status','!=','cancelled')->get();/*get all the user's sales*/
-        $total_sales = 0;/*initiate the total sales by 0*/
-
-        /*add all sales total contract price less the discount*/
-        foreach ($sales as $sale)
-        {
-            $difference = $sale->total_contract_price - $sale->discount;
-            $total_sales = $total_sales + $difference;
-        }
-        return $total_sales;
+        $sales = $this->retrieve([$user_id])->whereYear('reservation_date',now()->format('Y'));
+        $tcp = $sales->sum('total_contract_price');
+        $discount = $sales->sum('discount');
+        return $tcp - $discount;
     }
 
     public function getTotalUnitSold($userId)
@@ -357,7 +349,7 @@ class SalesRepository
      */
     public function getTotalSalesThisMonth($user_id)
     {
-        $sales = $this->retrieve($user_id)->whereMonth('reservation_date',now()->format('m'));
+        $sales = $this->retrieve($user_id)->whereMonth('reservation_date',now()->format('m'))->whereYear('reservation_date',now()->format('Y'));
         $tcp = $sales->sum('total_contract_price');
         $discount = $sales->sum('discount');
         return $tcp - $discount;

@@ -383,12 +383,5 @@ Route::get('/sample',function(){
 });
 
 Route::get('/sms-reminder',function(Request $request){
-    $code = \App\Services\RandomCodeGenerator::randomCode(5,10);
-    if(\App\Lead::where('extra_attribute->facebook_page_code',$code)->count() === 0)
-    {
-        return 'ok';
-    }
-    return 'not ok';
-
-//    return \App\Lead::where('extra_attribute->facebook_page_code','dhs-ZpkaXRUuXl')->get();
+    return \App\Lead::onlineWarrior()->count();
 });
