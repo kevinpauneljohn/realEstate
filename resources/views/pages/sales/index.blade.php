@@ -36,7 +36,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Team Sales for the month of {{now()->format('F')}}</span>
-                    <span class="info-box-number"><h4>&#8369; {{number_format($total_sales_this_month,2)}}</h4></span>
+                    <span class="info-box-number"><h4>&#8369; {{number_format($team_sales_this_month,2)}}</h4></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -47,7 +47,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Total Team Units Sold</span>
-                    <span class="info-box-number"><h4>{{$total_units_sold}}</h4></span>
+                    <span class="info-box-number"><h4>{{$team_units_sold}}</h4></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -58,8 +58,8 @@
                 <span class="info-box-icon bg-danger"><i class="fas fa-house-damage"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Cancelled this year</span>
-                    <span class="info-box-number"><h4>{{$total_cancelled}}</h4></span>
+                    <span class="info-box-text">Total Units Sold this {{now()->format('F')}}</span>
+                    <span class="info-box-number"><h4>{{$team_units_sold_this_month}}</h4></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -84,8 +84,8 @@
                 <span class="info-box-icon bg-orange"><i class="fas fa-user-check"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Team Sales for the month of {{now()->format('F')}}</span>
-                    <span class="info-box-number"><h4>&#8369; {{number_format($total_sales_this_month,2)}}</h4></span>
+                    <span class="info-box-text">Personal Sales for the month of {{now()->format('F')}}</span>
+                    <span class="info-box-number"><h4>&#8369; {{number_format($personal_sales_this_month,2)}}</h4></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -96,8 +96,8 @@
                 <span class="info-box-icon bg-fuchsia"><i class="fas fa-home"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Team Units Sold</span>
-                    <span class="info-box-number"><h4>{{$total_units_sold}}</h4></span>
+                    <span class="info-box-text">Total Personal Units Sold</span>
+                    <span class="info-box-number"><h4>{{$personal_units_sold}}</h4></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -108,8 +108,8 @@
                 <span class="info-box-icon bg-gradient-teal"><i class="fas fa-house-damage"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Cancelled this year</span>
-                    <span class="info-box-number"><h4>{{$total_cancelled}}</h4></span>
+                    <span class="info-box-text">Total Personal Units Sold this {{now()->format('F')}}</span>
+                    <span class="info-box-number"><h4>{{$personal_units_sold_this_month}}</h4></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>

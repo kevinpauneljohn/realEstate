@@ -304,9 +304,15 @@ class SalesRepository
         return $tcp - $discount;
     }
 
+    public function getTeamUnitSold($userId)
+    {
+        $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->concat([$this->accountManagerService->checkIfUserIsAccountManager()->id])->all();
+        return $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'));
+    }
+
     public function getTotalUnitSold($userId)
     {
-        return $this->retrieve($userId)->whereYear('reservation_date',now()->format('Y'))->count();
+        return $this->retrieve($userId)->whereYear('reservation_date',now()->format('Y'));
     }
 
     public function retrieve($downLineIds)
@@ -340,6 +346,15 @@ class SalesRepository
         return $tcp - $discount;
     }
 
+    public function getTeamSalesThisMonth($userId)
+    {
+        $teamIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->concat([$this->accountManagerService->checkIfUserIsAccountManager()->id])->all();
+        $sales = $this->retrieve($teamIds)->whereMonth('reservation_date',now()->format('m'))->whereYear('reservation_date',now()->format('Y'));
+        $tcp = $sales->sum('total_contract_price');
+        $discount = $sales->sum('discount');
+        return $tcp - $discount;
+    }
+
     /**
      * May 31, 2020
      * @author john kevin paunel
@@ -349,7 +364,7 @@ class SalesRepository
      */
     public function getTotalSalesThisMonth($user_id)
     {
-        $sales = $this->retrieve($user_id)->whereMonth('reservation_date',now()->format('m'))->whereYear('reservation_date',now()->format('Y'));
+        $sales = $this->retrieve([$user_id])->whereMonth('reservation_date',now()->format('m'))->whereYear('reservation_date',now()->format('Y'));
         $tcp = $sales->sum('total_contract_price');
         $discount = $sales->sum('discount');
         return $tcp - $discount;

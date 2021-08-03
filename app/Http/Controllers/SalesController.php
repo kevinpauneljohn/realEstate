@@ -54,10 +54,14 @@ class SalesController extends Controller
         return view('pages.sales.index')->with([
             'leads' => Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get(),
             'projects'   => Project::all(),
-            'total_units_sold' => $this->salesRepository->getTotalUnitSold((array)$this->accountManagement->checkIfUserIsAccountManager()->id),
-            'total_sales_this_month' => $this->salesRepository->getTotalSalesThisMonth((array)$this->accountManagement->checkIfUserIsAccountManager()->id),
+            'team_units_sold' => $this->salesRepository->getTeamUnitSold((array)$this->accountManagement->checkIfUserIsAccountManager()->id)->count(),
+            'team_units_sold_this_month' => $this->salesRepository->getTeamUnitSold((array)$this->accountManagement->checkIfUserIsAccountManager()->id)->whereMonth('reservation_date',now()->format('m'))->count(),
+            'personal_units_sold' => $this->salesRepository->getTotalUnitSold((array)$this->accountManagement->checkIfUserIsAccountManager()->id)->count(),
+            'personal_units_sold_this_month' => $this->salesRepository->getTotalUnitSold((array)$this->accountManagement->checkIfUserIsAccountManager()->id)->whereMonth('reservation_date',now()->format('m'))->count(),
+            'team_sales_this_month' => $this->salesRepository->getTeamSalesThisMonth((array)$this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_team_sales'   => $this->salesRepository->getTeamSales($this->accountManagement->checkIfUserIsAccountManager()->id),
             'personal_sales_this_year' => $this->salesRepository->getTotalPersonalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
+            'personal_sales_this_month' => $this->salesRepository->getTotalPersonalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_cancelled'   => Sales::where('status','cancelled')->count(),
             'templates' => Template::all(),
         ]);
