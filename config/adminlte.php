@@ -253,8 +253,19 @@ return [
         [
             'text' => 'Sales',
             'icon' => 'fas fa-chart-bar',
-            'route'  => 'sales.index',
             'can'   => 'view sales',
+            'submenu'   => [
+                [
+                    'text'    => 'View Sales',
+                    'can'     => 'view sales',
+                    'route'   => 'sales.index',
+                ],
+                [
+                    'text'    => 'Payment Schedules',
+                    'can'     => 'view task',
+                    'route'   => 'task.mine',
+                ]
+            ]
         ],
         [
             'text'    => 'Projects',

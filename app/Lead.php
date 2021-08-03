@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Services\RandomCodeGenerator;
 use App\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +11,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Lead extends Model
 {
     use SoftDeletes, LogsActivity, UsesUuid;
+    public $extraData;
 
     protected $fillable = [
         'user_id',
@@ -45,6 +47,14 @@ class Lead extends Model
     protected $dates = [
         'date_inquired'
     ];
+    protected $casts = ['extra_attribute' => 'array'];
+
+    protected static function booted()
+    {
+        static::saving(function($lead){
+            $lead->extra_attribute = ["facebook_page_code" => 'dhs-'.RandomCodeGenerator::runRandomCode()];
+        });
+    }
 
     public function user()
     {

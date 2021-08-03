@@ -14,6 +14,7 @@ use App\Repositories\RepositoryInterface\ClientRequirementInterface;
 use App\Repositories\RepositoryInterface\LeadInterface;
 use App\Repositories\RepositoryInterface\SalesInterface;
 use App\Services\AccountManagerService;
+use App\Services\RandomCodeGenerator;
 use App\Template;
 use App\User;
 use App\WebsiteLink;
@@ -185,16 +186,18 @@ class LeadController extends Controller
      */
     public function show($id)
     {
+        $lead = Lead::where([
+            ['id','=',$id],
+            ['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],
+        ])->firstOrFail();
         return view('pages.leads.view')->with([
-            'lead'  => Lead::where([
-                ['id','=',$id],
-                ['user_id','=',$this->accountManagement->checkIfUserIsAccountManager()->id],
-            ])->firstOrFail(),
+            'lead'  => $lead,
+            'fbCode' => $lead->extra_attribute['facebook_page_code'] !== null ? '<button class="btn btn-default btn-xs fbCode">'.$lead->extra_attribute['facebook_page_code'].'</button>' : '<button class="btn btn-default btn-xs generate-fb-code">Generate FB Page COde</button>',
             'leadNotes' => LeadNote::where('lead_id',$id),
             'activity_logs' => LogTouch::where('lead_id',$id),
             'website_links' => WebsiteLink::where('lead_id',$id),
             'label' => $this->leadRepository,
-            'reserved'  => $this->leads->viewReservedUnits($id)
+            'reserved'  => $this->leads->viewReservedUnits($id),
         ]);
     }
 
@@ -291,6 +294,17 @@ class LeadController extends Controller
             return back()->withInput()->with(['success' => false,'message' => 'No changes occurred!']);
         }
         return back()->withErrors()->withInput();
+    }
+
+    public function addFbCode(Request $request, $id)
+    {
+        $lead = Lead::find($id);
+        $code = RandomCodeGenerator::runRandomCode();
+        $lead->extra_attribute = $code;
+        if($lead->save())
+        {
+            return response()->json(['success' => true, 'message' => 'FB Code Generated!', 'code' => $lead->extra_attribute['facebook_page_code']]);
+        }
     }
 
     /**

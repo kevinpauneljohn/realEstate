@@ -22,6 +22,7 @@
         <div class="col-lg-9 lead-profile">
             <div class="card card-default">
                 <div class="card-header main-profile">
+                    <span class="float-left">{!! $fbCode !!}</span>
                     <span class="float-right">
                         <a href="{{route('leads.index')}}" class="btn btn-sm btn-default"><i class="fa fa-eye"></i> View all</a>
                         @if($lead->lead_status !== 'Reserved')
@@ -1558,6 +1559,32 @@
                 $('.save-payment-date').find('.submit-form-btn').attr('disabled',disabled);
             });
 
+            $(document).on('click','.fbCode',function(){
+                let id = $(this).text();
+                console.log(id);
+
+                copyToClipboard('.fbCode','Code was copied');
+            });
+
+            $(document).on('click','.generate-fb-code',function(){
+                $.ajax({
+                    'url' : '{{route('fb.code.generate',['lead' => $lead->id])}}',
+                    'type' : 'PUT',
+                    'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    beforeSend: function(){
+                        $('.generate-fb-code').attr('disabled',true).text('generating ...');
+                    },success: function(response){
+                        console.log(response);
+                        if(response.success === true)
+                        {
+                            customMessage('success',response.message);
+                            $('.generate-fb-code').removeClass('generate-fb-code').addClass('fbCode').text(response.code).attr('disabled',false);
+                        }
+                    },error: function(xhr,status, error){
+                        console.log(xhr);
+                    }
+                });
+            });
 
 
             $('#payment_date').datepicker({

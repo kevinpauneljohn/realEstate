@@ -90,7 +90,7 @@ Route::post('/leads/status/update','LeadController@updateLeadStatus')->name('lea
 Route::get('/lead/general/update','LeadController@generalLeadStatusUpdate')->name('lead.status.general.update');
 Route::get('/reserved/{lead_id}',[\App\Http\Controllers\LeadController::class,'reserved'])->name('lead.reserved.units')->middleware(['auth','permission:view sales','onlyAssignedLeads']);
 Route::get('/reserved-units/{lead_id}',[\App\Http\Controllers\LeadController::class,'reservedUnits'])->name('reserved.units')->middleware(['auth','permission:view sales','onlyAssignedLeads']);
-
+Route::put('/lead-fb-code-generate/{lead}',[\App\Http\Controllers\LeadController::class,'addFbCode'])->name('fb.code.generate')->middleware(['auth','permission:view lead|edit lead']);
 /*Log touches*/
 Route::post('/logs','LogTouchController@store')->name('logs.store')->middleware('auth','permission:edit lead');
 Route::get('/logs/{id}','LogTouchController@show')->name('logs.show')->middleware('auth','permission:add lead');
@@ -383,5 +383,12 @@ Route::get('/sample',function(){
 });
 
 Route::get('/sms-reminder',function(Request $request){
-    return $request->all();
+    $code = \App\Services\RandomCodeGenerator::randomCode(5,10);
+    if(\App\Lead::where('extra_attribute->facebook_page_code',$code)->count() === 0)
+    {
+        return 'ok';
+    }
+    return 'not ok';
+
+//    return \App\Lead::where('extra_attribute->facebook_page_code','dhs-ZpkaXRUuXl')->get();
 });
