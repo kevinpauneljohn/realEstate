@@ -157,6 +157,29 @@
                         </div>
                     </div>
 
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                <table id="activity-list" class="table table-hover" role="grid">
+                                    <thead>
+                                    <tr role="row">
+                                        <th width="10%">Date</th>
+                                        <th width="25%">Activity</th>
+                                        <th>Activity</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tfoot>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Activity</th>
+                                        <th>Activity</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     <!-- End Online warrior view -->
                 @else
                 <div class="card">
@@ -526,6 +549,23 @@
                         order:[0,'asc']
                     });
                 });
+            @endif
+
+            @if($user->hasRole('online warrior'))
+            $(function() {
+                $('#activity-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('employee.activities',['user' => $user->id]) !!}',
+                    columns: [
+                        { data: 'created_at', name: 'created_at'},
+                        { data: 'description', name: 'description'},
+                        { data: 'properties', name: 'properties'},
+                    ],
+                    responsive:true,
+                    order:[0,'desc']
+                });
+            });
             @endif
         </script>
     @endcan

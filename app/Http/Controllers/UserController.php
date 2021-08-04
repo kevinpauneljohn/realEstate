@@ -26,7 +26,10 @@ use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
-    public $thresholdRepository, $userRepository, $walletRepository, $accountmanagement;
+    public $thresholdRepository,
+        $userRepository,
+        $walletRepository,
+        $accountmanagement;
 
     public function __construct(ThresholdRepository $thresholdRepository,
                                 UserRepository $userRepository,
@@ -436,6 +439,11 @@ class UserController extends Controller
         ]);
     }
 
+    public function employee($userId)
+    {
+        return $this->userRepository->onlineWarriorActivities($userId);
+    }
+
 
     /**
      * March 11, 2020
@@ -583,4 +591,5 @@ class UserController extends Controller
         }
         return response($validator->errors());
     }
+
 }

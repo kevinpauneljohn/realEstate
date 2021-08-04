@@ -5,6 +5,9 @@ namespace App\Repositories;
 
 
 use App\User;
+use Carbon\Carbon;
+use Spatie\Activitylog\Models\Activity;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserRepository
 {
@@ -35,4 +38,20 @@ class UserRepository
         return $table;
     }
 
+    public function onlineWarriorActivities($id)
+    {
+        $user = User::findOrFail($id);
+        if($user->hasRole(['online warrior']))
+        {
+            $activities = Activity::where('causer_id',$user->id)->limit(100)->get();
+            return DataTables::of($activities)
+                ->editColumn('created_at',function($activity){
+                    return $activity->created_at;
+                })
+                ->editColumn('properties',function($activity){
+                    return $activity->properties;
+                })
+                ->make(true);
+        }
+    }
 }

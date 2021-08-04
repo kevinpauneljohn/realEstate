@@ -36,7 +36,7 @@ class LeadActivityController extends Controller
     public function index()
     {
         $user = $this->accountmanagement->checkIfUserIsAccountManager();
-        $tasks = LeadActivity::where('user_id',$user->id)->get();
+        $tasks = LeadActivity::where('user_id',$user->id)->where('status','pending')->get();
         return view('pages.leadActivities.index')->with([
             'title' => 'Scheduled Activities',
             'tasks' => $tasks,
