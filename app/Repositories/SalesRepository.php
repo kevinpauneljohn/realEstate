@@ -304,6 +304,14 @@ class SalesRepository
         return $tcp - $discount;
     }
 
+    public function getTotalPersonalSalesThisMonth($user_id)
+    {
+        $sales = $this->retrieve([$user_id])->whereYear('reservation_date',now()->format('Y'))->whereMonth('reservation_date',now()->format('m'));
+        $tcp = $sales->sum('total_contract_price');
+        $discount = $sales->sum('discount');
+        return $tcp - $discount;
+    }
+
     public function getTeamUnitSold($userId)
     {
         $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->concat([$this->accountManagerService->checkIfUserIsAccountManager()->id])->all();

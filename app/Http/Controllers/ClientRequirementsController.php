@@ -177,7 +177,7 @@ class ClientRequirementsController extends Controller
                 'drive_link' => $client->drive_link
             ]);
         }
-        return response(['requirements' => false, 'templates' => Template::all()]);
+        return response(['requirements' => false, 'templates' => collect(Template::all())->sortByDesc('name')]);
     }
 
     /**

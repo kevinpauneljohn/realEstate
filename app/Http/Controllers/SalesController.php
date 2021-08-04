@@ -61,7 +61,7 @@ class SalesController extends Controller
             'team_sales_this_month' => $this->salesRepository->getTeamSalesThisMonth((array)$this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_team_sales'   => $this->salesRepository->getTeamSales($this->accountManagement->checkIfUserIsAccountManager()->id),
             'personal_sales_this_year' => $this->salesRepository->getTotalPersonalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
-            'personal_sales_this_month' => $this->salesRepository->getTotalPersonalSales($this->accountManagement->checkIfUserIsAccountManager()->id),
+            'personal_sales_this_month' => $this->salesRepository->getTotalPersonalSalesThisMonth($this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_cancelled'   => Sales::where('status','cancelled')->count(),
             'templates' => Template::all(),
         ]);
