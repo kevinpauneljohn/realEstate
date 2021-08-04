@@ -563,6 +563,7 @@
                         { data: 'properties', name: 'properties'},
                     ],
                     responsive:true,
+                    columnDefs: [{ 'targets': 0, type: 'date-euro' }],
                     order:[0,'desc']
                 });
             });

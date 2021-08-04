@@ -43,7 +43,7 @@ class UserRepository
         $user = User::findOrFail($id);
         if($user->hasRole(['online warrior']))
         {
-            $activities = Activity::where('causer_id',$user->id)->limit(100)->get();
+            $activities = Activity::where('causer_id',$user->id)->orderBy('created_at','desc')->limit(100)->get();
             return DataTables::of($activities)
                 ->editColumn('created_at',function($activity){
                     return $activity->created_at;

@@ -34,11 +34,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/UserRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/acaronlex/laravel-calendar/" />
     <ignored path="$PROJECT_DIR$/vendor/symfony/http-client-contracts/" />
@@ -122,11 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/pages/users/profile.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="558" column="71" selection-start-line="558" selection-start-column="71" selection-end-line="558" selection-end-column="79" />
+            <state relative-caret-position="539">
+              <caret line="566" column="34" selection-start-line="566" selection-start-column="34" selection-end-line="566" selection-end-column="34" />
               <folding>
                 <element signature="e#9145#19870#0#HTML" />
               </folding>
@@ -143,11 +140,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Repositories/UserRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="45" column="75" selection-start-line="45" selection-start-column="75" selection-end-line="45" selection-end-column="75" />
+            <state relative-caret-position="353">
+              <caret line="45" column="92" selection-start-line="45" selection-start-column="92" selection-end-line="45" selection-end-column="92" />
               <folding>
                 <element signature="e#38#51#0#PHP" expanded="true" />
               </folding>
@@ -260,8 +257,8 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/LeadActivityController.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" />
         <option value="$PROJECT_DIR$/app/Repositories/UserRepository.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" />
       </list>
     </option>
   </component>
@@ -397,7 +394,7 @@
       <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1939" />
@@ -805,14 +802,7 @@
       <workItem from="1627841508535" duration="25142000" />
       <workItem from="1627923642345" duration="1265000" />
       <workItem from="1627964539597" duration="21731000" />
-      <workItem from="1628047979549" duration="4481000" />
-    </task>
-    <task id="LOCAL-00781" summary="leads feature update">
-      <created>1625156413703</created>
-      <option name="number" value="00781" />
-      <option name="presentableId" value="LOCAL-00781" />
-      <option name="project" value="LOCAL" />
-      <updated>1625156413703</updated>
+      <workItem from="1628047979549" duration="5123000" />
     </task>
     <task id="LOCAL-00782" summary="leads feature update">
       <created>1625157184918</created>
@@ -1150,11 +1140,18 @@
       <option name="project" value="LOCAL" />
       <updated>1628013338901</updated>
     </task>
-    <option name="localTasksCounter" value="830" />
+    <task id="LOCAL-00830" summary="fb code generator added">
+      <created>1628069502684</created>
+      <option name="number" value="00830" />
+      <option name="presentableId" value="LOCAL-00830" />
+      <option name="project" value="LOCAL" />
+      <updated>1628069502684</updated>
+    </task>
+    <option name="localTasksCounter" value="831" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="220437000" />
+    <option name="totallyTimeSpent" value="221079000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1169,7 +1166,7 @@
     <frame x="-8" y="-8" width="1551" height="839" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16230717" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16230717" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1183,7 +1180,7 @@
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32577905" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32531825" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1598,16 +1595,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/users/profile.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="558" column="71" selection-start-line="558" selection-start-column="71" selection-end-line="558" selection-end-column="79" />
-          <folding>
-            <element signature="e#9145#19870#0#HTML" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="430">
@@ -1624,10 +1611,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Repositories/UserRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="45" column="75" selection-start-line="45" selection-start-column="75" selection-end-line="45" selection-end-column="75" />
+        <state relative-caret-position="353">
+          <caret line="45" column="92" selection-start-line="45" selection-start-column="92" selection-end-line="45" selection-end-column="92" />
           <folding>
             <element signature="e#38#51#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/users/profile.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="566" column="34" selection-start-line="566" selection-start-column="34" selection-end-line="566" selection-end-column="34" />
+          <folding>
+            <element signature="e#9145#19870#0#HTML" />
           </folding>
         </state>
       </provider>
