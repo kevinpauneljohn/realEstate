@@ -34,8 +34,7 @@ class SalesRepository
      * */
     public function getSalesById($id)
     {
-        $sales = Sales::findOrFail($id);
-        return $sales;
+        return Sales::findOrFail($id);
     }
 
     /**
@@ -399,6 +398,11 @@ class SalesRepository
     public function viewSale($id)
     {
         return Sales::where('id',$id)->first();
+    }
+
+    public function getSalesByUser($userId)
+    {
+        return $this->retrieve(array($userId));
     }
 
 }

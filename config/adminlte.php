@@ -262,8 +262,8 @@ return [
                 ],
                 [
                     'text'    => 'Payment Schedules',
-                    'can'     => 'view task',
-                    'route'   => 'task.mine',
+                    'can'     => 'view sales',
+                    'route'   => 'sales.payment.schedule',
                 ]
             ]
         ],

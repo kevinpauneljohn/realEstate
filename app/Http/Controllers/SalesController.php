@@ -26,7 +26,12 @@ use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
 {
-    private $thresholdRepository, $salesRepository, $sales, $accountManagement, $paymentReminder, $downLines;
+    private $thresholdRepository,
+        $salesRepository,
+        $sales,
+        $accountManagement,
+        $paymentReminder,
+        $downLines;
 
     public function __construct(
         ThresholdRepository $thresholdRepository,
@@ -777,6 +782,18 @@ class SalesController extends Controller
     public function getSalesDueDate($salesId)
     {
         return $this->paymentReminder->viewSalesReminder($salesId)->get();
+    }
+
+    public function paymentSchedule()
+    {
+        return view('pages.sales.paymentSchedule')->with([
+            'paymentReminders' => $this->paymentReminder->viewAllSalesReminderOfCurrentUser($this->accountManagement->checkIfUserIsAccountManager()->id),
+        ]);
+    }
+
+    public function paymentThisMonth()
+    {
+        return $this->paymentReminder->paymentRemindersThisMonth($this->accountManagement->checkIfUserIsAccountManager()->id);
     }
 
 }

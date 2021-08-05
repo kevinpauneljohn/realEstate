@@ -156,6 +156,8 @@ Route::post('/sales/payment-date/{sale}',[\App\Http\Controllers\SalesController:
 Route::get('/sales/due-date/{sale}',[\App\Http\Controllers\SalesController::class,'getSalesDueDate'])->name('sales.due.date')->middleware(['auth','permission:view sales']);
 Route::get('/sales-edit/{sale}',[\App\Http\Controllers\SalesController::class,'editSales'])->name('sales.edit.data')->middleware(['auth','permission:view sales|edit sales']);
 Route::put('/sales-edit-amount',[\App\Http\Controllers\SalesController::class,'updateDueAmount'])->name('sales.edit.amount')->middleware(['auth','permission:view sales|edit sales']);
+Route::get('/payment-schedule',[\App\Http\Controllers\SalesController::class,'paymentSchedule'])->name('sales.payment.schedule')->middleware(['auth','permission:view sales']);
+Route::get('/payment-schedule-this-month',[\App\Http\Controllers\SalesController::class,'paymentThisMonth'])->name('sales.payment.this.month')->middleware(['auth','permission:view sales']);
 
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commissions']);

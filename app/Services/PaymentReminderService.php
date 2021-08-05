@@ -7,6 +7,7 @@ namespace App\Services;
 use App\PaymentReminder;
 use App\Repositories\SalesRepository;
 use Carbon\Carbon;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentReminderService
 {
@@ -19,6 +20,14 @@ class PaymentReminderService
     public function viewSalesReminder($sales_id)
     {
         return PaymentReminder::where('sales_id',$sales_id);
+    }
+
+    public function viewAllSalesReminderOfCurrentUser($userId)
+    {
+        return PaymentReminder::whereMonth('schedule',now()->format('m'))
+            ->whereYear('schedule',now()->format('Y'))
+            ->whereIn('sales_id',collect($this->sales->getSalesByUser($userId)->get())->pluck('id'))
+            ->get();
     }
 
     /**
@@ -106,5 +115,35 @@ class PaymentReminderService
         }
 
         return $dueDates;
+    }
+
+    public function paymentRemindersThisMonth($userId)
+    {
+        return DataTables::of($this->viewAllSalesReminderOfCurrentUser($userId))
+            ->editColumn('schedule',function($payment){
+                return Carbon::create($payment->schedule)->format('F-d-Y');
+            })
+            ->editColumn('amount',function($payment){
+                return $payment->amount;
+            })
+            ->addColumn('client',function($payment){
+                return '<a href="'.route("leads.show",["lead" => $payment->sales->lead_id]).'">'.$payment->sales->lead->fullname.'</a>';
+            })
+            ->addColumn('project',function($payment){
+                return $payment->sales->project->name;
+            })
+            ->addColumn('modelUnit',function($payment){
+                return $payment->sales->modelUnit->name;
+            })
+            ->addColumn('blk_and_lot',function($payment){
+                return "Phase: ".$payment->sales->block." Lot: ".$payment->sales->lot;
+            })
+            ->setRowClass(function($payment){
+                $schedule = Carbon::create($payment->schedule)->format('m-d-Y');
+                $dateNow = now()->format('m-d-Y');
+                return $schedule === $dateNow ? "due-date-now" : "";
+            })
+            ->rawColumns(['client'])
+            ->make(true);
     }
 }
