@@ -124,7 +124,7 @@ class PaymentReminderService
                 return Carbon::create($payment->schedule)->format('F-d-Y');
             })
             ->editColumn('amount',function($payment){
-                return $payment->amount;
+                return number_format($payment->amount,2);
             })
             ->addColumn('client',function($payment){
                 return '<a href="'.route("leads.show",["lead" => $payment->sales->lead_id]).'">'.$payment->sales->lead->fullname.'</a>';
@@ -136,7 +136,7 @@ class PaymentReminderService
                 return $payment->sales->modelUnit->name;
             })
             ->addColumn('blk_and_lot',function($payment){
-                return "Phase: ".$payment->sales->block." Lot: ".$payment->sales->lot;
+                return "Phase: ".$payment->sales->phase." Block: ".$payment->sales->block." Lot: ".$payment->sales->lot;
             })
             ->setRowClass(function($payment){
                 $schedule = Carbon::create($payment->schedule)->format('m-d-Y');
