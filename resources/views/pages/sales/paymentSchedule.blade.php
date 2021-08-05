@@ -64,6 +64,12 @@
         .due-date-now{
             background-color: #fbf4d8;
         }
+        .due-date-1-day{
+            background-color: #fcb6b6;
+        }
+        .due-date-5-days{
+            background-color: #bfedfe;
+        }
     </style>
 @stop
 

@@ -141,7 +141,15 @@ class PaymentReminderService
             ->setRowClass(function($payment){
                 $schedule = Carbon::create($payment->schedule)->format('m-d-Y');
                 $dateNow = now()->format('m-d-Y');
-                return $schedule === $dateNow ? "due-date-now" : "";
+                if($schedule === $dateNow){
+                    return "due-date-now";
+                }elseif (today()->diffInDays($payment->schedule,false) === 1){
+                    return "due-date-1-day";
+                }
+                elseif (today()->diffInDays($payment->schedule,false) < 5 && today()->diffInDays($payment->schedule,false) > 1){
+                    return "due-date-5-days";
+                }
+                return "";
             })
             ->rawColumns(['client'])
             ->make(true);

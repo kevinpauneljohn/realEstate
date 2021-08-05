@@ -34,11 +34,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/SalesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/SalesRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/PaymentReminderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/PaymentReminderService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/sales/paymentSchedule.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/sales/paymentSchedule.blade.php" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/acaronlex/laravel-calendar/" />
     <ignored path="$PROJECT_DIR$/vendor/symfony/http-client-contracts/" />
@@ -69,15 +66,15 @@
     <select />
   </component>
   <component name="DockManager">
-    <window id="1">
+    <window id="2">
       <content type="file-editors">
         <state>
           <leaf>
             <file pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/paymentSchedule.blade.php">
+              <entry file="file://$PROJECT_DIR$/app/Services/PaymentReminderService.php">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="221">
-                    <caret line="64" column="38" lean-forward="true" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="38" />
+                  <state relative-caret-position="235">
+                    <caret line="133" column="14" lean-forward="true" selection-start-line="133" selection-start-column="14" selection-end-line="133" selection-end-column="14" />
                   </state>
                 </provider>
               </entry>
@@ -103,11 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Services/PaymentReminderService.php">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Console/Commands/SendPaymentReminder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="137" column="57" lean-forward="true" selection-start-line="137" selection-start-column="57" selection-end-line="137" selection-end-column="57" />
+            <state relative-caret-position="-408">
+              <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -135,6 +132,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
               <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/paymentSchedule.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="69" column="25" lean-forward="true" selection-start-line="69" selection-start-column="25" selection-end-line="69" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -418,6 +424,24 @@
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Console" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Console" type="462c0819:PsiDirectoryNode" />
+              <item name="Commands" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
@@ -803,14 +827,7 @@
       <workItem from="1627923642345" duration="1265000" />
       <workItem from="1627964539597" duration="21731000" />
       <workItem from="1628047979549" duration="10186000" />
-      <workItem from="1628131045968" duration="7260000" />
-    </task>
-    <task id="LOCAL-00784" summary="updated the SalesRepository.php line 259 issue. The project ID was set specifically as 1 that's why it doesn't change the project ID">
-      <created>1625673283770</created>
-      <option name="number" value="00784" />
-      <option name="presentableId" value="LOCAL-00784" />
-      <option name="project" value="LOCAL" />
-      <updated>1625673283770</updated>
+      <workItem from="1628131045968" duration="8433000" />
     </task>
     <task id="LOCAL-00785" summary="updated the SalesRepository.php line 259 issue. The project ID was set specifically as 1 that's why it doesn't change the project ID">
       <created>1626666976491</created>
@@ -1148,11 +1165,18 @@
       <option name="project" value="LOCAL" />
       <updated>1628077708120</updated>
     </task>
-    <option name="localTasksCounter" value="833" />
+    <task id="LOCAL-00833" summary="fb code generator added">
+      <created>1628159497813</created>
+      <option name="number" value="00833" />
+      <option name="presentableId" value="LOCAL-00833" />
+      <option name="project" value="LOCAL" />
+      <updated>1628159497813</updated>
+    </task>
+    <option name="localTasksCounter" value="834" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="233402000" />
+    <option name="totallyTimeSpent" value="234575000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1164,7 +1188,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1552" height="840" extended-state="1" />
+    <frame x="-8" y="-8" width="1552" height="840" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16018766" />
@@ -1252,7 +1276,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="fb code generator added" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Events/CalendarEvent.php" />
     <entry file="file://$USER_HOME$/Downloads/AdminLTE-3.0.2/AdminLTE-3.0.2/pages/calendar.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-15880" />
@@ -1541,13 +1564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/PaymentReminder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Repositories/UserRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
@@ -1612,17 +1628,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/PaymentReminder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Console/Commands/SendPaymentReminder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-408">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Services/PaymentReminderService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="137" column="57" lean-forward="true" selection-start-line="137" selection-start-column="57" selection-end-line="137" selection-end-column="57" />
+        <state relative-caret-position="235">
+          <caret line="133" column="14" lean-forward="true" selection-start-line="133" selection-start-column="14" selection-end-line="133" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/paymentSchedule.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="64" column="38" lean-forward="true" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="38" />
+        <state relative-caret-position="255">
+          <caret line="69" column="25" lean-forward="true" selection-start-line="69" selection-start-column="25" selection-end-line="69" selection-end-column="25" />
         </state>
       </provider>
     </entry>
