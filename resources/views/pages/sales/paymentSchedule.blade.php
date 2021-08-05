@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'View Requirements')
+@section('title', 'Payment Schedule')
 
 @section('content_header')
     <div class="row mb-2">
@@ -62,10 +62,10 @@
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style rel="stylesheet">
         .due-date-now{
-            background-color: #fbf4d8;
+            background-color: #fcb6b6;
         }
         .due-date-1-day{
-            background-color: #fcb6b6;
+            background-color: #fbf4d8;
         }
         .due-date-5-days{
             background-color: #bfedfe;
