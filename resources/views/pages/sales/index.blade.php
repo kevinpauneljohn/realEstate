@@ -18,7 +18,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-success"><i class="fas fa-users"></i></span>
 
@@ -30,7 +30,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-info"><i class="fas fa-users-cog"></i></span>
 
@@ -41,7 +41,7 @@
                 <!-- /.info-box-content -->
             </div>
         </div>
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fas fa-home"></i></span>
 
@@ -53,7 +53,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-danger"><i class="fas fa-house-damage"></i></span>
 
@@ -67,7 +67,7 @@
         <!-- ./col -->
     </div>
     <div class="row">
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-purple"><i class="fas fa-user-check"></i></span>
 
@@ -79,7 +79,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-orange"><i class="fas fa-user-check"></i></span>
 
@@ -91,7 +91,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-fuchsia"><i class="fas fa-home"></i></span>
 
@@ -103,7 +103,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-gradient-teal"><i class="fas fa-house-damage"></i></span>
 
