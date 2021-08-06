@@ -245,13 +245,13 @@ return [
             'route'  => 'dashboard',
         ],
         [
-            'text'    => 'Users',
+            'text'    => 'User Management',
             'icon'    => 'fas fa-user',
             'route'    => 'users.index',
             'can'     => 'view user',
         ],
         [
-            'text' => 'Sales',
+            'text' => 'Sales Management',
             'icon' => 'fas fa-chart-bar',
             'can'   => 'view sales',
             'submenu'   => [
@@ -268,7 +268,7 @@ return [
             ]
         ],
         [
-            'text'    => 'Projects',
+            'text'    => 'Project Management',
             'icon'    => 'fas fa-building',
             'route'    => 'projects.index',
             'can'     => 'view project',
@@ -280,7 +280,7 @@ return [
             'can'     => 'view requirements',
         ],
         [
-            'text'    => 'Leads',
+            'text'    => 'Lead Management',
             'icon'    => 'fas fa-filter',
             'can'     => 'view lead',
             'submenu' => [
@@ -311,7 +311,7 @@ return [
             ],
         ],
         [
-            'text'    => 'Tasks',
+            'text'    => 'Task Management',
             'icon'    => 'fas fa-thumbtack',
             'can'     => 'view task',
             'submenu'   => [
@@ -327,31 +327,31 @@ return [
                 ]
             ]
         ],
-        [
-            'text'    => 'Dream Home Guide',
-            'icon'    => 'fas fa-home',
-            'can'     => 'view builder',
-            'submenu'   => [
-                [
-                    'text'    => 'Users',
-                    'icon'    => 'fas fa-user-tag',
-                    'can'     => 'view client',
-                    'route'   => 'client.index',
-                ],
-                [
-                    'text'    => 'Builders',
-                    'icon'    => 'fas fa-user-cog',
-                    'can'     => 'view builder',
-                    'route'   => 'builder.index',
-                ],
-                [
-                    'text'    => 'Projects',
-                    'icon'    => 'fas fa-user-cog',
-                    'can'     => 'view builder',
-                    'route'   => 'dhg.project.index',
-                ],
-            ],
-        ],
+//        [
+//            'text'    => 'Dream Home Guide',
+//            'icon'    => 'fas fa-home',
+//            'can'     => 'view builder',
+//            'submenu'   => [
+//                [
+//                    'text'    => 'Users',
+//                    'icon'    => 'fas fa-user-tag',
+//                    'can'     => 'view client',
+//                    'route'   => 'client.index',
+//                ],
+//                [
+//                    'text'    => 'Builders',
+//                    'icon'    => 'fas fa-user-cog',
+//                    'can'     => 'view builder',
+//                    'route'   => 'builder.index',
+//                ],
+//                [
+//                    'text'    => 'Projects',
+//                    'icon'    => 'fas fa-user-cog',
+//                    'can'     => 'view builder',
+//                    'route'   => 'dhg.project.index',
+//                ],
+//            ],
+//        ],
         [
             'text'    => 'Settings',
             'icon'    => 'fas fa-cogs',
