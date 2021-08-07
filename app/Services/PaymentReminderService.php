@@ -148,6 +148,9 @@ class PaymentReminderService
                 }
                 elseif (today()->diffInDays($payment->schedule,false) < 5 && today()->diffInDays($payment->schedule,false) > 1){
                     return "due-date-5-days";
+                }elseif (today()->diffInDays($payment->schedule,false) < 0)
+                {
+                    return "due-date-finished";
                 }
                 return "";
             })

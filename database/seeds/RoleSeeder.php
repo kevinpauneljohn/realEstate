@@ -25,6 +25,7 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'account manager']);
         Role::create(['name' => 'online warrior']);
         Role::create(['name' => 'JJ online warrior']);
+        Role::create(['name' => 'Finance Admin']);
 
         Permission::create(['name' => 'add role']);
         Permission::create(['name' => 'view role']);

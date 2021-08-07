@@ -70,6 +70,9 @@
         .due-date-5-days{
             background-color: #bfedfe;
         }
+        .due-date-finished{
+            background-color: #f1f0f0;
+        }
     </style>
 @stop
 
