@@ -288,6 +288,14 @@ class SalesRepository
 
     }
 
+    public function getTotalSales($user_id)
+    {
+        $sales = $this->retrieve([$user_id]);
+        $tcp = $sales->sum('total_contract_price');
+        $discount = $sales->sum('discount');
+        return $tcp - $discount;
+    }
+
     /**
      * March 31, 2020
      * @author john kevin paunel

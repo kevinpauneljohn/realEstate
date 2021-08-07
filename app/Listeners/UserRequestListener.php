@@ -49,7 +49,7 @@ class UserRequestListener
             'action' => 'Create new user',
             'original_data' => $this->userRepository->getUsersOriginalData($data)
         );
-        $reason = 'test user';
+        $reason = 'create new user';
         $priority = $this->thresholdRepository->getThresholdPriority('create new user');
         ///save the request to the threshold first for approval
         $this->thresholdRepository->saveThreshold('insert',$reason,$data,$extra_data,
