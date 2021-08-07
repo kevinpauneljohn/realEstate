@@ -251,35 +251,6 @@ return [
             'can'     => 'view user',
         ],
         [
-            'text' => 'Sales Management',
-            'icon' => 'fas fa-chart-bar',
-            'can'   => 'view sales',
-            'submenu'   => [
-                [
-                    'text'    => 'View Sales',
-                    'can'     => 'view sales',
-                    'route'   => 'sales.index',
-                ],
-                [
-                    'text'    => 'Payment Schedules',
-                    'can'     => 'view sales',
-                    'route'   => 'sales.payment.schedule',
-                ]
-            ]
-        ],
-        [
-            'text'    => 'Project Management',
-            'icon'    => 'fas fa-building',
-            'route'    => 'projects.index',
-            'can'     => 'view project',
-        ],
-        [
-            'text'    => 'Requirements',
-            'icon'    => 'fas fa-file-alt',
-            'route'    => 'requirements.index',
-            'can'     => 'view requirements',
-        ],
-        [
             'text'    => 'Lead Management',
             'icon'    => 'fas fa-filter',
             'can'     => 'view lead',
@@ -309,6 +280,35 @@ return [
                     'can'  => 'view lead',
                 ],
             ],
+        ],
+        [
+            'text' => 'Sales Management',
+            'icon' => 'fas fa-chart-bar',
+            'can'   => 'view sales',
+            'submenu'   => [
+                [
+                    'text'    => 'View Sales',
+                    'can'     => 'view sales',
+                    'route'   => 'sales.index',
+                ],
+                [
+                    'text'    => 'Payment Schedules',
+                    'can'     => 'view sales',
+                    'route'   => 'sales.payment.schedule',
+                ]
+            ]
+        ],
+        [
+            'text'    => 'Project Management',
+            'icon'    => 'fas fa-building',
+            'route'    => 'projects.index',
+            'can'     => 'view project',
+        ],
+        [
+            'text'    => 'Requirements',
+            'icon'    => 'fas fa-file-alt',
+            'route'    => 'requirements.index',
+            'can'     => 'view requirements',
         ],
         [
             'text'    => 'Task Management',
