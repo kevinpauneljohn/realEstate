@@ -581,6 +581,14 @@
     <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.min.css')}}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
+    <style>
+        .for-commission{
+            background-color:#e0fdba;
+        }
+        .commission-request-pending{
+            background-color: #d7fbfd;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -588,6 +596,7 @@
     <script src="{{asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
+    <script src="{{asset('js/custom-alert.js')}}"></script>
     @can('view sales')
     <script src="{{asset('js/sales.js')}}"></script>
     <!-- Summernote -->
@@ -634,6 +643,43 @@
                 order:[0,'desc']
             });
         });
+
+        @can('view commission request')
+        $(document).on('click','.commission-request-btn',function(){
+            let id = this.value;
+            let element = $(this);
+
+            $.ajax({
+                'url' : '/commission-requests',
+                'type' : 'POST',
+                'data' : {'sales_id' : id},
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                beforeSend: function(){
+                    element.attr('disabled',true).text('Requesting...');
+                },
+                success: function(response){
+                    console.log(response);
+                    if(response.success === true)
+                    {
+                        element.text('Requested');
+                        setTimeout(function () {
+                            element.fadeOut();
+                        },1000);
+
+                        element.closest('tr').removeClass('for-commission').addClass('commission-request-pending')
+                    }
+
+                },error: function(xhr, status, error){
+                    let validation = JSON.parse(xhr.responseText)
+                    console.log(validation.success);
+                    element.attr('disabled',false).text('Request Commission');
+                    customAlert('warning',validation.message)
+                }
+            });
+        });
+        @endcan
+
+
         //Initialize Select2 Elements
         $('.select2').select2();
         $('#edit_reservation_date').datepicker({

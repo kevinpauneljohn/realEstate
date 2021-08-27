@@ -49,15 +49,11 @@ class UserRepository
                     return $activity->created_at;
                 })
                 ->editColumn('properties',function($activity){
-//                    if($activity->description === "updated")
-//                    {
-//                        return json_encode($activity->properties['attributes']->);
-//                    }
-//                    return "";
                     return $activity->properties;
                 })
                 ->rawColumns(['properties'])
                 ->make(true);
         }
     }
+
 }

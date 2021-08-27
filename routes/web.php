@@ -374,17 +374,18 @@ Route::resource('staycation','Staycation\StaycationClientController');
 
 Route::get('/payment-reminder','PaymentReminderController');
 
-Route::get('/sample',function(){
-    $month = now()->month;
-    $data = [];
-    foreach (PaymentReminder::whereMonth('schedule', $month)->where('completed',false)->get() as $key => $reminder)
-    {
-        $data[$key] = $reminder->sales !== null ? $reminder->sales->lead->email : null;
-    }
-    // $reminder = PaymentReminder::whereMonth('schedule', $month)->where('completed',false)->first();
-    return $data;
+Route::get('/commission-requests/check-bypass',[\App\Http\Controllers\CommissionRequestController::class,'checkByPassForAllRequest'])->name('commission.request.check.bypass');
+Route::middleware(['auth'])->group(function(){
+
+    Route::get('/commission-requests/approvals/{request}',[\App\Http\Controllers\CommissionRequestController::class,'approval'])->name('commission.request.review.approval');
+    Route::get('/commission-requests/for-review/{request}',[\App\Http\Controllers\CommissionRequestController::class,'forReview'])->name('commission.request.review');
+    Route::get('/commission-requests/for-approval',[\App\Http\Controllers\CommissionRequestController::class,'forApproval'])->name('commission.request.approval');
+    Route::get('/commission-requests/for-approval/display',[\App\Http\Controllers\CommissionRequestController::class,'getForApproval'])->name('commission.request.approval.get');
+    Route::post('/commission-requests/status-set/{request}',[\App\Http\Controllers\CommissionRequestController::class,'setApprovalStatus'])->name('commission.request.status.set');
+    Route::resource('commission-requests',CommissionRequestController::class);
 });
 
-Route::get('/sms-reminder',function(Request $request){
-    return \App\Lead::onlineWarrior()->count();
+Route::get('/sms-reminder',function(){
+    return \App\Services\CommissionRequestService::commissionRequest();
 });
+

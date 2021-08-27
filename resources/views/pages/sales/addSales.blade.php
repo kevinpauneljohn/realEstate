@@ -19,7 +19,7 @@
 
 @section('content')
 
-    <div class="card">
+    <div class="card" id="add-sale-container">
         <div class="card-header">
             <a href="{{route('sales.index')}}"><button type="button" class="btn bg-gradient-success btn-sm">View all</button></a>
         </div>

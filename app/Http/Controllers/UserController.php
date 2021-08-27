@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Commission;
 use App\Downline;
 use App\Events\CreateNetworkEvent;
 use App\Events\SendMoneyEvent;

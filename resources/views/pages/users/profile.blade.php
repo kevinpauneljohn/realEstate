@@ -382,9 +382,18 @@
                                 <div class="form-group project">
                                     <label for="project">Project</label> <span>(Optional)</span>
                                     <select class="form-control" name="project" id="project">
-                                        <option value=""> -- Select -- </option>
+                                        @if(\App\Commission::where('user_id',$upline->id)->where('project_id',null)->count() > 0)
+                                            <option value=""> -- Select -- </option>
+                                            @endif
+
                                         @foreach($projects as $project)
-                                            <option value="{{$project->id}}">{{$project->name}}</option>
+                                            @if(\App\Commission::where('user_id',$upline->id)->where('project_id',null)->count() > 0)
+                                                <option value="{{$project->id}}">{{$project->name}}</option>
+                                                @else
+                                                    @if(\App\Commission::where('user_id',$upline->id)->where('project_id',$project->id)->count() > 0)
+                                                    <option value="{{$project->id}}">{{$project->name}}</option>
+                                                        @endif
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

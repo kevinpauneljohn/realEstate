@@ -277,9 +277,12 @@ class SalesRepository
                 if($user_rate >= $rate)
                 {
                     --$rate;
-                }elseif($user_rate <= 0){
+                }
+                elseif($user_rate <= 0){
+
                     $rate = 0; /* commission rate is zero and will return an error message to the user*/
-                }else{
+                }
+                else{
                     $rate = $user_rate;
                 }
             }

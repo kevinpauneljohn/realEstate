@@ -232,4 +232,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(TaskRemark::class);
     }
+
+    public function commissionRequests()
+    {
+        return $this->hasMany(CommissionRequest::class);
+    }
 }

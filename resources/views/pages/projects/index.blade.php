@@ -27,7 +27,7 @@
             </div>
             <div class="card-body">
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                    <table id="projects-list" class="table table-bordered table-striped" role="grid">
+                    <table id="projects-list" class="table table-bordered table-hover" role="grid">
                         <thead>
                         <tr role="row">
                             <th>Project Name</th>

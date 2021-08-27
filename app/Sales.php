@@ -115,4 +115,9 @@ class Sales extends Model
     {
         return "Phase {$this->phase}, Block {$this->block}, Lot {$this->lot}";
     }
+
+    public function commissionRequests()
+    {
+        return $this->hasMany(CommissionRequest::class);
+    }
 }

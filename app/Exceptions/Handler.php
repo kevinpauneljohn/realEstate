@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Support\Facades\URL;
 use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -54,6 +55,19 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+//        $previous = URL::previous();
+//        if ($exception instanceof ModelNotFoundException)
+//        {
+//            return redirect($previous);
+//        }
+//
+//
+//        if ($exception instanceof \ErrorException) {
+//            return redirect($previous);
+//        }
+//        else {
+//            return parent::render($request, $exception);
+//        }
         return parent::render($request, $exception);
     }
 }

@@ -78,7 +78,7 @@ $(document).on('submit','#add-sales-form',function(form){
         'type' : 'POST',
         'data' : data,
         beforeSend: function(){
-
+            $('.error-info').remove();
         },success: function(result){
             console.log(result);
 
@@ -106,7 +106,17 @@ $(document).on('submit','#add-sales-form',function(form){
                 element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
             });
         },error: function(xhr, status, error){
-            console.log(xhr);
+            console.log($.parseJSON(xhr.responseText).message);
+
+            $('#add-sale-container').before('<div class="callout callout-danger error-info">' +
+                '<h5><i class="icon fas fa-exclamation-triangle"></i> No commission rate was set</h5>' +
+                '<p>Your sales will not proceed unless you request your specified commission rate for this sale. <br/>' +
+                'You may also request a default rate for all projects.</p> </div>');
+
+            $('.submit-form-btn').attr('disabled',false);
+            $('.spinner').hide();
+
+            toastr.error('Please request a commission rate to your Team leader');
         }
     });
     clear_errors('reservation_date','buyer','project','model_unit',

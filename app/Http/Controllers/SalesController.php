@@ -211,7 +211,6 @@ class SalesController extends Controller
      * */
     public function salesList()
     {
-//        $sales = Sales::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get();
         $userId = $this->accountManagement->checkIfUserIsAccountManager()->id;
         $sales = Sales::whereIn('user_id',collect(collect($this->downLines->extractDownLines((array)$userId)->pluck('id'))->concat((array)$userId))->toArray())->get();
         return DataTables::of($sales)
@@ -230,27 +229,19 @@ class SalesController extends Controller
                 return $threshold->count();
             })
             ->addColumn('full_name',function($sale){
-                $lead = Lead::find($sale->lead_id);
-                $firstname = $lead->firstname;
-                $lastname = $lead->lastname;
-
-                return ucfirst($firstname).' '.ucfirst($lastname);
+                return '<a href="'.route('leads.show',['lead' => $sale->lead->id]).'">'.$sale->lead->fullname.'</a>';
             })
             ->addColumn('project',function($sale){
-                $project = Project::find($sale->project_id);
-
-                return $project->name;
+                return $sale->project->name;
             })
             ->addColumn('model_unit',function($sale){
-                $modelUnit = ModelUnit::find($sale->model_unit_id);
-
-                return $modelUnit->name;
+                return $sale->modelUnit->name;
             })
             ->addColumn('contact_number',function($sale){
-                return Lead::find($sale->lead_id)->mobileNo;
+                return $sale->lead->mobileNo;
             })
             ->addColumn('email',function($sale){
-                return Lead::find($sale->lead_id)->email;
+                return $sale->lead->email;
             })
             ->editColumn('commission_rate',function($sale){
                 if($sale->commission_rate != null && !auth()->user()->hasRole('online warrior'))
@@ -267,6 +258,8 @@ class SalesController extends Controller
             })
             ->addColumn('action', function ($sale)
             {
+                //this will get the due date by payment reminder last schedule or reservation date
+                $dueDate = collect($sale->paymentReminders)->count() > 0 && $sale->status !== "cancelled" ? $sale->paymentReminders->last()->schedule : collect($this->paymentReminder->scheduleFormatter($sale->id,$sale->reservation_date))->last();
                 $action = "";
                 if(auth()->user()->can('view sales'))
                 {
@@ -294,13 +287,39 @@ class SalesController extends Controller
 
                     if($this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
                     {
-                        $action .= '<a href="'.route('leads.show',['lead' => $sale->lead_id]).'" class="btn btn-xs btn-success view-request-btn" id="'.$sale->id.'" title="Create Client Account"><i class="fa fa-user-alt"></i></a>';
+                        $action .= '<a href="'.route('leads.show',['lead' => $sale->lead_id]).'" class="btn btn-xs btn-info view-request-btn" id="'.$sale->id.'" title="Create Client Account"><i class="fa fa-user-alt"></i></a>';
                     }
+                }
+
+                if(!auth()->user()->hasRole(['online warrior','account manager','admin','Finance Admin'])
+                    && today()->diffInDays($dueDate,false) < 0
+                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review'])->count() < 1
+                    && auth()->user()->can('view commission request'))
+                {
+                    $action .= '<button class="btn btn-xs btn-success commission-request-btn" id="request-'.$sale->id.'" title="Commission Request" value="'.$sale->id.'">Request Commission</button>';
                 }
 
                 return $action;
             })
-            ->rawColumns(['action','status','request_status'])
+            ->setRowClass(function($sale){
+                $dueDate = collect($sale->paymentReminders)->count() > 0 && $sale->status !== "cancelled" ? $sale->paymentReminders->last()->schedule : collect($this->paymentReminder->scheduleFormatter($sale->id,$sale->reservation_date))->last();
+                $action = "";
+                if(!auth()->user()->hasRole(['online warrior','account manager','admin','Finance Admin'])
+                    && today()->diffInDays($dueDate,false) < 0
+                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review'])->count() < 1
+                    && auth()->user()->can('view commission request'))
+                {
+                    $action .= 'for-commission';
+                }elseif (!auth()->user()->hasRole(['online warrior','account manager','admin','Finance Admin'])
+                    && today()->diffInDays($dueDate,false) < 0
+                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review'])->count() > 0
+                    && auth()->user()->can('view commission request'))
+                {
+                    $action .= 'commission-request-pending';
+                }
+                return $action;
+            })
+            ->rawColumns(['action','status','request_status','full_name'])
             ->make(true);
     }
 

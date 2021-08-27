@@ -17,7 +17,32 @@
     {{-- Navbar right links --}}
 
     <ul class="navbar-nav ml-auto reminder-notification">
+        <li class="nav-item dropdown my-task-notification">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fas fa-list" title="Commission Requests"></i>
 
+                @if(collect(\App\Services\CommissionRequestService::commissionRequest())->count() > 0)
+                    <span class="right badge bg-danger">{{collect(\App\Services\CommissionRequestService::commissionRequest())->count()}}</span>
+                    @endif
+
+            </a>
+            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
+                <span class="dropdown-item dropdown-header">Commission Requests</span>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <div class="media-body">
+                            <h6 align="center" class="text-muted">
+                                <span class="text-bold text-success">{{collect(\App\Services\CommissionRequestService::commissionRequest())->count()}}</span> Requests
+                            </h6>
+                        </div>
+                    </div>
+                    <!-- Message End -->
+                </a>
+                <a href="{{route('commission.request.approval')}}" class="dropdown-item dropdown-footer">View all requests</a>
+            </div>
+        </li>
         @can('view task')
             @php
                 $task = \App\Task::where('assigned_to',auth()->user()->id)

@@ -176,5 +176,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'delete staycation appointment'])->syncRoles(['JJ online warrior']);
 
         Permission::create(['name' => 'change password']);
+
+        Permission::create(['name' => 'view commission request'])->syncRoles(['team leader','admin','manager','agent','finance admin']);
     }
 }
