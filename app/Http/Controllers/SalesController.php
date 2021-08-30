@@ -195,14 +195,6 @@ class SalesController extends Controller
         return response()->json($validator->errors());
     }
 
-    public function test()
-    {
-//        return auth()->user()->userRankPoint;
-        return Sales::find(33);
-    }
-
-
-
 
     /**
      * March 06, 2020

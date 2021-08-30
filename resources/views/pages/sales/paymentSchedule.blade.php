@@ -98,7 +98,8 @@
                         { data: 'amount', name: 'amount'},
                     ],
                     responsive:true,
-                    order:[0,'asc']
+                    order:[0,'asc'],
+                    pageLength: 25
                 });
             });
             //Initialize Select2 Elements

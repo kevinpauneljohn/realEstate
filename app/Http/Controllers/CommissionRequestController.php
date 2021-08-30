@@ -192,9 +192,9 @@ class CommissionRequestController extends Controller
         return $this->commissionRequest->specifiedApprovalDataTable($requestId);
     }
 
+
     /**
-     * this will check if there are bypass approval request
-     * @return \Illuminate\Support\Collection
+     *this will check if there are bypass approval request
      */
     public function checkByPassForAllRequest()
     {
