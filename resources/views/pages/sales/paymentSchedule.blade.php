@@ -99,7 +99,7 @@
                     ],
                     responsive:true,
                     order:[0,'asc'],
-                    pageLength: 25
+                    pageLength: 100
                 });
             });
             //Initialize Select2 Elements
