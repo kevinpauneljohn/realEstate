@@ -34,7 +34,13 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/ByPassApproval.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/ByPassApproval.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommissionRequestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommissionRequestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/CommissionRequestService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CommissionRequestService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/CommissionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CommissionService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/sales.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/sales.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/commissionRequests/forReview.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/commissionRequests/forReview.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/acaronlex/laravel-calendar/" />
     <ignored path="$PROJECT_DIR$/vendor/symfony/http-client-contracts/" />
@@ -72,8 +78,8 @@
             <file pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommissionRequestController.php">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="2436">
-                    <caret line="194" selection-start-line="194" selection-end-line="194" />
+                  <state relative-caret-position="184">
+                    <caret line="175" column="85" selection-start-line="175" selection-start-column="65" selection-end-line="175" selection-end-column="85" />
                     <folding>
                       <element signature="e#40#66#0#PHP" expanded="true" />
                     </folding>
@@ -84,8 +90,8 @@
             <file pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/resources/views/pages/commissionRequests/forReview.blade.php">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="1343">
-                    <caret line="148" column="14" selection-start-line="148" selection-start-column="14" selection-end-line="148" selection-end-column="14" />
+                  <state relative-caret-position="2482">
+                    <caret line="146" column="135" selection-start-line="146" selection-start-column="113" selection-end-line="146" selection-end-column="135" />
                   </state>
                 </provider>
               </entry>
@@ -97,11 +103,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Services/CommissionRequestService.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="307">
+              <caret line="152" column="77" selection-start-line="152" selection-start-column="77" selection-end-line="152" selection-end-column="77" />
+              <folding>
+                <element signature="e#34#60#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="799" column="48" selection-start-line="799" selection-start-column="33" selection-end-line="799" selection-end-column="48" />
+            <state relative-caret-position="208">
+              <caret line="189" column="13" lean-forward="true" selection-start-line="189" selection-start-column="13" selection-end-line="189" selection-end-column="13" />
               <folding>
                 <element signature="e#40#77#0#PHP" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
@@ -112,19 +130,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Services/PaymentReminderService.php">
+        <entry file="file://$PROJECT_DIR$/app/Repositories/SalesRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="144" column="42" lean-forward="true" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
+            <state relative-caret-position="1712">
+              <caret line="306" column="21" lean-forward="true" selection-start-line="306" selection-start-column="21" selection-end-line="306" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Repositories/SalesRepository.php">
+        <entry file="file://$PROJECT_DIR$/app/Console/Commands/ByPassApproval.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="32" column="21" lean-forward="true" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
+            <state relative-caret-position="170">
+              <caret line="67" column="51" lean-forward="true" selection-start-line="67" selection-start-column="51" selection-end-line="67" selection-end-column="51" />
+              <folding>
+                <element signature="e#40#82#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Services/CommissionService.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="443">
+              <caret line="112" column="209" selection-start-line="112" selection-start-column="209" selection-end-line="112" selection-end-column="209" />
+              <folding>
+                <element signature="e#34#50#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -132,29 +165,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="209" column="57" selection-start-line="209" selection-start-column="51" selection-end-line="209" selection-end-column="57" />
+            <state relative-caret-position="92">
+              <caret line="203" column="48" selection-end-line="391" />
               <folding>
                 <element signature="e#7#389#0#PHP" expanded="true" />
+                <element signature="e#479#512#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotificationsController.php">
+        <entry file="file://$PROJECT_DIR$/public/js/sales.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="22" column="26" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/paymentSchedule.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="101" column="20" lean-forward="true" selection-start-line="101" selection-start-column="20" selection-end-line="101" selection-end-column="35" />
+            <state relative-caret-position="273">
+              <caret line="103" column="41" selection-start-line="103" selection-start-column="41" selection-end-line="103" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -162,24 +187,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="643" column="16" selection-start-line="643" selection-start-column="16" selection-end-line="643" selection-end-column="30" />
+            <state relative-caret-position="423">
+              <caret line="689" selection-start-line="689" selection-end-line="689" />
+              <folding>
+                <element signature="e#5254#5278#0#HTML" expanded="true" />
+                <element signature="e#12015#12035#0#HTML" expanded="true" />
+                <element signature="e#12769#12789#0#HTML" expanded="true" />
+                <element signature="e#13507#13527#0#HTML" expanded="true" />
+                <element signature="e#17983#18003#0#HTML" expanded="true" />
+                <element signature="e#21703#21723#0#HTML" expanded="true" />
+                <element signature="e#22593#22613#0#HTML" expanded="true" />
+                <element signature="e#23459#23479#0#HTML" expanded="true" />
+                <element signature="e#28386#28406#0#HTML" expanded="true" />
+                <element signature="e#32495#32515#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/index.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="335" column="34" selection-start-line="335" selection-start-column="34" selection-end-line="335" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -195,8 +218,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>commissions</find>
-      <find>profile</find>
       <find>add-commission-form</find>
       <find>upline</find>
       <find>sales.list</find>
@@ -209,22 +230,24 @@
       <find>getSpecifiedRequest</find>
       <find>getCommissionRequests</find>
       <find>forApproval</find>
-      <find>getAllowedCommission</find>
       <find>classes_topnav_nav</find>
       <find>user</find>
       <find>$daysComparison</find>
       <find>updateCommissionRequest</find>
-      <find>updateApprovalStatus</find>
       <find>art</find>
       <find>check_by_pass</find>
       <find>commission.request.review.approval</find>
       <find>specifiedApprovalDataTable</find>
       <find>store</find>
       <find>payment-schedule</find>
+      <find>notify</find>
+      <find>notifications</find>
       <find>paymentRemindersThisMonth</find>
       <find>paymentThisMonth</find>
-      <find>notifications</find>
-      <find>notify</find>
+      <find>getAllowedCommission</find>
+      <find>setCommissionRate</find>
+      <find>forApprovalDataTable</find>
+      <find>updateApprovalStatus</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -264,7 +287,6 @@
         <option value="$PROJECT_DIR$/app/Repositories/UserRepository.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/CheckCommission.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/app/Repositories/SalesRepository.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/users/profile.blade.php" />
         <option value="$PROJECT_DIR$/app/Services/UpLineService.php" />
         <option value="$PROJECT_DIR$/app/Sales.php" />
@@ -280,18 +302,19 @@
         <option value="$PROJECT_DIR$/app/Services/ClientRequirementsService.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/commissionRequests/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/projects/index.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/sales/addSales.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/sales/paymentSchedule.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/commissionRequests/forReview.blade.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/sales.js" />
+        <option value="$PROJECT_DIR$/app/Repositories/SalesRepository.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/CommissionRequestController.php" />
         <option value="$PROJECT_DIR$/app/Services/CommissionService.php" />
         <option value="$PROJECT_DIR$/app/Console/Commands/ByPassApproval.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/commissionRequests/forReview.blade.php" />
         <option value="$PROJECT_DIR$/app/Services/CommissionRequestService.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/sales/addSales.blade.php" />
-        <option value="$PROJECT_DIR$/public/js/sales.js" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/CommissionRequestController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/sales/paymentSchedule.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/pages/leads/index.blade.php" />
       </list>
     </option>
   </component>
@@ -428,10 +451,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="212" />
-    <option name="y" value="87" />
+    <option name="x" value="211" />
+    <option name="y" value="86" />
     <option name="width" value="1380" />
-    <option name="height" value="743" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectId" id="1nH9KnLc1219SSSjF1dire9K9qW" />
   <component name="ProjectView">
@@ -439,6 +462,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -454,6 +478,49 @@
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
               <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Console" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Console" type="462c0819:PsiDirectoryNode" />
+              <item name="Commands" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Repositories" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -468,14 +535,6 @@
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="leads" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
@@ -485,11 +544,18 @@
               <item name="pages" type="462c0819:PsiDirectoryNode" />
               <item name="notifications" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="realEstate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="realEstate" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="sales" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -847,14 +913,8 @@
       <workItem from="1629224010223" duration="34976000" />
       <workItem from="1629413141454" duration="7521000" />
       <workItem from="1629472356575" duration="55998000" />
-      <workItem from="1630299484266" duration="1704000" />
-    </task>
-    <task id="LOCAL-00797" summary="updated the client submitted requirements count">
-      <created>1626971458500</created>
-      <option name="number" value="00797" />
-      <option name="presentableId" value="LOCAL-00797" />
-      <option name="project" value="LOCAL" />
-      <updated>1626971458500</updated>
+      <workItem from="1630299484266" duration="6844000" />
+      <workItem from="1630332759666" duration="5872000" />
     </task>
     <task id="LOCAL-00798" summary="updated the client submitted requirements count">
       <created>1627027960514</created>
@@ -1192,11 +1252,18 @@
       <option name="project" value="LOCAL" />
       <updated>1630300567896</updated>
     </task>
-    <option name="localTasksCounter" value="846" />
+    <task id="LOCAL-00846" summary="updated the sales attribute and commission requests feature">
+      <created>1630311481868</created>
+      <option name="number" value="00846" />
+      <option name="presentableId" value="LOCAL-00846" />
+      <option name="project" value="LOCAL" />
+      <updated>1630311481868</updated>
+    </task>
+    <option name="localTasksCounter" value="847" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="469981000" />
+    <option name="totallyTimeSpent" value="480993000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1208,10 +1275,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15436241" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16174497" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1225,7 +1292,7 @@
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.27620396" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.27620396" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="12" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1453,16 +1520,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/CommissionService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="112" column="124" selection-start-line="112" selection-start-column="124" selection-end-line="112" selection-end-column="124" />
-          <folding>
-            <element signature="e#34#50#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Flarepoint-crm/tests/Browser/AppointmentTest.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1497,16 +1554,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Console/Commands/ByPassApproval.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-118">
-          <caret line="45" column="93" selection-start-line="45" selection-start-column="80" selection-end-line="45" selection-end-column="93" />
-          <folding>
-            <element signature="e#40#82#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/addLeads.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4133" />
@@ -1517,27 +1564,10 @@
         <state relative-caret-position="-2181" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/CommissionRequestService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2907">
-          <caret line="174" selection-start-line="174" selection-end-line="174" />
-          <folding>
-            <element signature="e#34#60#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/addSales.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/sales.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="80" column="26" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -1546,39 +1576,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/view.blade.php">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/commissionRequests/forReview.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="148" column="14" selection-start-line="148" selection-start-column="14" selection-end-line="148" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repositories/SalesRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="32" column="21" lean-forward="true" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/PaymentReminderService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="144" column="42" lean-forward="true" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="799" column="48" selection-start-line="799" selection-start-column="33" selection-end-line="799" selection-end-column="48" />
-          <folding>
-            <element signature="e#40#77#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/leadActivities/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -1590,23 +1587,6 @@
         <state relative-caret-position="-3191" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="209" column="57" selection-start-line="209" selection-start-column="51" selection-end-line="209" selection-end-column="57" />
-          <folding>
-            <element signature="e#7#389#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotificationsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="22" column="26" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/notifications/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="433">
@@ -1614,13 +1594,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommissionRequestController.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2436">
-          <caret line="194" selection-start-line="194" selection-end-line="194" />
-          <folding>
-            <element signature="e#40#66#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="333">
+          <caret line="335" column="34" selection-start-line="335" selection-start-column="34" selection-end-line="335" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -1631,17 +1608,120 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotificationsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="643" column="16" selection-start-line="643" selection-start-column="16" selection-end-line="643" selection-end-column="30" />
+        <state relative-caret-position="177">
+          <caret line="22" column="26" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/leads/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/Services/PaymentReminderService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="335" column="34" selection-start-line="335" selection-start-column="34" selection-end-line="335" selection-end-column="34" />
+        <state relative-caret-position="300">
+          <caret line="144" column="42" lean-forward="true" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/commissionRequests/forReview.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2482">
+          <caret line="146" column="135" selection-start-line="146" selection-start-column="113" selection-end-line="146" selection-end-column="135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="203" column="48" selection-end-line="391" />
+          <folding>
+            <element signature="e#7#389#0#PHP" expanded="true" />
+            <element signature="e#479#512#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pages/sales/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="689" selection-start-line="689" selection-end-line="689" />
+          <folding>
+            <element signature="e#5254#5278#0#HTML" expanded="true" />
+            <element signature="e#12015#12035#0#HTML" expanded="true" />
+            <element signature="e#12769#12789#0#HTML" expanded="true" />
+            <element signature="e#13507#13527#0#HTML" expanded="true" />
+            <element signature="e#17983#18003#0#HTML" expanded="true" />
+            <element signature="e#21703#21723#0#HTML" expanded="true" />
+            <element signature="e#22593#22613#0#HTML" expanded="true" />
+            <element signature="e#23459#23479#0#HTML" expanded="true" />
+            <element signature="e#28386#28406#0#HTML" expanded="true" />
+            <element signature="e#32495#32515#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/sales.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="103" column="41" selection-start-line="103" selection-start-column="41" selection-end-line="103" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SalesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="189" column="13" lean-forward="true" selection-start-line="189" selection-start-column="13" selection-end-line="189" selection-end-column="13" />
+          <folding>
+            <element signature="e#40#77#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Repositories/SalesRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1712">
+          <caret line="306" column="21" lean-forward="true" selection-start-line="306" selection-start-column="21" selection-end-line="306" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/CommissionService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="112" column="209" selection-start-line="112" selection-start-column="209" selection-end-line="112" selection-end-column="209" />
+          <folding>
+            <element signature="e#34#50#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Console/Commands/ByPassApproval.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="67" column="51" lean-forward="true" selection-start-line="67" selection-start-column="51" selection-end-line="67" selection-end-column="51" />
+          <folding>
+            <element signature="e#40#82#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/CommissionRequestService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="152" column="77" selection-start-line="152" selection-start-column="77" selection-end-line="152" selection-end-column="77" />
+          <folding>
+            <element signature="e#34#60#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommissionRequestController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="175" column="85" selection-start-line="175" selection-start-column="65" selection-end-line="175" selection-end-column="85" />
+          <folding>
+            <element signature="e#40#66#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

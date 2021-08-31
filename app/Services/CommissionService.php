@@ -53,7 +53,7 @@ class CommissionService
             return [
                 'commission' => (float)$this->sales->setCommissionRate($sales->project_id, $this->userId),
                 'upLines' => collect(collect($this->upLine->sellers(auth()->user()->id))->whereNotIn('id',[auth()->user()->id]))->map(function($item, $key){
-                    return collect($item)->merge(['approval' => null,'remarks' => null,'byPass' => null, 'is_by_passed' => false])->only(['id','approval','remarks','byPass','is_by_passed']);
+                    return collect($item)->merge(['approval' => null,'remarks' => null,'byPass' => null, 'is_by_passed' => false, 'action' => null])->only(['id','approval','remarks','byPass','is_by_passed','action']);
                 })
             ];
         }
@@ -110,7 +110,7 @@ class CommissionService
         return [
             'commission' => $commission[$key]['commission'] - $commission[$key - 1]['commission'],
             'upLines' => collect(collect($this->upLine->sellers(auth()->user()->id))->whereNotIn('id',[auth()->user()->id]))->map(function($item, $key){
-                return collect($item)->merge(['approval' => null,'remarks' => null,'byPass' => null, 'is_by_passed' => false])->only(['id','approval','remarks','byPass','is_by_passed']);
+                return collect($item)->merge(['approval' => null,'remarks' => null,'byPass' => null, 'is_by_passed' => false, 'action' => null])->only(['id','approval','remarks','byPass','is_by_passed','action']);
             })
         ];
     }

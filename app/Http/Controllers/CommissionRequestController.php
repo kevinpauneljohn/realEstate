@@ -159,7 +159,8 @@ class CommissionRequestController extends Controller
             'lastDueDate' =>  collect($commissionRequest->sales->paymentReminders)->count() > 0 && $commissionRequest->sales->status !== "cancelled"
                 ? $commissionRequest->sales->paymentReminders->last()->schedule
                 : collect($paymentReminderService->scheduleFormatter($commissionRequest->sales_id,$commissionRequest->sales->reservation_date))->last(),
-            'byPass' => $this->commissionRequest->check_by_pass($id)
+            'byPass' => $this->commissionRequest->check_by_pass($id),
+            'estimatedAmount' => $this->commissionRequest->getAmountRelease($id)
         ]);
     }
 

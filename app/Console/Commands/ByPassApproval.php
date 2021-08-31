@@ -66,7 +66,7 @@ class ByPassApproval extends Command
                             "remarks" => null,
                             "byPass" => now(),
                             "is_by_passed" => true,
-                            "key" => $key2
+                            "action" => "bypassed"
                         ];
 
                     }
@@ -80,7 +80,7 @@ class ByPassApproval extends Command
                                 "remarks" => null,
                                 "byPass" => now(),
                                 "is_by_passed" => true,
-                                "key" => $key2
+                                "action" => "bypassed"
                             ];
                         }
 

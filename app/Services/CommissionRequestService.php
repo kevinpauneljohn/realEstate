@@ -46,6 +46,19 @@ class CommissionRequestService
     }
 
     /**
+     * this will get the amount requested
+     * @param $requestId
+     * @return float|int
+     */
+    public function getAmountRelease($requestId)
+    {
+        $request = $this->getSpecifiedRequest($requestId);
+        $sales = $request->sales;
+        $netTCP = $sales->total_contract_price - $sales->discount;
+        return $netTCP * ($request->commission / 100);
+    }
+
+    /**
      * fetch for approval commission requests
      * @return \Illuminate\Support\Collection
      */
@@ -134,9 +147,9 @@ class CommissionRequestService
                 if($request['approval'] === null)
                 {
                     $approval = '<span class="text-info text-bold">Pending</span>';
-                }elseif($request['approval'] === "approved" && $request['is_by_passed'] === false){
+                }elseif($request['approval'] === "approved" && $request['is_by_passed'] === true && $request['action'] == null){
                     $approval = '<span class="text-success text-bold">Approved</span>';
-                }elseif($request['approval'] === "approved" && $request['is_by_passed'] === true){
+                }elseif($request['approval'] === "approved" && $request['is_by_passed'] === true && $request['action'] != null){
                     $approval = '<span class="text-purple text-bold">Bypassed</span>';
                 }else{
                     $approval = '<span class="text-danger text-bold">Rejected</span>';

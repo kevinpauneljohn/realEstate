@@ -78,7 +78,8 @@ $(document).on('submit','#add-sales-form',function(form){
         'type' : 'POST',
         'data' : data,
         beforeSend: function(){
-            $('.error-info').remove();
+            $('.error-info' +
+                '').remove();
         },success: function(result){
             console.log(result);
 
@@ -107,6 +108,7 @@ $(document).on('submit','#add-sales-form',function(form){
             });
         },error: function(xhr, status, error){
             console.log($.parseJSON(xhr.responseText).message);
+            console.log(xhr);
 
             $('#add-sale-container').before('<div class="callout callout-danger error-info">' +
                 '<h5><i class="icon fas fa-exclamation-triangle"></i> No commission rate was set</h5>' +

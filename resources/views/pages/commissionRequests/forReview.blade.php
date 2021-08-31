@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-10 order-2 order-md-1">
                     <div class="row">
-                        <div class="col-12 col-sm-4">
+                        <div class="col-12 col-sm-3">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Request Status</span>
@@ -31,7 +31,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-4">
+                        <div class="col-12 col-sm-3">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Date Requested</span>
+                                    <span class="info-box-number text-center text-muted mb-0">{{$commissionRequest->created_at->format('F-d-Y')}} </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Rate Requested</span>
@@ -39,11 +47,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-4">
+                        <div class="col-12 col-sm-3">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Date Requested</span>
-                                    <span class="info-box-number text-center text-muted mb-0">{{$commissionRequest->created_at->format('F-d-Y')}} </span>
+                                    <span class="info-box-text text-center text-muted">Estimated Amount</span>
+                                    <span class="info-box-number text-center text-muted mb-0">{{number_format($estimatedAmount,2)}} </span>
                                 </div>
                             </div>
                         </div>
@@ -128,17 +136,19 @@
                         <p class="text-sm">Contact Number
                             <b class="d-block">{{$commissionRequest->user->mobileNo}}</b>
                         </p>
-                        days passes: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['daysPasses']}}<br/>
-                        days  by pass: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['daysByPass']}}<br/>
-                        by pass user: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['byPassConsent'] ? "yes" : "no"}}<br/>
-                        allow approve and reject: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['AllowByPassApproveAndReject'] ? "yes" : "no"}}<br/>
-
-
+{{--                        days passes: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['daysPasses']}}<br/>--}}
+{{--                        days  by pass: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['daysByPass']}}<br/>--}}
+{{--                        by pass user: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['byPassConsent'] ? "yes" : "no"}}<br/>--}}
+{{--                        allow approve and reject: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['AllowByPassApproveAndReject'] ? "yes" : "no"}}<br/>--}}
 
                         @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent']
                         || (auth()->user()->hasRole('Finance Admin') && $commissionRequest->status == "for review"))
                             <div class="text-center mt-5 mb-3">
-                                <button class="btn btn-sm btn-primary approval-btn" id="approve-btn" data-toggle="modal" data-target="#approve">Approve</button>
+                                @if($commissionRequest->status != "for review" && $commissionRequest->status != "requested to developer")
+                                    <button class="btn btn-sm btn-primary approval-btn" id="approve-btn" data-toggle="modal" data-target="#approve">Approve</button>
+                                    @else
+                                    <button class="btn btn-sm bg-purple approval-btn" id="approve-btn" data-toggle="modal" data-target="#approve">Request to Developer</button>
+                                @endif
                                 <button class="btn btn-sm btn-danger approval-btn" id="reject-btn" data-toggle="modal" data-target="#approve">Reject</button>
                             </div>
                         @endif
