@@ -285,7 +285,7 @@ class SalesController extends Controller
 
                 if(!auth()->user()->hasRole(['online warrior','account manager','admin','Finance Admin'])
                     && today()->diffInDays($dueDate,false) < 0
-                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review'])->count() < 1
+                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review','requested to developer','for release','completed'])->count() < 1
                     && auth()->user()->can('view commission request') && $sale->status != 'cancelled')
                 {
                     $action .= '<button class="btn btn-xs btn-success commission-request-btn" id="request-'.$sale->id.'" title="Commission Request" value="'.$sale->id.'">Request Commission</button>';
@@ -298,13 +298,13 @@ class SalesController extends Controller
                 $action = "";
                 if(!auth()->user()->hasRole(['online warrior','account manager','admin','Finance Admin'])
                     && today()->diffInDays($dueDate,false) < 0
-                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review'])->count() < 1
+                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review','requested to developer','for release','completed'])->count() < 1
                     && auth()->user()->can('view commission request') && $sale->status != 'cancelled')
                 {
                     $action .= 'for-commission';
                 }elseif (!auth()->user()->hasRole(['online warrior','account manager','admin','Finance Admin'])
                     && today()->diffInDays($dueDate,false) < 0
-                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review'])->count() > 0
+                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review','requested to developer','for release','completed'])->count() > 0
                     && auth()->user()->can('view commission request') && $sale->status != 'cancelled')
                 {
                     $action .= 'commission-request-pending';

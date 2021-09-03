@@ -377,15 +377,14 @@ Route::get('/payment-reminder','PaymentReminderController');
 Route::get('/commission-requests/check-bypass',[\App\Http\Controllers\CommissionRequestController::class,'checkByPassForAllRequest'])->name('commission.request.check.bypass');
 Route::middleware(['auth'])->group(function(){
 
+    Route::patch('/commission-requests/admin-action/{request}',[\App\Http\Controllers\CommissionRequestController::class,'setAdminAction'])->name('commission.request.admin.action');
     Route::get('/commission-requests/approvals/{request}',[\App\Http\Controllers\CommissionRequestController::class,'approval'])->name('commission.request.review.approval');
-    Route::get('/commission-requests/for-review/{request}',[\App\Http\Controllers\CommissionRequestController::class,'forReview'])->name('commission.request.review');
+    Route::get('/commission-requests/for-review/{request}',[\App\Http\Controllers\CommissionRequestController::class,'forReview'])->name('commission.request.review')->middleware('checkUpLineApproval');
+    Route::get('/commission-requests/my-requests',[\App\Http\Controllers\CommissionRequestController::class,'myRequest'])->name('commission.request.mine');
     Route::get('/commission-requests/for-approval',[\App\Http\Controllers\CommissionRequestController::class,'forApproval'])->name('commission.request.approval');
     Route::get('/commission-requests/for-approval/display',[\App\Http\Controllers\CommissionRequestController::class,'getForApproval'])->name('commission.request.approval.get');
     Route::post('/commission-requests/status-set/{request}',[\App\Http\Controllers\CommissionRequestController::class,'setApprovalStatus'])->name('commission.request.status.set');
     Route::resource('commission-requests',CommissionRequestController::class);
 });
 
-Route::get('/sms-reminder',function(){
-    return \App\Services\CommissionRequestService::commissionRequest();
-});
 

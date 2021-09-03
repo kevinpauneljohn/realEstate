@@ -5,12 +5,12 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Request Details</h1>
+            <h1 class="m-0 text-dark">Request #: <span style="color:#007bff">{{str_pad($commissionRequest->id, 6, '0', STR_PAD_LEFT)}}</span></h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('commission.request.approval')}}">Commission Request</a></li>
+                <li class="breadcrumb-item"><a href="{{url()->previous()}}">Commission Request</a></li>
                 <li class="breadcrumb-item active">Request Details</li>
             </ol>
         </div><!-- /.col -->
@@ -22,40 +22,103 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-10 order-2 order-md-1">
-                    <div class="row">
-                        <div class="col-12 col-sm-3">
-                            <div class="info-box bg-light">
+                    <div class="row" id="phase-tracker">
+                        <div class="col-12 col-sm-3 phase">
+                            <div class="info-box @if($commissionRequest->status == "pending")bg-success @else bg-light @endif">
+                                <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
+
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Request Status</span>
-                                    <span class="info-box-number text-center text-muted mb-0">{{ucfirst($commissionRequest->status)}}</span>
+                                    <span class="info-box-text">Up Line Approvals</span>
+                                    <span class="info-box-number">
+                                            @if($commissionRequest->status == "pending")
+                                            On-going
+                                        @else
+                                            <span class="text-success">Completed</span>
+                                        @endif
+                                        </span>
                                 </div>
+                                <!-- /.info-box-content -->
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-sm-3 phase">
+                            <div class="info-box @if($commissionRequest->status == "for review")bg-success @else bg-light @endif">
+                                <span class="info-box-icon"><i class="fas fa-search"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Admin Review</span>
+                                    <span class="info-box-number">
+                                            @if($commissionRequest->status == "for review")
+                                            On-going
+                                        @elseif($commissionRequest->status == "pending")
+                                            pending
+                                        @else
+                                            <span class="text-success">Completed</span>
+                                        @endif
+                                        </span>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3">
-                            <div class="info-box bg-light">
+                        <div class="col-12 col-sm-3 phase">
+                            <div class="info-box @if($commissionRequest->status == "requested to developer")bg-success @else bg-light @endif">
+                                <span class="info-box-icon"><i class="fa fa-building"></i></span>
+
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Date Requested</span>
-                                    <span class="info-box-number text-center text-muted mb-0">{{$commissionRequest->created_at->format('F-d-Y')}} </span>
+                                    <span class="info-box-text">Request To Developer</span>
+                                    <span class="info-box-number">
+                                            @if($commissionRequest->status == "requested to developer")
+                                            On-going
+                                        @elseif($commissionRequest->status == "pending" || $commissionRequest->status == "for review")
+                                            pending
+                                        @else
+                                            <span class="text-success">Completed</span>
+                                        @endif
+                                        </span>
                                 </div>
+                                <!-- /.info-box-content -->
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3">
-                            <div class="info-box bg-light">
+                        <div class="col-12 col-sm-3 phase">
+                            <div class="info-box @if($commissionRequest->status == "for release")bg-success @else bg-light @endif">
+                                <span class="info-box-icon"><i class="fa fa-check-square"></i></span>
+
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Rate Requested</span>
-                                    <span class="info-box-number text-center text-muted mb-0">{{$askingRate}}%</span>
+                                    <span class="info-box-text">For Release</span>
+                                    <span class="info-box-number">
+                                            @if($commissionRequest->status == "for release")
+                                            On-going
+                                        @elseif($commissionRequest->status == "pending" || $commissionRequest->status == "for review" || $commissionRequest->status == "requested to developer")
+                                            pending
+                                        @else
+                                            <span class="text-success">Completed</span>
+                                        @endif
+                                        </span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-3">
-                            <div class="info-box bg-light">
-                                <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Estimated Amount</span>
-                                    <span class="info-box-number text-center text-muted mb-0">{{number_format($estimatedAmount,2)}} </span>
-                                </div>
+                                <!-- /.info-box-content -->
                             </div>
                         </div>
                     </div>
+
+                    <table class="table table-bordered" id="request-overview">
+                        <tr>
+                            <th>Request Status</th>
+                            <th>Date Requested</th>
+                            <th>Rate Requested</th>
+                            <th>Estimated Amount</th>
+                            <th>Approved Rate</th>
+                            <th>Approved Estimated Amount</th>
+                        </tr>
+                        <tr id="request-data">
+                            <td>{{ucfirst($commissionRequest->status)}}</td>
+                            <td>{{$commissionRequest->created_at->format('F-d-Y')}} </td>
+                            <td>{{$askingRate}}%</td>
+                            <td>{{number_format($estimatedAmount,2)}} </td>
+                            <td>@if($commissionRequest->approved_rate !== null) {{$commissionRequest->approved_rate}}% @endif </td>
+                            <td>@if($commissionRequest->approved_rate !== null) {{number_format($approvedEstimatedAmount,2)}} @endif</td>
+                        </tr>
+                    </table>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="post">
@@ -65,30 +128,33 @@
                                     <tr>
                                         <th>Date Reserved</th>
                                         <th>Last Due Date</th>
+                                        <th>Agent</th>
                                         <th>Client</th>
                                         <th>Project</th>
                                         <th>Model Unit</th>
+                                        <th>Phase/Blk/Lot</th>
                                         <th>TCP</th>
                                         <th>Discount</th>
                                         <th>Financing</th>
-                                        <th>Rate Given</th>
                                     </tr>
                                     <tr>
                                         <td>{{\Carbon\Carbon::create($commissionRequest->sales->reservation_date)->format('F-d-Y')}}</td>
                                         <td>{{\Carbon\Carbon::create($lastDueDate)->format('F-d-Y')}}</td>
+                                        <td>{{$commissionRequest->sales->user->fullname}}</td>
                                         <td>{{$commissionRequest->sales->lead->fullname}}</td>
                                         <td>{{$commissionRequest->sales->project->name}}</td>
                                         <td>{{$commissionRequest->sales->modelUnit->name}}</td>
+                                        <td>{{$commissionRequest->sales->location}}</td>
                                         <td>{{number_format($commissionRequest->sales->total_contract_price,2)}}</td>
                                         <td>{{number_format($commissionRequest->sales->discount,2)}}</td>
                                         <td>{{$commissionRequest->sales->financing}}</td>
-                                        <td>{{$rateGiven}}%</td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="post">
                                 <h5>Requirements <span class="text-info">({{\App\Services\ClientRequirementsService::clientRequirements($commissionRequest->sales->clientrequirements)}})</span></h5>
-
+                                <input type="text" class="form-control mb-2" value="{{collect($commissionRequest->sales->clientRequirements)->first()->drive_link}}">
+                                <a href="{{collect($commissionRequest->sales->clientRequirements)->first()->drive_link}}" target="_blank" class="btn btn-default btn-xs mb-2" title="click to access drive">Access Drive</a>
                                 @if(collect($commissionRequest->sales->clientrequirements)->count() > 0)
                                     <table class="table table-bordered">
                                         @foreach(collect($commissionRequest->sales->clientrequirements)->first()->requirements as $requirement)
@@ -130,27 +196,64 @@
                         <p class="text-sm">Agent Name
                             <b class="d-block">{{$commissionRequest->user->fullname}}</b>
                         </p>
+                        <p class="text-sm">Role
+                            <b class="d-block">
+                                @foreach($commissionRequest->user->getRoleNames() as $role)
+                                    <span class="right badge badge-info">{{$role}}</span>
+                                @endforeach
+                            </b>
+                        </p>
                         <p class="text-sm">Email
                             <b class="d-block">{{$commissionRequest->user->email}}</b>
                         </p>
                         <p class="text-sm">Contact Number
                             <b class="d-block">{{$commissionRequest->user->mobileNo}}</b>
                         </p>
+                        <p class="text-sm">Commission Rate
+                            <b class="d-block">{{$rateGiven}}%</b>
+                        </p>
 {{--                        days passes: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['daysPasses']}}<br/>--}}
 {{--                        days  by pass: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['daysByPass']}}<br/>--}}
 {{--                        by pass user: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['byPassConsent'] ? "yes" : "no"}}<br/>--}}
 {{--                        allow approve and reject: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['AllowByPassApproveAndReject'] ? "yes" : "no"}}<br/>--}}
 
-                        @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent']
-                        || (auth()->user()->hasRole('Finance Admin') && $commissionRequest->status == "for review"))
+                        @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
+
                             <div class="text-center mt-5 mb-3">
-                                @if($commissionRequest->status != "for review" && $commissionRequest->status != "requested to developer")
-                                    <button class="btn btn-sm btn-primary approval-btn" id="approve-btn" data-toggle="modal" data-target="#approve">Approve</button>
-                                    @else
-                                    <button class="btn btn-sm bg-purple approval-btn" id="approve-btn" data-toggle="modal" data-target="#approve">Request to Developer</button>
-                                @endif
+                                <button class="btn btn-sm btn-primary approval-btn" id="approve-btn" data-toggle="modal" data-target="#approve">Approve</button>
                                 <button class="btn btn-sm btn-danger approval-btn" id="reject-btn" data-toggle="modal" data-target="#approve">Reject</button>
                             </div>
+
+                            @else
+
+                            @if(auth()->user()->hasRole('Finance Admin') && $commissionRequest->status != "rejected" && $commissionRequest->status != "completed")
+                                <div class="mt-5 mb-3" id="finance-admin-form">
+                                    <form id="finance-admin-action">
+                                        @csrf
+                                        <div class="form-group action">
+                                            <label>Set Action</label>
+                                            <select name="action" class="select2" id="action" style="width: 100%">
+                                                <option value="" selected>-- Select Action --</option>
+                                                @if($commissionRequest->status !== "requested to developer" && $commissionRequest->status !== "for release")
+                                                    <option value="request to developer">Request to developer</option>
+                                                    @endif
+
+                                                @if($commissionRequest->status !== "for release")
+                                                    <option value="for release">For Release</option>
+                                                @endif
+
+                                                <option value="completed">Completed</option>
+                                                <option value="reject">Reject request</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Remarks</label> <span>(optional)</span>
+                                            <textarea name="remarks" class="form-control" style="min-height: 150px;"></textarea>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary" value="Submit" style="width: 100%">
+                                    </form>
+                                </div>
+                                @endif
                         @endif
 
 
@@ -162,8 +265,7 @@
     </div>
 
 
-    @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent']
-    || (auth()->user()->hasRole('Finance Admin') && $commissionRequest->status == "for review"))
+    @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
         <!--add contacts modal-->
         <div class="modal fade" id="approve">
             <form role="form" id="approve-request-form">
@@ -218,7 +320,9 @@
     <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
     <script src="{{asset('/js/custom-alert.js')}}"></script>
+    <script src="{{asset('/js/validation.js')}}"></script>
     <script>
+        @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
         let approveForm = $('#approve-request-form');
 
         $(document).on('click','.approval-btn',function(){
@@ -274,6 +378,68 @@
                 }
             });
         });
+
+        @else
+            $(document).on('submit','#finance-admin-action',function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
+                console.log(data[1].value);
+
+            Swal.fire({
+                title: 'Set Action <span class="text-info"> &nbsp;'+data[1].value+'</span>?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                console.log(result);
+                if (result.value) {
+
+                    $.ajax({
+                        'url' : '{{route('commission.request.admin.action',['request' => $commissionRequest->id])}}',
+                        'type' : 'PATCH',
+                        'data' : data,
+                        beforeSend: function(){
+                            $('#finance-admin-action').find('input[type=submit]').attr('disabled',true).val('Submitting ...');
+                        },success: function(response){
+                            console.log(response)
+
+                            if(response.success === true)
+                            {
+                                $('#phase-tracker').load('{{url()->current()}} #phase-tracker .phase');
+                                $('#request-overview #request-data').load('{{url()->current()}} #request-overview #request-data td');
+                                $('#finance-admin-form #finance-admin-action select').load('{{url()->current()}} #finance-admin-form #finance-admin-action select option',function () {
+                                    $('#finance-admin-action').trigger('reset');
+                                });
+                            }
+
+                            if(response.request_status === "completed" || response.request_status === "rejected")
+                            {
+                                $('#finance-admin-action').remove();
+                            }
+
+                            $.each(response, function (key, value) {
+                                let element = $('.'+key);
+
+                                element.find('.error-'+key).remove();
+                                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                            });
+                            $('#finance-admin-action').find('input[type=submit]').attr('disabled',false).val('Submit');
+                        },error: function(xhr, status, error){
+                            console.log(xhr);
+                            $('#finance-admin-action').find('input[type=submit]').attr('disabled',false).val('Submit');
+                        }
+                    });
+                    clear_errors('action');
+
+                }
+            });
+
+
+            });
+        @endif
 
 
         $(function() {

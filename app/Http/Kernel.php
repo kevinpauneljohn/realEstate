@@ -71,6 +71,7 @@ class Kernel extends HttpKernel
         'checkLid' => \App\Http\Middleware\RequestLid::class,
         'checkCommission' => \App\Http\Middleware\CheckCommission::class,
         'onlyAssignedLeads' => \App\Http\Middleware\OnlyAssignedLeads::class,
+        'checkUpLineApproval' => \App\Http\Middleware\CheckUpLineApproval::class
     ];
 
     /**

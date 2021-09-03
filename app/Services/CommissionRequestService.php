@@ -48,14 +48,17 @@ class CommissionRequestService
     /**
      * this will get the amount requested
      * @param $requestId
+     * @param $rate
      * @return float|int
      */
-    public function getAmountRelease($requestId)
+    public function getAmountRelease($requestId, $rate)
     {
         $request = $this->getSpecifiedRequest($requestId);
         $sales = $request->sales;
         $netTCP = $sales->total_contract_price - $sales->discount;
-        return $netTCP * ($request->commission / 100);
+        $rate = $rate == null ? $request->commission : $rate;
+//        return $netTCP * ($request->commission / 100);
+        return $netTCP * ($rate / 100);
     }
 
     /**
@@ -83,7 +86,17 @@ class CommissionRequestService
      */
     public function forApprovalDataTable()
     {
-        return DataTables::of($this->forUpLinesApproval())
+        return $this->commissionRequestTable($this->forUpLinesApproval());
+    }
+
+
+    public function commissionRequestTable($request)
+    {
+        return DataTables::of($request)
+            ->addColumn('requestNo',function($commissionRequest){
+                $request = str_pad($commissionRequest->id, 6, '0', STR_PAD_LEFT);
+                return '<a href="'.route('tasks.overview',$commissionRequest->id).'"><span style="color:#007bff">#'.$request.'</span></a>';
+            })
             ->addColumn('dateRequested',function($commissionRequest){
                 return $commissionRequest->created_at->format('F-d-Y');
             })
@@ -132,7 +145,7 @@ class CommissionRequestService
                 }
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['requestNo','action'])
             ->make(true);
     }
 

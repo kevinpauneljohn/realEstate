@@ -299,6 +299,12 @@ return [
             ]
         ],
         [
+            'text'    => 'Commission Request',
+            'icon'    => 'fas fa-money-check-alt',
+            'route'    => 'commission-requests.index',
+            'can'     => 'request commission',
+        ],
+        [
             'text'    => 'Project Management',
             'icon'    => 'fas fa-building',
             'route'    => 'projects.index',

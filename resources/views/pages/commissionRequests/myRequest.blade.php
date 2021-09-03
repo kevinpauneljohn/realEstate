@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Commission Requests</h1>
+            <h1 class="m-0 text-dark">My Commission Requests</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -79,35 +79,35 @@
 @stop
 
 @section('js')
-        <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-        @can('view commission request')
-            <script>
-                $(function() {
-                    $('#commission-request-list').DataTable({
-                        processing: true,
-                        serverSide: true,
-                        ajax: '{!! route('commission.request.approval.get') !!}',
-                        columns: [
-                            { data: 'requestNo', name: 'requestNo'},
-                            { data: 'dateRequested', name: 'dateRequested'},
-                            { data: 'project', name: 'project'},
-                            { data: 'client', name: 'client'},
-                            { data: 'tcp', name: 'tcp'},
-                            { data: 'discount', name: 'discount'},
-                            { data: 'agent', name: 'agent'},
-                            { data: 'upLine', name: 'upLine'},
-                            { data: 'rate', name: 'rate'},
-                            { data: 'rateRequested', name: 'rateRequested'},
-                            { data: 'lastDueDate', name: 'lastDueDate'},
-                            { data: 'status', name: 'status'},
-                            { data: 'action', name: 'action', orderable: false, searchable: false}
-                        ],
-                        responsive:true,
-                        order:[0,'asc']
-                    });
+    <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+    @can('view commission request')
+        <script>
+            $(function() {
+                $('#commission-request-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('commission.request.mine') !!}',
+                    columns: [
+                        { data: 'requestNo', name: 'requestNo'},
+                        { data: 'dateRequested', name: 'dateRequested'},
+                        { data: 'project', name: 'project'},
+                        { data: 'client', name: 'client'},
+                        { data: 'tcp', name: 'tcp'},
+                        { data: 'discount', name: 'discount'},
+                        { data: 'agent', name: 'agent'},
+                        { data: 'upLine', name: 'upLine'},
+                        { data: 'rate', name: 'rate'},
+                        { data: 'rateRequested', name: 'rateRequested'},
+                        { data: 'lastDueDate', name: 'lastDueDate'},
+                        { data: 'status', name: 'status'},
+                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'asc']
                 });
-                //Initialize Select2 Elements
-                $('.select2').select2();
-            </script>
-        @endcan
+            });
+            //Initialize Select2 Elements
+            $('.select2').select2();
+        </script>
+    @endcan
 @stop

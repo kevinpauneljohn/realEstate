@@ -10,11 +10,12 @@ class CommissionRequest extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'sales_id','user_id','commission','status','remarks','approval'
+        'sales_id','user_id','commission','status','remarks','approved_rate','approval'
     ];
 
     protected $casts = [
-        'approval' => 'array'
+        'approval' => 'array',
+        'remarks' => 'array'
     ];
 
     public function sales()

@@ -13,6 +13,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Validator;
 
 class CommissionRequestController extends Controller
 {
@@ -31,6 +32,7 @@ class CommissionRequestController extends Controller
     )
     {
         $this->middleware('permission:view commission request')->only(['forApproval','getForApproval','forReview','approveRequest']);
+        $this->middleware('role:Finance Admin')->only(['setAdminAction']);
         $this->downLineService = $downLineService;
         $this->commissionService = $commissionService;
         $this->upLine = $upLineService;
@@ -41,7 +43,7 @@ class CommissionRequestController extends Controller
 
     public function index()
     {
-
+        return view('pages.commissionRequests.myRequest');
     }
 
     /**
@@ -72,6 +74,12 @@ class CommissionRequestController extends Controller
                 'user_id'  => auth()->user()->id,
                 'commission' => $commission['commission'],
                 'status'  => User::find(auth()->user()->upline_id)->hasRole('super admin') ? 'for review' : 'pending', //this will check if the requester is direct to the super admin
+                'remarks' => [
+                    'request_to_developer' => null,
+                    'for_release' => null,
+                    'rejected' => null,
+                    'completed' => null
+                ],
                 'approval' => collect($commission)->count() > 0 ? $commission['upLines'] : null,
             ])){
                 return response()->json(['success' => true, 'message']);
@@ -141,6 +149,12 @@ class CommissionRequestController extends Controller
         return $this->commissionRequest->forApprovalDataTable();
     }
 
+    public function myRequest()
+    {
+        $myRequests = CommissionRequest::where('user_id',auth()->user()->id)->get();
+        return $this->commissionRequest->commissionRequestTable($myRequests);
+    }
+
     /**
      * @param $id
      * @param PaymentReminderService $paymentReminderService
@@ -160,7 +174,8 @@ class CommissionRequestController extends Controller
                 ? $commissionRequest->sales->paymentReminders->last()->schedule
                 : collect($paymentReminderService->scheduleFormatter($commissionRequest->sales_id,$commissionRequest->sales->reservation_date))->last(),
             'byPass' => $this->commissionRequest->check_by_pass($id),
-            'estimatedAmount' => $this->commissionRequest->getAmountRelease($id)
+            'estimatedAmount' => $this->commissionRequest->getAmountRelease($id,null),
+            'approvedEstimatedAmount' => $this->commissionRequest->getAmountRelease($id,$commissionRequest->approved_rate),
         ]);
     }
 
@@ -186,6 +201,41 @@ class CommissionRequestController extends Controller
             return response()->json(['success' => true, 'message' => 'Commission '.$request->status, $commissionRequest]);
         }
         return response()->json(['success' => false, 'message' => 'An error occurred'],400);
+    }
+
+    public function setAdminAction($requestId, Request $request)
+    {
+        $validation = Validator::make($request->all(),[
+            'action' => 'required'
+        ]);
+
+        if($validation->passes())
+        {
+            $commissionRequest = CommissionRequest::where('id',$requestId);
+
+            if(CommissionRequest::where('id',$requestId)->where('status','rejected')->count() === 0)
+            {
+                if($request->input('action') == "request to developer")
+                {
+                    $status = "requested to developer";
+                    $commissionRequest->update(['status' => 'requested to developer','remarks->request_to_developer' => $request->input('remarks')]);
+                }elseif ($request->input('action') == "for release"){
+                    $status = "for release";
+                    $commissionRequest->update(['status' => 'for release','remarks->for_release' => $request->input('remarks')]);
+                }elseif ($request->input('action') == "reject"){
+                    $status = "rejected";
+                    $commissionRequest->update(['status' => 'rejected','remarks->rejected' => $request->input('remarks')]);
+                }elseif ($request->input('action') == "completed"){
+                    $status = "completed";
+                    $commissionRequest->update(['status' => 'completed','remarks->completed' => $request->input('remarks')]);
+                }
+
+
+                return response()->json(['success' => true, 'message' => 'Status Updated','request_status' => $status]);
+            }
+            return response()->json(['success' => false, 'message' => 'Request already rejected']);
+        }
+        return response()->json($validation->errors());
     }
 
     public function approval($requestId)
