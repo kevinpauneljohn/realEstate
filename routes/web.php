@@ -304,14 +304,14 @@ Route::get('/task-status/update',[\App\Http\Controllers\ScrumController::class,'
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);
 
-Route::put('/clients/update-role/{client}','ClientController@updateRole')->name('client.update.role')->middleware(['auth','permission:edit client']);
-Route::get('/clients','ClientController@index')->name('client.index')->middleware(['auth','permission:view client']);
-Route::post('/clients','ClientController@store')->name('client.store')->middleware(['auth','permission:add client']);
-Route::get('/clients-list','ClientController@client_list')->name('client.list')->middleware(['auth','permission:view client']);
-Route::get('/client/{client}','ClientController@show')->name('client.show')->middleware(['auth','permission:view client']);
-Route::get('/client-info/{client}','ClientController@edit')->name('client.edit')->middleware(['auth','permission:view client']);
-Route::put('/clients/{client}','ClientController@update')->name('client.update')->middleware(['auth','permission:edit client']);
-Route::delete('/clients/{client}','ClientController@destroy')->name('client.destroy')->middleware(['auth','permission:delete client']);
+//Route::put('/clients/update-role/{client}','ClientController@updateRole')->name('client.update.role')->middleware(['auth','permission:edit client']);
+//Route::get('/clients','ClientController@index')->name('client.index')->middleware(['auth','permission:view client']);
+//Route::post('/clients','ClientController@store')->name('client.store')->middleware(['auth','permission:add client']);
+//Route::get('/clients-list','ClientController@client_list')->name('client.list')->middleware(['auth','permission:view client']);
+//Route::get('/client/{client}','ClientController@show')->name('client.show')->middleware(['auth','permission:view client']);
+//Route::get('/client-info/{client}','ClientController@edit')->name('client.edit')->middleware(['auth','permission:view client']);
+//Route::put('/clients/{client}','ClientController@update')->name('client.update')->middleware(['auth','permission:edit client']);
+//Route::delete('/clients/{client}','ClientController@destroy')->name('client.destroy')->middleware(['auth','permission:delete client']);
 
 Route::post('/check-list','CheckListController@store')->name('checklist.store')->middleware(['auth','permission:add checklist']);
 Route::get('/check-list/{client}','CheckListController@check_list')->name('checklist.client')->middleware(['auth','permission:view checklist']);
@@ -319,41 +319,41 @@ Route::get('/check-list/{client}','CheckListController@check_list')->name('check
 Route::post('/documentation','DocumentationController@store')->name('documentation.store')->middleware(['auth','permission:add documentation']);
 Route::get('/documentation/{id}','DocumentationController@document_list')->name('document.list')->middleware(['auth','permission:view documentation']);
 
-/*builders*/
-Route::get('/builders','BuilderController@index')->name('builder.index')->middleware(['auth','permission:view builder']);
-Route::post('/builders','BuilderController@store')->name('builder.store')->middleware(['auth','permission:add builder']);
-Route::get('/builders/{builder}','BuilderController@show')->name('builder.show')->middleware(['auth','permission:view builder']);
-Route::get('/builders-list','BuilderController@builderList')->name('builder.list')->middleware(['auth','permission:view builder']);
-Route::get('/builders/{builder}/edit','BuilderController@edit')->name('builder.edit')->middleware(['auth','permission:edit builder']);
-Route::put('/builders/{builder}','BuilderController@update')->name('builder.update')->middleware(['auth','permission:edit builder']);
-Route::delete('/builders/{builder}','BuilderController@destroy')->name('builder.destroy')->middleware(['auth','permission:delete builder']);
-
-Route::post('/add-member/builder','BuilderMemberController@addMember')->name('builder.member.add')->middleware(['auth','permission:add builder member']);
-Route::get('/builder/{builder}/member','BuilderMemberController@member')->name('builder.member.list')->middleware(['auth','permission:view builder member']);
-Route::delete('/builder/{id}/member','BuilderMemberController@destroy')->name('builder.member.destroy')->middleware(['auth','permission:delete builder member']);
+///*builders*/
+//Route::get('/builders','BuilderController@index')->name('builder.index')->middleware(['auth','permission:view builder']);
+//Route::post('/builders','BuilderController@store')->name('builder.store')->middleware(['auth','permission:add builder']);
+//Route::get('/builders/{builder}','BuilderController@show')->name('builder.show')->middleware(['auth','permission:view builder']);
+//Route::get('/builders-list','BuilderController@builderList')->name('builder.list')->middleware(['auth','permission:view builder']);
+//Route::get('/builders/{builder}/edit','BuilderController@edit')->name('builder.edit')->middleware(['auth','permission:edit builder']);
+//Route::put('/builders/{builder}','BuilderController@update')->name('builder.update')->middleware(['auth','permission:edit builder']);
+//Route::delete('/builders/{builder}','BuilderController@destroy')->name('builder.destroy')->middleware(['auth','permission:delete builder']);
+//
+//Route::post('/add-member/builder','BuilderMemberController@addMember')->name('builder.member.add')->middleware(['auth','permission:add builder member']);
+//Route::get('/builder/{builder}/member','BuilderMemberController@member')->name('builder.member.list')->middleware(['auth','permission:view builder member']);
+//Route::delete('/builder/{id}/member','BuilderMemberController@destroy')->name('builder.member.destroy')->middleware(['auth','permission:delete builder member']);
 /*end of builders*/
 
-/*dream home guide projects*/
-Route::get('/dhg-projects','ClientProjectController@index')->name('dhg.project.index')->middleware(['auth','permission:view dhg project']);
-Route::post('/dhg-projects','ClientProjectController@store')->name('dhg.project.store')->middleware(['auth','permission:add dhg project']);
-Route::get('/dhg-projects/{project}','ClientProjectController@show')->name('dhg.project.show')->middleware(['auth','permission:view dhg project']);
-Route::get('/dhg-projects-list','ClientProjectController@dhgProjectList')->name('dhg.project.list')->middleware(['auth','permission:view dhg project']);
-Route::get('/dhg-projects/{project}/edit','ClientProjectController@edit')->name('dhg.project.edit')->middleware(['auth','permission:edit dhg project']);
-Route::put('/dhg-projects/{project}','ClientProjectController@update')->name('dhg.project.update')->middleware(['auth','permission:edit dhg project']);
-Route::delete('/dhg-projects/{project}','ClientProjectController@destroy')->name('dhg.project.destroy')->middleware(['auth','permission:delete dhg project']);
-Route::post('/dhg-project-access','ClientProjectController@checkCredentialForDelete')->name('dhg.project.check.access')->middleware(['auth','permission:delete dhg project']);
-/*end dream home guide projects*/
+///*dream home guide projects*/
+//Route::get('/dhg-projects','ClientProjectController@index')->name('dhg.project.index')->middleware(['auth','permission:view dhg project']);
+//Route::post('/dhg-projects','ClientProjectController@store')->name('dhg.project.store')->middleware(['auth','permission:add dhg project']);
+//Route::get('/dhg-projects/{project}','ClientProjectController@show')->name('dhg.project.show')->middleware(['auth','permission:view dhg project']);
+//Route::get('/dhg-projects-list','ClientProjectController@dhgProjectList')->name('dhg.project.list')->middleware(['auth','permission:view dhg project']);
+//Route::get('/dhg-projects/{project}/edit','ClientProjectController@edit')->name('dhg.project.edit')->middleware(['auth','permission:edit dhg project']);
+//Route::put('/dhg-projects/{project}','ClientProjectController@update')->name('dhg.project.update')->middleware(['auth','permission:edit dhg project']);
+//Route::delete('/dhg-projects/{project}','ClientProjectController@destroy')->name('dhg.project.destroy')->middleware(['auth','permission:delete dhg project']);
+//Route::post('/dhg-project-access','ClientProjectController@checkCredentialForDelete')->name('dhg.project.check.access')->middleware(['auth','permission:delete dhg project']);
+///*end dream home guide projects*/
 
-/*dream home client payment*/
-Route::get('/client-payment/{payment}/edit','ClientPaymentController@edit')->name('client.payment.edit')->middleware(['auth','permission:view client payment|edit client payment']);
-Route::get('/client-payment/{project}','ClientPaymentController@clientPaymentList')->name('client.payment.list')->middleware(['auth','permission:view payment']);
-Route::post('/client-payment','ClientPaymentController@store')->name('client.payment.store')->middleware(['auth','permission:add payment']);
-Route::get('/client-payment/edit/layout/{id}','ClientPaymentController@paymentModal')->name('client.edit.payment.modal')->middleware(['auth','permission:edit client payment']);
-Route::post('/admin/credential','ClientPaymentController@adminCredential')->name('admin.check.credential')->middleware(['auth','permission:edit client payment']);
-Route::put('/client-payment/{id}','ClientPaymentController@update')->name('client.payment.update')->middleware(['auth','permission:edit client payment']);
-Route::delete('/client-payment/{id}','ClientPaymentController@destroy')->name('client.payment.destroy')->middleware(['auth','permission:delete client payment']);
-Route::post('/client-payment-access','ClientPaymentController@checkCredentialForDelete')->name('client.payment.check.access')->middleware(['auth','permission:delete client payment']);
-/*end dream home client payment*/
+///*dream home client payment*/
+//Route::get('/client-payment/{payment}/edit','ClientPaymentController@edit')->name('client.payment.edit')->middleware(['auth','permission:view client payment|edit client payment']);
+//Route::get('/client-payment/{project}','ClientPaymentController@clientPaymentList')->name('client.payment.list')->middleware(['auth','permission:view payment']);
+//Route::post('/client-payment','ClientPaymentController@store')->name('client.payment.store')->middleware(['auth','permission:add payment']);
+//Route::get('/client-payment/edit/layout/{id}','ClientPaymentController@paymentModal')->name('client.edit.payment.modal')->middleware(['auth','permission:edit client payment']);
+//Route::post('/admin/credential','ClientPaymentController@adminCredential')->name('admin.check.credential')->middleware(['auth','permission:edit client payment']);
+//Route::put('/client-payment/{id}','ClientPaymentController@update')->name('client.payment.update')->middleware(['auth','permission:edit client payment']);
+//Route::delete('/client-payment/{id}','ClientPaymentController@destroy')->name('client.payment.destroy')->middleware(['auth','permission:delete client payment']);
+//Route::post('/client-payment-access','ClientPaymentController@checkCredentialForDelete')->name('client.payment.check.access')->middleware(['auth','permission:delete client payment']);
+///*end dream home client payment*/
 
 Route::get('/developers','DevelopersController@index')->name('developers.index')->middleware(['auth','role:super admin']);
 
