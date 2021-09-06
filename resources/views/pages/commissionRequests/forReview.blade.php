@@ -153,8 +153,8 @@
                             </div>
                             <div class="post">
                                 <h5>Requirements <span class="text-info">({{\App\Services\ClientRequirementsService::clientRequirements($commissionRequest->sales->clientrequirements)}})</span></h5>
-                                <input type="text" class="form-control mb-2" value="{{collect($commissionRequest->sales->clientRequirements)->first()->drive_link}}">
-                                <a href="{{collect($commissionRequest->sales->clientRequirements)->first()->drive_link}}" target="_blank" class="btn btn-default btn-xs mb-2" title="click to access drive">Access Drive</a>
+                                <input type="text" class="form-control mb-2" value="{{collect($commissionRequest->sales->clientRequirements)->count() > 0 ? collect($commissionRequest->sales->clientRequirements)->first()->drive_link : ""}}" @if(collect($commissionRequest->sales->clientRequirements)->count() == 0) disabled @endif>
+                                <a href="{{collect($commissionRequest->sales->clientRequirements)->count() > 0 ? collect($commissionRequest->sales->clientRequirements)->first()->drive_link : "#"}}"  @if(collect($commissionRequest->sales->clientRequirements)->count() > 0) target="_blank" @endif class="btn btn-default btn-xs mb-2" title="click to access drive" >Access Drive</a>
                                 @if(collect($commissionRequest->sales->clientrequirements)->count() > 0)
                                     <table class="table table-bordered">
                                         @foreach(collect($commissionRequest->sales->clientrequirements)->first()->requirements as $requirement)
@@ -185,6 +185,32 @@
                                         </thead>
                                     </table>
                                 </div>
+                            </div>
+
+                            <div class="post">
+                                <h5>Admin Action</h5>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%">Requested To Developer</td>
+                                        <td>{{$commissionRequest->remarks['request_to_developer']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%">For Release</td>
+                                        <td>{{$commissionRequest->remarks['for_release']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%">Completed</td>
+                                        <td>{{$commissionRequest->remarks['rejected']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%">Rejected</td>
+                                        <td>{{$commissionRequest->remarks['completed']}}</td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>

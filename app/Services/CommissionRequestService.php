@@ -32,6 +32,11 @@ class CommissionRequestService
         return CommissionRequest::findOrFail($id);
     }
 
+    /**
+     * update the approval columns and status
+     * @param $requestId
+     * @param $approvals
+     */
     public function updateCommissionRequest($requestId, $approvals)
     {
         $commissionRequest = $this->getSpecifiedRequest($requestId);
@@ -238,6 +243,11 @@ class CommissionRequestService
             && $hierarchyApproval == true;
     }
 
+    /**
+     * this will check if the up line will be bypass
+     * @param $requestId
+     * @return array
+     */
     public function check_by_pass($requestId)
     {
         $commissionRequest = $this->getSpecifiedRequest($requestId);
@@ -285,6 +295,12 @@ class CommissionRequestService
         return $byPass;
     }
 
+    /**
+     * this is also use for check_by_pass method
+     * @param $byPassApproval
+     * @param $hierarchyApproval
+     * @return bool
+     */
     private function consent($byPassApproval, $hierarchyApproval)
     {
         if($hierarchyApproval == true && $byPassApproval == true){
@@ -304,6 +320,14 @@ class CommissionRequestService
         return true;
     }
 
+    /**
+     * organize the up line approval by hierarchy
+     * @param $commissionRequest
+     * @param $approval
+     * @param $byPassArray
+     * @param $key
+     * @return bool
+     */
     public function hierarchy($commissionRequest, $approval, $byPassArray, $key)
     {
         $previousData = collect($byPassArray)->count() > 0 ? $byPassArray[$key-1]['approval'] : null;

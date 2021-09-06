@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\Cors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Laravel\Passport\Http\Middleware\CheckClientCredentials;
 use Laravel\Passport\Http\Middleware\CreateFreshApiToken;
 
 class Kernel extends HttpKernel
@@ -71,7 +72,8 @@ class Kernel extends HttpKernel
         'checkLid' => \App\Http\Middleware\RequestLid::class,
         'checkCommission' => \App\Http\Middleware\CheckCommission::class,
         'onlyAssignedLeads' => \App\Http\Middleware\OnlyAssignedLeads::class,
-        'checkUpLineApproval' => \App\Http\Middleware\CheckUpLineApproval::class
+        'checkUpLineApproval' => \App\Http\Middleware\CheckUpLineApproval::class,
+        'client' => CheckClientCredentials::class
     ];
 
     /**

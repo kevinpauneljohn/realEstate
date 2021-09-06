@@ -177,6 +177,8 @@ class CommissionRequestController extends Controller
             'estimatedAmount' => $this->commissionRequest->getAmountRelease($id,null),
             'approvedEstimatedAmount' => $this->commissionRequest->getAmountRelease($id,$commissionRequest->approved_rate),
         ]);
+//        return collect($commissionRequest->sales->clientRequirements)->first()->drive_link;
+//        return collect($commissionRequest->sales->clientRequirements)->count() > 0 ? collect($commissionRequest->sales->clientRequirements)->first()->drive_link : "";
     }
 
     /**
