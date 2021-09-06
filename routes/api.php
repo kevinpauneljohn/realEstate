@@ -20,5 +20,5 @@ use Illuminate\Http\Request;
 //Route::post('/login','Api\AuthController@authenticate')->middleware(['role:client','cors:api']);
 Route::post('/login','Api\AuthController@authenticate')->name('login')->middleware(['cors:api']);
 Route::middleware('auth:api','client')->group(function(){
-    Route::resource('leads',\App\Http\Controllers\OpenHouseSeller\LeadsApiController::class);
+    Route::resource('leads-client','Api\LeadsClientController');
 });

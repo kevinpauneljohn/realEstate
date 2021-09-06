@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\OpenHouseSeller;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class LeadsApiController extends Controller
+class LeadsClientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LeadsApiController extends Controller
      */
     public function index()
     {
-        //
+        return 'hi';
     }
 
     /**
