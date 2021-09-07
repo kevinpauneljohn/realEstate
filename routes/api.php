@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 //Route::post('/api-login','Api\AuthController@authenticate')->middleware(['role:client','cors:api']);
 
-Route::middleware(['auth:api','client'])->group(function(){
+Route::middleware(['client'])->group(function(){
     Route::post('/api-login','Api\AuthController@authenticate')->name('login');
     Route::resource('leads-api','LeadsApiController');
 });
