@@ -144,7 +144,8 @@
                             </div>
                             <div class="form-group description">
                                 <label for="description">Description</label><span class="required">*</span>
-                                <textarea class="form-control" id="description" name="description" style="min-height:300px;"></textarea>
+                                <textarea name="description" id="description" style="min-height:300px;"></textarea>
+                                <!-- <textarea class="form-control" id="description" name="description" style="min-height:300px;"></textarea> -->
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
@@ -207,6 +208,11 @@
     <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <style>
+        .tox-statusbar__branding {
+            display: none;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -218,8 +224,17 @@
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
     <script src="{{asset('js/validation.js')}}"></script>
+    <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_APP_KEY') }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         $(function() {
+            tinymce.init({
+                selector: '#description',
+                plugins: "emoticons image link lists charmap table", 
+                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+                toolbar_mode: 'wrap',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            });
+
             $('#task-list').DataTable({
                 processing: true,
                 serverSide: true,
@@ -251,6 +266,10 @@
             $(document).on('click','.add-new-task',function(){
                 $('#add-task-modal').find('.modal-title').text("Add New Task");
                 $('#add-task-modal').find('form').attr('id','task-form').find('input[name=task_id]').remove();
+                
+                $('form#task-form').trigger("reset");
+                $('form#task-form select').trigger("change");
+                tinyMCE.get('description').setContent('');
             });
 
         $(document).on('submit','#task-form',function(form){
@@ -309,7 +328,7 @@
 
                     },success: function(result){
                         taskModal.find('input[name=title]').val(result.title);
-                        taskModal.find('textarea[name=description]').val(result.description);
+                        tinyMCE.get('description').setContent(result.description);
                         taskModal.find('input[name=due_date]').val(result.due_date);
                         taskModal.find('input[name=time]').val(result.time);
                         taskModal.find('select[name=priority]').val(result.priority_id).change();
@@ -353,6 +372,10 @@
                     });
 
                     $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
+                    
+                    setTimeout(function() { 
+                        $('#add-task-modal').modal('hide');
+                    }, 2000);
                 },error: function(xhr, status, error){
                     console.log(xhr);
                 }

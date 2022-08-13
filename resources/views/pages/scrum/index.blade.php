@@ -153,10 +153,13 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            <input type="hidden" id="add_checklist_count" value="0" class="form-control">
                             <table class="checklist-table">
                                 <tr class="table-row-0">
-                                    <td><textarea class="form-control" name="checklist[]"></textarea></td>
-                                    <td><button type="button" class="btn btn-danger btn-xs remove" id="0" title="remove"><i class="fas fa-trash"></i></button></td>
+                                    <td>
+                                        <textarea class="form-control" id="checklist0" name="checklist[]"></textarea>
+                                    </td>
+                                    <td><button type="button" disabled class="btn btn-danger btn-xs remove" id="0" title="remove"><i class="fas fa-trash"></i></button></td>
                                 </tr>
                             </table>
                             <button type="button" class="btn btn-default btn-sm add-row">Add Row</button>
@@ -189,7 +192,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <textarea class="form-control" name="checklist" style="min-height: 300px;"></textarea>
+                            <textarea class="form-control" id="edit_checklist" name="checklist" style="min-height: 300px;"></textarea>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -204,36 +207,34 @@
     @endcan
 
     <div class="modal fade" id="action-taken">
-
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Action Taken</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group action">
-                            <form role="form" id="action-taken-form">
-                                @csrf
-                                <input type="hidden" name="checklist_id">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Action Taken</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group action">
+                        <form role="form" id="action-taken-form">
+                            @csrf
+                            <input type="hidden" name="checklist_id">
                             <textarea class="form-control" name="action" style="min-height: 200px;" id="action"></textarea>
                             <input type="submit" class="btn btn-primary submit-checklist-btn" value="Save">
-                            </form>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12 action-timeline"></div>
-                        </div>
+                        </form>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <div class="row">
+                        <div class="col-md-12 action-timeline"></div>
                     </div>
                 </div>
-                <!-- /.modal-content -->
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    
+                </div>
             </div>
-            <!-- /.modal-dialog -->
+        </div>
     </div>
 
 @stop
@@ -252,6 +253,9 @@
         .dataTables_wrapper {
             overflow-x: hidden;
         }
+        .tox-statusbar__branding {
+            display: none;
+        }
     </style>
 @stop
 
@@ -263,7 +267,32 @@
     <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
+    <script src="https://cdn.tiny.cloud/1/j6t2d08hfxlqkrkpuydlbhnozzeq88y0ouvpm5ra0jpdw007/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
+        tinymce.init({
+            selector: '#edit_checklist',
+            plugins: "emoticons image link lists charmap table", 
+            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+            toolbar_mode: 'wrap',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        });
+
+        tinymce.init({
+            selector: '#checklist0',
+            plugins: "emoticons image link lists charmap table", 
+            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+            toolbar_mode: 'wrap',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        });
+
+        tinymce.init({
+            selector: '#action',
+            plugins: "emoticons image link lists charmap table", 
+            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+            toolbar_mode: 'wrap',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        });
+
         let checklist_id; //checklist_id
         $(document).on('submit','#update-assignee',function(form){
             form.preventDefault();
@@ -308,23 +337,74 @@
         let checklistTable = $('.checklist-table');
         let checklistForm = $('#checklist-form');
 
-        $(document).on('click','.add-row',function(){
-            let tr = checklistTable.find('tr').length;
+        function wysiwyg_editor(id) {
+            tinymce.init({
+                selector: '#checklist'+id,
+                plugins: "emoticons image link lists charmap table", 
+                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+                toolbar_mode: 'wrap',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            });
+        }
 
-            checklistTable.append(`<tr class="table-row-${tr}">
-                                    <td><textarea class="form-control" name="checklist[]"></textarea></td>
-                                    <td><button type="button" class="btn btn-danger btn-xs remove" id="${tr}" title="remove"><i class="fas fa-trash"></i></button></td>
-                                </tr>`)
+        function makeid(length) {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * 
+                charactersLength));
+            }
+            return result;
+        }
+
+        function makeint_id(length) {
+            var result           = '';
+            var characters       = '0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * 
+                charactersLength));
+            }
+            return result;
+        }
+
+        $(document).on('click','.add-row',function(){
+            let tr = checklistTable.find('tr').length + 1;
+            var checklist_form = +$('#add_checklist_count').val() + 1;
+            var checklist_count = $('#add_checklist_count').val(checklist_form);
+            
+            if (tr >= 0) {
+                $('.remove').prop('disabled', false);
+            }
+
+            var create_random_id = makeid(5);
+            var create_random_int_id = makeint_id(5);
+            checklistTable.append(
+                `<tr class="table-row-${create_random_int_id}">
+                    <td><textarea class="form-control" id="checklist${create_random_id}" name="checklist[]"></textarea></td>
+                    <td><button type="button" class="btn btn-danger btn-xs remove" id="${create_random_int_id}" title="remove"><i class="fas fa-trash"></i></button></td>
+                </tr>`
+            );
+            wysiwyg_editor(create_random_id)
         });
 
         $(document).on('click','.remove',function(){
             let id = this.id;
+            var checklist_form = +$('#add_checklist_count').val() - 1;
+            if (checklist_form > -1) {
+                var checklist_count = $('#add_checklist_count').val(checklist_form);
+            }
+
+            if (checklist_form == 0) {
+                $('.remove').prop('disabled', true);
+            }
+            
             checklistTable.find('.table-row-'+id).remove();
         });
 
         $(document).on('submit','#checklist-form',function(form){
             form.preventDefault();
-
             let data = $(this).serializeArray();
 
             $.ajax({
@@ -338,8 +418,18 @@
                     {
                         customAlert('success',response.message);
                         checklistTable.find('tr').remove();
-                        $('#checklist').modal('toggle');
+                        var create_random_id = makeid(5);
+                        checklistTable.append(
+                            `<tr class="table-row-0">
+                                <td><textarea class="form-control" id="checklist${create_random_id}" name="checklist[]"></textarea></td>
+                                <td><button type="button" class="btn btn-danger btn-xs remove" id="0" title="remove"><i class="fas fa-trash"></i></button></td>
+                            </tr>`
+                        );
+                        wysiwyg_editor(create_random_id);
+                        $('.remove').prop('disabled', true);
+                        $('#add_checklist_count').val(0);
 
+                        $('#checklist').modal('toggle');
                         let table = $('#check-list').DataTable();
                         table.ajax.reload();
                     }
@@ -406,11 +496,13 @@
                 let tr = $(this).closest('tr');
 
                 let data = tr.children("td").map(function () {
-                    return $(this).text();
+                    return $(this).html();
                 }).get();
 
                 $('#edit-checklist-form').find('input[name=checklist_id]').val(checklist_id);
-                $('#edit-checklist-form').find('textarea[name=checklist]').val(data[0]);
+                //$('#edit-checklist-form').find('textarea[name=checklist]').val(data[0]);
+
+                tinyMCE.get('edit_checklist').setContent(data[0]);
             });
 
             $(document).on('submit','#edit-checklist-form',function(form){
@@ -497,7 +589,7 @@
             actionContentHtml = $('.action-timeline').find('#action-taken-'+rowId).html();
             actionContent = $('.action-timeline').find('#action-taken-'+rowId).text();
 
-            $('.action-timeline').find('#action-taken-'+rowId).html('<form method="post" class="edit-action-form"><input type="hidden" name="action_taken_id" value="'+rowId+'"><input type="hidden" name="_token" value="{{csrf_token()}}"><textarea class="form-control" name="action_taken" id="'+rowId+'" style="min-height: 150px;">'+actionContent+'</textarea>' +
+            $('.action-timeline').find('#action-taken-'+rowId).html('<form method="post" class="edit-action-form"><input type="hidden" name="action_taken_id" value="'+rowId+'"><input type="hidden" name="_token" value="{{csrf_token()}}"><textarea class="form-control action_taken'+rowId+'" name="action_taken" id="'+rowId+'" style="min-height: 150px;">'+actionContent+'</textarea>' +
                 '<button type="button" class="btn btn-default btn-xs cancel" value="'+rowId+'">Cancel</button> <button type="submit" class="btn btn-default btn-xs save" value="'+rowId+'">Save</button></form>');
         });
             @endif
@@ -564,7 +656,8 @@
                     console.log(output);
                     if(output.success === true){
                         customAlert('success',output.message);
-                        $('#action-taken-form').find('textarea[name=action]').val("");
+                        //$('#action-taken-form').find('textarea[name=action]').val("");
+                        tinyMCE.get('action').setContent('');
 
                         $('#action-taken').modal('toggle');
 
