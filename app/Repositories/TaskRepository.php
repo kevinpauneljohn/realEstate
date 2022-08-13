@@ -10,6 +10,7 @@ use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
 use App\TaskRemark;
 use App\User;
+use App\Watcher;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -26,6 +27,11 @@ class TaskRepository implements TaskInterface
     public function create(array $task)
     {
         return Task::create($task);
+    }
+
+    public function getWatcher($task_id){
+        $taskWatcher = Watcher::where('task_id',$task_id)->get();
+        return $taskWatcher;
     }
 
     public function getTask($task_id)

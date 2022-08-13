@@ -182,6 +182,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group watchers">
+                                        <label for="watchers">Watchers</label>
+                                        <select name="watchers[]" multiple class="form-control" id="watchers" style="width: 100%">
+                                            <option value="">Please Select</option>
+                                            @foreach($users as $user)
+                                                <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -224,6 +237,10 @@
     <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_APP_KEY') }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         $(function() {
+            $("#watchers").select2({
+                minimumResultsForSearch: 20
+            });
+
             tinymce.init({
                 selector: '#description',
                 plugins: "emoticons image link lists charmap table", 
@@ -292,14 +309,19 @@
                 beforeSend: function(){
 
                 },success: function(result){
-                    console.log(result);
-                    taskModal.find('input[name=title]').val(result.title);
-                    tinyMCE.get('description').setContent(result.description);
-                    taskModal.find('input[name=due_date]').val(result.due_date);
-                    taskModal.find('input[name=time]').val(result.time);
-                    taskModal.find('select[name=priority]').val(result.priority_id).change();
-                    taskModal.find('select[name=assign_to]').val(result.assigned_to).change();
+                    taskModal.find('input[name=title]').val(result.task.title);
+                    tinyMCE.get('description').setContent(result.task.description);
+                    taskModal.find('input[name=due_date]').val(result.task.due_date);
+                    taskModal.find('input[name=time]').val(result.task.time);
+                    taskModal.find('select[name=priority]').val(result.task.priority_id).change();
+                    taskModal.find('select[name=assign_to]').val(result.task.assigned_to).change();
 
+                    var watcher_data = [];
+                    $.each(result.watcher, function(i, record) {
+                        watcher_data.push(record.user_id)
+                    });
+
+                    taskModal.find('#watchers').val(watcher_data).change();
                 },error: function(xhr, status, error){
                     console.log(xhr);
                 }

@@ -8,6 +8,7 @@ use App\Priority;
 use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
 use App\User;
+use App\Watcher;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
@@ -56,7 +57,6 @@ class ScrumController extends Controller
 
         if($validation->passes())
         {
-
             $task = [
                 'created_by'    => auth()->user()->id,
                 'title'    => $request->input('title'),
@@ -68,8 +68,18 @@ class ScrumController extends Controller
                 'priority_id'    => $request->input('priority'),
             ];
 
+            $watchers = $request->input('watchers');
+
             if($taskCreated = $this->task->create($task))
             {
+                foreach ($watchers as $watcher) {
+                    $watcher_data = [
+                        'user_id' => $watcher,
+                        'task_id' => $taskCreated->id
+                    ];
+
+                    Watcher::create($watcher_data);
+                }
                 event(new TaskEvent([
                     'assigned' => $taskCreated->user !== null ? $taskCreated->user->fullname : "nobody",
                     'title' => $taskCreated->title,
@@ -130,7 +140,11 @@ class ScrumController extends Controller
      * */
     public function show($id)
     {
-        return $this->task->getTask($id);
+        $data = [
+            'task' => $this->task->getTask($id),
+            'watcher' => $this->task->getWatcher($id)
+        ];
+        return $data;
     }
 
     public function update(Request $request, $id)
@@ -141,8 +155,10 @@ class ScrumController extends Controller
             'due_date'   => 'required|date',
             'priority'   => 'required',
             'assign_to'   => 'required',
+            'watchers'   => 'required',
         ]);
 
+        $watchers = $request->input('watchers');
         if($validation->passes())
         {
             $data = [
@@ -155,8 +171,18 @@ class ScrumController extends Controller
                 'priority_id' => $request->input('priority'),
             ];
 
+            $watcher = $this->delete_watcher($id);
             if($taskCreated = $this->task->update($id, $data))
             {
+                foreach ($watchers as $watcher) {
+                    $watcher_data = [
+                        'user_id' => $watcher,
+                        'task_id' => $taskCreated->id
+                    ];
+
+                    Watcher::create($watcher_data);
+                }
+
                 event(new TaskEvent([
                     'assigned' => $taskCreated->user !== null ? $taskCreated->user->fullname : "nobody",
                     'title' => $taskCreated->title,
@@ -171,10 +197,28 @@ class ScrumController extends Controller
                     ->withProperties($taskCreated)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated the task details');
 
                 return response(['success' => true, 'message' => 'Task successfully updated!', $taskCreated]);
+            } else {
+                foreach ($watchers as $watcher) {
+                    $watcher_data = [
+                        'user_id' => $watcher,
+                        'task_id' => $id
+                    ];
+
+                    Watcher::create($watcher_data);
+                }
+
+                return response(['success' => true, 'message' => 'Task watcher successfully updated!']);
             }
             return response(['success' => false, 'message' => 'No changes occurred!']);
         }
         return response($validation->errors());
+    }
+
+    public function delete_watcher($id)
+    {
+        $watcher = Watcher::where('task_id',$id)->delete();
+
+        return $watcher;
     }
 
     public function destroy($id)
