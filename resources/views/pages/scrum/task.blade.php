@@ -144,7 +144,8 @@
                             </div>
                             <div class="form-group description">
                                 <label for="description">Description</label><span class="required">*</span>
-                                <textarea class="form-control" id="description" name="description" style="min-height:300px;"></textarea>
+                                <textarea name="description" id="description" style="min-height:300px;"></textarea>
+                                <!-- <textarea class="form-control" id="description" name="description" style="min-height:300px;"></textarea> -->
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
@@ -165,7 +166,7 @@
                                     <div class="form-group priority">
                                         <label for="priority">Priority</label>
                                         <select name="priority" class="form-control select2" id="priority" style="width: 100%">
-                                            <option value=""></option>
+                                            <option value="">Please Select</option>
                                             @foreach($priorities as $priority)
                                                 <option value="{{$priority->id}}">{{$priority->name}}</option>
                                             @endforeach
@@ -176,9 +177,22 @@
                                     <div class="form-group assign_to">
                                         <label for="assign_to">Assign To</label>
                                         <select name="assign_to" class="form-control select2" id="assign_to" style="width: 100%">
-                                            <option value=""></option>
+                                            <option value="">Please Select</option>
                                             @foreach($agents as $agent)
                                                 <option value="{{$agent->id}}">{{$agent->fullname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group watchers">
+                                        <label for="watchers">Watchers</label>
+                                        <select name="watchers[]" multiple class="form-control" id="watchers" style="width: 100%">
+                                            <option value="">Please Select</option>
+                                            @foreach($users as $user)
+                                                <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -207,6 +221,11 @@
     <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <style>
+        .tox-statusbar__branding {
+            display: none;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -218,8 +237,21 @@
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
     <script src="{{asset('js/validation.js')}}"></script>
+    <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_APP_KEY') }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         $(function() {
+            $("#watchers").select2({
+                minimumResultsForSearch: 20
+            });
+
+            tinymce.init({
+                selector: '#description',
+                plugins: "emoticons image link lists charmap table", 
+                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+                toolbar_mode: 'wrap',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            });
+
             $('#task-list').DataTable({
                 processing: true,
                 serverSide: true,
@@ -251,6 +283,10 @@
             $(document).on('click','.add-new-task',function(){
                 $('#add-task-modal').find('.modal-title').text("Add New Task");
                 $('#add-task-modal').find('form').attr('id','task-form').find('input[name=task_id]').remove();
+                
+                $('form#task-form').trigger("reset");
+                $('form#task-form select').trigger("change");
+                tinyMCE.get('description').setContent('');
             });
 
         $(document).on('submit','#task-form',function(form){
@@ -308,13 +344,19 @@
                     beforeSend: function(){
 
                     },success: function(result){
-                        taskModal.find('input[name=title]').val(result.title);
-                        taskModal.find('textarea[name=description]').val(result.description);
-                        taskModal.find('input[name=due_date]').val(result.due_date);
-                        taskModal.find('input[name=time]').val(result.time);
-                        taskModal.find('select[name=priority]').val(result.priority_id).change();
-                        taskModal.find('select[name=assign_to]').val(result.assigned_to).change();
+                        taskModal.find('input[name=title]').val(result.task.title);
+                        tinyMCE.get('description').setContent(result.task.description);
+                        taskModal.find('input[name=due_date]').val(result.task.due_date);
+                        taskModal.find('input[name=time]').val(result.task.time);
+                        taskModal.find('select[name=priority]').val(result.task.priority_id).change();
+                        taskModal.find('select[name=assign_to]').val(result.task.assigned_to).change();
 
+                        var watcher_data = [];
+                        $.each(result.watcher, function(i, record) {
+                            watcher_data.push(record.user_id)
+                        });
+
+                        taskModal.find('#watchers').val(watcher_data).change();
                     },error: function(xhr, status, error){
                         console.log(xhr);
                     }
@@ -353,6 +395,10 @@
                     });
 
                     $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
+                    
+                    setTimeout(function() { 
+                        $('#add-task-modal').modal('hide');
+                    }, 2000);
                 },error: function(xhr, status, error){
                     console.log(xhr);
                 }

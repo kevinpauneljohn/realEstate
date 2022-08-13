@@ -73,7 +73,8 @@ class TaskChecklistController extends Controller
         if(!empty($request->input('checklist')))
         {
             $checkList = TaskChecklist::find($id);
-            $checkList->description = nl2br($request->input('checklist'));
+            //$checkList->description = nl2br($request->input('checklist'));
+            $checkList->description = $request->input('checklist');
             if($checkList->isDirty() && $checkList->save()) {
                 activity('task')
                     ->causedBy(auth()->user()->id)
