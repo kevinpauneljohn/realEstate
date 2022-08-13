@@ -78,16 +78,31 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <select class="select2" name="statusChange" style="width: 150px;">
-                <option value="">All</option>
-                <option value="pending" @if(\Illuminate\Support\Facades\Session::get('statusMyTask') === 'pending') selected @endif>Pending</option>
-                <option value="on-going" @if(\Illuminate\Support\Facades\Session::get('statusMyTask') === 'on-going') selected @endif>On-going</option>
-                <option value="completed" @if(\Illuminate\Support\Facades\Session::get('statusMyTask') === 'completed') selected @endif>Completed</option>
-            </select>
-
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="filteredStatus">
+                        <select class="select2" name="statusChange" style="width: 150px;">
+                            <option value="">All</option>
+                            <option value="pending" @if(\Illuminate\Support\Facades\Session::get('statusMyTask') === 'pending') selected @endif>Pending</option>
+                            <option value="on-going" @if(\Illuminate\Support\Facades\Session::get('statusMyTask') === 'on-going') selected @endif>On-going</option>
+                            <option value="completed" @if(\Illuminate\Support\Facades\Session::get('statusMyTask') === 'completed') selected @endif>Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ul class="nav nav-tabs float-right">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="mytickets" href="#">My Tickets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="mywatchedtickets" href="#">Watched Tickets</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="card-body">
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div id="mytickets" class="dataTables_wrapper dt-bootstrap4 mytasklist">
                 <table id="task-list" class="table table-bordered table-striped" role="grid">
                     <thead>
                     <tr role="row">
@@ -102,7 +117,37 @@
                         <th>Action</th>
                     </tr>
                     </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Task #</th>
+                        <th>Due Date</th>
+                        <th>Title</th>
+                        <th>Priority</th>
+                        <th>Assigned To</th>
+                        <th>Creator</th>
+                        <th>Date Created</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
 
+            <div id="mywatchedtickets" class="dataTables_wrapper dt-bootstrap4 mywatchedlist hidden">
+                <table id="watched-list" class="table table-bordered table-striped" role="grid">
+                    <thead>
+                    <tr role="row">
+                        <th>Task #</th>
+                        <th>Due Date</th>
+                        <th>Title</th>
+                        <th>Priority</th>
+                        <th>Assigned To</th>
+                        <th>Creator</th>
+                        <th>Date Created</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
                     <tfoot>
                     <tr>
                         <th>Task #</th>
@@ -222,6 +267,9 @@
         .tox-statusbar__branding {
             display: none;
         }
+        .hidden {
+            display:none;
+        }
     </style>
 @stop
 
@@ -236,37 +284,91 @@
     <script src="{{asset('js/validation.js')}}"></script>
     <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_APP_KEY') }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        $(function() {
+        $(document).ready(function() {
+            mytask();
+            $('#mytickets').css('font-weight', 'bold');
+
+            $(document).on('click','#mytickets',function(e){
+                mytask();
+                // e.preventDefault();           
+                $('#mywatchedtickets').removeClass('active');
+                $('#mytickets').addClass('active');
+                $('#mytickets').css('font-weight', 'bold');
+                $('#mywatchedtickets').css('font-weight', 'normal');
+                $('.mytasklist').removeClass('hidden');
+                $('.mywatchedlist').addClass('hidden');
+                $('.filteredStatus').removeClass('hidden');
+            })
+
+            $(document).on('click','#mywatchedtickets',function(e){
+                mywatched();
+                // e.preventDefault();             
+                $('#mytickets').removeClass('active');
+                $('#mywatchedtickets').addClass('active');
+                $('#mywatchedtickets').css('font-weight', 'bold');
+                $('#mytickets').css('font-weight', 'normal');
+                $('.mytasklist').addClass('hidden');
+                $('.mywatchedlist').removeClass('hidden');
+                $('.filteredStatus').addClass('hidden');
+            });
+
             $("#watchers").select2({
                 minimumResultsForSearch: 20
             });
 
             tinymce.init({
                 selector: '#description',
-                plugins: "emoticons image link lists charmap table", 
-                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+                plugins: "emoticons link lists charmap table", 
+                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link emoticons charmap hr | indent outdent | superscript subscript | removeformat",
                 toolbar_mode: 'wrap',
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             });
 
-            $('#task-list').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{!! route('my.tasks.list') !!}',
-                columns: [
-                    { data: 'id', name: 'id'},
-                    { data: 'due_date', name: 'due_date'},
-                    { data: 'title', name: 'title'},
-                    { data: 'priority_id', name: 'priority_id'},
-                    { data: 'assigned_to', name: 'assigned_to'},
-                    { data: 'created_by', name: 'created_by'},
-                    { data: 'created_at', name: 'created_at'},
-                    { data: 'status', name: 'status'},
-                    { data: 'action', name: 'action', orderable: false, searchable: false}
-                ],
-                responsive:true,
-                order:[0,'desc']
-            });
+            function mytask() {
+                $('#task-list').DataTable().clear();
+                $('#task-list').DataTable().destroy();
+                $('#task-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('my.tasks.list') !!}',
+                    columns: [
+                        { data: 'id', name: 'id'},
+                        { data: 'due_date', name: 'due_date'},
+                        { data: 'title', name: 'title'},
+                        { data: 'priority_id', name: 'priority_id'},
+                        { data: 'assigned_to', name: 'assigned_to'},
+                        { data: 'created_by', name: 'created_by'},
+                        { data: 'created_at', name: 'created_at'},
+                        { data: 'status', name: 'status'},
+                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'desc']
+                });
+            }
+
+            function mywatched() {
+                $('#watched-list').DataTable().clear();
+                $('#watched-list').DataTable().destroy();
+                $('#watched-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('my.watched.list') !!}',
+                    columns: [
+                        { data: 'id', name: 'id'},
+                        { data: 'due_date', name: 'due_date'},
+                        { data: 'title', name: 'title'},
+                        { data: 'priority_id', name: 'priority_id'},
+                        { data: 'assigned_to', name: 'assigned_to'},
+                        { data: 'created_by', name: 'created_by'},
+                        { data: 'created_at', name: 'created_at'},
+                        { data: 'status', name: 'status'},
+                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'desc']
+                });
+            }
         });
 
         $('#date_active').datepicker({

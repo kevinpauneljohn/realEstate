@@ -117,6 +117,19 @@ class ScrumController extends Controller
         return $this->task->displayTasks($tasks);
     }
 
+    public function myWatchedList()
+    {
+        $watcher = $this->task->getWatchedIds(auth()->user()->id);
+        
+        $data = [];
+        foreach ($watcher as $watchers) {
+            $data [] = $watchers['task_id'];
+        }
+
+        $tasks = Task::whereIn('id', $data)->get();
+        return $this->task->displayTasks($tasks);
+    }
+
     /**
      * @param Request $request
      * @return void
@@ -246,9 +259,25 @@ class ScrumController extends Controller
      */
     public function overview($id)
     {
+        $watchers = Watcher::where('task_id', $id)->get();
+        $data = [];
+        foreach ($watchers as $watcher) {
+            $data [] = $watcher['user_id'];
+        }
+
+        $users = User::whereIn('id', $data)->get();
+        $users_data = [];
+        foreach ($users as $user) {
+            $users_data [] = [
+                'first_name' => $user['firstname'],
+                'last_name' => $user['lastname'],
+            ];
+        }
+
         return view('pages.scrum.index',[
             'task'  => $this->task->getTask($id),
             'agents' => $this->task->getAgents($this->agents),
+            'watchers' => $users_data
         ]);
     }
 

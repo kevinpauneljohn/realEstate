@@ -246,8 +246,8 @@
 
             tinymce.init({
                 selector: '#description',
-                plugins: "emoticons image link lists charmap table", 
-                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+                plugins: "emoticons link lists charmap table", 
+                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link emoticons charmap hr | indent outdent | superscript subscript | removeformat",
                 toolbar_mode: 'wrap',
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             });
