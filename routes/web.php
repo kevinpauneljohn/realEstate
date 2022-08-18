@@ -388,6 +388,8 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('commission-requests',CommissionRequestController::class);
 });
 
+Route::get('send', 'MailSendController@email');
+
 
 
 

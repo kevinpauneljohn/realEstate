@@ -267,6 +267,9 @@
         .tox-statusbar__branding {
             display: none;
         }
+        .tox-notifications-container{
+            display:none;
+        }
         .hidden {
             display:none;
         }
