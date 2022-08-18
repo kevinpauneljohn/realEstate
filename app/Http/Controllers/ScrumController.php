@@ -78,7 +78,7 @@ class ScrumController extends Controller
                     'email' => $taskCreated->user->email,
                     'username' => $taskCreated->user->username,
                     'message' => strip_tags($request->input('description')),
-                    'title' => $request->input('title'),
+                    'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
                     'time' => date('h:i:s  a', strtotime($request->input('time'))),
                     'priority' => $taskCreated->priority->name,
                     'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
@@ -97,7 +97,7 @@ class ScrumController extends Controller
                         'user_id' => $watcher,
                         'task_id' => $taskCreated->id
                     ];
-
+                    Watcher::create($watcher_data);
                     $watchers_data = User::where('id', $watcher)->get();
                     foreach ($watchers_data as $watcher_data) {
                         $watchers_fullname = $watcher_data['firstname'].' '.$watcher_data['lastname'];
@@ -109,7 +109,7 @@ class ScrumController extends Controller
                         'email' => $watchers_email,
                         'username' => $watchers_username,
                         'message' => strip_tags($request->input('description')),
-                        'title' => $request->input('title'),
+                        'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
                         'time' => date('h:i:s  a', strtotime($request->input('time'))),
                         'priority' => $taskCreated->priority->name,
                         'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
@@ -122,7 +122,6 @@ class ScrumController extends Controller
                     ];
 
                     $watched_email = $this->task->taskEmail($watcher_emails);
-                    Watcher::create($watcher_data);
                 }
                 event(new TaskEvent([
                     'assigned' => $taskCreated->user !== null ? $taskCreated->user->fullname : "nobody",
@@ -227,6 +226,21 @@ class ScrumController extends Controller
                 'priority_id' => $request->input('priority'),
             ];
             $get_priority_id = $this->show($id)['task']['priority_id'];
+            $get_watchers = $this->show($id)['watcher'];
+
+            $get_list_watchers = [];
+            foreach ($get_watchers as $get_watcher) {
+                $get_list_watchers [] = $get_watcher['user_id'];
+            }
+
+            $new_watchers = [];
+            foreach ($watchers as $new_watch) {
+                $new_watchers [] = $new_watch;
+            }
+
+            $email_new_watchers = array_diff($new_watchers, $get_list_watchers);
+            $email_removed_watchers = array_diff($get_list_watchers, $new_watchers);
+
             $watcher = $this->delete_watcher($id);
             if($taskCreated = $this->task->update($id, $data))
             {
@@ -235,7 +249,7 @@ class ScrumController extends Controller
                         'email' => $taskCreated->user->email,
                         'username' => $taskCreated->user->username,
                         'message' => strip_tags($request->input('description')),
-                        'title' => $request->input('title'),
+                        'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
                         'time' => date('h:i:s  a', strtotime($request->input('time'))),
                         'priority' => $taskCreated->priority->name,
                         'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
@@ -253,7 +267,8 @@ class ScrumController extends Controller
                         'user_id' => $watcher,
                         'task_id' => $taskCreated->id
                     ];
-
+                    Watcher::create($watcher_data);
+                    
                     if ($get_priority_id != $request->input('priority')) {
                         $watchers_data = User::where('id', $watcher)->get();
                         foreach ($watchers_data as $watcher_data) {
@@ -266,7 +281,7 @@ class ScrumController extends Controller
                             'email' => $watchers_email,
                             'username' => $watchers_username,
                             'message' => strip_tags($request->input('description')),
-                            'title' => $request->input('title'),
+                            'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
                             'time' => date('h:i:s  a', strtotime($request->input('time'))),
                             'priority' => $taskCreated->priority->name,
                             'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
@@ -280,7 +295,52 @@ class ScrumController extends Controller
     
                         $watched_email = $this->task->taskEmail($watcher_emails);
                     }
-                    Watcher::create($watcher_data);
+                }
+
+                if (!empty($email_removed_watchers)) {
+                    foreach ($email_removed_watchers as $removed_watcher) {
+                        $user_removed_info = $this->task->getUser($removed_watcher);
+                        $removed_emails = [
+                            'email' => $user_removed_info['email'],
+                            'username' => $user_removed_info['username'],
+                            'message' => strip_tags($request->input('description')),
+                            'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
+                            'time' => date('h:i:s  a', strtotime($request->input('time'))),
+                            'priority' => $taskCreated->priority->name,
+                            'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
+                            'created_by' => auth()->user()->username,
+                            'id' => $taskCreated->id,
+                            'sub_title' => '',
+                            'submit_message' => 'You have been removed as a watcher on this task ticket.',
+                            'type' => 'deleted_ticket',
+                            'view_ticket' => 'view the ticket.',
+                        ];
+
+                        $removed_email = $this->task->taskEmail($removed_emails);
+                    }
+                }
+
+                if (!empty($email_new_watchers)) {
+                    foreach ($email_new_watchers as $new_add_watcher) {
+                        $user_new_info = $this->task->getUser($new_add_watcher);
+                        $removed_emails = [
+                            'email' => $user_new_info['email'],
+                            'username' => $user_new_info['username'],
+                            'message' => strip_tags($request->input('description')),
+                            'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
+                            'time' => date('h:i:s  a', strtotime($request->input('time'))),
+                            'priority' => $taskCreated->priority->name,
+                            'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
+                            'created_by' => auth()->user()->username,
+                            'id' => $taskCreated->id,
+                            'sub_title' => '',
+                            'submit_message' => auth()->user()->username.' has added you to watch this ticket.',
+                            'type' => 'watched',
+                            'view_ticket' => 'view the ticket.',
+                        ];
+
+                        $removed_email = $this->task->taskEmail($removed_emails);
+                    }
                 }
 
                 event(new TaskEvent([
@@ -298,6 +358,53 @@ class ScrumController extends Controller
 
                 return response(['success' => true, 'message' => 'Task successfully updated!', $taskCreated]);
             } else {
+                $priority_name = $this->task->getPriorityById($request->input('priority'))->name;
+                if (!empty($email_removed_watchers)) {
+                    foreach ($email_removed_watchers as $removed_watcher) {
+                        $user_removed_info = $this->task->getUser($removed_watcher);
+                        $removed_emails = [
+                            'email' => $user_removed_info['email'],
+                            'username' => $user_removed_info['username'],
+                            'message' => strip_tags($request->input('description')),
+                            'title' => '#'.str_pad($id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
+                            'time' => date('h:i:s  a', strtotime($request->input('time'))),
+                            'priority' => $priority_name,
+                            'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
+                            'created_by' => auth()->user()->username,
+                            'id' => $id,
+                            'sub_title' => '',
+                            'submit_message' => 'You have been removed as a watcher on this task ticket.',
+                            'type' => 'deleted_ticket',
+                            'view_ticket' => 'view the ticket.',
+                        ];
+
+                        $removed_email = $this->task->taskEmail($removed_emails);
+                    }
+                }
+
+                if (!empty($email_new_watchers)) {
+                    foreach ($email_new_watchers as $new_add_watcher) {
+                        $user_new_info = $this->task->getUser($new_add_watcher);
+                        $removed_emails = [
+                            'email' => $user_new_info['email'],
+                            'username' => $user_new_info['username'],
+                            'message' => strip_tags($request->input('description')),
+                            'title' => '#'.str_pad($id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
+                            'time' => date('h:i:s  a', strtotime($request->input('time'))),
+                            'priority' => $priority_name,
+                            'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
+                            'created_by' => auth()->user()->username,
+                            'id' => $id,
+                            'sub_title' => '',
+                            'submit_message' => auth()->user()->username.' has added you to watch this ticket.',
+                            'type' => 'watched',
+                            'view_ticket' => 'view the ticket.',
+                        ];
+
+                        $removed_email = $this->task->taskEmail($removed_emails);
+                    }
+                }
+
                 foreach ($watchers as $watcher) {
                     $watcher_data = [
                         'user_id' => $watcher,
@@ -341,7 +448,7 @@ class ScrumController extends Controller
                         'email' => $watchers_email,
                         'username' => $watchers_username,
                         'message' => '',
-                        'title' => $task->title,
+                        'title' => '#'.str_pad($task->id, 5, '0', STR_PAD_LEFT).' '.$task->title,
                         'time' => date('h:i:s  a', strtotime($task->time)),
                         'priority' => $task->priority->name,
                         'due_date' => date('F d, Y', strtotime($task->due_date)),
@@ -361,7 +468,7 @@ class ScrumController extends Controller
                 'email' => $task->user->email,
                 'username' => $task->user->username,
                 'message' => '',
-                'title' => $task->title,
+                'title' => '#'.str_pad($task->id, 5, '0', STR_PAD_LEFT).' '.$task->title,
                 'time' => date('h:i:s  a', strtotime($task->time)),
                 'priority' => $task->priority->name,
                 'due_date' => date('F d, Y', strtotime($task->due_date)),
@@ -433,7 +540,7 @@ class ScrumController extends Controller
                 'email' => $users_data['email'],
                 'username' => $users_data['username'],
                 'message' => '',
-                'title' => $task_ticket['task']['title'],
+                'title' => '#'.str_pad($request->task_id, 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
                 'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
                 'priority' => $priority_name,
                 'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
@@ -471,7 +578,7 @@ class ScrumController extends Controller
                 'email' => $assigned_user->email,
                 'username' => $assigned_user->username,
                 'message' => strip_tags($task_ticket['task']['description']),
-                'title' => $task_ticket['task']['title'],
+                'title' => '#'.str_pad($task_ticket['task']['id'], 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
                 'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
                 'priority' => $priority_name,
                 'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
@@ -498,7 +605,7 @@ class ScrumController extends Controller
                         'email' => $watchers_email,
                         'username' => $watchers_username,
                         'message' => strip_tags($task_ticket['task']['description']),
-                        'title' => $task_ticket['task']['title'],
+                        'title' => '#'.str_pad($request->task_id, 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
                         'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
                         'priority' => $priority_name,
                         'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
@@ -535,15 +642,22 @@ class ScrumController extends Controller
 
     public function changeTaskStatus($id)
     {
-        // if(auth()->user()->hasRole(['super admin','admin','account manager'])) {
-        //     dd('test');
-        // }
-        //$test = User::find(auth()->user()->upline_id)->hasRole('account manager');
-        $test = User::whereHas("roles", function($q) {
-            $q->where("name", "super admin");
+        $users = User::whereHas("roles", function($q) {
+            $q->whereIn("name", ["super admin", "account manager", "admin"]);
         })->get();
 
-        dd($test);
+        $users_data = [];
+        foreach ($users as $user) {
+            $users_data [] = [
+                'username' => $user->username,
+                'email' => $user->email,
+            ];
+        }
+
+        $task_ticket = $this->show($id);
+        $priority_name = $this->task->getPriorityById($task_ticket['task']['priority_id'])->name;
+        $assigned_users_data = $this->task->getUser($task_ticket['task']['assigned_to'])['username'];
+
         $task = $this->task->getTask($id);
         if($task->assigned_to === auth()->user()->id)
         {
@@ -565,7 +679,54 @@ class ScrumController extends Controller
                     ->withProperties($task)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated the task status');
 
                 if ($task->status == 'completed') {
-  
+                    foreach ($users_data as $user_data){
+                        $complete_emails = [
+                            'email' => $user_data['email'],
+                            'username' => $user_data['username'],
+                            'message' => strip_tags($task_ticket['task']['description']),
+                            'title' => '#'.str_pad($task_ticket['task']['id'], 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
+                            'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
+                            'priority' => $priority_name,
+                            'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
+                            'created_by' => auth()->user()->username,
+                            'id' => $task_ticket['task']['id'],
+                            'sub_title' => 'Kindly review the assigned task ticket.',
+                            'submit_message' => $assigned_users_data.' has completed the task ticket.',
+                            'type' => 'new_ticket',
+                            'view_ticket' => 'review the ticket.',
+                        ];
+
+                        $completed_email = $this->task->taskEmail($complete_emails);
+                    }
+
+                    if (!empty($task_ticket['watcher'])) {
+                        foreach ($task_ticket['watcher'] as $watcher) {
+                            $watcher_data = User::where('id', $watcher['user_id'])->get();
+                            foreach ($watcher_data as $watcher_data) {
+                                $watchers_fullname = $watcher_data['firstname'].' '.$watcher_data['lastname'];
+                                $watchers_username = $watcher_data['username'];
+                                $watchers_email = $watcher_data['email'];
+                            }
+        
+                            $watcher_emails = [
+                                'email' => $watchers_email,
+                                'username' => $watchers_username,
+                                'message' => strip_tags($task_ticket['task']['description']),
+                                'title' => '#'.str_pad($task_ticket['task']['id'], 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
+                                'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
+                                'priority' => $priority_name,
+                                'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
+                                'created_by' => auth()->user()->username,
+                                'id' => $task_ticket['task']['id'],
+                                'sub_title' => '',
+                                'submit_message' => $assigned_users_data.' has completed the task ticket you are watching.',
+                                'type' => 'watched',
+                                'view_ticket' => 'view the ticket.',
+                            ];
+        
+                            $watched_email = $this->task->taskEmail($watcher_emails);
+                        }
+                    }
                 }
 
                 return response(['success' => true,
