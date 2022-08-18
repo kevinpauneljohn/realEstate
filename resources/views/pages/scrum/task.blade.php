@@ -227,7 +227,7 @@
         }
 
         .tox-notifications-container{
-            display:none;
+            display:none !important;
         }
     </style>
 @stop
