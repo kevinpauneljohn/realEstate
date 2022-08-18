@@ -76,8 +76,6 @@
             <div class="card card-default">
                 <div class="card-body">
                     <strong><i class="fas fa-ticket-alt"></i> Task # <span class="text-primary text-bold">{{str_pad($task->id, 5, '0', STR_PAD_LEFT)}}</span></strong>
-
-
                     <hr>
                     <strong><i class="fas fa-user mr-1"></i> Requester</strong>
 
@@ -122,6 +120,18 @@
                     <strong><i class="fas fa-info-circle mr-1"></i> Priority</strong>
 
                     <p class="text-muted">{{$task->priority->name}}</p>
+                    <hr>
+
+                    <strong><i class="fa fa-eye mr-1"></i> Watcher</strong>
+                    @if(empty($watchers))
+                        <br />
+                        <span class="text-muted">No watchers found.</span>
+                    @else
+                        @foreach($watchers as $watcher)
+                        <br />
+                        <span class="text-muted">{{$watcher['first_name']}} {{$watcher['last_name']}}</span>
+                        @endforeach
+                    @endif
                 </div>
             </div>
 
@@ -221,7 +231,9 @@
                             @csrf
                             <input type="hidden" name="checklist_id">
                             <textarea class="form-control" name="action" style="min-height: 200px;" id="action"></textarea>
-                            <input type="submit" class="btn btn-primary submit-checklist-btn" value="Save">
+                            <br />
+                            <input type="submit" class="btn btn-primary submit-checklist-btn float-right" value="Save">
+                            <br />
                         </form>
                     </div>
 
@@ -256,6 +268,9 @@
         .tox-statusbar__branding {
             display: none;
         }
+        .tox-notifications-container{
+            display:none !important;
+        }
     </style>
 @stop
 
@@ -271,24 +286,16 @@
     <script>
         tinymce.init({
             selector: '#edit_checklist',
-            plugins: "emoticons image link lists charmap table", 
-            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+            plugins: "emoticons link lists charmap table", 
+            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link emoticons charmap hr | indent outdent | superscript subscript | removeformat",
             toolbar_mode: 'wrap',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
         });
 
         tinymce.init({
             selector: '#checklist0',
-            plugins: "emoticons image link lists charmap table", 
-            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
-            toolbar_mode: 'wrap',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-        });
-
-        tinymce.init({
-            selector: '#action',
-            plugins: "emoticons image link lists charmap table", 
-            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+            plugins: "emoticons link lists charmap table", 
+            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link emoticons charmap hr | indent outdent | superscript subscript | removeformat",
             toolbar_mode: 'wrap',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
         });
@@ -340,8 +347,8 @@
         function wysiwyg_editor(id) {
             tinymce.init({
                 selector: '#checklist'+id,
-                plugins: "emoticons image link lists charmap table", 
-                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link image emoticons charmap hr | indent outdent | superscript subscript | removeformat",
+                plugins: "emoticons link lists charmap table", 
+                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link emoticons charmap hr | indent outdent | superscript subscript | removeformat",
                 toolbar_mode: 'wrap',
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             });

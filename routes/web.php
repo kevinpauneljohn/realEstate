@@ -291,6 +291,7 @@ Route::get('/tasks','ScrumController@index')->name('tasks.index')->middleware(['
 Route::post('/tasks','ScrumController@store')->name('tasks.store')->middleware(['auth','permission:add task']);
 Route::get('/tasks-list','ScrumController@task_list')->name('tasks.list')->middleware(['auth','permission:view task']);
 Route::get('/my-tasks-list','ScrumController@myTaskList')->name('my.tasks.list')->middleware(['auth','permission:view task']);
+Route::get('/my-watched-list','ScrumController@myWatchedList')->name('my.watched.list')->middleware(['auth','permission:view task']);
 Route::get('/tasks/{id}','ScrumController@show')->name('tasks.show')->middleware(['auth','permission:view task']);
 Route::put('/tasks/{id}','ScrumController@update')->name('tasks.update')->middleware(['auth','permission:view task|edit task']);
 Route::get('/tasks/overview/{id}','ScrumController@overview')->name('tasks.overview')->middleware(['auth','permission:view task']);
@@ -304,6 +305,7 @@ Route::get('/task-status/update',[\App\Http\Controllers\ScrumController::class,'
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);
 
+Route::get('send', 'MailSendController@email');
 //Route::put('/clients/update-role/{client}','ClientController@updateRole')->name('client.update.role')->middleware(['auth','permission:edit client']);
 //Route::get('/clients','ClientController@index')->name('client.index')->middleware(['auth','permission:view client']);
 //Route::post('/clients','ClientController@store')->name('client.store')->middleware(['auth','permission:add client']);
@@ -386,7 +388,6 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/commission-requests/status-set/{request}',[\App\Http\Controllers\CommissionRequestController::class,'setApprovalStatus'])->name('commission.request.status.set');
     Route::resource('commission-requests',CommissionRequestController::class);
 });
-
 
 
 
