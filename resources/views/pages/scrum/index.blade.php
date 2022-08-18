@@ -268,6 +268,9 @@
         .tox-statusbar__branding {
             display: none;
         }
+        .tox-notifications-container{
+            display:none !important;
+        }
     </style>
 @stop
 

@@ -231,7 +231,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group watchers">
                                         <label for="watchers">Watchers</label>
-                                        <select name="watchers[]" multiple class="form-control" id="watchers" style="width: 100%">
+                                        <select name="watchers[]" multiple class="form-control" id="watchers" style="width: 100%" required>
                                             <option value="">Please Select</option>
                                             @foreach($users as $user)
                                                 <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
@@ -266,6 +266,9 @@
     <style>
         .tox-statusbar__branding {
             display: none;
+        }
+        .tox-notifications-container{
+            display:none !important;
         }
         .hidden {
             display:none;

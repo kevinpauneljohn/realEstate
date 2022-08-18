@@ -14,6 +14,7 @@ use App\Watcher;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use \App\Mail\SendTask;
 
 class TaskRepository implements TaskInterface
 {
@@ -232,5 +233,31 @@ class TaskRepository implements TaskInterface
     public function getAllTaskExcept(array $status)
     {
         return Task::whereNotIn('status',$status)->get();
+    }
+
+    public function getUser($id)
+    {
+        $users = User::where('id', $id)->get();
+        $user_data = [];
+        foreach ($users as $user) {
+            $user_data = [
+                'username' => $user->username,
+                'email' => $user->email,
+                'id' => $user->id,
+            ];
+        }
+
+        return $user_data;
+    }
+
+    public function getPriorityById($id)
+    {
+        return Priority::where('id',$id)->first();
+    }
+
+    public function taskEmail(array $emails)
+    {
+        \Mail::to($emails['email'])->send(new SendTask($emails));
+        return true;
     }
 }
