@@ -142,6 +142,18 @@ class TaskRepository implements TaskInterface
         return $tasks;
     }
 
+    public function getWatchedIds($user_id)
+    {
+        $watch = Watcher::select('task_id')->where('user_id',$user_id)->get();
+        return $watch;
+    }
+
+    public function getWatchedTickets($task_id)
+    {
+        $ticket = Task::where('id',$task_id)->get();
+        return $task_id;
+    }
+
     public function reopen($task_id, $remarks): TaskRemark
     {
         $taskRemarks = new TaskRemark();
