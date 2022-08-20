@@ -30,6 +30,19 @@ class TaskRepository implements TaskInterface
         return Task::create($task);
     }
 
+    public function getAssigneeUser($task_id){
+        $taskAssignee = Task::select('assigned_to')->where('id',$task_id)->first();
+        $users = User::where('id', $taskAssignee->assigned_to)->first();
+
+        $data = [];
+        $data = [
+            'email' => $users->email,
+            'username' => $users->username,
+            'id' => $taskAssignee->assigned_to
+        ];
+        return $data;
+    }
+
     public function getWatcher($task_id){
         $taskWatcher = Watcher::where('task_id',$task_id)->get();
         return $taskWatcher;

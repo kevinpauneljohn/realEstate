@@ -9,6 +9,7 @@ use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
 use App\User;
 use App\Watcher;
+use App\Role;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
@@ -26,13 +27,15 @@ class ScrumController extends Controller
     )
     {
         $this->task = $task;
-        $this->agents = ['admin','account manager','online warrior','super admin'];
+        $this->agents = ['admin','account manager','online warrior','super admin','agent'];
     }
     public function index()
     {
+        $roles = Role::select('name')->get()->toArray();
+        // dd($roles);
         $priorities = Priority::all();
         $users = User::all();
-        $agents = $this->task->getAgents($this->agents);
+        $agents = $this->task->getAgents($roles);
         $status = [
             'open' => $this->task->getTaskStatusCount('open'),
             'pending' => $this->task->getTaskStatusCount('pending'),
@@ -227,6 +230,7 @@ class ScrumController extends Controller
             ];
             $get_priority_id = $this->show($id)['task']['priority_id'];
             $get_watchers = $this->show($id)['watcher'];
+            $assigned_user = $this->task->getAssigneeUser($id);
 
             $get_list_watchers = [];
             foreach ($get_watchers as $get_watcher) {
@@ -244,6 +248,42 @@ class ScrumController extends Controller
             $watcher = $this->delete_watcher($id);
             if($taskCreated = $this->task->update($id, $data))
             {
+                if ($assigned_user['id'] != $request->input('assign_to')) {
+                    $new_assigned_user = [
+                        'email' => $taskCreated->user->email,
+                        'username' => $taskCreated->user->username,
+                        'message' => strip_tags($request->input('description')),
+                        'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
+                        'time' => date('h:i:s  a', strtotime($request->input('time'))),
+                        'priority' => $taskCreated->priority->name,
+                        'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
+                        'created_by' => auth()->user()->username,
+                        'id' => $taskCreated->id,
+                        'sub_title' => 'Kindly review the assigned task ticket.',
+                        'submit_message' => auth()->user()->username.' has assigned the task ticket to you.',
+                        'type' => 'new_ticket',
+                        'view_ticket' => 'review the ticket.',
+                    ];
+                    $assigned_new_email = $this->task->taskEmail($new_assigned_user);
+
+                    $old_assigned_user = [
+                        'email' => $assigned_user['email'],
+                        'username' => $assigned_user['username'],
+                        'message' => strip_tags($request->input('description')),
+                        'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
+                        'time' => date('h:i:s  a', strtotime($request->input('time'))),
+                        'priority' => $taskCreated->priority->name,
+                        'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
+                        'created_by' => auth()->user()->username,
+                        'id' => $taskCreated->id,
+                        'sub_title' => 'Kindly review the assigned task ticket.',
+                        'submit_message' => auth()->user()->username.' was assigned your task ticket to another staff.',
+                        'type' => 'deleted_ticket',
+                        'view_ticket' => 'review the ticket.',
+                    ];
+                    $assigned_old_email = $this->task->taskEmail($old_assigned_user);
+                }
+                
                 if ($get_priority_id != $request->input('priority')) {
                     $update_emails = [
                         'email' => $taskCreated->user->email,
@@ -262,6 +302,7 @@ class ScrumController extends Controller
                     ];
                     $assigned_email = $this->task->taskEmail($update_emails);
                 }
+
                 foreach ($watchers as $watcher) {
                     $watcher_data = [
                         'user_id' => $watcher,
