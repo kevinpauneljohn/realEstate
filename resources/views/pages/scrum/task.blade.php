@@ -77,17 +77,22 @@
     </div>
     <div class="card">
         <div class="card-header">
-            @can('add task')
-                <button type="button" class="btn bg-gradient-primary btn-sm add-new-task mr-1" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
-            @endcan
-
-            <select class="select2" name="statusChange" style="width: 150px;">
-                <option value="">All</option>
-                <option value="pending" @if(\Illuminate\Support\Facades\Session::get('status') === 'pending') selected @endif>Pending</option>
-                <option value="on-going" @if(\Illuminate\Support\Facades\Session::get('status') === 'on-going') selected @endif>On-going</option>
-                <option value="completed" @if(\Illuminate\Support\Facades\Session::get('status') === 'completed') selected @endif>Completed</option>
-            </select>
-
+            <div class="row">
+                <div class="col-md-6">
+                    <select class="select2" name="statusChange" id="statusChange" style="width: 200px;">
+                        <option value="">All</option>
+                        <option value="pending" @if(\Illuminate\Support\Facades\Session::get('status') === 'pending') selected @endif>Pending</option>
+                        <option value="on-going" @if(\Illuminate\Support\Facades\Session::get('status') === 'on-going') selected @endif>On-going</option>
+                        <option value="completed" @if(\Illuminate\Support\Facades\Session::get('status') === 'completed') selected @endif>Completed</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    @can('add task')
+                        <button type="button" class="btn bg-gradient-primary btn-sm add-new-task mr-1 float-right" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
+                    @endcan
+                    <button type="button" class="btn bg-gradient-success btn-sm add-new-task mr-1 float-right" id="exportTasks"><i class="fa fa-arrow-circle-down"></i> Export</button>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -310,7 +315,7 @@
                  // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
                  setTimeout(dt.ajax.reload, 0);
                  // Prevent rendering of the full data to the DOM
-                 return false;
+                 return true;
              });
          });
          // Requery the server with the new one-time export settings
@@ -334,6 +339,17 @@
                 $('form#task-form select').trigger("change");
                 tinyMCE.get('description').setContent('');
             });
+
+        $(document).on('click','#exportTasks',function(){
+            var status = $('#statusChange').val();
+            var id = status;
+            if (status == '') {
+                id = 'all';
+            }
+
+            var url = "{{URL::to('export-task')}}/" + id + "/" + "ticket"
+            window.location = url;
+        });
 
         $(document).on('submit','#task-form',function(form){
             form.preventDefault();
@@ -411,9 +427,8 @@
 
         $(document).on('submit','#edit-task-form',function(form){
             form.preventDefault();
-
             let data = $(this).serializeArray();
-            console.log(data);
+
             $.ajax({
                 'url' : '/tasks/'+data[0].value,
                 'type' : 'PUT',
@@ -473,43 +488,42 @@
         });
 
         @if(auth()->user()->can('delete task'))
-                $(document).on('click','.delete-task-btn',function(){
-                    let id = this.id;
-                    console.log(id);
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.value) {
+            $(document).on('click','.delete-task-btn',function(){
+                let id = this.id;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
 
-                    $.ajax({
-                        'url' : '/tasks/'+id,
-                        'type' : 'DELETE',
-                        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        success: function(output){
-                            if(output.success === true){
-                                customAlert('success',output.message);
-                                let table = $('#task-list').DataTable();
-                                table.ajax.reload();
+                        $.ajax({
+                            'url' : '/tasks/'+id,
+                            'type' : 'DELETE',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            success: function(output){
+                                if(output.success === true){
+                                    customAlert('success',output.message);
+                                    let table = $('#task-list').DataTable();
+                                    table.ajax.reload();
 
-                            }else if(output.success === false){
-                                customAlert('warning',output.message);
+                                }else if(output.success === false){
+                                    customAlert('warning',output.message);
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                                customAlert('error',"Task Constraints, There's an existing checklist created!");
                             }
-                        },error: function(xhr, status, error){
-                            console.log(xhr);
-                            customAlert('error',"Task Constraints, There's an existing checklist created!");
-                        }
-                    });
+                        });
 
-                }
-            });
+                    }
                 });
-            @endif
+            });
+        @endif
     </script>
 @stop
 

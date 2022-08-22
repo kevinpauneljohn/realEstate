@@ -16,6 +16,8 @@ use Spatie\Activitylog\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use \App\Mail\SendTask;
+use App\Exports\TaskExport;
+use Excel;
 
 class ScrumController extends Controller
 {
@@ -171,7 +173,15 @@ class ScrumController extends Controller
             $data [] = $watchers['task_id'];
         }
 
-        $tasks = Task::whereIn('id', $data)->get();
+        $status = \session('statusMyTask');
+        if(!isset($status))
+        {
+            $tasks = Task::whereNotIn('status',['completed'])->whereIn('id', $data);
+        }else{
+            $tasks = Task::where('status',$status)->whereIn('id', $data)->get();
+        }
+
+        //$tasks = Task::whereIn('id', $data)->get();
         return $this->task->displayTasks($tasks);
     }
 
@@ -841,5 +851,23 @@ class ScrumController extends Controller
         Artisan::call('taskStatus:update');
         return Artisan::output();
 //        return $this->task->updateTaskStatus();
+    }
+
+    public function exportTasks($status, $type)
+    {
+        $date = date('Y-m-d_H:i:s_A');
+        return Excel::download(new TaskExport($status, $type), 'tasks_'.$status.'-'.$date.'.xlsx');
+    }
+
+    public function exportMyTasks($status, $type)
+    {
+        $date = date('Y-m-d_H:i:s_A');
+        return Excel::download(new TaskExport($status, $type), 'My_task_tickets_'.$status.'-'.$date.'.xlsx');
+    }
+
+    public function exportMyWatched($status, $type)
+    {
+        $date = date('Y-m-d_H:i:s_A');
+        return Excel::download(new TaskExport($status, $type), 'My_watched_task_'.$status.'-'.$date.'.xlsx');
     }
 }
