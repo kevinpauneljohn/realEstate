@@ -389,5 +389,10 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('commission-requests',CommissionRequestController::class);
 });
 
+//Export Routes
+Route::get('/export-task/{status}/{type}','ScrumController@exportTasks');
+Route::get('/export-my-task/{status}','ScrumController@exportMyTasks');
+Route::get('/export-my-watched/{status}','ScrumController@exportMyWatched');
+
 
 

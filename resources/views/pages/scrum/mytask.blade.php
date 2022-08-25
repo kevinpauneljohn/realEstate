@@ -81,7 +81,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="filteredStatus">
-                        <select class="select2" name="statusChange" style="width: 150px;">
+                        <select class="select2" name="statusChange" id="statusChange" style="width: 150px;">
                             <option value="">All</option>
                             <option value="pending" @if(\Illuminate\Support\Facades\Session::get('statusMyTask') === 'pending') selected @endif>Pending</option>
                             <option value="on-going" @if(\Illuminate\Support\Facades\Session::get('statusMyTask') === 'on-going') selected @endif>On-going</option>
@@ -98,6 +98,13 @@
                             <a class="nav-link" id="mywatchedtickets" href="#">Watched Tickets</a>
                         </li>
                     </ul>
+                    <input type="hidden" class="form-control" id="myTab" value="myticket">
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn bg-gradient-success btn-sm add-new-task mr-1 float-right" id="exportTasks"><i class="fa fa-arrow-circle-down"></i> Export</button>
                 </div>
             </div>
         </div>
@@ -300,7 +307,8 @@
                 $('#mywatchedtickets').css('font-weight', 'normal');
                 $('.mytasklist').removeClass('hidden');
                 $('.mywatchedlist').addClass('hidden');
-                $('.filteredStatus').removeClass('hidden');
+                $('#myTab').val('myticket');
+                //$('.filteredStatus').removeClass('hidden');
             })
 
             $(document).on('click','#mywatchedtickets',function(e){
@@ -312,7 +320,8 @@
                 $('#mytickets').css('font-weight', 'normal');
                 $('.mytasklist').addClass('hidden');
                 $('.mywatchedlist').removeClass('hidden');
-                $('.filteredStatus').addClass('hidden');
+                $('#myTab').val('mywatched');
+                //$('.filteredStatus').addClass('hidden');
             });
 
             $("#watchers").select2({
@@ -393,8 +402,13 @@
                 },beforeSend: function(){
 
                 },success: function(response){
-                    let table = $('#task-list').DataTable();
-                    table.ajax.reload();
+                    if ($('#myTab').val() == 'myticket') {
+                        let table = $('#task-list').DataTable();
+                        let test = table.ajax.reload();
+                    } else if ($('#myTab').val() == 'mywatched') {
+                        let table = $('#watched-list').DataTable();
+                        table.ajax.reload();
+                    }
                 },error: function(xhr, status, error){
                     console.log(xhr);
                 }
@@ -431,6 +445,17 @@
                     console.log(xhr);
                 }
             });
+        });
+
+        $(document).on('click','#exportTasks',function(){
+            var status = $('#statusChange').val();
+            var id = status;
+            if (status == '') {
+                id = 'all';
+            }
+            var type = $('#myTab').val();
+            var url = "{{URL::to('export-task')}}/" + id + "/" + type
+            window.location = url;
         });
 
         $(document).on('submit','#edit-task-form',function(form){
