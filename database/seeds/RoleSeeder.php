@@ -179,5 +179,7 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'view commission request'])->syncRoles(['team leader','admin','manager','agent','finance admin']);
         Permission::create(['name' => 'request commission'])->syncRoles(['team leader','manager','agent']);
+
+        Permission::create(['name' => 'view task export'])->syncRoles(['account manager','admin']);
     }
 }
