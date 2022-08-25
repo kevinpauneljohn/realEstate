@@ -39,15 +39,25 @@ class TaskChecklistController extends Controller
                         'created_at' => now(),
                         'updated_at' => now(),
                     ];
+
+                $checklist_log =
+                    [
+                        'task_id' => $request->input('task_id'),
+                        'description' => nl2br($value),
+                        'status' => 'pending',
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+
+                activity('task')
+                    ->causedBy(auth()->user()->id)
+                    ->performedOn(new TaskChecklist())
+                    ->withProperties($checklist_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> Created a checklist');
             }
         }
 
         if($taskChecklist = $this->taskChecklist->create($checklist))
         {
-            activity('task')
-                ->causedBy(auth()->user()->id)
-                ->performedOn(new TaskChecklist())
-                ->withProperties($checklist)->log('<span class="text-info">'.auth()->user()->fullname.'</span> Created a checklist');
             return response(['success' => true,'message' => 'Checklist successfully created!']);
         }
         return response(['success' => false,'message' => 'An error occurred'],400);
@@ -75,11 +85,22 @@ class TaskChecklistController extends Controller
             $checkList = TaskChecklist::find($id);
             //$checkList->description = nl2br($request->input('checklist'));
             $checkList->description = $request->input('checklist');
+
+            $checklist_log =
+            [
+                'task_id' => "$checkList->task_id",
+                'id' => $checkList->id,
+                'description' => $checkList->description,
+                'status' => $checkList->status,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
             if($checkList->isDirty() && $checkList->save()) {
                 activity('task')
                     ->causedBy(auth()->user()->id)
                     ->performedOn($checkList)
-                    ->withProperties($checkList)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated a checklist');
+                    ->withProperties($checklist_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated a checklist');
                 return response(['success' => true, 'message' => 'Checklist successfully updated!']);
             }
             return response(['success' => false, 'message' => 'No changes occurred!']);
@@ -93,12 +114,22 @@ class TaskChecklistController extends Controller
     public function destroy($id)
     {
         $checklist = $this->taskChecklist->getChecklist($id)->first();
+        $checklist_log =
+        [
+            'task_id' => "$checklist->task_id",
+            'id' => $checklist->id,
+            'description' => $checklist->description,
+            'status' => $checklist->status,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
         if($this->taskChecklist->getChecklist($id)->delete())
         {
             activity('task')
                 ->causedBy(auth()->user()->id)
                 ->performedOn(new TaskChecklist())
-                ->withProperties($checklist)->log('<span class="text-info">'.auth()->user()->fullname.'</span> deleted a checklist');
+                ->withProperties($checklist_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> deleted a checklist');
             return response(['success' => true, 'message' => 'Successfully deleted!']);
         }
         return response(['success' => false, 'message' => 'An error occurred!'],400);
@@ -107,5 +138,10 @@ class TaskChecklistController extends Controller
     public function displayChecklist($task_id)
     {
         return $this->taskChecklist->checklists($task_id);
+    }
+
+    public function displayLog($id)
+    {
+        return $this->taskChecklist->logs($id);
     }
 }

@@ -390,9 +390,11 @@ Route::middleware(['auth'])->group(function(){
 });
 
 //Export Routes
-Route::get('/export-task/{status}/{type}','ScrumController@exportTasks');
-Route::get('/export-my-task/{status}','ScrumController@exportMyTasks');
-Route::get('/export-my-watched/{status}','ScrumController@exportMyWatched');
+Route::get('/export-task/{status}/{type}','ScrumController@exportTasks')->middleware(['auth','permission:view task export']);
+Route::get('/export-my-task/{status}','ScrumController@exportMyTasks')->middleware(['auth','permission:view task export']);
+Route::get('/export-my-watched/{status}','ScrumController@exportMyWatched')->middleware(['auth','permission:view task export']);
+
+Route::get('/task-activity/{task_id}/log',[\App\Http\Controllers\TaskChecklistController::class,'displayLog'])->name('log.display');
 
 
 

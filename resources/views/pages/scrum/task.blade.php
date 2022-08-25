@@ -90,7 +90,9 @@
                     @can('add task')
                         <button type="button" class="btn bg-gradient-primary btn-sm add-new-task mr-1 float-right" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
                     @endcan
+                    @can('view task export')
                     <button type="button" class="btn bg-gradient-success btn-sm add-new-task mr-1 float-right" id="exportTasks"><i class="fa fa-arrow-circle-down"></i> Export</button>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -149,8 +151,7 @@
                             </div>
                             <div class="form-group description">
                                 <label for="description">Description</label><span class="required">*</span>
-                                <textarea name="description" id="description" style="min-height:300px;"></textarea>
-                                <!-- <textarea class="form-control" id="description" name="description" style="min-height:300px;"></textarea> -->
+                                <textarea class="textEditor" name="description" id="description" style="min-height:300px;"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
@@ -226,6 +227,7 @@
     <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style>
         .tox-statusbar__branding {
             display: none;
@@ -246,19 +248,25 @@
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
     <script src="{{asset('js/validation.js')}}"></script>
-    <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_APP_KEY') }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
     <script>
         $(function() {
             $("#watchers").select2({
                 minimumResultsForSearch: 20
             });
 
-            tinymce.init({
-                selector: '#description',
-                plugins: "emoticons link lists charmap table", 
-                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link emoticons charmap hr | indent outdent | superscript subscript | removeformat",
-                toolbar_mode: 'wrap',
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            $('.textEditor').summernote({
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']],
+                    ['height', ['height']],
+                    ['view', ['fullscreen']],
+                ],
+                lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
             });
 
             $('#task-list').DataTable({
@@ -337,7 +345,8 @@
                 
                 $('form#task-form').trigger("reset");
                 $('form#task-form select').trigger("change");
-                tinyMCE.get('description').setContent('');
+
+                $('.textEditor').summernote("code", "");
             });
 
         $(document).on('click','#exportTasks',function(){
@@ -391,6 +400,10 @@
         });
         @endcan
 
+        $("#add-task-modal").on('hide.bs.modal', function () {
+            $('.textEditor').summernote("code", "");
+        });
+        
         @can('edit task')
             let taskModal = $('#add-task-modal');
             $(document).on('click','.edit-task-btn',function(){
@@ -407,11 +420,11 @@
 
                     },success: function(result){
                         taskModal.find('input[name=title]').val(result.task.title);
-                        tinyMCE.get('description').setContent(result.task.description);
                         taskModal.find('input[name=due_date]').val(result.task.due_date);
                         taskModal.find('input[name=time]').val(result.task.time);
                         taskModal.find('select[name=priority]').val(result.task.priority_id).change();
                         taskModal.find('select[name=assign_to]').val(result.task.assigned_to).change();
+                        taskModal.find('textarea[name=description]').summernote('code', result.task.description);
 
                         var watcher_data = [];
                         $.each(result.watcher, function(i, record) {

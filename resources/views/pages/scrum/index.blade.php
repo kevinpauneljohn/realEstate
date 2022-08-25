@@ -68,7 +68,27 @@
                     <span class="card-title">Activity Logs</span>
                 </div>
                 <div class="card-body">
+                    <table id="activity-log" class="table table-bordered table-hover" role="grid">
+                        <thead>
+                        <tr role="row">
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>From</th>
+                            <th>User</th>
+                            <th width="20%">Date</th>
+                        </tr>
+                        </thead>
 
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>From</th>
+                            <th>User</th>
+                            <th>Date</th>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
@@ -132,6 +152,8 @@
                         <span class="text-muted">{{$watcher['first_name']}} {{$watcher['last_name']}}</span>
                         @endforeach
                     @endif
+                    <input type="hidden" class="get_task_id" value="{{$task->id}}">
+                    <input type="hidden" class="get_task_status" value="{{$task->status}}">
                 </div>
             </div>
 
@@ -202,7 +224,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <textarea class="form-control" id="edit_checklist" name="checklist" style="min-height: 300px;"></textarea>
+                            <textarea class="form-control textEditor" id="edit_checklist" name="checklist" style="min-height: 300px;"></textarea>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -230,7 +252,8 @@
                         <form role="form" id="action-taken-form">
                             @csrf
                             <input type="hidden" name="checklist_id">
-                            <textarea class="form-control" name="action" style="min-height: 200px;" id="action"></textarea>
+                            <input type="hidden" name="task_id" value="{{$task->id}}">
+                            <textarea class="form-control actionTaken" name="action" style="min-height: 200px;" id="action"></textarea>
                             <br />
                             <input type="submit" class="btn btn-primary submit-checklist-btn float-right" value="Save">
                             <br />
@@ -258,6 +281,7 @@
     <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
     <style>
         #remarks-list_length, #remarks-list_filter, .dataTables_info{
             display:none;
@@ -271,6 +295,9 @@
         .tox-notifications-container{
             display:none !important;
         }
+        .hidden{
+            display:none;
+        }
     </style>
 @stop
 
@@ -282,22 +309,34 @@
     <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <script src="{{asset('js/custom-alert.js')}}"></script>
-    <script src="https://cdn.tiny.cloud/1/j6t2d08hfxlqkrkpuydlbhnozzeq88y0ouvpm5ra0jpdw007/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
     <script>
-        tinymce.init({
-            selector: '#edit_checklist',
-            plugins: "emoticons link lists charmap table", 
-            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link emoticons charmap hr | indent outdent | superscript subscript | removeformat",
-            toolbar_mode: 'wrap',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        $('.textEditor,.actionTaken').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link']],
+                ['height', ['height']],
+                ['view', ['fullscreen']],
+            ],
+            lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
         });
 
-        tinymce.init({
-            selector: '#checklist0',
-            plugins: "emoticons link lists charmap table", 
-            toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link emoticons charmap hr | indent outdent | superscript subscript | removeformat",
-            toolbar_mode: 'wrap',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        $('#checklist0').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link']],
+                ['height', ['height']],
+                ['view', ['fullscreen']],
+            ],
+            lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
         });
 
         let checklist_id; //checklist_id
@@ -324,7 +363,85 @@
             });
         })
 
+        function getStatus()
+        {
+            var get_status = $('.get_task_status').val();
+            @if(($task->assigned_to === auth()->user()->id))
+                if (get_status == 'pending') {
+                    $('.start_task_component_user_span').removeClass('hidden');
+
+                    if (!$('.ongoing_task_component_user_span').hasClass("hidden")) {
+                        $('.ongoing_task_component_user_span').addClass('hidden');
+                    }
+
+                    if (!$('.completed_task_component_user_span').hasClass("hidden")) {
+                        $('.completed_task_component_user_span').addClass('hidden');
+                    }
+                } else if (get_status == 'on-going') {
+                    $('.ongoing_task_component_user_span').removeClass('hidden');
+
+                    if (!$('.start_task_component_user_span').hasClass("hidden")) {
+                        $('.start_task_component_user_span').addClass('hidden');
+                    }
+
+                    if (!$('.completed_task_component_user_span').hasClass("hidden")) {
+                        $('.completed_task_component_user_span').addClass('hidden');
+                    }
+                } else if (get_status == 'completed') {
+                    @if((auth()->user()->hasRole(['super admin','admin','account manager'])))
+                        $('.completed_task_component_user_span').removeClass('hidden');
+                    @else
+                        $('.completed_task_component_span').removeClass('hidden');
+                    @endif
+
+                    if (!$('.start_task_component_user_span').hasClass("hidden")) {
+                        $('.start_task_component_user_span').addClass('hidden');
+                    }
+
+                    if (!$('.ongoing_task_component_user_span').hasClass("hidden")) {
+                        $('.ongoing_task_component_user_span').addClass('hidden');
+                    }
+                }
+            @else
+                if (get_status == 'pending') {
+                    $('.start_task_component_span').removeClass('hidden');
+
+                    if (!$('.ongoing_task_component_span').hasClass("hidden")) {
+                        $('.ongoing_task_component_span').addClass('hidden');
+                    }
+
+                    if (!$('.completed_task_component_span').hasClass("hidden")) {
+                        $('.completed_task_component_span').addClass('hidden');
+                    }
+                } else if (get_status == 'on-going') {
+                    $('.ongoing_task_component_span').removeClass('hidden');
+
+                    if (!$('.start_task_component_span').hasClass("hidden")) {
+                        $('.start_task_component_span').addClass('hidden');
+                    }
+
+                    if (!$('.completed_task_component_span').hasClass("hidden")) {
+                        $('.completed_task_component_span').addClass('hidden');
+                    }
+                } else if (get_status == 'completed') {
+                    @if((auth()->user()->hasRole(['super admin','admin','account manager'])))
+                        $('.completed_task_component_user_span').removeClass('hidden');
+                    @else
+                        $('.completed_task_component_span').removeClass('hidden');
+                    @endif
+
+                    if (!$('.start_task_component_span').hasClass("hidden")) {
+                        $('.start_task_component_span').addClass('hidden');
+                    }
+
+                    if (!$('.ongoing_task_component_span').hasClass("hidden")) {
+                        $('.ongoing_task_component_span').addClass('hidden');
+                    }
+                }
+            @endif
+        }
         $(function() {
+            getStatus();
             $('#check-list').DataTable({
                 processing: true,
                 serverSide: true,
@@ -338,6 +455,22 @@
                 order:[0,'desc'],
                 pageLength: 25
             });
+
+            $('#activity-log').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('log.display',$task->id) !!}',
+                columns: [
+                    { data: 'id', name: 'id', visible: false},
+                    { data: 'description', name: 'description'},
+                    { data: 'subject_type', name: 'subject_type'},
+                    { data: 'causer_id', name: 'causer_id'},
+                    { data: 'created_at', name: 'created_at'},
+                ],
+                responsive:true,
+                order:[0,'desc'],
+                pageLength: 10
+            });
         });
 
 
@@ -345,12 +478,34 @@
         let checklistForm = $('#checklist-form');
 
         function wysiwyg_editor(id) {
-            tinymce.init({
-                selector: '#checklist'+id,
-                plugins: "emoticons link lists charmap table", 
-                toolbar: "fontsizeselect | bold italic underline strikethrough | forecolor backcolor | h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | link emoticons charmap hr | indent outdent | superscript subscript | removeformat",
-                toolbar_mode: 'wrap',
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            $('#checklist'+id).summernote({
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']],
+                    ['height', ['height']],
+                    ['view', ['fullscreen']],
+                ],
+                lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
+            });
+        }
+
+        function action_taken_editor(id) {
+            $('.actionTaken'+id).summernote({
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']],
+                    ['height', ['height']],
+                    ['view', ['fullscreen']],
+                ],
+                lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
             });
         }
 
@@ -439,6 +594,9 @@
                         $('#checklist').modal('toggle');
                         let table = $('#check-list').DataTable();
                         table.ajax.reload();
+
+                        let tableLog = $('#activity-log').DataTable();
+                        tableLog.ajax.reload();
                     }
                     checklistForm.find('input, textarea').attr('disabled',false);
                 },error: function(xhr, status, error){
@@ -451,7 +609,6 @@
             $(document).on('click','.check-list-box',function(){
                 $('#action-taken-form').show();
                 checklist_id = this.value;
-
                 displayActionTaken();
 
             $('#action-taken-form').find('input[name=checklist_id]').val(checklist_id);
@@ -486,6 +643,9 @@
                                 }
                                 let table = $('#check-list').DataTable();
                                 table.ajax.reload();
+
+                                let tableLog = $('#activity-log').DataTable();
+                                tableLog.ajax.reload();
                             },error: function(xhr, status, error){
                                 console.log(xhr);
                             }
@@ -507,9 +667,7 @@
                 }).get();
 
                 $('#edit-checklist-form').find('input[name=checklist_id]').val(checklist_id);
-                //$('#edit-checklist-form').find('textarea[name=checklist]').val(data[0]);
-
-                tinyMCE.get('edit_checklist').setContent(data[0]);
+                $('#edit_checklist').summernote('code', data[0]);
             });
 
             $(document).on('submit','#edit-checklist-form',function(form){
@@ -529,6 +687,9 @@
                             $('#edit-checklist').modal('toggle');
                             let table = $('#check-list').DataTable();
                             table.ajax.reload();
+
+                            let tableLog = $('#activity-log').DataTable();
+                            tableLog.ajax.reload();
                         }else if(output.success === false){
                             customAlert('warning',output.message);
                         }
@@ -544,6 +705,7 @@
 
             function displayActionTaken()
             {
+                let task_id = $('.get_task_id').val();
                 $.ajax({
                     'url' : '/action-taken/'+checklist_id+'/display',
                     'type' : 'GET',
@@ -553,8 +715,8 @@
                         $('.action-timeline').html('<div class="timeline"></div>');
 
                         $.each(response, function(key, value){
-                            let action = value.is_creator === true ? `<button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${value.id}">Edit</button>
-                                <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${value.id}">Delete</button>` : ``;
+                            let action = value.is_creator === true ? `<button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="${task_id}" value="${value.id}">Edit</button>
+                                <button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="${task_id}" value="${value.id}">Delete</button>` : ``;
                             $('.action-timeline').find('.timeline').append(`
                                 <div class="time-label label-${value.id}">
                                     <span class="bg-cyan">${moment(value.created_at).format('dddd, MMMM Do YYYY')}</span>
@@ -592,23 +754,26 @@
         @if(auth()->user()->hasRole(["super admin"]))
         $(document).on('click','.edit-action-taken',function(){
             rowId = this.value;
+            var task_id = $('.get_task_id').val();
+
             $('.action-timeline').find('#action-btn-'+rowId).remove();
             actionContentHtml = $('.action-timeline').find('#action-taken-'+rowId).html();
-            actionContent = $('.action-timeline').find('#action-taken-'+rowId).text();
-
-            $('.action-timeline').find('#action-taken-'+rowId).html('<form method="post" class="edit-action-form"><input type="hidden" name="action_taken_id" value="'+rowId+'"><input type="hidden" name="_token" value="{{csrf_token()}}"><textarea class="form-control action_taken'+rowId+'" name="action_taken" id="'+rowId+'" style="min-height: 150px;">'+actionContent+'</textarea>' +
-                '<button type="button" class="btn btn-default btn-xs cancel" value="'+rowId+'">Cancel</button> <button type="submit" class="btn btn-default btn-xs save" value="'+rowId+'">Save</button></form>');
+            actionContent = $('.action-timeline').find('#action-taken-'+rowId).html();
+            
+            $('.action-timeline').find('#action-taken-'+rowId).html('<form method="post" class="edit-action-form"><input type="hidden" name="task_id" value="'+task_id+'"><input type="hidden" name="action_taken_id" value="'+rowId+'"><input type="hidden" name="_token" value="{{csrf_token()}}"><textarea class="form-control actionTaken'+rowId+'" name="action_taken" id="'+rowId+'" style="min-height: 150px;">'+actionContent+'</textarea>' +
+                '<button type="button" class="btn btn-default btn-xs cancel" data-id="'+task_id+'" value="'+rowId+'">Cancel</button> <button type="submit" class="btn btn-success btn-xs save" data-id="'+task_id+'" value="'+rowId+'">Save</button></form>');
+            action_taken_editor(rowId);
         });
             @endif
 
         $(document).on('click','.cancel',function(){
             let id = this.value;
-
+            let task_id = $('.get_task_id').val();
             $('.action-timeline').find('#action-taken-'+id)
                 .html(`<div class="timeline-body" id="action-taken-${id}">${actionContentHtml}</div>
                     <div class="timeline-footer" id="action-btn-${id}">
-                        <button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${id}">Edit</button>
-                        <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${id}">Delete</button>
+                        <button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="${task_id}" value="${id}">Edit</button>
+                        <button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="${task_id}" value="${id}">Delete</button>
                     </div>`);
         });
 
@@ -617,6 +782,8 @@
             form.preventDefault();
             let data = $(this).serializeArray();
             let id = $('input[name=action_taken_id]').val();
+            let task_id = $('.get_task_id').val();
+
             $.ajax({
                 'url' : '/action-taken/'+id,
                 'type' : 'PUT',
@@ -632,8 +799,8 @@
                         $('.action-timeline').find('#action-taken-'+id)
                             .html(`<div class="timeline-body" id="action-taken-${id}">${actionContent}</div>
                             <div class="timeline-footer" id="action-btn-${id}">
-                                <button type="button" class="btn btn-primary btn-xs edit-action-taken" value="${id}">Edit</button>
-                                <button type="button" class="btn btn-danger btn-xs delete-action-taken" value="${id}">Delete</button>
+                                <button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="${task_id}" value="${id}">Edit</button>
+                                <button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="${task_id}" value="${id}">Delete</button>
                             </div>`);
                     }else if(output.success === false){
                         customAlert('warning',output.message);
@@ -650,7 +817,7 @@
 
         $(document).on('submit','#action-taken-form',function(form){
             form.preventDefault();
-
+            
             let data = $(this).serializeArray();
             $.ajax({
                 'url' : '{{route('action-taken.store')}}',
@@ -663,13 +830,14 @@
                     console.log(output);
                     if(output.success === true){
                         customAlert('success',output.message);
-                        //$('#action-taken-form').find('textarea[name=action]').val("");
-                        tinyMCE.get('action').setContent('');
-
+                        $('textarea[name=action]').summernote("code", "");
                         $('#action-taken').modal('toggle');
 
                         let table = $('#check-list').DataTable();
                         table.ajax.reload();
+
+                        let tableLog = $('#activity-log').DataTable();
+                        tableLog.ajax.reload();
                     }else if(output.success === false){
                         customAlert('warning',output.message);
                     }
@@ -729,7 +897,54 @@
                 beforeSend: function(){
                     $('.task-action-button').find('button').attr('disabled',true);
                 },success: function(response){
-                    console.log(response);
+                    var get_status = response.status;
+                    $('.get_task_status').val(get_status);
+                    if (get_status == 'pending') {
+                        $('.start_task_component_user_span').removeClass('hidden');
+
+                        if (!$('.ongoing_task_component_user_span').hasClass("hidden")) {
+                            $('.ongoing_task_component_user_span').addClass('hidden');
+                        }
+
+                        if (!$('.completed_task_component_user_span').hasClass("hidden")) {
+                            $('.completed_task_component_user_span').addClass('hidden');
+                        }
+                    } else if (get_status == 'on-going') {
+                        $('.ongoing_task_component_user_span').removeClass('hidden');
+
+                        if (!$('.start_task_component_user_span').hasClass("hidden")) {
+                            $('.start_task_component_user_span').addClass('hidden');
+                        }
+
+                        if (!$('.completed_task_component_user_span').hasClass("hidden")) {
+                            $('.completed_task_component_user_span').addClass('hidden');
+                        }
+                    } else if (get_status == 'completed') {
+                        @if(auth()->user()->hasRole(['super admin','admin','account manager']))
+                            $('.completed_task_component_user_span').removeClass('hidden');
+                        @else
+                            $('.completed_task_component_span').removeClass('hidden');
+                        @endif
+                        if (!$('.start_task_component_user_span').hasClass("hidden")) {
+                            $('.start_task_component_user_span').addClass('hidden');
+                        }
+
+                        if (!$('.ongoing_task_component_user_span').hasClass("hidden")) {
+                            $('.ongoing_task_component_user_span').addClass('hidden');
+                        }
+                    }
+                        
+                    if (response.actions == 'incomplete') {
+                        alert('Checklist Action taken must have atleast 1 data. Please Check each checklist action taken before completed the Task.');
+                    }
+
+                    $('.task-action-button').find('button').attr('disabled',false);
+
+                    let table = $('#check-list').DataTable();
+                    table.ajax.reload();
+
+                    let tableLog = $('#activity-log').DataTable();
+                    tableLog.ajax.reload();
                 },error: function(xhr, status, error){
                     console.log(xhr);
                 }
@@ -757,6 +972,12 @@
 
                         let table = $('#remarks-list').DataTable();
                         table.ajax.reload();
+
+                        let tableList = $('#check-list').DataTable();
+                        tableList.ajax.reload();
+
+                        let tableLog = $('#activity-log').DataTable();
+                        tableLog.ajax.reload();
                     }
 
                     $.each(response, function (key, value) {
@@ -767,6 +988,20 @@
                     });
 
                     $('#set-status-form').find('.remarks-btn').val('Update Status').attr('disabled',false);
+
+                    var get_status = response.status;
+                    $('.get_task_status').val(get_status);
+                    if (get_status == 'pending') {
+                        $('.start_task_component_user_span').removeClass('hidden');
+
+                        if (!$('.ongoing_task_component_user_span').hasClass("hidden")) {
+                            $('.ongoing_task_component_user_span').addClass('hidden');
+                        }
+
+                        if (!$('.completed_task_component_user_span').hasClass("hidden")) {
+                            $('.completed_task_component_user_span').addClass('hidden');
+                        }
+                    }
                 },error: function(xhr, status, error){
                     console.log(xhr);
                 }
@@ -791,6 +1026,9 @@
         $('#action-taken').on('hidden.bs.modal',function(){
             let table = $('#check-list').DataTable();
             table.ajax.reload();
+
+            let tableLog = $('#activity-log').DataTable();
+            tableLog.ajax.reload();
         });
     </script>
 @stop
