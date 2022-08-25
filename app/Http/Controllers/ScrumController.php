@@ -9,12 +9,17 @@ use App\Repositories\RepositoryInterface\TaskInterface;
 use App\Task;
 use App\User;
 use App\Watcher;
+use App\Role;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use \App\Mail\SendTask;
+use App\Exports\TaskExport;
+use Excel;
+use App\TaskChecklist;
+use App\ActionTaken;
 
 class ScrumController extends Controller
 {
@@ -26,13 +31,15 @@ class ScrumController extends Controller
     )
     {
         $this->task = $task;
-        $this->agents = ['admin','account manager','online warrior','super admin'];
+        $this->agents = ['admin','account manager','online warrior','super admin','agent'];
     }
     public function index()
     {
+        $roles = Role::select('name')->get()->toArray();
+        // dd($roles);
         $priorities = Priority::all();
         $users = User::all();
-        $agents = $this->task->getAgents($this->agents);
+        $agents = $this->task->getAgents($roles);
         $status = [
             'open' => $this->task->getTaskStatusCount('open'),
             'pending' => $this->task->getTaskStatusCount('pending'),
@@ -168,7 +175,15 @@ class ScrumController extends Controller
             $data [] = $watchers['task_id'];
         }
 
-        $tasks = Task::whereIn('id', $data)->get();
+        $status = \session('statusMyTask');
+        if(!isset($status))
+        {
+            $tasks = Task::whereNotIn('status',['completed'])->whereIn('id', $data);
+        }else{
+            $tasks = Task::where('status',$status)->whereIn('id', $data)->get();
+        }
+
+        //$tasks = Task::whereIn('id', $data)->get();
         return $this->task->displayTasks($tasks);
     }
 
@@ -227,6 +242,7 @@ class ScrumController extends Controller
             ];
             $get_priority_id = $this->show($id)['task']['priority_id'];
             $get_watchers = $this->show($id)['watcher'];
+            $assigned_user = $this->task->getAssigneeUser($id);
 
             $get_list_watchers = [];
             foreach ($get_watchers as $get_watcher) {
@@ -244,6 +260,42 @@ class ScrumController extends Controller
             $watcher = $this->delete_watcher($id);
             if($taskCreated = $this->task->update($id, $data))
             {
+                if ($assigned_user['id'] != $request->input('assign_to')) {
+                    $new_assigned_user = [
+                        'email' => $taskCreated->user->email,
+                        'username' => $taskCreated->user->username,
+                        'message' => strip_tags($request->input('description')),
+                        'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
+                        'time' => date('h:i:s  a', strtotime($request->input('time'))),
+                        'priority' => $taskCreated->priority->name,
+                        'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
+                        'created_by' => auth()->user()->username,
+                        'id' => $taskCreated->id,
+                        'sub_title' => 'Kindly review the assigned task ticket.',
+                        'submit_message' => auth()->user()->username.' has assigned the task ticket to you.',
+                        'type' => 'new_ticket',
+                        'view_ticket' => 'review the ticket.',
+                    ];
+                    $assigned_new_email = $this->task->taskEmail($new_assigned_user);
+
+                    $old_assigned_user = [
+                        'email' => $assigned_user['email'],
+                        'username' => $assigned_user['username'],
+                        'message' => strip_tags($request->input('description')),
+                        'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
+                        'time' => date('h:i:s  a', strtotime($request->input('time'))),
+                        'priority' => $taskCreated->priority->name,
+                        'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
+                        'created_by' => auth()->user()->username,
+                        'id' => $taskCreated->id,
+                        'sub_title' => 'Kindly review the assigned task ticket.',
+                        'submit_message' => auth()->user()->username.' was assigned your task ticket to another staff.',
+                        'type' => 'deleted_ticket',
+                        'view_ticket' => 'review the ticket.',
+                    ];
+                    $assigned_old_email = $this->task->taskEmail($old_assigned_user);
+                }
+                
                 if ($get_priority_id != $request->input('priority')) {
                     $update_emails = [
                         'email' => $taskCreated->user->email,
@@ -262,6 +314,7 @@ class ScrumController extends Controller
                     ];
                     $assigned_email = $this->task->taskEmail($update_emails);
                 }
+
                 foreach ($watchers as $watcher) {
                     $watcher_data = [
                         'user_id' => $watcher,
@@ -658,59 +711,54 @@ class ScrumController extends Controller
         $priority_name = $this->task->getPriorityById($task_ticket['task']['priority_id'])->name;
         $assigned_users_data = $this->task->getUser($task_ticket['task']['assigned_to'])['username'];
 
+        $task_checklist = TaskChecklist::all()->where('task_id', $id);
+        $checklist_id = [];
+        foreach ($task_checklist as $checklist_ids){
+            $checklist_id [] = $this->getAction($checklist_ids->id);
+        }
+        
+        $action_status = 'complete';
+        if (in_array(false, $checklist_id)) {
+            $action_status = 'incomplete';
+        }
+        
         $task = $this->task->getTask($id);
         if($task->assigned_to === auth()->user()->id)
         {
-            
             $task->status = $this->setStatus($task->status);
-            if($task->save())
-            {
-                event(new TaskEvent([
-                    'assigned' => $task !== null ? $task->user->fullname : "nobody",
-                    'title' => $task->title,
-                    'priority' => $task->priority->name,
-                    'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
-                    'action' => 'task updated'
-                ]));
-
-                activity('task')
-                    ->causedBy(auth()->user()->id)
-                    ->performedOn($task)
-                    ->withProperties($task)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated the task status');
-
-                if ($task->status == 'completed') {
-                    foreach ($users_data as $user_data){
-                        $complete_emails = [
-                            'email' => $user_data['email'],
-                            'username' => $user_data['username'],
-                            'message' => strip_tags($task_ticket['task']['description']),
-                            'title' => '#'.str_pad($task_ticket['task']['id'], 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
-                            'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
-                            'priority' => $priority_name,
-                            'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
-                            'created_by' => auth()->user()->username,
-                            'id' => $task_ticket['task']['id'],
-                            'sub_title' => 'Kindly review the assigned task ticket.',
-                            'submit_message' => $assigned_users_data.' has completed the task ticket.',
-                            'type' => 'new_ticket',
-                            'view_ticket' => 'review the ticket.',
-                        ];
-
-                        $completed_email = $this->task->taskEmail($complete_emails);
-                    }
-
-                    if (!empty($task_ticket['watcher'])) {
-                        foreach ($task_ticket['watcher'] as $watcher) {
-                            $watcher_data = User::where('id', $watcher['user_id'])->get();
-                            foreach ($watcher_data as $watcher_data) {
-                                $watchers_fullname = $watcher_data['firstname'].' '.$watcher_data['lastname'];
-                                $watchers_username = $watcher_data['username'];
-                                $watchers_email = $watcher_data['email'];
-                            }
-        
-                            $watcher_emails = [
-                                'email' => $watchers_email,
-                                'username' => $watchers_username,
+            if (
+                ($task->status == 'completed' && $action_status == 'complete') ||
+                $task->status == 'pending' || $task->status == 'on-going'
+            ) {
+                if($task->save())
+                {
+                    event(new TaskEvent([
+                        'assigned' => $task !== null ? $task->user->fullname : "nobody",
+                        'title' => $task->title,
+                        'priority' => $task->priority->name,
+                        'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
+                        'action' => 'task updated'
+                    ]));
+    
+                    $status_log =
+                    [
+                        'task_id' => "$task->id",
+                        'description' => $task->user->username. ' Update the Task Ticket Status to '.$task->status,
+                        'status' => $task->status,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+    
+                    activity('task')
+                        ->causedBy(auth()->user()->id)
+                        ->performedOn($task)
+                        ->withProperties($status_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated the task status to '.$task->status);
+    
+                    if ($task->status == 'completed') {
+                        foreach ($users_data as $user_data){
+                            $complete_emails = [
+                                'email' => $user_data['email'],
+                                'username' => $user_data['username'],
                                 'message' => strip_tags($task_ticket['task']['description']),
                                 'title' => '#'.str_pad($task_ticket['task']['id'], 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
                                 'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
@@ -718,27 +766,76 @@ class ScrumController extends Controller
                                 'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
                                 'created_by' => auth()->user()->username,
                                 'id' => $task_ticket['task']['id'],
-                                'sub_title' => '',
-                                'submit_message' => $assigned_users_data.' has completed the task ticket you are watching.',
-                                'type' => 'watched',
-                                'view_ticket' => 'view the ticket.',
+                                'sub_title' => 'Kindly review the assigned task ticket.',
+                                'submit_message' => $assigned_users_data.' has completed the task ticket.',
+                                'type' => 'new_ticket',
+                                'view_ticket' => 'review the ticket.',
                             ];
-        
-                            $watched_email = $this->task->taskEmail($watcher_emails);
+    
+                            $completed_email = $this->task->taskEmail($complete_emails);
+                        }
+    
+                        if (!empty($task_ticket['watcher'])) {
+                            foreach ($task_ticket['watcher'] as $watcher) {
+                                $watcher_data = User::where('id', $watcher['user_id'])->get();
+                                foreach ($watcher_data as $watcher_data) {
+                                    $watchers_fullname = $watcher_data['firstname'].' '.$watcher_data['lastname'];
+                                    $watchers_username = $watcher_data['username'];
+                                    $watchers_email = $watcher_data['email'];
+                                }
+            
+                                $watcher_emails = [
+                                    'email' => $watchers_email,
+                                    'username' => $watchers_username,
+                                    'message' => strip_tags($task_ticket['task']['description']),
+                                    'title' => '#'.str_pad($task_ticket['task']['id'], 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
+                                    'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
+                                    'priority' => $priority_name,
+                                    'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
+                                    'created_by' => auth()->user()->username,
+                                    'id' => $task_ticket['task']['id'],
+                                    'sub_title' => '',
+                                    'submit_message' => $assigned_users_data.' has completed the task ticket you are watching.',
+                                    'type' => 'watched',
+                                    'view_ticket' => 'view the ticket.',
+                                ];
+            
+                                $watched_email = $this->task->taskEmail($watcher_emails);
+                            }
                         }
                     }
+    
+                    return response([
+                        'success' => true,
+                        'message' => 'Task ' . $this->setStatus($task->status),
+                        'status' => $task->status,
+                        'actions' => $action_status
+                    ]);
+                } else {
+                    return response(['success' => false, 'message' => 'An error occurred'],400);
                 }
-
-                return response(['success' => true,
-                    'message' => 'Task ' . $this->setStatus($task->status)
+            } else {
+                return response([
+                    'success' => true,
+                    'message' => 'Task action taken Incomplete',
+                    'actions' => $action_status
                 ]);
             }
-            return response(['success' => false, 'message' => 'An error occurred'],400);
+        } else {
+            return response(['success' => false, 'message' => 'You are not allowed to access this action'],403);
         }
-        return response(['success' => false, 'message' => 'You are not allowed to access this action'],403);
     }
 
+    public function getAction($id)
+    {
+        $action_taken = ActionTaken::where('task_checklist_id', $id)->get();
 
+        if (count($action_taken) >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * set the task status
      * @param $status
@@ -779,11 +876,20 @@ class ScrumController extends Controller
                     'action' => 'task updated'
                 ]));
 
+                $status_log =
+                [
+                    'task_id' => "$task->id",
+                    'description' => $task->user->username. ' Re-open the task ticket',
+                    'status' => $task->status,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+
                 activity('task')
                     ->causedBy(auth()->user()->id)
                     ->performedOn($task)
-                    ->withProperties($task)->log('<span class="text-info">'.auth()->user()->fullname.'</span> reopened the task');
-                return response(['success' => true, 'message' => 'Task Reopen']);
+                    ->withProperties($status_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> reopened the task ticket');
+                return response(['success' => true, 'message' => 'Task Reopen', 'status' => $task->status]);
             }
             return response(['success' => false, 'message' => 'An error occurred!'],400);
         }
@@ -800,5 +906,23 @@ class ScrumController extends Controller
         Artisan::call('taskStatus:update');
         return Artisan::output();
 //        return $this->task->updateTaskStatus();
+    }
+
+    public function exportTasks($status, $type)
+    {
+        $date = date('Y-m-d_H:i:s_A');
+        return Excel::download(new TaskExport($status, $type), 'tasks_'.$status.'-'.$date.'.xlsx');
+    }
+
+    public function exportMyTasks($status, $type)
+    {
+        $date = date('Y-m-d_H:i:s_A');
+        return Excel::download(new TaskExport($status, $type), 'My_task_tickets_'.$status.'-'.$date.'.xlsx');
+    }
+
+    public function exportMyWatched($status, $type)
+    {
+        $date = date('Y-m-d_H:i:s_A');
+        return Excel::download(new TaskExport($status, $type), 'My_watched_task_'.$status.'-'.$date.'.xlsx');
     }
 }
