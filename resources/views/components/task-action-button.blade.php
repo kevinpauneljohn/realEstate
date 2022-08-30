@@ -41,7 +41,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group remarks">
-                        <textarea class="form-control" name="remarks" id="remarks" style="min-height: 300px;"></textarea>
+                        <textarea class="form-control textEditor" name="remarks" id="remarks" style="min-height: 300px;"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">

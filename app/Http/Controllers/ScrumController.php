@@ -20,6 +20,7 @@ use App\Exports\TaskExport;
 use Excel;
 use App\TaskChecklist;
 use App\ActionTaken;
+use App\Jobs\SendEmailJob;
 
 class ScrumController extends Controller
 {
@@ -36,7 +37,6 @@ class ScrumController extends Controller
     public function index()
     {
         $roles = Role::select('name')->get()->toArray();
-        // dd($roles);
         $priorities = Priority::all();
         $users = User::all();
         $agents = $this->task->getAgents($roles);
@@ -97,8 +97,7 @@ class ScrumController extends Controller
                     'view_ticket' => 'review the ticket.',
                 ];
                 
-                $assigned_email = $this->task->taskEmail($new_emails);
-
+                SendEmailJob::dispatch($new_emails);
                 foreach ($watchers as $watcher) {
                     $watcher_data = [
                         'user_id' => $watcher,
@@ -128,7 +127,7 @@ class ScrumController extends Controller
                         'view_ticket' => 'view the ticket.',
                     ];
 
-                    $watched_email = $this->task->taskEmail($watcher_emails);
+                    SendEmailJob::dispatch($watcher_emails);
                 }
                 event(new TaskEvent([
                     'assigned' => $taskCreated->user !== null ? $taskCreated->user->fullname : "nobody",
@@ -183,7 +182,6 @@ class ScrumController extends Controller
             $tasks = Task::where('status',$status)->whereIn('id', $data)->get();
         }
 
-        //$tasks = Task::whereIn('id', $data)->get();
         return $this->task->displayTasks($tasks);
     }
 
@@ -276,7 +274,7 @@ class ScrumController extends Controller
                         'type' => 'new_ticket',
                         'view_ticket' => 'review the ticket.',
                     ];
-                    $assigned_new_email = $this->task->taskEmail($new_assigned_user);
+                    SendEmailJob::dispatch($new_assigned_user);
 
                     $old_assigned_user = [
                         'email' => $assigned_user['email'],
@@ -293,7 +291,7 @@ class ScrumController extends Controller
                         'type' => 'deleted_ticket',
                         'view_ticket' => 'review the ticket.',
                     ];
-                    $assigned_old_email = $this->task->taskEmail($old_assigned_user);
+                    SendEmailJob::dispatch($old_assigned_user);
                 }
                 
                 if ($get_priority_id != $request->input('priority')) {
@@ -312,7 +310,7 @@ class ScrumController extends Controller
                         'type' => 'new_ticket',
                         'view_ticket' => 'review the ticket.',
                     ];
-                    $assigned_email = $this->task->taskEmail($update_emails);
+                    SendEmailJob::dispatch($update_emails);
                 }
 
                 foreach ($watchers as $watcher) {
@@ -345,8 +343,7 @@ class ScrumController extends Controller
                             'type' => 'watched',
                             'view_ticket' => 'view the ticket.',
                         ];
-    
-                        $watched_email = $this->task->taskEmail($watcher_emails);
+                        SendEmailJob::dispatch($watcher_emails);
                     }
                 }
 
@@ -368,8 +365,7 @@ class ScrumController extends Controller
                             'type' => 'deleted_ticket',
                             'view_ticket' => 'view the ticket.',
                         ];
-
-                        $removed_email = $this->task->taskEmail($removed_emails);
+                        SendEmailJob::dispatch($removed_emails);
                     }
                 }
 
@@ -391,8 +387,7 @@ class ScrumController extends Controller
                             'type' => 'watched',
                             'view_ticket' => 'view the ticket.',
                         ];
-
-                        $removed_email = $this->task->taskEmail($removed_emails);
+                        SendEmailJob::dispatch($removed_emails);
                     }
                 }
 
@@ -430,8 +425,7 @@ class ScrumController extends Controller
                             'type' => 'deleted_ticket',
                             'view_ticket' => 'view the ticket.',
                         ];
-
-                        $removed_email = $this->task->taskEmail($removed_emails);
+                        SendEmailJob::dispatch($removed_emails);
                     }
                 }
 
@@ -453,8 +447,7 @@ class ScrumController extends Controller
                             'type' => 'watched',
                             'view_ticket' => 'view the ticket.',
                         ];
-
-                        $removed_email = $this->task->taskEmail($removed_emails);
+                        SendEmailJob::dispatch($removed_emails);
                     }
                 }
 
@@ -512,8 +505,7 @@ class ScrumController extends Controller
                         'type' => 'deleted_ticket',
                         'view_ticket' => 'view the ticket.',
                     ];
-
-                    $watched_email = $this->task->taskEmail($watcher_emails);
+                    SendEmailJob::dispatch($watcher_emails);
                 }
             }
 
@@ -532,7 +524,7 @@ class ScrumController extends Controller
                 'type' => 'deleted_ticket',
                 'view_ticket' => 'review the ticket.',
             ];
-            $assigned_email = $this->task->taskEmail($deleted_emails);
+            SendEmailJob::dispatch($deleted_emails);
 
             event(new TaskEvent([
                 'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
@@ -608,7 +600,7 @@ class ScrumController extends Controller
                 'type' => 'deleted_ticket',
                 'view_ticket' => 'review the ticket.',
             ];
-            $assigned_email = $this->task->taskEmail($deleted_emails);
+            SendEmailJob::dispatch($deleted_emails);
 
             $assigned_user = User::find($request->input('assigned_id'));
 
@@ -646,8 +638,7 @@ class ScrumController extends Controller
                 'type' => 'new_ticket',
                 'view_ticket' => 'review the ticket.',
             ];
-            
-            $assigned_new_email = $this->task->taskEmail($new_emails);
+            SendEmailJob::dispatch($new_emails);
 
             if (!empty($task_ticket['watcher'])) {
                 foreach ($task_ticket['watcher'] as $watcher) {
@@ -673,8 +664,7 @@ class ScrumController extends Controller
                         'type' => 'watched',
                         'view_ticket' => 'view the ticket.',
                     ];
-
-                    $watched_email = $this->task->taskEmail($watcher_emails);
+                    SendEmailJob::dispatch($watcher_emails);
                 }
             }
 
@@ -724,8 +714,7 @@ class ScrumController extends Controller
                     'type' => 'deleted_ticket',
                     'view_ticket' => 'view the ticket.',
                 ];
-
-                $removed_email = $this->task->taskEmail($removed_emails);
+                SendEmailJob::dispatch($removed_emails);
             }
         }
 
@@ -747,8 +736,7 @@ class ScrumController extends Controller
                     'type' => 'watched',
                     'view_ticket' => 'view the ticket.',
                 ];
-
-                $removed_email = $this->task->taskEmail($removed_emails);
+                SendEmailJob::dispatch($removed_emails);
             }
         }
 
@@ -856,8 +844,7 @@ class ScrumController extends Controller
                                 'type' => 'new_ticket',
                                 'view_ticket' => 'review the ticket.',
                             ];
-    
-                            //$completed_email = $this->task->taskEmail($complete_emails);
+                            SendEmailJob::dispatch($complete_emails);
                         }
     
                         if (!empty($task_ticket['watcher'])) {
@@ -884,8 +871,7 @@ class ScrumController extends Controller
                                     'type' => 'watched',
                                     'view_ticket' => 'view the ticket.',
                                 ];
-            
-                                //$watched_email = $this->task->taskEmail($watcher_emails);
+                                SendEmailJob::dispatch($watcher_emails);
                             }
                         }
                     }
@@ -952,7 +938,56 @@ class ScrumController extends Controller
         {
             if($this->task->reopen($request->input('task_id'),$request->input('remarks')))
             {
+                $task_assignee = $this->task->getTask($request->input('task_id'));
+                $watchers = Watcher::where('task_id', $request->input('task_id'))->get();
+
+                if (!empty($watchers)) {
+                    foreach ($watchers as $watcher) {
+                        $watchers_data = User::where('id', $watcher['user_id'])->get();
+                        foreach ($watchers_data as $watcher_data) {
+                            $watchers_fullname = $watcher_data['firstname'].' '.$watcher_data['lastname'];
+                            $watchers_username = $watcher_data['username'];
+                            $watchers_email = $watcher_data['email'];
+                        }
+    
+                        $watcher_emails = [
+                            'email' => $watchers_email,
+                            'username' => $watchers_username,
+                            'message' =>  strip_tags($request->input('remarks')),
+                            'title' => '#'.str_pad($request->input('task_id'), 5, '0', STR_PAD_LEFT).' '.$task_assignee->title,
+                            'time' => date('h:i:s  a', strtotime($task_assignee->time)),
+                            'priority' => $task_assignee->priority->name,
+                            'due_date' => date('F d, Y', strtotime($task_assignee->due_date)),
+                            'created_by' => auth()->user()->username,
+                            'id' => $request->input('task_id'),
+                            'sub_title' => '',
+                            'submit_message' => 'A ticket on your watch has been re-opened!',
+                            'type' => 'watched',
+                            'view_ticket' => 'view the ticket.',
+                        ];
+    
+                        SendEmailJob::dispatch($watcher_emails);
+                    }
+                }
+
                 $task = $this->task->update($request->input('task_id'),['status' => 'pending']);
+
+                $reopen_task = [
+                    'email' => $task_assignee->user->email,
+                    'username' => $task_assignee->user->username,
+                    'message' => strip_tags($request->input('remarks')),
+                    'title' => '#'.str_pad($request->input('task_id'), 5, '0', STR_PAD_LEFT).' '.$task_assignee->title,
+                    'time' => date('h:i:s  a', strtotime($task_assignee->time)),
+                    'priority' => $task_assignee->priority->name,
+                    'due_date' => date('F d, Y', strtotime($task_assignee->due_date)),
+                    'created_by' => auth()->user()->username,
+                    'id' => $request->input('task_id'),
+                    'sub_title' => 'Kindly review the assigned task ticket.',
+                    'submit_message' => auth()->user()->username.' has re-opened your task ticket.',
+                    'type' => 'new_ticket',
+                    'view_ticket' => 'review the ticket.',
+                ];
+                SendEmailJob::dispatch($reopen_task);
 
                 event(new TaskEvent([
                     'assigned' => $task !== null ? $task->user->fullname : "nobody",
@@ -991,7 +1026,6 @@ class ScrumController extends Controller
     {
         Artisan::call('taskStatus:update');
         return Artisan::output();
-//        return $this->task->updateTaskStatus();
     }
 
     public function exportTasks($status, $type)
