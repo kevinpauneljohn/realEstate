@@ -111,10 +111,4 @@ class TaskChecklistRepository implements TaskChecklistInterface
             ->whereJsonContains('properties', ['task_id' => $task_id])
             ->orderBy('id', 'desc');
     }
-
-    // public function getUser($id)
-    // {
-    //     $user = User::select('username')->where('id', $id)->get();
-    //     return 'test';
-    // }
 }
