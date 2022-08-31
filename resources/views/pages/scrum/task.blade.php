@@ -250,6 +250,7 @@
     <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
     <script>
         $(function() {
+            //getTask();
             $("#watchers").select2({
                 minimumResultsForSearch: 20
             });
@@ -283,6 +284,7 @@
                     { data: 'status', name: 'status'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
+                pageLength: 10,
                 responsive:true,
                 order:[0,'desc']
             });

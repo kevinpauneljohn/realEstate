@@ -112,7 +112,7 @@
         </div>
         <div class="card-body">
             <div id="mytickets" class="dataTables_wrapper dt-bootstrap4 mytasklist">
-                <table id="task-list" class="table table-bordered table-striped" role="grid">
+                <table id="task-list" class="table table-bordered table-striped task-list" role="grid">
                     <thead>
                     <tr role="row">
                         <th>Task #</th>
@@ -342,9 +342,8 @@
             });
 
             function mytask() {
-                $('#task-list').DataTable().clear();
-                $('#task-list').DataTable().destroy();
-                $('#task-list').DataTable({
+                $('.task-list').DataTable({
+                    retrieve: true,
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('my.tasks.list') !!}',
@@ -365,9 +364,8 @@
             }
 
             function mywatched() {
-                $('#watched-list').DataTable().clear();
-                $('#watched-list').DataTable().destroy();
                 $('#watched-list').DataTable({
+                    retrieve: true,
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('my.watched.list') !!}',

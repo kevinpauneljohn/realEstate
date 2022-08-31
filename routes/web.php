@@ -396,15 +396,3 @@ Route::get('/export-my-task/{status}','ScrumController@exportMyTasks')->middlewa
 Route::get('/export-my-watched/{status}','ScrumController@exportMyWatched')->middleware(['auth','permission:view task export']);
 
 Route::get('/task-activity/{task_id}/log',[\App\Http\Controllers\TaskChecklistController::class,'displayLog'])->name('log.display');
-
-Route::get('email-test', function(){
-  
-    $details['email'] = 'nheya@cloudstaff.com';
-  
-    dispatch(new App\Jobs\SendEmailJob($details));
-  
-    dd('done');
-});
-
-
-

@@ -267,10 +267,4 @@ class TaskRepository implements TaskInterface
     {
         return Priority::where('id',$id)->first();
     }
-
-    public function taskEmail(array $emails)
-    {
-        \Mail::to($emails['email'])->send(new SendTask($emails));
-        return true;
-    }
 }
