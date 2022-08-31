@@ -109,22 +109,22 @@
 
                     <p class="text-muted">
                         @if(auth()->user()->id === $task->created_by || auth()->user()->hasRole(['super admin','admin','account manager']))
+                            <span class="update-assignee hidden">{{$task->user->fullname ?? ''}}</span>
                             <form id="update-assignee">
                                 @csrf
                                 @method('put')
                                 <input type="hidden" name="task_id" value="{{$task->id}}">
-                                <select class="form-control select" id="assigned_to" name="assigned_id">
-                                    <option value=""></option>
+                                <select class="form-control select2" id="assigned_to" name="assigned_id">
                                     @foreach($agents as $agent)
                                         <option value="{{$agent->id}}" @if(!empty($task->user->fullname) && $agent->fullname === $task->user->fullname) selected @endif>{{$agent->fullname}}</option>
                                     @endforeach
                                 </select>
-                                <button type="submit" class="btn btn-primary btn-xs" style="width: 100%">update</button>
+                                <button type="submit" class="btn btn-primary btn-xs AssigneeButton" style="width: 100%" disabled>update</button>
                             </form>
                         @else
                             {{$task->user->fullname ?? ''}}
                         @endif
-
+                        
                     </p>
 
                     <hr>
@@ -143,15 +143,48 @@
                     <hr>
 
                     <strong><i class="fa fa-eye mr-1"></i> Watcher</strong>
-                    @if(empty($watchers))
-                        <br />
-                        <span class="text-muted">No watchers found.</span>
-                    @else
-                        @foreach($watchers as $watcher)
-                        <br />
-                        <span class="text-muted">{{$watcher['first_name']}} {{$watcher['last_name']}}</span>
-                        @endforeach
-                    @endif
+                        <p class="text-muted">
+                            @if(auth()->user()->id === $task->created_by || auth()->user()->hasRole(['super admin','admin','account manager']))
+                                <span class="update-watcher hidden">
+                                    @if(!empty($watcher_id))
+                                        @foreach($watchers as $watcher_list)
+                                            <span class="text-muted">{{$watcher_list['first_name']}} {{$watcher_list['last_name']}}</span><br />
+                                        @endforeach
+                                    @else
+                                        <span class="text-muted">No Watchers Found.</span>
+                                    @endif
+                                </span>
+                                <form id="update-watcher">
+                                    @csrf
+                                    @method('put')
+                                    <input type="hidden" name="task_id" value="{{$task->id}}">
+                                    <select name="watchers[]" multiple class="form-control" id="watchers" style="width: 100%" placeholder="Select Watcher Here">
+                                        @foreach($users as $user)
+                                            @if(!empty($watcher_id))
+                                                @foreach($watcher_id as $watchers) 
+                                                    @if($watchers == $user->id)
+                                                        <option value="{{$user->id}}" selected>{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
+                                                    @else
+                                                        <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-xs watchersButton" style="width: 100%" disabled>update</button>
+                                </form>
+                            @else
+                                @if(!empty($watcher_id))
+                                    @foreach($watchers as $watcher)
+                                        <span class="text-muted">{{$watcher['first_name']}} {{$watcher['last_name']}}</span><br />
+                                    @endforeach
+                                @else
+                                    <span class="text-muted">No Watchers Found.</span>
+                                @endif
+                            @endif
+                        </p>
                     <input type="hidden" class="get_task_id" value="{{$task->id}}">
                     <input type="hidden" class="get_task_status" value="{{$task->status}}">
                 </div>
@@ -311,6 +344,10 @@
     <script src="{{asset('js/custom-alert.js')}}"></script>
     <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
     <script>
+        $("#watchers").select2({
+            minimumResultsForSearch: 20
+        });
+
         $('.textEditor,.actionTaken').summernote({
             toolbar: [
                 ['style', ['style']],
@@ -339,6 +376,10 @@
             lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
         });
 
+        $("#update-assignee").change(function() {
+            $('.AssigneeButton').attr('disabled',false);
+        });
+
         let checklist_id; //checklist_id
         $(document).on('submit','#update-assignee',function(form){
             form.preventDefault();
@@ -353,8 +394,40 @@
                 },success: function(response){
                     if(response.success === true)
                     {
-                        $('#update-assignee').find('select, button').attr('disabled',false);
+                        $('#update-assignee').find('select').attr('disabled',false);
+                        $('#update-assignee').find('button').attr('disabled',true);
                         $('#update-assignee').find('button').text('update');
+                        customAlert('success',response.message);
+                    }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+        })
+
+        $("#update-watcher").change(function() {
+            $watchers_val = $('#update-watcher').find('select').val();
+            if ($watchers_val != '') {
+                $('.watchersButton').attr('disabled',false);
+            }
+        });
+
+        $(document).on('submit','#update-watcher',function(form){
+            form.preventDefault();
+            let data = $(this).serializeArray();
+            $.ajax({
+                'url' : '{{route('tasks.update.watcher')}}',
+                'type' : 'PUT',
+                'data' : data,
+                beforeSend: function(){
+                    $('#update-watcher').find('select, button').attr('disabled',true);
+                    $('#update-watcher').find('button').text('updating ...');
+                },success: function(response){
+                    if(response.success === true)
+                    {
+                        $('#update-watcher').find('select').attr('disabled',false);
+                        $('#update-watcher').find('button').attr('disabled',true);
+                        $('#update-watcher').find('button').text('update');
                         customAlert('success',response.message);
                     }
                 },error: function(xhr, status, error){
@@ -437,6 +510,12 @@
                     if (!$('.ongoing_task_component_span').hasClass("hidden")) {
                         $('.ongoing_task_component_span').addClass('hidden');
                     }
+
+                    $('#update-assignee').addClass('hidden');
+                    $('.update-assignee').removeClass('hidden');
+
+                    $('#update-watcher').addClass('hidden');
+                    $('.update-watcher').removeClass('hidden');
                 }
             @endif
         }
@@ -703,6 +782,9 @@
             })
         @endcan
 
+            let creator_action;
+            let super_admin_action;
+            let user_action_id;
             function displayActionTaken()
             {
                 let task_id = $('.get_task_id').val();
@@ -715,8 +797,21 @@
                         $('.action-timeline').html('<div class="timeline"></div>');
 
                         $.each(response, function(key, value){
-                            let action = value.is_creator === true ? `<button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="${task_id}" value="${value.id}">Edit</button>
-                                <button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="${task_id}" value="${value.id}">Delete</button>` : ``;
+                            creator_action = value.user_id;
+                            var action = value.is_creator;
+                            user_action_id = '{{auth()->user()->id}}';
+                            super_admin_action = '{{auth()->user()->hasRole(["super admin"])}}';
+
+                            var edit_action = `<button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="${task_id}" value="${value.id}">Edit</button>`;
+                            var delete_action = `<button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="${task_id}" value="${value.id}">Delete</button>`;
+                            
+                            var actions = '';
+                            if (super_admin_action != '') {
+                                actions = edit_action+delete_action;
+                            } else if (user_action_id == creator_action) {
+                                actions = edit_action;
+                            }
+
                             $('.action-timeline').find('.timeline').append(`
                                 <div class="time-label label-${value.id}">
                                     <span class="bg-cyan">${moment(value.created_at).format('dddd, MMMM Do YYYY')}</span>
@@ -727,12 +822,12 @@
                                     <div class="timeline-item">
                                         <span class="time"><i class="fas fa-clock"></i> ${moment(value.created_at).format('ddd, hA')}</span>
                                         <h3 class="timeline-header"><a href="#">Creator</a> ${value.creator}</h3>
-
+                            
                                         <div class="timeline-body" id="action-taken-${value.id}">${value.action}</div>
-                                        @if(auth()->user()->hasRole(["super admin"]))<div class="timeline-footer" id="action-btn-${value.id}">${action}</div>@endif
+                                        <div class="timeline-footer" id="action-btn-${value.id}">${actions}</div>
                                     </div>
                                 </div>
-                               `);
+                            `);
                         });
 
                     },error: function(xhr, status, error){
@@ -750,8 +845,10 @@
         let actionContent;
         let actionContentHtml;
         let rowId;
+        let actionEditHtml;
+        let actionDeleteHtml;
+        let returnActionHtml;
 
-        @if(auth()->user()->hasRole(["super admin"]))
         $(document).on('click','.edit-action-taken',function(){
             rowId = this.value;
             var task_id = $('.get_task_id').val();
@@ -764,20 +861,26 @@
                 '<button type="button" class="btn btn-default btn-xs cancel" data-id="'+task_id+'" value="'+rowId+'">Cancel</button> <button type="submit" class="btn btn-success btn-xs save" data-id="'+task_id+'" value="'+rowId+'">Save</button></form>');
             action_taken_editor(rowId);
         });
-            @endif
 
         $(document).on('click','.cancel',function(){
             let id = this.value;
             let task_id = $('.get_task_id').val();
+            actionEditHtml = '<button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="'+task_id+'" value="'+id+'">Edit</button>';
+            actionDeleteHtml = '<button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="'+task_id+'" value="'+id+'">Delete</button>';
+
+            var actions = '';
+            if (super_admin_action != '') {
+                actions = actionEditHtml+actionDeleteHtml;
+            } else if (user_action_id == creator_action) {
+                actions = actionEditHtml;
+            }
             $('.action-timeline').find('#action-taken-'+id)
                 .html(`<div class="timeline-body" id="action-taken-${id}">${actionContentHtml}</div>
                     <div class="timeline-footer" id="action-btn-${id}">
-                        <button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="${task_id}" value="${id}">Edit</button>
-                        <button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="${task_id}" value="${id}">Delete</button>
+                        ${actions}
                     </div>`);
         });
 
-        @if(auth()->user()->hasRole(["super admin"]))
         $(document).on('submit','.edit-action-form', function(form){
             form.preventDefault();
             let data = $(this).serializeArray();
@@ -796,11 +899,20 @@
                         actionContent = output.actionContent;
                         customAlert('success',output.message);
 
+                        action_edit = '<button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="'+task_id+'" value="'+id+'">Edit</button>';
+                        action_delete = '<button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="'+task_id+'" value="'+id+'">Delete</button>';
+
+                        var actions = '';
+                        if (super_admin_action != '') {
+                            actions = action_edit+action_delete;
+                        } else if (user_action_id == creator_action) {
+                            actions = action_edit;
+                        }
+                        
                         $('.action-timeline').find('#action-taken-'+id)
                             .html(`<div class="timeline-body" id="action-taken-${id}">${actionContent}</div>
                             <div class="timeline-footer" id="action-btn-${id}">
-                                <button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="${task_id}" value="${id}">Edit</button>
-                                <button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="${task_id}" value="${id}">Delete</button>
+                                ${actions}
                             </div>`);
                     }else if(output.success === false){
                         customAlert('warning',output.message);
@@ -813,7 +925,7 @@
                 }
             });
         });
-        @endif
+
 
         $(document).on('submit','#action-taken-form',function(form){
             form.preventDefault();
@@ -919,7 +1031,7 @@
                         if (!$('.completed_task_component_user_span').hasClass("hidden")) {
                             $('.completed_task_component_user_span').addClass('hidden');
                         }
-                    } else if (get_status == 'completed') {
+                    } else if (get_status == 'completed' && response.actions == 'complete') {
                         @if(auth()->user()->hasRole(['super admin','admin','account manager']))
                             $('.completed_task_component_user_span').removeClass('hidden');
                         @else
@@ -932,9 +1044,15 @@
                         if (!$('.ongoing_task_component_user_span').hasClass("hidden")) {
                             $('.ongoing_task_component_user_span').addClass('hidden');
                         }
+
+                        $('#update-assignee').addClass('hidden');
+                        $('.update-assignee').removeClass('hidden');
+
+                        $('#update-watcher').addClass('hidden');
+                        $('.update-watcher').removeClass('hidden');
                     }
                         
-                    if (response.actions == 'incomplete') {
+                    if (response.actions == 'incomplete' && response.status == 'completed') {
                         alert('Checklist Action taken must have atleast 1 data. Please Check each checklist action taken before completed the Task.');
                     }
 

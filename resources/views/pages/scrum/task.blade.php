@@ -196,7 +196,6 @@
                                     <div class="form-group watchers">
                                         <label for="watchers">Watchers</label>
                                         <select name="watchers[]" multiple class="form-control" id="watchers" style="width: 100%" required>
-                                            <option value="">Please Select</option>
                                             @foreach($users as $user)
                                                 <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
                                             @endforeach
@@ -346,6 +345,7 @@
                 $('form#task-form').trigger("reset");
                 $('form#task-form select').trigger("change");
 
+                $('#watchers').val('{{auth()->user()->id}}').change();
                 $('.textEditor').summernote("code", "");
             });
 

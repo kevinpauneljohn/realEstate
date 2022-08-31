@@ -47,6 +47,8 @@ class ActionTakenRepository implements ActionTakenInterface
         if($actionTaken->isDirty() && $actionTaken->user_id === auth()->user()->id)
         {
             return $actionTaken->save();
+        } else if ($actionTaken->isDirty() && auth()->user()->hasRole(["super admin"])) {
+            return $actionTaken->save();
         }
         return false;
     }
@@ -54,7 +56,7 @@ class ActionTakenRepository implements ActionTakenInterface
     public function destroy($action_taken_id): bool
     {
         $action = $this->getAction($action_taken_id);
-        if($action->user_id === auth()->user()->id)
+        if(auth()->user()->hasRole(["super admin"]))
         {
             return $action->delete();
         }

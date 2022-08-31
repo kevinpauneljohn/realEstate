@@ -287,6 +287,7 @@ Route::post('/contest','ContestController@store')->name('contest.index')->middle
 Route::post('/display-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayTask'])->name('display.task.change')->middleware(['auth','permission:view task']);
 Route::post('/display-my-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayMyTask'])->name('display.my.task.change')->middleware(['auth','permission:view task']);
 Route::put('/tasks/agent','ScrumController@updateAgent')->name('tasks.update.agent')->middleware(['auth','permission:view task|edit task']);
+Route::put('/tasks/watcher','ScrumController@updateWatcher')->name('tasks.update.watcher')->middleware(['auth','permission:view task|edit task']);
 Route::get('/tasks','ScrumController@index')->name('tasks.index')->middleware(['auth','permission:view task']);
 Route::post('/tasks','ScrumController@store')->name('tasks.store')->middleware(['auth','permission:add task']);
 Route::get('/tasks-list','ScrumController@task_list')->name('tasks.list')->middleware(['auth','permission:view task']);
