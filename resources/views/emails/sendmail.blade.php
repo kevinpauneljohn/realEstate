@@ -27,7 +27,7 @@
                                                         <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td align="center"><!-- LOGO HERE --><i class="fas fa-house-user"></i><br />SampleLogo</td>
+                                                                    <td align="center"><img src="{{ asset('images/DHG_logo.png') }}" width="120" height="120"/></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

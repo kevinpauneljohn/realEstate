@@ -49,8 +49,8 @@ class TaskChecklistRepository implements TaskChecklistInterface
                     $action .= '<button class="btn btn-info btn-xs log-action" id="'.$checklist->id.'" title="log action taken" data-toggle="modal" data-target="#action-taken"><i class="far fa-address-book"></i></button>';
                     if((auth()->user()->hasRole(['super admin','admin','account manager'])) || ($checklist->task->assigned_to === auth()->user()->id && auth()->user()->can('edit checklist')))
                     {
-                        $action .= '<button class="btn btn-default btn-xs edit" id="'.$checklist->id.'" data-toggle="modal" data-target="#edit-checklist"><i class="fas fa-edit"></i></button>';
-                        $action .= '<button class="btn btn-default btn-xs delete" id="'.$checklist->id.'"><i class="fas fa-trash"></i></button>';
+                        $action .= '<button class="btn btn-primary btn-xs edit" id="'.$checklist->id.'" data-toggle="modal" data-target="#edit-checklist"><i class="fas fa-edit"></i></button>';
+                        $action .= '<button class="btn btn-danger btn-xs delete" id="'.$checklist->id.'"><i class="fas fa-trash"></i></button>';
                     }
                 }
                 return $action;
@@ -111,10 +111,4 @@ class TaskChecklistRepository implements TaskChecklistInterface
             ->whereJsonContains('properties', ['task_id' => $task_id])
             ->orderBy('id', 'desc');
     }
-
-    // public function getUser($id)
-    // {
-    //     $user = User::select('username')->where('id', $id)->get();
-    //     return 'test';
-    // }
 }

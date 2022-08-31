@@ -196,7 +196,6 @@
                                     <div class="form-group watchers">
                                         <label for="watchers">Watchers</label>
                                         <select name="watchers[]" multiple class="form-control" id="watchers" style="width: 100%" required>
-                                            <option value="">Please Select</option>
                                             @foreach($users as $user)
                                                 <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
                                             @endforeach
@@ -251,6 +250,7 @@
     <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
     <script>
         $(function() {
+            //getTask();
             $("#watchers").select2({
                 minimumResultsForSearch: 20
             });
@@ -284,6 +284,7 @@
                     { data: 'status', name: 'status'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
+                pageLength: 10,
                 responsive:true,
                 order:[0,'desc']
             });
@@ -346,6 +347,7 @@
                 $('form#task-form').trigger("reset");
                 $('form#task-form select').trigger("change");
 
+                $('#watchers').val('{{auth()->user()->id}}').change();
                 $('.textEditor').summernote("code", "");
             });
 

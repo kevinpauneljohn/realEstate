@@ -129,6 +129,8 @@ class ActionTakenController extends Controller
     public function update(Request $request, $id)
     {
         $action = ActionTaken::find($id);
+        $date_today = date('Y-m-d H:i:s');
+        $due_date = date('Y-m-d H:i:s', strtotime($action->created_at. '+ 3 days'));
         $action_log = [
             'task_id' => $request->input('task_id'),
             'id' => $id,
@@ -141,15 +143,39 @@ class ActionTakenController extends Controller
 
         if(!empty($request->input('action_taken')))
         {
-            if($actionContent =$this->actionTaken->update($request->input('action_taken'),$id))
-            {
-                activity('task')
-                    ->causedBy(auth()->user()->id)
-                    ->performedOn(ActionTaken::find($id))
-                    ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
-                return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => nl2br($request->input('action_taken'))]);
+            // if($actionContent =$this->actionTaken->update($request->input('action_taken'),$id))
+            // {
+            //     activity('task')
+            //         ->causedBy(auth()->user()->id)
+            //         ->performedOn(ActionTaken::find($id))
+            //         ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
+            //     return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => nl2br($request->input('action_taken'))]);
+            // }
+            // return response(['success' =>false, 'message' => 'No changes occurred!']);
+            if ($date_today <= $due_date) {
+                if($actionContent =$this->actionTaken->update($request->input('action_taken'),$id))
+                {
+                    activity('task')
+                        ->causedBy(auth()->user()->id)
+                        ->performedOn(ActionTaken::find($id))
+                        ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
+                        return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => nl2br($request->input('action_taken'))]);
+                }
+                return response(['success' =>false, 'message' => 'No changes occurred!']);
+            } else {
+                if (auth()->user()->hasRole(["super admin"])) {
+                    if($actionContent =$this->actionTaken->update($request->input('action_taken'),$id))
+                    {
+                        activity('task')
+                            ->causedBy(auth()->user()->id)
+                            ->performedOn(ActionTaken::find($id))
+                            ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
+                            return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => nl2br($request->input('action_taken'))]);
+                    }
+                    return response(['success' =>false, 'message' => 'No changes occurred!']);
+                }
+                return response(['success' =>false, 'message' => 'Action taken is more than 3 days. Please contact system administrator to update your action taken.']);
             }
-            return response(['success' =>false, 'message' => 'No changes occurred!']);
         }
         return response(['success' => false, 'message' => 'Empty value is not allowed'],403);
     }
@@ -195,7 +221,8 @@ class ActionTakenController extends Controller
             $collection = collect($value);
 
             $merged = $collection->merge(['is_creator' => $value['user_id'] === auth()->user()->getAuthIdentifier(),
-                'creator' => User::find($value['user_id'])->fullname
+                'creator' => User::find($value['user_id'])->fullname,
+                'user_id' => $value['user_id']
             ]);
 
             $actions[$key] = $merged->all();

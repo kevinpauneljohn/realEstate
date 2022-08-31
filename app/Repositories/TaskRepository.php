@@ -109,9 +109,9 @@ class TaskRepository implements TaskInterface
                 {
                     $action .= '<a href="'.route('tasks.overview',['id' => $task->id]).'" class="btn btn-xs btn-success" title="View"><i class="fas fa-eye"></i></a>';
                 }
-                if(auth()->user()->can('edit task'))
+                if(auth()->user()->hasRole('super admin') || ($task->created_by === auth()->user()->id && auth()->user()->can('delete task')))
                 {
-                    $action .= '<button type="button" class="btn btn-xs btn-primary edit-task-btn" title="Edit" id="'.$task->id.'" data-toggle="modal" data-target="#edit-task-modal"><i class="fas fa-edit"></i></button>';
+                        $action .= '<button type="button" class="btn btn-xs btn-primary edit-task-btn" title="Edit" id="'.$task->id.'" data-toggle="modal" data-target="#edit-task-modal"><i class="fas fa-edit"></i></button>';
                 }
                 if(auth()->user()->hasRole('super admin') || ($task->created_by === auth()->user()->id && auth()->user()->can('delete task')))
                 {
@@ -266,11 +266,5 @@ class TaskRepository implements TaskInterface
     public function getPriorityById($id)
     {
         return Priority::where('id',$id)->first();
-    }
-
-    public function taskEmail(array $emails)
-    {
-        \Mail::to($emails['email'])->send(new SendTask($emails));
-        return true;
     }
 }

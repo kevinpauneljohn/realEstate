@@ -287,6 +287,7 @@ Route::post('/contest','ContestController@store')->name('contest.index')->middle
 Route::post('/display-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayTask'])->name('display.task.change')->middleware(['auth','permission:view task']);
 Route::post('/display-my-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayMyTask'])->name('display.my.task.change')->middleware(['auth','permission:view task']);
 Route::put('/tasks/agent','ScrumController@updateAgent')->name('tasks.update.agent')->middleware(['auth','permission:view task|edit task']);
+Route::put('/tasks/watcher','ScrumController@updateWatcher')->name('tasks.update.watcher')->middleware(['auth','permission:view task|edit task']);
 Route::get('/tasks','ScrumController@index')->name('tasks.index')->middleware(['auth','permission:view task']);
 Route::post('/tasks','ScrumController@store')->name('tasks.store')->middleware(['auth','permission:add task']);
 Route::get('/tasks-list','ScrumController@task_list')->name('tasks.list')->middleware(['auth','permission:view task']);
@@ -305,7 +306,7 @@ Route::get('/task-status/update',[\App\Http\Controllers\ScrumController::class,'
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);
 
-Route::get('send', 'MailSendController@email');
+// Route::get('send', 'MailSendController@email');
 //Route::put('/clients/update-role/{client}','ClientController@updateRole')->name('client.update.role')->middleware(['auth','permission:edit client']);
 //Route::get('/clients','ClientController@index')->name('client.index')->middleware(['auth','permission:view client']);
 //Route::post('/clients','ClientController@store')->name('client.store')->middleware(['auth','permission:add client']);
@@ -395,6 +396,3 @@ Route::get('/export-my-task/{status}','ScrumController@exportMyTasks')->middlewa
 Route::get('/export-my-watched/{status}','ScrumController@exportMyWatched')->middleware(['auth','permission:view task export']);
 
 Route::get('/task-activity/{task_id}/log',[\App\Http\Controllers\TaskChecklistController::class,'displayLog'])->name('log.display');
-
-
-
