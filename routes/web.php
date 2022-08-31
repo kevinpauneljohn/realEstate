@@ -306,7 +306,7 @@ Route::get('/task-status/update',[\App\Http\Controllers\ScrumController::class,'
 Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
 Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);
 
-Route::get('send', 'MailSendController@email');
+// Route::get('send', 'MailSendController@email');
 //Route::put('/clients/update-role/{client}','ClientController@updateRole')->name('client.update.role')->middleware(['auth','permission:edit client']);
 //Route::get('/clients','ClientController@index')->name('client.index')->middleware(['auth','permission:view client']);
 //Route::post('/clients','ClientController@store')->name('client.store')->middleware(['auth','permission:add client']);
@@ -396,6 +396,15 @@ Route::get('/export-my-task/{status}','ScrumController@exportMyTasks')->middlewa
 Route::get('/export-my-watched/{status}','ScrumController@exportMyWatched')->middleware(['auth','permission:view task export']);
 
 Route::get('/task-activity/{task_id}/log',[\App\Http\Controllers\TaskChecklistController::class,'displayLog'])->name('log.display');
+
+Route::get('email-test', function(){
+  
+    $details['email'] = 'nheya@cloudstaff.com';
+  
+    dispatch(new App\Jobs\SendEmailJob($details));
+  
+    dd('done');
+});
 
 
 
