@@ -90,7 +90,7 @@ class ScrumController extends Controller
                     'time' => date('h:i:s  a', strtotime($request->input('time'))),
                     'priority' => $taskCreated->priority->name,
                     'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                    'created_by' => auth()->user()->username,
+                    'created_by' => 'Dream Home Guide System Administrator',
                     'id' => $taskCreated->id,
                     'sub_title' => 'Kindly review the assigned task ticket.',
                     'submit_message' => auth()->user()->username.' has submitted a task ticket.',
@@ -120,7 +120,7 @@ class ScrumController extends Controller
                         'time' => date('h:i:s  a', strtotime($request->input('time'))),
                         'priority' => $taskCreated->priority->name,
                         'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                        'created_by' => auth()->user()->username,
+                        'created_by' => 'Dream Home Guide System Administrator',
                         'id' => $taskCreated->id,
                         'sub_title' => '',
                         'submit_message' => 'A ticket on your watch has been submitted!',
@@ -268,7 +268,7 @@ class ScrumController extends Controller
                         'time' => date('h:i:s  a', strtotime($request->input('time'))),
                         'priority' => $taskCreated->priority->name,
                         'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                        'created_by' => auth()->user()->username,
+                        'created_by' => 'Dream Home Guide System Administrator',
                         'id' => $taskCreated->id,
                         'sub_title' => 'Kindly review the assigned task ticket.',
                         'submit_message' => auth()->user()->username.' has assigned the task ticket to you.',
@@ -285,7 +285,7 @@ class ScrumController extends Controller
                         'time' => date('h:i:s  a', strtotime($request->input('time'))),
                         'priority' => $taskCreated->priority->name,
                         'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                        'created_by' => auth()->user()->username,
+                        'created_by' => 'Dream Home Guide System Administrator',
                         'id' => $taskCreated->id,
                         'sub_title' => 'Kindly review the assigned task ticket.',
                         'submit_message' => auth()->user()->username.' was assigned your task ticket to another staff.',
@@ -304,7 +304,7 @@ class ScrumController extends Controller
                         'time' => date('h:i:s  a', strtotime($request->input('time'))),
                         'priority' => $taskCreated->priority->name,
                         'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                        'created_by' => auth()->user()->username,
+                        'created_by' => 'Dream Home Guide System Administrator',
                         'id' => $taskCreated->id,
                         'sub_title' => 'Kindly review the assigned task ticket.',
                         'submit_message' => auth()->user()->username.' has updated the priority of your task ticket.',
@@ -337,7 +337,7 @@ class ScrumController extends Controller
                             'time' => date('h:i:s  a', strtotime($request->input('time'))),
                             'priority' => $taskCreated->priority->name,
                             'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                            'created_by' => auth()->user()->username,
+                            'created_by' => 'Dream Home Guide System Administrator',
                             'id' => $taskCreated->id,
                             'sub_title' => '',
                             'submit_message' => auth()->user()->username.' has updated the priority of a task ticket you are watching.',
@@ -359,7 +359,7 @@ class ScrumController extends Controller
                             'time' => date('h:i:s  a', strtotime($request->input('time'))),
                             'priority' => $taskCreated->priority->name,
                             'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                            'created_by' => auth()->user()->username,
+                            'created_by' => 'Dream Home Guide System Administrator',
                             'id' => $taskCreated->id,
                             'sub_title' => '',
                             'submit_message' => 'You have been removed as a watcher on this task ticket.',
@@ -381,7 +381,7 @@ class ScrumController extends Controller
                             'time' => date('h:i:s  a', strtotime($request->input('time'))),
                             'priority' => $taskCreated->priority->name,
                             'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                            'created_by' => auth()->user()->username,
+                            'created_by' => 'Dream Home Guide System Administrator',
                             'id' => $taskCreated->id,
                             'sub_title' => '',
                             'submit_message' => auth()->user()->username.' has added you to watch this ticket.',
@@ -419,7 +419,7 @@ class ScrumController extends Controller
                             'time' => date('h:i:s  a', strtotime($request->input('time'))),
                             'priority' => $priority_name,
                             'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                            'created_by' => auth()->user()->username,
+                            'created_by' => 'Dream Home Guide System Administrator',
                             'id' => $id,
                             'sub_title' => '',
                             'submit_message' => 'You have been removed as a watcher on this task ticket.',
@@ -441,7 +441,7 @@ class ScrumController extends Controller
                             'time' => date('h:i:s  a', strtotime($request->input('time'))),
                             'priority' => $priority_name,
                             'due_date' => date('F d, Y', strtotime($request->input('due_date'))),
-                            'created_by' => auth()->user()->username,
+                            'created_by' => 'Dream Home Guide System Administrator',
                             'id' => $id,
                             'sub_title' => '',
                             'submit_message' => auth()->user()->username.' has added you to watch this ticket.',
@@ -499,7 +499,7 @@ class ScrumController extends Controller
                         'time' => date('h:i:s  a', strtotime($task->time)),
                         'priority' => $task->priority->name,
                         'due_date' => date('F d, Y', strtotime($task->due_date)),
-                        'created_by' => auth()->user()->username,
+                        'created_by' => 'Dream Home Guide System Administrator',
                         'id' => $task->id,
                         'sub_title' => '',
                         'submit_message' => 'The ticket you are watching has been deleted by '.auth()->user()->username,
@@ -518,7 +518,7 @@ class ScrumController extends Controller
                 'time' => date('h:i:s  a', strtotime($task->time)),
                 'priority' => $task->priority->name,
                 'due_date' => date('F d, Y', strtotime($task->due_date)),
-                'created_by' => auth()->user()->username,
+                'created_by' => 'Dream Home Guide System Administrator',
                 'id' => $task->id,
                 'sub_title' => '',
                 'submit_message' => 'Your task ticket has been deleted by '.auth()->user()->username,
@@ -566,6 +566,10 @@ class ScrumController extends Controller
         }
 
         $users = User::all();
+
+        $task_checklist = TaskChecklist::select('id')->where('task_id', $id)->get();
+        $count_task = count($task_checklist);
+
         return view('pages.scrum.index',[
             'task'  => $this->task->getTask($id),
             'agents' => $this->task->getAgents($this->agents),
@@ -594,7 +598,7 @@ class ScrumController extends Controller
                 'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
                 'priority' => $priority_name,
                 'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
-                'created_by' => auth()->user()->username,
+                'created_by' => 'Dream Home Guide System Administrator',
                 'id' => $request->task_id,
                 'sub_title' => '',
                 'submit_message' => auth()->user()->username. ' was assigned your task ticket to another staff.',
@@ -632,7 +636,7 @@ class ScrumController extends Controller
                 'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
                 'priority' => $priority_name,
                 'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
-                'created_by' => auth()->user()->username,
+                'created_by' => 'Dream Home Guide System Administrator',
                 'id' => $task_ticket['task']['id'],
                 'sub_title' => 'Kindly review the assigned task ticket.',
                 'submit_message' => auth()->user()->username.' has assigned the task ticket to you.',
@@ -658,7 +662,7 @@ class ScrumController extends Controller
                         'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
                         'priority' => $priority_name,
                         'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
-                        'created_by' => auth()->user()->username,
+                        'created_by' => 'Dream Home Guide System Administrator',
                         'id' => $request->task_id,
                         'sub_title' => '',
                         'submit_message' => auth()->user()->username.' has assigned the task ticket to '.$assigned_user->fullname,
@@ -708,7 +712,7 @@ class ScrumController extends Controller
                     'time' => date('h:i:s  a', strtotime($get_task['time'])),
                     'priority' => $priority_name,
                     'due_date' => date('F d, Y', strtotime($get_task['due_date'])),
-                    'created_by' => auth()->user()->username,
+                    'created_by' => 'Dream Home Guide System Administrator',
                     'id' => $request->task_id,
                     'sub_title' => '',
                     'submit_message' => 'You have been removed as a watcher on this task ticket.',
@@ -730,7 +734,7 @@ class ScrumController extends Controller
                     'time' => date('h:i:s  a', strtotime($get_task['time'])),
                     'priority' => $priority_name,
                     'due_date' => date('F d, Y', strtotime($get_task['due_date'])),
-                    'created_by' => auth()->user()->username,
+                    'created_by' => 'Dream Home Guide System Administrator',
                     'id' => $request->task_id,
                     'sub_title' => '',
                     'submit_message' => auth()->user()->username.' has added you to watch this ticket.',
@@ -838,7 +842,7 @@ class ScrumController extends Controller
                                 'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
                                 'priority' => $priority_name,
                                 'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
-                                'created_by' => auth()->user()->username,
+                                'created_by' => 'Dream Home Guide System Administrator',
                                 'id' => $task_ticket['task']['id'],
                                 'sub_title' => 'Kindly review the assigned task ticket.',
                                 'submit_message' => $assigned_users_data.' has completed the task ticket.',
@@ -865,7 +869,7 @@ class ScrumController extends Controller
                                     'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
                                     'priority' => $priority_name,
                                     'due_date' => date('F d, Y', strtotime($task_ticket['task']['due_date'])),
-                                    'created_by' => auth()->user()->username,
+                                    'created_by' => 'Dream Home Guide System Administrator',
                                     'id' => $task_ticket['task']['id'],
                                     'sub_title' => '',
                                     'submit_message' => $assigned_users_data.' has completed the task ticket you are watching.',
@@ -959,7 +963,7 @@ class ScrumController extends Controller
                             'time' => date('h:i:s  a', strtotime($task_assignee->time)),
                             'priority' => $task_assignee->priority->name,
                             'due_date' => date('F d, Y', strtotime($task_assignee->due_date)),
-                            'created_by' => auth()->user()->username,
+                            'created_by' => 'Dream Home Guide System Administrator',
                             'id' => $request->input('task_id'),
                             'sub_title' => '',
                             'submit_message' => 'A ticket on your watch has been re-opened!',
@@ -981,7 +985,7 @@ class ScrumController extends Controller
                     'time' => date('h:i:s  a', strtotime($task_assignee->time)),
                     'priority' => $task_assignee->priority->name,
                     'due_date' => date('F d, Y', strtotime($task_assignee->due_date)),
-                    'created_by' => auth()->user()->username,
+                    'created_by' => 'Dream Home Guide System Administrator',
                     'id' => $request->input('task_id'),
                     'sub_title' => 'Kindly review the assigned task ticket.',
                     'submit_message' => auth()->user()->username.' has re-opened your task ticket.',
@@ -1045,5 +1049,37 @@ class ScrumController extends Controller
     {
         $date = date('Y-m-d_H:i:s_A');
         return Excel::download(new TaskExport($status, $type), 'My_watched_task_'.$status.'-'.$date.'.xlsx');
+    }
+
+    public function watchedAction($id, $action)
+    {
+
+        $task = Task::find($id);
+
+        $action_taken = '';
+        if ($action == 'watch') {
+            $action_taken = 'remove';
+        } else if ($action == 'unwatch') {
+            $action_taken = 'add';
+        }
+
+        $watcher_emails = [
+            'email' => $task->creator->email,
+            'username' => $task->creator->username,
+            'message' => $task->description,
+            'title' => '#'.str_pad($task->id, 5, '0', STR_PAD_LEFT).' '.$task->title,
+            'time' => date('h:i:s  a', strtotime($task->time)),
+            'priority' => $task->priority->name,
+            'due_date' => date('F d, Y', strtotime($task->due_date)),
+            'created_by' => 'Dream Home Guide System Administrator',
+            'id' => $task->id,
+            'sub_title' => 'Kindly review the assigned task ticket.',
+            'submit_message' => auth()->user()->username.' has requested to '.$action_taken.' this ticket under watched ticket.',
+            'type' => 'new_ticket',
+            'view_ticket' => 'view the ticket.',
+        ];
+        SendEmailJob::dispatch($watcher_emails);
+
+        return response(['success' => true, 'message' => 'Request Successfully sent to '.$task->creator->username.'!']);
     }
 }
