@@ -103,6 +103,7 @@ class TaskRepository implements TaskInterface
                 return $task->created_at->format('M d, Y g:i A');
             })
             ->addColumn('action',function($task){
+                $watch_id = $this->getwatchedTicketByUserIdTaskId($task->id);
                 $action = "";
 
                 if(auth()->user()->can('view task'))
@@ -117,10 +118,40 @@ class TaskRepository implements TaskInterface
                 {
                     $action .= '<button type="button" class="btn btn-xs btn-danger delete-task-btn" title="Delete" id="'.$task->id.'"><i class="fas fa-trash"></i></button>';
                 }
+
+                if ($task->status != 'completed') {
+                    if ($task->assigned_to != auth()->user()->id) {
+                        if(!empty($watch_id)) {
+                            if ($task->created_by != auth()->user()->id) {
+                                if ($watch_id === $task->id) {
+                                    $action .= '<button type="button" class="btn btn-xs btn-warning request-task-watch" title="Request to Remove Watch Ticket" id="'.$task->id.'" data-action="watch"><i class="fa fa-eye-slash"></i></button>';
+                                }
+                            }
+                        } else {
+                            $action .= '<button type="button" class="btn btn-xs btn-warning request-task-watch" title="Request to Watch this Ticket" id="'.$task->id.'" data-action="unwatch"><i class="fa fa-tags"></i></button>';
+                        }
+                    }
+                }
+
                 return $action;
             })
             ->rawColumns(['action','id','priority_id'])
             ->make(true);
+    }
+
+    public function getwatchedTicketByUserIdTaskId($task_id)
+    {
+        $watch = Watcher::select('task_id')
+            ->where('user_id', auth()->user()->id)
+            ->where('task_id', $task_id)
+            ->first();
+
+        if (!empty($watch)) {
+            return $watch->task_id;
+        } else {
+            return false;
+        }
+        
     }
 
     public function displayRemarks($task_id)
