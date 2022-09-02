@@ -124,7 +124,7 @@
                         @else
                             {{$task->user->fullname ?? ''}}
                         @endif
-                        
+                        <input type="hidden" class="form-control assignee_saved_value" value="{{$task->assigned_to}}">
                     </p>
 
                     <hr>
@@ -377,7 +377,15 @@
         });
 
         $("#update-assignee").change(function() {
-            $('.AssigneeButton').attr('disabled',false);
+            
+            var selected_assignee_value = $('#assigned_to').find(":selected").val();
+            var save_assignee_value = $('.assignee_saved_value').val();
+
+            if (save_assignee_value == selected_assignee_value) {
+                $('.AssigneeButton').attr('disabled',true);
+            } else {
+                $('.AssigneeButton').attr('disabled',false);
+            }
         });
 
         let checklist_id; //checklist_id
@@ -407,8 +415,23 @@
 
         $("#update-watcher").change(function() {
             $watchers_val = $('#update-watcher').find('select').val();
-            if ($watchers_val != '') {
+
+            var $input = $(this),
+                theSame = $("option", this).map(function() {
+                    return this.selected === this.defaultSelected
+                }).get(),
+                allTheSame = !!theSame.reduce(function(a, b) {
+                    return (a === b) ? a : NaN;
+                });
+
+            if (!allTheSame) {
                 $('.watchersButton').attr('disabled',false);
+            } else {
+                $('.watchersButton').attr('disabled',true);
+            }
+
+            if ($watchers_val == '') {
+                $('.watchersButton').attr('disabled',true);
             }
         });
 
@@ -464,6 +487,9 @@
                     @if((auth()->user()->hasRole(['super admin','admin','account manager'])))
                         $('.completed_task_component_user_span').removeClass('hidden');
                     @else
+                        $('.delete-action-taken').attr('disabled',true);
+                        $('.submit-checklist-btn').attr('disabled',true);
+
                         $('.completed_task_component_span').removeClass('hidden');
                     @endif
 
@@ -500,6 +526,9 @@
                     @if((auth()->user()->hasRole(['super admin','admin','account manager'])))
                         $('.completed_task_component_user_span').removeClass('hidden');
                     @else
+                        $('.delete-action-taken').attr('disabled',true);
+                        $('.submit-checklist-btn').attr('disabled',true);
+
                         $('.completed_task_component_span').removeClass('hidden');
                     @endif
 
@@ -527,8 +556,8 @@
                 ajax: '{!! route('checklist.display',$task->id) !!}',
                 columns: [
                     { data: 'description', name: 'description'},
-                    { data: 'completed', name: 'completed', orderable: false, searchable: false},
-                    { data: 'action', name: 'action', orderable: false, searchable: false}
+                    { data: 'completed', name: 'completed', orderable: false, searchable: false, className: 'text-center'},
+                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
                 ],
                 responsive:true,
                 order:[0,'desc'],
@@ -782,59 +811,75 @@
             })
         @endcan
 
-            let creator_action;
-            let super_admin_action;
-            let user_action_id;
-            function displayActionTaken()
-            {
-                let task_id = $('.get_task_id').val();
-                $.ajax({
-                    'url' : '/action-taken/'+checklist_id+'/display',
-                    'type' : 'GET',
-                    beforeSend: function(){
-                        $('#action-taken-form').find("textarea").val("");
-                    },success: function(response){
-                        $('.action-timeline').html('<div class="timeline"></div>');
+        let creator_action;
+        let super_admin_action;
+        let user_action_id;
+        function displayActionTaken()
+        {
+            let task_id = $('.get_task_id').val();
+            $.ajax({
+                'url' : '/action-taken/'+checklist_id+'/display',
+                'type' : 'GET',
+                beforeSend: function(){
+                    $('#action-taken-form').find("textarea").val("");
+                },success: function(response){
+                    $('.action-timeline').html('<div class="timeline"></div>');
 
-                        $.each(response, function(key, value){
-                            creator_action = value.user_id;
-                            var action = value.is_creator;
-                            user_action_id = '{{auth()->user()->id}}';
-                            super_admin_action = '{{auth()->user()->hasRole(["super admin"])}}';
+                    $.each(response, function(key, value){
+                        var created_at = value.created_at;
+                        var expired_at = value.expired_at;
+                        var today = value.today;
 
-                            var edit_action = `<button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="${task_id}" value="${value.id}">Edit</button>`;
-                            var delete_action = `<button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="${task_id}" value="${value.id}">Delete</button>`;
-                            
-                            var actions = '';
-                            if (super_admin_action != '') {
-                                actions = edit_action+delete_action;
-                            } else if (user_action_id == creator_action) {
+                        var job_start_date = value.expired_at;
+                        var job_end_date = value.today;
+                        job_start_date = job_start_date.split('-');
+                        job_end_date = job_end_date.split('-');
+
+                        var new_start_date = new Date(job_start_date[2],job_start_date[0],job_start_date[1]);
+                        var new_end_date = new Date(job_end_date[2],job_end_date[0],job_end_date[1]);
+
+                        creator_action = value.user_id;
+                        var action = value.is_creator;
+                        user_action_id = '{{auth()->user()->id}}';
+                        super_admin_action = '{{auth()->user()->hasRole(["super admin"])}}';
+
+                        var edit_action = `<button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="${task_id}" value="${value.id}">Edit</button>`;
+                        var delete_action = `<button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="${task_id}" value="${value.id}">Delete</button>`;
+                        
+                        var actions = '';
+                        if (super_admin_action != '') {
+                            actions = edit_action+delete_action;
+                        } else if (user_action_id == creator_action) {
+                            if(new_end_date >= new_start_date) {
+                                actions = '';
+                            } else {
                                 actions = edit_action;
                             }
+                        }
 
-                            $('.action-timeline').find('.timeline').append(`
-                                <div class="time-label label-${value.id}">
-                                    <span class="bg-cyan">${moment(value.created_at).format('dddd, MMMM Do YYYY')}</span>
+                        $('.action-timeline').find('.timeline').append(`
+                            <div class="time-label label-${value.id}">
+                                <span class="bg-cyan">${moment(value.created_at).format('dddd, MMMM Do YYYY')}</span>
+                            </div>
+
+                            <div class="timeline-content-${value.id}">
+                                <i class="fas fa-check-circle bg-success"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fas fa-clock"></i> ${moment(value.created_at).format('ddd, hA')}</span>
+                                    <h3 class="timeline-header"><a href="#">Creator</a> ${value.creator}</h3>
+                        
+                                    <div class="timeline-body" id="action-taken-${value.id}">${value.action}</div>
+                                    <div class="timeline-footer" id="action-btn-${value.id}">${actions}</div>
                                 </div>
+                            </div>
+                        `);
+                    });
 
-                                <div class="timeline-content-${value.id}">
-                                    <i class="fas fa-check-circle bg-success"></i>
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fas fa-clock"></i> ${moment(value.created_at).format('ddd, hA')}</span>
-                                        <h3 class="timeline-header"><a href="#">Creator</a> ${value.creator}</h3>
-                            
-                                        <div class="timeline-body" id="action-taken-${value.id}">${value.action}</div>
-                                        <div class="timeline-footer" id="action-btn-${value.id}">${actions}</div>
-                                    </div>
-                                </div>
-                            `);
-                        });
-
-                    },error: function(xhr, status, error){
-                        console.log(xhr);
-                    }
-                });
-            }
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+        }
 
         $(document).on('click','.log-action',function(){
             checklist_id = this.id;
@@ -863,12 +908,13 @@
         });
 
         $(document).on('click','.cancel',function(){
+            console.log(user_action_id);
             let id = this.value;
             let task_id = $('.get_task_id').val();
             actionEditHtml = '<button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="'+task_id+'" value="'+id+'">Edit</button>';
             actionDeleteHtml = '<button type="button" class="btn btn-danger btn-xs delete-action-taken" data-id="'+task_id+'" value="'+id+'">Delete</button>';
 
-            var actions = '';
+            var actions;
             if (super_admin_action != '') {
                 actions = actionEditHtml+actionDeleteHtml;
             } else if (user_action_id == creator_action) {
@@ -1035,8 +1081,12 @@
                         @if(auth()->user()->hasRole(['super admin','admin','account manager']))
                             $('.completed_task_component_user_span').removeClass('hidden');
                         @else
+                            $('.delete-action-taken').attr('disabled',true);
+                            $('.submit-checklist-btn').attr('disabled',true);
+
                             $('.completed_task_component_span').removeClass('hidden');
                         @endif
+
                         if (!$('.start_task_component_user_span').hasClass("hidden")) {
                             $('.start_task_component_user_span').addClass('hidden');
                         }

@@ -396,3 +396,4 @@ Route::get('/export-my-task/{status}','ScrumController@exportMyTasks')->middlewa
 Route::get('/export-my-watched/{status}','ScrumController@exportMyWatched')->middleware(['auth','permission:view task export']);
 
 Route::get('/task-activity/{task_id}/log',[\App\Http\Controllers\TaskChecklistController::class,'displayLog'])->name('log.display');
+Route::get('/tasks/action/watch/{task_id}/{action}',[\App\Http\Controllers\ScrumController::class,'watchedAction'])->name('tasks.watch.action');

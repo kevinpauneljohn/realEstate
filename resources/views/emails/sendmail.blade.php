@@ -27,7 +27,7 @@
                                                         <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td align="center"><img src="{{ asset('images/DHG_logo.png') }}" width="120" height="120"/></td>
+                                                                    <td align="center"><img src="http://portal.dream-homeseller.com/images/DHG_logo.png" width="100" height="100"/></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -100,7 +100,7 @@
                                                                                         @else
                                                                                             <p><b>{{ $emails['submit_message'] }}</b></p>
                                                                                         @endif
-                                                                                        <p>If you need further assistance,kindly contact <b>{{ $emails['created_by'] }}</b></p>
+                                                                                        <p>If you need further assistance, kindly contact <b>{{ $emails['created_by'] }}</b></p>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
@@ -117,7 +117,7 @@
                                                 <tr>
                                                     <td height="40" style="font-size:40px;line-height:40px">
                                                         <p style="color:#6b6f70;font-size:10px;font-family:Arial,Helvetica,sans-serif;line-height:14px">
-                                                            <i>&nbsp; **A direct reply to this email will be automatically recorded to the Dream Home Seller Messaging System.</i>
+                                                            <i>&nbsp; **A direct reply to this email will be automatically recorded to the Dream Home Guide Messaging System.</i>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -147,7 +147,7 @@
 
                                                                     <tbody><tr>
                                                                         <td align="center">
-                                                                            <?php echo date('Y'); ?> &copy; by <a href="{{ env('APP_URL') }}" target="_blank">Dream Home Seller</a> <br>
+                                                                            <?php echo date('Y'); ?> &copy; by <a href="{{ env('APP_URL') }}" target="_blank">Dream Home Guide</a> <br>
                                                                         </td>
                                                                     </tr>
 

@@ -222,7 +222,10 @@ class ActionTakenController extends Controller
 
             $merged = $collection->merge(['is_creator' => $value['user_id'] === auth()->user()->getAuthIdentifier(),
                 'creator' => User::find($value['user_id'])->fullname,
-                'user_id' => $value['user_id']
+                'user_id' => $value['user_id'],
+                'expired_at' => date('m-d-Y', strtotime($value['created_at']. ' + 3 days')),
+                'created_at_format' => date('Y-m-d', strtotime($value['created_at'])),
+                'today' => date('m-d-Y')
             ]);
 
             $actions[$key] = $merged->all();
