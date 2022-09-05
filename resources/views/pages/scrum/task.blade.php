@@ -456,7 +456,7 @@
                     {
                         customAlert('success',result.message);
                         let table = $('#task-list').DataTable();
-                        table.ajax.reload();
+                        table.ajax.reload(null, false);
                         $('#edit-task-modal').modal('toggle');
                     }else if(result.success === false)
                     {
@@ -495,7 +495,7 @@
 
                 },success: function(response){
                     let table = $('#task-list').DataTable();
-                    table.ajax.reload();
+                    table.ajax.reload(null, false);
                 },error: function(xhr, status, error){
                     console.log(xhr);
                 }
@@ -505,12 +505,12 @@
         $(document).on('click','.request-task-watch',function(){
             let id = this.id;
             let action = $(this).attr('data-action');
-
+            let data_id = $(this).attr('data-id');
             var text_title;
             if (action == 'watch') {
-                text_title = 'You want to request to Remove task ticket under your watch?';
+                text_title = 'You want to request to Remove task ticket #'+data_id+' under your watch?';
             } else if (action == 'unwatch') {
-                text_title = 'You want to request to add task ticket under your watch?';
+                text_title = 'You want to request to add task ticket #'+data_id+' under your watch?';
             }
 
             Swal.fire({
@@ -531,7 +531,7 @@
                             if(output.success === true){
                                 customAlert('success',output.message);
                                 let table = $('#task-list').DataTable();
-                                table.ajax.reload();
+                                table.ajax.reload(null, false);
 
                             }else if(output.success === false){
                                 customAlert('warning',output.message);
@@ -568,7 +568,7 @@
                                 if(output.success === true){
                                     customAlert('success',output.message);
                                     let table = $('#task-list').DataTable();
-                                    table.ajax.reload();
+                                    table.ajax.reload(null, false);
 
                                 }else if(output.success === false){
                                     customAlert('warning',output.message);
