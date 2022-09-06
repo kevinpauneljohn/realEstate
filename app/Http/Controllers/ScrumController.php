@@ -61,7 +61,8 @@ class ScrumController extends Controller
             'description'   => 'required|max:10000',
             'due_date'   => 'required|date',
             'priority'   => 'required',
-            'assign_to'   => 'required',
+            // 'assign_to'   => 'required',
+            'watchers'   => 'required',
         ]);
 
         if($validation->passes())
@@ -82,9 +83,16 @@ class ScrumController extends Controller
 
             if($taskCreated = $this->task->create($task))
             {
+                $user_email = '';
+                $user_name = '';
+                if (!empty($taskCreated->user->email)) {
+                    $user_email = $taskCreated->user->email;
+                    $user_name = $taskCreated->user->username;
+                }
+
                 $new_emails = [
-                    'email' => $taskCreated->user->email,
-                    'username' => $taskCreated->user->username,
+                    'email' => $user_email,
+                    'username' => $user_name,
                     'message' => strip_tags($request->input('description')),
                     'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
                     'time' => date('h:i:s  a', strtotime($request->input('time'))),
@@ -98,11 +106,15 @@ class ScrumController extends Controller
                     'view_ticket' => 'review the ticket.',
                 ];
                 
-                SendEmailJob::dispatch($new_emails);
+                if (!empty($taskCreated->user->email)) {
+                    SendEmailJob::dispatch($new_emails);
+                }
+                
                 foreach ($watchers as $watcher) {
                     $watcher_data = [
                         'user_id' => $watcher,
-                        'task_id' => $taskCreated->id
+                        'task_id' => $taskCreated->id,
+                        'request_status' => 'completed'
                     ];
                     Watcher::create($watcher_data);
                     $watchers_data = User::where('id', $watcher)->get();
@@ -127,8 +139,9 @@ class ScrumController extends Controller
                         'type' => 'watched',
                         'view_ticket' => 'view the ticket.',
                     ];
-
-                    SendEmailJob::dispatch($watcher_emails);
+                    if (!empty($watchers_email)) {
+                        SendEmailJob::dispatch($watcher_emails);
+                    }
                 }
                 event(new TaskEvent([
                     'assigned' => $taskCreated->user !== null ? $taskCreated->user->fullname : "nobody",
@@ -223,7 +236,7 @@ class ScrumController extends Controller
             'description'   => 'required|max:10000',
             'due_date'   => 'required|date',
             'priority'   => 'required',
-            'assign_to'   => 'required',
+            // 'assign_to'   => 'required',
             'watchers'   => 'required',
         ]);
 
@@ -259,10 +272,24 @@ class ScrumController extends Controller
             $watcher = $this->delete_watcher($id);
             if($taskCreated = $this->task->update($id, $data))
             {
+                $user_email = '';
+                $user_name = '';
+                if (!empty($taskCreated->user->email)) {
+                    $user_email = $taskCreated->user->email;
+                    $user_name = $taskCreated->user->username;
+                }
+
                 if ($assigned_user['id'] != $request->input('assign_to')) {
+                    $assigned_user_email = '';
+                    $assigned_user_name = '';
+                    if (!empty($assigned_user['email'])) {
+                        $assigned_user_email = $assigned_user['email'];
+                        $assigned_user_name = $assigned_user['username'];
+                    }
+
                     $new_assigned_user = [
-                        'email' => $taskCreated->user->email,
-                        'username' => $taskCreated->user->username,
+                        'email' => $user_email,
+                        'username' => $user_name,
                         'message' => strip_tags($request->input('description')),
                         'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
                         'time' => date('h:i:s  a', strtotime($request->input('time'))),
@@ -275,11 +302,14 @@ class ScrumController extends Controller
                         'type' => 'new_ticket',
                         'view_ticket' => 'review the ticket.',
                     ];
-                    SendEmailJob::dispatch($new_assigned_user);
+
+                    if (!empty($taskCreated->user->email)) {
+                        SendEmailJob::dispatch($new_assigned_user);
+                    }
 
                     $old_assigned_user = [
-                        'email' => $assigned_user['email'],
-                        'username' => $assigned_user['username'],
+                        'email' => $assigned_user_email,
+                        'username' => $assigned_user_name,
                         'message' => strip_tags($request->input('description')),
                         'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
                         'time' => date('h:i:s  a', strtotime($request->input('time'))),
@@ -292,13 +322,16 @@ class ScrumController extends Controller
                         'type' => 'deleted_ticket',
                         'view_ticket' => 'review the ticket.',
                     ];
-                    SendEmailJob::dispatch($old_assigned_user);
+
+                    if (!empty($assigned_user['email'])) {
+                        SendEmailJob::dispatch($old_assigned_user);
+                    }
                 }
                 
                 if ($get_priority_id != $request->input('priority')) {
                     $update_emails = [
-                        'email' => $taskCreated->user->email,
-                        'username' => $taskCreated->user->username,
+                        'email' => $user_email,
+                        'username' => $user_name,
                         'message' => strip_tags($request->input('description')),
                         'title' => '#'.str_pad($taskCreated->id, 5, '0', STR_PAD_LEFT).' '.$request->input('title'),
                         'time' => date('h:i:s  a', strtotime($request->input('time'))),
@@ -311,13 +344,17 @@ class ScrumController extends Controller
                         'type' => 'new_ticket',
                         'view_ticket' => 'review the ticket.',
                     ];
-                    SendEmailJob::dispatch($update_emails);
+
+                    if (!empty($taskCreated->user->email)) {
+                        SendEmailJob::dispatch($update_emails);
+                    }
                 }
 
                 foreach ($watchers as $watcher) {
                     $watcher_data = [
                         'user_id' => $watcher,
-                        'task_id' => $taskCreated->id
+                        'task_id' => $taskCreated->id,
+                        'request_status' => 'completed'
                     ];
                     Watcher::create($watcher_data);
                     
@@ -455,7 +492,8 @@ class ScrumController extends Controller
                 foreach ($watchers as $watcher) {
                     $watcher_data = [
                         'user_id' => $watcher,
-                        'task_id' => $id
+                        'task_id' => $id,
+                        'request_status' => 'completed'
                     ];
 
                     Watcher::create($watcher_data);
@@ -510,9 +548,16 @@ class ScrumController extends Controller
                 }
             }
 
+            $user_email = '';
+            $user_name = '';
+            if (!empty($task->user->email)) {
+                $user_email = $task->user->email;
+                $user_name = $task->user->username;
+            }
+
             $deleted_emails = [
-                'email' => $task->user->email,
-                'username' => $task->user->username,
+                'email' => $user_email,
+                'username' => $user_name,
                 'message' => '',
                 'title' => '#'.str_pad($task->id, 5, '0', STR_PAD_LEFT).' '.$task->title,
                 'time' => date('h:i:s  a', strtotime($task->time)),
@@ -525,8 +570,11 @@ class ScrumController extends Controller
                 'type' => 'deleted_ticket',
                 'view_ticket' => 'review the ticket.',
             ];
-            SendEmailJob::dispatch($deleted_emails);
+            if (!empty($task->user->email)) {
+                SendEmailJob::dispatch($deleted_emails);
+            }
 
+            Watcher::where('task_id', $id)->delete();
             event(new TaskEvent([
                 'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
                 'action' => 'task deleted'
@@ -547,7 +595,13 @@ class ScrumController extends Controller
      */
     public function overview($id)
     {
-        $watchers = Watcher::where('task_id', $id)->get();
+        $watchers = Watcher::where('task_id', $id)
+            ->where(function ($query) {
+                $query->where('request_status', 'completed');
+                $query->orWhere('request_status', 'remove');
+                $query->orWhere('request_status', '');
+            })
+            ->get();
         $data = [];
         foreach ($watchers as $watcher) {
             $data [] = $watcher['user_id'];
@@ -590,9 +644,16 @@ class ScrumController extends Controller
 
         if($taskUpdated = $this->task->setAssignee($request->input('assigned_id'), $request->input('task_id')))
         {
+            $user_email = '';
+            $user_name = '';
+            if (!empty($users_data['email'])) {
+                $user_email = $users_data['email'];
+                $user_name = $users_data['username'];    
+            }
+
             $deleted_emails = [
-                'email' => $users_data['email'],
-                'username' => $users_data['username'],
+                'email' => $user_email,
+                'username' => $user_name,
                 'message' => '',
                 'title' => '#'.str_pad($request->task_id, 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
                 'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
@@ -605,7 +666,10 @@ class ScrumController extends Controller
                 'type' => 'deleted_ticket',
                 'view_ticket' => 'review the ticket.',
             ];
-            SendEmailJob::dispatch($deleted_emails);
+
+            if (!empty($users_data['email'])) {
+                SendEmailJob::dispatch($deleted_emails);
+            }
 
             $assigned_user = User::find($request->input('assigned_id'));
 
@@ -628,9 +692,16 @@ class ScrumController extends Controller
                     'task_id' => $request->input('task_id'),
                 ])->log('<span class="text-info">'.auth()->user()->fullname.'</span> assigned the task to '.$assigned_user->fullname);
 
+            $assigned_user_email = '';
+            $asssigned_user_name = '';
+            if (!empty($assigned_user->email)) {
+                $assigned_user_email = $assigned_user->email;
+                $asssigned_user_name = $assigned_user;
+            }
+
             $new_emails = [
-                'email' => $assigned_user->email,
-                'username' => $assigned_user->username,
+                'email' => $assigned_user_email,
+                'username' => $asssigned_user_name,
                 'message' => strip_tags($task_ticket['task']['description']),
                 'title' => '#'.str_pad($task_ticket['task']['id'], 5, '0', STR_PAD_LEFT).' '.$task_ticket['task']['title'],
                 'time' => date('h:i:s  a', strtotime($task_ticket['task']['time'])),
@@ -643,7 +714,10 @@ class ScrumController extends Controller
                 'type' => 'new_ticket',
                 'view_ticket' => 'review the ticket.',
             ];
-            SendEmailJob::dispatch($new_emails);
+
+            if (!empty($assigned_user->email)) {
+                SendEmailJob::dispatch($new_emails);
+            }
 
             if (!empty($task_ticket['watcher'])) {
                 foreach ($task_ticket['watcher'] as $watcher) {
@@ -748,7 +822,8 @@ class ScrumController extends Controller
         foreach ($watchers as $watcher) {
             $watcher_data = [
                 'user_id' => $watcher,
-                'task_id' => $request->task_id
+                'task_id' => $request->task_id,
+                'request_status' => 'completed'
             ];
 
             Watcher::create($watcher_data);
@@ -977,9 +1052,16 @@ class ScrumController extends Controller
 
                 $task = $this->task->update($request->input('task_id'),['status' => 'pending']);
 
+                $user_email = '';
+                $user_name = '';
+                if (!empty($task_assignee->user->email)) {
+                    $user_email = $task_assignee->user->email;
+                    $user_name = $task_assignee->user->username;
+                }
+
                 $reopen_task = [
-                    'email' => $task_assignee->user->email,
-                    'username' => $task_assignee->user->username,
+                    'email' => $user_email,
+                    'username' => $user_name,
                     'message' => strip_tags($request->input('remarks')),
                     'title' => '#'.str_pad($request->input('task_id'), 5, '0', STR_PAD_LEFT).' '.$task_assignee->title,
                     'time' => date('h:i:s  a', strtotime($task_assignee->time)),
@@ -992,7 +1074,10 @@ class ScrumController extends Controller
                     'type' => 'new_ticket',
                     'view_ticket' => 'review the ticket.',
                 ];
-                SendEmailJob::dispatch($reopen_task);
+
+                if (!empty($task_assignee->user->email)) {
+                    SendEmailJob::dispatch($reopen_task);
+                }
 
                 event(new TaskEvent([
                     'assigned' => $task !== null ? $task->user->fullname : "nobody",
@@ -1008,7 +1093,8 @@ class ScrumController extends Controller
                     'description' => $task->user->username. ' Re-open the task ticket',
                     'status' => $task->status,
                     'created_at' => now(),
-                    'updated_at' => now(),
+                    'updated_at' 
+                    => now(),
                 ];
 
                 activity('task')
@@ -1057,16 +1143,34 @@ class ScrumController extends Controller
         $task = Task::find($id);
 
         $action_taken = '';
+        $status = '';
         if ($action == 'watch') {
             $action_taken = 'remove';
+            $status = 'remove';
         } else if ($action == 'unwatch') {
             $action_taken = 'add';
+            $status = 'pending';
+        }
+
+        $watcher_data = [
+            'user_id' => auth()->user()->id,
+            'task_id' => $id,
+            'request_status' => $status
+        ];
+
+        if ($status == 'pending') {
+            Watcher::create($watcher_data);
+        } else if ($status == 'remove') {
+            $watch = $this->task->getwatchedTicketByUserIdTaskId($id);
+
+            Watcher::where('id', $watch->id)
+                ->update(['request_status' => $status]);
         }
 
         $watcher_emails = [
             'email' => $task->creator->email,
             'username' => $task->creator->username,
-            'message' => $task->description,
+            'message' => strip_tags($task->description),
             'title' => '#'.str_pad($task->id, 5, '0', STR_PAD_LEFT).' '.$task->title,
             'time' => date('h:i:s  a', strtotime($task->time)),
             'priority' => $task->priority->name,
@@ -1081,5 +1185,73 @@ class ScrumController extends Controller
         SendEmailJob::dispatch($watcher_emails);
 
         return response(['success' => true, 'message' => 'Request Successfully sent to '.$task->creator->username.'!']);
+    }
+
+    public function displayRequest($id)
+    {
+        return $this->task->displayRequest($id);
+    }
+
+    public function UpdateRequest(Request $request)
+    {
+        $id = $request->input('id');
+        $task_id = $request->input('task_id');
+        $watchers_user = $request->input('user_id');
+        $watchers_type = $request->input('type');
+        $watchers_request = $request->input('request');
+        $watchers_fullname = $request->input('fullname');
+        $watchers_username = $request->input('username');
+        $watchers_email = $request->input('email');
+
+        $task = Task::where('id', $task_id)->first();
+
+        $task_remark = '';
+        if ($watchers_request == 'pending') {
+            $task_remark = 'watch';
+            if ($watchers_type == 'approved') {
+                Watcher::where('id', $id)->update(['request_status' => 'completed']);
+            } else if ($watchers_type == 'rejected'){
+                Watcher::where('id', $id)->delete();
+            }
+        } else if ($watchers_request == 'remove') {
+            $task_remark = 'un-watched';
+            if ($watchers_type == 'approved') {
+                Watcher::where('id', $id)->delete();
+            } else if ($watchers_type == 'rejected'){
+                Watcher::where('id', $id)->update(['request_status' => 'completed']);
+            }
+        }
+
+        $watcher_emails = [
+            'email' => $watchers_email,
+            'username' => $watchers_username,
+            'message' => strip_tags($task->description),
+            'title' => '#'.str_pad($task->id, 5, '0', STR_PAD_LEFT).' '.$task->title,
+            'time' => date('h:i:s  a', strtotime($task->time)),
+            'priority' => $task->priority->name,
+            'due_date' => date('F d, Y', strtotime($task->due_date)),
+            'created_by' => 'Dream Home Guide System Administrator',
+            'id' => $task->id,
+            'sub_title' => 'Kindly review the assigned task ticket.',
+            'submit_message' => auth()->user()->username.' has '.$watchers_type.' your request to '.$task_remark.' the task ticket.',
+            'type' => 'new_ticket',
+            'view_ticket' => 'view the ticket.',
+        ];
+
+        SendEmailJob::dispatch($watcher_emails);
+
+        $status_log = [
+            'task_id' => "$task_id",
+            'description' => auth()->user()->username. ' '.$watchers_type.' the request to '.$task_remark.' the task ticket',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+        
+        activity('task')
+        ->causedBy(auth()->user()->id)
+        ->performedOn(Task::find($task_id))
+        ->withProperties($status_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> '.$watchers_type.' the request of '.$watchers_fullname.' to '.$task_remark.' the task ticket');
+
+        return response(['success' => true, 'message' => 'Request Successfully '.$watchers_type.'!']);
     }
 }

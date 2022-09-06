@@ -114,7 +114,8 @@
                                 @csrf
                                 @method('put')
                                 <input type="hidden" name="task_id" value="{{$task->id}}">
-                                <select class="form-control select2" id="assigned_to" name="assigned_id">
+                                <select class="form-control select2" id="assigned_to" name="assigned_id" style="width: 100%">
+                                    <option value="">Please Select</option>
                                     @foreach($agents as $agent)
                                         <option value="{{$agent->id}}" @if(!empty($task->user->fullname) && $agent->fullname === $task->user->fullname) selected @endif>{{$agent->fullname}}</option>
                                     @endforeach
@@ -161,13 +162,11 @@
                                     <select name="watchers[]" multiple class="form-control" id="watchers" style="width: 100%" placeholder="Select Watcher Here">
                                         @foreach($users as $user)
                                             @if(!empty($watcher_id))
-                                                @foreach($watcher_id as $watchers) 
-                                                    @if($watchers == $user->id)
-                                                        <option value="{{$user->id}}" selected>{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
-                                                    @else
-                                                        <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
-                                                    @endif
-                                                @endforeach
+                                                @if(in_array($user->id, $watcher_id))
+                                                    <option value="{{$user->id}}" selected>{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
+                                                @else
+                                                    <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
+                                                @endif
                                             @else
                                                 <option value="{{$user->id}}">{{$user->username}} [{{$user->firstname}} {{$user->lastname}}]</option>
                                             @endif
@@ -189,7 +188,22 @@
                     <input type="hidden" class="get_task_status" value="{{$task->status}}">
                 </div>
             </div>
-
+            @if(auth()->user()->id === $task->created_by || auth()->user()->hasRole(['super admin','admin','account manager']))
+                <div class="card card-default">
+                    <div class="card-body">
+                        <label>Watcher's Request</label>
+                        <table id="watchers-request" class="table table-bordered table-striped" role="grid">
+                            <thead>
+                            <tr role="row">
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            @endif
             <div class="card card-default">
                 <div class="card-body">
                     <table id="remarks-list" class="table table-bordered table-striped" role="grid">
@@ -329,6 +343,9 @@
             display:none !important;
         }
         .hidden{
+            display:none;
+        }
+        #watchers-request_filter{
             display:none;
         }
     </style>
@@ -701,10 +718,10 @@
 
                         $('#checklist').modal('toggle');
                         let table = $('#check-list').DataTable();
-                        table.ajax.reload();
+                        table.ajax.reload(null, false);
 
                         let tableLog = $('#activity-log').DataTable();
-                        tableLog.ajax.reload();
+                        tableLog.ajax.reload(null, false);
                     }
                     checklistForm.find('input, textarea').attr('disabled',false);
                 },error: function(xhr, status, error){
@@ -750,10 +767,10 @@
                                     customAlert('success',output.message);
                                 }
                                 let table = $('#check-list').DataTable();
-                                table.ajax.reload();
+                                table.ajax.reload(null, false);
 
                                 let tableLog = $('#activity-log').DataTable();
-                                tableLog.ajax.reload();
+                                tableLog.ajax.reload(null, false);
                             },error: function(xhr, status, error){
                                 console.log(xhr);
                             }
@@ -794,10 +811,10 @@
 
                             $('#edit-checklist').modal('toggle');
                             let table = $('#check-list').DataTable();
-                            table.ajax.reload();
+                            table.ajax.reload(null, false);
 
                             let tableLog = $('#activity-log').DataTable();
-                            tableLog.ajax.reload();
+                            tableLog.ajax.reload(null, false);
                         }else if(output.success === false){
                             customAlert('warning',output.message);
                         }
@@ -908,7 +925,6 @@
         });
 
         $(document).on('click','.cancel',function(){
-            console.log(user_action_id);
             let id = this.value;
             let task_id = $('.get_task_id').val();
             actionEditHtml = '<button type="button" class="btn btn-primary btn-xs edit-action-taken" data-id="'+task_id+'" value="'+id+'">Edit</button>';
@@ -992,10 +1008,10 @@
                         $('#action-taken').modal('toggle');
 
                         let table = $('#check-list').DataTable();
-                        table.ajax.reload();
+                        table.ajax.reload(null, false);
 
                         let tableLog = $('#activity-log').DataTable();
-                        tableLog.ajax.reload();
+                        tableLog.ajax.reload(null, false);
                     }else if(output.success === false){
                         customAlert('warning',output.message);
                     }
@@ -1109,10 +1125,10 @@
                     $('.task-action-button').find('button').attr('disabled',false);
 
                     let table = $('#check-list').DataTable();
-                    table.ajax.reload();
+                    table.ajax.reload(null, false);
 
                     let tableLog = $('#activity-log').DataTable();
-                    tableLog.ajax.reload();
+                    tableLog.ajax.reload(null, false);
                 },error: function(xhr, status, error){
                     console.log(xhr);
                 }
@@ -1139,13 +1155,13 @@
                         $('#set-status').modal('toggle');
 
                         let table = $('#remarks-list').DataTable();
-                        table.ajax.reload();
+                        table.ajax.reload(null, false);
 
                         let tableList = $('#check-list').DataTable();
-                        tableList.ajax.reload();
+                        tableList.ajax.reload(null, false);
 
                         let tableLog = $('#activity-log').DataTable();
-                        tableLog.ajax.reload();
+                        tableLog.ajax.reload(null, false);
                     }
 
                     $.each(response, function (key, value) {
@@ -1191,12 +1207,113 @@
             });
         });
 
+        $(function() {
+            $('#watchers-request').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('request.display',$task->id) !!}',
+                columns: [
+                    { data: 'name', name: 'name', orderable: false, searchable: false},
+                    { data: 'type', name: 'type', orderable: false, searchable: false},
+                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
+                ],
+                responsive:true,
+                order:[0,'desc']
+            });
+        });
+
+        $(document).on('click','.update-task-request',function(){
+            let id = this.id;
+            let task_id = $(this).attr('data-id');
+            let user_id = $(this).attr('data-user');
+            let type = $(this).attr('data-type');
+            let request = $(this).attr('data-request');
+            let fullname = $(this).attr('data-name');
+            let username = $(this).attr('data-username');
+            let email = $(this).attr('data-email');
+
+            var type_title = 'remove';
+            var type_text = 'reject';
+            if (type == 'approved') {
+                type_title = 'approve';
+                type_text = 'approve';
+            }
+
+            Swal.fire({
+                title: 'Are you sure',
+                text: "You want to "+type_text+" this request?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, '+type_title+' it!'
+            }).then((result) => {
+                if (result.value) {
+
+                    $.ajax({
+                        'url' : '{{route('request.update')}}',
+                        'type' : 'POST',
+                        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        'data' : {
+                            'id' : id,
+                            'task_id' : task_id,
+                            'user_id' : user_id,
+                            'type' : type,
+                            'request' : request,
+                            'fullname' : fullname,
+                            'username' : username,
+                            'email' : email
+                        },
+                        beforeSend: function(){
+
+                        },success: function(output){
+                            if(output.success === true){
+                                customAlert('success',output.message);
+                            }
+                            let table = $('#watchers-request').DataTable();
+                            table.ajax.reload(null, false);
+
+                            let tableLog = $('#activity-log').DataTable();
+                            tableLog.ajax.reload(null, false);
+
+                            if (request == 'pending') {
+                                if (type == 'approved') {
+                                    var selectedItems = $('#watchers').val();
+                                    selectedItems.push(user_id);
+                                    $('#watchers').val(selectedItems).trigger('change');
+                                    $('.watchersButton').attr('disabled',true);
+                                }
+                            } else if (request == 'remove') {
+                                if (type == 'approved') {
+                                    var $select = $('#watchers');
+                                    var idToRemove = user_id;
+
+                                    var values = $select.val();
+                                    if (values) {
+                                        var i = values.indexOf(idToRemove);
+                                        if (i <= 0) {
+                                            values.splice(i, 1);
+                                            $select.val(values).change();
+                                        }
+                                    }
+                                    $('.watchersButton').attr('disabled',true);
+                                }
+                            }
+                            
+                        },error: function(xhr, status, error){
+                            console.log(xhr);
+                        }
+                    });
+
+                }
+            });
+        });
         $('#action-taken').on('hidden.bs.modal',function(){
             let table = $('#check-list').DataTable();
-            table.ajax.reload();
+            table.ajax.reload(null, false);
 
             let tableLog = $('#activity-log').DataTable();
-            tableLog.ajax.reload();
+            tableLog.ajax.reload(null, false);
         });
     </script>
 @stop
