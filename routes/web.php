@@ -397,3 +397,5 @@ Route::get('/export-my-watched/{status}','ScrumController@exportMyWatched')->mid
 
 Route::get('/task-activity/{task_id}/log',[\App\Http\Controllers\TaskChecklistController::class,'displayLog'])->name('log.display');
 Route::get('/tasks/action/watch/{task_id}/{action}',[\App\Http\Controllers\ScrumController::class,'watchedAction'])->name('tasks.watch.action');
+Route::get('/display-request/{task_id}',[\App\Http\Controllers\ScrumController::class,'displayRequest'])->name('request.display');
+Route::post('/task-request',[\App\Http\Controllers\ScrumController::class,'UpdateRequest'])->name('request.update');

@@ -407,10 +407,10 @@
                 },success: function(response){
                     if ($('#myTab').val() == 'myticket') {
                         let table = $('#task-list').DataTable();
-                        let test = table.ajax.reload();
+                        table.ajax.reload(null, false);
                     } else if ($('#myTab').val() == 'mywatched') {
                         let table = $('#watched-list').DataTable();
-                        table.ajax.reload();
+                        table.ajax.reload(null, false);
                     }
                 },error: function(xhr, status, error){
                     console.log(xhr);
@@ -480,7 +480,7 @@
                     {
                         customAlert('success',result.message);
                         let table = $('#task-list').DataTable();
-                        table.ajax.reload();
+                        table.ajax.reload(null, false);
                         $('#edit-task-modal').modal('toggle');
                     }else if(result.success === false)
                     {
@@ -530,7 +530,7 @@
                             if(output.success === true){
                                 customAlert('success',output.message);
                                 let table = $('#task-list').DataTable();
-                                table.ajax.reload();
+                                table.ajax.reload(null, false);
 
                             }else if(output.success === false){
                                 customAlert('warning',output.message);
@@ -545,6 +545,55 @@
             });
         });
         @endif
+
+        $(document).on('click','.request-task-watch',function(){
+            let id = this.id;
+            let action = $(this).attr('data-action');
+            let data_id = $(this).attr('data-id');
+            var text_title;
+            if (action == 'watch') {
+                text_title = 'You want to request to Remove task ticket #'+data_id+' under your watch?';
+            } else if (action == 'unwatch') {
+                text_title = 'You want to request to add task ticket #'+data_id+' under your watch?';
+            }
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: text_title,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, request it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        'url' : '/tasks/action/watch/'+id+'/'+action,
+                        'type' : 'GET',
+                        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(output){
+                            if(output.success === true){
+                                customAlert('success',output.message);
+                                if ($('#myTab').val() == 'myticket') {
+                                    let table = $('#task-list').DataTable();
+                                    table.ajax.reload(null, false);
+                                } else if ($('#myTab').val() == 'mywatched') {
+                                    let table = $('#watched-list').DataTable();
+                                    table.ajax.reload(null, false);
+                                }
+
+                            }else if(output.success === false){
+                                customAlert('warning',output.message);
+                            }
+                        },error: function(xhr, status, error){
+                            console.log(xhr);
+                            //customAlert('error',"Task Constraints, There's an existing checklist created!");
+                        }
+                    });
+
+                }
+            });
+        });
     </script>
 
 @stop

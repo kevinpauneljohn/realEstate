@@ -44,7 +44,13 @@ class TaskRepository implements TaskInterface
     }
 
     public function getWatcher($task_id){
-        $taskWatcher = Watcher::where('task_id',$task_id)->get();
+        $taskWatcher = Watcher::where('task_id',$task_id)
+            ->where(function ($query) {
+                $query->where('request_status', 'completed');
+                $query->orWhere('request_status', 'remove');
+                $query->orWhere('request_status', '');
+            })
+            ->get();
         return $taskWatcher;
     }
 
@@ -104,6 +110,7 @@ class TaskRepository implements TaskInterface
             })
             ->addColumn('action',function($task){
                 $watch_id = $this->getwatchedTicketByUserIdTaskId($task->id);
+                $formatted_task_id = str_pad($task->id, 5, '0', STR_PAD_LEFT);
                 $action = "";
 
                 if(auth()->user()->can('view task'))
@@ -123,12 +130,20 @@ class TaskRepository implements TaskInterface
                     if ($task->assigned_to != auth()->user()->id) {
                         if(!empty($watch_id)) {
                             if ($task->created_by != auth()->user()->id) {
-                                if ($watch_id === $task->id) {
-                                    $action .= '<button type="button" class="btn btn-xs btn-warning request-task-watch" title="Request to Remove Watch Ticket" id="'.$task->id.'" data-action="watch"><i class="fa fa-eye-slash"></i></button>';
+                                if ($watch_id->task_id === $task->id) {
+                                    if ($watch_id->request_status == 'pending') {
+                                        $action .= '<button type="button" class="btn btn-xs btn-warning request-task-watch" title="Please Wait for request approval" id="'.$task->id.'" data-action="watch" data-id="'.$formatted_task_id.'" disabled><i class="fa fa-tags"></i></button>';
+                                    } else if ($watch_id->request_status == 'remove') {
+                                        $action .= '<button type="button" class="btn btn-xs btn-warning request-task-watch" title="Please Wait for request approval" id="'.$task->id.'" data-action="watch" data-id="'.$formatted_task_id.'" disabled><i class="fa fa-eye-slash"></i></button>';
+                                    } else {
+                                        $action .= '<button type="button" class="btn btn-xs btn-warning request-task-watch" title="Request to Remove Watch Ticket" id="'.$task->id.'" data-action="watch" data-id="'.$formatted_task_id.'"><i class="fa fa-eye-slash"></i></button>';
+                                    }
                                 }
                             }
                         } else {
-                            $action .= '<button type="button" class="btn btn-xs btn-warning request-task-watch" title="Request to Watch this Ticket" id="'.$task->id.'" data-action="unwatch"><i class="fa fa-tags"></i></button>';
+                            if ($task->created_by != auth()->user()->id) {
+                                $action .= '<button type="button" class="btn btn-xs btn-warning request-task-watch" title="Request to Watch this Ticket" id="'.$task->id.'" data-action="unwatch" data-id="'.$formatted_task_id.'"><i class="fa fa-tags"></i></button>';
+                            }
                         }
                     }
                 }
@@ -141,13 +156,13 @@ class TaskRepository implements TaskInterface
 
     public function getwatchedTicketByUserIdTaskId($task_id)
     {
-        $watch = Watcher::select('task_id')
+        $watch = Watcher::select('id', 'task_id','request_status')
             ->where('user_id', auth()->user()->id)
             ->where('task_id', $task_id)
             ->first();
 
         if (!empty($watch)) {
-            return $watch->task_id;
+            return $watch;
         } else {
             return false;
         }
@@ -297,5 +312,37 @@ class TaskRepository implements TaskInterface
     public function getPriorityById($id)
     {
         return Priority::where('id',$id)->first();
+    }
+
+    public function displayRequest($task_id)
+    {
+        $taskRequest = Watcher::where('task_id',$task_id)
+            ->whereNotIn('request_status', ['completed',''])->get();
+
+        return DataTables::of($taskRequest)
+            ->addColumn('name',function($name){
+                $action = '';
+                $action .= $name->user->fullname;
+                return $action;
+            })
+            ->addColumn('type',function($type){
+                $action = '';
+                if ($type->request_status == 'pending') {
+                    $status_type = 'watch';
+                } else if ($type->request_status == 'remove') {
+                    $status_type = 'un-watch';
+                }
+
+                $action .= $status_type;
+                return $action;
+            })
+            ->addColumn('action',function($task){
+                $action = '';
+                $action .= '<button type="button" class="btn btn-xs btn-primary update-task-request" data-email="'.$task->user->email.'" data-username="'.$task->user->username.'" data-name="'.$task->user->fullname.'" data-id="'.$task->task_id.'" data-request="'.$task->request_status.'" data-user="'.$task->user_id.'" data-type="approved" title="Approve" id="'.$task->id.'"><i class="fa fa-check-circle"></i></button>';
+                $action .= '<button type="button" class="btn btn-xs btn-danger update-task-request" data-email="'.$task->user->email.'" data-username="'.$task->user->username.'" data-name="'.$task->user->fullname.'" data-id="'.$task->task_id.'" data-request="'.$task->request_status.'" data-user="'.$task->user_id.'" data-type="rejected" title="Reject" id="'.$task->id.'"><i class="fa fa-times-circle"></i></button>';
+                return $action;
+            })
+            ->rawColumns(['name','type','action'])
+            ->make(true);
     }
 }

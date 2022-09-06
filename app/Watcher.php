@@ -8,7 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Watcher extends Model
 {
     protected $fillable = [
-        'user_id','task_id'
+        'user_id','task_id','request_status'
     ];
 
     public function task()
