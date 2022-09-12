@@ -150,7 +150,7 @@
                                                                             <?php echo date('Y'); ?> &copy; by <a href="http://portal.dream-homeseller.com/login" target="_blank">Dream Home Guide</a> <br>
                                                                         </td>
                                                                     </tr>
-
+<!-- end tr -->
                                                                 </tbody></table>
 
                                                                 <table border="0" align="left" width="5" cellpadding="0" cellspacing="0" style="border-collapse:collapse">
