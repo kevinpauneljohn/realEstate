@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
+use App\Events\UserCommissionRequestEvent;
 
 class CommissionController extends Controller
 {
@@ -92,13 +93,17 @@ class CommissionController extends Controller
             ->addColumn('action', function ($commission)
             {
                 $action = "";
-                if(auth()->user()->can('edit commission'))
+                if(auth()->user()->can('edit commissions'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-primary edit-user-btn" id="'.$commission->id.'" data-toggle="modal" data-target="#edit-user-modal"><i class="fa fa-edit"></i> Edit</a>';
+                    $action .= '<a href="#" data-rate="'.$commission->commission_rate.'" class="btn btn-xs btn-primary edit-commission-btn" id="'.$commission->id.'" data-toggle="modal" data-target="#edit-commission-modal"><i class="fa fa-edit"></i> Edit</a>';
                 }
-                if(auth()->user()->can('delete commission'))
+                if(auth()->user()->can('delete commissions'))
                 {
-                    $action .= '<a href="#" class="btn btn-xs btn-danger delete-user-btn" id="'.$commission->id.'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    if (auth()->user()->hasRole(["super admin"])) {
+                        $action .= '<a href="#" class="btn btn-xs btn-danger delete-commission-btn-admin" id="'.$commission->id.'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    } else {
+                        $action .= '<a href="#" class="btn btn-xs btn-danger delete-commission-btn" id="'.$commission->id.'" data-toggle="modal" data-target="#delete-user-modal"><i class="fa fa-trash"></i> Delete</a>';
+                    }
                 }
                 return $action;
             })
@@ -113,7 +118,14 @@ class CommissionController extends Controller
      */
     public function show($id)
     {
-        //
+        $commissions = Commission::where('id',$id)->first();
+        $data = [
+            'id' => $commissions->id,
+            'rate' => intval($commissions->commission_rate*100.0)/100,
+            'project_id' => $commissions->project_id
+        ];
+
+        return $data;
     }
 
     /**
@@ -134,20 +146,95 @@ class CommissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function getCommission($id)
     {
-        //
+        return Commission::findOrFail($id);
     }
 
+    public function updates($id, array $data)
+    {
+        $commission = $this->getCommission($id);
+        $commission->fill($data);
+        if($commission->isDirty())
+        {
+            $commission->forceFill(array('project_id' => $data['project_id']));
+            $commission->save();
+            return $commission;
+        }
+        return false;
+
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'commission_rate'   => 'required',
+        ],[
+            'commission_rate.required'  => 'Commission Rate is required'
+        ]);
+
+        if($validator->passes())
+        {
+            $data = [
+                'commission_rate' => $request->input('commission_rate'),
+                'project_id' => $request->project,
+            ];
+
+            if(auth()->user()->hasRole('super admin'))
+            {
+                if ($commissions = $this->updates($id, $data)) {
+                    return response(['success' => true, 'message' => 'Commission successfully updated!', $commissions]);
+                }
+            } else {
+                $get_request =[
+                    'commission_id' => $request->id,
+                    '_token' => $request->_token,
+                    'user_id' => $request->user_id,
+                    'project' => $request->project,
+                    'commission_rate' => $request->commission_rate,
+                    'project_name' => $this->getProject($request->project),
+                    'reason' => $request->commission_remark,
+                    'action' => 'update'
+                ];
+                $result = event(new UserCommissionRequestEvent($get_request));
+                return response()->json(['success' => true,'message' => 'Update User Commission successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
+            }
+
+        } else {
+            return response(['success' => false, 'message' => 'An error occurred!']);
+        }
+
+    }
+
+    public function getProject($id)
+    {
+        $project = Project::where('id', $id)->first();
+
+        $project_name = 'No Project Selected';
+        if (!empty($project)) {
+            $project_name = $project->name;
+        }
+        return $project_name;
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+;
+    }
+
+    public function delete($id): bool
+    {
+        $commission = Commission::where('id','=',$id);
+        if($commission->count() > 0)
+        {
+            return $commission->delete();
+        }
+        return false;
     }
 
     /**
@@ -189,7 +276,6 @@ class CommissionController extends Controller
             }
             $commission = $commission - 0.5;
         }
-
 
         /*this will be used as a drop down for commission rate found on commission.js file*/
         $option = array();

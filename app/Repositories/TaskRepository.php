@@ -237,8 +237,12 @@ class TaskRepository implements TaskInterface
 
     public function delete($task_id): bool
     {
-        $task = Task::where('created_by','=',auth()->user()->id)
-            ->where('id','=',$task_id);
+        if (auth()->user()->hasRole(["super admin"])) {
+            $task = Task::where('id','=',$task_id);
+        } else {
+            $task = Task::where('id','=',$task_id)->where('created_by','=',auth()->user()->id);
+        }
+        
         if($task->count() > 0)
         {
             return $task->delete();

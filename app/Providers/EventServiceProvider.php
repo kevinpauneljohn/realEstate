@@ -56,6 +56,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\FirstBloodContestEvent' => [
             'App\Listeners\FirstBloodContestContestListener',
+        ],
+        'App\Events\UserCommissionRequestEvent' => [
+            'App\Listeners\UserCommissionRequestListener',
         ]
     ];
 

@@ -5,6 +5,8 @@ namespace App\Repositories;
 
 
 use App\User;
+use App\Commission;
+use App\Project;
 use Carbon\Carbon;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\Facades\DataTables;
@@ -56,4 +58,24 @@ class UserRepository
         }
     }
 
+
+    public function getUsersOriginalCommissionData($data)
+    {
+        $project_name = $this->getProject($data['project_id']);
+        $table = '<table class="table table-hover table-bordered">';
+        $table .= '<tr><td>Full Name</td><td>'.User::find($data['user_id'])->fullname.'</td></tr>';
+        $table .= '<tr><td>Project ID</td><td>'.$data['project_id'].'</td></tr>';
+        $table .= '<tr><td>Project Name</td><td>'.$project_name.'</td></tr>';
+        $table .= '<tr><td>Commission Rate</td><td>'.$data['commission_rate'].'%</td></tr>';
+        $table .= '</table>';
+
+        return $table;
+    }
+
+    public function getProject($id)
+    {
+        $project = Project::where('id', $id)->first();
+
+        return $project->name;
+    }
 }

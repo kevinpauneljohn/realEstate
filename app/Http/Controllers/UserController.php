@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\DataTables;
+use App\Events\UserCommissionRequestEvent;
 
 class UserController extends Controller
 {
@@ -593,4 +594,64 @@ class UserController extends Controller
         return response($validator->errors());
     }
 
+    public function deleteCommission(Request $request)
+    {
+        $commission = Commission::find($request->id);
+        if(auth()->user()->hasRole('super admin'))
+        {
+            if($this->deleteUserCommission($request->id))
+            {
+                return response(['success' => true, 'message' => 'Commission successfully deleted!']);
+            }
+        } else {
+            $get_commission = $this->getUserCommission($request->commission_id);
+            $get_request =[
+                'commission_id' => $request->commission_id,
+                '_token' => $request->_token,
+                'user_id' => $request->user_id,
+                'project' => $get_commission['project_id'],
+                'commission_rate' => $get_commission['commission_rate'],
+                'project_name' => $this->getProject($get_commission['project_id']),
+                'reason' => $request->commission_remark,
+                'action' => 'delete'
+            ];
+
+            $result = event(new UserCommissionRequestEvent($get_request));
+            return response()->json(['success' => true,'message' => 'Delete User Commission successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
+        }
+        return response(['success' => false, 'message' => 'You are not allowed to delete this Commission!']);
+    }
+
+    public function deleteUserCommission($id): bool
+    {
+        $commission = Commission::where('id','=',$id);
+        if($commission->count() > 0)
+        {
+            return $commission->delete();
+        }
+        return false;
+    }
+
+    public function getProject($id)
+    {
+        $project = Project::where('id', $id)->first();
+
+        $project_name = 'No Project Selected';
+        if (!empty($project)) {
+            $project_name = $project->name;
+        }
+        return $project_name;
+    }
+
+    public function getUserCommission($id)
+    {
+        $commission = Commission::where('id', $id)->first();
+
+        $data = [
+            'project_id' => $commission->project_id,
+            'commission_rate' => $commission->commission_rate
+        ];
+
+        return $data;
+    }
 }
