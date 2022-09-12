@@ -74,6 +74,7 @@ class UserRepository
 
     public function getProject($id)
     {
+        //added 'No project selected'
         $project = Project::where('id', $id)->first();
 
         $project_name = 'No Project Selected';
