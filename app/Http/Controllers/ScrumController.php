@@ -602,6 +602,7 @@ class ScrumController extends Controller
                 $query->orWhere('request_status', '');
             })
             ->get();
+
         $data = [];
         foreach ($watchers as $watcher) {
             $data [] = $watcher['user_id'];
@@ -621,14 +622,17 @@ class ScrumController extends Controller
 
         $users = User::all();
 
-        $task_checklist = TaskChecklist::select('id')->where('task_id', $id)->get();
-        $count_task = count($task_checklist);
+        $request = Watcher::where('task_id',$id)->whereNotIn('request_status', ['completed',''])->get();
+        $count_request = count($request);
+
+        // $task_checklist = TaskChecklist::select('id')->where('task_id', $id)->get();
+        // $count_task = count($task_checklist);
 
         return view('pages.scrum.index',[
             'task'  => $this->task->getTask($id),
             'agents' => $this->task->getAgents($this->agents),
             'watchers' => $users_data
-        ],compact('users', 'watcher_id'));
+        ],compact('users', 'watcher_id', 'count_request'));
     }
 
 
@@ -924,7 +928,7 @@ class ScrumController extends Controller
                                 'type' => 'new_ticket',
                                 'view_ticket' => 'review the ticket.',
                             ];
-                            SendEmailJob::dispatch($complete_emails);
+                            //SendEmailJob::dispatch($complete_emails);
                         }
     
                         if (!empty($task_ticket['watcher'])) {
@@ -951,7 +955,7 @@ class ScrumController extends Controller
                                     'type' => 'watched',
                                     'view_ticket' => 'view the ticket.',
                                 ];
-                                SendEmailJob::dispatch($watcher_emails);
+                                //SendEmailJob::dispatch($watcher_emails);
                             }
                         }
                     }
@@ -1253,5 +1257,13 @@ class ScrumController extends Controller
         ->withProperties($status_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> '.$watchers_type.' the request of '.$watchers_fullname.' to '.$task_remark.' the task ticket');
 
         return response(['success' => true, 'message' => 'Request Successfully '.$watchers_type.'!']);
+    }
+
+    public function getRequestCount($id)
+    {
+        $request = Watcher::where('task_id',$id)->whereNotIn('request_status', ['completed',''])->get();
+        $count_request = count($request);
+
+        return $count_request;
     }
 }

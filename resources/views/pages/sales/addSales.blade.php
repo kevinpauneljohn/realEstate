@@ -89,27 +89,27 @@
                             <div class="col-lg-4">
                                 <div class="form-group total_contract_price">
                                     <label>Total Contract Price</label><span class="required">*</span>
-                                    <input type="number" name="total_contract_price" id="total_contract_price" class="form-control">
+                                    <input step="any" type="number" name="total_contract_price" id="total_contract_price" class="form-control">
                                 </div>
                                 <div class="form-group discount">
                                     <label>Discount</label>
-                                    <input type="number" name="discount" id="discount" class="form-control" value="0">
+                                    <input step="any" type="number" name="discount" id="discount" class="form-control" value="0">
                                 </div>
                                 <div class="form-group processing_fee">
                                     <label for="processing_fee">Processing Fee</label>
-                                    <input type="number" name="processing_fee" id="processing_fee" class="form-control" value="0">
+                                    <input step="any" type="number" name="processing_fee" id="processing_fee" class="form-control" value="0">
                                 </div>
                                 <div class="form-group reservation_fee">
                                     <label>Reservation Fee</label>
-                                    <input type="number" name="reservation_fee" id="reservation_fee" class="form-control" value="0">
+                                    <input step="any" type="number" name="reservation_fee" id="reservation_fee" class="form-control" value="0">
                                 </div>
                                 <div class="form-group equity">
                                     <label>Equity/Down Payment</label>
-                                    <input type="number" name="equity" id="equity" class="form-control" value="0">
+                                    <input step="any" type="number" name="equity" id="equity" class="form-control" value="0">
                                 </div>
                                 <div class="form-group loanable_amount">
                                     <label>Loanable Amount</label>
-                                    <input type="number" name="loanable_amount" id="loanable_amount" class="form-control" value="0">
+                                    <input step="any" type="number" name="loanable_amount" id="loanable_amount" class="form-control" value="0">
                                 </div>
 
                             </div>

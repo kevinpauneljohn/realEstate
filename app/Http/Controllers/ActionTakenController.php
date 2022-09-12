@@ -64,24 +64,23 @@ class ActionTakenController extends Controller
         if($validation->passes())
         {
             $action = [
-                'task_checklist_id' => $request->input('checklist_id'),
-                'action' => nl2br($request->input('action')),
+                'task_checklist_id' => $request->id,
+                'action' => $request->action,
                 'user_id' => auth()->user()->id
             ];
 
             if($action = $this->actionTaken->create($action))
             {
                 $action_log = [
-                    'task_id' => $request->input('task_id'),
+                    'task_id' => $request->id,
                     'id' => $action->id,
-                    'task_checklist_id' => $request->input('checklist_id'),
-                    'action' => nl2br($request->input('action')),
+                    'action' => $request->action,
                     'user_id' => auth()->user()->id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ];
 
-                $this->taskChecklist->update($request->input('checklist_id'));
+                //$this->taskChecklist->update($request->input('checklist_id'));
                 activity('task')
                     ->causedBy(auth()->user()->id)
                     ->performedOn($action)
@@ -132,45 +131,35 @@ class ActionTakenController extends Controller
         $date_today = date('Y-m-d H:i:s');
         $due_date = date('Y-m-d H:i:s', strtotime($action->created_at. '+ 3 days'));
         $action_log = [
-            'task_id' => $request->input('task_id'),
+            'task_id' => $request->task_id,
             'id' => $id,
-            'task_checklist_id' => $action->task_checklist_id,
-            'action' => $request->input('action_taken'),
+            'action' => $request->action,
             'user_id' => auth()->user()->id,
             'created_at' => now(),
             'updated_at' => now()
         ];
 
-        if(!empty($request->input('action_taken')))
+        if(!empty($request->action))
         {
-            // if($actionContent =$this->actionTaken->update($request->input('action_taken'),$id))
-            // {
-            //     activity('task')
-            //         ->causedBy(auth()->user()->id)
-            //         ->performedOn(ActionTaken::find($id))
-            //         ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
-            //     return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => nl2br($request->input('action_taken'))]);
-            // }
-            // return response(['success' =>false, 'message' => 'No changes occurred!']);
             if ($date_today <= $due_date) {
-                if($actionContent =$this->actionTaken->update($request->input('action_taken'),$id))
+                if($actionContent =$this->actionTaken->update($request->action,$id))
                 {
                     activity('task')
                         ->causedBy(auth()->user()->id)
                         ->performedOn(ActionTaken::find($id))
                         ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
-                        return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => nl2br($request->input('action_taken'))]);
+                        return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => $request->action]);
                 }
                 return response(['success' =>false, 'message' => 'No changes occurred!']);
             } else {
                 if (auth()->user()->hasRole(["super admin"])) {
-                    if($actionContent =$this->actionTaken->update($request->input('action_taken'),$id))
+                    if($actionContent =$this->actionTaken->update($request->action,$id))
                     {
                         activity('task')
                             ->causedBy(auth()->user()->id)
                             ->performedOn(ActionTaken::find($id))
                             ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
-                            return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => nl2br($request->input('action_taken'))]);
+                            return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => $request->action]);
                     }
                     return response(['success' =>false, 'message' => 'No changes occurred!']);
                 }
@@ -188,14 +177,11 @@ class ActionTakenController extends Controller
      */
     public function destroy($id)
     {
-
         $action = ActionTaken::find($id);
-        $checklist = TaskChecklist::find($action->task_checklist_id);
 
         $action_log = [
-            'task_id' => "$checklist->task_id",
+            'task_id' => "$action->task_checklist_id",
             'id' => $action->id,
-            'task_checklist_id' => $action->task_checklist_id,
             'action' => $action->action,
             'user_id' => auth()->user()->id,
             'created_at' => now(),
@@ -231,5 +217,11 @@ class ActionTakenController extends Controller
             $actions[$key] = $merged->all();
         }
         return $actions;
+    }
+
+    public function actionTakenLists($task_id)
+    {
+        $action = ActionTaken::where('task_checklist_id', $task_id)->get();
+        return $this->actionTaken->lists($action);
     }
 }

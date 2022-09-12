@@ -328,7 +328,7 @@
                                     </div>
                                 @endif
                                 <div id="commission" class="container tab-pane fade"><br>
-                                    <button type="button" class="btn btn-primary btn-sm" style="margin:3px;" data-target="#add-commission-modal" data-toggle="modal" @if($rate_limit === null) disabled="disabled" @endif>Add Commission</button>
+                                    <button type="button" class="btn btn-primary btn-sm add-commission-btn" style="margin:3px;" data-target="#add-commission-modal" data-toggle="modal" @if($rate_limit === null) disabled="disabled" @endif>Add Commission</button>
 
                                     <table id="commission-list" class="table table-bordered table-striped" role="grid">
                                         <thead>
@@ -381,18 +381,21 @@
                             <div class="modal-body">
                                 <div class="form-group project">
                                     <label for="project">Project</label> <span>(Optional)</span>
-                                    <select class="form-control" name="project" id="project">
-                                        @if(\App\Commission::where('user_id',$upline->id)->where('project_id',null)->count() > 0)
-                                            <option value=""> -- Select -- </option>
-                                            @endif
-
+                                    <select class="form-control" name="project" id="project" style="width:100%;">
+                                        <option value=""> -- Select -- </option>
                                         @foreach($projects as $project)
                                             @if(\App\Commission::where('user_id',$upline->id)->where('project_id',null)->count() > 0)
                                                 <option value="{{$project->id}}">{{$project->name}}</option>
-                                                @else
-                                                    @if(\App\Commission::where('user_id',$upline->id)->where('project_id',$project->id)->count() > 0)
+                                            @else
+                                                @if(\App\Commission::where('user_id',$upline->id)->where('project_id',$project->id)->count() > 0)
                                                     <option value="{{$project->id}}">{{$project->name}}</option>
+                                                @else
+                                                    @if(auth()->user()->hasRole(['super admin']))
+                                                        @if(\App\Commission::where('project_id',$project->id)->orWhere('project_id',null)->count() > 0)
+                                                            <option value="{{$project->id}}">{{$project->name}}</option>
                                                         @endif
+                                                    @endif
+                                                @endif
                                             @endif
                                         @endforeach
                                     </select>
@@ -407,9 +410,17 @@
                                         @endfor
                                     </select>
                                 </div>
-                                <div class="modal-footer justify-content-between">
-                                    <button type="reset" class="btn btn-default">Reset</button>
-                                    <input type="submit" class="btn btn-primary submit-commission-btn" value="Save">
+                                @if(!auth()->user()->hasRole(['super admin']))
+                                    <div class="form-group commission_remark hidden">
+                                        <label for="commission_rate">Reason</label>
+                                        <textarea name="commission_remark" class="form-control commission_text_remark"></textarea>
+                                    </div>
+                                @else
+                                    <input type="hidden" value="1" class="form-control commission_text_is_admin">
+                                @endif
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn btn-default pull-left reset">Reset</button>
+                                    <input type="submit" class="btn btn-primary submit-commission-btn pull-right" value="Save">
                                 </div>
                             </div>
                         </div>
@@ -438,6 +449,9 @@
         }
         small{
             margin: 2px;
+        }
+        .hidden{
+            display:none;
         }
     </style>
 @stop
