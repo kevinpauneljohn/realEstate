@@ -1,7 +1,7 @@
 
 <div class="start_task_component_user_span hidden">
     (Click button to start task) 
-    <button type="button" class="btn btn-primary btn-xs start_task_component_button" name="start_task" value="{{$tasks->id}}">Start</button>
+    <button type="button" class="btn btn-primary btn-xs start_task_component_button" data-name="start" name="start_task" value="{{$tasks->id}}">Start</button>
 </div>
 
 <div class="start_task_component_span hidden">
@@ -10,7 +10,7 @@
 
 <div class="ongoing_task_component_user_span hidden">
     (Click button if task was finished) 
-    <button type="button" class="btn btn-primary btn-primary btn-xs ongoing_task_component_button" name="start_task" value="{{$tasks->id}}">Completed</button>
+    <button type="button" class="btn btn-primary btn-primary btn-xs ongoing_task_component_button" data-name="completed" name="start_task" value="{{$tasks->id}}">Completed</button>
 </div>
 
 <div class="ongoing_task_component_span hidden">
@@ -20,7 +20,7 @@
 <div class="completed_task_component_user_span hidden">
     Status: <span class="text-success text-bold">Completed</span>, 
     <i>Do you want to </i>
-    <button type="button" class="btn btn-xs btn-warning completed_task_component_button" value="{{$tasks->id}}" data-toggle="modal" data-target="#set-status">Re-open?</button>
+    <button type="button" class="btn btn-xs btn-warning completed_task_component_button" data-name="reopen" value="{{$tasks->id}}" data-toggle="modal" data-target="#set-status">Re-open?</button>
 </div>
 
 <div class="text-bold completed_task_component_span hidden">

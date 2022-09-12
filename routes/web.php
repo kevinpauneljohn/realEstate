@@ -70,7 +70,7 @@ Route::delete('/users/{user}','UserController@destroy')->name('users.destroy')->
 Route::get('/users/downline/{upline}','UserController@downLines')->name('users.down.lines')->middleware(['auth','permission:view down lines']);
 Route::put('/user/change-password',[\App\Http\Controllers\UserController::class,'userChangePassword'])->name('change.password')->middleware(['auth','permission:change password']);
 Route::get('/user/employee/{user}',[\App\Http\Controllers\UserController::class,'employee'])->name('employee.activities')->middleware(['auth','permission:view user']);
-
+Route::post('/user/commission/delete','UserController@deleteCommission')->name('delete.user.commission')->middleware('auth','permission:delete commissions');
 /*leads*/
 Route::get('/assigned-to-me',[\App\Http\Controllers\LeadController::class,'assignedPage'])->name('assigned.leads.mine')->middleware(['auth','permission:view assigned lead']);
 Route::post('/assign-leads',[\App\Http\Controllers\LeadController::class,'assignTo'])->name('assign.leads')->middleware(['auth','permission:assign leads']);
@@ -164,7 +164,10 @@ Route::get('/commissions/{user}','CommissionController@index')->name('commission
 Route::post('/commissions','CommissionController@store')->name('commissions.store')->middleware(['auth','permission:add commissions']);
 Route::get('/commissions-list/{user}','CommissionController@commission_list')->name('commissions.list')->middleware(['auth','permission:view commissions']);
 Route::get('/upline-commission/{project}','CommissionController@getUpLineCommissionOnAProject')->name('commissions.upline.projectId')->middleware(['auth','permission:view commissions']);
-
+Route::get('/commissions/{id}/show','CommissionController@show')->name('commissions.show')->middleware(['auth','permission:view commissions']);
+Route::put('/commissions/{id}','CommissionController@update')->name('commissions.update')->middleware(['auth','permission:view commissions|edit commissions']);
+//Route::get('/commissions/delete/{$id}','CommissionController@testDelete')->name('commissions.test')->middleware(['auth','permission:delete commissions']);
+// Route::post('/commissions/destroy','CommissionController@testDelete')->name('delete.user.commission')->middleware('auth','permission:delete commissions');
 /*change password*/
 Route::get('/change-password','UserController@changePassword')->name('users.change.password')->middleware(['auth']);
 Route::put('/change-password','UserController@changePasswordValidate')->name('users.change.password.update')->middleware(['auth']);
@@ -370,6 +373,11 @@ Route::resource('task-checklist','TaskChecklistController');
 
 Route::get('/action-taken/{checklist_id}/display',[\App\Http\Controllers\ActionTakenController::class,'actionTakenList'])->name('action.taken.display');
 Route::resource('action-taken','ActionTakenController');
+
+Route::get('/action-taken/{task_id}/displays',[\App\Http\Controllers\ActionTakenController::class,'actionTakenLists'])->name('actionTaken.display');
+Route::post('/action-taken',[\App\Http\Controllers\ActionTakenController::class,'store']);
+Route::put('/action-taken/{task_id}',[\App\Http\Controllers\ActionTakenController::class,'update']);
+Route::delete('/action-taken/{task_id}',[\App\Http\Controllers\ActionTakenController::class,'destroy']);
 Route::get('test', [\App\Http\Controllers\SalesController::class,'test']);
 
 Route::get('/staycation/availability',[\App\Http\Controllers\Staycation\StaycationAppointmentController::class,'availability'])->name('staycation.availability');
@@ -399,3 +407,4 @@ Route::get('/task-activity/{task_id}/log',[\App\Http\Controllers\TaskChecklistCo
 Route::get('/tasks/action/watch/{task_id}/{action}',[\App\Http\Controllers\ScrumController::class,'watchedAction'])->name('tasks.watch.action');
 Route::get('/display-request/{task_id}',[\App\Http\Controllers\ScrumController::class,'displayRequest'])->name('request.display');
 Route::post('/task-request',[\App\Http\Controllers\ScrumController::class,'UpdateRequest'])->name('request.update');
+Route::get('/count-request/{task_id}',[\App\Http\Controllers\ScrumController::class,'getRequestCount'])->name('request.watchers.count');

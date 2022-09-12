@@ -93,27 +93,27 @@
                                     <div class="col-lg-4">
                                         <div class="form-group edit_total_contract_price">
                                             <label>Total Contract Price</label><span class="required">*</span> <i class="fas fa-question-circle" data-toggle="tooltip" title="Requires Admin approval to reflect the changes"></i>
-                                            <input type="number" name="edit_total_contract_price" id="edit_total_contract_price" class="form-control" value="{{$sales->total_contract_price}}">
+                                            <input step="any" type="number" name="edit_total_contract_price" id="edit_total_contract_price" class="form-control" value="{{$sales->total_contract_price}}">
                                         </div>
                                         <div class="form-group edit_discount">
                                             <label>Discount</label> <i class="fas fa-question-circle" data-toggle="tooltip" title="Requires Admin approval to reflect the changes"></i>
-                                            <input type="number" name="edit_discount" id="edit_discount" class="form-control" value="{{$sales->discount !== null ? $sales->discount : 0}}" step="any">
+                                            <input step="any" type="number" name="edit_discount" id="edit_discount" class="form-control" value="{{$sales->discount !== null ? $sales->discount : 0}}" step="any">
                                         </div>
                                         <div class="form-group edit_processing_fee">
                                             <label for="edit_processing_fee">Processing Fee</label>
-                                            <input type="number" name="edit_processing_fee" id="edit_processing_fee" class="form-control" value="{{$sales->processing_fee !== null ? $sales->processing_fee : 0}}">
+                                            <input step="any" type="number" name="edit_processing_fee" id="edit_processing_fee" class="form-control" value="{{$sales->processing_fee !== null ? $sales->processing_fee : 0}}">
                                         </div>
                                         <div class="form-group edit_reservation_fee">
                                             <label>Reservation Fee</label>
-                                            <input type="number" name="edit_reservation_fee" id="edit_reservation_fee" class="form-control" value="{{$sales->reservation_fee !== null ? $sales->reservation_fee : 0}}">
+                                            <input step="any" type="number" name="edit_reservation_fee" id="edit_reservation_fee" class="form-control" value="{{$sales->reservation_fee !== null ? $sales->reservation_fee : 0}}">
                                         </div>
                                         <div class="form-group edit_equity">
                                             <label>Equity/Down Payment</label>
-                                            <input type="number" name="edit_equity" id="edit_equity" class="form-control" value="{{$sales->equity !== null ? $sales->equity : 0}}">
+                                            <input step="any" e="number" name="edit_equity" id="edit_equity" class="form-control" value="{{$sales->equity !== null ? $sales->equity : 0}}">
                                         </div>
                                         <div class="form-group edit_loanable_amount">
                                             <label>Loanable Amount</label>
-                                            <input type="number" name="edit_loanable_amount" id="edit_loanable_amount" class="form-control" value="{{$sales->loanable_amount !== null ? $sales->loanable_amount : 0}}">
+                                            <input step="any" type="number" name="edit_loanable_amount" id="edit_loanable_amount" class="form-control" value="{{$sales->loanable_amount !== null ? $sales->loanable_amount : 0}}">
                                         </div>
 
                                     </div>
