@@ -45,14 +45,23 @@ class ActionTakenRepository implements ActionTakenInterface
     public function update($action_taken, $action_taken_id): bool
     {
         $actionTaken = $this->getAction($action_taken_id);
+        $taskCreator = $this->getCreatorId($actionTaken->task_checklist_id);
         $actionTaken->action = nl2br($action_taken);
         if($actionTaken->isDirty() && $actionTaken->user_id === auth()->user()->id)
         {
+            return $actionTaken->save();
+        } else if ($actionTaken->isDirty() && $taskCreator === auth()->user()->id) {
             return $actionTaken->save();
         } else if ($actionTaken->isDirty() && auth()->user()->hasRole(["super admin"])) {
             return $actionTaken->save();
         }
         return false;
+    }
+
+    public function getCreatorId($id)
+    {
+        $task = Task::where('id', $id)->first();
+        return $task->created_by;
     }
 
     public function destroy($action_taken_id): bool

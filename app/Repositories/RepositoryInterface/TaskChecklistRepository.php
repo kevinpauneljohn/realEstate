@@ -119,36 +119,4 @@ class TaskChecklistRepository implements TaskChecklistInterface
     {
         return $this->getChecklist($checklist_id)->update($checklist);
     }
-
-    public function logs($task_id)
-    {
-        $logs = $this->getChecklistActivityTaskId($task_id)->get();
-        return DataTables::of($logs)
-            ->addColumn('description',function($description){
-                return strip_tags($description->description);
-            })
-            ->addColumn('description',function($description){
-                return strip_tags($description->description);
-            })
-            ->addColumn('subject_type',function($subject){
-                return substr($subject->subject_type, 4);
-            })
-            ->addColumn('causer_id',function($user){
-                $users = User::where('id', $user->causer_id)->first();
-                return $users['username'].' [ '.$users['firstname'].' '.$users['lastname'].' ]';
-            })
-            ->addColumn('created_at',function($created){
-                return date('F d, Y H:i:s A', strtotime($created->created_at));
-            })
-            ->rawColumns(['id', 'description', 'subject_type', 'causer_id', 'created_at'])
-            ->make(true);
-    }
-
-    public function getChecklistActivityTaskId($task_id)
-    {
-        return Activity::select('id', 'description', 'subject_type', 'causer_id', 'created_at')
-            ->where('log_name', 'task')
-            ->whereJsonContains('properties', ['task_id' => $task_id])
-            ->orderBy('id', 'desc');
-    }
 }

@@ -139,9 +139,4 @@ class TaskChecklistController extends Controller
     {
         return $this->taskChecklist->checklists($task_id);
     }
-
-    public function displayLog($id)
-    {
-        return $this->taskChecklist->logs($id);
-    }
 }
