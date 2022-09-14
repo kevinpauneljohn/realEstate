@@ -268,8 +268,13 @@ $(document).on('change','#project',function(){
             'type' : 'GET',
             beforeSend: function(){
                 $('#commission_rate').html("");
+                $('#commission_rate').prop('disabled', true);
             },
             success: function (result) {
+                setTimeout(function() { 
+                    $('#commission_rate').prop('disabled', false);
+                }, 300);
+
                 $('#commission_rate').append('<option value=""> -- Select -- </option>');
                 $.each(result, function (key, value) {
                     if (value == rate) {

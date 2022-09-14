@@ -78,9 +78,9 @@ class UserRepository
         $project = Project::where('id', $id)->first();
 
         $project_name = 'No Project Selected';
-        if (!empty($project_name)) {
+        if (!empty($project)) {
             $project_name = $project->name;
         }
-        return $project_name;
+        return $project;
     }
 }

@@ -1023,6 +1023,12 @@ class ScrumController extends Controller
             if($this->task->reopen($request->input('task_id'),$request->input('remarks')))
             {
                 $task_assignee = $this->task->getTask($request->input('task_id'));
+                
+                $creator = 'no';
+                if ($task_assignee->created_by == auth()->user()->id) {
+                    $creator = 'yes';
+                }
+
                 $watchers = Watcher::where('task_id', $request->input('task_id'))->get();
 
                 if (!empty($watchers)) {
@@ -1105,7 +1111,7 @@ class ScrumController extends Controller
                     ->causedBy(auth()->user()->id)
                     ->performedOn($task)
                     ->withProperties($status_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> reopened the task ticket');
-                return response(['success' => true, 'message' => 'Task Reopen', 'status' => $task->status]);
+                return response(['success' => true, 'message' => 'Task Reopen', 'status' => $task->status, 'creator' => $creator]);
             }
             return response(['success' => false, 'message' => 'An error occurred!'],400);
         }
@@ -1265,5 +1271,10 @@ class ScrumController extends Controller
         $count_request = count($request);
 
         return $count_request;
+    }
+
+    public function displayLog($id)
+    {
+        return $this->task->logs($id);
     }
 }

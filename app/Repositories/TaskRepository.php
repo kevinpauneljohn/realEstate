@@ -11,6 +11,7 @@ use App\Task;
 use App\TaskRemark;
 use App\User;
 use App\Watcher;
+use Spatie\Activitylog\Models\Activity;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -175,7 +176,7 @@ class TaskRepository implements TaskInterface
         return DataTables::of($taskRemarks)
             ->addColumn('task',function($remarks){
                 $action = '';
-                $action .= '<h6 class="text-info">'.$remarks->user->fullname.'</h6>';
+                $action .= '<span class="text-info">'.$remarks->user->fullname.'</span> (Re-Open Task ticket)<br />';
                 $action .= '<span class="text-muted">'.Carbon::parse($remarks->created_at)->format('Y, M d g:i:a').'</span>';
                 $action .= '<p class="text-bold">'.$remarks->remarks.'</p>';
 
@@ -348,5 +349,48 @@ class TaskRepository implements TaskInterface
             })
             ->rawColumns(['name','type','action'])
             ->make(true);
+    }
+
+    public function logs($task_id)
+    {
+        $logs = $this->getChecklistActivityTaskId($task_id)->get();
+        return DataTables::of($logs)
+            ->addColumn('description',function($description){
+                $data = '';
+                $data_val = 'aaaaa';
+                if (!empty($description->properties['action']))
+                {
+                    $data_val = $description->properties['action'];
+                } else if (!empty($description->properties['description'])) {
+                    $data_val = $description->properties['description'];
+                } else {
+                    $data_val = 'bbbbbbbbbbb';
+                }
+
+                $data .= 'Action: '.$description->description;
+                $data .='<br />';
+                $data .= 'Data: '.$data_val;
+                return $data;
+            })
+            ->addColumn('subject_type',function($subject){
+                return substr($subject->subject_type, 4);
+            })
+            ->addColumn('causer_id',function($user){
+                $users = User::where('id', $user->causer_id)->first();
+                return $users['username'].' [ '.$users['firstname'].' '.$users['lastname'].' ]';
+            })
+            ->addColumn('created_at',function($created){
+                return date('F d, Y H:i:s A', strtotime($created->created_at));
+            })
+            ->rawColumns(['id', 'description', 'subject_type', 'causer_id', 'created_at'])
+            ->make(true);
+    }
+
+    public function getChecklistActivityTaskId($task_id)
+    {
+        return Activity::select('id', 'description', 'subject_type', 'causer_id', 'created_at', 'properties')
+            ->where('log_name', 'task')
+            ->whereJsonContains('properties', ['task_id' => $task_id])
+            ->orderBy('id', 'desc');
     }
 }
