@@ -351,6 +351,130 @@ $(document).on('click','.edit-sales-btn',function () {
     });
 });
 
+$(document).on('click','.delete-request-sale-btn',function(){
+    let id = this.id;
+
+    $('#deleteSaleId').val(id);
+    $.ajax({
+        'url' : '/sales/'+id,
+        'type' : 'GET',
+        beforeSend: function (request, settings) {
+            $('.image-loader').show();
+            $('.sales-details').hide();
+        },
+        success: function(result){
+            $('.submit-delete-btn').prop('disabled', true);
+            $('.image-loader').hide();
+            $('.sales-details').show();
+
+            let tcp = parseInt(result.sales.total_contract_price);
+            let discountAmount = parseInt(result.sales.discount);
+            let pf = parseInt(result.sales.processing_fee);
+            let rf = parseInt(result.sales.reservation_fee);
+            let equity = parseInt(result.sales.equity);
+            let loan_amount = parseInt(result.sales.loanable_amount);
+            let email = "", contactNumber = "", phase ="", block ="",lot ="", lot_area = "", floor_area = "", equity_terms = "",commission_rate = "";
+
+            if(result.leads.email != null)
+            {
+                email = result.leads.email;
+            }
+            if(result.leads.mobileNo != null)
+            {
+                contactNumber = result.leads.mobileNo;
+            }
+            if(result.sales.phase != null)
+            {
+                phase = result.sales.phase;
+            }
+            if(result.sales.block != null)
+            {
+                block = result.sales.block;
+            }
+            if(result.sales.lot != null)
+            {
+                lot = result.sales.lot;
+            }
+            if(result.model_unit.lot_area != null)
+            {
+                lot_area = result.model_unit.lot_area;
+            }
+            if(result.model_unit.floor_area != null)
+            {
+                floor_area = result.model_unit.floor_area;
+            }
+            if(result.sales.terms != null)
+            {
+                equity_terms = result.sales.terms;
+            }
+            if(result.sales.commission_rate !== undefined )
+            {
+                commission_rate = result.sales.commission_rate;
+            }
+            $('#sale-status-del').html('<strong>'+statusLabel(result.sales.status)+'</strong>');
+            $('#reservation-date-del').html('<strong>'+result.sales.reservation_date+'</strong>');
+            $('#buyer-name-del').html('<strong>'+result.leads.firstname+' '+result.leads.lastname+'</strong>');
+            $('#contact-number-del').html('<strong>'+contactNumber+'</strong>');
+            $('#email-address-del').html('<strong>'+email+'</strong>');
+            $('#commission-rate-del').html('<strong>'+commission_rate+'%</strong>');
+            $('#project-name-del').html('<strong>'+result.project.name+'</strong>');
+            $('#model-unit-name-del').html('<strong>'+result.model_unit.name+'</strong>');
+            $('#lot-area-del').html('<strong>'+lot_area+'</strong>');
+            $('#floor-area-del').html('<strong>'+floor_area+'</strong>');
+            $('#location-del').html('<strong>Phase: '+phase+' Block:'+block+' Lot:'+lot+'</strong>');
+            $('#total-contract-price-del').html('<strong>&#8369; '+tcp.toLocaleString()+'</strong>');
+            $('#discount-amount-del').html('<strong>&#8369; '+discountAmount.toLocaleString()+'</strong>');
+            $('#processing-fee-del').html('<strong>&#8369; '+pf.toLocaleString()+'</strong>');
+            $('#reservation-fee-del').html('<strong>&#8369; '+rf.toLocaleString()+'</strong>');
+            $('#equity-amount-del').html('<strong>&#8369; '+equity.toLocaleString()+'</strong>');
+            $('#loanable-amount-del').html('<strong>&#8369; '+loan_amount.toLocaleString()+'</strong>');
+            $('#financing-terms-del').html('<strong>'+result.sales.financing+'</strong>');
+            $('#dp-terms-del').html('<strong>'+equity_terms+'</strong>');
+
+        }
+    });
+
+});
+
+$('.delete_reason_request_content').on('change keyup paste', function() {
+    var val = $(this).val();
+    if (val != '') {
+        $('.submit-delete-btn').prop('disabled', false);
+    } else {
+        $('.submit-delete-btn').prop('disabled', true);
+    }
+});
+$(document).on('submit','#delete-sales-form',function (form) {
+    form.preventDefault();
+    let data = $('#delete-sales-form').serializeArray();
+
+    $.ajax({
+        'url'   : '/sales-delete-request/'+id,
+        'type'  : 'PUT',
+        'data'  : data,
+        beforeSend: function(){
+            $('.submit-delete-btn').text('Submitting ... ').attr('disabled',true);
+        },success: function(result){
+            console.log(result);
+            if(result.success === true)
+            {
+                var table = $('#sales-list').DataTable();
+                table.ajax.reload();
+
+                $('#delete-sales-form').trigger('reset');
+                $('#delete-sale-request').modal('toggle');
+                toastr.success(result.message);
+            }else if(result.success === false){
+                toastr.error(result.message);
+            }
+
+            $('.submit-delete-btn').val('Submit').attr('disabled',false);
+        },error: function(xhr, status, error){
+            console.log(xhr);
+        }
+    });
+});
+
 $(document).on('change','#edit_project',function(){
     let value = this.value;
     projectChange(value, 'edit_model_unit');

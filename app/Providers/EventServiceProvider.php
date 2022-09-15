@@ -59,6 +59,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\UserCommissionRequestEvent' => [
             'App\Listeners\UserCommissionRequestListener',
+        ],
+        'App\Events\DeleteSalesRequestEvent' => [
+            'App\Listeners\DeleteSalesRequestListener',
         ]
     ];
 

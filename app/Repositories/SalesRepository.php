@@ -416,4 +416,31 @@ class SalesRepository
         return $this->retrieve(array($userId));
     }
 
+    public function getSalesData($data)
+    {
+        $sale = $this->getSalesById($data['id']);
+        $originalData = '<table class="table table-sm table-bordered table-hover">';
+        $originalData .= '<tr><td>Reservation Date</td><td>'.$sale->reservation_date.'</td></tr>';
+        $originalData .= '<tr><td>Client Name</td><td>'.$sale->lead->fullname.'</td></tr>';
+        $originalData .= '<tr><td>Project</td><td>'.$sale->project->name.'</td></tr>';
+        $originalData .= '<tr><td>Model Unit</td><td>'.$sale->modelUnit->name.'</td></tr>';
+        $originalData .= '<tr><td>Lot Area</td><td>'.$sale->lot_area.'</td></tr>';
+        $originalData .= '<tr><td>Floor Area</td><td>'.$sale->floor_area.'</td></tr>';
+        $originalData .= '<tr><td>Phase</td><td>'.$sale->phase.'</td></tr>';
+        $originalData .= '<tr><td>Block</td><td>'.$sale->block.'</td></tr>';
+        $originalData .= '<tr><td>Lot</td><td>'.$sale->lot.'</td></tr>';
+        $originalData .= '<tr><td>Total Contract Price</td><td>'.number_format($sale->total_contract_price).'</td></tr>';
+        $originalData .= '<tr><td>Discount</td><td>'.number_format($sale->discount).'</td></tr>';
+        $originalData .= '<tr><td>Processing Fee</td><td>'.number_format($sale->processing_fee).'</td></tr>';
+        $originalData .= '<tr><td>Reservation Fee</td><td>'.number_format($sale->reservation_fee).'</td></tr>';
+        $originalData .= '<tr><td>Equity</td><td>'.number_format($sale->equity).'</td></tr>';
+        $originalData .= '<tr><td>Loanable Amount</td><td>'.number_format($sale->loanable_amount).'</td></tr>';
+        $originalData .= '<tr><td>Financing</td><td>'.$sale->financing.'</td></tr>';
+        $originalData .= '<tr><td>Terms</td><td>'.$sale->terms.'</td></tr>';
+        $originalData .= '<tr><td>Details</td><td>'.$sale->details.'</td></tr>';
+        $originalData .= '<tr><td>Status</td><td>'.$sale->status.'</td></tr>';
+        $originalData .= '</table>';
+
+        return $originalData;
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\UpdateLeadStatusEvent;
 use App\Events\UserRankPointsEvent;
+use App\Events\DeleteSalesRequestEvent;
 use App\Lead;
 use App\ModelUnit;
 use App\Project;
@@ -264,9 +265,12 @@ class SalesController extends Controller
                     {
                         $action .= '<button class="btn btn-xs btn-default edit-sales-btn" id="'.$sale->id.'" data-target="#edit-sales-modal" data-toggle="modal" title="Edit"><i class="fa fa-edit"></i></button>';
                     }
-                    if(auth()->user()->can('delete sales') && $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
+                    if(auth()->user()->hasRole(['super admin']) && $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
                     {
                         $action .= '<button class="btn btn-xs btn-default delete-sale-btn" id="'.$sale->id.'" title="Delete"><i class="fa fa-trash"></i></button>';
+                    } else if(auth()->user()->can('delete sales') && $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
+                    {
+                        $action .= '<button class="btn btn-xs btn-default delete-request-sale-btn" id="'.$sale->id.'" title="Delete" data-toggle="modal" data-target="#delete-sale-request"><i class="fa fa-trash"></i></button>';
                     }
                     if(auth()->user()->can('edit sales') && $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
                     {
@@ -807,4 +811,16 @@ class SalesController extends Controller
         return $this->paymentReminder->paymentRemindersThisMonth($this->accountManagement->checkIfUserIsAccountManager()->id);
     }
 
+    public function delRequest(Request $request, $id)
+    {
+        $get_request =[
+            'sales_id' => $request->deleteSaleId,
+            '_token' => $request->_token,
+            'user_id' => auth()->user()->id,
+            'reason' => $request->reason,
+            'action' => 'delete'
+        ];
+        $result = event(new DeleteSalesRequestEvent($get_request));
+        return response()->json(['success' => true,'message' => 'Delete Sales Request successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
+    }
 }
