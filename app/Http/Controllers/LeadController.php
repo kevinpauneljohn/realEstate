@@ -149,6 +149,13 @@ class LeadController extends Controller
         $lead->lead_status = 'Hot';
         $lead->important = false;
 
+        if (!empty($request->birthday)) {
+            $birthday = date('Y-m-d', strtotime($request->birthday));
+        } else {
+            $birthday = $request->birthday;
+        }
+        $lead->birthday = $birthday;
+
         if($lead->save())
         {
             //if the user who added new leads is an online warrior it will be automatically assigned to him
@@ -284,6 +291,13 @@ class LeadController extends Controller
         $lead->project = $interest;
         $lead->remarks = $request->remarks;
 
+        if (!empty($request->birthday)) {
+            $birthday = date('Y-m-d', strtotime($request->birthday));
+        } else {
+            $birthday = $request->birthday;
+        }
+        $lead->birthday = $birthday;
+        
         if($lead->isDirty())
         {
             if($lead->save())

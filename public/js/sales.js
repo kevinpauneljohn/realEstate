@@ -270,15 +270,16 @@ let status, //instantiate the current sale status
 $(document).on('click','.update-sale-status-btn',function () {
     id = this.id; /*get the id value*/
     $tr = $(this).closest('tr');
-
+    var saved_status = $(this).attr("data-status");
     var data = $tr.children("td").map(function () {
         return $(this).text();
     }).get();
 
-    status = data[8].toLowerCase();
-
+    status = saved_status;
+    console.log(saved_status);
+    $(".select-update-status").val(saved_status).trigger('change');
     $('#updateSaleId').val(id);
-    $('#status').val(status).change();
+    //$('#status').val(status).change();
 });
 
 $(document).on('change','#status',function () {

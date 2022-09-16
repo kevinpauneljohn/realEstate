@@ -523,7 +523,7 @@
                         <div class="modal-body">
                             <div class="form-group status">
                                 <label for="status">Sale Status</label><span class="required">*</span>
-                                <select name="status" id="status" class="select2 form-control" style="width: 100%;">
+                                <select name="status" id="status" class="select2 form-control select-update-status" style="width: 100%;">
                                     <option value=""> -- Select -- </option>
                                     <option value="reserved">Reserved</option>
                                     <option value="cancelled">Cancelled</option>
