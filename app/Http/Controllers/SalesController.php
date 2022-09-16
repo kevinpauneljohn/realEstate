@@ -274,7 +274,7 @@ class SalesController extends Controller
                     }
                     if(auth()->user()->can('edit sales') && $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
                     {
-                        $action .= '<a href="#" class="btn btn-xs btn-default update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';
+                        $action .= '<a href="#" data-status="'.$sale->status.'" class="btn btn-xs btn-default update-sale-status-btn" title="Update Sale Status" data-toggle="modal" data-target="#update-sale-status" id="'.$sale->id.'"><i class="fas fa-thermometer-three-quarters"></i></a>';
                     }
                     if(auth()->user()->can('view request') && $this->accountManagement->checkIfUserIsAccountManager()->id === $sale->user_id)
                     {

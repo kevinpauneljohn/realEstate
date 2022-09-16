@@ -76,7 +76,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="address">Address</label>
-                                <textarea class="form-control" name="address">{{old('address')}}</textarea>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+                                    </div>
+                                    <textarea class="form-control" name="address">{{old('address')}}</textarea>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Landline</label>
@@ -115,54 +120,81 @@
                                    </span>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label for="status">Civil Status</label>
-                                <select class="form-control" name="status">
-                                    <option value="">-- Select --</option>
-                                    <option value="Single" @if(old('status') == "Single") selected="selected" @endif>Single</option>
-                                    <option value="Married" @if(old('status') == "Married") selected="selected" @endif>Married</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="status">Civil Status</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-venus-mars"></i></span>
+                                        </div>
+                                        <select class="form-control" name="status">
+                                            <option value="">-- Select --</option>
+                                            <option value="Single" @if(old('status') == "Single") selected="selected" @endif>Single</option>
+                                            <option value="Married" @if(old('status') == "Married") selected="selected" @endif>Married</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Birthday</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" name="birthday" class="form-control datemask" id="birthday" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                    </div>
+                                </div>
                             </div>
+                            <br />
                             <div class="form-group">
                                 <label for="income">Income Range</label>
-                                <select name="income_range" class="form-control" id="income_range">
-                                    <option value=""> -- Select -- </option>
-                                    <option value="Below 10K" @if(old('income_range') == "Below 10K") selected="selected" @endif>Below 10K</option>
-                                    <option value="10K - 20K" @if(old('income_range') == "10K - 20K") selected="selected" @endif>10K - 20K</option>
-                                    <option value="21K - 30K" @if(old('income_range') == "21K - 30K") selected="selected" @endif>21K - 30K</option>
-                                    <option value="31K - 40K" @if(old('income_range') == "31K - 40K") selected="selected" @endif>31K - 40K</option>
-                                    <option value="41K - 50K" @if(old('income_range') == "41K - 50K") selected="selected" @endif>41K - 50K</option>
-                                    <option value="51K - 60K" @if(old('income_range') == "51K - 60K") selected="selected" @endif>51K - 60K</option>
-                                    <option value="61K - 70K" @if(old('income_range') == "61K - 70K") selected="selected" @endif>61K - 70K</option>
-                                    <option value="70K+" @if(old('income_range') == "70K+") selected="selected" @endif>70K+</option>
-                                </select>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+                                    </div>
+                                    <select name="income_range" class="form-control" id="income_range">
+                                        <option value=""> -- Select -- </option>
+                                        <option value="Below 10K" @if(old('income_range') == "Below 10K") selected="selected" @endif>Below 10K</option>
+                                        <option value="10K - 20K" @if(old('income_range') == "10K - 20K") selected="selected" @endif>10K - 20K</option>
+                                        <option value="21K - 30K" @if(old('income_range') == "21K - 30K") selected="selected" @endif>21K - 30K</option>
+                                        <option value="31K - 40K" @if(old('income_range') == "31K - 40K") selected="selected" @endif>31K - 40K</option>
+                                        <option value="41K - 50K" @if(old('income_range') == "41K - 50K") selected="selected" @endif>41K - 50K</option>
+                                        <option value="51K - 60K" @if(old('income_range') == "51K - 60K") selected="selected" @endif>51K - 60K</option>
+                                        <option value="61K - 70K" @if(old('income_range') == "61K - 70K") selected="selected" @endif>61K - 70K</option>
+                                        <option value="70K+" @if(old('income_range') == "70K+") selected="selected" @endif>70K+</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group {{$errors->has('point_of_contact') ? 'has-error' : ''}}">
                                 <label for="point_of_contact">Point Of Contact</label><span class="required">*</span>
-                                <select name="point_of_contact" class="form-control" id="point_of_contact">
-                                    <option value=""> -- Select -- </option>
-                                    <option value="Booth" @if(old('point_of_contact') == "Booth") selected="selected" @endif>Booth</option>
-                                    <option value="Site" @if(old('point_of_contact') == "Site") selected="selected" @endif>Site</option>
-                                    <option value="Online" @if(old('point_of_contact') == "Online") selected="selected" @endif>Online</option>
-                                    <option value="Saturation" @if(old('point_of_contact') == "Saturation") selected="selected" @endif>Saturation</option>
-                                    <option value="Referral" @if(old('point_of_contact') == "Referral") selected="selected" @endif>Referral</option>
-                                    <option value="Youtube" @if(old('point_of_contact') == "Youtube") selected="selected" @endif>Youtube</option>
-                                    <option value="Facebook" @if(old('point_of_contact') == "Facebook") selected="selected" @endif>Facebook</option>
-                                    <option value="Phone Call" @if(old('point_of_contact') == "Phone Call") selected="selected" @endif>Phone Call</option>
-                                    <option value="SMS" @if(old('point_of_contact') == "SMS") selected="selected" @endif>SMS</option>
-                                    <option value="Viber" @if(old('point_of_contact') == "Viber") selected="selected" @endif>Viber</option>
-                                    <option value="Whatsapp" @if(old('point_of_contact') == "Whatsapp") selected="selected" @endif>Whatsapp</option>
-                                    <option value="IMO" @if(old('point_of_contact') == "IMO") selected="selected" @endif>IMO</option>
-                                    <option value="Line" @if(old('point_of_contact') == "Line") selected="selected" @endif>Line</option>
-                                    <option value="Others" @if(old('point_of_contact') == "Others") selected="selected" @endif>Others</option>
-                                </select>
-                                @error('point_of_contact')
-                                <span class="invalid-feedback" role="alert">
-                                       <strong>{{ $message }}</strong>
-                                   </span>
-                                @enderror
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-address-card"></i></span>
+                                    </div>
+                                    <select name="point_of_contact" class="form-control" id="point_of_contact">
+                                        <option value=""> -- Select -- </option>
+                                        <option value="Booth" @if(old('point_of_contact') == "Booth") selected="selected" @endif>Booth</option>
+                                        <option value="Site" @if(old('point_of_contact') == "Site") selected="selected" @endif>Site</option>
+                                        <option value="Online" @if(old('point_of_contact') == "Online") selected="selected" @endif>Online</option>
+                                        <option value="Saturation" @if(old('point_of_contact') == "Saturation") selected="selected" @endif>Saturation</option>
+                                        <option value="Referral" @if(old('point_of_contact') == "Referral") selected="selected" @endif>Referral</option>
+                                        <option value="Youtube" @if(old('point_of_contact') == "Youtube") selected="selected" @endif>Youtube</option>
+                                        <option value="Facebook" @if(old('point_of_contact') == "Facebook") selected="selected" @endif>Facebook</option>
+                                        <option value="Phone Call" @if(old('point_of_contact') == "Phone Call") selected="selected" @endif>Phone Call</option>
+                                        <option value="SMS" @if(old('point_of_contact') == "SMS") selected="selected" @endif>SMS</option>
+                                        <option value="Viber" @if(old('point_of_contact') == "Viber") selected="selected" @endif>Viber</option>
+                                        <option value="Whatsapp" @if(old('point_of_contact') == "Whatsapp") selected="selected" @endif>Whatsapp</option>
+                                        <option value="IMO" @if(old('point_of_contact') == "IMO") selected="selected" @endif>IMO</option>
+                                        <option value="Line" @if(old('point_of_contact') == "Line") selected="selected" @endif>Line</option>
+                                        <option value="Others" @if(old('point_of_contact') == "Others") selected="selected" @endif>Others</option>
+                                    </select>
+                                    @error('point_of_contact')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="form-group project">
@@ -267,6 +299,12 @@
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             }).datepicker("setDate", new Date());
+
+            $('#birthday').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+
             //Money Euro
             $('[data-mask]').inputmask()
             $('.textarea').html('{!! old('remarks') !!}');
