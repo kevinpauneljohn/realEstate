@@ -232,14 +232,11 @@
                 <div class="modal-body">
                     <div class="form-group action">
                         @csrf
+                        <span class="action_required_text" style="color:red;"></span>
                         <input type="hidden" name="checklist_id">
                         <input type="hidden" name="task_id" value="{{$task->id}}">
                         <textarea class="form-control actionTaken" name="action" style="min-height: 200px;" id="action"></textarea> 
                     </div>
-
-                    <!-- <div class="row">
-                        <div class="col-md-12 action-timeline"></div>
-                    </div> -->
                 </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -300,20 +297,6 @@
         });
 
         $('.textEditor,.actionTaken').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['fontname', ['fontname']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link']],
-                ['height', ['height']],
-                ['view', ['fullscreen']],
-            ],
-            lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
-        });
-
-        $('#checklist0').summernote({
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'underline', 'clear']],
@@ -722,8 +705,12 @@
                     var get_status = response.status;
                     $('.get_task_status').val(get_status);
                     if (get_status == 'pending') {
-                        $('.start_task_component_user_span').removeClass('hidden');
-
+                        if (response.creator == 'no') {
+                            $('.start_task_component_user_span').removeClass('hidden');
+                        } else {
+                            $('.start_task_component_span').removeClass('hidden');
+                        }
+                        
                         if (!$('.ongoing_task_component_user_span').hasClass("hidden")) {
                             $('.ongoing_task_component_user_span').addClass('hidden');
                         }
@@ -900,42 +887,56 @@
             let action = $('textarea[name=action]').val();
             let id = $('.get_task_id').val();
 
-            $.ajax({
-                'url' : '/action-taken',
-                'type' : 'POST',
-                'data' : {
-                    'id': id,
-                    'action': action
-                },
-                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                beforeSend: function(){
-                    $('.submit-checklist-btn').prop('disabled',true);
-                    $('.submit-checklist-btn').text('Saving...');
-                },success: function(output){
-                    if(output.success === true){
-                        customAlert('success',output.message);
-                        $('textarea[name=action]').summernote("code", "");
-                        $('#action-taken').modal('toggle');
+            var valid;
+            if ($('textarea[name=action]').summernote('isEmpty')) {
+                valid = false;
+                $('.action_required_text').text('*Action field is required.');
+            } else {
+                valid = true;
+            }
 
-                        let table = $('#action-list').DataTable();
-                        table.ajax.reload(null, false);
+            if (valid)
+            {
+                $.ajax({
+                    'url' : '/action-taken',
+                    'type' : 'POST',
+                    'data' : {
+                        'id': id,
+                        'action': action
+                    },
+                    'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    beforeSend: function(){
+                        $('.submit-checklist-btn').prop('disabled',true);
+                        $('.submit-checklist-btn').text('Saving...');
+                    },success: function(output){
+                        if(output.success === true){
+                            customAlert('success',output.message);
+                            $('textarea[name=action]').summernote("code", "");
+                            $('#action-taken').modal('toggle');
 
-                        let tableLog = $('#activity-log').DataTable();
-                        tableLog.ajax.reload(null, false);
+                            let table = $('#action-list').DataTable();
+                            table.ajax.reload(null, false);
 
-                        $('.submit-checklist-btn').prop('disabled',false);
-                        $('.submit-checklist-btn').text('Save');
-                        taskStatus(id);
-                    }else if(output.success === false){
-                        customAlert('warning',output.message);
+                            let tableLog = $('#activity-log').DataTable();
+                            tableLog.ajax.reload(null, false);
+
+                            $('.action_required_text').text('');
+                            $('.submit-checklist-btn').prop('disabled',false);
+                            $('.submit-checklist-btn').text('Save');
+                            taskStatus(id);
+                        }else if(output.success === false){
+                            customAlert('warning',output.message);
+                            $('.submit-checklist-btn').prop('disabled',false);
+                            $('.submit-checklist-btn').text('Save');
+                        }
+
+                        $('#action-taken-form').find('input,textarea').attr('disabled',false);
+                        $('#action-taken-form').find('input[type=submit]').val('Save');
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
                     }
-
-                    $('#action-taken-form').find('input,textarea').attr('disabled',false);
-                    $('#action-taken-form').find('input[type=submit]').val('Save');
-                },error: function(xhr, status, error){
-                    console.log(xhr);
-                }
-            });
+                });
+            }
         })
 
         $(document).on('click','.UpdateActionTaken',function(){
@@ -943,41 +944,55 @@
             let id = $('input[name=action_taken_id]').val();
             let task_id = $('.get_task_id').val();
 
-            $.ajax({
-                'url' : '/action-taken/'+id,
-                'type' : 'PUT',
-                'data' : {
-                    'task_id': task_id,
-                    'action' : action
-                },
-                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                beforeSend: function(){
-                    $('.UpdateActionTaken').prop('disabled',true);
-                    $('.UpdateActionTaken').text('Saving...');
-                },success: function(output){
-                    if(output.success === true){
-                        customAlert('success',output.message);
-                        $('textarea[name=action]').summernote("code", "");
-                        $('#action-taken').modal('toggle');
+            var valid;
+            if ($('textarea[name=action]').summernote('isEmpty')) {
+                valid = false;
+                $('.action_required_text').text('*Action field is required.');
+            } else {
+                valid = true;
+            }
 
-                        let table = $('#action-list').DataTable();
-                        table.ajax.reload(null, false);
+            if (valid)
+            {
+                $.ajax({
+                    'url' : '/action-taken/'+id,
+                    'type' : 'PUT',
+                    'data' : {
+                        'task_id': task_id,
+                        'action' : action
+                    },
+                    'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    beforeSend: function(){
+                        $('.UpdateActionTaken').prop('disabled',true);
+                        $('.UpdateActionTaken').text('Saving...');
+                    },success: function(output){
+                        if(output.success === true){
+                            customAlert('success',output.message);
+                            $('textarea[name=action]').summernote("code", "");
+                            $('#action-taken').modal('toggle');
 
-                        let tableLog = $('#activity-log').DataTable();
-                        tableLog.ajax.reload(null, false);
+                            let table = $('#action-list').DataTable();
+                            table.ajax.reload(null, false);
 
-                        $('.UpdateActionTaken').prop('disabled',false);
-                        $('.UpdateActionTaken').text('Save');
-                    }else if(output.success === false){
-                        customAlert('warning',output.message);
+                            let tableLog = $('#activity-log').DataTable();
+                            tableLog.ajax.reload(null, false);
+
+                            $('.action_required_text').text('');
+                            $('.UpdateActionTaken').prop('disabled',false);
+                            $('.UpdateActionTaken').text('Save');
+                        }else if(output.success === false){
+                            customAlert('warning',output.message);
+                            $('.UpdateActionTaken').text('Save');
+                            $('.UpdateActionTaken').prop('disabled',false);
+                        }
+
+                        $('.edit-action-form').find('button,textarea').attr('disabled',false);
+                        $('.edit-action-form').find('button .save').text('Save');
+                    },error: function(xhr, status, error){
+                        console.log(xhr);
                     }
-
-                    $('.edit-action-form').find('button,textarea').attr('disabled',false);
-                    $('.edit-action-form').find('button .save').text('Save');
-                },error: function(xhr, status, error){
-                    console.log(xhr);
-                }
-            });
+                });
+            }
         });
 
         $(document).on('click','.delete-action-btn',function(){

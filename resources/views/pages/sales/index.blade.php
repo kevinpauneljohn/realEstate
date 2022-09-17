@@ -523,7 +523,7 @@
                         <div class="modal-body">
                             <div class="form-group status">
                                 <label for="status">Sale Status</label><span class="required">*</span>
-                                <select name="status" id="status" class="select2 form-control" style="width: 100%;">
+                                <select name="status" id="status" class="select2 form-control select-update-status" style="width: 100%;">
                                     <option value=""> -- Select -- </option>
                                     <option value="reserved">Reserved</option>
                                     <option value="cancelled">Cancelled</option>
@@ -571,6 +571,81 @@
         </div>
         <!--end add user modal-->
     @endcan
+
+    @can('delete sales')
+        <!--view request-->
+
+        <div class="modal fade" id="delete-sale-request">
+            <form role="form" id="delete-sales-form" class="form-submit">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="deleteSaleId" id="deleteSaleId">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Sales Detail</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="image-loader">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-5 del-sales-details">
+                                    <table class="table table-bordered table-hover">
+                                        <tbody>
+                                        <tr><td>Status</td><td id="sale-status-del"></td></tr>
+                                        <tr><td>Date Of Reservation</td><td id="reservation-date-del"></td></tr>
+                                        <tr><td>Buyer's Name</td><td id="buyer-name-del"></td></tr>
+                                        <tr><td>Contact Number</td><td id="contact-number-del"></td></tr>
+                                        <tr><td>Email</td><td id="email-address-del"></td></tr>
+                                        <tr><td>Commission Rate</td><td id="commission-rate-del"></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-7 del-sales-details table-wrapper-scroll-y custom-scrollbar">
+                                    <table class="table table-bordered table-hover">
+                                        <tbody>
+                                        <tr><td>Project</td><td id="project-name-del"></td></tr>
+                                        <tr><td>Model Unit</td><td id="model-unit-name-del"></td></tr>
+                                        <tr><td>Lot Area</td><td id="lot-area-del"></td></tr>
+                                        <tr><td>Floor Area</td><td id="floor-area-del"></td></tr>
+                                        <tr><td>Phase / Block / Lot</td><td id="location-del"></td></tr>
+                                        <tr><td>Total Contract Price</td><td id="total-contract-price-del"></td></tr>
+                                        <tr><td>Discount</td><td id="discount-amount-del"></td></tr>
+                                        <tr><td>Processing Fee</td><td id="processing-fee-del"></td></tr>
+                                        <tr><td>Reservation Fee</td><td id="reservation-fee-del"></td></tr>
+                                        <tr><td>Equity</td><td id="equity-amount-del"></td></tr>
+                                        <tr><td>Loanable Amount</td><td id="loanable-amount-del"></td></tr>
+                                        <tr><td>Financing Terms</td><td id="financing-terms-del"></td></tr>
+                                        <tr><td>Equity/Down Payment Terms</td><td id="dp-terms-del"></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group reason">
+                                        <label for="reason"><span style="color:red;">*Reason to Delete:</span></label>
+                                        <textarea class="form-control delete_reason_request_content" name="reason" id="reason" rows="6"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary submit-delete-btn" id="delete-submit-btn"><i class="spinner fa fa-spinner fa-spin"></i> Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--end add user modal-->
+    @endcan
 @stop
 
 @section('css')
@@ -587,6 +662,14 @@
         }
         .commission-request-pending{
             background-color: #d7fbfd;
+        }
+        .custom-scrollbar {
+            position: relative;
+            height: 220px;
+            overflow: auto;
+        }
+        .table-wrapper-scroll-y {
+            display: block;
         }
     </style>
 @stop

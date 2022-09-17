@@ -70,6 +70,27 @@ class PrioritiesSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'update user commission',
+                'description' => 'update user commission',
+                'priority_id' => \App\Priority::where('name','normal')->first()->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'delete user commission',
+                'description' => 'delete user commission',
+                'priority_id' => \App\Priority::where('name','normal')->first()->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'delete sales',
+                'description' => 'delete sales',
+                'priority_id' => \App\Priority::where('name','critical')->first()->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
 
         \App\Action::insert($data);

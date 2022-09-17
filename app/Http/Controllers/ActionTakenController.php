@@ -147,7 +147,7 @@ class ActionTakenController extends Controller
                     activity('task')
                         ->causedBy(auth()->user()->id)
                         ->performedOn(ActionTaken::find($id))
-                        ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
+                        ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated the action taken');
                         return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => $request->action]);
                 }
                 return response(['success' =>false, 'message' => 'No changes occurred!']);
@@ -158,7 +158,7 @@ class ActionTakenController extends Controller
                         activity('task')
                             ->causedBy(auth()->user()->id)
                             ->performedOn(ActionTaken::find($id))
-                            ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> edited the action taken');
+                            ->withProperties($action_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated the action taken');
                             return response(['success' =>true, 'message' => 'Action taken successfully updated', 'actionContent' => $request->action]);
                     }
                     return response(['success' =>false, 'message' => 'No changes occurred!']);
