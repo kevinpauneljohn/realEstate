@@ -91,7 +91,7 @@
                         <button type="button" class="btn bg-gradient-primary btn-sm add-new-task mr-1 float-right" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
                     @endcan
                     @can('view task export')
-                    <!-- <button type="button" class="btn bg-gradient-success btn-sm add-new-task mr-1 float-right" id="exportTasks"><i class="fa fa-arrow-circle-down"></i> Export</button> -->
+                    <button type="button" class="btn bg-gradient-success btn-sm add-new-task mr-1 float-right" id="exportTasks"><i class="fa fa-arrow-circle-down"></i> Export</button>
                     @endcan
                 </div>
             </div>

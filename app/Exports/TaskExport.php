@@ -66,12 +66,17 @@ class Taskexport implements FromCollection,WithHeadings,WithEvents
         $task = $get_task;
         $task_data = [];
         foreach ($task as $data) {
+            $assigned_to = '';
+            if (!empty($data->user->fullname)) {
+                $assigned_to = $data->user->fullname;
+            }
+
             $task_data [] = [
                 str_pad($data->id, 5, '0', STR_PAD_LEFT), 
                 Carbon::parse($data->due_date)->format('M d, Y').' - '.Carbon::parse($data->time)->format('g:i A'),
                 $data->title,
                 $data->priority->name,
-                $data->user->fullname,
+                $assigned_to,
                 $data->creator->fullname,
                 $data->created_at->format('M d, Y g:i A'),
                 ucfirst($data->status),

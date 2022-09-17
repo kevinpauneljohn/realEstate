@@ -102,12 +102,12 @@
                 </div>
             </div>
             @can('view task export')
-            <!-- <br />
+            <br />
             <div class="row">
                 <div class="col-md-12">
                     <button type="button" class="btn bg-gradient-success btn-sm add-new-task mr-1 float-right" id="exportTasks"><i class="fa fa-arrow-circle-down"></i> Export</button>
                 </div>
-            </div> -->
+            </div>
             @endcan
         </div>
         <div class="card-body">
