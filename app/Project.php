@@ -15,7 +15,8 @@ class Project extends Model
         'name',
         'address',
         'remarks',
-        'commission_rate'
+        'commission_rate',
+        'shortcode'
     ];
 
     protected static $logAttributes = [

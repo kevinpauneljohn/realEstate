@@ -24,7 +24,7 @@ class Lead extends Model
         'email',
         'status',
         'income_range',
-        'point_of_contact',
+        'point_of_contact','birthday','important','project',
         'remarks','lead_status','online_warrior_id'
     ];
 
