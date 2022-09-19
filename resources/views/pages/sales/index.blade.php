@@ -118,10 +118,43 @@
     </div>
     <div class="card">
         <div class="card-header">
-            @can('add sales')
-                <a href="{{route('sales.create')}}" class="btn bg-gradient-primary btn-sm"><i class="fa fa-plus-circle"></i> Add Sales</a>
-            @endcan
-
+            <div class="row">
+                <div class="col-lg-6">
+                    @can('add sales')
+                        <a href="{{route('sales.create')}}" class="btn bg-gradient-primary btn-sm"><i class="fa fa-plus-circle"></i> Add Sales</a>
+                    @endcan
+                </div>
+                <div class="col-lg-6">
+                    <button type="button" class="btn bg-gradient-success btn-sm import-sales mr-1 float-right" data-toggle="modal" data-target="#import-sales-modal"><i class="fa fa-upload"></i> Import Sales</button>
+                    <div class="modal fade" id="import-sales-modal">
+                        <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Import Sales</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group file">
+                                            <label for="file">File</label><span class="required">*</span>
+                                            <input type="file" name="file" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn btn-primary submit-task-btn" value="Save">
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
