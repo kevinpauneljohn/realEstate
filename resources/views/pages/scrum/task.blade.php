@@ -202,6 +202,17 @@
                                         </select>
                                     </div>
                                 </div>
+                                @can('add task privacy')
+                                    <div class="col-lg-6">
+                                        <div class="form-group privacy">
+                                            <label for="watchers">Ticket Privacy</label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" checked name="privacy" class="custom-control-input" id="privacy">
+                                                <label  style="cursor: pointer;" class="custom-control-label" for="privacy">Toggle to set ticket in Public</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endcan
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -256,6 +267,7 @@
             });
 
             $('.textEditor').summernote({
+                followingToolbar: true,
                 toolbar: [
                     ['style', ['style']],
                     ['font', ['bold', 'underline', 'clear']],
@@ -427,7 +439,11 @@
                         taskModal.find('select[name=priority]').val(result.task.priority_id).change();
                         taskModal.find('select[name=assign_to]').val(result.task.assigned_to).change();
                         taskModal.find('textarea[name=description]').summernote('code', result.task.description);
-
+                        if (result.task.privacy == 'on') {
+                            taskModal.find('input[name=privacy]').prop('checked', true);
+                        } else {
+                            taskModal.find('input[name=privacy]').prop('checked', false);
+                        }
                         var watcher_data = [];
                         $.each(result.watcher, function(i, record) {
                             watcher_data.push(record.user_id)
