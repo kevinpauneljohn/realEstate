@@ -202,17 +202,15 @@
                                         </select>
                                     </div>
                                 </div>
-                                @can('add task privacy')
-                                    <div class="col-lg-6">
-                                        <div class="form-group privacy">
-                                            <label for="watchers">Ticket Privacy</label>
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" checked name="privacy" class="custom-control-input" id="privacy">
-                                                <label  style="cursor: pointer;" class="custom-control-label" for="privacy">Toggle to set ticket in Public</label>
-                                            </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group privacy">
+                                        <label for="watchers">Ticket Privacy</label>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" checked name="privacy" class="custom-control-input" id="privacy">
+                                            <label  style="cursor: pointer;" class="custom-control-label" for="privacy">Toggle to set ticket in Public</label>
                                         </div>
                                     </div>
-                                @endcan
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
