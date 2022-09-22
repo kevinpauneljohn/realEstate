@@ -409,3 +409,5 @@ Route::get('/display-request/{task_id}',[\App\Http\Controllers\ScrumController::
 Route::post('/task-request',[\App\Http\Controllers\ScrumController::class,'UpdateRequest'])->name('request.update');
 Route::get('/count-request/{task_id}',[\App\Http\Controllers\ScrumController::class,'getRequestCount'])->name('request.watchers.count');
 Route::get('/send-mail',[\App\Http\Controllers\SendMailController::class,'index']);
+
+Route::post('import', 'SalesController@importSales')->name('import');

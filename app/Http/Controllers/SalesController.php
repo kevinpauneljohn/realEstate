@@ -24,6 +24,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\DataTables;
+use App\Imports\SalesImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SalesController extends Controller
 {
@@ -822,5 +824,12 @@ class SalesController extends Controller
         ];
         $result = event(new DeleteSalesRequestEvent($get_request));
         return response()->json(['success' => true,'message' => 'Delete Sales Request successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
+    }
+
+    public function importSales() 
+    {
+        Excel::import(new SalesImport,request()->file('file'));
+           
+        return back();
     }
 }

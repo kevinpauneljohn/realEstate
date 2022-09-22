@@ -29,8 +29,14 @@ class UserRankPointsListener
      */
     public function handle(UserRankPointsEvent $event)
     {
+        $user_id = '';
+        if (!empty($event->user->id)) {
+            $user_id = $event->user->id;
+        } else if (!empty($event->user)) {
+            $user_id = $event->user;
+        }
         UserRankPoint::updateOrCreate(
-            ['user_id' => $event->user->id],
+            ['user_id' => $user_id],
             ['rank_id' => $this->setRankByPoints($event->sales_points, $event->extra_points), 'sales_points' => $event->sales_points,'extra_points' => $event->extra_points]
         );
     }
