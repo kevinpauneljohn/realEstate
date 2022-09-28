@@ -82,7 +82,7 @@ class ScrumController extends Controller
                 $privacy = $request->input('privacy');
             }
 
-            $task_role = 'staff';
+            $task_role = NULL;
             if(!empty($request->input('assign_to'))) {
                 $users = User::where('id', $request->input('assign_to'))->whereHas("roles", function($q) {
                     $q->whereIn("name", ["dhg_ojt"]);
@@ -205,7 +205,7 @@ class ScrumController extends Controller
                 $tasks = Task::whereNotIn('status',['completed'])
                 ->where(function ($query) use ($data_watcher) {
                     $query->where('privacy', NULL);
-                    $query->where('task_role', '<>', 'ojt');
+                    $query->where('task_role', NULL);
                     $query->orWhere(function ($privacy) {
                         $privacy->where('privacy', 'on');
                         $privacy->where('assigned_to', auth()->user()->id);
@@ -229,7 +229,7 @@ class ScrumController extends Controller
                 $tasks = Task::where('status',$status)
                 ->where(function ($query) use ($data_watcher) {
                     $query->where('privacy', NULL);
-                    $query->where('task_role', '<>', 'ojt');
+                    $query->where('task_role', NULL);
                     $query->orWhere(function ($privacy) {
                         $privacy->where('privacy', 'on');
                         $privacy->where('assigned_to', auth()->user()->id);
