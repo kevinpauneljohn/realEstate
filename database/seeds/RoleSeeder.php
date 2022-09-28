@@ -26,6 +26,8 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'online warrior']);
         Role::create(['name' => 'JJ online warrior']);
         Role::create(['name' => 'Finance Admin']);
+        Role::create(['name' => 'dhg_ojt']);
+        Role::create(['name' => 'dhg_staff']);
 
         Permission::create(['name' => 'add role']);
         Permission::create(['name' => 'view role']);
@@ -122,6 +124,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view task']);
         Permission::create(['name' => 'edit task']);
         Permission::create(['name' => 'delete task']);
+        Permission::create(['name' => 'add ojt task']);
 
         Permission::create(['name' => 'add client']);
         Permission::create(['name' => 'view client']);
