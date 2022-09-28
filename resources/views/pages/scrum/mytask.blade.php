@@ -105,7 +105,12 @@
             <br />
             <div class="row">
                 <div class="col-md-12">
+                    @can('add task')
+                        <button type="button" class="btn bg-gradient-primary btn-sm add-new-task mr-1 float-right" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
+                    @endcan
+                    <!-- @can('view task export')
                     <button type="button" class="btn bg-gradient-success btn-sm add-new-task mr-1 float-right" id="exportTasks"><i class="fa fa-arrow-circle-down"></i> Export</button>
+                    @endcan -->
                 </div>
             </div>
             @endcan
@@ -178,9 +183,8 @@
     @can('add task')
         <!--add new roles modal-->
         <div class="modal fade" id="add-task-modal">
-            <form role="form" id="edit-task-form">
+            <form role="form" id="task-form">
                 @csrf
-                <input type="hidden" name="task_id">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -217,7 +221,7 @@
                                     <div class="form-group priority">
                                         <label for="priority">Priority</label>
                                         <select name="priority" class="form-control select2" id="priority" style="width: 100%">
-                                            <option value=""></option>
+                                            <option value="">Please Select</option>
                                             @foreach($priorities as $priority)
                                                 <option value="{{$priority->id}}">{{$priority->name}}</option>
                                             @endforeach
@@ -228,7 +232,7 @@
                                     <div class="form-group assign_to">
                                         <label for="assign_to">Assign To</label>
                                         <select name="assign_to" class="form-control select2" id="assign_to" style="width: 100%">
-                                            <option value=""></option>
+                                            <option value="">Please Select</option>
                                             @foreach($agents as $agent)
                                                 <option value="{{$agent->id}}">{{$agent->fullname}}</option>
                                             @endforeach
@@ -429,6 +433,56 @@
             });
         });
 
+        $(document).on('click','.add-new-task',function(){
+            $('#add-task-modal').find('.modal-title').text("Add New Task");
+            $('#add-task-modal').find('form').attr('id','task-form').find('input[name=task_id]').remove();
+            
+            $('form#task-form').trigger("reset");
+            $('form#task-form select').trigger("change");
+
+            $('#watchers').val('{{auth()->user()->id}}').change();
+            $('.textEditor').summernote("code", "");
+        });
+
+        $(document).on('submit','#task-form',function(form){
+            form.preventDefault();
+
+            let data = $(this).serializeArray();
+
+            $.ajax({
+                'url' : '/tasks',
+                'type' : 'POST',
+                'data' : data,
+                beforeSend: function(){
+                    $('.submit-task-btn').val('Saving ...').attr('disabled',true);
+                },success: function(result){
+
+                    if(result.success === true)
+                    {
+                        let table = $('#task-list').DataTable();
+                        table.ajax.reload();
+                        $('#task-form').trigger('reset');
+                        $('#task-form #collaborator').empty();
+                        toastr.success(result.message);
+
+                        $('#add-task-modal').modal('toggle');
+                        $('#assign_to, #priority').val([]).trigger('change');
+                    }
+
+                    $.each(result, function (key, value) {
+                        let element = $('.'+key);
+
+                        element.find('.error-'+key).remove();
+                        element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
+                    });
+                    $('.submit-task-btn').val('Save').attr('disabled',false);
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
+            clear_errors('title','description','due_date','priority','assign_to');
+        });
+
         $("#add-task-modal").on('hide.bs.modal', function () {
             $('.textEditor').summernote("code", "");
         });
@@ -438,7 +492,9 @@
         $(document).on('click','.edit-task-btn',function(){
             let id = this.id;
 
-            taskModal.find('input[name=task_id]').val(id);
+            taskModal.find('input[name=task_id], .text-danger').remove();
+            taskModal.find('.modal-title').text("Edit Task");
+            taskModal.find('form').attr('id','edit-task-form').prepend('<input type="hidden" name="task_id" value="'+id+'">');
             $('#add-task-modal').modal('toggle');
             $.ajax({
                 'url' : '/tasks/'+id,

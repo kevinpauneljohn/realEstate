@@ -33,8 +33,13 @@
                                 <p>{!! ucfirst(nl2br($task->description)) !!}</p>
                             </div>
                             <div class="post">
+                                <div class="row">
+                                    <button class="btn btn-primary btn-sm add-new-action-taken">Add Action Taken</button>
+                                    <input type="hidden" class="form-control action_taken_count" value="{{$action_taken}}" >
+                                </div>
+                                <br />
                                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                    <h5>Action Taken</h5>
+                                    
                                     <table id="action-list" class="table table-bordered table-hover" role="grid">
                                         <thead>
                                         <tr role="row">
@@ -410,9 +415,10 @@
                     if (!$('.completed_task_component_user_span').hasClass("hidden")) {
                         $('.completed_task_component_user_span').addClass('hidden');
                     }
+
+                    $('.add-new-action-taken').addClass('hidden');
                 } else if (get_status == 'on-going') {
                     $('.ongoing_task_component_user_span').removeClass('hidden');
-
                     if (!$('.start_task_component_user_span').hasClass("hidden")) {
                         $('.start_task_component_user_span').addClass('hidden');
                     }
@@ -420,6 +426,14 @@
                     if (!$('.completed_task_component_user_span').hasClass("hidden")) {
                         $('.completed_task_component_user_span').addClass('hidden');
                     }
+
+                    if ($('.action_taken_count').val() == 1) {
+                        $('.ongoing_task_component_button').prop("disabled", false);
+                    } else {
+                        $('.ongoing_task_component_button').prop("disabled", true);
+                    }
+                    
+                    $('.add-new-action-taken').removeClass('hidden');
                 } else if (get_status == 'completed') {
                     @if((auth()->user()->hasRole(['super admin','admin','account manager'])))
                         $('.completed_task_component_user_span').removeClass('hidden');
@@ -434,6 +448,8 @@
                     if (!$('.ongoing_task_component_user_span').hasClass("hidden")) {
                         $('.ongoing_task_component_user_span').addClass('hidden');
                     }
+
+                    $('.add-new-action-taken').addClass('hidden');
                 }
             @else
                 if (get_status == 'pending') {
@@ -446,6 +462,8 @@
                     if (!$('.completed_task_component_span').hasClass("hidden")) {
                         $('.completed_task_component_span').addClass('hidden');
                     }
+
+                    $('.add-new-action-taken').addClass('hidden');
                 } else if (get_status == 'on-going') {
                     $('.ongoing_task_component_span').removeClass('hidden');
 
@@ -456,6 +474,14 @@
                     if (!$('.completed_task_component_span').hasClass("hidden")) {
                         $('.completed_task_component_span').addClass('hidden');
                     }
+
+                    if ($('.action_taken_count').val() == 1) {
+                        $('.ongoing_task_component_button').prop("disabled", false);
+                    } else {
+                        $('.ongoing_task_component_button').prop("disabled", true);
+                    }
+
+                    $('.add-new-action-taken').addClass('hidden');
                 } else if (get_status == 'completed') {
                     @if((auth()->user()->hasRole(['super admin','admin','account manager'])))
                         $('.completed_task_component_user_span').removeClass('hidden');
@@ -476,6 +502,8 @@
 
                     $('#update-watcher').addClass('hidden');
                     $('.update-watcher').removeClass('hidden');
+
+                    $('.add-new-action-taken').addClass('hidden');
                 }
             @endif
         }
@@ -590,14 +618,15 @@
         });
         @endif
 
+        $(document).on('click','.add-new-action-taken',function(){
+            $('#action-taken').modal('toggle');
+        });
+
         $(document).on('click','button[name=start_task]',function(){
             let id = this.value;
             let buttonStatus = $(this).attr("data-name");
-            if (buttonStatus == 'start') {
-                taskStatus(id);
-            } else if (buttonStatus == 'completed') {
-                $('#action-taken').modal('toggle');
-            }
+
+            taskStatus(id);
         });
 
         function taskStatus(id){
@@ -620,6 +649,8 @@
                         if (!$('.completed_task_component_user_span').hasClass("hidden")) {
                             $('.completed_task_component_user_span').addClass('hidden');
                         }
+
+                        $('.add-new-action-taken').addClass('hidden');
                     } else if (get_status == 'on-going') {
                         $('.ongoing_task_component_user_span').removeClass('hidden');
 
@@ -630,6 +661,9 @@
                         if (!$('.completed_task_component_user_span').hasClass("hidden")) {
                             $('.completed_task_component_user_span').addClass('hidden');
                         }
+
+                        $('.ongoing_task_component_button').prop("disabled", true);
+                        $('.add-new-action-taken').removeClass('hidden');
                     } else if (get_status == 'completed' && response.actions == 'complete') {
                         @if(auth()->user()->hasRole(['super admin','admin','account manager']))
                             $('.completed_task_component_user_span').removeClass('hidden');
@@ -650,13 +684,15 @@
 
                         $('#update-watcher').addClass('hidden');
                         $('.update-watcher').removeClass('hidden');
+
+                        $('.add-new-action-taken').addClass('hidden');
                     }
                         
                     if (response.actions == 'incomplete' && response.status == 'completed') {
                         alert('Checklist Action taken must have atleast 1 data. Please Check each checklist action taken before completed the Task.');
                     }
 
-                    $('.task-action-button').find('button').attr('disabled',false);
+                    //$('.task-action-button').find('button').attr('disabled',false);
 
                     let tableLog = $('#activity-log').DataTable();
                     tableLog.ajax.reload(null, false);
@@ -718,6 +754,8 @@
                         if (!$('.completed_task_component_user_span').hasClass("hidden")) {
                             $('.completed_task_component_user_span').addClass('hidden');
                         }
+
+                        $('.add-new-action-taken').addClass('hidden');
                     }
                 },error: function(xhr, status, error){
                     console.log(xhr);
@@ -923,7 +961,9 @@
                             $('.action_required_text').text('');
                             $('.submit-checklist-btn').prop('disabled',false);
                             $('.submit-checklist-btn').text('Save');
-                            taskStatus(id);
+
+                            $('.action_taken_count').val(1);
+                            $('.ongoing_task_component_button').prop("disabled", false);
                         }else if(output.success === false){
                             customAlert('warning',output.message);
                             $('.submit-checklist-btn').prop('disabled',false);
@@ -980,6 +1020,7 @@
                             $('.action_required_text').text('');
                             $('.UpdateActionTaken').prop('disabled',false);
                             $('.UpdateActionTaken').text('Save');
+                            $('.action_taken_count').val(1);
                         }else if(output.success === false){
                             customAlert('warning',output.message);
                             $('.UpdateActionTaken').text('Save');
