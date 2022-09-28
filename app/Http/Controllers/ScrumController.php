@@ -37,10 +37,20 @@ class ScrumController extends Controller
     }
     public function index()
     {
-        $roles = Role::select('name')->get()->toArray();
+        if(auth()->user()->hasRole('super admin')) {
+            $roles = Role::select('name')->get()->toArray();
+        } else {
+            if (auth()->user()->hasPermissionTo('add ojt task')) {
+                $roles = Role::select('name')->get()->toArray();
+            } else {
+                $roles = Role::select('name')->where('name', '<>', 'dhg_ojt')->get()->toArray();
+            }
+        }
+        
         $priorities = Priority::all();
-        $users = User::all();
+        //$users = User::all();
         $agents = $this->task->getAgents($roles);
+        $users = $agents;
         $status = [
             'open' => $this->task->getTaskStatusCount('open'),
             'pending' => $this->task->getTaskStatusCount('pending'),
@@ -72,6 +82,17 @@ class ScrumController extends Controller
                 $privacy = $request->input('privacy');
             }
 
+            $task_role = 'staff';
+            if(!empty($request->input('assign_to'))) {
+                $users = User::where('id', $request->input('assign_to'))->whereHas("roles", function($q) {
+                    $q->whereIn("name", ["dhg_ojt"]);
+                })->get();
+        
+                if(count($users) >= 1) {
+                    $task_role = 'ojt';
+                }
+            }
+
             $task = [
                 'created_by'    => auth()->user()->id,
                 'title'    => $request->input('title'),
@@ -81,7 +102,8 @@ class ScrumController extends Controller
                 'time'    => $request->input('time'),
                 'assigned_to'    => $request->input('assign_to'),
                 'priority_id'    => $request->input('priority'),
-                'privacy' => $privacy
+                'privacy' => $privacy,
+                'task_role' => $task_role
             ];
 
             $emails = [];
@@ -179,10 +201,11 @@ class ScrumController extends Controller
         {
             if(auth()->user()->hasRole('super admin')) {
                 $tasks = Task::whereNotIn('status',['completed']);
-            } else {
+            } else if(!auth()->user()->hasRole('dhg_ojt')) {
                 $tasks = Task::whereNotIn('status',['completed'])
                 ->where(function ($query) use ($data_watcher) {
                     $query->where('privacy', NULL);
+                    $query->where('task_role', '<>', 'ojt');
                     $query->orWhere(function ($privacy) {
                         $privacy->where('privacy', 'on');
                         $privacy->where('assigned_to', auth()->user()->id);
@@ -193,14 +216,20 @@ class ScrumController extends Controller
                         $watch->whereIn('id', $data_watcher);
                     });
                 });
+            } else if(auth()->user()->hasRole('dhg_ojt')) {
+                $tasks = Task::whereNotIn('status',['completed'])
+                ->where('task_role', 'ojt');
+            } else {
+                return abort(404);
             }
         }else{
             if(auth()->user()->hasRole('super admin')) {
                 $tasks = Task::where('status',$status)->get();
-            } else {
+            } else if (!auth()->user()->hasRole('dhg_ojt')) {
                 $tasks = Task::where('status',$status)
                 ->where(function ($query) use ($data_watcher) {
                     $query->where('privacy', NULL);
+                    $query->where('task_role', '<>', 'ojt');
                     $query->orWhere(function ($privacy) {
                         $privacy->where('privacy', 'on');
                         $privacy->where('assigned_to', auth()->user()->id);
@@ -211,6 +240,11 @@ class ScrumController extends Controller
                         $watch->whereIn('id', $data_watcher);
                     });
                 })->get();
+            } else if (auth()->user()->hasRole('dhg_ojt')) {
+                $tasks = Task::where('status',$status)
+                    ->where('task_role', 'ojt')->get();
+            } else {
+                return abort(404);
             }
         }
         return $this->task->displayTasks($tasks);
@@ -676,41 +710,67 @@ class ScrumController extends Controller
         $request = Watcher::where('task_id',$id)->whereNotIn('request_status', ['completed',''])->get();
         $count_request = count($request);
 
-        // $task_checklist = TaskChecklist::select('id')->where('task_id', $id)->get();
-        // $count_task = count($task_checklist);
+        $actions = $this->getAction($id);
+        $action_taken = 0;
+        if ($actions) {
+            $action_taken = 1;
+        }
         $task = Task::where('id',$id)->first();
 
-        if ($task->privacy == 'on') {
-            if (auth()->user()->hasRole('super admin')) {
-                return view('pages.scrum.index',[
-                    'task'  => $this->task->getTask($id),
-                    'agents' => $this->task->getAgents($this->agents),
-                    'watchers' => $users_data
-                ],compact('users', 'watcher_id', 'count_request'));
-            } else {
-                if (
-                    $task->created_by == auth()->user()->id || 
-                    $task->assigned_to == auth()->user()->id ||
-                    $find_watcher->user_id == auth()->user()->id
-                ) {
+        if (!empty($task)) {
+            if ($task->privacy == 'on') {
+                if (auth()->user()->hasRole('super admin')) {
                     return view('pages.scrum.index',[
                         'task'  => $this->task->getTask($id),
                         'agents' => $this->task->getAgents($this->agents),
                         'watchers' => $users_data
-                    ],compact('users', 'watcher_id', 'count_request'));
+                    ],compact('users', 'watcher_id', 'count_request', 'action_taken'));
+                } else if (!auth()->user()->hasRole('dhg_ojt')) {
+                    if (
+                        $task->created_by == auth()->user()->id || 
+                        !empty($task->assigned_to) == auth()->user()->id ||
+                        !empty($find_watcher->user_id) == auth()->user()->id ||
+                        auth()->user()->hasPermissionTo('add ojt task')
+                    ) {
+                        return view('pages.scrum.index',[
+                            'task'  => $this->task->getTask($id),
+                            'agents' => $this->task->getAgents($this->agents),
+                            'watchers' => $users_data
+                        ],compact('users', 'watcher_id', 'count_request', 'action_taken'));
+                    } else {
+                        return abort(404);
+                    }
                 } else {
-                    return redirect('/');
+                    return abort(404);
+                }
+            } else {
+                if (!auth()->user()->hasRole('dhg_ojt')) {
+                    if ($task->task_role != 'ojt' || auth()->user()->hasPermissionTo('add ojt task')) {
+                        return view('pages.scrum.index',[
+                            'task'  => $this->task->getTask($id),
+                            'agents' => $this->task->getAgents($this->agents),
+                            'watchers' => $users_data
+                        ],compact('users', 'watcher_id', 'count_request', 'action_taken'));
+                    } else {
+                        return abort(404);
+                    }
+                } else if (auth()->user()->hasRole('dhg_ojt')) {
+                    if ($task->task_role == 'ojt') {
+                        return view('pages.scrum.index',[
+                            'task'  => $this->task->getTask($id),
+                            'agents' => $this->task->getAgents($this->agents),
+                            'watchers' => $users_data
+                        ],compact('users', 'watcher_id', 'count_request', 'action_taken'));
+                    } else {
+                        return abort(404);
+                    }
+                } else {
+                    return abort(404);
                 }
             }
         } else {
-            return view('pages.scrum.index',[
-                'task'  => $this->task->getTask($id),
-                'agents' => $this->task->getAgents($this->agents),
-                'watchers' => $users_data
-            ],compact('users', 'watcher_id', 'count_request'));
+            return abort(404);
         }
-
-
     }
 
 
@@ -1354,5 +1414,19 @@ class ScrumController extends Controller
     public function displayLog($id)
     {
         return $this->task->logs($id);
+    }
+
+    public function ojt()
+    {
+        $roles = Role::select('name')->where('name', 'dhg_ojt')->get()->toArray();
+
+        $agents = $this->task->getAgents($roles);
+        $id = [];
+        if (!empty($agents))
+        foreach ($agents as $agent) {
+            $id [] = $agent->id;
+        }
+
+        return response(['success' => true, 'data' => $id]);
     }
 }

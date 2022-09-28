@@ -411,3 +411,5 @@ Route::get('/count-request/{task_id}',[\App\Http\Controllers\ScrumController::cl
 Route::get('/send-mail',[\App\Http\Controllers\SendMailController::class,'index']);
 
 Route::post('import', 'SalesController@importSales')->name('import');
+
+Route::get('/task-ojt',[\App\Http\Controllers\ScrumController::class,'ojt'])->name('request.ojt');

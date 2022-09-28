@@ -90,9 +90,9 @@
                     @can('add task')
                         <button type="button" class="btn bg-gradient-primary btn-sm add-new-task mr-1 float-right" data-toggle="modal" data-target="#add-task-modal"><i class="fa fa-plus-circle"></i> Add New</button>
                     @endcan
-                    @can('view task export')
+                    <!-- @can('view task export')
                     <button type="button" class="btn bg-gradient-success btn-sm add-new-task mr-1 float-right" id="exportTasks"><i class="fa fa-arrow-circle-down"></i> Export</button>
-                    @endcan
+                    @endcan -->
                 </div>
             </div>
         </div>
@@ -597,6 +597,25 @@
                 });
             });
         @endif
+
+        $(document).on('change','#assign_to',function(){
+            $('#privacy').prop('checked', true);
+            $.ajax({
+                'url' : '/task-ojt',
+                'type' : 'GET',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: function(output){
+                    $.each(output.data, function(key, val) {
+                        if ($('#assign_to').val() == val) {
+                            $('#privacy').prop('checked', false);
+                        }
+                    });
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                    //customAlert('error',"Task Constraints, There's an existing checklist created!");
+                }
+            });
+        });
     </script>
 @stop
 
