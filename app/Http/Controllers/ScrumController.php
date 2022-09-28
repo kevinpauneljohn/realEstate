@@ -206,6 +206,7 @@ class ScrumController extends Controller
                 ->where(function ($query) use ($data_watcher) {
                     $query->where('privacy', NULL);
                     $query->where('task_role', NULL);
+                    $query->orWhere('task_role', 'ojt');
                     $query->orWhere(function ($privacy) {
                         $privacy->where('privacy', 'on');
                         $privacy->where('assigned_to', auth()->user()->id);
@@ -230,6 +231,7 @@ class ScrumController extends Controller
                 ->where(function ($query) use ($data_watcher) {
                     $query->where('privacy', NULL);
                     $query->where('task_role', NULL);
+                    $query->orWhere('task_role', 'ojt');
                     $query->orWhere(function ($privacy) {
                         $privacy->where('privacy', 'on');
                         $privacy->where('assigned_to', auth()->user()->id);
