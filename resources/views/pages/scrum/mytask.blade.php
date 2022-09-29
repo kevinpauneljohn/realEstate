@@ -128,6 +128,7 @@
                         <th>Creator</th>
                         <th>Date Created</th>
                         <th>Status</th>
+                        <th>Action Taken</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -141,6 +142,7 @@
                         <th>Creator</th>
                         <th>Date Created</th>
                         <th>Status</th>
+                        <th>Action Taken</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -159,6 +161,7 @@
                         <th>Creator</th>
                         <th>Date Created</th>
                         <th>Status</th>
+                        <th>Action Taken</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -172,6 +175,7 @@
                         <th>Creator</th>
                         <th>Date Created</th>
                         <th>Status</th>
+                        <th>Action Taken</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -370,7 +374,8 @@
                         { data: 'assigned_to', name: 'assigned_to'},
                         { data: 'created_by', name: 'created_by'},
                         { data: 'created_at', name: 'created_at'},
-                        { data: 'status', name: 'status'},
+                        { data: 'status', name: 'status', "className": "text-center"},
+                        { data: 'action_taken', name: 'action_taken', "className": "text-center", orderable: false, searchable: false},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
@@ -393,6 +398,7 @@
                         { data: 'created_by', name: 'created_by'},
                         { data: 'created_at', name: 'created_at'},
                         { data: 'status', name: 'status'},
+                        { data: 'action_taken', name: 'action_taken', "className": "text-center", orderable: false, searchable: false},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
@@ -509,8 +515,10 @@
                     taskModal.find('select[name=assign_to]').val(result.task.assigned_to).change();
                     taskModal.find('textarea[name=description]').summernote('code', result.task.description);
                     if (result.task.privacy == 'on') {
+                        $('.toggle_private label').text('Toggle to set ticket in Public');
                         taskModal.find('input[name=privacy]').prop('checked', true);
                     } else {
+                        $('.toggle_private label').text('Toggle to set ticket in Private');
                         taskModal.find('input[name=privacy]').prop('checked', false);
                     }
 
@@ -663,6 +671,27 @@
                         }
                     });
 
+                }
+            });
+        });
+
+        $(document).on('change','#assign_to',function(){
+            $('#privacy').prop('checked', true);
+            $('.toggle_private label').text('Toggle to set ticket in Public');
+            $.ajax({
+                'url' : '/task-ojt',
+                'type' : 'GET',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: function(output){
+                    $.each(output.data, function(key, val) {
+                        if ($('#assign_to').val() == val) {
+                            $('.toggle_private label').text('Toggle to set ticket in Private');
+                            $('#privacy').prop('checked', false);
+                        }
+                    });
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                    //customAlert('error',"Task Constraints, There's an existing checklist created!");
                 }
             });
         });
