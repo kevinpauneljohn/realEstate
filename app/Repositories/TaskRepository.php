@@ -11,6 +11,7 @@ use App\Task;
 use App\TaskRemark;
 use App\User;
 use App\Watcher;
+use App\ActionTaken;
 use Spatie\Activitylog\Models\Activity;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -104,10 +105,25 @@ class TaskRepository implements TaskInterface
 
             })
             ->editColumn('assigned_to',function($task){
-                return $task->user->fullname ?? "";
+                $roles = $this->getRoles($task->assigned_to);
+                $fullname = '';
+                if (!empty($task->user->fullname)) {
+                    $fullname = $task->user->fullname;
+                }
+
+                return '<span class="top" title="'.$roles.'" data-original-title="Tooltip on right">'.$fullname.'</span>';
             })
             ->editColumn('created_at',function($task){
                 return $task->created_at->format('M d, Y g:i A');
+            })
+            ->editColumn('status',function($task){
+                if ($task->status == 'pending') {
+                    return '<span class="right badge badge-warning">'.ucfirst($task->status).'</span>';
+                } else if ($task->status == 'on-going') {
+                    return '<span class="right badge badge-primary">'.ucfirst($task->status).'</span>';
+                } else if ($task->status == 'completed') {
+                    return '<span class="right badge badge-success">'.ucfirst($task->status).'</span>';
+                }
             })
             ->addColumn('action',function($task){
                 $watch_id = $this->getwatchedTicketByUserIdTaskId($task->id);
@@ -151,8 +167,44 @@ class TaskRepository implements TaskInterface
 
                 return $action;
             })
-            ->rawColumns(['action','id','priority_id'])
+            ->addColumn('action_taken',function($task){
+                return $this->actionTakenCount($task->id);
+            })
+            ->rawColumns(['action','id','priority_id','assigned_to','status'])
             ->make(true);
+    }
+
+    public function actionTakenCount($id)
+    {
+        $count = ActionTaken::all()->where('task_checklist_id', $id)->count();
+
+        $get_count = '-';
+        if ($count >= 1) {
+            $get_count = $count;
+        }
+
+        return $get_count;
+    }
+
+    public function getRoles($id)
+    {
+        $user = User::find($id);
+        $role = '';
+        if (!empty($user)) {
+            $role = $user->roles()->get(['name']);
+        }
+        
+        $data = [];
+        $datas = '';
+        if (!empty($role)) {
+            foreach ($role as $roles) {
+                $data [] = ucfirst($roles->name);
+            }
+    
+            $datas = implode(", ", $data);
+        }
+
+        return $datas;
     }
 
     public function getwatchedTicketByUserIdTaskId($task_id)
