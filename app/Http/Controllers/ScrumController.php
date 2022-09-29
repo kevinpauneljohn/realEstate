@@ -51,13 +51,14 @@ class ScrumController extends Controller
         //$users = User::all();
         $agents = $this->task->getAgents($roles);
         $users = $agents;
+
         $status = [
             'open' => $this->task->getTaskStatusCount('open'),
             'pending' => $this->task->getTaskStatusCount('pending'),
             'ongoing' => $this->task->getTaskStatusCount('on-going'),
             'completed' => $this->task->getTaskStatusCount('completed'),
         ];
-        return view('pages.scrum.task',compact('priorities','users','agents','priorities','status'));
+        return view('pages.scrum.task',compact('users','agents','priorities','status'));
     }
 
     /**
@@ -978,9 +979,24 @@ class ScrumController extends Controller
 
     public function myTasks()
     {
+        if(auth()->user()->hasRole('super admin')) {
+            $roles = Role::select('name')->get()->toArray();
+        } else {
+            if (auth()->user()->hasPermissionTo('add ojt task')) {
+                $roles = Role::select('name')->get()->toArray();
+            } else {
+                $roles = Role::select('name')->where('name', '<>', 'dhg_ojt')->get()->toArray();
+            }
+        }
+        
         $priorities = Priority::all();
-        $users = User::all();
-        $agents = $this->task->getAgents($this->agents);
+        //$users = User::all();
+        $agents = $this->task->getAgents($roles);
+        $users = $agents;
+
+        // $priorities = Priority::all();
+        // $users = User::all();
+        // $agents = $this->task->getAgents($this->agents);
         $status = [
             'open' => $this->task->getMyTaskStatusCount(auth()->user()->id,'open'),
             'pending' => $this->task->getMyTaskStatusCount(auth()->user()->id,'pending'),

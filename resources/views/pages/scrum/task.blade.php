@@ -109,6 +109,7 @@
                         <th>Creator</th>
                         <th>Date Created</th>
                         <th>Status</th>
+                        <th>Action Taken</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -123,6 +124,7 @@
                         <th>Creator</th>
                         <th>Date Created</th>
                         <th>Status</th>
+                        <th>Action Taken</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -205,7 +207,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group privacy">
                                         <label for="watchers">Ticket Privacy</label>
-                                        <div class="custom-control custom-switch">
+                                        <div class="custom-control custom-switch toggle_private">
                                             <input type="checkbox" checked name="privacy" class="custom-control-input" id="privacy">
                                             <label  style="cursor: pointer;" class="custom-control-label" for="privacy">Toggle to set ticket in Public</label>
                                         </div>
@@ -291,7 +293,8 @@
                     { data: 'assigned_to', name: 'assigned_to'},
                     { data: 'created_by', name: 'created_by'},
                     { data: 'created_at', name: 'created_at'},
-                    { data: 'status', name: 'status'},
+                    { data: 'status', name: 'status', "className": "text-center"},
+                    { data: 'action_taken', name: 'action_taken', "className": "text-center", orderable: false, searchable: false},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 pageLength: 10,
@@ -438,8 +441,10 @@
                         taskModal.find('select[name=assign_to]').val(result.task.assigned_to).change();
                         taskModal.find('textarea[name=description]').summernote('code', result.task.description);
                         if (result.task.privacy == 'on') {
+                            $('.toggle_private label').text('Toggle to set ticket in Public');
                             taskModal.find('input[name=privacy]').prop('checked', true);
                         } else {
+                            $('.toggle_private label').text('Toggle to set ticket in Private');
                             taskModal.find('input[name=privacy]').prop('checked', false);
                         }
                         var watcher_data = [];
@@ -600,6 +605,7 @@
 
         $(document).on('change','#assign_to',function(){
             $('#privacy').prop('checked', true);
+            $('.toggle_private label').text('Toggle to set ticket in Public');
             $.ajax({
                 'url' : '/task-ojt',
                 'type' : 'GET',
@@ -607,6 +613,7 @@
                 success: function(output){
                     $.each(output.data, function(key, val) {
                         if ($('#assign_to').val() == val) {
+                            $('.toggle_private label').text('Toggle to set ticket in Private');
                             $('#privacy').prop('checked', false);
                         }
                     });
