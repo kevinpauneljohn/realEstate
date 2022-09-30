@@ -39,7 +39,6 @@
                                 </div>
                                 <br />
                                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                    
                                     <table id="action-list" class="table table-bordered table-hover" role="grid">
                                         <thead>
                                         <tr role="row">
@@ -72,27 +71,29 @@
                     <span class="card-title">Activity Logs</span>
                 </div>
                 <div class="card-body">
-                    <table id="activity-log" class="table table-bordered table-hover" role="grid">
-                        <thead>
-                        <tr role="row">
-                            <th>ID</th>
-                            <th>Description</th>
-                            <th>From</th>
-                            <th>User</th>
-                            <th width="20%">Date</th>
-                        </tr>
-                        </thead>
+                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table id="activity-log" class="table table-bordered table-hover" role="grid">
+                            <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>From</th>
+                                <th>User</th>
+                                <th width="20%">Date</th>
+                            </tr>
+                            </thead>
 
-                        <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Description</th>
-                            <th>From</th>
-                            <th>User</th>
-                            <th>Date</th>
-                        </tr>
-                        </tfoot>
-                    </table>
+                            <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>From</th>
+                                <th>User</th>
+                                <th>Date</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,28 +198,32 @@
                 <input type="hidden" class="get_count_request form-control" value="{{$count_request}}" >
                 <div class="card card-default watchers-div-request">
                     <div class="card-body">
-                        <label>Watcher's Request</label>
-                        <table id="watchers-request" class="table table-bordered table-striped" role="grid">
-                            <thead>
-                            <tr role="row">
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                        </table>
+                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" >
+                            <label>Watcher's Request</label>
+                            <table id="watchers-request" class="table table-bordered table-striped" role="grid">
+                                <thead>
+                                <tr role="row">
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             @endif
             <div class="card card-default">
                 <div class="card-body">
-                    <table id="remarks-list" class="table table-bordered table-striped" role="grid">
-                        <thead>
-                        <tr role="row">
-                            <th>Remarks</th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table id="remarks-list" class="table table-bordered table-striped" role="grid">
+                            <thead>
+                            <tr role="row">
+                                <th>Remarks</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -267,7 +272,7 @@
             display:none;
         }
         .dataTables_wrapper {
-            overflow-x: hidden;
+            overflow-x: auto;
         }
         .tox-statusbar__branding {
             display: none;
@@ -308,7 +313,6 @@
                 ['fontname', ['fontname']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link']],
                 ['height', ['height']],
                 ['view', ['fullscreen']],
             ],
@@ -550,7 +554,6 @@
                     ['fontname', ['fontname']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link']],
                     ['height', ['height']],
                     ['view', ['fullscreen']],
                 ],

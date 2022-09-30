@@ -338,9 +338,10 @@ class ScrumController extends Controller
                 'priority_id' => $request->input('priority'),
                 'privacy' => $privacy
             ];
-            $get_priority_id = $this->show($id)['task']['priority_id'];
-            $get_watchers = $this->show($id)['watcher'];
-            $assigned_user = $this->task->getAssigneeUser($id);
+
+            $get_priority_id = $this->show($request['task_id'])['task']['priority_id'];
+            $get_watchers = $this->show($request['task_id'])['watcher'];
+            $assigned_user = $this->task->getAssigneeUser($request['task_id']);
 
             $get_list_watchers = [];
             foreach ($get_watchers as $get_watcher) {
@@ -355,8 +356,8 @@ class ScrumController extends Controller
             $email_new_watchers = array_diff($new_watchers, $get_list_watchers);
             $email_removed_watchers = array_diff($get_list_watchers, $new_watchers);
 
-            $watcher = $this->delete_watcher($id);
-            if($taskCreated = $this->task->update($id, $data))
+            $watcher = $this->delete_watcher($request['task_id']);
+            if($taskCreated = $this->task->update($request['task_id'], $data))
             {
                 $user_email = '';
                 $user_name = '';

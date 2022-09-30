@@ -117,7 +117,7 @@
         </div>
         <div class="card-body">
             <div id="mytickets" class="dataTables_wrapper dt-bootstrap4 mytasklist">
-                <table id="task-list" class="table table-bordered table-striped task-list" role="grid">
+                <table id="task-list" class="table table-bordered table-hover task-list" role="grid">
                     <thead>
                     <tr role="row">
                         <th>Task #</th>
@@ -150,7 +150,7 @@
             </div>
 
             <div id="mywatchedtickets" class="dataTables_wrapper dt-bootstrap4 mywatchedlist hidden">
-                <table id="watched-list" class="table table-bordered table-striped" role="grid">
+                <table id="watched-list" class="table table-bordered table-hover" role="grid">
                     <thead>
                     <tr role="row">
                         <th>Task #</th>
@@ -302,6 +302,9 @@
         .hidden {
             display:none;
         }
+        .due_dates {
+            background-color: #ffe4e4 !important;
+        }
     </style>
 @stop
 
@@ -353,7 +356,6 @@
                     ['fontname', ['fontname']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link']],
                     ['height', ['height']],
                     ['view', ['fullscreen']],
                 ],
@@ -378,6 +380,14 @@
                         { data: 'action_taken', name: 'action_taken', "className": "text-center", orderable: false, searchable: false},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
+                    "createdRow": function( row, data, dataIndex ) {
+                        if (
+                            data['status_due'] <= data['date_today'] &&
+                            data['status_text'] != 'completed'
+                        ) {        
+                            $(row).addClass('due_dates');
+                        }
+                    },
                     responsive:true,
                     order:[0,'desc']
                 });
@@ -401,6 +411,15 @@
                         { data: 'action_taken', name: 'action_taken', "className": "text-center", orderable: false, searchable: false},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
+                    "createdRow": function( row, data, dataIndex ) {
+                        if (
+                            data['status_due'] <= data['date_today'] &&
+                            data['status_text'] != 'completed'
+                        ) {        
+                            $(row).addClass('due_dates');
+                            console.log(data);
+                        }
+                    },
                     responsive:true,
                     order:[0,'desc']
                 });
