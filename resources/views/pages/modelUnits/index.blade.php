@@ -236,7 +236,6 @@
                     ['fontname', ['fontname']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link']],
                     ['height', ['height']],
                     ['view', ['fullscreen']],
                 ],
