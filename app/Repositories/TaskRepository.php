@@ -102,7 +102,6 @@ class TaskRepository implements TaskInterface
             })
             ->editColumn('due_date',function($task){
                 return Carbon::parse($task->due_date)->format('M d, Y').' - '.Carbon::parse($task->time)->format('g:i A');
-
             })
             ->editColumn('assigned_to',function($task){
                 $roles = $this->getRoles($task->assigned_to);
@@ -170,6 +169,16 @@ class TaskRepository implements TaskInterface
             ->addColumn('action_taken',function($task){
                 return $this->actionTakenCount($task->id);
             })
+            ->addColumn('status_due',function($task){
+                $due_date = $task->due_date.' '.$task->time;
+                return $due_date;
+            })
+            ->addColumn('date_today',function($task){
+                return date('Y-m-d H:i:s');
+            })
+            ->addColumn('status_text',function($task){
+                return $task->status;
+            })
             ->rawColumns(['action','id','priority_id','assigned_to','status'])
             ->make(true);
     }
@@ -191,7 +200,7 @@ class TaskRepository implements TaskInterface
         $user = User::find($id);
         $role = '';
         if (!empty($user)) {
-            $role = $user->roles()->get(['name']);
+            $role = $user->roles()->whereNotIn('name', ['super admin'])->get(['name']);
         }
         
         $data = [];
