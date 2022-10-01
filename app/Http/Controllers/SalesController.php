@@ -317,6 +317,10 @@ class SalesController extends Controller
                 }
                 return $action;
             })
+            ->addColumn('rate_status', function ($sale)
+            {
+                return $this->StatusSaleRate();
+            })
             ->rawColumns(['action','status','request_status','full_name'])
             ->make(true);
     }
@@ -831,5 +835,24 @@ class SalesController extends Controller
         Excel::import(new SalesImport,request()->file('file'));
            
         return back();
+    }
+
+    public function hideSaleRate(Request $request): void
+    {
+        \session(['rate' => $request->input('rate')]);
+        \session(['user_rate' => auth()->user()->id]);
+    }
+
+    public function StatusSaleRate()
+    {
+        $rate =\session('rate');
+        $user_rate =\session('user_rate');
+
+        $data = '';
+        if ($user_rate == auth()->user()->id) {
+            $data = $rate;
+        }
+        
+        return $data;
     }
 }
