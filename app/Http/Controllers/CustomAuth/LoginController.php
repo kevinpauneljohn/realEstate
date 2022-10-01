@@ -96,7 +96,9 @@ class LoginController extends Controller
     {
         activity()->causedBy(auth()->user()->id)->withProperties(['username' => auth()->user()->username])->log('user logged out');
         Auth::logout();
-
+        $request->session()->forget('rate');
+        $request->session()->forget('user_rate');
+        
         return redirect(route('login'));
     }
 }
