@@ -26,7 +26,9 @@ class MyTestMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Dream Home Seller Payment Reminder')
+        return $this
+            ->from($address = 'system@dream-homeseller.com', $name = 'Payment Reminder')
+            ->subject('Dream Home Seller Payment Reminder')
             ->view('emails.myTestMail');
     }
 }
