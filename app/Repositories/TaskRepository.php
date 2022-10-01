@@ -135,11 +135,23 @@ class TaskRepository implements TaskInterface
                 }
                 if(auth()->user()->hasRole('super admin') || ($task->created_by === auth()->user()->id && auth()->user()->can('delete task')))
                 {
+                    if ($task->status != 'completed') {
                         $action .= '<button type="button" class="btn btn-xs btn-primary edit-task-btn" title="Edit" id="'.$task->id.'" data-toggle="modal" data-target="#edit-task-modal"><i class="fas fa-edit"></i></button>';
+                    } else {
+                        if(auth()->user()->hasRole('super admin')){
+                            $action .= '<button type="button" class="btn btn-xs btn-primary edit-task-btn" title="Edit" id="'.$task->id.'" data-toggle="modal" data-target="#edit-task-modal"><i class="fas fa-edit"></i></button>';
+                        }
+                    }
                 }
                 if(auth()->user()->hasRole('super admin') || ($task->created_by === auth()->user()->id && auth()->user()->can('delete task')))
                 {
-                    $action .= '<button type="button" class="btn btn-xs btn-danger delete-task-btn" title="Delete" id="'.$task->id.'"><i class="fas fa-trash"></i></button>';
+                    if ($task->status != 'completed') {
+                        $action .= '<button type="button" class="btn btn-xs btn-danger delete-task-btn" title="Delete" id="'.$task->id.'"><i class="fas fa-trash"></i></button>';
+                    } else {
+                        if(auth()->user()->hasRole('super admin')){
+                            $action .= '<button type="button" class="btn btn-xs btn-danger delete-task-btn" title="Delete" id="'.$task->id.'"><i class="fas fa-trash"></i></button>';
+                        }
+                    }
                 }
 
                 if ($task->status != 'completed') {
