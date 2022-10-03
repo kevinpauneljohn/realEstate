@@ -29,7 +29,9 @@ class SendTask extends Mailable
      */
     public function build()
     {
-        return $this->subject('Task: '.$this->emails['title'])
+        return $this
+            ->from($address = 'system@dream-homeseller.com', $name = 'Task Management')
+            ->subject('Task: '.$this->emails['title'])
             ->view('emails.sendmail');
     }
 }

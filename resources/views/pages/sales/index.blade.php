@@ -125,7 +125,18 @@
                     @endcan
                 </div>
                 <div class="col-lg-6">
-                    <button type="button" class="btn bg-gradient-success btn-sm import-sales mr-1 float-right" data-toggle="modal" data-target="#import-sales-modal"><i class="fa fa-upload"></i> Import Sales</button>
+                    <div class="float-right">
+                        <label>Rate Visibility Status :</label><br />
+                        <select class="select2" name="hide_rate" id="statusChange" style="width: 200px;">
+                            <option value="show" @if(\Illuminate\Support\Facades\Session::get('rate') === 'show') selected @endif>Show</option>
+                            <option value="hide" @if(\Illuminate\Support\Facades\Session::get('rate') === 'hide') selected @endif>Hide</option>
+                        </select>
+                    </div>
+                    <!-- <div class="custom-control custom-switch toggle_private float-right">
+                        <input type="checkbox" name="hide_rate" class="custom-control-input" id="rate_status">
+                        <label  style="cursor: pointer;" class="custom-control-label" for="rate_status">Toggle to Hide Rate Column</label>
+                    </div> -->
+                    <!-- <button type="button" class="btn bg-gradient-success btn-sm import-sales mr-1 float-right" data-toggle="modal" data-target="#import-sales-modal"><i class="fa fa-upload"></i> Import Sales</button>
                     <div class="modal fade" id="import-sales-modal">
                         <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -148,11 +159,9 @@
                                         <input type="submit" class="btn btn-primary submit-task-btn" value="Save">
                                     </div>
                                 </div>
-                                <!-- /.modal-content -->
                             </div>
-                            <!-- /.modal-dialog -->
                         </form>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -737,7 +746,7 @@
     </script>
     <script>
         $(function() {
-            $('#sales-list').DataTable({
+            let table = $('#sales-list').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{!! route('sales.list') !!}',
@@ -754,10 +763,20 @@
                     { data: 'request_status', name: 'request_status'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
+                "createdRow": function( row, data, dataIndex ) {
+                    if (
+                        data['rate_status'] == 'hide'
+                    ) {        
+                        table.columns([6]).visible(false);
+                    } else {
+                        table.columns([6]).visible(true);
+                    }
+                },
                 responsive:true,
                 order:[0,'desc'],
                 pageLength: 50
             });
+          
         });
 
         @can('view commission request')
@@ -805,6 +824,26 @@
 
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        $(document).on('change','select[name=hide_rate]',function(){
+            let value = this.value;
+
+            $.ajax({
+                'url' : '{{route('hide.sale.rate')}}',
+                'type' : 'POST',
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                'data' : {
+                    'rate' : value
+                },beforeSend: function(){
+
+                },success: function(response){
+                    let table = $('#sales-list').DataTable();
+                    table.ajax.reload(null, false);
+                },error: function(xhr, status, error){
+                    console.log(xhr);
+                }
+            });
         });
     </script>
     @endcan
