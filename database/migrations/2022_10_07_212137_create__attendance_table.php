@@ -37,5 +37,3 @@ class CreateAttendanceTable extends Migration
         Schema::dropIfExists('attendances');
     }
 }
-
-/**wqoeuwqeoiuqwie */
