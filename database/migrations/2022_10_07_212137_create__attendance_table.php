@@ -13,10 +13,17 @@ class CreateAttendanceTable extends Migration
      */
     public function up()
     {
-        Schema::create('_attendance', function (Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->id();
+            $table->uuid('user_id');
+            $table->string('timein')->nullable();
+            $table->string('breakout')->nullable();
+            $table->string('breakin')->nullable();
+            $table->string('timeout')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+            
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -27,6 +34,6 @@ class CreateAttendanceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_attendance');
+        Schema::dropIfExists('attendances');
     }
 }
