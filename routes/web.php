@@ -417,3 +417,4 @@ Route::post('/hide-sale-rate',[\App\Http\Controllers\SalesController::class,'hid
 
 
 //form attendance
+Route::get('/attendances','AttendancesController@attendances');
