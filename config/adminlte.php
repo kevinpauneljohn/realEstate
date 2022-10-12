@@ -251,6 +251,23 @@ return [
             'can'     => 'view user',
         ],
         [
+            'text'    => 'Time Management',
+            'icon'    => 'fas fa-calendar',
+            'can'     => 'view task',
+            'submenu'   => [
+                [
+                    'text'    => 'Log',
+                    'can'     => 'view attendances',
+                    'route'   => 'attendances.index',
+                ],
+                [
+                    'text'    => 'Timesheet',
+                    'can'     => 'view attendances',
+                    'route'   => 'attendances.timesheet',
+                ]
+                ]
+        ],
+        [
             'text'    => 'Lead Management',
             'icon'    => 'fas fa-filter',
             'can'     => 'view lead',
