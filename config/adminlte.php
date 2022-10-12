@@ -251,11 +251,6 @@ return [
             'can'     => 'view user',
         ],
         [
-            'text'    => 'Attendances',
-            'route'    => 'attendances.index',
-            'can'     => 'view timesheet',
-        ],
-        [
             'text'    => 'Lead Management',
             'icon'    => 'fas fa-filter',
             'can'     => 'view lead',

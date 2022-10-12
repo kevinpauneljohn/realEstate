@@ -414,3 +414,6 @@ Route::post('import', 'SalesController@importSales')->name('import');
 
 Route::get('/task-ojt',[\App\Http\Controllers\ScrumController::class,'ojt'])->name('request.ojt');
 Route::post('/hide-sale-rate',[\App\Http\Controllers\SalesController::class,'hideSaleRate'])->name('hide.sale.rate')->middleware(['auth','permission:view sales']);
+
+
+//form attendance
