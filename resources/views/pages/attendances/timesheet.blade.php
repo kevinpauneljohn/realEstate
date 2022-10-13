@@ -27,7 +27,7 @@
                     <table id="rank-list" class="table table-bordered table-striped" role="grid">
                         <thead>
                         <tr role="row">
-                            <th></th>
+                            
                             <th width='15%'>User Id</th>
                             <th width="15%">Time In</th>
                             <th width="15%">Break In</th>
