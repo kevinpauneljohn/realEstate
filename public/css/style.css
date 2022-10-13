@@ -94,3 +94,9 @@ table td{
 .sample-computation-form{
     margin-bottom:20px;
 }
+
+.button2 {background-color: #008CBA;} /* Blue */
+.row
+{
+    margin:10px;
+}
