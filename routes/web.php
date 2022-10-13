@@ -36,8 +36,10 @@ Route::get('/home', function (){
     Route::post('/login','CustomAuth\LoginController@authenticate')->name('authenticate');
 //});
 
+    
 
-Route::group(['middleware' => ['auth']], function(){
+
+    Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
     Route::post('/logout','CustomAuth\LoginController@logout')->name('logout');
 });
@@ -414,8 +416,3 @@ Route::post('import', 'SalesController@importSales')->name('import');
 
 Route::get('/task-ojt',[\App\Http\Controllers\ScrumController::class,'ojt'])->name('request.ojt');
 Route::post('/hide-sale-rate',[\App\Http\Controllers\SalesController::class,'hideSaleRate'])->name('hide.sale.rate')->middleware(['auth','permission:view sales']);
-
-
-//form attendance
-Route::get('/attendances','AttendancesController@index')->name('attendances.index');
-Route::get('/timesheet','AttendancesController@timesheet')->name('attendances.timesheet');
