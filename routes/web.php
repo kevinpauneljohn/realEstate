@@ -25,6 +25,7 @@ use App\UserRankPoint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use pp\Http\Controllers\AttendancesController;
 
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
@@ -36,8 +37,10 @@ Route::get('/home', function (){
     Route::post('/login','CustomAuth\LoginController@authenticate')->name('authenticate');
 //});
 
+    
 
-Route::group(['middleware' => ['auth']], function(){
+
+    Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
     Route::post('/logout','CustomAuth\LoginController@logout')->name('logout');
 });
@@ -414,3 +417,8 @@ Route::post('import', 'SalesController@importSales')->name('import');
 
 Route::get('/task-ojt',[\App\Http\Controllers\ScrumController::class,'ojt'])->name('request.ojt');
 Route::post('/hide-sale-rate',[\App\Http\Controllers\SalesController::class,'hideSaleRate'])->name('hide.sale.rate')->middleware(['auth','permission:view sales']);
+
+//form attendance
+Route::get('/attendances','AttendancesController@index')->name('attendances.index');
+Route::get('/timesheet','AttendancesController@timesheet')->name('attendances.timesheet');
+Route::put('/attendances/{id}', [AttendancesController::class, 'timeIn']);
