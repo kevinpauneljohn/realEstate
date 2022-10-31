@@ -25,6 +25,7 @@ use App\UserRankPoint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use pp\Http\Controllers\AttendancesController;
 
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
@@ -420,3 +421,4 @@ Route::post('/hide-sale-rate',[\App\Http\Controllers\SalesController::class,'hid
 //form attendance
 Route::get('/attendances','AttendancesController@index')->name('attendances.index');
 Route::get('/timesheet','AttendancesController@timesheet')->name('attendances.timesheet');
+Route::put('/attendances/{id}', [AttendancesController::class, 'timeIn']);
