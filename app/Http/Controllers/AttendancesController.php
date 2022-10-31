@@ -19,8 +19,10 @@ class AttendancesController extends Controller
     }
 
     public function timesheet()
-    {
-        return view('pages.attendances.timesheet');
+    {   
+        $attendances =  Attendance::all()->toArray();
+        
+        return view('pages.attendances.timesheet',compact('attendances'));
     }
     public function timeIn(Request $request,$id)
     {   
@@ -29,4 +31,5 @@ class AttendancesController extends Controller
         $users->update();
         return view('pages.attendances.index',['users'=>$users]);    
     }
+    
 }
