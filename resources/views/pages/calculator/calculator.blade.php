@@ -53,7 +53,7 @@
                     <div class="form-group pf_months">
                         <label for="pf_months">PF Months</label><span class="required">*</span>
                         <select name="pf_months" id="pf_months" class="form-control">
-                            @for($months = 1; $months <= 12;$months++)
+                            @for($months = 1; $months <= 24;$months++)
                                 <option value="{{$months}}">{{$months}} @if($months == 1) month @else months @endif</option>
                             @endfor
                         </select>
@@ -83,7 +83,7 @@
                     <div class="form-group equity_months">
                         <label for="equity_months">Equity Months</label><span class="required">*</span>
                         <select name="equity_months" id="equity_months" class="form-control">
-                            @for($months = 1; $months <= 12;$months++)
+                            @for($months = 1; $months <= 24;$months++)
                                 <option value="{{$months}}">{{$months}} @if($months == 1) month @else months @endif</option>
                             @endfor
                         </select>
@@ -152,7 +152,7 @@
                     <div class="form-group pf_months">
                         <label for="pf_months">PF Months</label><span class="required">*</span>
                         <select name="pf_months" id="pf_months" class="form-control">
-                            @for($months = 1; $months <= 20;$months++)
+                            @for($months = 1; $months <= 24;$months++)
                                 <option value="{{$months}}">{{$months}} @if($months == 1) month @else months @endif</option>
                             @endfor
                         </select>
@@ -182,7 +182,7 @@
                     <div class="form-group equity_months">
                         <label for="equity_months">Equity Months</label><span class="required">*</span>
                         <select name="equity_months" id="equity_months" class="form-control">
-                            @for($months = 1; $months <= 20;$months++)
+                            @for($months = 1; $months <= 24;$months++)
                                 <option value="{{$months}}">{{$months}} @if($months == 1) month @else months @endif</option>
                             @endfor
                         </select>
