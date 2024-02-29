@@ -5,7 +5,7 @@ Requirements
 2. node package manager - https://nodejs.org/en/
 
 
-Note: Follow the installation steps in LARAVEL 7 - https://laravel.com/docs/7.x/installation
+Note: Follow the installation steps in LARAVEL 7 - https://laravel.com/docs/8.x/installation
 
 
 #Installation Guidelines
