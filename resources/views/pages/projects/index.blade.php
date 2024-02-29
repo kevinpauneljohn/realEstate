@@ -19,12 +19,13 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-header">
+
                 @can('add project')
-                    <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-project-modal"><i class="fa fa-plus-circle"></i> Add Project</button>
+                    <div class="card-header">
+                        <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-project-modal"><i class="fa fa-plus-circle"></i> Add Project</button>
+                    </div>
                 @endcan
 
-            </div>
             <div class="card-body">
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <table id="projects-list" class="table table-bordered table-hover" role="grid">
@@ -33,7 +34,10 @@
                             <th>Project Name</th>
                             <th>Address</th>
                             <th>Model Units</th>
-                            <th>Commission Rate</th>
+                            @if(auth()->user()->hasRole('super admin'))
+                                <th>Commission Rate</th>
+                            @endif
+
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -43,7 +47,9 @@
                             <th>Project Name</th>
                             <th width="40%">Address</th>
                             <th>Model Units</th>
-                            <th>Commission Rate</th>
+                            @if(auth()->user()->hasRole('super admin'))
+                                <th>Commission Rate</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                         </tfoot>
@@ -170,7 +176,9 @@
                         { data: 'name', name: 'name'},
                         { data: 'address', name: 'address'},
                         { data: 'model_units', name: 'model_units'},
-                        { data: 'commission_rate', name: 'commission_rate'},
+                            @if(auth()->user()->hasRole('super admin'))
+                            { data: 'commission_rate', name: 'commission_rate'},
+                           @endif
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
