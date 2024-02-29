@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class AccountManagerService
 {
@@ -12,7 +13,10 @@ class AccountManagerService
 
     public function __construct()
     {
-        $this->superAdmin = User::whereHas("roles", function($q){ $q->where("name", "super admin"); })->first();
+        if(Auth::check())
+        {
+            $this->superAdmin = User::whereHas("roles", function($q){ $q->where("name", "super admin"); })->first();
+        }
     }
 
     /**

@@ -3,13 +3,13 @@
 namespace App;
 
 use App\Traits\UsesUuid;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable
 {
@@ -236,5 +236,10 @@ class User extends Authenticatable
     public function commissionRequests()
     {
         return $this->hasMany(CommissionRequest::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
 }

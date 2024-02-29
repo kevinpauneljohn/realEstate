@@ -7,6 +7,7 @@ use App\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Lead extends Model
 {
@@ -104,5 +105,8 @@ class Lead extends Model
         return $this->hasOne(User::class,'id','online_warrior_id');
     }
 
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
 }

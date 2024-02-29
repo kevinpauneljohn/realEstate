@@ -38,7 +38,8 @@ Route::get('/home', function (){
 
 
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
+//    Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
+    Route::get('/dashboard',[\App\Http\Controllers\DashboardController::class,'dashboard'])->name('dashboard');
     Route::post('/logout','CustomAuth\LoginController@logout')->name('logout');
 });
 

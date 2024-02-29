@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -28,6 +29,7 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'Finance Admin']);
         Role::create(['name' => 'dhg_ojt']);
         Role::create(['name' => 'dhg_staff']);
+        Role::create(['name' => 'team leader']);
 
         Permission::create(['name' => 'add role']);
         Permission::create(['name' => 'view role']);

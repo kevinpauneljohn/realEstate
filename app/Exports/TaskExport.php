@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Carbon\Carbon;
 
-class Taskexport implements FromCollection,WithHeadings,WithEvents
+class TaskExport implements FromCollection,WithHeadings,WithEvents
 {
     protected $status;
     protected $type;
@@ -72,7 +72,7 @@ class Taskexport implements FromCollection,WithHeadings,WithEvents
             }
 
             $task_data [] = [
-                str_pad($data->id, 5, '0', STR_PAD_LEFT), 
+                str_pad($data->id, 5, '0', STR_PAD_LEFT),
                 Carbon::parse($data->due_date)->format('M d, Y').' - '.Carbon::parse($data->time)->format('g:i A'),
                 $data->title,
                 $data->priority->name,
@@ -97,7 +97,7 @@ class Taskexport implements FromCollection,WithHeadings,WithEvents
     {
         return [
             AfterSheet::class    => function(AfterSheet $event) {
-   
+
                 $event->sheet->getDelegate()->getStyle('A1:H1')->getFont()->setBold(true);
                 $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(25);
                 $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(50);
@@ -106,7 +106,7 @@ class Taskexport implements FromCollection,WithHeadings,WithEvents
                 $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(20);
                 $event->sheet->getDelegate()->getColumnDimension('G')->setWidth(25);
                 $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(10);
-   
+
             },
         ];
     }

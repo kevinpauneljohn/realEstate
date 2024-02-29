@@ -184,6 +184,10 @@
     @endif
 @stop
 
+@section('right-sidebar')
+    <x-custom.right-sidebar />
+@stop
+
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">

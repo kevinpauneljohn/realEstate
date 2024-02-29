@@ -19,10 +19,10 @@ use Illuminate\Http\Request;
 
 //Route::post('/api-login','Api\AuthController@authenticate')->middleware(['role:client','cors:api']);
 
-Route::middleware(['client'])->group(function(){
-    Route::post('/api-login','Api\AuthController@authenticate')->name('login');
-    Route::resource('leads-api','LeadsApiController');
-});
+//Route::middleware(['client'])->group(function(){
+//    Route::post('/api-login','Api\AuthController@authenticate')->name('login');
+//    Route::resource('leads-api','LeadsApiController');
+//});
 
-Route::get('/test', function (Request $request) { dd($request->header()); });
+//Route::get('/test', function (Request $request) { dd($request->header()); });
 //Route::resource('leads-api','LeadsApiController');

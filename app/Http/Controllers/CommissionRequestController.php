@@ -60,7 +60,7 @@ class CommissionRequestController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -160,7 +160,7 @@ class CommissionRequestController extends Controller
      * @param PaymentReminderService $paymentReminderService
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function forReview($id, PaymentReminderService $paymentReminderService)
+    public function forReview($id, PaymentReminderService $paymentReminderService): \Illuminate\Contracts\View\Factory|\Illuminate\View\View
     {
         $commissionRequest = $this->commissionRequest->getSpecifiedRequest($id);
 //        return $this->commissionRequest->check_by_pass($id);

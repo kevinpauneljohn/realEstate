@@ -108,11 +108,11 @@
                     <div class="card bg-gradient-primary">
                         <div class="card-body">
                             <h6 align="center">Current Rank</h6>
-                            <h1 align="center" style="color:#f6ff00;">{{ucfirst($user->userRankPoint->rank->name)}}</h1>
+                            <h1 align="center" style="color:#f6ff00;">{{ucfirst(isset($user->userRankPoint->rank)? $user->userRankPoint->rank->name : 'n/a')}}</h1>
                         </div>
                         <div class="card-footer">
                             <a href="{{route('notifications.index')}}" class="btn btn-outline-light btn-sm float-right" data-toggle="modal" data-target="#rank-lists-modal">View Rank Lists</a>
-                            <h6>Total Points Earned = {{number_format(($user->userRankPoint->sales_points + $user->userRankPoint->extra_points),2)}} pts</h6>
+                            <h6>Total Points Earned = {{number_format((isset($user->userRankPoint->sales_points) ? $user->userRankPoint->sales_points + $user->userRankPoint->extra_points : 0),2)}} pts</h6>
                         </div>
                     </div>
                 </div>
@@ -249,6 +249,9 @@
         </div>
     @endif
 
+@stop
+@section('right-sidebar')
+    <x-custom.right-sidebar />
 @stop
 
 @section('css')

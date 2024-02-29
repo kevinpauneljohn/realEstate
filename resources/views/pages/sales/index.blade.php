@@ -689,7 +689,9 @@
         <!--end add user modal-->
     @endcan
 @stop
-
+@section('right-sidebar')
+    <x-custom.right-sidebar />
+@stop
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
@@ -766,7 +768,7 @@
                 "createdRow": function( row, data, dataIndex ) {
                     if (
                         data['rate_status'] == 'hide'
-                    ) {        
+                    ) {
                         table.columns([6]).visible(false);
                     } else {
                         table.columns([6]).visible(true);
@@ -776,7 +778,7 @@
                 order:[0,'desc'],
                 pageLength: 50
             });
-          
+
         });
 
         @can('view commission request')

@@ -134,7 +134,9 @@
         <!--end add new roles modal-->
     @endcan
 @stop
-
+@section('right-sidebar')
+    <x-custom.right-sidebar />
+@stop
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- bootstrap datepicker -->

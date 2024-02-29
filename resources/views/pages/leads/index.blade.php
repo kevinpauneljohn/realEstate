@@ -285,7 +285,9 @@
     @endcan
 
 @stop
-
+@section('right-sidebar')
+    <x-custom.right-sidebar />
+@stop
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
@@ -295,15 +297,6 @@
     <link rel="stylesheet" href="{{asset('vendor/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
-{{--    <style type="text/css">--}}
-{{--        table{--}}
-{{--            table-layout:fixed!important;--}}
-{{--        }--}}
-{{--        table td{--}}
-{{--            word-wrap: break-word;--}}
-{{--        }--}}
-
-{{--    </style>--}}
 @stop
 
 @section('js')
