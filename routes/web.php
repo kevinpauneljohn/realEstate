@@ -286,7 +286,7 @@ Route::delete('/rank/{id}','RankController@destroy')->name('rank.destroy')->midd
 
 Route::get('/contest','ContestController@index')->name('contest.index')->middleware(['auth','permission:view contest']);
 Route::get('/contest-list','ContestController@contest_list')->name('contest.list')->middleware(['auth','permission:view contest']);
-Route::post('/contest','ContestController@store')->name('contest.index')->middleware(['auth','permission:add contest']);
+Route::post('/contest','ContestController@store')->name('contest.store')->middleware(['auth','permission:add contest']);
 
 Route::post('/display-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayTask'])->name('display.task.change')->middleware(['auth','permission:view task']);
 Route::post('/display-my-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayMyTask'])->name('display.my.task.change')->middleware(['auth','permission:view task']);
