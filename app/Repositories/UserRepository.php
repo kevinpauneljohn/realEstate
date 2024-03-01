@@ -21,7 +21,7 @@ class UserRepository
         return User::findOrFail($id);
     }
 
-    public function getUsersOriginalData($data)
+    public function getUsersOriginalData($data): string
     {
         $table = '<table class="table table-hover table-bordered">';
         $table .= '<tr><td>Upline</td><td>'.User::find($data['upline_id'])->fullname.'</td></tr>';
@@ -59,7 +59,7 @@ class UserRepository
     }
 
 
-    public function getUsersOriginalCommissionData($data)
+    public function getUsersOriginalCommissionData($data): string
     {
         $project_name = $this->getProject($data['project_id']);
         $table = '<table class="table table-hover table-bordered">';
@@ -82,5 +82,11 @@ class UserRepository
             $project_name = $project->name;
         }
         return $project;
+    }
+
+    public function assignPermission($userId, $permission): bool
+    {
+        $user = User::findOrFail($userId);
+        return (bool)$user->givePermissionTo($permission);
     }
 }

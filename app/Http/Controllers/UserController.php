@@ -11,6 +11,7 @@ use App\Events\UserRequestEvent;
 use App\Http\Middleware\checkUserAuth;
 use App\Lead;
 use App\ModelUnit;
+use App\Permission;
 use App\Project;
 use App\Repositories\ThresholdRepository;
 use App\Repositories\UserRepository;
@@ -197,6 +198,9 @@ class UserController extends Controller
                     $roles .= '<span class="badge badge-info right role-badge">'.$role.'</span>';
                 }
                 return $roles;
+            })
+            ->addColumn('permissions',function($user){
+                return 'permissions';
             })
             ->addColumn('action', function ($user)
             {
@@ -437,7 +441,8 @@ class UserController extends Controller
             'reserved_leads' => Lead::where([['user_id','=',$id],['lead_status','=','Reserved']])->count(),
             'onlineWarrior' => $onlineWarriorLeads,
             'onlineWarriorSales' => Sales::whereIn('lead_id',collect($onlineWarriorLeads->get())->pluck('id')),
-            'activities' => Activity::where('causer_id',$id)
+            'activities' => Activity::where('causer_id',$id),
+            'permissions' => Permission::all()
         ]);
     }
 
@@ -653,5 +658,13 @@ class UserController extends Controller
         ];
 
         return $data;
+    }
+
+    public function assignPermissionToUser(Request $request): bool
+    {
+        $request->validate([
+            'permissions' => 'required'
+        ]);
+        return $this->userRepository->assignPermission($request->userId, $request->permissions);
     }
 }

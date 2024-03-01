@@ -26,6 +26,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
+require __DIR__ . '/web/user.php';
+
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
     return redirect(route('dashboard'));

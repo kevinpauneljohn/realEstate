@@ -204,6 +204,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#commission">Commissions</a>
                                 </li>
+                                @if(auth()->user()->hasRole('super admin'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#permission">Permissions</a>
+                                    </li>
+                                @endif
                             </ul>
                             <div class="tab-content">
                                 <div id="sales" class="container tab-pane active"><br>
@@ -350,6 +355,27 @@
                                         </tfoot>
                                     </table>
                                 </div>
+
+                                @if(auth()->user()->hasRole('super admin'))
+                                    <div id="permission" class="container tab-pane fade">
+                                        <form class="mt-4" id="give-permission-to-user-form">
+                                            @csrf
+                                            <input type="hidden" name="userId" value="{{$user->id}}">
+                                            <div class="row mb-2">
+                                                <div class="col-lg-12 permissions">
+                                                    <label for="permissions">Permissions</label>
+                                                    <select name="permissions" id="permissions" class="form-control select2-blue " data-placeholder="Select a permissions" style="width: 100%;">
+                                                        <option value=""> -- Select Permission-- </option>
+                                                        @foreach($permissions as $permission)
+                                                            <option value="{{$permission->name}}">{{$permission->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </form>
+                                    </div>
+                                @endif
                             </div>
                             <!-- /.tab-content -->
 
@@ -469,6 +495,7 @@
         <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
         <script src="{{asset('js/sales.js')}}"></script>
         <script src="{{asset('js/commission.js')}}"></script>
+        <script src="{{asset('js/custom-alert.js')}}"></script>
         <script>
 
             $(function () {
@@ -493,7 +520,7 @@
                 format: 'yyyy-mm-dd'
             });
             //Initialize Select2 Elements
-            $('.select2').select2();
+            $('.select2, #permissions').select2();
             //Timepicker
             $('.timepicker').timepicker({
                 showInputs: false,
@@ -591,6 +618,38 @@
                     order:[0,'desc']
                 });
             });
+            @endif
+
+            @if(auth()->user()->hasRole('super admin'))
+                let permissionsForm = $('#give-permission-to-user-form');
+                $(document).on('submit','#give-permission-to-user-form',function(form){
+                    form.preventDefault();
+                    permissionsForm.find('.text-danger').remove();
+                    let data = $(this).serializeArray();
+
+                    $.ajax({
+                        url: '/assign-permission-to-user/',
+                        type: 'POST',
+                        data: data,
+                        beforeSend: () => {
+                            permissionsForm.find('button[type=submit]').attr('disabled',true).text('Saving...');
+                        }
+                    }).done((response, status, xhr) => {
+                        if(xhr.status === 200)
+                        {
+                            customAlert("success","Successfully assigned permission to user")
+                        }
+                    }).fail((xhr, status, error) => {
+                        // console.log(xhr.responseJSON.errors.permissions);
+                        console.log(xhr.status)
+                        if(xhr.status === 422)
+                        {
+                            permissionsForm.find('.permissions').append('<p class="text-danger">'+xhr.responseJSON.errors.permissions+'</p>');
+                        }
+                    }).always(() => {
+                        permissionsForm.find('button[type=submit]').attr('disabled',false).text('Save');
+                    })
+                });
             @endif
         </script>
     @endcan
