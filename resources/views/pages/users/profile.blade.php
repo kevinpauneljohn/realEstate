@@ -660,6 +660,7 @@
                             $('#permission-list').DataTable().ajax.reload(null, false);
                         }
                     }).fail((xhr, status, error) => {
+                        console.log(xhr)
                         if(xhr.status === 422)
                         {
                             permissionsForm.find('.permissions').append('<p class="text-danger">'+xhr.responseJSON.errors.permissions+'</p>');
