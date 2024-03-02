@@ -647,7 +647,7 @@
 
                     $.ajax({
                         url: '/assign-permission-to-user/',
-                        type: 'POST',
+                        type: 'post',
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         data: data,
                         beforeSend: () => {
