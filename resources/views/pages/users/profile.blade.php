@@ -648,6 +648,7 @@
                     $.ajax({
                         url: '/assign-permission-to-user/',
                         type: 'POST',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         data: data,
                         beforeSend: () => {
                             permissionsForm.find('button[type=submit]').attr('disabled',true).text('Saving...');
