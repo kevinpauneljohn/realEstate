@@ -646,8 +646,8 @@
                     let data = $(this).serializeArray();
 
                     $.ajax({
-                        url: '/assign-permission-to-user/',
-                        type: 'post',
+                        url: '/assign-permission-to-user',
+                        type: 'POST',
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         data: data,
                         beforeSend: () => {
