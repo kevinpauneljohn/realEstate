@@ -660,13 +660,12 @@ class UserController extends Controller
         return $data;
     }
 
-    public function assignPermissionToUser(Request $request)
+    public function assignPermissionToUser(Request $request): bool
     {
-//        $request->validate([
-//            'permissions' => 'required'
-//        ]);
-//        return $this->userRepository->assignPermission($request->userId, $request->permissions);
-        return $request->method();
+        $request->validate([
+            'permissions' => 'required'
+        ]);
+        return $this->userRepository->assignPermission($request->userId, $request->permissions);
     }
 
     public function userPermissions($userId)
