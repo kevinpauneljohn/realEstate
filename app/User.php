@@ -242,4 +242,9 @@ class User extends Authenticatable
     {
         return LogOptions::defaults();
     }
+
+    public function computations()
+    {
+        return $this->hasMany(Computation::class);
+    }
 }

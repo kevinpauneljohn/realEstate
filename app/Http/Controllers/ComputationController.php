@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Computation;
 use App\ModelUnit;
 use App\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -30,6 +31,12 @@ class ComputationController extends Controller
             })
             ->editColumn('model_unit_id',function($computation){
                 return ModelUnit::find($computation->model_unit_id)->name;
+            })
+            ->editColumn('user_id', function($computation){
+                return $computation->user->fullname;
+            })
+            ->editColumn('updated_at', function($computation){
+                return $computation->updated_at->format('M d, Y');
             })
             ->addColumn('action', function ($computation)
             {
@@ -97,6 +104,7 @@ class ComputationController extends Controller
             $computation->location_type = $request->unit_type;
             $computation->financing = $request->financing;
             $computation->computation = nl2br($request->computation);
+            $computation->user_id = auth()->user()->id;
 
             if($computation->isDirty())
             {

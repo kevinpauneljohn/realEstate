@@ -33,6 +33,8 @@
                         <th>Model Unit</th>
                         <th>Financing</th>
                         <th>Unit Type</th>
+                        <th>Updated By</th>
+                        <th>Date Updated</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -43,6 +45,8 @@
                         <th>Model Unit</th>
                         <th>Financing</th>
                         <th>Unit Type</th>
+                        <th>Updated By</th>
+                        <th>Date Updated</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -191,6 +195,8 @@
                         { data: 'model_unit_id', name: 'model_unit_id'},
                         { data: 'financing', name: 'financing'},
                         { data: 'location_type', name: 'location_type'},
+                        { data: 'user_id', name: 'user_id'},
+                        { data: 'updated_at', name: 'updated_at'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

@@ -161,7 +161,7 @@
                             <select class="form-control" id="calculator-template">
                                 <option value=""> -- Select -- </option>
                                 <option value="Apec Homes HDMF">Apec Homes HDMF</option>
-                                <option value="Bank">Bank Calculator</option>
+                                <option value="Bank">Mortgage Calculator</option>
                                 <option value="Hausland Bank Calculator">Hausland Bank Calculator</option>
                                 <option value="Hausland Inhouse Calculator">Hausland Inhouse Calculator</option>
                             </select>

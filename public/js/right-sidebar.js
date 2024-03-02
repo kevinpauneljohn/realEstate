@@ -45,7 +45,7 @@ $(document).on('submit','.sample-computation-form',function(form){
                     '<div class="col-lg-12">' +
                     '<div class="callout callout-info">' +
                     '<button class="btn btn-success btn-sm float-right copy-computation" id="'+value.id+'"><i class="fa fa-copy"></i> Copy</button>' +
-                    '<div id="computation-'+value.id+'"><h5>Project: '+value.project_id+'<br/>Model Unit: '+value.model_unit_id+'</h5>' +
+                    '<p>Updated At: '+moment(value.updated_at).format('MM/DD/YYYY')+'</p><div id="computation-'+value.id+'"><h5>Project: '+value.project_id+'<br/>Model Unit: '+value.model_unit_id+'</h5>' +
                     '<span class="unit-type-title">'+value.location_type+'</span><br/>' +
                     '<strong class="financing-title">'+value.financing+'</strong>' +
                     '<p>'+value.computation+'</p>' +

@@ -36,4 +36,9 @@ class Computation extends Model
     {
         return LogOptions::defaults();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
