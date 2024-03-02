@@ -89,4 +89,24 @@ class UserRepository
         $user = User::findOrFail($userId);
         return (bool)$user->givePermissionTo($permission);
     }
+
+    public function getUserPermissions($userId)
+    {
+        return DataTables::of(User::findOrFail($userId)->permissions)
+            ->addColumn('action', function($permission){
+                $action = '';
+                if(auth()->user()->can('remove user permission'))
+                {
+                    $action .= '<a href="#" class="btn btn-xs bg-warning remove-permission" id="'.$permission->id.'"><i class="fa fa-trash"></i></a>';
+                }
+                return $action;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function removeUserPermission($userId, $permission): bool
+    {
+        return (bool) User::findOrFail($userId)->revokePermissionTo($permission);
+    }
 }

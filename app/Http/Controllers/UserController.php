@@ -442,7 +442,7 @@ class UserController extends Controller
             'onlineWarrior' => $onlineWarriorLeads,
             'onlineWarriorSales' => Sales::whereIn('lead_id',collect($onlineWarriorLeads->get())->pluck('id')),
             'activities' => Activity::where('causer_id',$id),
-            'permissions' => Permission::all()
+            'permissions' => Permission::all(),
         ]);
     }
 
@@ -666,5 +666,18 @@ class UserController extends Controller
             'permissions' => 'required'
         ]);
         return $this->userRepository->assignPermission($request->userId, $request->permissions);
+    }
+
+    public function userPermissions($userId)
+    {
+        return $this->userRepository->getUserPermissions($userId);
+    }
+
+    public function removePermission($userId, $permissionId): \Illuminate\Http\JsonResponse
+    {
+        $permission = Permission::findOrFail($permissionId);
+        return $this->userRepository->removeUserPermission($userId, $permission->name) ?
+        response()->json(['success' => true, 'message' => 'Permission successfully removed']) :
+            response()->json(['success' => false, 'message' => 'An error occurred']);
     }
 }

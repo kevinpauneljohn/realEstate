@@ -358,12 +358,12 @@
 
                                 @if(auth()->user()->hasRole('super admin'))
                                     <div id="permission" class="container tab-pane fade">
-                                        <form class="mt-4" id="give-permission-to-user-form">
+                                        <form class="mt-4 mb-5" id="give-permission-to-user-form">
                                             @csrf
                                             <input type="hidden" name="userId" value="{{$user->id}}">
                                             <div class="row mb-2">
                                                 <div class="col-lg-12 permissions">
-                                                    <label for="permissions">Permissions</label>
+                                                    <label for="permissions">Assign Permission</label>
                                                     <select name="permissions" id="permissions" class="form-control select2-blue " data-placeholder="Select a permissions" style="width: 100%;">
                                                         <option value=""> -- Select Permission-- </option>
                                                         @foreach($permissions as $permission)
@@ -374,6 +374,22 @@
                                             </div>
                                             <button type="submit" class="btn btn-primary">Save</button>
                                         </form>
+
+                                        <table id="permission-list" class="table table-bordered table-striped" role="grid">
+                                            <thead>
+                                            <tr role="row">
+                                                <th>Permissions</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tfoot>
+                                            <tr>
+                                                <th>Permissions</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
                                     </div>
                                 @endif
                             </div>
@@ -551,6 +567,8 @@
             });
 
 
+
+
             $(function() {
                 $('#commission-list').DataTable({
                     processing: true,
@@ -637,11 +655,11 @@
                     }).done((response, status, xhr) => {
                         if(xhr.status === 200)
                         {
-                            customAlert("success","Successfully assigned permission to user")
+                            customAlert("success","Successfully assigned permission to user");
+                            permissionsForm.find('select').val('').change();
+                            $('#permission-list').DataTable().ajax.reload(null, false);
                         }
                     }).fail((xhr, status, error) => {
-                        // console.log(xhr.responseJSON.errors.permissions);
-                        console.log(xhr.status)
                         if(xhr.status === 422)
                         {
                             permissionsForm.find('.permissions').append('<p class="text-danger">'+xhr.responseJSON.errors.permissions+'</p>');
@@ -650,6 +668,49 @@
                         permissionsForm.find('button[type=submit]').attr('disabled',false).text('Save');
                     })
                 });
+
+                $(document).on('click','.remove-permission', function(){
+                    let permissionId = this.id;
+                    console.log(permissionId)
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, remove permission!'
+                    }).then((result) => {
+                        if (result.value) {
+                            $.ajax({
+                                url: '/remove-user-permission/{{$user->id}}/'+permissionId,
+                                type: 'POST',
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            }).done( (response, status,xhr) => {
+                                $('#permission-list').DataTable().ajax.reload(null, false);
+                            }).fail( (xhr, status, error) => {
+                                console.log(xhr)
+                            });
+                        }
+                    });
+
+
+                })
+
+            $(function() {
+                $('#permission-list').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('user-permissions',['user' => $user->id]) !!}',
+                    columns: [
+                        { data: 'name', name: 'name'},
+                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'asc']
+                });
+            });
             @endif
         </script>
     @endcan

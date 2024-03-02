@@ -57,59 +57,6 @@ function submitform(url , type , data , message , reload = true, elementAttr, co
     });
 }
 
-$(document).ready(function () {
-
-    /*add project*/
-    // $('#add-project-form').submit(function (form) {
-    //     form.preventDefault();
-    //
-    //     let data = $('#add-project-form').serialize();
-    //     submitform(
-    //         '/projects',
-    //         'POST',
-    //         data,
-    //         'New Project Successfully Added!',
-    //         true,
-    //         '',
-    //         false,
-    //     );
-    // });
-
-    // /*edit project*/
-    // $('#edit-project-form').submit(function (form) {
-    //     form.preventDefault();
-    //
-    //     let data = $('#edit-project-form').serialize();
-    //     let id = $('#updateProjectId').val();
-    //     submitform(
-    //         '/projects/'+id,
-    //         'PUT',
-    //         data,
-    //         'Project Successfully Edited!',
-    //         true,
-    //         '',
-    //         false,
-    //     );
-    // });
-
-    // /*delete project*/
-    // $('#delete-project-form').submit(function (form) {
-    //     form.preventDefault();
-    //
-    //     let data = $('#delete-project-form').serialize();
-    //     let id = $('#deleteProjectId').val();
-    //     submitform(
-    //         '/projects/'+id,
-    //         'DELETE',
-    //         data,
-    //         'Project Successfully Deleted!',
-    //         true,
-    //         '',
-    //         false,
-    //     );
-    // });
-});
-
 $(document).on('submit','#add-project-form',function(form){
     form.preventDefault();
 
