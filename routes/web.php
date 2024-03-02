@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 require __DIR__ . '/web/user.php';
+require __DIR__ . '/web/contest.php';
 
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
@@ -285,10 +286,6 @@ Route::get('/rank-list','RankController@rank_list')->name('rank.list')->middlewa
 Route::post('/rank/{id}','RankController@getRank')->name('rank.get')->middleware(['auth','permission:view rank']);
 Route::put('/rank/{id}','RankController@update')->name('rank.update')->middleware(['auth','permission:edit rank']);
 Route::delete('/rank/{id}','RankController@destroy')->name('rank.destroy')->middleware(['auth','permission:delete rank']);
-
-Route::get('/contest','ContestController@index')->name('contest.index')->middleware(['auth','permission:view contest']);
-Route::get('/contest-list','ContestController@contest_list')->name('contest.list')->middleware(['auth','permission:view contest']);
-Route::post('/contest','ContestController@store')->name('contest.store')->middleware(['auth','permission:add contest']);
 
 Route::post('/display-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayTask'])->name('display.task.change')->middleware(['auth','permission:view task']);
 Route::post('/display-my-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayMyTask'])->name('display.my.task.change')->middleware(['auth','permission:view task']);

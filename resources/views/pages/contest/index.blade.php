@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-header">
             @can('add contest')
-                <button type="button" class="btn bg-gradient-primary btn-sm" data-toggle="modal" data-target="#add-new-contest-modal"><i class="fa fa-plus-circle"></i> Add New</button>
+                <button type="button" class="btn bg-gradient-primary btn-sm add-contest-btn" data-toggle="modal" data-target="#add-new-contest-modal"><i class="fa fa-plus-circle"></i> Add New</button>
             @endcan
 
         </div>
@@ -31,6 +31,7 @@
                     <tr role="row">
                         <th width="20%">Name</th>
                         <th>Description</th>
+                        <th>Allowed Rank</th>
                         <th width="8%">Active</th>
                         <th width="10%">Date Active</th>
                         <th width="10%">Action</th>
@@ -41,6 +42,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Allowed Rank</th>
                         <th>Active</th>
                         <th>Date Active</th>
                         <th>Action</th>
@@ -79,11 +81,22 @@
                                 <label for="description">Description</label><span class="required">*</span>
                                 <textarea name="description" class="form-control" id="description"></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="date">Date</label><span class="required">*</span>
-                                <input type="text" name="date_active" class="form-control datemask" id="date_active" value="{{today()->format('Y-m-d')}}" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
-                            </div>
                             <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="date">Date</label><span class="required">*</span>
+                                    <input type="text" name="date_active" class="form-control datemask" id="date_active" value="{{today()->format('Y-m-d')}}" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
+                                </div>
+                                <div class="col-lg-6 rank">
+                                    <label for="rank">Rank</label><span class="required">*</span>
+                                    <select class="form-control" name="rank" id="rank">
+                                        <option value="">-- Select Rank --</option>
+                                        @foreach($ranks as $rank)
+                                            <option value="{{$rank->id}}">{{$rank->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
                                 <div class="col-lg-4">
                                     <div class="form-group amount">
                                         <label for="amount">Amount</label><span class="required">*</span>
@@ -197,6 +210,7 @@
         <script src="{{asset('/vendor/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
         <script src="{{asset('/vendor/daterangepicker/daterangepicker.js')}}"></script>
         <script src="{{asset('/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+        <script src="{{asset('js/custom-alert.js')}}"></script>
         <script src="{{asset('js/contest.js')}}"></script>
         <script>
             $(function() {
@@ -207,6 +221,7 @@
                     columns: [
                         { data: 'name', name: 'name'},
                         { data: 'description', name: 'description'},
+                        { data: 'rank', name: 'rank'},
                         { data: 'active', name: 'active'},
                         { data: 'date_working', name: 'date_working'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
