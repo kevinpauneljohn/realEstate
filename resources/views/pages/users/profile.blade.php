@@ -40,6 +40,12 @@
                         </p>
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
+                                <b><i class="fas fa-certificate mr-1"></i>Rank</b> <a class="float-right">{{ucfirst(isset($user->userRankPoint->rank)? $user->userRankPoint->rank->name : 'n/a')}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b><i class="fas fa-star mr-1"></i>Total Points</b> <a class="float-right">{{number_format((isset($user->userRankPoint->sales_points) ? $user->userRankPoint->sales_points + $user->userRankPoint->extra_points : 0),2)}} pts</a>
+                            </li>
+                            <li class="list-group-item">
                                 <b><i class="fas fa-plus mr-1"></i>Up line</b> <a href="@if($upline->hasRole('super admin'))#@else{{route('users.profile',['user' => $upline->id])}}@endif" class="float-right">{{ucfirst($upline->firstname)}} {{ucfirst($upline->lastname)}}</a>
                             </li>
                             <li class="list-group-item">
