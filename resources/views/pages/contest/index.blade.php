@@ -18,22 +18,26 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
-            @can('add contest')
-                <button type="button" class="btn bg-gradient-primary btn-sm add-contest-btn" data-toggle="modal" data-target="#add-new-contest-modal"><i class="fa fa-plus-circle"></i> Add New</button>
-            @endcan
 
-        </div>
+        @can('add contest')
+            <div class="card-header">
+                <button type="button" class="btn bg-gradient-primary btn-sm add-contest-btn" data-toggle="modal" data-target="#add-new-contest-modal"><i class="fa fa-plus-circle"></i> Add New</button>
+            </div>
+        @endcan
+
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="contest-list" class="table table-bordered table-striped" role="grid">
+                <table id="contest-list" class="table table-bordered table-striped table-hover" role="grid">
                     <thead>
                     <tr role="row">
                         <th width="20%">Name</th>
                         <th>Description</th>
                         <th>Allowed Rank</th>
-                        <th width="8%">Active</th>
-                        <th width="10%">Date Active</th>
+                        @if(auth()->user()->can('add contest'))
+                            <th width="8%">Active</th>
+                            <th width="10%">Date Active</th>
+                        @endif
+
                         <th width="10%">Action</th>
                     </tr>
                     </thead>
@@ -42,9 +46,11 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Allowed Rank</th>
-                        <th>Active</th>
-                        <th>Date Active</th>
+                        <th width="10%">Allowed Rank</th>
+                        @if(auth()->user()->can('add contest'))
+                            <th width="8%">Active</th>
+                            <th width="10%">Date Active</th>
+                        @endif
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -194,6 +200,9 @@
 @section('right-sidebar')
     <x-custom.right-sidebar />
 @stop
+@section('navbar-layout-topnav')
+    hello world
+@stop
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
@@ -222,8 +231,10 @@
                         { data: 'name', name: 'name'},
                         { data: 'description', name: 'description'},
                         { data: 'rank', name: 'rank'},
-                        { data: 'active', name: 'active'},
-                        { data: 'date_working', name: 'date_working'},
+                        @if(auth()->user()->can('add contest'))
+                            { data: 'active', name: 'active'},
+                            { data: 'date_working', name: 'date_working'},
+                        @endif
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

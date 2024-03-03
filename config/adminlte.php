@@ -315,6 +315,10 @@ return [
 //            ],
 //        ],
         [
+            'type'         => 'darkmode-widget',
+            'topnav_right' => true, // Or "topnav => true" to place on the left.
+        ],
+        [
             'text' => 'Dashboard',
             'icon' => 'fa fa-tachometer-alt',
             'route'  => 'dashboard',
@@ -512,6 +516,7 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
+        \App\Filters\RoleMenuFilter::class,
     ],
 
     /*
