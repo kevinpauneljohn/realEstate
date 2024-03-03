@@ -319,6 +319,14 @@ return [
             'topnav_right' => true, // Or "topnav => true" to place on the left.
         ],
         [
+            'text' => 'Contests',
+            'route'  => 'contest.index',
+            'icon'    => 'fas fa-trophy',
+            'can'  => 'view contest',
+            'icon_color' => 'warning',
+            'topnav' => true
+        ],
+        [
             'text' => 'Dashboard',
             'icon' => 'fa fa-tachometer-alt',
             'route'  => 'dashboard',
@@ -442,11 +450,6 @@ return [
             'icon'    => 'fas fa-cogs',
             'can'     => 'view settings',
             'submenu' => [
-                [
-                    'text' => 'Contests',
-                    'route'  => 'contest.index',
-                    'can'  => 'view contest',
-                ],
                 [
                     'text' => 'Canned Message',
                     'route'  => 'canned.create',
