@@ -392,7 +392,7 @@ return [
             'can'     => 'request commission',
         ],
         [
-            'text'    => 'Project Management',
+            'text'    => 'Projects',
             'icon'    => 'fas fa-building',
             'route'    => 'projects.index',
             'can'     => 'view project',
@@ -419,6 +419,18 @@ return [
                     'route'   => 'task.mine',
                 ]
             ]
+        ],
+        [
+            'text' => 'Computations',
+            'icon'    => 'fas fa-calculator',
+            'route'  => 'computations.index',
+            'can'  => 'add computation',
+        ],
+        [
+            'text' => 'Contacts',
+            'icon'    => 'fas fa-address-book',
+            'route'  => 'contacts.index',
+            'can'  => 'view contacts',
         ],
 //        [
 //            'text'    => 'Dream Home Guide',
@@ -456,11 +468,6 @@ return [
                     'can'  => 'add canned message',
                 ],
                 [
-                    'text' => 'Computations',
-                    'route'  => 'computations.index',
-                    'can'  => 'add computation',
-                ],
-                [
                     'text' => 'Actions',
                     'route'  => 'actions.index',
                     'can'  => 'view action',
@@ -479,11 +486,6 @@ return [
                     'text' => 'Permissions',
                     'route'  => 'permissions.index',
                     'can'  => 'view permission',
-                ],
-                [
-                    'text' => 'Contacts',
-                    'route'  => 'contacts.index',
-                    'can'  => 'view contacts',
                 ],
                 [
                     'text' => 'Ranks',
