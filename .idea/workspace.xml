@@ -37,11 +37,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="leads controller api for openhouseseller.com">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Contest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Contest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ContestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ContestController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/contest.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/contest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/permission.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/contest/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/contest/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/mytask.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/mytask.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -735,7 +733,8 @@
       <workItem from="1688569687716" duration="306000" />
       <workItem from="1688571075972" duration="777000" />
       <workItem from="1709103257435" duration="71492000" />
-      <workItem from="1709568804250" duration="1856000" />
+      <workItem from="1709568804250" duration="2486000" />
+      <workItem from="1709583773903" duration="78000" />
     </task>
     <task id="LOCAL-00805" summary="setup the payment reminder">
       <created>1627136957909</created>

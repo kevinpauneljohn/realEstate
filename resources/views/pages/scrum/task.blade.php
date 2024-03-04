@@ -229,7 +229,9 @@
     @endcan
 
 @stop
-
+@section('right-sidebar')
+    <x-custom.right-sidebar />
+@stop
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
@@ -303,7 +305,7 @@
                     if (
                         data['status_due'] <= data['date_today'] &&
                         data['status_text'] != 'completed'
-                    ) {        
+                    ) {
                         $(row).addClass('due_dates');
                         console.log(data);
                     }
@@ -367,7 +369,7 @@
             $(document).on('click','.add-new-task',function(){
                 $('#add-task-modal').find('.modal-title').text("Add New Task");
                 $('#add-task-modal').find('form').attr('id','task-form').find('input[name=task_id]').remove();
-                
+
                 $('form#task-form').trigger("reset");
                 $('form#task-form select').trigger("change");
 
@@ -429,7 +431,7 @@
         $("#add-task-modal").on('hide.bs.modal', function () {
             $('.textEditor').summernote("code", "");
         });
-        
+
         @can('edit task')
             let taskModal = $('#add-task-modal');
             $(document).on('click','.edit-task-btn',function(){
@@ -501,8 +503,8 @@
                     });
 
                     $('#edit-task-form input, #edit-task-form select, #edit-task-form textarea').attr('disabled',false);
-                    
-                    setTimeout(function() { 
+
+                    setTimeout(function() {
                         $('#add-task-modal').modal('hide');
                     }, 2000);
                 },error: function(xhr, status, error){

@@ -245,7 +245,7 @@
                         <span class="action_required_text" style="color:red;"></span>
                         <input type="hidden" name="checklist_id">
                         <input type="hidden" name="task_id" value="{{$task->id}}">
-                        <textarea class="form-control actionTaken" name="action" style="min-height: 200px;" id="action"></textarea> 
+                        <textarea class="form-control actionTaken" name="action" style="min-height: 200px;" id="action"></textarea>
                     </div>
                 </div>
                     <div class="modal-footer justify-content-between">
@@ -258,7 +258,9 @@
     </div>
 
 @stop
-
+@section('right-sidebar')
+    <x-custom.right-sidebar />
+@stop
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
@@ -320,7 +322,7 @@
         });
 
         $("#update-assignee").change(function() {
-            
+
             var selected_assignee_value = $('#assigned_to').find(":selected").val();
             var save_assignee_value = $('.assignee_saved_value').val();
 
@@ -368,7 +370,7 @@
                 });
             if (!allTheSame) {
                 $('.watchersButton').attr('disabled',false);
-            } else {  
+            } else {
                 if (watchers_val === watchers_array) {
                     $('.watchersButton').attr('disabled',true);
                 } else {
@@ -436,7 +438,7 @@
                     } else {
                         $('.ongoing_task_component_button').prop("disabled", true);
                     }
-                    
+
                     $('.add-new-action-taken').removeClass('hidden');
                 } else if (get_status == 'completed') {
                     @if((auth()->user()->hasRole(['super admin','admin','account manager'])))
@@ -566,7 +568,7 @@
             var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             var charactersLength = characters.length;
             for ( var i = 0; i < length; i++ ) {
-            result += characters.charAt(Math.floor(Math.random() * 
+            result += characters.charAt(Math.floor(Math.random() *
                 charactersLength));
             }
             return result;
@@ -577,7 +579,7 @@
             var characters       = '0123456789';
             var charactersLength = characters.length;
             for ( var i = 0; i < length; i++ ) {
-            result += characters.charAt(Math.floor(Math.random() * 
+            result += characters.charAt(Math.floor(Math.random() *
                 charactersLength));
             }
             return result;
@@ -690,7 +692,7 @@
 
                         $('.add-new-action-taken').addClass('hidden');
                     }
-                        
+
                     if (response.actions == 'incomplete' && response.status == 'completed') {
                         alert('Checklist Action taken must have atleast 1 data. Please Check each checklist action taken before completed the Task.');
                     }
@@ -749,7 +751,7 @@
                         } else {
                             $('.start_task_component_span').removeClass('hidden');
                         }
-                        
+
                         if (!$('.ongoing_task_component_user_span').hasClass("hidden")) {
                             $('.ongoing_task_component_user_span').addClass('hidden');
                         }
@@ -872,7 +874,7 @@
                 }
             });
         });
-        
+
         function countRequest(id)
         {
             $.ajax({
@@ -892,7 +894,7 @@
                 }
             });
         }
-        
+
         function checkRequest()
         {
             var val = $('.get_count_request').val();
