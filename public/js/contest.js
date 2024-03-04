@@ -13,8 +13,10 @@ $(document).on('submit','#contest-form',function(form){
             contestForm.find('button[type=submit]').attr('disabled',true).text('Saving...');
         }
     }).done( (response, status, xhr) => {
+        console.log(response)
         $('#contest-list').DataTable().ajax.reload(null, false);
     }).fail((xhr, status, error) => {
+        console.log(xhr)
         $.each(xhr.responseJSON.errors, function(key, value){
             contestForm.find('.'+key).append('<p class="text-danger">'+value+'</p>');
         })
@@ -30,6 +32,7 @@ $(document).on('click','.add-contest-btn', function(){
     contestModal.find('.modal-title').text('Add New Contest')
     contestModal.find('.form-submit').attr('id','contest-form')
     contestModal.find('input[name=id]').remove();
+    contestForm.find('#rank').val(null).change();
     contestForm.trigger('reset');
 })
 $(document).on('click','.edit-rank-btn', function(){
@@ -46,6 +49,7 @@ $(document).on('click','.edit-rank-btn', function(){
             contestModal.find('.modal-body').append('<input type="hidden" name="id" value="'+contestId+'">');
         }
     }).done( (response, status, xhr) => {
+        console.log(response.ranks)
         if(response.active === 1)
         {
             $('input[name=is_active]').prop('checked',true)
@@ -55,7 +59,7 @@ $(document).on('click','.edit-rank-btn', function(){
         contestForm.find('input[name=title]').val(response.name);
         contestForm.find('textarea[name=description]').val(response.description);
         contestForm.find('input[name=date_active]').val(moment(response.date_working).format('YYYY-MM-DD'));
-        contestForm.find('select[name=rank]').val(response.extra_field.rank).change();
+        contestForm.find('#rank').val(response.ranks).change();
         contestForm.find('input[name=amount]').val(response.extra_field.amount);
         contestForm.find('input[name=points]').val(response.extra_field.points);
         contestForm.find('input[name=item]').val(response.extra_field.item);

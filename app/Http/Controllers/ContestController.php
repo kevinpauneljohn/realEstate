@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Contest;
 use App\Http\Requests\ContestRequest;
 use App\Rank;
+use App\Services\ContestService;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class ContestController extends Controller
@@ -41,7 +43,12 @@ class ContestController extends Controller
                 return $contest->date_working->format('M d, Y');
             })
             ->addColumn('rank',function($contest){
-                return ucfirst(Rank::findOrFail($contest->extra_field->rank)->name);
+                $ranks = DB::table('contest_rank')->where('contest_id',$contest->id)->get();
+                $rankName = '';
+                foreach ($ranks as $rank){
+                    $rankName .= '<span class="badge badge-success mr-1">'.Rank::findOrFail($rank->rank_id)->name.'</span>';
+                }
+                return $rankName;
             })
             ->addColumn('action',function($contest){
                 $action = "";
@@ -60,39 +67,42 @@ class ContestController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action','active'])
+            ->rawColumns(['action','active','rank'])
             ->make(true);
     }
 
-    public function store(ContestRequest $request)
+    public function store(ContestRequest $request, ContestService $contestService)
     {
             $contest = new Contest();
             $contest->name = $request->title;
             $contest->description = $request->description;
+            $contest->ranks = array($request->rank);
             $contest->active = $request->is_active ? true : false;
             $contest->date_working = $request->date_active;
             $contest->extra_field = array(
                 'amount'    => $request->amount,
                 'points'    => $request->points,
                 'item'      => $request->item ? $request->item : "",
-                'rank'      => $request->rank,
             );
 
             $contest->save();
+            $contestService->saveRankToContest($contest->id, $request->rank);
             return response()->json(['success' => true, 'message' => 'Contest successfully added!']);
-
     }
 
-    public function edit($id)
+    public function edit($id, ContestService $contestService)
     {
-        return Contest::findOrFail($id);
+        return collect(Contest::findOrFail($id))->merge([
+            'ranks' => collect($contestService->getRanksByContestId($id))->pluck(['rank_id'])
+        ]);
     }
 
-    public function update(ContestRequest $request, $id): \Illuminate\Http\JsonResponse
+    public function update(ContestRequest $request, $id, ContestService $contestService): \Illuminate\Http\JsonResponse
     {
         $contest = Contest::findOrFail($id);
         $contest->name = $request->title;
         $contest->description = $request->description;
+        $contest->ranks = array($request->rank);
         $contest->active = $request->is_active ? 1 : 0;
         $contest->date_working = $request->date_active;
         $contest->extra_field = array(
@@ -105,6 +115,8 @@ class ContestController extends Controller
         if($contest->isDirty())
         {
             $contest->save();
+            $contestService->removeRanksByContestId($contest->id);
+            $contestService->saveRankToContest($contest->id, $request->rank);
             return response()->json(['success' => true, 'message' => 'Contest successfully updated!']);
         }
         return response()->json(['success' => false, 'message' => 'No changes made!']);

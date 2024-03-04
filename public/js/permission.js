@@ -100,6 +100,7 @@ $(document).on('click','.edit-permission-btn',function () {
         'type' : 'POST',
         'data' : {'name':data[0]},
         success: function(result){
+            console.log(result)
             $('#edit_roles').val(result).change();
         }
     });

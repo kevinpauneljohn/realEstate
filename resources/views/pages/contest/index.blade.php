@@ -46,7 +46,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th width="10%">Allowed Rank</th>
+                        <th width="20%">Allowed Rank</th>
                         @if(auth()->user()->can('add contest'))
                             <th width="8%">Active</th>
                             <th width="10%">Date Active</th>
@@ -64,7 +64,7 @@
         <div class="modal fade" id="add-new-contest-modal">
             <form role="form" id="contest-form" class="form-submit">
                 @csrf
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Add New Contest</h4>
@@ -88,14 +88,16 @@
                                 <textarea name="description" class="form-control" id="description"></textarea>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <label for="date">Date</label><span class="required">*</span>
                                     <input type="text" name="date_active" class="form-control datemask" id="date_active" value="{{today()->format('Y-m-d')}}" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask="" im-insert="false">
                                 </div>
-                                <div class="col-lg-6 rank">
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-12 rank">
                                     <label for="rank">Rank</label><span class="required">*</span>
-                                    <select class="form-control" name="rank" id="rank">
-                                        <option value="">-- Select Rank --</option>
+                                    <select class="form-control select2" name="rank[]" multiple="multiple" data-placeholder="Select rank" id="rank" style="width:100%;">
+                                        <option value=""></option>
                                         @foreach($ranks as $rank)
                                             <option value="{{$rank->id}}">{{$rank->name}}</option>
                                         @endforeach
@@ -136,66 +138,6 @@
         <!--end add new roles modal-->
     @endcan
 
-    @can('edit role')
-        <!--edit role modal-->
-        <div class="modal fade" id="edit-role-modal">
-            <form role="form" id="edit-role-form" class="form-submit">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="id" id="updateRoleId">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Update Role Name</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-body">
-                                <div class="form-group edit_role">
-                                    <label for="edit_role">Role Name</label><span class="required">*</span>
-                                    <input type="text" name="edit_role" class="form-control" id="edit_role">
-                                </div>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Save</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-        <!--end add terminal modal-->
-    @endcan
-
-    @can('delete role')
-        <!--delete terminal-->
-        <div class="modal fade" id="delete-role-modal">
-            <form role="form" id="delete-role-form" class="form-submit">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="deleteRoleId" id="deleteRoleId">
-                <div class="modal-dialog">
-                    <div class="modal-content bg-danger">
-                        <div class="modal-body">
-                            <p class="delete_role">Delete Role: <span class="delete-role-name"></span></p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-outline-light submit-form-btn"><i class="spinner fa fa-spinner fa-spin"></i> Delete</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </form>
-        </div>
-        <!--end delete terminal modal-->
-    @endcan
 @stop
 @section('right-sidebar')
     <x-custom.right-sidebar />
@@ -246,5 +188,10 @@
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             }).datepicker("setDate", new Date());
+
+            //Initialize Select2 Elements
+            $('.select2').select2({
+                allowClear: true
+            });
         </script>
     @stop
