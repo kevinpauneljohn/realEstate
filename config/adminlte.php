@@ -319,7 +319,7 @@ return [
             'topnav_right' => true, // Or "topnav => true" to place on the left.
         ],
         [
-            'text' => 'Contests',
+            'text' => 'Contests kevin',
             'route'  => 'contest.index',
             'icon'    => 'fas fa-trophy',
             'can'  => 'view contest',
