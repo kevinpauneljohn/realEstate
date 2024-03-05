@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\User;
 use Illuminate\Support\Facades\DB;
 
 class ContestService
@@ -25,4 +26,38 @@ class ContestService
     {
         return DB::table('contest_rank')->where('contest_id',$contestId)->delete();
     }
+
+    public function joinContest($contest_id, $user_id): bool
+    {
+        if($this->checkUserIfAllowedToJoin($user_id, $contest_id))
+        {
+            return DB::table('contest_user')->insert([
+                'contest_id' => $contest_id,
+                'user_id' => $user_id
+            ]);
+        }
+        return false;
+    }
+
+    public function getUserRank($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        return $user->userRankPoint;
+    }
+
+    public function checkUserIfAllowedToJoin($user_id, $contest_id): bool
+    {
+        return DB::table('contest_rank')
+                ->where('contest_id',$contest_id)
+                ->where('rank_id',$this->getUserRank($user_id)->rank_id)->count() > 0;
+    }
+
+    public function checkIfUserAlreadyJoinedContest($user_id, $contest_id): bool
+    {
+        return DB::table('contest_user')
+            ->where('contest_id',$contest_id)
+            ->where('user_id',$user_id)
+            ->count() > 0;
+    }
+
 }

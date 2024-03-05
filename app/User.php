@@ -247,4 +247,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Computation::class);
     }
+
+    public function contests()
+    {
+        return $this->belongsToMany(Contest::class);
+    }
 }

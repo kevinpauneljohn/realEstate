@@ -57,7 +57,14 @@ $(document).on('click','.edit-rank-btn', function(){
             $('input[name=is_active]').prop('checked',false)
         }
         contestForm.find('input[name=title]').val(response.name);
-        contestForm.find('textarea[name=description]').val(response.description);
+        // contestForm.find('textarea[name=description]').val(response.description);
+        contestForm.find('textarea[name=description]').val(function () {
+            let regex = /(<([^>]+)>)/ig
+            let body = response.description;
+            let content = body.replace(regex, "");
+
+            return content;
+        });
         contestForm.find('input[name=date_active]').val(moment(response.date_working).format('YYYY-MM-DD'));
         contestForm.find('#rank').val(response.ranks).change();
         contestForm.find('input[name=amount]').val(response.extra_field.amount);

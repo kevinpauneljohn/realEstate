@@ -94,3 +94,7 @@ table td{
 .sample-computation-form{
     margin-bottom:20px;
 }
+
+.contest-card{
+    max-width: 1080px;
+}

@@ -5,31 +5,23 @@ namespace App\Services;
 
 
 use App\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 
 class AccountManagerService
 {
-    public $superAdmin;
 
-    public function __construct()
-    {
-        if(Auth::check())
-        {
-            $this->superAdmin = User::whereHas("roles", function($q){ $q->where("name", "super admin"); })->first();
-        }
-    }
 
     /**
-     * if the logged in user is an account manager will return all the leads of the super admin
-     * if the logged in user is not an account manager will return
-     * @param $user
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     *  if the logged in user is an account manager will return all the leads of the super admin
+     *  if the logged in user is not an account manager will return
+     * @return Authenticatable|null
      */
-    public function checkIfUserIsAccountManager(): ?\Illuminate\Contracts\Auth\Authenticatable
+    public function checkIfUserIsAccountManager()
     {
         if(auth()->user()->hasRole(['account manager','online warrior']))
         {
-            return $this->superAdmin;
+            return User::whereHas("roles", function($q){ $q->where("name", "super admin"); })->first();
         }
         return auth()->user();
     }

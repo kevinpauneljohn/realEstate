@@ -32,4 +32,9 @@ class Contest extends Model
     {
         return json_decode($value);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

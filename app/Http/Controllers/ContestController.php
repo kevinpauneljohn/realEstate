@@ -14,7 +14,7 @@ class ContestController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','permission:view contest'])->only(['index','contest_list']);
+        $this->middleware(['auth','permission:view contest'])->only(['index','contest_list','joinUserToContest']);
         $this->middleware(['auth','permission:add contest'])->only(['store']);
         $this->middleware(['auth','permission:edit contest'])->only(['edit','update']);
     }
@@ -32,9 +32,6 @@ class ContestController extends Controller
         return DataTables::of($contests)
             ->editColumn('name',function($contest){
                 return ucfirst($contest->name);
-            })
-            ->editColumn('description',function($contest){
-                return ucfirst($contest->description);
             })
             ->editColumn('active',function($contest){
                 return $contest->active === 1 ? '<span class="text-success">Yes</span>' : '<span class="text-muted">No</span>';
@@ -55,7 +52,7 @@ class ContestController extends Controller
 
                 if(auth()->user()->can('view contest'))
                 {
-                    $action .= '<button type="button" class="btn btn-xs btn-success view-rank-btn" title="View" id="'.$contest->id.'" data-toggle="modal" data-target="#edit-rank-modal"><i class="fas fa-eye"></i></button>';
+                    $action .= '<a href="'.route('contest.show',['contest' => $contest->id]).'" class="btn btn-xs btn-success view-rank-btn" title="View" id="'.$contest->id.'"><i class="fas fa-eye"></i></a>';
                 }
                 if(auth()->user()->can('edit contest'))
                 {
@@ -67,15 +64,30 @@ class ContestController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action','active','rank'])
+            ->rawColumns(['action','active','rank','description'])
             ->make(true);
+    }
+
+    public function show($id, ContestService $contestService)
+    {
+        $userId = auth()->user()->id;
+        $contest = Contest::findOrFail($id);
+        $userRank = $contestService->getUserRank($userId);
+        $allowedToJoin = $contestService->checkUserIfAllowedToJoin($userId, $id);
+        $is_user_joined_the_contest = $contestService->checkIfUserAlreadyJoinedContest($userId, $contest->id);
+        return view('pages.contest.profile',
+            compact('contest',
+                'userRank',
+                'allowedToJoin',
+                'is_user_joined_the_contest')
+        );
     }
 
     public function store(ContestRequest $request, ContestService $contestService)
     {
             $contest = new Contest();
             $contest->name = $request->title;
-            $contest->description = $request->description;
+            $contest->description = nl2br($request->description);
             $contest->ranks = array($request->rank);
             $contest->active = $request->is_active ? true : false;
             $contest->date_working = $request->date_active;
@@ -101,7 +113,7 @@ class ContestController extends Controller
     {
         $contest = Contest::findOrFail($id);
         $contest->name = $request->title;
-        $contest->description = $request->description;
+        $contest->description = nl2br($request->description);
         $contest->ranks = array($request->rank);
         $contest->active = $request->is_active ? 1 : 0;
         $contest->date_working = $request->date_active;
@@ -121,5 +133,12 @@ class ContestController extends Controller
         }
         return response()->json(['success' => false, 'message' => 'No changes made!']);
 
+    }
+
+    public function joinUserToContest($contest_id, ContestService $contestService): \Illuminate\Http\JsonResponse
+    {
+        return $contestService->joinContest($contest_id, auth()->user()->id) ?
+            response()->json(['success' => true, 'message' =>'User successfully joined']) :
+            response()->json(['success' => false, 'message' =>'User not allowed to join']);
     }
 }

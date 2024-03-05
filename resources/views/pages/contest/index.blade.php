@@ -31,7 +31,6 @@
                     <thead>
                     <tr role="row">
                         <th width="20%">Name</th>
-                        <th>Description</th>
                         <th>Allowed Rank</th>
                         @if(auth()->user()->can('add contest'))
                             <th width="8%">Active</th>
@@ -45,7 +44,6 @@
                     <tfoot>
                     <tr>
                         <th>Name</th>
-                        <th>Description</th>
                         <th width="20%">Allowed Rank</th>
                         @if(auth()->user()->can('add contest'))
                             <th width="8%">Active</th>
@@ -85,7 +83,7 @@
                             </div>
                             <div class="form-group description">
                                 <label for="description">Description</label><span class="required">*</span>
-                                <textarea name="description" class="form-control" id="description"></textarea>
+                                <textarea name="description" class="form-control" id="description" style="min-height: 300px;"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -142,9 +140,7 @@
 @section('right-sidebar')
     <x-custom.right-sidebar />
 @stop
-@section('navbar-layout-topnav')
-    hello world
-@stop
+
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
@@ -171,7 +167,6 @@
                     ajax: '{!! route('contest.list') !!}',
                     columns: [
                         { data: 'name', name: 'name'},
-                        { data: 'description', name: 'description'},
                         { data: 'rank', name: 'rank'},
                         @if(auth()->user()->can('add contest'))
                             { data: 'active', name: 'active'},
