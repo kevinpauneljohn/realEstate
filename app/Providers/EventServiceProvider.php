@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -72,8 +73,24 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
+//        parent::boot();
 
-        //
+        Event::listen(BuildingMenu::class, function(BuildingMenu $event){
+            $event->menu->add([
+                'text' => 'Welcome back '.auth()->user()->username,
+                'url' => '#',
+                'topnav' => true,
+                'classes'  => 'text-info text-bold',
+            ]);
+
+            $event->menu->addAfter('contacts',[
+                'text' => 'Contests',
+                'route'  => 'contest.index',
+                'icon'    => 'fas fa-trophy',
+                'can'  => 'view contest',
+                'icon_color' => 'warning',
+                'key' => 'contest'
+            ]);
+        });
     }
 }

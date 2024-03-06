@@ -9,7 +9,7 @@ class Contest extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name','description','active','ranks','date_working','extra_field'];
+    protected $fillable = ['name','description','active','ranks','date_working','extra_field','user_id'];
 
     protected $dates = ['date_working'];
 

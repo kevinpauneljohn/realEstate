@@ -36,7 +36,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="leads controller api for openhouseseller.com">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Contest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Contest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filters/AdminRequestFiler.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AlertController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AlertController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ContestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ContestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/ContestService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ContestService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/RoleSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/RoleSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/contest/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/contest/profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web/contest.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web/contest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -733,7 +744,7 @@
       <workItem from="1709568804250" duration="2486000" />
       <workItem from="1709583773903" duration="1014000" />
       <workItem from="1709584899370" duration="338000" />
-      <workItem from="1709587412992" duration="20080000" />
+      <workItem from="1709587412992" duration="31205000" />
     </task>
     <task id="LOCAL-00805" summary="setup the payment reminder">
       <created>1627136957909</created>

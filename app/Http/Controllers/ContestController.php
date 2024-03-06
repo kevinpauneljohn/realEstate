@@ -14,9 +14,11 @@ class ContestController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','permission:view contest'])->only(['index','contest_list','joinUserToContest']);
+        $this->middleware(['auth','permission:view contest'])->only(['index','contest_list','joinUserToContest','getContestParticipants']);
         $this->middleware(['auth','permission:add contest'])->only(['store']);
         $this->middleware(['auth','permission:edit contest'])->only(['edit','update']);
+        $this->middleware(['auth','permission:declare contest winner'])->only(['declareWinner']);
+
     }
     public function index()
     {
@@ -140,5 +142,46 @@ class ContestController extends Controller
         return $contestService->joinContest($contest_id, auth()->user()->id) ?
             response()->json(['success' => true, 'message' =>'User successfully joined']) :
             response()->json(['success' => false, 'message' =>'User not allowed to join']);
+    }
+
+    public function getContestParticipants($contest_id)
+    {
+        $contest = Contest::findOrFail($contest_id);
+        return DataTables::of($contest->users)
+            ->addColumn('fullName', function($user){
+                return '<span class="text-primary">'.$user->fullname.'</span>';
+            })
+            ->addColumn('rank', function($user){
+                return $user->userRankPoint->rank->name;
+            })
+            ->addColumn('action',function($user) use ($contest){
+                $action = "";
+
+                if(auth()->user()->can('declare contest winner'))
+                {
+                    if($contest->user_id == null)
+                    {
+                        $action .= '<button type="button" class="btn btn-xs btn-primary declare-winner-btn" title="Declare Winner" id="'.$user->id.'"><i class="fas fa-trophy"></i></button>';
+                    }
+                    elseif($contest->user_id == $user->id)
+                    {
+                        $action .= '<span class="fas fa-trophy text-warning"></span> Winner';
+                    }
+
+                }
+                return $action;
+            })
+            ->setRowClass(function ($user) use ($contest){
+                return $contest->user_id == $user->id ? 'winner' : '';
+            })
+            ->rawColumns(['action','rank','fullName'])
+            ->make(true);
+    }
+
+    public function declareWinner($contest_id, $user_id, ContestService $contestService): \Illuminate\Http\JsonResponse
+    {
+        return $contestService->saveContestWinner($contest_id, $user_id) ?
+            response()->json(['success' => true, 'message' => 'A winner has been declared!']) :
+            response()->json(['success' => false, 'message' => 'An error occurred!']);
     }
 }

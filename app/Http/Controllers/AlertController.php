@@ -69,7 +69,7 @@ class AlertController extends Controller
                 'count' => $notification->count()
             ],
             [
-                'icon' => 'fas fa-fw fa-tasks',
+                'icon' => 'fas fa-fw fa-thumbtack',
                 'text' => ($task > 0) ? 'Tasks <span class="badge badge-danger">'.$task.'</span>' : 'Tasks',
                 'url' => '/my-tasks',
                 'count' => $task

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Contest;
 use App\User;
 use Illuminate\Support\Facades\DB;
 
@@ -58,6 +59,13 @@ class ContestService
             ->where('contest_id',$contest_id)
             ->where('user_id',$user_id)
             ->count() > 0;
+    }
+
+    public function saveContestWinner($contest_id, $user_id): bool
+    {
+        $contest = Contest::findOrFail($contest_id);
+        $contest->user_id = $user_id;
+        return (bool)$contest->save();
     }
 
 }

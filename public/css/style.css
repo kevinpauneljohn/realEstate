@@ -98,3 +98,6 @@ table td{
 .contest-card{
     max-width: 1080px;
 }
+.winner{
+    background-color: #e0fdba!important;
+}

@@ -211,7 +211,7 @@ return [
     */
 
     'sidebar_mini' => 'md',
-    'sidebar_collapse' => true,
+    'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -318,22 +318,14 @@ return [
             'type'         => 'darkmode-widget',
             'topnav_right' => true, // Or "topnav => true" to place on the left.
         ],
-        [
-            'text' => 'Contests',
-            'route'  => 'contest.index',
-            'icon'    => 'fas fa-trophy',
-            'can'  => 'view contest',
-            'icon_color' => 'warning',
-            'topnav' => true
-        ],
 //        [
-//            'text' => 'Admin Requests',
-//            'route'  => 'thresholds.index',
-//            'icon'    => 'fas fa-list',
-//            'can'  => 'view request',
-//            'icon_color' => 'danger',
-//            'label' => 4,
-//            'topnav' => true
+//            'text' => 'Contests',
+//            'route'  => 'contest.index',
+//            'icon'    => 'fas fa-trophy',
+//            'can'  => 'view contest',
+//            'icon_color' => 'warning',
+//            'topnav_right' => true,
+//            'key' => 'contest'
 //        ],
         [
             'text' => 'Dashboard',
@@ -440,6 +432,7 @@ return [
             'icon'    => 'fas fa-address-book',
             'route'  => 'contacts.index',
             'can'  => 'view contacts',
+            'key' => 'contacts'
         ],
 //        [
 //            'text'    => 'Dream Home Guide',
@@ -531,7 +524,7 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
         \App\Filters\RoleMenuFilter::class,
-        \App\Filters\AdminRequestFiler::class
+//        \App\Filters\AdminRequestFiler::class
     ],
 
     /*
