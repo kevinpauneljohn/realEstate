@@ -298,22 +298,22 @@ return [
 //            'text' => 'Search', //input placeholder
 //            'topnav' => true
 //        ],
-//        [
-//            'type'         => 'navbar-notification',
-//            'id'           => 'my-notification',      // An ID attribute (required).
-//            'icon'         => 'fas fa-bell',          // A font awesome icon (required).
-//            'icon_color'   => 'warning',              // The initial icon color (optional).
-//            'label'        => 0,                      // The initial label for the badge (optional).
-//            'label_color'  => 'danger',               // The initial badge color (optional).
-//            'url'          => 'notifications/show',   // The url to access all notifications/elements (required).
-//            'topnav_right' => true,                   // Or "topnav => true" to place on the left (required).
-//            'dropdown_mode'   => true,                // Enables the dropdown mode (optional).
-//            'dropdown_flabel' => 'All notifications', // The label for the dropdown footer link (optional).
-//            'update_cfg'   => [
-//                'url' => 'notifications/get',         // The url to periodically fetch new data (optional).
-//                'period' => 30,                       // The update period for get new data (in seconds, optional).
-//            ],
-//        ],
+        [
+            'type'         => 'navbar-notification',
+            'id'           => 'my-notification',      // An ID attribute (required).
+            'icon'         => 'fas fa-bell',          // A font awesome icon (required).
+            'icon_color'   => 'warning',              // The initial icon color (optional).
+            'label'        => 0,                      // The initial label for the badge (optional).
+            'label_color'  => 'danger',               // The initial badge color (optional).
+            'url'          => '#',   // The url to access all notifications/elements (required).
+            'topnav_right' => true,                   // Or "topnav => true" to place on the left (required).
+            'dropdown_mode'   => true,                // Enables the dropdown mode (optional).
+            'dropdown_flabel' => 'All notifications', // The label for the dropdown footer link (optional).
+            'update_cfg'   => [
+                'url' => 'notifications/get',         // The url to periodically fetch new data (optional).
+                'period' => 30,                       // The update period for get new data (in seconds, optional).
+            ],
+        ],
         [
             'type'         => 'darkmode-widget',
             'topnav_right' => true, // Or "topnav => true" to place on the left.
@@ -326,6 +326,15 @@ return [
             'icon_color' => 'warning',
             'topnav' => true
         ],
+//        [
+//            'text' => 'Admin Requests',
+//            'route'  => 'thresholds.index',
+//            'icon'    => 'fas fa-list',
+//            'can'  => 'view request',
+//            'icon_color' => 'danger',
+//            'label' => 4,
+//            'topnav' => true
+//        ],
         [
             'text' => 'Dashboard',
             'icon' => 'fa fa-tachometer-alt',
@@ -522,6 +531,7 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
         \App\Filters\RoleMenuFilter::class,
+        \App\Filters\AdminRequestFiler::class
     ],
 
     /*
