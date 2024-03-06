@@ -64,7 +64,7 @@ class AlertController extends Controller
             ],
             [
                 'icon' => 'fas fa-fw fa-users',
-                'text' => ($notification->count() > 0) ? 'Lead Activities <span class="badge badge-danger">'.$notification->count().'</span>' : 'Lead Activities',
+                'text' => ($notification->count() > 0) ? 'Reminders <span class="badge badge-danger">'.$notification->count().'</span>' : 'Reminders',
                 'url' => '/notifications',
                 'count' => $notification->count()
             ],
