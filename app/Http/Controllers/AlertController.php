@@ -56,25 +56,23 @@ class AlertController extends Controller
 
         $notifications = [
             [
-                'icon' => 'fas fa-fw fa-wallet text-warning',
-                'text' => 'Wallet Amount  = <span class="text-success">&#8369; '.number_format(\App\Wallet::where([['user_id','=',auth()->user()->id],['status','!=','completed']])->sum('amount'),2).'</span>',
-                'url' => '#'
-            ],
-            [
                 'icon' => 'fas fa-fw fa-list',
                 'text' => ' Admin Request <span class="badge badge-danger">'.$request->count().'</span>',
                 'time' => rand(0, 10) . ' minutes',
-                'url' => '/thresholds'
+                'url' => '/thresholds',
+                'count' => $request->count()
             ],
             [
                 'icon' => 'fas fa-fw fa-users',
                 'text' => ($notification->count() > 0) ? 'Lead Activities <span class="badge badge-danger">'.$notification->count().'</span>' : 'Lead Activities',
-                'url' => '/notifications'
+                'url' => '/notifications',
+                'count' => $notification->count()
             ],
             [
                 'icon' => 'fas fa-fw fa-tasks',
                 'text' => ($task > 0) ? 'Tasks <span class="badge badge-danger">'.$task.'</span>' : 'Tasks',
-                'url' => '/my-tasks'
+                'url' => '/my-tasks',
+                'count' => $task
             ],
         ];
 
@@ -83,24 +81,24 @@ class AlertController extends Controller
         $dropdownHtml = '';
 
         foreach ($notifications as $key => $not) {
-            $icon = "<i class='mr-2 {$not['icon']}'></i>";
 
-
-
-            $dropdownHtml .= "<a href='".$not['url']."' class='dropdown-item'>
+            if($not['count'] > 0)
+            {
+                $icon = "<i class='mr-2 {$not['icon']}'></i>";
+                $dropdownHtml .= "<a href='".$not['url']."' class='dropdown-item'>
                             {$icon}{$not['text']}
                           </a>";
-
-            if ($key < count($notifications) - 1) {
-                $dropdownHtml .= "<div class='dropdown-divider'></div>";
+                if ($key < count($notifications) - 1) {
+                    $dropdownHtml .= "<div class='dropdown-divider'></div>";
+                }
             }
+
         }
 
         // Return the new notification data.
 
         return [
-//            'label'       => count($notifications),
-            'label'       => '',
+            'label'       => $request->count() + $notification->count() + $task,
             'label_color' => 'danger',
             'icon_color'  => 'dark',
             'dropdown'    => $dropdownHtml,
