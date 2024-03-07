@@ -69,7 +69,7 @@
                 <div class="col-12 col-sm-12">
                     <div class="info-box bg-light">
                         <div class="info-box-content">
-                            @if($is_user_joined_the_contest === true || !is_null($contest->user_id))
+                            @if($is_user_joined_the_contest === true || !is_null($contest->user_id) || auth()->user()->hasRole('super admin'))
                                 {!! $contest->description !!}
                             @else
                                 Click the Join Button to view the mechanics
