@@ -32,12 +32,12 @@
                     <tr role="row">
                         <th width="20%">Name</th>
                         <th>Allowed Rank</th>
+                        <th width="8%">Active</th>
                         @if(auth()->user()->can('add contest'))
-                            <th width="8%">Active</th>
                             <th width="10%">Date Active</th>
                         @endif
-
-                        <th width="10%">Action</th>
+                        <th>Winner</th>
+                        <th width="10%"></th>
                     </tr>
                     </thead>
 
@@ -45,11 +45,12 @@
                     <tr>
                         <th>Name</th>
                         <th width="20%">Allowed Rank</th>
+                        <th width="8%">Active</th>
                         @if(auth()->user()->can('add contest'))
-                            <th width="8%">Active</th>
                             <th width="10%">Date Active</th>
                         @endif
-                        <th>Action</th>
+                        <th>Winner</th>
+                        <th></th>
                     </tr>
                     </tfoot>
                 </table>
@@ -168,10 +169,11 @@
                     columns: [
                         { data: 'name', name: 'name'},
                         { data: 'rank', name: 'rank'},
+                        { data: 'active', name: 'active'},
                         @if(auth()->user()->can('add contest'))
-                            { data: 'active', name: 'active'},
                             { data: 'date_working', name: 'date_working'},
                         @endif
+                        { data: 'user_id', name: 'user_id'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,

@@ -91,6 +91,13 @@ class EventServiceProvider extends ServiceProvider
                 'icon_color' => 'warning',
                 'key' => 'contest'
             ]);
+            $event->menu->addAfter('settings',[
+                'text' => 'Wallet Amount ('.number_format(\App\Wallet::where([['user_id','=',auth()->user()->id],['status','!=','completed']])->sum('amount'),2).')',
+                'route'  => 'wallet.index',
+                'icon'    => 'fas fa-wallet',
+                'icon_color' => 'info',
+                'key' => 'wallet'
+            ]);
         });
     }
 }

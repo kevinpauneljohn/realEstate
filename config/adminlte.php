@@ -463,6 +463,7 @@ return [
             'text'    => 'Settings',
             'icon'    => 'fas fa-cogs',
             'can'     => 'view settings',
+            'key'     => 'settings',
             'submenu' => [
                 [
                     'text' => 'Canned Message',

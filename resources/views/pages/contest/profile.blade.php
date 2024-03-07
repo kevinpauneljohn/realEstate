@@ -20,25 +20,60 @@
 @section('content')
     <div class="card contest-card container-fluid">
         <div class="card-header">
-            <h3 class="card-title">
-                {{ucwords($contest->name)}}
-            </h3>
-            <div class="card-tools">
-                @if($allowedToJoin === true)
-                    @if($is_user_joined_the_contest === true)
-                        <button type="button" class="btn btn-success btn-sm" disabled>Joined</button>
-                    @else
-                        <button type="button" class="btn btn-success btn-sm" id="join-btn">Join</button>
-                    @endif
-                @endif
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-success"><i class="fa fa-money-bill-alt"></i></span>
 
+                        <div class="info-box-content">
+                            <span class="info-box-text">Cash Incentives</span>
+                            <span class="info-box-number">&#8369; {{number_format($contest->extra_field->amount,2)}}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-primary"><i class="fa fa-trophy"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Item (In-kind)</span>
+                            <span class="info-box-number">@if(!empty($contest->extra_field->item)) {{$contest->extra_field->item}} @else N/A @endif</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
             </div>
 
         </div>
         <div class="card-body">
-            <p class="contest-description">
-                {!! $contest->description !!}
-            </p>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4 class="float-left text-primary">
+                        {{ucwords($contest->name)}}
+                    </h4>
+                    <div class="float-right">
+                        @if($contest->active == 1)
+                            @if($allowedToJoin === true)
+                                @if($is_user_joined_the_contest === true)
+                                    <button type="button" class="btn btn-success btn-sm" disabled>Joined</button>
+                                @else
+                                    <button type="button" class="btn btn-success btn-sm" id="join-btn">Join</button>
+                                @endif
+                            @endif
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <div class="info-box bg-light">
+                        <div class="info-box-content">
+                            {!! $contest->description !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -113,7 +148,11 @@
                     order:[0,'desc']
                 });
             });
+        </script>
+    @endcan
 
+    @if($contest->active == 1)
+        <script>
             $(document).on('click','#join-btn', function(){
 
                 $.ajax({
@@ -128,6 +167,7 @@
                     if(response.success === true)
                     {
                         customAlert("success",response.message);
+                        $('#participants-list').DataTable().ajax.reload(null, false);
                     }else if(response.success === false)
                     {
                         customAlert("warning",response.message);
@@ -140,7 +180,7 @@
                 })
             });
         </script>
-    @endcan
+    @endif
 
     @can('declare contest winner')
         <script>

@@ -6,6 +6,7 @@ use App\Contest;
 use App\Http\Requests\ContestRequest;
 use App\Rank;
 use App\Services\ContestService;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
@@ -41,6 +42,9 @@ class ContestController extends Controller
             ->editColumn('date_working',function($contest){
                 return $contest->date_working->format('M d, Y');
             })
+            ->editColumn('user_id',function($contest){
+                return !is_null($contest->user_id) ? User::find($contest->user_id)->fullname : '';
+            })
             ->addColumn('rank',function($contest){
                 $ranks = DB::table('contest_rank')->where('contest_id',$contest->id)->get();
                 $rankName = '';
@@ -51,20 +55,22 @@ class ContestController extends Controller
             })
             ->addColumn('action',function($contest){
                 $action = "";
-
                 if(auth()->user()->can('view contest'))
                 {
                     $action .= '<a href="'.route('contest.show',['contest' => $contest->id]).'" class="btn btn-xs btn-success view-rank-btn" title="View" id="'.$contest->id.'"><i class="fas fa-eye"></i></a>';
                 }
-                if(auth()->user()->can('edit contest'))
+                if(auth()->user()->can('edit contest') && is_null($contest->user_id))
                 {
                     $action .= '<button type="button" class="btn btn-xs btn-primary edit-rank-btn" title="Edit" id="'.$contest->id.'" data-toggle="modal" data-target="#edit-rank-modal"><i class="fas fa-edit"></i></button>';
                 }
-                if(auth()->user()->can('delete contest'))
+                if(auth()->user()->can('delete contest')&& is_null($contest->user_id))
                 {
                     $action .= '<button type="button" class="btn btn-xs btn-danger delete-rank-btn" title="Delete" id="'.$contest->id.'"><i class="fas fa-trash"></i></button>';
                 }
                 return $action;
+            })
+            ->setRowClass(function ($contest){
+                return !is_null($contest->user_id) ? 'contest-completed' : '';
             })
             ->rawColumns(['action','active','rank','description'])
             ->make(true);
