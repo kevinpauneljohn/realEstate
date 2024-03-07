@@ -69,7 +69,12 @@
                 <div class="col-12 col-sm-12">
                     <div class="info-box bg-light">
                         <div class="info-box-content">
-                            {!! $contest->description !!}
+                            @if($is_user_joined_the_contest === true || !is_null($contest->user_id))
+                                {!! $contest->description !!}
+                            @else
+                                Click the Join Button to view the mechanics
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -168,6 +173,9 @@
                     {
                         customAlert("success",response.message);
                         $('#participants-list').DataTable().ajax.reload(null, false);
+                        setTimeout(function (){
+                            window.location.reload();
+                        },1500)
                     }else if(response.success === false)
                     {
                         customAlert("warning",response.message);
