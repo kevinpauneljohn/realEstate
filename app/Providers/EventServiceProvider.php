@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Threshold;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -97,6 +98,20 @@ class EventServiceProvider extends ServiceProvider
                 'icon'    => 'fas fa-wallet',
                 'icon_color' => 'info',
                 'key' => 'wallet'
+            ]);
+
+            $thresholds = Threshold::where([
+                ['user_id','=',auth()->user()->id],
+                ['status','=','pending'],
+            ]);
+            $event->menu->addAfter('contacts',[
+                'text' => 'Admin Requests',
+                'icon'    => 'fas fa-list',
+                'route'  => 'thresholds.index',
+                'label' => $thresholds->count() > 0 ? $thresholds->count() : '',
+                'label_color' => $thresholds->count() > 0 ? 'danger' : 'default',
+                'can'  => 'view request',
+                'key' => 'admin_request'
             ]);
         });
     }

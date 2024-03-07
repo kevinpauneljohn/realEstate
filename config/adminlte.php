@@ -434,12 +434,6 @@ return [
             'can'  => 'view contacts',
             'key' => 'contacts'
         ],
-        [
-            'text' => 'Admin Requests',
-            'icon'    => 'fas fa-list',
-            'route'  => 'thresholds.index',
-            'can'  => 'view request',
-        ],
 //        [
 //            'text'    => 'Dream Home Guide',
 //            'icon'    => 'fas fa-home',
