@@ -58,7 +58,9 @@
                                 @if($is_user_joined_the_contest === true)
                                     <button type="button" class="btn btn-success btn-sm" disabled>Joined</button>
                                 @else
-                                    <button type="button" class="btn btn-success btn-sm" id="join-btn">Join</button>
+                                    @if(is_null($contest->user_id))
+                                        <button type="button" class="btn btn-success btn-sm" id="join-btn">Join</button>
+                                    @endif
                                 @endif
                             @endif
                         @endif
