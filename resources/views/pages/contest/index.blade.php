@@ -30,6 +30,7 @@
                 <table id="contest-list" class="table table-bordered table-striped table-hover" role="grid">
                     <thead>
                     <tr role="row">
+                        <th>Contest Id</th>
                         <th width="20%">Name</th>
                         <th>Allowed Rank</th>
                         <th>Cash Prize</th>
@@ -46,6 +47,7 @@
 
                     <tfoot>
                     <tr>
+                        <th>Contest Id</th>
                         <th>Name</th>
                         <th width="20%">Allowed Rank</th>
                         <th>Cash Prize</th>
@@ -173,6 +175,7 @@
                     serverSide: true,
                     ajax: '{!! route('contest.list') !!}',
                     columns: [
+                        { data: 'id', name: 'id'},
                         { data: 'name', name: 'name'},
                         { data: 'rank', name: 'rank'},
                         { data: 'cash', name: 'cash'},
@@ -186,7 +189,8 @@
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[0,'desc']
+                    order:[0,'desc'],
+                    pageLength: 50
                 });
             });
 

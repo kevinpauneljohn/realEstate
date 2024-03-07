@@ -33,6 +33,10 @@ class ContestController extends Controller
         $contests = Contest::all();
 
         return DataTables::of($contests)
+            ->editColumn('id', function($contest){
+                $id = str_pad($contest->id, 5, '0', STR_PAD_LEFT);
+                return '<a href="#"><span style="color:#007bff">'.$id.'</span></a>';
+            })
             ->editColumn('name',function($contest){
                 return ucfirst($contest->name);
             })
@@ -81,7 +85,7 @@ class ContestController extends Controller
             ->setRowClass(function ($contest){
                 return !is_null($contest->user_id) ? 'contest-completed' : '';
             })
-            ->rawColumns(['action','active','rank','description','cash','item'])
+            ->rawColumns(['id','action','active','rank','description','cash','item'])
             ->make(true);
     }
 
