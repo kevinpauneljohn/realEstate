@@ -169,11 +169,11 @@ class ContestController extends Controller
                     {
                         $action .= '<button type="button" class="btn btn-xs btn-primary declare-winner-btn" title="Declare Winner" id="'.$user->id.'"><i class="fas fa-trophy"></i></button>';
                     }
-                    elseif($contest->user_id == $user->id)
-                    {
-                        $action .= '<span class="fas fa-trophy text-warning"></span> Winner';
-                    }
 
+                }
+                if($contest->user_id == $user->id)
+                {
+                    $action .= '<span class="fas fa-trophy text-warning"></span> Winner';
                 }
                 return $action;
             })
