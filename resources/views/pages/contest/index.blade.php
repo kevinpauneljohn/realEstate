@@ -32,6 +32,8 @@
                     <tr role="row">
                         <th width="20%">Name</th>
                         <th>Allowed Rank</th>
+                        <th>Cash Prize</th>
+                        <th>Item Prize</th>
                         <th width="8%">Active</th>
                         <th width="8%">No. of Participants</th>
                         @if(auth()->user()->can('add contest'))
@@ -46,6 +48,8 @@
                     <tr>
                         <th>Name</th>
                         <th width="20%">Allowed Rank</th>
+                        <th>Cash Prize</th>
+                        <th>Item Prize</th>
                         <th width="8%">Active</th>
                         <th width="8%">No. of Participants</th>
                         @if(auth()->user()->can('add contest'))
@@ -171,6 +175,8 @@
                     columns: [
                         { data: 'name', name: 'name'},
                         { data: 'rank', name: 'rank'},
+                        { data: 'cash', name: 'cash'},
+                        { data: 'item', name: 'item'},
                         { data: 'active', name: 'active'},
                         { data: 'participants', name: 'participants'},
                         @if(auth()->user()->can('add contest'))

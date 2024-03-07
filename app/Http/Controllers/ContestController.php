@@ -48,6 +48,12 @@ class ContestController extends Controller
             ->editColumn('user_id',function($contest){
                 return !is_null($contest->user_id) ? User::find($contest->user_id)->fullname : '';
             })
+            ->addColumn('cash', function($contest){
+                return '<span class="text-primary">&#8369; '.number_format($contest->extra_field->amount,2).'</span>';
+            })
+            ->addColumn('item', function($contest){
+                return '<span class="text-primary">'.$contest->extra_field->item.'</span>';
+            })
             ->addColumn('rank',function($contest){
                 $ranks = DB::table('contest_rank')->where('contest_id',$contest->id)->get();
                 $rankName = '';
@@ -75,7 +81,7 @@ class ContestController extends Controller
             ->setRowClass(function ($contest){
                 return !is_null($contest->user_id) ? 'contest-completed' : '';
             })
-            ->rawColumns(['action','active','rank','description'])
+            ->rawColumns(['action','active','rank','description','cash','item'])
             ->make(true);
     }
 
