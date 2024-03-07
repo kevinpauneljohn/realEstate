@@ -33,6 +33,7 @@
                         <th width="20%">Name</th>
                         <th>Allowed Rank</th>
                         <th width="8%">Active</th>
+                        <th width="8%">No. of Participants</th>
                         @if(auth()->user()->can('add contest'))
                             <th width="10%">Date Active</th>
                         @endif
@@ -46,6 +47,7 @@
                         <th>Name</th>
                         <th width="20%">Allowed Rank</th>
                         <th width="8%">Active</th>
+                        <th width="8%">No. of Participants</th>
                         @if(auth()->user()->can('add contest'))
                             <th width="10%">Date Active</th>
                         @endif
@@ -170,6 +172,7 @@
                         { data: 'name', name: 'name'},
                         { data: 'rank', name: 'rank'},
                         { data: 'active', name: 'active'},
+                        { data: 'participants', name: 'participants'},
                         @if(auth()->user()->can('add contest'))
                             { data: 'date_working', name: 'date_working'},
                         @endif

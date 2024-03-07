@@ -39,6 +39,9 @@ class ContestController extends Controller
             ->editColumn('active',function($contest){
                 return $contest->active === 1 ? '<span class="text-success">Yes</span>' : '<span class="text-muted">No</span>';
             })
+            ->addColumn('participants',function($contest){
+                return $contest->users->count();
+            })
             ->editColumn('date_working',function($contest){
                 return $contest->date_working->format('M d, Y');
             })
