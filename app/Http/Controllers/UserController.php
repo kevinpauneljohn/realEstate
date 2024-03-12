@@ -139,10 +139,10 @@ class UserController extends Controller
 
                 return $modelUnit->name;
             })
-            ->addColumn('status',function($sale){
-
-                return '';
-            })
+//            ->Column('status',function($sale){
+//
+//                return '';
+//            })
             ->addColumn('action', function ($sale)
             {
                 $action = "";

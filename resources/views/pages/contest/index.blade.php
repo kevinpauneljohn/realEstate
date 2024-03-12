@@ -27,7 +27,7 @@
 
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table id="contest-list" class="table table-bordered table-striped table-hover" role="grid">
+                <table id="contest-list" class="table table-bordered table-hover" role="grid">
                     <thead>
                     <tr role="row">
                         <th width="8%">Contest Id</th>
