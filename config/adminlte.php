@@ -624,12 +624,14 @@ return [
             ],
         ],
         'Pace' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
+                    'asset' => true,
+//                    'asset' => false,
+//                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
+                    'location' => 'css/barber-shop.css',
                 ],
                 [
                     'type' => 'js',
