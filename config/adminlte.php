@@ -131,7 +131,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header_class' => 'bg-default',
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => true,
@@ -192,7 +192,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-light-info elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -234,7 +234,7 @@ return [
 
     'right_sidebar' => true,
     'right_sidebar_icon' => 'fas fa-cogs',
-    'right_sidebar_theme' => 'dark',
+    'right_sidebar_theme' => 'light',
     'right_sidebar_slide' => true,
     'right_sidebar_push' => false,
     'right_sidebar_scrollbar_theme' => 'os-theme-light',
@@ -314,19 +314,6 @@ return [
                 'period' => 30,                       // The update period for get new data (in seconds, optional).
             ],
         ],
-        [
-            'type'         => 'darkmode-widget',
-            'topnav_right' => true, // Or "topnav => true" to place on the left.
-        ],
-//        [
-//            'text' => 'Contests',
-//            'route'  => 'contest.index',
-//            'icon'    => 'fas fa-trophy',
-//            'can'  => 'view contest',
-//            'icon_color' => 'warning',
-//            'topnav_right' => true,
-//            'key' => 'contest'
-//        ],
         [
             'text' => 'Dashboard',
             'icon' => 'fa fa-tachometer-alt',
@@ -434,31 +421,6 @@ return [
             'can'  => 'view contacts',
             'key' => 'contacts'
         ],
-//        [
-//            'text'    => 'Dream Home Guide',
-//            'icon'    => 'fas fa-home',
-//            'can'     => 'view builder',
-//            'submenu'   => [
-//                [
-//                    'text'    => 'Users',
-//                    'icon'    => 'fas fa-user-tag',
-//                    'can'     => 'view client',
-//                    'route'   => 'client.index',
-//                ],
-//                [
-//                    'text'    => 'Builders',
-//                    'icon'    => 'fas fa-user-cog',
-//                    'can'     => 'view builder',
-//                    'route'   => 'builder.index',
-//                ],
-//                [
-//                    'text'    => 'Projects',
-//                    'icon'    => 'fas fa-user-cog',
-//                    'can'     => 'view builder',
-//                    'route'   => 'dhg.project.index',
-//                ],
-//            ],
-//        ],
         [
             'text'    => 'Settings',
             'icon'    => 'fas fa-cogs',
