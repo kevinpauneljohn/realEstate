@@ -214,14 +214,14 @@ class TaskRepository implements TaskInterface
         if (!empty($user)) {
             $role = $user->roles()->whereNotIn('name', ['super admin'])->get(['name']);
         }
-        
+
         $data = [];
         $datas = '';
         if (!empty($role)) {
             foreach ($role as $roles) {
                 $data [] = ucfirst($roles->name);
             }
-    
+
             $datas = implode(", ", $data);
         }
 
@@ -240,7 +240,7 @@ class TaskRepository implements TaskInterface
         } else {
             return false;
         }
-        
+
     }
 
     public function displayRemarks($task_id)
@@ -316,7 +316,7 @@ class TaskRepository implements TaskInterface
         } else {
             $task = Task::where('id','=',$task_id)->where('created_by','=',auth()->user()->id);
         }
-        
+
         if($task->count() > 0)
         {
             return $task->delete();
@@ -327,7 +327,7 @@ class TaskRepository implements TaskInterface
     public function updateTaskStatus()
     {
         $tasks = $this->getAllTaskExcept(['completed']);
-//        $data = array();
+        $data = array();
         foreach ($tasks as $key => $task)
         {
             $dueDate = Carbon::parse($task->due_date.' '.$task->time);

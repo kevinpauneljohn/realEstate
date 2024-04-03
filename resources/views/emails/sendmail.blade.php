@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <metan name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width">
         <title>Dream Home Seller.com</title>
     </head>
     <body>

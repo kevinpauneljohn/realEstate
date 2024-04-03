@@ -36,16 +36,16 @@ class SendPaymentReminder extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return bool|int
      */
-    public function handle()
+    public function handle(): bool|int
     {
         $month = now()->month; /// get current month which will be use to retrieve reminders of the month
 
         foreach (PaymentReminder::whereMonth('schedule', $month)->where('completed',false)->get() as $reminder)
         {
 //            $clientEmail = $reminder->sales->lead->email;
-            $clientEmail = $reminder->sales !== null ? $reminder->sales->lead->email : null;
+            $clientEmail = $reminder->sales?->lead->email;
             if(today()->diffInDays($reminder->scedule,false) === 5)
             {
                 //this will remind the client of their payment 5 days before their due date
