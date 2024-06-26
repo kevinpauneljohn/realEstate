@@ -55,6 +55,11 @@ class ProjectController extends Controller
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-project-btn" id="'.$project->id.'"><i class="fa fa-trash"></i></a>';
                 }
+                if(!is_null($project->google_drive_link))
+                {
+                    $action .= '<a href="'.$project->google_drive_link.'" target="_blank" class="btn btn-xs bg-purple view-photos" id="'.$project->id.'" title="View Photos"><i class="fa fa-images"></i></a>';
+                }
+
                 return $action;
             })
             ->rawColumns(['model_units','action'])
@@ -75,7 +80,7 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -83,10 +88,12 @@ class ProjectController extends Controller
             'name'              => 'required|unique:projects,name',
             'address'           => 'required',
             'commission_rate'   => 'required|numeric',
+            'google_drive_link'   => 'url|nullable',
         ],[
             'name.required' => 'Project name is required',
             'commission_rate.required' => 'Commission rate is required',
             'commission_rate.numeric' => 'Commission rate must be a number',
+            'google_drive_link.url' => 'Must be a valid url',
         ]);
 
         if($validator->passes())
@@ -96,6 +103,7 @@ class ProjectController extends Controller
             $project->address = $request->address;
             $project->remarks = $request->remarks;
             $project->commission_rate = $request->commission_rate;
+            $project->google_drive_link = $request->google_drive_link;
 
             if($project->save())
             {
@@ -145,7 +153,7 @@ class ProjectController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -153,10 +161,11 @@ class ProjectController extends Controller
             'edit_name'      => 'required',
             'edit_address'   => 'required',
             'edit_commission_rate'   => 'required|numeric',
+            'edit_google_drive_link'   => 'url|nullable',
         ],[
             'edit_name.required' => 'Project name is required',
             'edit_commission_rate.required' => 'Commission rate is required',
-            'edit_commission_rate.numeric' => 'Commission rate must be a number',
+            'edit_google_drive_link.url' => 'Must be a valid url',
         ]);
 
         if($validator->passes())
@@ -166,6 +175,7 @@ class ProjectController extends Controller
             $project->address = $request->edit_address;
             $project->remarks = $request->edit_remarks;
             $project->commission_rate = $request->edit_commission_rate;
+            $project->google_drive_link = $request->edit_google_drive_link;
 
             if($project->isDirty())
             {

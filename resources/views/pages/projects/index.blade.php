@@ -89,6 +89,10 @@
                                 <label for="commission_rate">Commission Rate</label>
                                 <input type="number" name="commission_rate" class="form-control" id="commission_rate" min="1">
                             </div>
+                            <div class="form-group google_drive_link">
+                                <label for="google_drive_link">Google drive link</label>
+                                <input type="text" name="google_drive_link" class="form-control" id="google_drive_link">
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -134,6 +138,10 @@
                             <div class="form-group edit_commission_rate">
                                 <label for="edit_commission_rate">Commission Rate</label>
                                 <input type="number" name="edit_commission_rate" class="form-control" id="edit_commission_rate" min="1">
+                            </div>
+                            <div class="form-group edit_google_drive_link">
+                                <label for="edit_google_drive_link">Google drive link</label>
+                                <input type="text" name="edit_google_drive_link" class="form-control" id="edit_google_drive_link">
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -98,7 +98,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->forget('rate');
         $request->session()->forget('user_rate');
-        
+
         return redirect(route('login'));
     }
 }
