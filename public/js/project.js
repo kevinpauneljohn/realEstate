@@ -94,7 +94,7 @@ $(document).on('submit','#add-project-form',function(form){
             console.log(xhr);
         }
     });
-    clear_errors('name','address','commission_rate');
+    clear_errors('name','address','commission_rate','google_drive_link');
 });
 
 $(document).on('submit','#edit-project-form',function(form){
@@ -136,7 +136,7 @@ $(document).on('submit','#edit-project-form',function(form){
             console.log(xhr);
         }
     });
-    clear_errors('edit_name','edit_address','edit_commission_rate');
+    clear_errors('edit_name','edit_address','edit_commission_rate','edit_google_drive_link');
 });
 
 $(document).on('click','.edit-project-btn',function(){
@@ -154,6 +154,7 @@ $(document).on('click','.edit-project-btn',function(){
             $('#edit_address').val(result.address);
             $('#edit_commission_rate').val(result.commission_rate);
             $('#edit_remarks').val(result.remarks);
+            $('#edit_google_drive_link').val(result.google_drive_link);
 
             $('#edit-project-form input,#edit-project-form textarea').attr('disabled',false);
         }
