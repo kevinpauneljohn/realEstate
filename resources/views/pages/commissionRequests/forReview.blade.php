@@ -242,45 +242,47 @@
 {{--                        days  by pass: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['daysByPass']}}<br/>--}}
 {{--                        by pass user: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['byPassConsent'] ? "yes" : "no"}}<br/>--}}
 {{--                        allow approve and reject: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['AllowByPassApproveAndReject'] ? "yes" : "no"}}<br/>--}}
+                        @if(collect($byPass)->where('upLine_id',auth()->user()->id)->count() > 0)
+                            @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
 
-                        @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
-
-                            <div class="text-center mt-5 mb-3">
-                                <button class="btn btn-sm btn-primary approval-btn" id="approve-btn" data-toggle="modal" data-target="#approve">Approve</button>
-                                <button class="btn btn-sm btn-danger approval-btn" id="reject-btn" data-toggle="modal" data-target="#approve">Reject</button>
-                            </div>
+                                <div class="text-center mt-5 mb-3">
+                                    <button class="btn btn-sm btn-primary approval-btn" id="approve-btn" data-toggle="modal" data-target="#approve">Approve</button>
+                                    <button class="btn btn-sm btn-danger approval-btn" id="reject-btn" data-toggle="modal" data-target="#approve">Reject</button>
+                                </div>
 
                             @else
 
-                            @if(auth()->user()->hasRole('Finance Admin') && $commissionRequest->status != "rejected" && $commissionRequest->status != "completed")
-                                <div class="mt-5 mb-3" id="finance-admin-form">
-                                    <form id="finance-admin-action">
-                                        @csrf
-                                        <div class="form-group action">
-                                            <label>Set Action</label>
-                                            <select name="action" class="select2" id="action" style="width: 100%">
-                                                <option value="" selected>-- Select Action --</option>
-                                                @if($commissionRequest->status !== "requested to developer" && $commissionRequest->status !== "for release")
-                                                    <option value="request to developer">Request to developer</option>
+                                @if(auth()->user()->hasRole('Finance Admin') && $commissionRequest->status != "rejected" && $commissionRequest->status != "completed")
+                                    <div class="mt-5 mb-3" id="finance-admin-form">
+                                        <form id="finance-admin-action">
+                                            @csrf
+                                            <div class="form-group action">
+                                                <label>Set Action</label>
+                                                <select name="action" class="select2" id="action" style="width: 100%">
+                                                    <option value="" selected>-- Select Action --</option>
+                                                    @if($commissionRequest->status !== "requested to developer" && $commissionRequest->status !== "for release")
+                                                        <option value="request to developer">Request to developer</option>
                                                     @endif
 
-                                                @if($commissionRequest->status !== "for release")
-                                                    <option value="for release">For Release</option>
-                                                @endif
+                                                    @if($commissionRequest->status !== "for release")
+                                                        <option value="for release">For Release</option>
+                                                    @endif
 
-                                                <option value="completed">Completed</option>
-                                                <option value="reject">Reject request</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Remarks</label> <span>(optional)</span>
-                                            <textarea name="remarks" class="form-control" style="min-height: 150px;"></textarea>
-                                        </div>
-                                        <input type="submit" class="btn btn-primary" value="Submit" style="width: 100%">
-                                    </form>
-                                </div>
+                                                    <option value="completed">Completed</option>
+                                                    <option value="reject">Reject request</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Remarks</label> <span>(optional)</span>
+                                                <textarea name="remarks" class="form-control" style="min-height: 150px;"></textarea>
+                                            </div>
+                                            <input type="submit" class="btn btn-primary" value="Submit" style="width: 100%">
+                                        </form>
+                                    </div>
                                 @endif
+                            @endif
                         @endif
+
 
 
                 </div>
@@ -290,7 +292,7 @@
     </div>
     </div>
 
-
+@if(collect($byPass)->where('upLine_id',auth()->user()->id)->count() > 0)
     @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
         <!--add contacts modal-->
         <div class="modal fade" id="approve">
@@ -323,6 +325,8 @@
         </div>
         <!--end contacts modal-->
     @endif
+@endif
+
 @stop
 @section('right-sidebar')
     <x-custom.right-sidebar />
@@ -350,124 +354,127 @@
     <script src="{{asset('/js/custom-alert.js')}}"></script>
     <script src="{{asset('/js/validation.js')}}"></script>
     <script>
-        @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
-        let approveForm = $('#approve-request-form');
+        @if(collect($byPass)->where('upLine_id',auth()->user()->id)->count() > 0)
+            @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
+            let approveForm = $('#approve-request-form');
 
-        $(document).on('click','.approval-btn',function(){
-            let id = this.id;
-            let status = "";
-            let modalTitle = "";
-            console.log(id);
-            if(id === "approve-btn"){
-                status = "approved";
-                modalTitle = "Approved Request?";
-            }else {
-                status = "rejected";
-                modalTitle = "Reject Request?";
-            }
-            approveForm.find('input[name=status]').val(status);
-            approveForm.find('.modal-title').text(modalTitle);
-        });
-
-        $(document).on('submit','#approve-request-form',function(form){
-            form.preventDefault();
-
-            let data = $(this).serializeArray();
-            console.log(data);
-
-            $.ajax({
-                'url' : '{{route('commission.request.status.set',['request' => $commissionRequest->id])}}',
-                'type' : 'post',
-                'data' : data,
-                beforeSend: function(){
-                    approveForm.find('.submit-request').attr('disabled',true).val('Proceeding ...');
-                },success: function (response) {
-                    console.log(response);
-
-                    if(response.success === true)
-                    {
-                        let table = $('#approvals-list').DataTable();
-                        table.ajax.reload(null, false);
-
-                        $('.approval-btn').fadeOut();
-                        customAlert('success',response.message);
-
-                        approveForm.find('.submit-request').attr('disabled',false).val('Proceeded!').removeClass('btn-primary').addClass('btn-success');
-                        setTimeout(function () {
-                            approveForm.closest('#approve').modal('toggle');
-                            setTimeout(function () {
-                                approveForm.closest('#approve').remove()
-                            },850);
-                        },800);
-                    }
-
-                },error: function(xhr, status, error){
-                    console.log(xhr)
+            $(document).on('click','.approval-btn',function(){
+                let id = this.id;
+                let status = "";
+                let modalTitle = "";
+                console.log(id);
+                if(id === "approve-btn"){
+                    status = "approved";
+                    modalTitle = "Approved Request?";
+                }else {
+                    status = "rejected";
+                    modalTitle = "Reject Request?";
                 }
+                approveForm.find('input[name=status]').val(status);
+                approveForm.find('.modal-title').text(modalTitle);
             });
-        });
 
-        @else
+            $(document).on('submit','#approve-request-form',function(form){
+                form.preventDefault();
+
+                let data = $(this).serializeArray();
+                console.log(data);
+
+                $.ajax({
+                    'url' : '{{route('commission.request.status.set',['request' => $commissionRequest->id])}}',
+                    'type' : 'post',
+                    'data' : data,
+                    beforeSend: function(){
+                        approveForm.find('.submit-request').attr('disabled',true).val('Proceeding ...');
+                    },success: function (response) {
+                        console.log(response);
+
+                        if(response.success === true)
+                        {
+                            let table = $('#approvals-list').DataTable();
+                            table.ajax.reload(null, false);
+
+                            $('.approval-btn').fadeOut();
+                            customAlert('success',response.message);
+
+                            approveForm.find('.submit-request').attr('disabled',false).val('Proceeded!').removeClass('btn-primary').addClass('btn-success');
+                            setTimeout(function () {
+                                approveForm.closest('#approve').modal('toggle');
+                                setTimeout(function () {
+                                    approveForm.closest('#approve').remove()
+                                },850);
+                            },800);
+                        }
+
+                    },error: function(xhr, status, error){
+                        console.log(xhr)
+                    }
+                });
+            });
+
+            @else
             $(document).on('submit','#finance-admin-action',function(form){
                 form.preventDefault();
                 let data = $(this).serializeArray();
                 console.log(data[1].value);
 
-            Swal.fire({
-                title: 'Set Action <span class="text-info"> &nbsp;'+data[1].value+'</span>?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                console.log(result);
-                if (result.value) {
+                Swal.fire({
+                    title: 'Set Action <span class="text-info"> &nbsp;'+data[1].value+'</span>?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    console.log(result);
+                    if (result.value) {
 
-                    $.ajax({
-                        'url' : '{{route('commission.request.admin.action',['request' => $commissionRequest->id])}}',
-                        'type' : 'PATCH',
-                        'data' : data,
-                        beforeSend: function(){
-                            $('#finance-admin-action').find('input[type=submit]').attr('disabled',true).val('Submitting ...');
-                        },success: function(response){
-                            console.log(response)
+                        $.ajax({
+                            'url' : '{{route('commission.request.admin.action',['request' => $commissionRequest->id])}}',
+                            'type' : 'PATCH',
+                            'data' : data,
+                            beforeSend: function(){
+                                $('#finance-admin-action').find('input[type=submit]').attr('disabled',true).val('Submitting ...');
+                            },success: function(response){
+                                console.log(response)
 
-                            if(response.success === true)
-                            {
-                                $('#phase-tracker').load('{{url()->current()}} #phase-tracker .phase');
-                                $('#request-overview #request-data').load('{{url()->current()}} #request-overview #request-data td');
-                                $('#finance-admin-form #finance-admin-action select').load('{{url()->current()}} #finance-admin-form #finance-admin-action select option',function () {
-                                    $('#finance-admin-action').trigger('reset');
+                                if(response.success === true)
+                                {
+                                    $('#phase-tracker').load('{{url()->current()}} #phase-tracker .phase');
+                                    $('#request-overview #request-data').load('{{url()->current()}} #request-overview #request-data td');
+                                    $('#finance-admin-form #finance-admin-action select').load('{{url()->current()}} #finance-admin-form #finance-admin-action select option',function () {
+                                        $('#finance-admin-action').trigger('reset');
+                                    });
+                                }
+
+                                if(response.request_status === "completed" || response.request_status === "rejected")
+                                {
+                                    $('#finance-admin-action').remove();
+                                }
+
+                                $.each(response, function (key, value) {
+                                    let element = $('.'+key);
+
+                                    element.find('.error-'+key).remove();
+                                    element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
                                 });
+                                $('#finance-admin-action').find('input[type=submit]').attr('disabled',false).val('Submit');
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                                $('#finance-admin-action').find('input[type=submit]').attr('disabled',false).val('Submit');
                             }
+                        });
+                        clear_errors('action');
 
-                            if(response.request_status === "completed" || response.request_status === "rejected")
-                            {
-                                $('#finance-admin-action').remove();
-                            }
-
-                            $.each(response, function (key, value) {
-                                let element = $('.'+key);
-
-                                element.find('.error-'+key).remove();
-                                element.append('<p class="text-danger error-'+key+'">'+value+'</p>');
-                            });
-                            $('#finance-admin-action').find('input[type=submit]').attr('disabled',false).val('Submit');
-                        },error: function(xhr, status, error){
-                            console.log(xhr);
-                            $('#finance-admin-action').find('input[type=submit]').attr('disabled',false).val('Submit');
-                        }
-                    });
-                    clear_errors('action');
-
-                }
-            });
+                    }
+                });
 
 
             });
+            @endif
         @endif
+
 
 
         $(function() {

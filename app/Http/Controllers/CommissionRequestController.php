@@ -57,6 +57,23 @@ class CommissionRequestController extends Controller
     }
 
     /**
+     * this will check if the requester is the super admin or direct to the super admin
+     * @return string
+     */
+    private function salesStatus(): string
+    {
+        //if the user is the super admin or direct to the super admin this will automatically
+        // set the sales status as "for review"
+        $user = auth()->user();
+        if($user->hasRole('super admin'))
+        {
+            return 'for review';
+        }
+        return User::find(auth()->user()->upline_id)->hasRole('super admin') ? 'for review' : 'pending';
+
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -73,7 +90,7 @@ class CommissionRequestController extends Controller
                 'sales_id' => $request->input('sales_id'),
                 'user_id'  => auth()->user()->id,
                 'commission' => $commission['commission'],
-                'status'  => User::find(auth()->user()->upline_id)->hasRole('super admin') ? 'for review' : 'pending', //this will check if the requester is direct to the super admin
+                'status'  => $this->salesStatus(),
                 'remarks' => [
                     'request_to_developer' => null,
                     'for_release' => null,
@@ -166,9 +183,9 @@ class CommissionRequestController extends Controller
 //        return $this->commissionRequest->check_by_pass($id);
         return view('pages.commissionRequests.forReview')->with([
             'commissionRequest' => $commissionRequest,
-            'rateGiven' => $commissionRequest->user->commissions()->where('project_id',$commissionRequest->sales->project_id)->count() > 0
-                ? $commissionRequest->user->commissions()->where('project_id',$commissionRequest->sales->project_id)->first()->commission_rate
-                : $commissionRequest->user->commissions()->where('project_id',null)->first()->commission_rate,
+            'rateGiven' => $commissionRequest->user->commissions()->where('project_id', $commissionRequest->sales->project_id)->count() > 0 ?
+                $commissionRequest->user->commissions()->where('project_id', $commissionRequest->sales->project_id)->first()->commission_rate :
+                (auth()->user()->hasRole('super admin') ? $commissionRequest->commission : $commissionRequest->user->commissions()->where('project_id', null)->first()->commission_rate),
             'askingRate' => $commissionRequest->commission,
             'lastDueDate' =>  collect($commissionRequest->sales->paymentReminders)->count() > 0 && $commissionRequest->sales->status !== "cancelled"
                 ? $commissionRequest->sales->paymentReminders->last()->schedule
@@ -249,7 +266,7 @@ class CommissionRequestController extends Controller
     /**
      *this will check if there are bypass approval request
      */
-    public function checkByPassForAllRequest()
+    public function checkByPassForAllRequest(): void
     {
         Artisan::call('bypass:approval');
     }

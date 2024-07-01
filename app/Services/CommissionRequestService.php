@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\CommissionRequest;
+use App\Project;
 use App\User;
 use Illuminate\Support\Carbon;
 use Yajra\DataTables\Facades\DataTables;
@@ -121,12 +122,18 @@ class CommissionRequestService
                 return $commissionRequest->user->fullname;
             })
             ->addColumn('upLine',function($commissionRequest){
-                return User::find($commissionRequest->user->upline_id)->fullname;
+                return auth()->user()->hasRole('super admin') ? '' : User::find($commissionRequest->user->upline_id)->fullname;
             })
             ->addColumn('rate',function($commissionRequest){
-                $rate = $commissionRequest->user->commissions()->where('project_id',$commissionRequest->sales->project_id)->count() > 0
-                    ? $commissionRequest->user->commissions()->where('project_id',$commissionRequest->sales->project_id)->first()->commission_rate
-                    : $commissionRequest->user->commissions()->where('project_id',null)->first()->commission_rate;
+                if(auth()->user()->hasRole('super admin'))
+                {
+                    $rate = $commissionRequest->sales->commission_rate;
+                }
+                else{
+                    $rate = $commissionRequest->user->commissions()->where('project_id',$commissionRequest->sales->project_id)->count() > 0
+                        ? $commissionRequest->user->commissions()->where('project_id',$commissionRequest->sales->project_id)->first()->commission_rate
+                        : $commissionRequest->user->commissions()->where('project_id',null)->first()->commission_rate;
+                }
                 return $rate.'%';
             })
             ->addColumn('rateRequested',function($commissionRequest){
@@ -157,6 +164,7 @@ class CommissionRequestService
 
     public function specifiedApprovalDataTable($requestId)
     {
+//        return DataTables::of(collect($this->getSpecifiedRequest($requestId)->approval)->where('id','!=',auth()->user()->id)->all())
         return DataTables::of(collect($this->getSpecifiedRequest($requestId)->approval)->where('id','!=',auth()->user()->id)->all())
             ->editColumn('id',function($request){
                 return User::find($request['id'])->fullname;
