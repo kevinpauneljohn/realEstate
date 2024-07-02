@@ -25,7 +25,7 @@ class StoreFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => ['required', 'max:2048', File::types([
+            'file' => ['required', 'max:160000', File::types([
                 'jpg','png','gif','pdf','doc','docx','xls','xlsx','ppt','pptx'
             ])],
         ];

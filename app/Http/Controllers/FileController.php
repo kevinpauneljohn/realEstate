@@ -44,7 +44,7 @@ class FileController extends Controller
     {
         return DataTables::of(File::where('project_id',$project_id)->get())
             ->editColumn('user_id',function($file){
-                return $file->name;
+                return $file->user->fullname;
             })
             ->addColumn('action', function($file){
                 $action = "";
