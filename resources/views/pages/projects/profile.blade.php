@@ -461,7 +461,11 @@
             success: function (file, response) {
                 // console.log(file)
                 console.log(response)
-                toastr.success(response.message);
+                if(response.success === true)
+                {
+                    toastr.success(response.message);
+                    $('#project-files').DataTable().ajax.reload(null, false);
+                }
             },
             error: function (file, error) {
                 console.log(error)

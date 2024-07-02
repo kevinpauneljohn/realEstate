@@ -50,7 +50,7 @@ class FileController extends Controller
                 $action = "";
                 if(auth()->user()->can('download files'))
                 {
-                    $action .= '<a href="'.route('download.files',['id' => $file->id]).'" class="btn btn-info btn-sm"><i class="fa fa-download"></i></a>';
+                    $action .= '<a href="'.route('download.files',['id' => $file->id]).'" class="btn btn-info btn-sm" title="Download"><i class="fa fa-download"></i></a>';
                 }
                 return $action;
             })
