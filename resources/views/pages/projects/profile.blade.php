@@ -168,11 +168,15 @@
             </div>
 
             <div class="card">
-                @can('add project links')
                     <div class="card-header">
-                        <button class="btn btn-primary btn-sm" id="add-links">Add Links</button>
+                        <h3 class="card-title">Quick Links</h3>
+                        @can('add project links')
+                        <span class="float-right">
+                            <button class="btn btn-primary btn-sm" id="add-links">Add Links</button>
+                        </span>
+                        @endcan
                     </div>
-                @endcan
+
                 <div class="card-body">
                     <table id="project-links" class="table table-borderless table-hover w-100">
                         <thead>

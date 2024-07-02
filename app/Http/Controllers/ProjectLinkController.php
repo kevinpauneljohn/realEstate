@@ -13,6 +13,8 @@ class ProjectLinkController extends Controller
     public function __construct()
     {
         $this->middleware(['permission:add project links'])->only(['store']);
+        $this->middleware(['permission:add view links'])->only(['links']);
+        $this->middleware(['permission:delete view links'])->only(['destroy']);
     }
 
     /**
