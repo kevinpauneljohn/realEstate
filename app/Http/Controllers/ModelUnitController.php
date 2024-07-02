@@ -46,7 +46,7 @@ class ModelUnitController extends Controller
             'floor_level'      => 'required',
             'lot_area'      => 'required',
             'floor_area'      => 'required',
-            'photo_url'      => 'url',
+            'photo_url'      => 'url|nullable',
             'remarks'      => 'max:8000',
         ]);
 
@@ -227,7 +227,7 @@ class ModelUnitController extends Controller
             'edit_floor_level'      => 'required',
             'edit_lot_area'      => 'required',
             'edit_floor_area'      => 'required',
-            'edit_photo_url'      => 'url',
+            'edit_photo_url'      => 'url|nullable',
             'edit_remarks'      => 'max:8000',
         ],[
             'edit_model_name.required'   => 'Model name is required',
