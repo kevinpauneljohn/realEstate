@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\ModelUnit;
 use App\Project;
 use Illuminate\Http\Request;
@@ -123,7 +124,8 @@ class ProjectController extends Controller
     public function profile($id)
     {
         $project = Project::findOrFail($id);
-        return view('pages.projects.profile',compact('project'));
+        $files = File::where('project_id',$id)->get();
+        return view('pages.projects.profile',compact('project','files'));
     }
 
     /**

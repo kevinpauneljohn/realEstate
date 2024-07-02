@@ -252,4 +252,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Contest::class);
     }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
 }

@@ -638,6 +638,21 @@ return [
                 ],
             ],
         ],
+        'DropZone' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js',
+                ],
+            ],
+        ],
     ],
 
     /*

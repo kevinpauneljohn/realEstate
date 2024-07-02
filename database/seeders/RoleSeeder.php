@@ -187,5 +187,11 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'view task export'])->syncRoles(['account manager','admin']);
         Permission::create(['name' => 'declare contest winner']);
+
+        Permission::create(['name' => 'view files'])->syncRoles(['agent','admin','online warrior','manager','finance admin','team leader']);
+        Permission::create(['name' => 'add files'])->syncRoles(['admin']);
+        Permission::create(['name' => 'edit files'])->syncRoles(['admin']);
+        Permission::create(['name' => 'delete files'])->syncRoles(['admin']);
+        Permission::create(['name' => 'download files'])->syncRoles(['agent','admin','online warrior','manager','finance admin','team leader']);
     }
 }

@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Mail;
 
 require __DIR__ . '/web/user.php';
 require __DIR__ . '/web/contest.php';
+require __DIR__ . '/web/files.php';
 
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
