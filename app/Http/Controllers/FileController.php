@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\File;
 use App\Http\Requests\StoreFileRequest;
+use App\Services\FilesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -40,11 +41,14 @@ class FileController extends Controller
         return Storage::download('/public/'.$file->name);
     }
 
-    public function files($project_id)
+    public function files($project_id, FilesService $filesService)
     {
         return DataTables::of(File::where('project_id',$project_id)->get())
             ->editColumn('user_id',function($file){
                 return $file->user->fullname;
+            })
+            ->editColumn('extension',function ($file) use ($filesService){
+                return '<img src="'.asset('images/icons/'.$filesService->icons($file->extension)).'" class="img-fluid img-thumbnail" style="width:50px;">';
             })
             ->addColumn('action', function($file){
                 $action = "";
@@ -54,7 +58,7 @@ class FileController extends Controller
                 }
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','extension'])
             ->make(true);
     }
 }

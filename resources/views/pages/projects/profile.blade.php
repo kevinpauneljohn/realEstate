@@ -30,7 +30,6 @@
                     @endcan
                 </div>
                 <div class="card-body">
-                    <a href="fb://facewebmodal/f?href=https://it-it.facebook.com/messages/t/4431281110315860">Open FB</a>
 
                     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                         <table id="model-units-list" class="table table-bordered table-striped" role="grid">
@@ -165,28 +164,28 @@
 
                     </div>
 
-                    {{--                    <h5 class="mt-5 text-muted">Project files</h5>--}}
-                    {{--                    <ul class="list-unstyled">--}}
-                    {{--                        <li>--}}
-                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>--}}
-                    {{--                        </li>--}}
-                    {{--                        <li>--}}
-                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>--}}
-                    {{--                        </li>--}}
-                    {{--                        <li>--}}
-                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>--}}
-                    {{--                        </li>--}}
-                    {{--                        <li>--}}
-                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>--}}
-                    {{--                        </li>--}}
-                    {{--                        <li>--}}
-                    {{--                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>--}}
-                    {{--                        </li>--}}
-                    {{--                    </ul>--}}
-                    {{--                    <div class="text-center mt-5 mb-3">--}}
-                    {{--                        <a href="#" class="btn btn-sm btn-primary">Add files</a>--}}
-                    {{--                        <a href="#" class="btn btn-sm btn-warning">Report contact</a>--}}
-                    {{--                    </div>--}}
+                    <h5 class="mt-5 text-muted">Project Links</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
+                        </li>
+                        <li>
+                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
+                        </li>
+                        <li>
+                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
+                        </li>
+                        <li>
+                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
+                        </li>
+                        <li>
+                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
+                        </li>
+                    </ul>
+                    <div class="text-center mt-5 mb-3">
+                        <a href="#" class="btn btn-sm btn-primary">Add files</a>
+                        <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+                    </div>
                 </div>
             </div>
         </div>
