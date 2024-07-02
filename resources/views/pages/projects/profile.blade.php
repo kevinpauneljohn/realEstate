@@ -30,6 +30,7 @@
                     @endcan
                 </div>
                 <div class="card-body">
+                    <a href="fb://facewebmodal/f?href=https://it-it.facebook.com/fcbarcelona/">Open FB</a>
 
                     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                         <table id="model-units-list" class="table table-bordered table-striped" role="grid">
