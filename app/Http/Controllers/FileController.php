@@ -47,6 +47,9 @@ class FileController extends Controller
             ->editColumn('user_id',function($file){
                 return $file->user->fullname;
             })
+            ->editColumn('updated_at',function($file){
+                return $file->updated_at->format('m-d-Y g:i a');
+            })
             ->editColumn('extension',function ($file) use ($filesService){
                 return '<img src="'.asset('images/icons/'.$filesService->icons($file->extension)).'" class="img-fluid img-thumbnail" style="width:50px;">';
             })

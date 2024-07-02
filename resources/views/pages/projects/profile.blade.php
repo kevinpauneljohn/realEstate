@@ -136,6 +136,7 @@
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Updated By</th>
+                                <th>Uploaded At</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -163,32 +164,26 @@
                         @endif
 
                     </div>
-
-                    <h5 class="mt-5 text-muted">Project Links</h5>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-                        </li>
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-                        </li>
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
-                        </li>
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
-                        </li>
-                        <li>
-                            <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-                        </li>
-                    </ul>
-                    <div class="text-center mt-5 mb-3">
-                        <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                        <a href="#" class="btn btn-sm btn-warning">Report contact</a>
-                    </div>
                 </div>
             </div>
-        </div>
+
+            <div class="card">
+                @can('add project links')
+                    <div class="card-header">
+                        <button class="btn btn-primary btn-sm" id="add-links">Add Links</button>
+                    </div>
+                @endcan
+                <div class="card-body">
+                    <table id="project-links" class="table table-borderless table-hover w-100">
+                        <thead>
+                        <tr role="row" class="project-links-head">
+                            <th width="90%"></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
     </div>
 
     @can('add model unit')
@@ -375,6 +370,41 @@
                 <!-- /.modal-dialog -->
         </div>
     @endcan
+
+    @can('add project links')
+        <form class="project-links-form">
+            @csrf
+            <div class="modal fade" id="project-links-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title"></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group title">
+                                <label for="title">Title</label><span class="required">*</span>
+                                <input type="text" name="title" class="form-control" id="title" />
+                            </div>
+                            <div class="form-group url">
+                                <label for="url">URL</label><span class="required">*</span>
+                                <input type="url" name="url" class="form-control" id="url" />
+                            </div>
+                        </div>
+                        <input type="hidden" name="project_id" value="{{$project->id}}" />
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary edit-model-btn" value="Save">
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </form>
+    @endcan
 @stop
 @section('plugins.DropZone',true)
 @section('right-sidebar')
@@ -387,9 +417,17 @@
     <link rel="stylesheet" href="{{asset('/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <!-- Bootstrap time Picker -->
     <link rel="stylesheet" href="{{asset('/vendor/timepicker/bootstrap-timepicker.min.css')}}">
-    <style type="text/css">
-
-    </style>
+            <style>
+                .dataTables_wrapper {
+                    overflow-x: hidden;
+                }
+                .delete-category:hover{
+                    color:red;
+                }
+                .project-links-head{
+                    display:none;
+                }
+            </style>
 @stop
 
 @section('js')
@@ -427,10 +465,26 @@
                         { data: 'name', name: 'name'},
                         { data: 'extension', name: 'extension'},
                         { data: 'user_id', name: 'user_id'},
+                        { data: 'updated_at', name: 'updated_at'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
                     order:[0,'asc']
+                });
+
+                $('#project-links').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('project.links.list',['project_id' => $project->id]) !!}',
+                    columns: [
+                        { data: 'title', name: 'name'},
+                        { data: 'action', name: 'action', orderable: false, searchable: false}
+                    ],
+                    responsive:true,
+                    order:[0,'asc'],
+                    searching: false,
+                    paging: false,
+                    info:false
                 });
             });
             //Initialize Select2 Elements
@@ -511,4 +565,86 @@
         }
         // DropzoneJS Demo Code End
     </script>
+
+    @can('add project links')
+        <script>
+            let projectLinkModal = $('#project-links-modal');
+            let projectLinkForm = $('.project-links-form');
+            $(document).on('click','#add-links', function(){
+                projectLinkModal.modal('toggle');
+                projectLinkModal.find('.modal-title').text('Add External Links');
+                projectLinkForm.attr('id','add-project-links-form')
+            });
+
+            $(document).on('submit','#add-project-links-form', function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
+
+                $.ajax({
+                    url: '{{route('project-links.store')}}',
+                    method: 'post',
+                    data: data,
+                    beforeSend: function(){
+                        projectLinkModal.find('.text-danger').remove();
+                        projectLinkModal.find('.is-invalid').removeClass('is-invalid');
+                    }
+                }).done(function(response){
+                    console.log(response)
+                    if(response.success === true)
+                    {
+                        $('#project-links').DataTable().ajax.reload(null, false);
+                        toastr.success(response.message);
+                        projectLinkForm.trigger('reset');
+                        projectLinkModal.modal('toggle');
+                    }
+                }).fail(function(xhr, status, error){
+                    console.log(xhr.responseJSON.errors)
+                    $.each(xhr.responseJSON.errors, function(key, value){
+                        projectLinkModal.find('.'+key).append('<p class="text-danger">'+value+'</p>');
+                        projectLinkModal.find('#'+key).addClass('is-invalid');
+                    })
+                }).always(function(){
+
+                });
+            });
+        </script>
+    @endcan
+
+    @can('delete project links')
+        <script>
+            $(document).on('click','.delete-project-links',function(){
+                let id = this.id;
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/project-links/'+id,
+                            'type' : 'DELETE',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            'data' : {'_method':'DELETE','id' : id},
+                            beforeSend: function(){
+
+                            },success: function(response){
+                                if(response.success === true){
+                                    $('#project-links').DataTable().ajax.reload(null, false);
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }
+                });
+            });
+        </script>
+    @endcan
 @stop
