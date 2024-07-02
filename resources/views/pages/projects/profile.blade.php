@@ -157,7 +157,7 @@
                         <p class="text-sm">Address
                             <b class="d-block">{{ucfirst($project->address)}}</b>
                         </p>
-                        @if(auth()->user()->hasRole('super admin'))
+                        @if(auth()->user()->hasRole(['super admin','admin']))
                             <p class="text-sm">Commission Rate
                                 <b class="d-block">{{$project->commission_rate}}%</b>
                             </p>
