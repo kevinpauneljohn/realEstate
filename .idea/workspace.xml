@@ -36,7 +36,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="leads controller api for openhouseseller.com">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -755,7 +754,7 @@
       <workItem from="1719393472459" duration="8244000" />
       <workItem from="1719413713401" duration="11201000" />
       <workItem from="1719479103039" duration="600000" />
-      <workItem from="1719873773546" duration="51914000" />
+      <workItem from="1719873773546" duration="52011000" />
     </task>
     <task id="LOCAL-00805" summary="setup the payment reminder">
       <created>1627136957909</created>

@@ -778,7 +778,7 @@
                     });
 
                     $('#sales-list').find('tbody')
-                        .append('<tr class="leader-bg" style="font-size: 22pt;">'+rankings+'</tr>');
+                        .append('<tr class="leader-bg" style="font-size: 18pt;">'+rankings+'</tr>');
                 }
             });
 
