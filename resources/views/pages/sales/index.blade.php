@@ -766,7 +766,7 @@
                 pageLength: 10,
                 drawCallback: function(row){
                     let sale = row.json
-                    let rankings;
+                    let rankings = '';
                     $('#sales-list').find('tbody')
                         .append('<tr class="sales-info-bg"><td colspan="11" style="font-size: 20pt"><span class="text-muted">Total Sales: </span>'+sale.total_sales+'</td></tr>')
                     // $.each(sale.leaderboard, function(key, value){
@@ -778,7 +778,7 @@
                     });
 
                     $('#sales-list').find('tbody')
-                        .append('<tr class="leader-bg" style="font-size: 22pt;">'+rankings+'</tr>');
+                        .append('<tr class="leader-bg" style="font-size: 22pt;"><td colspan="11"><h3 class="text-center">Leaderboard</h3><table><tr>'+rankings+'</tr></table></td></tr>');
                 }
             });
 
