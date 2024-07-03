@@ -217,8 +217,10 @@
                                 @endif
                             </ul>
                             <div class="tab-content">
-                                <div id="sales" class="container tab-pane active"><br>
-                                    <table id="sales-list" class="table table-bordered table-striped" role="grid">
+                                <div id="sales" class="container tab-pane active">
+                                    <div class="mt-4"></div>
+                                    <x-sales.date-range />
+                                    <table id="sales-list" class="table table-bordered table-striped mt-4" role="grid">
                                         <thead>
                                         <tr role="row">
                                             <th>Date Reserved</th>
@@ -232,18 +234,7 @@
                                         </tr>
                                         </thead>
 
-                                        <tfoot>
-                                        <tr>
-                                            <th>Date Reserved</th>
-                                            <th>Full Name</th>
-                                            <th>Project</th>
-                                            <th>Model Unit</th>
-                                            <th>Total Contract Price</th>
-                                            <th>Discount</th>
-                                            <th>Financing</th>
-                                            <th>Status</th>
-                                        </tr>
-                                        </tfoot>
+                                        <tbody></tbody>
                                     </table>
                                 </div>
                                 <div id="down-line" class="container tab-pane fade"><br>
@@ -568,7 +559,12 @@
                         // { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[0,'asc']
+                    order:[0,'asc'],
+                    drawCallback: function(row){
+                        let sale = row.json;
+                        $('#sales-list').find('tbody')
+                            .append('<tr class="sales-info-bg"><td colspan="8" style="font-size: 20pt"><span class="text-muted">Total Sales: </span>'+sale.total_sales+'</td></tr>')
+                    }
                 });
             });
 

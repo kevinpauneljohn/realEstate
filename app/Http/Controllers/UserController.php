@@ -13,6 +13,7 @@ use App\Lead;
 use App\ModelUnit;
 use App\Permission;
 use App\Project;
+use App\Repositories\SalesRepository;
 use App\Repositories\ThresholdRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\WalletRepository;
@@ -32,17 +33,20 @@ class UserController extends Controller
     public $thresholdRepository,
         $userRepository,
         $walletRepository,
-        $accountmanagement;
+        $accountmanagement,
+        $salesRepository;
 
     public function __construct(ThresholdRepository $thresholdRepository,
                                 UserRepository $userRepository,
                                 WalletRepository $walletRepository,
-                                AccountManagerService $accountManagerService)
+                                AccountManagerService $accountManagerService,
+                                SalesRepository $salesRepository)
     {
         $this->thresholdRepository = $thresholdRepository;
         $this->userRepository = $userRepository;
         $this->walletRepository = $walletRepository;
         $this->accountmanagement = $accountManagerService;
+        $this->salesRepository = $salesRepository;
     }
 
 
@@ -115,10 +119,12 @@ class UserController extends Controller
      * @author john kevin paunel
      * fetch all user sales
      * */
-    public function user_sales_list($id)
+    public function user_sales_list($id, Request $request)
     {
-        $sales = Sales::where('user_id',$id)->get();
-        return DataTables::of($sales)
+        $start_date = $request->session()->get('start_date');
+        $end_date = $request->session()->get('end_date');
+        $sales = Sales::where('user_id',$id)->whereBetween('reservation_date',[$start_date, $end_date]);
+        return DataTables::of($sales->get())
             ->editColumn('total_contract_price',function($sale){
                 return number_format($sale->total_contract_price);
             })
@@ -161,6 +167,9 @@ class UserController extends Controller
                 return $action;
             })
             ->rawColumns(['action'])
+            ->with([
+                'total_sales' => number_format($sales->sum('total_contract_price'),2)
+            ])
             ->make(true);
     }
 
