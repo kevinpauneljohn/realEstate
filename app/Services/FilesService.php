@@ -46,6 +46,10 @@ class FilesService
         {
             $icon = 'pptx-file.png';
         }
+        elseif($type === 'csv')
+        {
+            $icon = 'csv-file.png';
+        }
         else{
             $icon = '';
         }

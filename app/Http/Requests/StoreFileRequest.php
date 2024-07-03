@@ -26,7 +26,7 @@ class StoreFileRequest extends FormRequest
     {
         return [
             'file' => ['required', 'max:160000', File::types([
-                'jpg','png','gif','pdf','doc','docx','xls','xlsx','ppt','pptx'
+                'jpg','png','gif','pdf','doc','docx','xls','xlsx','ppt','pptx','csv'
             ])],
         ];
     }
