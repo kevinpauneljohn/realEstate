@@ -13,6 +13,7 @@ use App\Threshold;
 use App\User;
 use App\UserRankPoint;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class SalesRepository
 {
@@ -328,6 +329,7 @@ class SalesRepository
         return $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'));
     }
 
+
     public function getTotalUnitSold($userId)
     {
         return $this->retrieve($userId)->whereYear('reservation_date',now()->format('Y'));
@@ -348,6 +350,14 @@ class SalesRepository
         $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->concat([$this->accountManagerService->checkIfUserIsAccountManager()->id])->all();
         $tcp = $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'))->sum('total_contract_price');
         $discount = $this->retrieve($downLineIds)->whereYear('reservation_date',now()->format('Y'))->sum('discount');
+        return $tcp - $discount;
+    }
+
+    public function getTeamSalesByDateRange($userId, $start_date, $end_date)
+    {
+        $downLineIds = collect($this->downLine->extractDownLines($userId)->pluck('id'))->concat([$this->accountManagerService->checkIfUserIsAccountManager()->id])->all();
+        $tcp = $this->retrieve($downLineIds)->whereBetween('reservation_date',[$start_date, $end_date])->sum('total_contract_price');
+        $discount = $this->retrieve($downLineIds)->whereBetween('reservation_date',[$start_date, $end_date])->sum('discount');
         return $tcp - $discount;
     }
 

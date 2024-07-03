@@ -166,6 +166,7 @@
             </div>
         </div>
         <div class="card-body">
+            <x-sales.date-range />
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
                 <table id="sales-list" class="table table-bordered table-hover" role="grid">
                     <thead>
@@ -184,21 +185,7 @@
                     </tr>
                     </thead>
 
-                    <tfoot>
-                    <tr>
-                        <th>Date Reserved</th>
-                        <th>Full Name</th>
-                        <th>Project</th>
-                        <th>Model Unit</th>
-                        <th>Total Contract Price</th>
-                        <th>Financing</th>
-                        <th>Rate</th>
-                        <th>Sale Status</th>
-                        <th>Agent</th>
-                        <th width="3%">Request Count</th>
-                        <th width="12%">Action</th>
-                    </tr>
-                    </tfoot>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -776,7 +763,12 @@
                 },
                 responsive:true,
                 order:[0,'desc'],
-                pageLength: 50
+                pageLength: 25,
+                drawCallback: function(row){
+                    let sale = row.json;
+                    $('#sales-list').find('tbody')
+                        .append('<tr class="sales-info-bg"><td colspan="11" style="font-size: 20pt"><span class="text-muted">Total Sales: </span>'+sale.total_sales+'</td></tr>')
+                }
             });
 
         });

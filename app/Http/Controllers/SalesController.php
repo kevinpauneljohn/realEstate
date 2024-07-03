@@ -20,6 +20,7 @@ use App\Services\PaymentReminderService;
 use App\Template;
 use App\Threshold;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -204,10 +205,19 @@ class SalesController extends Controller
      * @author john kevin paunel
      * fetch all sales
      * */
-    public function salesList()
+    public function salesList(Request $request)
     {
         $userId = $this->accountManagement->checkIfUserIsAccountManager()->id;
-        $sales = Sales::whereIn('user_id',collect(collect($this->downLines->extractDownLines((array)$userId)->pluck('id'))->concat((array)$userId))->toArray())->get();
+        if(is_null($request->session()->get('start_date')))
+        {
+            $sales = Sales::whereIn('user_id',collect(collect($this->downLines->extractDownLines((array)$userId)->pluck('id'))->concat((array)$userId))->toArray())->get();
+        }else{
+            $start_date = $request->session()->get('start_date');
+            $end_date = $request->session()->get('end_date');
+            $sales = Sales::whereIn('user_id',collect(collect($this->downLines->extractDownLines((array)$userId)->pluck('id'))->concat((array)$userId))->toArray())
+                ->whereBetween('reservation_date',[$start_date, $end_date])->get();
+        }
+
         return DataTables::of($sales)
             ->editColumn('reservation_date',function($sale){
                 return $sale->reservation_date;
@@ -322,6 +332,9 @@ class SalesController extends Controller
                 return $this->StatusSaleRate();
             })
             ->rawColumns(['action','status','request_status','full_name'])
+            ->with([
+                'total_sales' => number_format($this->salesRepository->getTeamSalesByDateRange(auth()->user()->id, $start_date, $end_date),2)
+            ])
             ->make(true);
     }
 
@@ -830,10 +843,10 @@ class SalesController extends Controller
         return response()->json(['success' => true,'message' => 'Delete Sales Request successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
     }
 
-    public function importSales() 
+    public function importSales()
     {
         Excel::import(new SalesImport,request()->file('file'));
-           
+
         return back();
     }
 
@@ -852,7 +865,14 @@ class SalesController extends Controller
         if ($user_rate == auth()->user()->id) {
             $data = $rate;
         }
-        
+
         return $data;
+    }
+
+    public function salesDateRange(Request $request)
+    {
+        $date = explode('-',$request->date);
+        $request->session()->put('start_date',Carbon::parse($date[0]));
+        $request->session()->put('end_date',Carbon::parse($date[1]));
     }
 }
