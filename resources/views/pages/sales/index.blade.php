@@ -778,7 +778,7 @@
                     });
 
                     $('#sales-list').find('tbody')
-                        .append('<tr class="leader-bg" style="font-size: 22pt;"><td colspan="11"><h3 class="text-center">Leaderboard</h3><table><tr>'+rankings+'</tr></table></td></tr>');
+                        .append('<tr class="leader-bg" style="font-size: 15pt;"><td colspan="11"><h3 class="text-center">Leaderboard</h3><table><tr>'+rankings+'</tr></table></td></tr>');
                 }
             });
 
