@@ -766,12 +766,19 @@
                 pageLength: 10,
                 drawCallback: function(row){
                     let sale = row.json
+                    let rankings = '<td colspan="3">Leaderboard</td>';
                     $('#sales-list').find('tbody')
-                        .append('<tr class="sales-info-bg"><td colspan="11" style="font-size: 20pt"><span class="text-muted">Total Sales: </span>'+sale.total_sales+'</td></tr><tr class="leader-bg"><td colspan="11" style="font-size: 22pt;">Leaderboard</td></tr>')
+                        .append('<tr class="sales-info-bg"><td colspan="11" style="font-size: 20pt"><span class="text-muted">Total Sales: </span>'+sale.total_sales+'</td></tr>')
+                    // $.each(sale.leaderboard, function(key, value){
+                    //     $('#sales-list').find('tbody')
+                    //         .append('<tr class="leader-bg"><td colspan="11" style="font-size: 20pt"><span class="text-yellow"><i class="fa fa-trophy" aria-hidden="true"></i></span><span class="text-primary">#'+(parseInt(key)+1)+' </span> - <span class="text-success">'+value.firstname+' '+value.lastname+'</span> = <span>'+value.sales+'</span></td></tr>')
+                    // });
                     $.each(sale.leaderboard, function(key, value){
-                        $('#sales-list').find('tbody')
-                            .append('<tr class="leader-bg"><td colspan="11" style="font-size: 20pt"><span class="text-yellow"><i class="fa fa-trophy" aria-hidden="true"></i></span><span class="text-primary">#'+(parseInt(key)+1)+' </span> - <span class="text-success">'+value.firstname+' '+value.lastname+'</span> = <span>'+value.sales+'</span></td></tr>')
+                        rankings +='<td colspan="3" class="text-center"><div class="text-yellow"><i class="fa fa-trophy" aria-hidden="true"></i><span class="text-primary">#'+(parseInt(key)+1)+' </span></div><div class="text-success">'+value.firstname+' '+value.lastname+'</div><div>'+value.sales+'</div></td>'
                     });
+
+                    $('#sales-list').find('tbody')
+                        .append('<tr class="leader-bg" style="font-size: 22pt;">'+rankings+'</tr>');
                 }
             });
 
