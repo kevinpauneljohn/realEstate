@@ -19,133 +19,140 @@
 
 @section('content')
     <div class="row">
-        <div class="col-12 col-md-12 col-lg-9 order-2 order-md-1">
-            <div class="card">
-                <div class="card-header">
-                    @can('add model unit')
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-new-model-modal">Add Model Unit</button>
-                    @endcan
-                    @can('view project')
-                        <a href="{{route('projects.index')}}" class="btn btn-success btn-sm">All Projects</a>
-                    @endcan
-                </div>
-                <div class="card-body">
+        <div class="col-lg-9 table-responsive">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            @can('add model unit')
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-new-model-modal">Add Model Unit</button>
+                            @endcan
+                            @can('view project')
+                                <a href="{{route('projects.index')}}" class="btn btn-success btn-sm">All Projects</a>
+                            @endcan
+                        </div>
+                        <div class="card-body">
+                            <table id="model-units-list" class="table table-bordered table-striped" role="grid" style="width: 100%;">
+                                <thead>
+                                <tr role="row">
+                                    <th>Model</th>
+                                    <th>House Type</th>
+                                    <th>Floor Level</th>
+                                    <th>Lot Area</th>
+                                    <th>Floor Area</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
 
-                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                        <table id="model-units-list" class="table table-bordered table-striped" role="grid">
-                            <thead>
-                            <tr role="row">
-                                <th>Model</th>
-                                <th>House Type</th>
-                                <th>Floor Level</th>
-                                <th>Lot Area</th>
-                                <th>Floor Area</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-
-                            <tfoot>
-                            <tr>
-                                <th>Model</th>
-                                <th>House Type</th>
-                                <th>Floor Level</th>
-                                <th>Lot Area</th>
-                                <th>Floor Area</th>
-                                <th>Action</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            @if(auth()->user()->can('add files'))
-                <div class="card card-default">
-                    <div class="card-header">
-                        <h3 class="card-title">Upload Files Here</h3>
-                    </div>
-                    <div class="card-body">
-                        <div id="actions" class="row">
-                            <div class="col-lg-6">
-                                <div class="btn-group w-100">
+                                <tfoot>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>House Type</th>
+                                    <th>Floor Level</th>
+                                    <th>Lot Area</th>
+                                    <th>Floor Area</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div></div>
+                <div class="col-lg-12">
+                    @if(auth()->user()->can('add files'))
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">Upload Files Here</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="actions" class="row">
+                                    <div class="col-lg-6">
+                                        <div class="btn-group w-100">
                       <span class="btn btn-success col fileinput-button">
                         <i class="fas fa-plus"></i>
                         <span>Add files</span>
                       </span>
-                                    <button type="submit" class="btn btn-primary col start">
-                                        <i class="fas fa-upload"></i>
-                                        <span>Start upload</span>
-                                    </button>
-                                    <button type="reset" class="btn btn-warning col cancel">
-                                        <i class="fas fa-times-circle"></i>
-                                        <span>Cancel upload</span>
-                                    </button>
+                                            <button type="submit" class="btn btn-primary col start">
+                                                <i class="fas fa-upload"></i>
+                                                <span>Start upload</span>
+                                            </button>
+                                            <button type="reset" class="btn btn-warning col cancel">
+                                                <i class="fas fa-times-circle"></i>
+                                                <span>Cancel upload</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 d-flex align-items-center">
+                                        <div class="fileupload-process w-100">
+                                            <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 d-flex align-items-center">
-                                <div class="fileupload-process w-100">
-                                    <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                <div class="table table-striped files" id="previews">
+                                    <div id="template" class="row mt-2">
+                                        <div class="col-auto">
+                                            <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
+                                        </div>
+                                        <div class="col d-flex align-items-center">
+                                            <p class="mb-0">
+                                                <span class="lead" data-dz-name></span>
+                                                (<span data-dz-size></span>)
+                                            </p>
+                                            <strong class="error text-danger" data-dz-errormessage></strong>
+                                        </div>
+                                        <div class="col-4 d-flex align-items-center">
+                                            <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto d-flex align-items-center">
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary start">
+                                                    <i class="fas fa-upload"></i>
+                                                    <span>Start</span>
+                                                </button>
+                                                <button data-dz-remove class="btn btn-warning cancel">
+                                                    <i class="fas fa-times-circle"></i>
+                                                    <span>Cancel</span>
+                                                </button>
+                                                <button data-dz-remove class="btn btn-danger delete">
+                                                    <i class="fas fa-trash"></i>
+                                                    <span>Delete</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="table table-striped files" id="previews">
-                            <div id="template" class="row mt-2">
-                                <div class="col-auto">
-                                    <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
-                                </div>
-                                <div class="col d-flex align-items-center">
-                                    <p class="mb-0">
-                                        <span class="lead" data-dz-name></span>
-                                        (<span data-dz-size></span>)
-                                    </p>
-                                    <strong class="error text-danger" data-dz-errormessage></strong>
-                                </div>
-                                <div class="col-4 d-flex align-items-center">
-                                    <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                                    </div>
-                                </div>
-                                <div class="col-auto d-flex align-items-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-primary start">
-                                            <i class="fas fa-upload"></i>
-                                            <span>Start</span>
-                                        </button>
-                                        <button data-dz-remove class="btn btn-warning cancel">
-                                            <i class="fas fa-times-circle"></i>
-                                            <span>Cancel</span>
-                                        </button>
-                                        <button data-dz-remove class="btn btn-danger delete">
-                                            <i class="fas fa-trash"></i>
-                                            <span>Delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
-            @endif
-            <div class="card">
-                <div class="card-body">
-                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4 table-responsive">
-                        <table id="project-files" class="table table-bordered table-striped" role="grid">
-                            <thead>
-                            <tr role="row">
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Updated By</th>
-                                <th>Uploaded At</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                        </table>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                <table id="project-files" class="table table-bordered table-striped" role="grid">
+                                    <thead>
+                                    <tr role="row">
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Updated By</th>
+                                        <th>Uploaded At</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+
         </div>
-        <div class="col-12 col-md-12 col-lg-3 order-1 order-md-2">
+        <div class="col-lg-3">
             <div class="card">
                 <div class="card-header">
                     <h4 class="text-primary">{{$project->name}}</h4>
@@ -422,12 +429,6 @@
     <!-- Bootstrap time Picker -->
     <link rel="stylesheet" href="{{asset('/vendor/timepicker/bootstrap-timepicker.min.css')}}">
             <style>
-                .dataTables_wrapper {
-                    overflow-x: hidden;
-                }
-                .delete-category:hover{
-                    color:red;
-                }
                 .project-links-head{
                     display:none;
                 }
