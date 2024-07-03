@@ -763,11 +763,15 @@
                 },
                 responsive:true,
                 order:[0,'desc'],
-                pageLength: 25,
+                pageLength: 10,
                 drawCallback: function(row){
-                    let sale = row.json;
+                    let sale = row.json
                     $('#sales-list').find('tbody')
-                        .append('<tr class="sales-info-bg"><td colspan="11" style="font-size: 20pt"><span class="text-muted">Total Sales: </span>'+sale.total_sales+'</td></tr>')
+                        .append('<tr class="sales-info-bg"><td colspan="11" style="font-size: 20pt"><span class="text-muted">Total Sales: </span>'+sale.total_sales+'</td></tr><tr class="leader-bg"><td colspan="11" style="font-size: 22pt;">Leaderboard</td></tr>')
+                    $.each(sale.leaderboard, function(key, value){
+                        $('#sales-list').find('tbody')
+                            .append('<tr class="leader-bg"><td colspan="11" style="font-size: 20pt"><span class="text-yellow"><i class="fa fa-trophy" aria-hidden="true"></i></span><span class="text-primary">#'+(parseInt(key)+1)+' </span> - <span class="text-success">'+value.firstname+' '+value.lastname+'</span> = <span>'+value.sales+'</span></td></tr>')
+                    });
                 }
             });
 

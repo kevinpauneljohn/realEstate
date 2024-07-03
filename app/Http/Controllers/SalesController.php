@@ -16,6 +16,7 @@ use App\SaleRequirement;
 use App\Sales;
 use App\Services\AccountManagerService;
 use App\Services\DownLineService;
+use App\Services\Leaderboard;
 use App\Services\PaymentReminderService;
 use App\Template;
 use App\Threshold;
@@ -35,7 +36,8 @@ class SalesController extends Controller
         $sales,
         $accountManagement,
         $paymentReminder,
-        $downLines;
+        $downLines,
+        $leaderboard;
 
     public function __construct(
         ThresholdRepository $thresholdRepository,
@@ -43,7 +45,8 @@ class SalesController extends Controller
         SalesInterface $sales,
         AccountManagerService $accountManagerService,
         PaymentReminderService $paymentReminder,
-        DownLineService $downLineService
+        DownLineService $downLineService,
+        Leaderboard $leaderboard
     )
     {
         $this->thresholdRepository = $thresholdRepository;
@@ -52,14 +55,15 @@ class SalesController extends Controller
         $this->accountManagement = $accountManagerService;
         $this->paymentReminder = $paymentReminder;
         $this->downLines = $downLineService;
+        $this->leaderboard = $leaderboard;
     }
 
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
+
+    public function index(Request $request)
     {
+        $start_date = $request->session()->get('start_date');
+        $end_date = $request->session()->get('end_date');
         return view('pages.sales.index')->with([
             'leads' => Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get(),
             'projects'   => Project::all(),
@@ -73,6 +77,7 @@ class SalesController extends Controller
             'personal_sales_this_month' => $this->salesRepository->getTotalPersonalSalesThisMonth($this->accountManagement->checkIfUserIsAccountManager()->id),
             'total_cancelled'   => Sales::where('status','cancelled')->count(),
             'templates' => Template::all(),
+            'leaderboard' => $this->leaderboard->userRankingBySales($start_date, $end_date)
         ]);
     }
 
@@ -333,7 +338,8 @@ class SalesController extends Controller
             })
             ->rawColumns(['action','status','request_status','full_name'])
             ->with([
-                'total_sales' => number_format($this->salesRepository->getTeamSalesByDateRange(auth()->user()->id, $start_date, $end_date),2)
+                'total_sales' => number_format($this->salesRepository->getTeamSalesByDateRange(auth()->user()->id, $start_date, $end_date),2),
+                'leaderboard' => $this->leaderboard->userRankingBySales($start_date, $end_date)
             ])
             ->make(true);
     }
