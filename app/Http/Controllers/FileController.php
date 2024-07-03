@@ -16,6 +16,7 @@ class FileController extends Controller
         $this->middleware(['permission:add files'])->only('upload');
         $this->middleware(['permission:view files'])->only('files');
         $this->middleware(['permission:download files'])->only('download');
+        $this->middleware(['permission:delete files'])->only('destroy');
     }
 
     public function upload(StoreFileRequest $request): \Illuminate\Http\JsonResponse
