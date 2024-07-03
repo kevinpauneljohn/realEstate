@@ -62,11 +62,11 @@ class FileController extends Controller
                 $action = "";
                 if(auth()->user()->can('download files'))
                 {
-                    $action .= '<a href="'.route('download.files',['id' => $file->id]).'" class="btn btn-info btn-sm" title="Download"><i class="fa fa-download"></i></a>';
+                    $action .= '<a href="'.route('download.files',['id' => $file->id]).'" class="btn btn-info btn-sm mr-1 mb-1" title="Download"><i class="fa fa-download"></i></a>';
                 }
                 if(auth()->user()->can('delete files'))
                 {
-                    $action .= '<button class="btn btn-danger btn-sm delete-files ml-2" id="'.$file->id.'" title="Delete file"><i class="fa fa-trash"></i></button>';
+                    $action .= '<button class="btn btn-danger btn-sm delete-files mb-1" id="'.$file->id.'" title="Delete file"><i class="fa fa-trash"></i></button>';
                 }
                 return $action;
             })
