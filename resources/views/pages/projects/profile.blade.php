@@ -129,7 +129,7 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4 table-responsive">
                         <table id="project-files" class="table table-bordered table-striped" role="grid">
                             <thead>
                             <tr role="row">
@@ -523,6 +523,9 @@
                 {
                     toastr.success(response.message);
                     $('#project-files').DataTable().ajax.reload(null, false);
+                    setTimeout(function(){
+                        $('.dz-complete').fadeOut();
+                    },2500)
                 }
             },
             error: function (file, error) {
@@ -569,6 +572,47 @@
         }
         // DropzoneJS Demo Code End
     </script>
+
+            @can('delete files')
+                <script>
+                    $(document).on('click','.delete-files',function(){
+                        let id = this.id;
+
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.value) {
+
+                                $.ajax({
+                                    'url' : '/files/'+id,
+                                    'type' : 'DELETE',
+                                    'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                    'data' : {'_method':'DELETE','id' : id},
+                                    beforeSend: function(){
+
+                                    },success: function(response){
+                                        console.log(response)
+                                        if(response.success === true)
+                                        {
+                                            toastr.success(response.message);
+                                            $('#project-files').DataTable().ajax.reload(null, false);
+                                        }
+                                    },error: function(xhr, status, error){
+                                        console.log(xhr);
+                                    }
+                                });
+
+                            }
+                        });
+                    });
+                </script>
+            @endcan
 
     @can('add project links')
         <script>

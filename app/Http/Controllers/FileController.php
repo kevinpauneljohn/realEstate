@@ -21,6 +21,10 @@ class FileController extends Controller
     public function upload(StoreFileRequest $request): \Illuminate\Http\JsonResponse
     {
         $file = $request->file('file');
+        if(file_exists(public_path('storage\\'.$file->getClientOriginalName())))
+        {
+            return response()->json(['success' => false, 'message' => 'File already exists.'],406);
+        }
         $file->move(public_path('storage'),$file->getClientOriginalName());
 
         if(File::create([
@@ -59,9 +63,21 @@ class FileController extends Controller
                 {
                     $action .= '<a href="'.route('download.files',['id' => $file->id]).'" class="btn btn-info btn-sm" title="Download"><i class="fa fa-download"></i></a>';
                 }
+                if(auth()->user()->can('delete files'))
+                {
+                    $action .= '<button class="btn btn-danger btn-sm delete-files ml-2" id="'.$file->id.'" title="Delete file"><i class="fa fa-trash"></i></button>';
+                }
                 return $action;
             })
             ->rawColumns(['action','extension'])
             ->make(true);
+    }
+
+    public function destroy(File $file)
+    {
+        unlink(public_path("storage\\".$file->name));
+        return $file->delete() ?
+        response()->json(['success' => true, 'message' => 'Files deleted.']):
+        response()->json(['success' => false, 'message' => 'No files deleted.']);
     }
 }
