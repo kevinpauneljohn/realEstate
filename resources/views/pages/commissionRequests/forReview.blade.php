@@ -61,13 +61,13 @@
                             </div>
                         </div>
                         <div class="col-12 col-sm-3 phase">
-                            <div class="info-box @if($commissionRequest->status == "requested to developer")bg-success @else bg-light @endif">
+                            <div class="info-box @if($commissionRequest->status == "requested")bg-success @else bg-light @endif">
                                 <span class="info-box-icon"><i class="fa fa-building"></i></span>
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Request To Developer</span>
                                     <span class="info-box-number">
-                                            @if($commissionRequest->status == "requested to developer")
+                                            @if($commissionRequest->status == "requested")
                                             On-going
                                         @elseif($commissionRequest->status == "pending" || $commissionRequest->status == "for review")
                                             pending
@@ -88,7 +88,7 @@
                                     <span class="info-box-number">
                                             @if($commissionRequest->status == "for release")
                                             On-going
-                                        @elseif($commissionRequest->status == "pending" || $commissionRequest->status == "for review" || $commissionRequest->status == "requested to developer")
+                                        @elseif($commissionRequest->status == "pending" || $commissionRequest->status == "for review" || $commissionRequest->status == "requested")
                                             pending
                                         @else
                                             <span class="text-success">Completed</span>
@@ -106,15 +106,15 @@
                             <th>Date Requested</th>
                             <th>Rate Requested</th>
                             <th>Estimated Amount</th>
-                            <th>Approved Rate</th>
-                            <th>Approved Estimated Amount</th>
+                            <th>% Released</th>
+                            <th>Released Amount</th>
                         </tr>
                         <tr id="request-data">
                             <td>{{ucfirst($commissionRequest->status)}}</td>
                             <td>{{$commissionRequest->created_at->format('F-d-Y')}} </td>
                             <td>{{$askingRate}}%</td>
                             <td>{{number_format($estimatedAmount,2)}} </td>
-                            <td>@if($commissionRequest->approved_rate !== null) {{$commissionRequest->approved_rate}}% @endif </td>
+                            <td>@if($commissionRequest->percentage_released !== null) {{$commissionRequest->percentage_released}}% @endif </td>
                             <td>@if($commissionRequest->approved_rate !== null) {{number_format($approvedEstimatedAmount,2)}} @endif</td>
                         </tr>
                     </table>
@@ -187,31 +187,6 @@
                                 </div>
                             </div>
 
-                            <div class="post">
-                                <h5>Admin Action</h5>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>Action</th>
-                                        <th>Remarks</th>
-                                    </tr>
-                                    <tr>
-                                        <td width="20%">Requested To Developer</td>
-                                        <td>{{$commissionRequest->remarks['request_to_developer']}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width="20%">For Release</td>
-                                        <td>{{$commissionRequest->remarks['for_release']}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width="20%">Completed</td>
-                                        <td>{{$commissionRequest->remarks['rejected']}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width="20%">Rejected</td>
-                                        <td>{{$commissionRequest->remarks['completed']}}</td>
-                                    </tr>
-                                </table>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -289,8 +264,344 @@
             </div>
         </div>
         <!-- /.card-body -->
+        </div>
     </div>
-    </div>
+    @if($commissionRequest->sales->user_id === auth()->user()->id)
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="card voucher-preview">
+
+                    <div class="card-body preview table-responsive-xl">
+
+                        <table class="table table-bordered table-hover">
+                            <tbody><tr>
+                                <th class="text-center" colspan="4">Dream Home Guide Realty Comm Voucher</th>
+                            </tr>
+                            <tr>
+                                <th id="project-name" colspan="4" class="text-center"></th>
+                            </tr>
+                            <tr>
+                                <td>Payee</td>
+                                <td id="payee" class="text-bold">{{$commissionRequest->sales->user->fullname}}</td>
+                                <td>Amount:</td>
+                                <td id="amount" class="text-bold">@if($commissionVoucher->count() > 0) {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td class="w-25">Client</td>
+                                <td id="client" class="text-bold w-25">{{$commissionRequest->sales->lead->fullname}}</td>
+                                <td>In Words:</td>
+                                <td id="amount-in-words" class="text-bold w-50">@if($commissionVoucher->count() > 0) {{ucwords($net_commission_in_words)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="table-active"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">TCP</td>
+                                <td colspan="1" id="tcp">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionRequest->sales->total_contract_price,2)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Requested %</td>
+                                <td colspan="1" id="requested-rate">{{number_format($commissionRequest->commission,2)}}%</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Gross Commission</td>
+                                <td colspan="1" id="gross-commission">@if($commissionVoucher->count() > 0)&#8369;{{number_format($commissionVoucher->first()->gross_commission,2)}}@endif</td>
+                            </tr>
+                            <tr id="tax-basis-row" style="display: none;">
+                                <td colspan="3" id="tax_basis_reference_remarks"></td>
+                                <td colspan="1" id="tax-basis"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><span id="percent-released">@if($commissionVoucher->count() === 0) 0 @else {{$commissionVoucher->first()->percentage_released}} @endif%</span> Released</td>
+                                <td colspan="1" id="released-gross-commission">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionVoucher->first()->sub_total,2)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Withholding Tax <span id="wht-percent">@if($commissionVoucher->count() === 0) 0 @else {{$commissionVoucher->first()->wht_percent}} @endif%</span></td>
+                                <td colspan="1" id="wht">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionVoucher->first()->wht_amount,2)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">VAT <span id="vat-percent">@if($commissionVoucher->count() === 0) 0 @else {{$commissionVoucher->first()->vat_percent}} @endif%</span></td>
+                                <td colspan="1" id="vat-amount">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionVoucher->first()->vat_amount,2)}} @endif</td>
+                            </tr>
+                            <tr class="net-commission">
+                                <td colspan="3">Net Commission</td>
+                                <td colspan="1" id="net-commission">@if($commissionVoucher->count() > 0)&#8369;  {{number_format($commissionVoucher->first()->net_commission_less_vat,2)}} @endif</td>
+                            </tr>
+                            @if($commissionVoucher->count() > 0)
+                                @foreach($commissionVoucher->first()->deductions as $deduction)
+                                    <tr>
+                                        <td colspan="3">{{$deduction->title}}</td>
+                                        <td class="text-danger">- &#8369; {{number_format($deduction->amount,2)}}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            @if($commissionVoucher->count() > 0)
+                                @if($commissionVoucher->first()->deductions->count() > 0)
+                                    <tr>
+                                        <td colspan="3">Total Commission Balance</td>
+                                        <td class="text-success"> &#8369; {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}}</td>
+                                    </tr>
+                                @endif
+                            @endif
+                            <tr id="row-separator">
+                                <td colspan="4" class="table-active"></td>
+                            </tr>
+                            </tbody></table>
+                        <div id="save-button-section" class="mt-3">
+                            @if($commissionVoucher->count() === 0)
+                                <button type="button" class="btn btn-primary btn-sm w-100" id="save-voucher-button">Save</button>
+                            @elseif($commissionVoucher->count() > 0 && $commissionVoucher->first()->status === 'pending')
+                                <button type="button" class="btn btn-success btn-sm w-100" id="approve-voucher-button">Approve</button>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+    @if(auth()->user()->hasRole(['super admin','admin','Finance Admin']))
+        <div class="row">
+            <div class="col-lg-6">
+                <form>
+                     @csrf
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12 request_status">
+                                    <label for="request_status">Request Status</label>
+                                    <select name="request_status" class="form-control" id="request_status">
+                                        <option value="pending" @if($commissionRequest->status === 'pending') selected @endif>Pending</option>
+                                        <option value="for review" @if($commissionRequest->status === 'for review') selected @endif>On-going Admin Review</option>
+                                        <option value="requested" @if($commissionRequest->status === 'requested') selected @endif>Requested to developer</option>
+                                        <option value="for release" @if($commissionRequest->status === 'for release') selected @endif>For Release</option>
+                                        <option value="completed" @if($commissionRequest->status === 'completed') selected @endif>Completed</option>
+                                        <option value="rejected" @if($commissionRequest->status === 'rejected') selected @endif>Rejected</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6">
+                <form class="sales-form">
+                    @csrf
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6 total_contract_price">
+                                    <label for="total_contract_price">Total Contract Price</label>
+                                    <input type="number" name="total_contract_price" step="any" class="form-control" id="total_contract_price" value="{{$commissionRequest->sales->total_contract_price}}">
+                                </div>
+                                <div class="col-lg-6 commission_rate">
+                                    <label for="commission_rate">Commission Rate</label>
+                                    <input type="number" name="commission_rate" step="any" class="form-control" id="commission_rate" value="{{$commissionRequest->commission}}">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <label for="total_commission">Total Commission Amount</label>
+                                    <input type="text" name="total_commission" step="any" class="form-control" id="total_commission" value="{{number_format($commissionRequest->sales->total_contract_price * ($commissionRequest->commission / 100),2)}}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <form class="calculate-voucher">
+                    @csrf
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="category">Category</label>
+                                    <select name="category" class="form-select form-control" id="category" required="">
+                                        <option value="">--Select Category--</option>
+                                        <option value="Corporate Broker's Tax Deduction">Corporate Broker's Tax Deduction</option>
+                                        <option value="Individual Broker's Tax Deduction">Individual Broker's Tax Deduction</option>
+                                        <option value="Apec Homes Tax Deduction">Apec Homes Tax Deduction</option>
+                                        <option value="No Tax Deduction">No Tax Deduction</option>
+                                        <option value="Split Commission">Split Commission</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-9 mt-3 total_contract_price">
+                                    <label for="total_contract_price">TCP</label>
+                                    <input type="number" step="any" class="form-control" name="total_contract_price" id="total_contract_price" value="{{$commissionRequest->sales->total_contract_price}}" readonly>
+                                </div>
+                                <div class="col-lg-3 mt-3 requested_rate">
+                                    <label for="requested_rate">Requested Rate</label>
+                                    <input type="number" step="any" class="form-control" name="requested_rate" id="requested_rate" max="100" min="0" value="{{$commissionRequest->commission}}" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 mt-3 gross_commission">
+                                    <label for="gross_commission">Gross Commission</label>
+                                    <input type="number" step="any" class="form-control" name="gross_commission" id="gross_commission" max="5000000" min="0" value="{{$commissionRequest->sales->total_contract_price * ($commissionRequest->commission / 100)}}" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 mt-3 reference_amount_for_wht">
+                                    <input type="checkbox" id="reference_amount_for_wht" name="reference_amount_checkbox">
+                                    <label for="reference_amount_for_wht"></label> <span>Select other amount for wht</span>
+                                </div>
+                            </div>
+                            <div class="row reference_amount_field_row" style="display: none;">
+                                <div class="col-lg-6 mt-3 reference_amount">
+                                    <label for="reference_amount">Ref. Amt WHT</label>
+                                    <input type="number" step="any" class="form-control" name="reference_amount" id="reference_amount" max="5000000" min="0" value="0" disabled="disabled" required="">
+                                </div>
+                                <div class="col-lg-6 mt-3 remarks">
+                                    <label for="remarks">Remarks</label>
+                                    <input type="text" step="any" class="form-control" name="remarks" id="remarks" disabled="disabled" required="">
+                                </div>
+                            </div>
+                            <div class="row reference_amount_field_row" style="display: none;">
+                                <div class="col-lg-5 mt-3 percentage_released_reference_amount">
+                                    <label for="percentage_released_reference_amount">% Released ref</label>
+                                    <input type="number" step="any" class="form-control" name="percentage_released_reference_amount" id="percentage_released_reference_amount" placeholder="0% remaining" max="0" min="0" required="" disabled="disabled">
+                                </div>
+                                <div class="col-lg-7 mt-3 sub_total_reference_amount">
+                                    <label for="sub_total_reference_amount">Sub Total ref</label>
+                                    <input type="number" step="any" class="form-control" name="sub_total_reference_amount" id="sub_total_reference_amount" max="5000000" min="0" value="0" required="" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="row tcp_basis">
+                                <div class="col-lg-5 mt-3 percentage_released">
+                                    <label for="percentage_released">% Released</label>
+                                    <input type="number" step="any" class="form-control" name="percentage_released" id="percentage_released" placeholder="0% remaining" max="100" min="0" required="">
+                                </div>
+                                <div class="col-lg-7 mt-3 sub_total">
+                                    <label for="sub_total">Sub Total</label>
+                                    <input type="number" step=".01" class="form-control" name="sub_total" id="sub_total" max="{{$commissionRequest->sales->total_contract_price * ($commissionRequest->commission / 100)}}" min="0" value="0">
+                                </div>
+                            </div>
+                            <div class="row tax">
+                                <div class="col-lg-6 mt-3 wht">
+                                    <label for="wht">WHT Tax</label>
+                                    <input type="number" name="wht" step="any" class="form-control" id="wht" min="0" value="0" readonly>
+                                </div>
+                                <div class="col-lg-6 mt-3 vat">
+                                    <label for="vat">VAT</label>
+                                    <input type="number" name="vat" step="any" class="form-control" id="vat" min="0" max="12" value="0" readonly>
+                                </div>
+                            </div>
+                            <div class="row deductions">
+                                <div class="col-12 mt-3"><h5>Deductions</h5></div>
+
+                            </div>
+                        </div>
+                        <input type="hidden" name="sale_id" value="{{$commissionRequest->sales_id}}">
+                        <input type="hidden" name="commission_request_id" value="{{$commissionRequest->id}}">
+                        <div class="card-footer">
+                            <button type="submit" class="btn bg-gray">Preview</button>
+                            <span class="float-right">
+                                <button type="button" class="btn bg-warning" id="add-deduction-btn">Add Deduction</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6">
+                <div class="card voucher-preview">
+
+                    <div class="card-body preview table-responsive-xl">
+
+                        <table class="table table-bordered table-hover">
+                            <tbody><tr>
+                                <th class="text-center" colspan="4">Dream Home Guide Realty Comm Voucher</th>
+                            </tr>
+                            <tr>
+                                <th id="project-name" colspan="4" class="text-center"></th>
+                            </tr>
+                            <tr>
+                                <td>Payee</td>
+                                <td id="payee" class="text-bold">{{$commissionRequest->sales->user->fullname}}</td>
+                                <td>Amount:</td>
+                                <td id="amount" class="text-bold">@if($commissionVoucher->count() > 0) {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td class="w-25">Client</td>
+                                <td id="client" class="text-bold w-25">{{$commissionRequest->sales->lead->fullname}}</td>
+                                <td>In Words:</td>
+                                <td id="amount-in-words" class="text-bold w-50">@if($commissionVoucher->count() > 0) {{ucwords($net_commission_in_words)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="table-active"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">TCP</td>
+                                <td colspan="1" id="tcp">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionRequest->sales->total_contract_price,2)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Requested %</td>
+                                <td colspan="1" id="requested-rate">{{number_format($commissionRequest->commission,2)}}%</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Gross Commission</td>
+                                <td colspan="1" id="gross-commission">@if($commissionVoucher->count() > 0)&#8369;{{number_format($commissionVoucher->first()->gross_commission,2)}}@endif</td>
+                            </tr>
+                            <tr id="tax-basis-row" style="display: none;">
+                                <td colspan="3" id="tax_basis_reference_remarks"></td>
+                                <td colspan="1" id="tax-basis"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><span id="percent-released">@if($commissionVoucher->count() === 0) 0 @else {{$commissionVoucher->first()->percentage_released}} @endif%</span> Released</td>
+                                <td colspan="1" id="released-gross-commission">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionVoucher->first()->sub_total,2)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Withholding Tax <span id="wht-percent">@if($commissionVoucher->count() === 0) 0 @else {{$commissionVoucher->first()->wht_percent}} @endif%</span></td>
+                                <td colspan="1" id="wht">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionVoucher->first()->wht_amount,2)}} @endif</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">VAT <span id="vat-percent">@if($commissionVoucher->count() === 0) 0 @else {{$commissionVoucher->first()->vat_percent}} @endif%</span></td>
+                                <td colspan="1" id="vat-amount">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionVoucher->first()->vat_amount,2)}} @endif</td>
+                            </tr>
+                            <tr class="net-commission">
+                                <td colspan="3">Net Commission</td>
+                                <td colspan="1" id="net-commission">@if($commissionVoucher->count() > 0)&#8369;  {{number_format($commissionVoucher->first()->net_commission_less_vat,2)}} @endif</td>
+                            </tr>
+                            @if($commissionVoucher->count() > 0)
+                                @foreach($commissionVoucher->first()->deductions as $deduction)
+                                    <tr>
+                                        <td colspan="3">{{$deduction->title}}</td>
+                                        <td class="text-danger">- &#8369; {{number_format($deduction->amount,2)}}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            @if($commissionVoucher->count() > 0)
+                                @if($commissionVoucher->first()->deductions->count() > 0)
+                                    <tr>
+                                        <td colspan="3">Total Commission Balance</td>
+                                        <td class="text-success"> &#8369; {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}}</td>
+                                    </tr>
+                                @endif
+                            @endif
+                            <tr id="row-separator">
+                                <td colspan="4" class="table-active"></td>
+                            </tr>
+                            </tbody></table>
+                        <div id="save-button-section" class="mt-3">
+                            @if($commissionVoucher->count() === 0)
+                                <button type="button" class="btn btn-primary btn-sm w-100" id="save-voucher-button">Save</button>
+                            @elseif($commissionVoucher->count() > 0 && $commissionVoucher->first()->status === 'pending')
+                                <button type="button" class="btn btn-success btn-sm w-100" id="approve-voucher-button">Approve</button>
+                           @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+   @endif
 
 @if(collect($byPass)->where('upLine_id',auth()->user()->id)->count() > 0)
     @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
@@ -495,4 +806,269 @@
             });
         });
     </script>
+
+    @if(auth()->user()->hasRole(['super admin','admin','Finance Admin']))
+        <script>
+            let request_status = $('#request_status').val();
+            $(document).on('change','#request_status',function(){
+                let value = $(this).val();
+                console.log(value)
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, update status!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/commission-request-status-update/{{$commissionRequest->id}}',
+                            'type' : 'post',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            'data' : {'status':value},
+                            beforeSend: function(){
+
+                            },success: function(response){
+                                console.log(response)
+                                if(response.success === true)
+                                {
+                                    Swal.fire({
+                                        title: "Good job!",
+                                        text: response.message,
+                                        type: "success"
+                                    });
+
+                                    window.location.reload();
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }else{
+                        $(this).val(request_status)
+                    }
+                });
+            });
+
+
+            function category(category)
+            {
+                let wht = 0, vat = 0, readonly = true;
+                if(category === "Corporate Broker's Tax Deduction")
+                {
+                    wht = 15; vat = 12;
+                    readonly = false;
+                }
+                else if(category === "Individual Broker's Tax Deduction")
+                {
+                    wht = 10; vat = 12;
+                    readonly = false;
+                }
+                else if(category === "Apec Homes Tax Deduction")
+                {
+                    wht = 15; vat = 0;
+                    readonly = false;
+                }
+
+                $('#wht').val(wht).attr('readonly',readonly);
+                $('#vat').val(vat).attr('readonly',readonly);
+            }
+
+            $(document).on('change','#category',function(){
+                let tax = $(this).val();
+                category(tax)
+            })
+
+            function commission_released(gross_commission, percentage_released)
+            {
+                return gross_commission * (percentage_released / 100);
+            }
+
+            function rate_released(gross_commission, sub_total)
+            {
+                return (sub_total / gross_commission) * 100;
+            }
+
+            $(document).on('input','#percentage_released',function(){
+                let gross_commission = $('#gross_commission').val();
+                let percentage_released = $(this).val();
+
+                if(percentage_released > 100)
+                {
+                    $(this).val(100).change();
+                }
+                else if(percentage_released < 0)
+                {
+                    $(this).val(0).change();
+                }
+
+                $('#sub_total').val(commission_released(gross_commission, percentage_released).toFixed(2));
+            })
+
+
+            $(document).on('input','#sub_total',function(){
+                let gross_commission = $('#gross_commission').val();
+                let sub_total = $(this).val();
+                if(sub_total > gross_commission)
+                {
+                    $(this).val(gross_commission).change();
+                }
+
+                $('#percentage_released').val(rate_released(gross_commission, sub_total)).change()
+            })
+
+            let calculateVoucher = $('.calculate-voucher');
+            $(document).on('click','#add-deduction-btn',function(){
+                calculateVoucher.find('.deductions').append('<div class="deduction-row col-lg-12"><div class="row"><div class="col-5 mt-2"><input type="text" class="form-control" name="deductions_remarks[]" placeholder="Deduction"></div>' +
+                    '<div class="col-5 mt-2"><input type="number" step="0.1" class="form-control" name="deductions[]" placeholder="amount"></div><div class="col-2"><button type="button" class="btn btn-xs btn-danger mt-3 remove-deduction"><i class="fa fa-minus"></i></button></div></div></div>');
+            });
+
+            $(document).on('click','.remove-deduction',function(){
+                $(this).closest('.deduction-row').remove();
+            });
+
+            let voucherData;
+            let voucherPreview = $('.voucher-preview');
+            $(document).on('submit','.calculate-voucher',function(form){
+                form.preventDefault();
+                voucherData = $(this).serializeArray();
+                // console.log(voucherData);
+                $.ajax({
+                    url: '{{route('preview.voucher')}}',
+                    type: 'post',
+                    data: voucherData,
+                    beforeSend: function(){
+                        voucherPreview.append('<div class="overlay"><i class="fas fa-2x fa-sync-alt fa-spin"></i></div>');
+                        voucherPreview.find('.deduction-preview').remove()
+                    }
+                }).done(function(response){
+                    // console.log(response)
+                    voucherPreview.find('#tcp').text('₱ '+response.tcp);
+                    voucherPreview.find('#requested-rate').text(response.requested_rate);
+                    voucherPreview.find('#gross-commission').text('₱ '+response.gross_commission);
+                    voucherPreview.find('#percent-released').text(response.percentage_released);
+                    voucherPreview.find('#released-gross-commission').text('₱ '+response.sub_total);
+                    voucherPreview.find('#wht-percent').text('('+response.wht_percent+')');
+                    voucherPreview.find('#wht').text('₱ '+response.wht);
+                    voucherPreview.find('#vat-percent').text('('+response.vat_percent+')');
+                    voucherPreview.find('#vat-amount').text('₱ '+response.vat);
+                    voucherPreview.find('#net-commission').text('₱ '+response.net_commission_less_vat);
+
+                    // voucherPreview.find('.deduction-preview').append('<tr><td colspan="2" class="text-bold">Deductions</td></tr>');
+                    let deductionRow = '';
+                    let deductionCount = 0;
+                    $.each(response.deductions, function(key, value){
+                        deductionRow += '<tr class="deduction-preview"><td colspan="3">'+key+'</td><td class="text-danger" colspan="1">- ₱ '+value+'</td></tr>';
+                        deductionCount++;
+                    });
+
+                    if(deductionCount > 0)
+                    {
+                        deductionRow += '<tr class="deduction-preview"><td colspan="3">Total Commission Balance</td><td class="text-success" colspan="1">₱ '+response.net_commission_less_deductions+'</td></tr>';
+                    }
+                    // console.log(deductionCount)
+                    voucherPreview.find('.net-commission').after(deductionRow);
+                }).fail(function(xhr, status, error){
+                    console.log(xhr)
+                }).always(function(){
+                    $('.overlay').remove();
+                });
+            })
+
+
+            $(document).on('click','#save-voucher-button',function (){
+                Swal.fire({
+                    title: 'Do you want to save the voucher?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, save it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/save-commission-voucher',
+                            'type' : 'post',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            'data' : voucherData,
+                            beforeSend: function(){
+
+                            },success: function(response){
+                                console.log(response)
+                                if(response.success === true)
+                                {
+                                    Swal.fire({
+                                        title: "Good job!",
+                                        text: response.message,
+                                        type: "success"
+                                    });
+
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    },1000)
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }else{
+                        $(this).val(request_status)
+                    }
+                });
+            })
+
+            @if($commissionVoucher->count() > 0)
+            $(document).on('click','#approve-voucher-button',function (){
+                Swal.fire({
+                    title: 'Do you want to approve the voucher?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, approve it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/approve-voucher/{{$commissionVoucher->first()->id}}',
+                            'type' : 'post',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            beforeSend: function(){
+
+                            },success: function(response){
+                                console.log(response)
+                                if(response.success === true)
+                                {
+                                    Swal.fire({
+                                        title: "Good job!",
+                                        text: response.message,
+                                        type: "success"
+                                    });
+
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    },1500)
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }else{
+                        $(this).val(request_status)
+                    }
+                });
+            })
+            @endif
+
+        </script>
+    @endif
 @stop

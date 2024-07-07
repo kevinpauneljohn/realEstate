@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\CommissionRequest;
+use App\CommissionVoucher;
 use App\Project;
 use App\User;
 use Illuminate\Support\Carbon;
@@ -146,7 +147,15 @@ class CommissionRequestService
                 return Carbon::create($dueDate)->format('F-d-Y');
             })
             ->addColumn('status',function($commissionRequest){
-                return $commissionRequest->status;
+                return $this->status_badge($commissionRequest->status);
+            })
+            ->addColumn('percentage_released', function($commissionRequest){
+                $voucher = CommissionVoucher::where('commission_request_id',$commissionRequest->id);
+                return $voucher->count() > 0 ? '<span class="text-bold text-primary">'.$voucher->first()->percentage_released.'%</span>' : '';
+            })
+            ->addColumn('amount_released', function($commissionRequest){
+                $voucher = CommissionVoucher::where('commission_request_id',$commissionRequest->id);
+                return $voucher->count() > 0 ? '<span class="text-bold text-primary">'.number_format($voucher->first()->net_commission_less_deductions,2).'</span>' : '';
             })
             ->addColumn('action',function($commissionRequest){
                 $action = '';
@@ -157,8 +166,21 @@ class CommissionRequestService
                 }
                 return $action;
             })
-            ->rawColumns(['requestNo','action'])
+            ->rawColumns(['requestNo','action','status','percentage_released','amount_released'])
             ->make(true);
+    }
+
+    private function status_badge($status)
+    {
+        return match ($status) {
+            'pending' => '<span class="badge badge-warning">' . $status . '</span>',
+            'for review' => '<span class="badge badge-info">' . $status . '</span>',
+            'requested' => '<span class="badge bg-purple">' . $status . '</span>',
+            'for release' => '<span class="badge bg-pink">' . $status . '</span>',
+            'completed' => '<span class="badge badge-success">' . $status . '</span>',
+            'rejected' => '<span class="badge badge-danger">' . $status . '</span>',
+            default => '',
+        };
     }
 
 
@@ -360,7 +382,7 @@ class CommissionRequestService
      * @param array $commissionRequestApproval
      * @return bool|mixed
      */
-    public static function commissionRequestHierarchyApproval($commissionRequestApproval)
+    public static function commissionRequestHierarchyApproval($commissionRequestApproval): mixed
     {
         $consent = true;
         foreach ($commissionRequestApproval as $approval){
@@ -378,4 +400,5 @@ class CommissionRequestService
         }
         return $consent;
     }
+
 }

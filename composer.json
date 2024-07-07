@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.0",
         "laraveldaily/laravel-charts": "0.2.3",
         "pusher/pusher-php-server": "^5.0",
+        "rmunate/spell-number": "^4.2",
         "spatie/laravel-activitylog": "^4.4.0",
         "spatie/laravel-permission": "^5.5.0",
         "yajra/laravel-datatables-oracle": "~9.0"

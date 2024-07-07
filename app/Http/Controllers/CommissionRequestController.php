@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\CommissionRequest;
+use App\CommissionVoucher;
 use App\Repositories\SalesRepository;
 use App\Services\CommissionRequestService;
 use App\Services\CommissionService;
+use App\Services\CommissionVoucherService;
 use App\Services\DownLineService;
 use App\Services\PaymentReminderService;
 use App\Services\UpLineService;
@@ -14,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
+use Rmunate\Utilities\SpellNumber;
 
 class CommissionRequestController extends Controller
 {
@@ -33,6 +36,7 @@ class CommissionRequestController extends Controller
     {
         $this->middleware('permission:view commission request')->only(['forApproval','getForApproval','forReview','approveRequest']);
         $this->middleware('role:Finance Admin')->only(['setAdminAction']);
+        $this->middleware('permission:edit commission request')->only(['updateStatus']);
         $this->downLineService = $downLineService;
         $this->commissionService = $commissionService;
         $this->upLine = $upLineService;
@@ -168,7 +172,13 @@ class CommissionRequestController extends Controller
 
     public function myRequest()
     {
-        $myRequests = CommissionRequest::where('user_id',auth()->user()->id)->get();
+        if(auth()->user()->hasRole(['super admin','Finance Admin']))
+        {
+            $myRequests = CommissionRequest::all();
+        }else{
+            $userIds = collect($this->downLineService->extractDownLines(auth()->user()->id)->concat([collect(auth()->user())->toArray()]))->pluck('id');
+            $myRequests = CommissionRequest::whereIn('user_id',$userIds)->get();
+        }
         return $this->commissionRequest->commissionRequestTable($myRequests);
     }
 
@@ -193,9 +203,9 @@ class CommissionRequestController extends Controller
             'byPass' => $this->commissionRequest->check_by_pass($id),
             'estimatedAmount' => $this->commissionRequest->getAmountRelease($id,null),
             'approvedEstimatedAmount' => $this->commissionRequest->getAmountRelease($id,$commissionRequest->approved_rate),
+            'commissionVoucher' => $commissionVoucher = CommissionVoucher::where('commission_request_id',$id),
+            'net_commission_in_words' => $commissionVoucher->count() > 0 ? SpellNumber::value($commissionVoucher->first()->net_commission_less_deductions)->locale('en')->currency('Pesos')->toMoney() : ''
         ]);
-//        return collect($commissionRequest->sales->clientRequirements)->first()->drive_link;
-//        return collect($commissionRequest->sales->clientRequirements)->count() > 0 ? collect($commissionRequest->sales->clientRequirements)->first()->drive_link : "";
     }
 
     /**
@@ -222,7 +232,7 @@ class CommissionRequestController extends Controller
         return response()->json(['success' => false, 'message' => 'An error occurred'],400);
     }
 
-    public function setAdminAction($requestId, Request $request)
+    public function setAdminAction($requestId, Request $request): \Illuminate\Http\JsonResponse
     {
         $validation = Validator::make($request->all(),[
             'action' => 'required'
@@ -269,5 +279,39 @@ class CommissionRequestController extends Controller
     public function checkByPassForAllRequest(): void
     {
         Artisan::call('bypass:approval');
+    }
+    public function updateStatus(CommissionRequest $commissionRequest, Request $request): \Illuminate\Http\JsonResponse
+    {
+        $commissionRequest->status = $request->status;
+        return $commissionRequest->save() ?
+            response()->json(['success' => true, 'message' => 'Status updated!']) :
+            response()->json(['success' => false, 'message' => 'An error occurred!']) ;
+    }
+
+
+    public function previewVoucher(Request $request, CommissionVoucherService $commissionVoucherService):array
+    {
+        return $commissionVoucherService->voucherPreview($request);
+    }
+
+    public function saveVoucher(Request $request, CommissionVoucherService $commissionVoucherService): \Illuminate\Http\JsonResponse
+    {
+        return $commissionVoucherService->save($request) ?
+            response()->json(['success' => true, 'message' => 'Voucher successfully saved!']):
+            response()->json(['success' => false, 'message' => 'No voucher saved!']);
+    }
+
+    public function approveVoucher($id): \Illuminate\Http\JsonResponse
+    {
+        $voucher = CommissionVoucher::findOrFail($id);
+        $voucher->status = 'approved';
+        if($voucher->save())
+        {
+            $comm_request = CommissionRequest::find($voucher->commission_request_id);
+            $comm_request->status = 'completed';
+            $comm_request->save();
+            return response()->json(['success' => true, 'message' => 'Voucher approved!']);
+        }
+        return response()->json(['success' => false, 'message' => 'an error occurred!']);
     }
 }

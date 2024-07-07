@@ -8,13 +8,15 @@ use App\User;
 
 class DownLineService
 {
-    private $users = array(), $key = 0;
+    private int $key = 0;
+    private array $users = array();
+
     public function getDownLines($userId)
     {
         return User::whereIn('upline_id',(array)$userId);
     }
 
-    public function extractDownLines($userId)
+    public function extractDownLines($userId): \Illuminate\Support\Collection
     {
         $upLineIds = [];//container of all up Line Ids
         if($this->getDownLines($userId)->count() > 0)

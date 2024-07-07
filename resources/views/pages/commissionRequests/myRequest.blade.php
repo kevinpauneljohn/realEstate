@@ -19,10 +19,6 @@
 @section('content')
     <div class="container-fluid">
         <div class="card">
-            <div class="card-header">
-
-
-            </div>
             <div class="card-body">
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <table id="commission-request-list" class="table table-bordered table-hover" role="grid">
@@ -38,29 +34,12 @@
                             <th>Up Line</th>
                             <th>Comm. Rate</th>
                             <th>Rate Requested</th>
-                            <th>Last Due Date</th>
+                            <th>% Released</th>
+                            <th>Amount Released</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
-
-                        <tfoot>
-                        <tr>
-                            <th>Request #</th>
-                            <th>Date Requested</th>
-                            <th>Project</th>
-                            <th>Client</th>
-                            <th>TCP</th>
-                            <th>Discount</th>
-                            <th>Agent</th>
-                            <th>Up Line</th>
-                            <th>Comm. Rate</th>
-                            <th>Rate Requested</th>
-                            <th>Last Due Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -100,7 +79,8 @@
                         { data: 'upLine', name: 'upLine'},
                         { data: 'rate', name: 'rate'},
                         { data: 'rateRequested', name: 'rateRequested'},
-                        { data: 'lastDueDate', name: 'lastDueDate'},
+                        { data: 'percentage_released', name: 'percentage_released'},
+                        { data: 'amount_released', name: 'amount_released'},
                         { data: 'status', name: 'status'},
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],

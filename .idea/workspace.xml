@@ -36,8 +36,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="leads controller api for openhouseseller.com">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/realEstate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/realEstate.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/sales/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommissionRequestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommissionRequestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SalesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/CommissionRequestService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CommissionRequestService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/DownLineService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/DownLineService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/commissionRequests/forReview.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/commissionRequests/forReview.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/commissionRequests/myRequest.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/commissionRequests/myRequest.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,6 +329,7 @@
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-ignition" />
       <path value="$PROJECT_DIR$/vendor/spatie/backtrace" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem-local" />
+      <path value="$PROJECT_DIR$/vendor/rmunate/spell-number" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -755,7 +767,10 @@
       <workItem from="1719393472459" duration="8244000" />
       <workItem from="1719413713401" duration="11201000" />
       <workItem from="1719479103039" duration="600000" />
-      <workItem from="1719873773546" duration="53197000" />
+      <workItem from="1719873773546" duration="78373000" />
+      <workItem from="1720145629013" duration="2286000" />
+      <workItem from="1720177656745" duration="4392000" />
+      <workItem from="1720263586812" duration="16858000" />
     </task>
     <task id="LOCAL-00805" summary="setup the payment reminder">
       <created>1627136957909</created>

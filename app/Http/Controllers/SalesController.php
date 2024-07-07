@@ -215,6 +215,8 @@ class SalesController extends Controller
         $userId = $this->accountManagement->checkIfUserIsAccountManager()->id;
         if(is_null($request->session()->get('start_date')))
         {
+            $start_date = now()->startOfYear()->format('m/d/Y');
+            $end_date = now()->endOfYear()->format('m/d/Y');
             $sales = Sales::whereIn('user_id',collect(collect($this->downLines->extractDownLines((array)$userId)->pluck('id'))->concat((array)$userId))->toArray())->get();
         }else{
             $start_date = $request->session()->get('start_date');

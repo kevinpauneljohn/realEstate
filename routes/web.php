@@ -31,6 +31,7 @@ require __DIR__ . '/web/contest.php';
 require __DIR__ . '/web/files.php';
 require __DIR__ . '/web/project_links.php';
 require __DIR__ . '/web/sales.php';
+require __DIR__ . '/web/commission_requests.php';
 
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
