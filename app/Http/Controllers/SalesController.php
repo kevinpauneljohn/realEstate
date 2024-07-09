@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CommissionVoucher;
 use App\Events\UpdateLeadStatusEvent;
 use App\Events\UserRankPointsEvent;
 use App\Events\DeleteSalesRequestEvent;
@@ -308,10 +309,15 @@ class SalesController extends Controller
 
                 if(!auth()->user()->hasRole(['online warrior','account manager','admin','Finance Admin'])
                     && today()->diffInDays($dueDate,false) < 0
-                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review','requested to developer','for release','completed'])->count() < 1
+                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review','requested to developer','for release'])->count() < 1
                     && auth()->user()->can('view commission request') && $sale->status != 'cancelled')
                 {
-                    $action .= '<button class="btn btn-xs btn-success commission-request-btn" id="request-'.$sale->id.'" title="Commission Request" value="'.$sale->id.'">Request Commission</button>';
+//                    $action .= collect($sale->commissionRequests)->pluck('id');
+                    $remaining_commission = $this->totalCommissionReleased($sale->id);
+                    if($remaining_commission < 100)
+                    {
+                        $action .= '<button class="btn btn-xs btn-success commission-request-btn" id="request-'.$sale->id.'" title="Commission Request" value="'.$sale->id.'">Request Commission</button>';
+                    }
                 }
 
                 return $action;
@@ -321,10 +327,15 @@ class SalesController extends Controller
                 $action = "";
                 if(!auth()->user()->hasRole(['online warrior','account manager','admin','Finance Admin'])
                     && today()->diffInDays($dueDate,false) < 0
-                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review','requested to developer','for release','completed'])->count() < 1
+                    && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review','requested to developer','for release'])->count() < 1
                     && auth()->user()->can('view commission request') && $sale->status != 'cancelled')
                 {
-                    $action .= 'for-commission';
+                    $remaining_commission = $this->totalCommissionReleased($sale->id);
+                    if($remaining_commission < 100)
+                    {
+                        $action .= 'for-commission';
+                    }
+
                 }elseif (!auth()->user()->hasRole(['online warrior','account manager','admin','Finance Admin'])
                     && today()->diffInDays($dueDate,false) < 0
                     && $sale->commissionRequests()->where('user_id',auth()->user()->id)->whereIn('status',['pending','for review','requested to developer','for release','completed'])->count() > 0
@@ -334,16 +345,25 @@ class SalesController extends Controller
                 }
                 return $action;
             })
+            ->addColumn('comm_released', function($sale){
+                return '<span class="text-bold text-primary">'.$this->totalCommissionReleased($sale->id).'%</span>';
+            })
             ->addColumn('rate_status', function ($sale)
             {
                 return $this->StatusSaleRate();
             })
-            ->rawColumns(['action','status','request_status','full_name'])
+            ->rawColumns(['action','status','request_status','full_name','comm_released'])
             ->with([
                 'total_sales' => number_format($this->salesRepository->getTeamSalesByDateRange(auth()->user()->id, $start_date, $end_date),2),
                 'leaderboard' => $this->leaderboard->userRankingBySales($start_date, $end_date)
             ])
             ->make(true);
+    }
+
+    private function totalCommissionReleased($sales_id)
+    {
+        $sale = Sales::find($sales_id);
+        return CommissionVoucher::whereIn('commission_request_id',collect($sale->commissionRequests->where('user_id',auth()->user()->id))->pluck('id'))->sum('percentage_released');
     }
 
     /**

@@ -181,6 +181,7 @@
                         <th>Sale Status</th>
                         <th>Agent</th>
                         <th>Request Count</th>
+                        <th>Comm. Released</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -750,6 +751,7 @@
                     { data: 'status', name: 'status'},
                     { data: 'agent', name: 'agent'},
                     { data: 'request_status', name: 'request_status'},
+                    { data: 'comm_released', name: 'comm_released'},
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
                 "createdRow": function( row, data, dataIndex ) {
@@ -768,7 +770,7 @@
                     let sale = row.json
                     let rankings = '';
                     $('#sales-list').find('tbody')
-                        .append('<tr class="sales-info-bg"><td colspan="11" style="font-size: 20pt"><span class="text-muted">Total Sales: </span>'+sale.total_sales+'</td></tr>')
+                        .append('<tr class="sales-info-bg"><td colspan="12" style="font-size: 20pt"><span class="text-muted">Total Sales: </span>'+sale.total_sales+'</td></tr>')
                     // $.each(sale.leaderboard, function(key, value){
                     //     $('#sales-list').find('tbody')
                     //         .append('<tr class="leader-bg"><td colspan="11" style="font-size: 20pt"><span class="text-yellow"><i class="fa fa-trophy" aria-hidden="true"></i></span><span class="text-primary">#'+(parseInt(key)+1)+' </span> - <span class="text-success">'+value.firstname+' '+value.lastname+'</span> = <span>'+value.sales+'</span></td></tr>')
@@ -778,7 +780,7 @@
                     });
 
                     $('#sales-list').find('tbody')
-                        .append('<tr class="leader-bg" style="font-size: 15pt;"><td colspan="11"><h3 class="text-center">Leaderboard</h3><table><tr>'+rankings+'</tr></table></td></tr>');
+                        .append('<tr class="leader-bg" style="font-size: 15pt;"><td colspan="12"><h3 class="text-center">Leaderboard</h3><table><tr>'+rankings+'</tr></table></td></tr>');
                 }
             });
 

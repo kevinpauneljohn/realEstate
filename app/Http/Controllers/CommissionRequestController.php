@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CommissionRequest;
 use App\CommissionVoucher;
 use App\Repositories\SalesRepository;
+use App\Sales;
 use App\Services\CommissionRequestService;
 use App\Services\CommissionService;
 use App\Services\CommissionVoucherService;
@@ -187,10 +188,10 @@ class CommissionRequestController extends Controller
      * @param PaymentReminderService $paymentReminderService
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function forReview($id, PaymentReminderService $paymentReminderService): \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+    public function forReview($id, PaymentReminderService $paymentReminderService)
     {
         $commissionRequest = $this->commissionRequest->getSpecifiedRequest($id);
-//        return $this->commissionRequest->check_by_pass($id);
+////        return $this->commissionRequest->check_by_pass($id);
         return view('pages.commissionRequests.forReview')->with([
             'commissionRequest' => $commissionRequest,
             'rateGiven' => $commissionRequest->user->commissions()->where('project_id', $commissionRequest->sales->project_id)->count() > 0 ?
@@ -204,8 +205,16 @@ class CommissionRequestController extends Controller
             'estimatedAmount' => $this->commissionRequest->getAmountRelease($id,null),
             'approvedEstimatedAmount' => $this->commissionRequest->getAmountRelease($id,$commissionRequest->approved_rate),
             'commissionVoucher' => $commissionVoucher = CommissionVoucher::where('commission_request_id',$id),
-            'net_commission_in_words' => $commissionVoucher->count() > 0 ? SpellNumber::value($commissionVoucher->first()->net_commission_less_deductions)->locale('en')->currency('Pesos')->toMoney() : ''
+            'net_commission_in_words' => $commissionVoucher->count() > 0 ? SpellNumber::value($commissionVoucher->first()->net_commission_less_deductions)->locale('en')->currency('Pesos')->toMoney() : '',
+            'remaining_request' => 100 - $this->totalCommissionReleased($commissionRequest->sales->id, $commissionRequest->user_id)
         ]);
+//        return $this->totalCommissionReleased($commissionRequest->sales->id, $commissionRequest->user_id);
+    }
+
+    private function totalCommissionReleased($sales_id, $requester_id)
+    {
+        $sale = Sales::find($sales_id);
+        return CommissionVoucher::whereIn('commission_request_id',collect($sale->commissionRequests->where('user_id',$requester_id))->pluck('id'))->sum('percentage_released');
     }
 
     /**

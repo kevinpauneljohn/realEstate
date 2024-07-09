@@ -266,7 +266,7 @@
         <!-- /.card-body -->
         </div>
     </div>
-    @if($commissionRequest->sales->user_id === auth()->user()->id)
+    @if($commissionRequest->sales->user_id === auth()->user()->id && $commissionVoucher->count() > 0 && $commissionRequest->status === 'completed')
         <div class="row">
             <div class="col-lg-10">
                 <div class="card voucher-preview">
@@ -347,13 +347,6 @@
                                 <td colspan="4" class="table-active"></td>
                             </tr>
                             </tbody></table>
-                        <div id="save-button-section" class="mt-3">
-                            @if($commissionVoucher->count() === 0)
-                                <button type="button" class="btn btn-primary btn-sm w-100" id="save-voucher-button">Save</button>
-                            @elseif($commissionVoucher->count() > 0 && $commissionVoucher->first()->status === 'pending')
-                                <button type="button" class="btn btn-success btn-sm w-100" id="approve-voucher-button">Approve</button>
-                            @endif
-                        </div>
                     </div>
                 </div>
             </div>
@@ -477,7 +470,7 @@
                             <div class="row tcp_basis">
                                 <div class="col-lg-5 mt-3 percentage_released">
                                     <label for="percentage_released">% Released</label>
-                                    <input type="number" step="any" class="form-control" name="percentage_released" id="percentage_released" placeholder="0% remaining" max="100" min="0" required="">
+                                    <input type="number" step="any" class="form-control" name="percentage_released" id="percentage_released" placeholder="{{$remaining_request}}% remaining" max="{{$remaining_request}}" min="0" required="">
                                 </div>
                                 <div class="col-lg-7 mt-3 sub_total">
                                     <label for="sub_total">Sub Total</label>
