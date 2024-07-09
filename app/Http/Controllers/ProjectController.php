@@ -56,10 +56,10 @@ class ProjectController extends Controller
                 {
                     $action .= '<a href="#" class="btn btn-xs btn-danger delete-project-btn" id="'.$project->id.'"><i class="fa fa-trash"></i></a>';
                 }
-                if(!is_null($project->google_drive_link))
-                {
-                    $action .= '<a href="'.$project->google_drive_link.'" target="_blank" class="btn btn-xs bg-purple view-photos" id="'.$project->id.'" title="View Photos"><i class="fa fa-images"></i></a>';
-                }
+//                if(!is_null($project->google_drive_link))
+//                {
+//                    $action .= '<a href="'.$project->google_drive_link.'" target="_blank" class="btn btn-xs bg-purple view-photos" id="'.$project->id.'" title="View Photos"><i class="fa fa-images"></i></a>';
+//                }
 
                 return $action;
             })
