@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CommissionRequest;
 use Illuminate\Http\Request;
 
 class AlertController extends Controller
@@ -33,6 +34,14 @@ class AlertController extends Controller
             ]);
         }
 
+        ///commission request
+        if(auth()->user()->hasAnyRole(['super admin','admin','Finance Admin']))
+        {
+            $commissionRequest = CommissionRequest::where('status','pending');
+        }else{
+            $commissionRequest = CommissionRequest::where('status','completed')->where('status','rejected')->where('updated_at','>=',now()->subDays(2));
+        }
+
         //notification
         $notification = \App\Notification::where([
             ['user_id','=',auth()->user()->id],
@@ -55,6 +64,13 @@ class AlertController extends Controller
         // but you can assume this data comes from a database query.
 
         $notifications = [
+            [
+                'icon' => 'fas fa-fw fa-wallet',
+                'text' => ' Commission Request <span class="badge badge-danger">'.$commissionRequest->count().'</span>',
+                'time' => rand(0, 10) . ' minutes',
+                'url' => '/commission-requests',
+                'count' => $commissionRequest->count()
+            ],
             [
                 'icon' => 'fas fa-fw fa-list',
                 'text' => ' Admin Request <span class="badge badge-danger">'.$request->count().'</span>',
@@ -98,7 +114,7 @@ class AlertController extends Controller
         // Return the new notification data.
 
         return [
-            'label'       => $request->count() + $notification->count() + $task,
+            'label'       => $request->count() + $notification->count() + $task + $commissionRequest->count(),
             'label_color' => 'danger',
             'icon_color'  => 'dark',
             'dropdown'    => $dropdownHtml,

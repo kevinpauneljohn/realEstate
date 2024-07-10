@@ -420,7 +420,4 @@ Route::get('/task-ojt',[\App\Http\Controllers\ScrumController::class,'ojt'])->na
 Route::post('/hide-sale-rate',[\App\Http\Controllers\SalesController::class,'hideSaleRate'])->name('hide.sale.rate')->middleware(['auth','permission:view sales']);
 
 Route::get('/alert-me',[\App\Http\Controllers\AlertController::class,'notifications'])->name('alert-me')->middleware(['auth']);
-Route::get(
-    'notifications/get',
-    [\App\Http\Controllers\AlertController::class, 'getNotificationsData']
-)->name('notifications.get')->middleware(['auth']);
+Route::get('notifications/get',[\App\Http\Controllers\AlertController::class, 'getNotificationsData'])->name('notifications.get')->middleware(['auth']);
