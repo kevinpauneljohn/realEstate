@@ -7,6 +7,7 @@ namespace App\Services;
 use App\CommissionRequest;
 use App\CommissionVoucher;
 use App\Project;
+use App\Sales;
 use App\User;
 use Illuminate\Support\Carbon;
 use Yajra\DataTables\Facades\DataTables;
@@ -170,15 +171,15 @@ class CommissionRequestService
             ->make(true);
     }
 
-    private function status_badge($status)
+    public function status_badge($status): string
     {
         return match ($status) {
-            'pending' => '<span class="badge badge-warning">' . $status . '</span>',
-            'for review' => '<span class="badge badge-info">' . $status . '</span>',
-            'requested' => '<span class="badge bg-purple">' . $status . '</span>',
-            'for release' => '<span class="badge bg-pink">' . $status . '</span>',
-            'completed' => '<span class="badge badge-success">' . $status . '</span>',
-            'rejected' => '<span class="badge badge-danger">' . $status . '</span>',
+            'pending' => '<span class="badge badge-warning">' . ucwords($status) . '</span>',
+            'for review' => '<span class="badge badge-info">' . ucwords($status) . '</span>',
+            'requested' => '<span class="badge bg-purple">' . ucwords($status) . '</span>',
+            'for release' => '<span class="badge bg-pink">' . ucwords($status) . '</span>',
+            'completed' => '<span class="badge badge-success">' . ucwords($status) . '</span>',
+            'rejected' => '<span class="badge badge-danger">' . ucwords($status) . '</span>',
             default => '',
         };
     }
@@ -399,6 +400,12 @@ class CommissionRequestService
 
         }
         return $consent;
+    }
+
+    public function related_requests($sale_id, $requester_id)
+    {
+        $sales = Sales::find($sale_id);
+        return $sales->commissionRequests()->where('sales_id',$sale_id)->where('user_id',$requester_id)->get();
     }
 
 }

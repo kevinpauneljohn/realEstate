@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Request #: <span style="color:#007bff">{{str_pad($commissionRequest->id, 6, '0', STR_PAD_LEFT)}}</span></h1>
+            <h1 class="m-0 text-dark">Request #: <span style="color:#007bff">{{$commissionRequest->request_number}}</span> - {!! $status !!}</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -114,8 +114,8 @@
                             <td>{{$commissionRequest->created_at->format('F-d-Y')}} </td>
                             <td>{{$askingRate}}%</td>
                             <td>{{number_format($estimatedAmount,2)}} </td>
-                            <td>@if($commissionRequest->percentage_released !== null) {{$commissionRequest->percentage_released}}% @endif </td>
-                            <td>@if($commissionRequest->approved_rate !== null) {{number_format($approvedEstimatedAmount,2)}} @endif</td>
+                            <td>@if($commissionVoucher->count() > 0) {{$commissionVoucher->first()->percentage_released}}% @endif </td>
+                            <td>@if($commissionVoucher->count() > 0) {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}} @endif</td>
                         </tr>
                     </table>
 
@@ -213,10 +213,6 @@
                         <p class="text-sm">Commission Rate
                             <b class="d-block">{{$rateGiven}}%</b>
                         </p>
-{{--                        days passes: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['daysPasses']}}<br/>--}}
-{{--                        days  by pass: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['daysByPass']}}<br/>--}}
-{{--                        by pass user: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['byPassConsent'] ? "yes" : "no"}}<br/>--}}
-{{--                        allow approve and reject: {{collect($byPass)->where('upLine_id',auth()->user()->id)->first()['AllowByPassApproveAndReject'] ? "yes" : "no"}}<br/>--}}
                         @if(collect($byPass)->where('upLine_id',auth()->user()->id)->count() > 0)
                             @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
 
@@ -355,6 +351,21 @@
     @if(auth()->user()->hasRole(['super admin','admin','Finance Admin']))
         <div class="row">
             <div class="col-lg-6">
+                <div class="card card-olive" id="related-requests">
+                    <div class="card-header">
+                        <h3 class="card-title">Related Requests</h3>
+                    </div>
+                    <div class="card-body">
+                        @if(collect($related_requests)->count() > 0)
+                                @foreach($related_requests as $request)
+                                    <a href="@if($request->id === $commissionRequest->id) #related-requests @else{{route('commission.request.review',['request' => $request->id])}}@endif" style="font-size: 15pt;"><span class="@if($request->id === $commissionRequest->id) text-success @else text-primary @endif">#{{$request->request_number}}</span></a>
+                                    @if($request->id === $commissionRequest->id) <i>Current</i> @endif<br/>
+                                @endforeach
+                            @else
+                            No Available Data
+                        @endif
+                    </div>
+                </div>
                 <form>
                      @csrf
                     <div class="card">
@@ -376,34 +387,36 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-6">
-                <form class="sales-form">
-                    @csrf
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-6 total_contract_price">
-                                    <label for="total_contract_price">Total Contract Price</label>
-                                    <input type="number" name="total_contract_price" step="any" class="form-control" id="total_contract_price" value="{{$commissionRequest->sales->total_contract_price}}">
+            @if($commissionRequest->status !== 'completed' && $commissionRequest->status !== 'rejected')
+                <div class="col-lg-6">
+                    <form class="sales-form">
+                        @csrf
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6 total_contract_price">
+                                        <label for="total_contract_price">Total Contract Price</label>
+                                        <input type="number" name="total_contract_price" step="any" class="form-control" id="total_contract_price" value="{{$commissionRequest->sales->total_contract_price}}">
+                                    </div>
+                                    <div class="col-lg-6 commission_rate">
+                                        <label for="commission_rate">Commission Rate</label>
+                                        <input type="number" name="commission_rate" step="any" class="form-control" id="commission_rate" value="{{$commissionRequest->commission}}" disabled>
+                                    </div>
                                 </div>
-                                <div class="col-lg-6 commission_rate">
-                                    <label for="commission_rate">Commission Rate</label>
-                                    <input type="number" name="commission_rate" step="any" class="form-control" id="commission_rate" value="{{$commissionRequest->commission}}">
+                                <div class="row mt-3">
+                                    <div class="col-lg-12">
+                                        <label for="total_commission">Total Commission Amount</label>
+                                        <input type="text" name="total_commission" step="any" class="form-control" id="total_commission" value="{{number_format($commissionRequest->sales->total_contract_price * ($commissionRequest->commission / 100),2)}}" disabled>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mt-3">
-                                <div class="col-lg-12">
-                                    <label for="total_commission">Total Commission Amount</label>
-                                    <input type="text" name="total_commission" step="any" class="form-control" id="total_commission" value="{{number_format($commissionRequest->sales->total_contract_price * ($commissionRequest->commission / 100),2)}}" disabled>
-                                </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary btn-sm">Save</button>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-lg-6">
@@ -583,11 +596,13 @@
                             </tr>
                             </tbody></table>
                         <div id="save-button-section" class="mt-3">
-                            @if($commissionVoucher->count() === 0)
-                                <button type="button" class="btn btn-primary btn-sm w-100" id="save-voucher-button">Save</button>
-                            @elseif($commissionVoucher->count() > 0 && $commissionVoucher->first()->status === 'pending')
-                                <button type="button" class="btn btn-success btn-sm w-100" id="approve-voucher-button">Approve</button>
-                           @endif
+                            @if($commissionRequest->status !== 'completed' && $commissionRequest->status !== 'rejected')
+                                @if($commissionVoucher->count() === 0)
+                                    <button type="button" class="btn btn-primary btn-sm w-100" id="save-voucher-button">Save</button>
+                                @elseif($commissionVoucher->count() > 0 && $commissionVoucher->first()->status === 'pending')
+                                    <button type="button" class="btn btn-success btn-sm w-100" id="approve-voucher-button">Approve</button>
+                                @endif
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -1061,7 +1076,52 @@
                 });
             })
             @endif
+            @if($commissionRequest->status !== 'completed' && $commissionRequest->status !== 'rejected')
+            let salesForm = $('.sales-form');
+            $(document).on('submit','.sales-form', function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
+                // console.log(data)
+                $.ajax({
+                    url: '{{route('update.sales.tcp',['sales_id' => $commissionRequest->sales->id])}}',
+                    type: 'post',
+                    data: data,
+                    beforeSend: function(){
+                        salesForm.find('.text-danger').remove();
+                        salesForm.find('button[type=submit]').attr('disabled',true).text('Saving...')
+                    }
+                }).done(function(response){
+                    console.log(response)
+                    if(response.success === true)
+                    {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: response.message,
+                            icon: "success"
+                        });
 
+                        setTimeout(function(){
+                            window.location.reload();
+                        },1500)
+                    }
+                    else if(response.success === false)
+                    {
+                        Swal.fire({
+                            title: response.message,
+                            icon: "warning"
+                        });
+                    }
+                }).fail(function(xhr, status, error){
+                    console.log(xhr)
+                    $.each(xhr.responseJSON.errors, function(key, value){
+                        salesForm.find('.'+key).append('<p class="text-danger">'+value+'</p>');
+                    })
+
+                }).always(function(){
+                    salesForm.find('button[type=submit]').attr('disabled',false).text('Save')
+                })
+            })
+            @endif
         </script>
     @endif
 @stop

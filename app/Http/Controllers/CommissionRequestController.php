@@ -206,7 +206,9 @@ class CommissionRequestController extends Controller
             'approvedEstimatedAmount' => $this->commissionRequest->getAmountRelease($id,$commissionRequest->approved_rate),
             'commissionVoucher' => $commissionVoucher = CommissionVoucher::where('commission_request_id',$id),
             'net_commission_in_words' => $commissionVoucher->count() > 0 ? SpellNumber::value($commissionVoucher->first()->net_commission_less_deductions)->locale('en')->currency('Pesos')->toMoney() : '',
-            'remaining_request' => 100 - $this->totalCommissionReleased($commissionRequest->sales->id, $commissionRequest->user_id)
+            'remaining_request' => 100 - $this->totalCommissionReleased($commissionRequest->sales->id, $commissionRequest->user_id),
+            'status' => $this->commissionRequest->status_badge($commissionRequest->status),
+            'related_requests' => $this->commissionRequest->related_requests($commissionRequest->sales->id, $commissionRequest->user_id)
         ]);
 //        return $this->totalCommissionReleased($commissionRequest->sales->id, $commissionRequest->user_id);
     }
@@ -216,6 +218,8 @@ class CommissionRequestController extends Controller
         $sale = Sales::find($sales_id);
         return CommissionVoucher::whereIn('commission_request_id',collect($sale->commissionRequests->where('user_id',$requester_id))->pluck('id'))->sum('percentage_released');
     }
+
+
 
     /**
      * approve or reject a commission request
@@ -322,5 +326,21 @@ class CommissionRequestController extends Controller
             return response()->json(['success' => true, 'message' => 'Voucher approved!']);
         }
         return response()->json(['success' => false, 'message' => 'an error occurred!']);
+    }
+
+    public function updateSalesTotalPrice(Request $request, $sales_id): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'total_contract_price' => ['required'],
+        ]);
+
+        $sales = Sales::findOrFail($sales_id);
+        $sales->total_contract_price = $request->total_contract_price;
+        if($sales->isDirty())
+        {
+            $sales->save();
+            return response()->json(['success' => true, 'message' => 'Total contract price successfully updated!']);
+        }
+        return response()->json(['success' => false, 'message' =>  'No changes made!']);
     }
 }

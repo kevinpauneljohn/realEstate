@@ -18,6 +18,8 @@ class CommissionRequest extends Model
         'remarks' => 'array'
     ];
 
+    protected $appends = ['request_number'];
+
     public function sales()
     {
         return $this->belongsTo(Sales::class);
@@ -26,5 +28,10 @@ class CommissionRequest extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getRequestNumberAttribute()
+    {
+        return str_pad($this->id, 6, '0', STR_PAD_LEFT);
     }
 }
