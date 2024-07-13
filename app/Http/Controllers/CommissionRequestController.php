@@ -196,7 +196,7 @@ class CommissionRequestController extends Controller
             'commissionRequest' => $commissionRequest,
             'rateGiven' => $commissionRequest->user->commissions()->where('project_id', $commissionRequest->sales->project_id)->count() > 0 ?
                 $commissionRequest->user->commissions()->where('project_id', $commissionRequest->sales->project_id)->first()->commission_rate :
-                (auth()->user()->hasRole('super admin') ? $commissionRequest->commission : $commissionRequest->user->commissions()->where('project_id', null)->first()->commission_rate),
+                (auth()->user()->hasRole(['super admin','Finance Admin']) ? $commissionRequest->commission : $commissionRequest->user->commissions()->where('project_id', null)->first()->commission_rate),
             'askingRate' => $commissionRequest->commission,
             'lastDueDate' =>  collect($commissionRequest->sales->paymentReminders)->count() > 0 && $commissionRequest->sales->status !== "cancelled"
                 ? $commissionRequest->sales->paymentReminders->last()->schedule
