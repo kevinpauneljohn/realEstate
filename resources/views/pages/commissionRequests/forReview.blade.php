@@ -112,9 +112,9 @@
                         <tr id="request-data">
                             <td>{{ucfirst($commissionRequest->status)}}</td>
                             <td>{{$commissionRequest->created_at->format('F-d-Y')}} </td>
-                            <td>{{$askingRate}}%</td>
+                            <td><span class="dhg-hidden">{{$askingRate}}%</span></td>
                             <td>{{number_format($estimatedAmount,2)}} </td>
-                            <td>@if($commissionVoucher->count() > 0) {{$commissionVoucher->first()->percentage_released}}% @endif </td>
+                            <td>@if($commissionVoucher->count() > 0) <span class="dhg-hidden">{{$commissionVoucher->first()->percentage_released}}%</span> @endif </td>
                             <td>@if($commissionVoucher->count() > 0) {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}} @endif</td>
                         </tr>
                     </table>
@@ -211,7 +211,7 @@
                             <b class="d-block">{{$commissionRequest->user->mobileNo}}</b>
                         </p>
                         <p class="text-sm">Commission Rate
-                            <b class="d-block">{{$rateGiven}}%</b>
+                            <b class="d-block dhg-hidden">{{$rateGiven}}%</b>
                         </p>
                         @if(collect($byPass)->where('upLine_id',auth()->user()->id)->count() > 0)
                             @if(collect($byPass)->where('upLine_id',auth()->user()->id)->first()['finalConsent'] && !auth()->user()->hasRole('Finance Admin'))
@@ -297,7 +297,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">Requested %</td>
-                                <td colspan="1" id="requested-rate">{{number_format($commissionRequest->commission,2)}}%</td>
+                                <td colspan="1"><span id="requested-rate" class="dhg-hidden">{{number_format($commissionRequest->commission,2)}}%</span></td>
                             </tr>
                             <tr>
                                 <td colspan="3">Gross Commission</td>
@@ -400,7 +400,7 @@
                                     </div>
                                     <div class="col-lg-6 commission_rate">
                                         <label for="commission_rate">Commission Rate</label>
-                                        <input type="number" name="commission_rate" step="any" class="form-control" id="commission_rate" value="{{$commissionRequest->commission}}" disabled>
+                                        <input type="number" name="commission_rate" step="any" class="form-control" id="commission_rate" value="{{\Illuminate\Support\Facades\DB::table('settings')->where('title','sensitive_data')->first()->show ? $commissionRequest->commission : 0}}" disabled>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -445,7 +445,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-3 requested_rate">
                                     <label for="requested_rate">Requested Rate</label>
-                                    <input type="number" step="any" class="form-control" name="requested_rate" id="requested_rate" max="100" min="0" value="{{$commissionRequest->commission}}" readonly>
+                                    <input type="number" step="any" class="form-control" name="requested_rate" id="requested_rate" max="100" min="0" value="{{\Illuminate\Support\Facades\DB::table('settings')->where('title','sensitive_data')->first()->show ? $commissionRequest->commission : 0}}" readonly>
                                 </div>
                             </div>
                             <div class="row">
@@ -549,7 +549,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">Requested %</td>
-                                <td colspan="1" id="requested-rate">{{number_format($commissionRequest->commission,2)}}%</td>
+                                <td colspan="1"><span id="requested-rate" class="dhg-hidden">{{number_format($commissionRequest->commission,2)}}%</span></td>
                             </tr>
                             <tr>
                                 <td colspan="3">Gross Commission</td>
