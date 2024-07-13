@@ -124,10 +124,10 @@ class CommissionRequestService
                 return $commissionRequest->user->fullname;
             })
             ->addColumn('upLine',function($commissionRequest){
-                return auth()->user()->hasRole('super admin') ? '' : User::find($commissionRequest->user->upline_id)->fullname;
+                return auth()->user()->hasRole(['super admin','Finance Admin']) ? '' : User::find($commissionRequest->user->upline_id)->fullname;
             })
             ->addColumn('rate',function($commissionRequest){
-                if(auth()->user()->hasRole('super admin'))
+                if(auth()->user()->hasRole(['super admin','Finance Admin']))
                 {
                     $rate = $commissionRequest->sales->commission_rate;
                 }
