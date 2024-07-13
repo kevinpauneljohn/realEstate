@@ -677,14 +677,6 @@
         <!--end add user modal-->
     @endcan
 @stop
-@php
-    $display_sensitive_data = \Illuminate\Support\Facades\DB::table('settings')->where('title','sensitive_data')->first()->show;
-@endphp
-@if(auth()->user()->hasRole('super admin'))
-    @if(!$display_sensitive_data)
-        @section('plugins.Settings',true)
-    @endif
-@endif
 @section('right-sidebar')
     <x-custom.right-sidebar />
 @stop

@@ -210,7 +210,7 @@
     @php
         $display_sensitive_data = \Illuminate\Support\Facades\DB::table('settings')->where('title','sensitive_data')->first()->show;
     @endphp
-    @if(auth()->user()->hasRole('super admin'))
+    @if(auth()->user()->hasRole(['super admin','Finance Admin']))
         @if(!$display_sensitive_data)
             @section('plugins.Settings',true)
         @endif
