@@ -259,7 +259,7 @@ class SalesController extends Controller
             ->editColumn('commission_rate',function($sale){
                 if($sale->commission_rate != null && !auth()->user()->hasRole('online warrior'))
                 {
-                    return $sale->commission_rate.'%';
+                    return '<span class="dhg-hidden">'.$sale->commission_rate.'%</span>';
                 }
                 return "";
             })
@@ -352,7 +352,7 @@ class SalesController extends Controller
             {
                 return $this->StatusSaleRate();
             })
-            ->rawColumns(['action','status','request_status','full_name','comm_released'])
+            ->rawColumns(['action','status','request_status','full_name','comm_released','commission_rate'])
             ->with([
                 'total_sales' => number_format($this->salesRepository->getTeamSalesByDateRange(auth()->user()->id, $start_date, $end_date),2),
                 'leaderboard' => $this->leaderboard->userRankingBySales($start_date, $end_date)

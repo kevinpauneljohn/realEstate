@@ -683,6 +683,16 @@ return [
                 ],
             ],
         ],
+        'Settings' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'css/settings.css',
+                ],
+            ],
+        ],
     ],
 
     /*

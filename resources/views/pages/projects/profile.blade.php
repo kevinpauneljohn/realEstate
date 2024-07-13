@@ -166,7 +166,7 @@
                         </p>
                         @if(auth()->user()->hasRole(['super admin','admin']))
                             <p class="text-sm">Commission Rate
-                                <b class="d-block">{{$project->commission_rate}}%</b>
+                                <b class="d-block dhg-hidden">{{$project->commission_rate}}%</b>
                             </p>
                         @endif
 
@@ -195,6 +195,8 @@
                     </table>
                 </div>
             </div>
+        </div>
+
     </div>
 
     @can('add model unit')
@@ -417,7 +419,17 @@
         </form>
     @endcan
 @stop
+@php
+    $display_sensitive_data = \Illuminate\Support\Facades\DB::table('settings')->where('title','sensitive_data')->first()->show;
+@endphp
+@if(auth()->user()->hasRole('super admin'))
+    @if(!$display_sensitive_data)
+        @section('plugins.Settings',true)
+    @endif
+@endif
 @section('plugins.DropZone',true)
+
+
 @section('right-sidebar')
     <x-custom.right-sidebar />
 @stop

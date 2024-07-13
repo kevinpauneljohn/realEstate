@@ -39,7 +39,7 @@ class ProjectController extends Controller
                 {
                     $rate = $project->commission_rate.'%';
                 }
-                return $rate;
+                return '<span class="dhg-hidden">'.$rate.'</span>';
             })
             ->addColumn('action', function ($project)
             {
@@ -63,7 +63,7 @@ class ProjectController extends Controller
 
                 return $action;
             })
-            ->rawColumns(['model_units','action'])
+            ->rawColumns(['model_units','action','commission_rate'])
             ->make(true);
     }
 

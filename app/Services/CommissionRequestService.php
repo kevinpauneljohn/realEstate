@@ -136,10 +136,10 @@ class CommissionRequestService
                         ? $commissionRequest->user->commissions()->where('project_id',$commissionRequest->sales->project_id)->first()->commission_rate
                         : $commissionRequest->user->commissions()->where('project_id',null)->first()->commission_rate;
                 }
-                return $rate.'%';
+                return '<span class="dhg-hidden">'.$rate.'%</span>';
             })
             ->addColumn('rateRequested',function($commissionRequest){
-                return $commissionRequest->commission.'%';
+                return '<span class="dhg-hidden">'.$commissionRequest->commission.'%</span>';
             })
             ->addColumn('lastDueDate',function($commissionRequest){
                 $dueDate = collect($commissionRequest->sales->paymentReminders)->count() > 0 && $commissionRequest->sales->status !== "cancelled"
@@ -167,7 +167,7 @@ class CommissionRequestService
                 }
                 return $action;
             })
-            ->rawColumns(['requestNo','action','status','percentage_released','amount_released'])
+            ->rawColumns(['requestNo','action','status','percentage_released','amount_released','rate','rateRequested'])
             ->make(true);
     }
 
