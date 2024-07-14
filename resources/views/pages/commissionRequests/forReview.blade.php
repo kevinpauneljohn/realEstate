@@ -494,7 +494,7 @@
                             <div class="row reference_amount_field_row" style="display: none;">
                                 <div class="col-lg-5 mt-3 percentage_released_reference_amount">
                                     <label for="percentage_released_reference_amount">% Released ref</label>
-                                    <input type="number" step="any" class="form-control" name="percentage_released_reference_amount" id="percentage_released_reference_amount" placeholder="0% remaining" max="0" min="0" required="" disabled="disabled">
+                                    <input type="number" step="any" class="form-control" name="percentage_released_reference_amount" id="percentage_released_reference_amount" placeholder="remaining" max="100" min="0" required="" disabled="disabled">
                                 </div>
                                 <div class="col-lg-7 mt-3 sub_total_reference_amount">
                                     <label for="sub_total_reference_amount">Sub Total ref</label>
@@ -542,80 +542,7 @@
 
                     <div class="card-body preview table-responsive-xl">
 
-                        <table class="table table-bordered table-hover">
-                            <tbody><tr>
-                                <th class="text-center" colspan="4">Dream Home Guide Realty Comm Voucher</th>
-                            </tr>
-                            <tr>
-                                <th id="project-name" colspan="4" class="text-center"></th>
-                            </tr>
-                            <tr>
-                                <td>Payee</td>
-                                <td id="payee" class="text-bold">{{$commissionRequest->sales->user->fullname}}</td>
-                                <td>Amount:</td>
-                                <td id="amount" class="text-bold">@if($commissionVoucher->count() > 0) {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}} @endif</td>
-                            </tr>
-                            <tr>
-                                <td class="w-25">Client</td>
-                                <td id="client" class="text-bold w-25">{{$commissionRequest->sales->lead->fullname}}</td>
-                                <td>In Words:</td>
-                                <td id="amount-in-words" class="text-bold w-50">@if($commissionVoucher->count() > 0) {{ucwords($net_commission_in_words)}} @endif</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4" class="table-active"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">TCP</td>
-                                <td colspan="1" id="tcp">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionRequest->sales->total_contract_price,2)}} @endif</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">Requested %</td>
-                                <td colspan="1"><span id="requested-rate" class="dhg-hidden">{{number_format($commissionRequest->commission,2)}}%</span></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">Gross Commission</td>
-                                <td colspan="1" id="gross-commission">@if($commissionVoucher->count() > 0)&#8369;{{number_format($commissionVoucher->first()->gross_commission,2)}}@endif</td>
-                            </tr>
-                            <tr id="tax-basis-row" style="display: none;">
-                                <td colspan="3" id="tax_basis_reference_remarks"></td>
-                                <td colspan="1" id="tax-basis"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"><span id="percent-released">@if($commissionVoucher->count() === 0) 0 @else {{$commissionVoucher->first()->percentage_released}} @endif%</span> Released</td>
-                                <td colspan="1" id="released-gross-commission">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionVoucher->first()->sub_total,2)}} @endif</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">Withholding Tax <span id="wht-percent">@if($commissionVoucher->count() === 0) 0 @else {{$commissionVoucher->first()->wht_percent}} @endif%</span></td>
-                                <td colspan="1" id="wht">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionVoucher->first()->wht_amount,2)}} @endif</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">VAT <span id="vat-percent">@if($commissionVoucher->count() === 0) 0 @else {{$commissionVoucher->first()->vat_percent}} @endif%</span></td>
-                                <td colspan="1" id="vat-amount">@if($commissionVoucher->count() > 0)&#8369; {{number_format($commissionVoucher->first()->vat_amount,2)}} @endif</td>
-                            </tr>
-                            <tr class="net-commission">
-                                <td colspan="3">Net Commission</td>
-                                <td colspan="1" id="net-commission">@if($commissionVoucher->count() > 0)&#8369;  {{number_format($commissionVoucher->first()->net_commission_less_vat,2)}} @endif</td>
-                            </tr>
-                            @if($commissionVoucher->count() > 0)
-                                @foreach($commissionVoucher->first()->deductions as $deduction)
-                                    <tr>
-                                        <td colspan="3">{{$deduction->title}}</td>
-                                        <td class="text-danger">- &#8369; {{number_format($deduction->amount,2)}}</td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                            @if($commissionVoucher->count() > 0)
-                                @if($commissionVoucher->first()->deductions->count() > 0)
-                                    <tr>
-                                        <td colspan="3">Total Commission Balance</td>
-                                        <td class="text-success"> &#8369; {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}}</td>
-                                    </tr>
-                                @endif
-                            @endif
-                            <tr id="row-separator">
-                                <td colspan="4" class="table-active"></td>
-                            </tr>
-                            </tbody></table>
+                        <x-commission-voucher.voucher :commissionRequest="$commissionRequest" :commissionVoucher="$commissionVoucher" :netCommissionWords="$net_commission_in_words"/>
                         <div id="save-button-section" class="mt-3">
                             @if($commissionRequest->status !== 'completed' && $commissionRequest->status !== 'rejected')
                                 @if($commissionVoucher->count() === 0)
@@ -960,12 +887,94 @@
                 $(this).closest('.deduction-row').remove();
             });
 
+            //commission reference amount
+            const use_reference_amount = () => {
+                let reference_amount_field_row = $('.reference_amount_field_row')
+                let tcp_basis = $('.tcp_basis')
+                if($('#reference_amount_for_wht').is(":checked"))
+                {
+                    reference_amount_field_row.show();
+                    reference_amount_field_row.
+                    find('#reference_amount, #percentage_released_reference_amount, #sub_total_reference_amount, #remarks').attr('disabled',false);
+
+                    tcp_basis.hide()
+                    tcp_basis.find('#percentage_released, #sub_total').attr('disabled',true);
+                }else{
+                    reference_amount_field_row.hide();
+                    reference_amount_field_row.find('#reference_amount, #percentage_released_reference_amount, #sub_total_reference_amount, #remarks').attr('disabled',true);
+
+                    tcp_basis.show()
+                    tcp_basis.find('#percentage_released, #sub_total').attr('disabled',false);
+                }
+            }
+
+            $(document).on('change','#reference_amount_for_wht',function (){
+                use_reference_amount()
+            })
+
+            const reference_amount_for_wht_value = () => {
+                return parseFloat($('input[name=reference_amount]').val());
+            }
+
+            $(document).on('input','input[name=percentage_released_reference_amount]',function(){
+                let percentage_released_reference_amount = 0
+                if(this.value !== "")
+                {
+                    percentage_released_reference_amount = parseFloat(this.value) / 100
+                }
+
+                let sub_total_ref_value = reference_amount_for_wht_value() * percentage_released_reference_amount
+
+                $('input[name=sub_total_reference_amount]').val(sub_total_ref_value.toFixed(2));
+            })
+
+            $(document).on('input','input[name=reference_amount]',function(){
+                let reference_amount = 0
+                let percentage_released_reference_amount = 0
+                let percentage_released_element = $('input[name=percentage_released_reference_amount]');
+                if(this.value !== "")
+                {
+                    reference_amount = parseFloat(this.value)
+                }
+
+                if(percentage_released_element.val() !== "")
+                {
+                    percentage_released_reference_amount = parseFloat(percentage_released_element.val()) / 100
+                }
+
+                let sub_total_ref_value = reference_amount * percentage_released_reference_amount
+
+                $('input[name=sub_total_reference_amount]').val(sub_total_ref_value.toFixed(2));
+            })
+
+            $(document).on('input','input[name=sub_total_reference_amount]',function(){
+                let sub_total_reference_amount = 0
+                let reference_amount = 0
+                let reference_amount_element = $('input[name=reference_amount]');
+                let percentage_released_element = $('input[name=percentage_released_reference_amount]');
+                if(this.value !== "")
+                {
+                    sub_total_reference_amount = parseFloat(this.value)
+
+                }
+
+                if(reference_amount_element.val() !== "")
+                {
+                    reference_amount = parseFloat(reference_amount_element.val())
+                }
+
+                let percentage_released_reference_amount = (sub_total_reference_amount / reference_amount) * 100
+
+                percentage_released_element.val(percentage_released_reference_amount.toFixed(2));
+            })
+            //end commission reference amount
+
             let voucherData;
             let voucherPreview = $('.voucher-preview');
             $(document).on('submit','.calculate-voucher',function(form){
                 form.preventDefault();
                 voucherData = $(this).serializeArray();
-                // console.log(voucherData);
+                console.log(voucherData);
                 $.ajax({
                     url: '{{route('preview.voucher')}}',
                     type: 'post',
@@ -975,7 +984,7 @@
                         voucherPreview.find('.deduction-preview').remove()
                     }
                 }).done(function(response){
-                    // console.log(response)
+                    console.log(response)
                     voucherPreview.find('#tcp').text('₱ '+response.tcp);
                     voucherPreview.find('#requested-rate').text(response.requested_rate);
                     voucherPreview.find('#gross-commission').text('₱ '+response.gross_commission);
@@ -985,8 +994,17 @@
                     voucherPreview.find('#wht').text('₱ '+response.wht);
                     voucherPreview.find('#vat-percent').text('('+response.vat_percent+')');
                     voucherPreview.find('#vat-amount').text('₱ '+response.vat);
-                    voucherPreview.find('#net-commission').text('₱ '+response.net_commission_less_vat);
+                    voucherPreview.find('#net-commission').text('₱ '+response.total_receivable_without_deduction);
 
+
+                    if(response.tax_basis_reference === true)
+                    {
+                        $('#tax-basis-row').show();
+                        voucherPreview.find('#tax_basis_reference_remarks').text(response.tax_basis_reference_remarks);
+                        voucherPreview.find('#tax-basis').text(response.tax_basis_reference_amount);
+                    }else{
+                        $('#tax-basis-row').hide();
+                    }
                     // voucherPreview.find('.deduction-preview').append('<tr><td colspan="2" class="text-bold">Deductions</td></tr>');
                     let deductionRow = '';
                     let deductionCount = 0;

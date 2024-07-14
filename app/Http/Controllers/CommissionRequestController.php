@@ -191,7 +191,6 @@ class CommissionRequestController extends Controller
     public function forReview($id, PaymentReminderService $paymentReminderService)
     {
         $commissionRequest = $this->commissionRequest->getSpecifiedRequest($id);
-////        return $this->commissionRequest->check_by_pass($id);
         return view('pages.commissionRequests.forReview')->with([
             'commissionRequest' => $commissionRequest,
             'rateGiven' => $commissionRequest->user->commissions()->where('project_id', $commissionRequest->sales->project_id)->count() > 0 ?
@@ -208,7 +207,7 @@ class CommissionRequestController extends Controller
             'net_commission_in_words' => $commissionVoucher->count() > 0 ? SpellNumber::value($commissionVoucher->first()->net_commission_less_deductions)->locale('en')->currency('Pesos')->toMoney() : '',
             'remaining_request' => 100 - $this->totalCommissionReleased($commissionRequest->sales->id, $commissionRequest->user_id),
             'status' => $this->commissionRequest->status_badge($commissionRequest->status),
-            'related_requests' => $this->commissionRequest->related_requests($commissionRequest->sales->id, $commissionRequest->user_id)
+            'related_requests' => $this->commissionRequest->related_requests($commissionRequest->sales->id, $commissionRequest->user_id),
         ]);
 //        return $this->totalCommissionReleased($commissionRequest->sales->id, $commissionRequest->user_id);
     }

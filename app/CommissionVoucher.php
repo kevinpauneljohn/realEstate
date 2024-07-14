@@ -10,9 +10,14 @@ class CommissionVoucher extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sale_id','commission_request_id','gross_commission','percentage_released','sub_total',
-        'wht_percent','wht_amount','vat_percent','vat_amount','deductions',
-        'net_commission_less_vat','net_commission_less_deductions'
+        'sale_id','commission_request_id',
+        'tax_basis','tax_basis_reference_remarks','tax_basis_reference_amount',
+        'tcp','requested_rate',
+        'gross_commission','percentage_released','sub_total',
+        'wht_percent','wht_amount','vat_percent','vat_amount',
+        'net_commission_less_vat',
+        'total_receivable_without_deduction',
+        'net_commission_less_deductions','status'
     ];
 
     public function deductions()
