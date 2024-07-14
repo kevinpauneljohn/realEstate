@@ -33,6 +33,7 @@ require __DIR__ . '/web/project_links.php';
 require __DIR__ . '/web/sales.php';
 require __DIR__ . '/web/commission_requests.php';
 require __DIR__ . '/web/settings.php';
+require __DIR__ . '/web/findings.php';
 
 Route::get('/','LandingPageController');
 Route::get('/home', function (){

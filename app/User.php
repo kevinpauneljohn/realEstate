@@ -257,4 +257,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(File::class);
     }
+
+    public function findings()
+    {
+        return $this->hasMany(Finding::class);
+    }
 }

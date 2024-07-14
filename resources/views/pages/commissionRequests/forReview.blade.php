@@ -151,40 +151,61 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="post">
-                                <h5>Requirements <span class="text-info">({{\App\Services\ClientRequirementsService::clientRequirements($commissionRequest->sales->clientrequirements)}})</span></h5>
-                                <input type="text" class="form-control mb-2" value="{{collect($commissionRequest->sales->clientRequirements)->count() > 0 ? collect($commissionRequest->sales->clientRequirements)->first()->drive_link : ""}}" @if(collect($commissionRequest->sales->clientRequirements)->count() == 0) disabled @endif>
-                                <a href="{{collect($commissionRequest->sales->clientRequirements)->count() > 0 ? collect($commissionRequest->sales->clientRequirements)->first()->drive_link : "#"}}"  @if(collect($commissionRequest->sales->clientRequirements)->count() > 0) target="_blank" @endif class="btn btn-default btn-xs mb-2" title="click to access drive" >Access Drive</a>
-                                @if(collect($commissionRequest->sales->clientrequirements)->count() > 0)
-                                    <table class="table table-bordered">
-                                        @foreach(collect($commissionRequest->sales->clientrequirements)->first()->requirements as $requirement)
-                                            <tr>
-                                                <td>{{$requirement['description']}}</td>
-                                                <td>
-                                                    @if($requirement['exists'])
-                                                        <i class="fas fa-check text-success"></i>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </table>
-                                @endif
-
-                            </div>
-
-                            <div class="post">
-                                <h5>Approvals</h5>
-                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                    <table id="approvals-list" class="table table-bordered table-hover" role="grid">
-                                        <thead>
-                                        <tr role="row">
-                                            <td width="20%">Up Line</td>
-                                            <td>Remarks</td>
-                                            <td width="8%">Status</td>
-                                        </tr>
-                                        </thead>
-                                    </table>
+                            <div class="card card-primary card-outline card-tabs">
+                                <div class="card-header p-0 pt-1 border-bottom-0">
+                                    <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="requirements-tab-link" data-toggle="pill" href="#requirements-tab" role="tab" aria-selected="true">Requirements</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="approval-tab-link" data-toggle="pill" href="#approval-tab" role="tab" aria-selected="false">Approvals</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="findings-tab-link" data-toggle="pill" href="#findings-tab" role="tab" aria-selected="false">Findings</a>
+                                        </li>
+                                    </ul>
                                 </div>
+                                <div class="card-body">
+                                    <div class="tab-content" id="custom-tabs-three-tabContent">
+                                        <div class="tab-pane fade active show" id="requirements-tab" role="tabpanel">
+                                            <h5>Requirements <span class="text-info">({{\App\Services\ClientRequirementsService::clientRequirements($commissionRequest->sales->clientrequirements)}})</span></h5>
+                                            <input type="text" class="form-control mb-2" value="{{collect($commissionRequest->sales->clientRequirements)->count() > 0 ? collect($commissionRequest->sales->clientRequirements)->first()->drive_link : ""}}" @if(collect($commissionRequest->sales->clientRequirements)->count() == 0) disabled @endif>
+                                            <a href="{{collect($commissionRequest->sales->clientRequirements)->count() > 0 ? collect($commissionRequest->sales->clientRequirements)->first()->drive_link : "#"}}"  @if(collect($commissionRequest->sales->clientRequirements)->count() > 0) target="_blank" @endif class="btn btn-default btn-xs mb-2" title="click to access drive" >Access Drive</a>
+                                            @if(collect($commissionRequest->sales->clientrequirements)->count() > 0)
+                                                <table class="table table-bordered">
+                                                    @foreach(collect($commissionRequest->sales->clientrequirements)->first()->requirements as $requirement)
+                                                        <tr>
+                                                            <td>{{$requirement['description']}}</td>
+                                                            <td>
+                                                                @if($requirement['exists'])
+                                                                    <i class="fas fa-check text-success"></i>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            @endif
+                                        </div>
+                                        <div class="tab-pane fade" id="approval-tab" role="tabpanel">
+                                            <h5>Approvals</h5>
+                                            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                                <table id="approvals-list" class="table table-bordered table-hover" role="grid">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <td width="20%">Up Line</td>
+                                                        <td>Remarks</td>
+                                                        <td width="8%">Status</td>
+                                                    </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="findings-tab" role="tabpanel">
+                                            <x-findings.findings-tab :commissionRequest="$commissionRequest"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card -->
                             </div>
 
                         </div>
