@@ -552,6 +552,19 @@
                                     <button type="button" class="btn btn-success btn-sm" id="approve-voucher-button">Approve</button>
                                     <button type="button" class="btn btn-danger btn-sm" id="remove-voucher-button">Remove</button>
                                 @endif
+
+                            @elseif($commissionVoucher->count() > 0 && $commissionVoucher->first()->status === 'approved')
+                                <form id="save-drive-form">
+                                    @csrf
+                                    <div class="form-group drive_link">
+                                        <label for="drive_link">Drive Link</label>
+                                        <input type="text" name="drive_link" class="form-control" id="drive_link" value="{{$commissionVoucher->first()->drive_link}}">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Drive</button>
+                                    @if(!is_null($commissionVoucher->first()->drive_link))
+                                        <a href="{{$commissionVoucher->first()->drive_link}}" target="_blank" class="btn btn-success">Access Drive</a>
+                                    @endif
+                                </form>
                             @endif
                         </div>
                     </div>
@@ -1205,6 +1218,52 @@
                     salesForm.find('button[type=submit]').attr('disabled',false).text('Save')
                 })
             })
+
+            @else
+                let saveDriveForm = $('#save-drive-form');
+                 $(document).on('submit','#save-drive-form',function(form){
+                     form.preventDefault();
+                     let data = $(this).serializeArray();
+
+                     $.ajax({
+                         url: '{{route('voucher.save.drive.link',['voucher_id' => $commissionVoucher->first()->id])}}',
+                         type: 'patch',
+                         data: data,
+                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                         beforeSend: function(){
+                             saveDriveForm.find('.text-danger').remove();
+                             saveDriveForm.find('button[type=submit]').attr('disabled',true).text('Saving...');
+                         }
+                     }).done(function(response){
+                         console.log(response)
+                         if(response.success === true)
+                         {
+                             Swal.fire({
+                                 title: "Good job!",
+                                 text: response.message,
+                                 icon: "success"
+                             });
+
+                             setTimeout(function(){
+                                 window.location.reload();
+                             },1500)
+                         }
+                         else if(response.success === false)
+                         {
+                             Swal.fire({
+                                 title: response.message,
+                                 icon: "warning"
+                             });
+                         }
+                     }).fail(function(xhr, status, error){
+                        console.log(xhr)
+                         $.each(xhr.responseJSON.errors, function(key, value){
+                             saveDriveForm.find('.'+key).append('<p class="text-danger">'+value+'</p>');
+                         })
+                     }).always(function(){
+                         saveDriveForm.find('button[type=submit]').attr('disabled',false).text('Save Drive');
+                     })
+                 })
             @endif
         </script>
     @endif

@@ -82,4 +82,17 @@ class CommissionVoucherController extends Controller
     {
         //
     }
+
+    public function saveDriveLink($voucher_id, Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'drive_link' => ['url','nullable']
+        ]);
+
+        $commissionVoucher = CommissionVoucher::findOrFail($voucher_id);
+        $commissionVoucher->drive_link = $request->drive_link;
+        return $commissionVoucher->save() ?
+            response()->json(['success' => true, 'message' => 'Drive successfully updated']) :
+            response()->json(['success' => false, 'message' => 'An error occured while updating drive']); ;
+    }
 }
