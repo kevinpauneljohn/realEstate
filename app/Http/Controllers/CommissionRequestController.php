@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CommissionRequest;
 use App\CommissionVoucher;
+use App\Deduction;
 use App\Repositories\SalesRepository;
 use App\Sales;
 use App\Services\CommissionRequestService;
@@ -330,6 +331,7 @@ class CommissionRequestController extends Controller
     public function removeVoucher($id)
     {
         $voucher = CommissionVoucher::findOrFail($id);
+        Deduction::where('commission_voucher_id',$id)->delete();
 
         return $voucher->delete() ? response()->json(['success' => true, 'message' => 'Voucher has been removed!']) :
             response()->json(['success' => false, 'message' => 'an error occurred!']);
