@@ -7,5 +7,6 @@ Route::middleware(['auth'])->group(function(){
 
     Route::post('/save-commission-voucher',[\App\Http\Controllers\CommissionRequestController::class,'saveVoucher'])->name('save.commission.voucher');
     Route::post('/approve-voucher/{id}',[\App\Http\Controllers\CommissionRequestController::class,'approveVoucher'])->name('approve.voucher');
+    Route::delete('/remove-voucher/{id}',[\App\Http\Controllers\CommissionRequestController::class,'removeVoucher'])->name('remove.voucher');
     Route::post('/commission-request/update-sales-tcp/{sales_id}',[\App\Http\Controllers\CommissionRequestController::class,'updateSalesTotalPrice'])->name('update.sales.tcp');
 });

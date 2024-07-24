@@ -327,6 +327,14 @@ class CommissionRequestController extends Controller
         return response()->json(['success' => false, 'message' => 'an error occurred!']);
     }
 
+    public function removeVoucher($id)
+    {
+        $voucher = CommissionVoucher::findOrFail($id);
+
+        return $voucher->delete() ? response()->json(['success' => true, 'message' => 'Voucher has been removed!']) :
+            response()->json(['success' => false, 'message' => 'an error occurred!']);
+    }
+
     public function updateSalesTotalPrice(Request $request, $sales_id): \Illuminate\Http\JsonResponse
     {
         $request->validate([

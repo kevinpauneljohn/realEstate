@@ -549,7 +549,8 @@
                                 @if($commissionVoucher->count() === 0)
                                     <button type="button" class="btn btn-primary btn-sm w-100" id="save-voucher-button">Save</button>
                                 @elseif($commissionVoucher->count() > 0 && $commissionVoucher->first()->status === 'pending')
-                                    <button type="button" class="btn btn-success btn-sm w-100" id="approve-voucher-button">Approve</button>
+                                    <button type="button" class="btn btn-success btn-sm" id="approve-voucher-button">Approve</button>
+                                    <button type="button" class="btn btn-danger btn-sm" id="remove-voucher-button">Remove</button>
                                 @endif
                             @endif
                         </div>
@@ -1088,6 +1089,49 @@
                         $.ajax({
                             'url' : '/approve-voucher/{{$commissionVoucher->first()->id}}',
                             'type' : 'post',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            beforeSend: function(){
+
+                            },success: function(response){
+                                console.log(response)
+                                if(response.success === true)
+                                {
+                                    Swal.fire({
+                                        title: "Good job!",
+                                        text: response.message,
+                                        type: "success"
+                                    });
+
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    },1500)
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }else{
+                        $(this).val(request_status)
+                    }
+                });
+            })
+
+            $(document).on('click','#remove-voucher-button',function (){
+                Swal.fire({
+                    title: 'Do you want to remove the voucher?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, remove it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/remove-voucher/{{$commissionVoucher->first()->id}}',
+                            'type' : 'delete',
                             'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             beforeSend: function(){
 
