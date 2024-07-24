@@ -364,6 +364,9 @@
                                 <td colspan="4" class="table-active"></td>
                             </tr>
                             </tbody></table>
+                        @if($commissionVoucher->count() > 0 && !is_null($commissionVoucher->first()->drive_link))
+                            <a href="{{$commissionVoucher->first()->drive_link}}" target="_blank" class="btn btn-success mt-2">Access drive</a>
+                        @endif
                     </div>
                 </div>
             </div>
