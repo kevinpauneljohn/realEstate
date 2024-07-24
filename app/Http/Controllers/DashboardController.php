@@ -85,9 +85,14 @@ class DashboardController extends Controller
             'aggregate_function' => 'sum',
             'aggregate_field' => 'total_contract_price',
 
+
             'group_by_field' => 'created_at',
             'group_by_period' => 'month',
-            'chart_type' => 'line',
+            'chart_type' => 'bar',
+            'filter_field' => 'created_at',
+            'filter_days' => 365, // show only transactions for last 30 days
+            'filter_period' => 'week', // show only transactions for this week
+            'range_date_start ' => now()->startOfYear(),
         ];
         $sales = new LaravelChart($chart_options);
 

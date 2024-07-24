@@ -331,13 +331,21 @@ class CommissionRequestController extends Controller
     {
         $request->validate([
             'total_contract_price' => ['required'],
+            'commission_rate' => ['required']
         ]);
 
         $sales = Sales::findOrFail($sales_id);
         $sales->total_contract_price = $request->total_contract_price;
+        $sales->commission_rate = $request->commission_rate;
         if($sales->isDirty())
         {
             $sales->save();
+            $commissionRequest = CommissionRequest::findOrFail($request->request_id);
+            $commissionRequest->commission = $request->commission_rate;
+            if($commissionRequest->isDirty('commission')){
+                $commissionRequest->save();
+            }
+
             return response()->json(['success' => true, 'message' => 'Total contract price successfully updated!']);
         }
         return response()->json(['success' => false, 'message' =>  'No changes made!']);

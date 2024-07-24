@@ -197,57 +197,6 @@
     <!--end rank lists modal-->
     @endif
 
-    {{--architects module--}}
-    @if(auth()->user()->hasRole('architect'))
-        architect dashboard
-    @endif
-
-    {{--Client module--}}
-    @if(auth()->user()->hasRole('client'))
-
-        <div class="row process-section">
-            <div class="col-3 process">
-                <img src="{{asset('/images/mobileappicon/document.png')}}" alt="documentation" width="35" height="35">
-                <p>Documentation</p>
-            </div>
-            <div class="col-3 process">
-                <img src="{{asset('/images/mobileappicon/renovation.png')}}" alt="construction" width="35" height="35">
-                <p>Construction</p>
-            </div>
-            <div class="col-3 process">
-                <img src="{{asset('/images/mobileappicon/document-search.png')}}" alt="inspection" width="35" height="35">
-                <p>Inspection</p>
-            </div>
-            <div class="col-3 process">
-                <img src="{{asset('/images/mobileappicon/deal.png')}}" alt="turn over" width="35" height="35">
-                <p>Turn-over</p>
-            </div>
-        </div>
-
-        <h4>My Account</h4>
-        <div class="card card-default">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-4">
-                        <img src="{{asset('/images/mobileappicon/hand.png')}}" class="payment-icon" alt="turn over" width="80" height="80">
-                    </div>
-                    <div class="col-8">
-                        <span class="payment-section">
-                            <p class="text-muted">Total Payment</p>
-                            <h5 class="text-bold">PHP 1,500,000.00</h5>
-                            <p class="text-muted">Last Payment</p>
-                            <h6 class="text-bold">Sep 03, 2020</h6>
-                        </span>
-                        <span class="payment-section">
-                            <div class="click-icon">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
 
 @stop
 @section('right-sidebar')

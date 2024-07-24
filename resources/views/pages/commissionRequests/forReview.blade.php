@@ -421,7 +421,7 @@
                                     </div>
                                     <div class="col-lg-6 commission_rate">
                                         <label for="commission_rate">Commission Rate</label>
-                                        <input type="number" name="commission_rate" step="any" class="form-control" id="commission_rate" value="{{\Illuminate\Support\Facades\DB::table('settings')->where('title','sensitive_data')->first()->show ? $commissionRequest->commission : 0}}" disabled>
+                                        <input type="number" name="commission_rate" step="any" class="form-control" id="commission_rate" value="{{\Illuminate\Support\Facades\DB::table('settings')->where('title','sensitive_data')->first()->show ? $commissionRequest->commission : 0}}">
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -431,6 +431,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="request_id" value="{{$commissionRequest->id}}">
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary btn-sm">Save</button>
                             </div>
