@@ -40,6 +40,7 @@
                             <th>Action</th>
                         </tr>
                         </thead>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
@@ -85,7 +86,14 @@
                         { data: 'action', name: 'action', orderable: false, searchable: false}
                     ],
                     responsive:true,
-                    order:[0,'desc']
+                    order:[0,'desc'],
+                    drawCallback: function(row){
+                        let released = row.json
+                        $('#commission-request-list').find('tbody')
+                            .append('<tr class="sales-info-bg"><td colspan="10" style="font-size: 20pt"></td>' +
+                                '<td colspan="4" style="font-size: 20pt"><span class="text-muted">Total Released: </span>'+released.total_amount_released+'</td></tr>')
+
+                    }
                 });
             });
             //Initialize Select2 Elements

@@ -168,6 +168,9 @@ class CommissionRequestService
                 return $action;
             })
             ->rawColumns(['requestNo','action','status','percentage_released','amount_released','rate','rateRequested'])
+            ->with([
+                'total_amount_released' => number_format(CommissionVoucher::whereIn('commission_request_id',collect($request)->pluck('id'))->sum('net_commission_less_deductions'),2),
+            ])
             ->make(true);
     }
 

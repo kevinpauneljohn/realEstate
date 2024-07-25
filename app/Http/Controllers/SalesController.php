@@ -451,7 +451,7 @@ class SalesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return object
+     * @return array
      */
     public function edit($id)
     {
