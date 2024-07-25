@@ -87,6 +87,7 @@
                     ],
                     responsive:true,
                     order:[0,'desc'],
+                    pageLength: 50,
                     drawCallback: function(row){
                         let released = row.json
                         $('#commission-request-list').find('tbody')
