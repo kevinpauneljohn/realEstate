@@ -76,7 +76,7 @@ class FileController extends Controller
 
     public function destroy(File $file)
     {
-        unlink(public_path("storage\\".$file->name));
+        unlink(public_path("storage/".$file->name));
         return $file->delete() ?
         response()->json(['success' => true, 'message' => 'Files deleted.']):
         response()->json(['success' => false, 'message' => 'No files deleted.']);
