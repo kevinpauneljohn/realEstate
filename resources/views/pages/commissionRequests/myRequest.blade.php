@@ -90,8 +90,8 @@
                     drawCallback: function(row){
                         let released = row.json
                         $('#commission-request-list').find('tbody')
-                            .append('<tr class="sales-info-bg"><td colspan="10" style="font-size: 20pt"></td>' +
-                                '<td colspan="4" style="font-size: 20pt"><span class="text-muted">Total Released: </span>'+released.total_amount_released+'</td></tr>')
+                            .append('<tr class="sales-info-bg"><td colspan="9" style="font-size: 20pt"></td>' +
+                                '<td colspan="5" style="font-size: 20pt"><span class="text-muted">Total Released: </span>'+released.total_amount_released+'</td></tr>')
 
                     }
                 });
