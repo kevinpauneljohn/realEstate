@@ -3,27 +3,15 @@
 @endif
 
 <div class="table-responsive mt-3">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="findings-list">
         <thead>
             <tr>
                 <th>Updated At</th>
                 <th>Findings</th>
                 <th>Updated by</th>
+                <th>Action</th>
             </tr>
         </thead>
-        <tbody>
-            @if(collect($findings)->count() < 1)
-                <tr><td colspan="3" class="text-center">No available data</td></tr>
-            @else
-                @foreach($findings as $finding)
-                    <tr>
-                        <td>{{$finding->updated_at->format('m-d-Y')}}</td>
-                        <td class="w-50">{!! nl2br($finding->description) !!}</td>
-                        <td>{{$finding->user->fullname}}</td>
-                    </tr>
-                @endforeach
-            @endif
-        </tbody>
     </table>
 </div>
 
@@ -58,10 +46,31 @@
     </form>
 @endif
 
-@if(auth()->user()->can('add findings'))
+
     @push('js')
         @once
+            @if(auth()->user()->can('view findings'))
+                <script>
+                    $(function() {
+                        $('#findings-list').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            ajax: '{!! route('findings.lists',['commission_request_id' => $commissionRequest->id]) !!}',
+                            columns: [
+                                { data: 'updated_at', name: 'updated_at'},
+                                { data: 'description', name: 'description'},
+                                { data: 'user_id', name: 'user_id'},
+                                { data: 'action', name: 'action', orderable: false, searchable: false}
+                            ],
+                            responsive:true,
+                            order:[0,'desc'],
+                            pageLength: 50
+                        });
+                    });
+                </script>
+            @endif
             <script>
+                @if(auth()->user()->can('add findings'))
                 let findingsModal = $('#findings-modal');
                 $(document).on('click','.add-findings-btn', function(){
                     findingsModal.modal('toggle')
@@ -87,9 +96,9 @@
                                 title: response.message,
                                 icon: "success"
                             });
-                            setTimeout(function(){
-                                window.location.reload();
-                            },1500)
+
+                            let table = $('#findings-list').DataTable();
+                            table.ajax.reload(null, false);
                         }else{
                             Swal.fire({
                                 title: response.message,
@@ -105,7 +114,57 @@
 
                     })
                 })
+
+                @if(auth()->user()->can('delete findings'))
+                $(document).on('click','.delete-findings',function(findings){
+                    let id = this.id;
+
+                    Swal.fire({
+                        title: 'Delete Findings?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        console.log(result);
+                        if (result.value) {
+
+                            $.ajax({
+                                'url' : '/findings/'+id,
+                                'type' : 'delete',
+                                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                success: function(response){
+                                    console.log(response)
+                                    if(response.success === true)
+                                    {
+                                        Swal.fire({
+                                            title: response.message,
+                                            icon: "success"
+                                        });
+
+                                        let table = $('#findings-list').DataTable();
+                                        table.ajax.reload(null, false);
+                                    }else{
+                                        Swal.fire({
+                                            title: response.message,
+                                            icon: "error"
+                                        });
+                                    }
+                                },error: function(xhr, status, error){
+                                    console.log(xhr)
+                                }
+                            });
+
+                        }
+                    });
+
+
+                });
+                @endif
+                @endif
             </script>
         @endonce
     @endpush
-@endif
+

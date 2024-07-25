@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Finding;
 use App\Http\Requests\StoreFindingRequest;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class FindingController extends Controller
 {
@@ -87,11 +89,38 @@ class FindingController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Finding  $finding
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Finding $finding)
+    public function destroy(Finding $finding): \Illuminate\Http\JsonResponse
     {
-        //
+        return $finding->delete() ?
+            response()->json(['success' => true,'message' => 'Finding Successfully deleted!']) :
+            response()->json(['success' => false,'message' => 'An error occurred!']) ;
+    }
+
+    public function findingsList($commission_request_id)
+    {
+        return DataTables::of(Finding::where('commission_request_id', $commission_request_id)->get())
+            ->editColumn('updated_at', function ($finding) {
+                return $finding->updated_at->format('m-d-Y');
+            })
+            ->editColumn('user_id', function ($finding) {
+                return $finding->user->fullname;
+            })
+            ->editColumn('description', function ($finding) {
+                return nl2br($finding->description);
+            })
+            ->addColumn('action', function ($finding) use ($commission_request_id) {
+                $action = '';
+                if(auth()->user()->can('delete findings'))
+                {
+                    $action .= '<button class="btn btn-danger btn-sm delete-findings" id="'.$finding->id.'"><i class="fa fa-trash"></i></button>';
+                }
+
+                return $action;
+            })
+            ->rawColumns(['action','description'])
+            ->make(true);
     }
 
 }
