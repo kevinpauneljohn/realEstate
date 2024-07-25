@@ -1223,50 +1223,53 @@
             })
 
             @else
-                let saveDriveForm = $('#save-drive-form');
-                 $(document).on('submit','#save-drive-form',function(form){
-                     form.preventDefault();
-                     let data = $(this).serializeArray();
+                @if($commissionVoucher->count() > 0)
+            let saveDriveForm = $('#save-drive-form');
+            $(document).on('submit','#save-drive-form',function(form){
+                form.preventDefault();
+                let data = $(this).serializeArray();
 
-                     $.ajax({
-                         url: '{{route('voucher.save.drive.link',['voucher_id' => $commissionVoucher->first()->id])}}',
-                         type: 'patch',
-                         data: data,
-                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                         beforeSend: function(){
-                             saveDriveForm.find('.text-danger').remove();
-                             saveDriveForm.find('button[type=submit]').attr('disabled',true).text('Saving...');
-                         }
-                     }).done(function(response){
-                         console.log(response)
-                         if(response.success === true)
-                         {
-                             Swal.fire({
-                                 title: "Good job!",
-                                 text: response.message,
-                                 icon: "success"
-                             });
+                $.ajax({
+                    url: '{{route('voucher.save.drive.link',['voucher_id' => $commissionVoucher->first()->id])}}',
+                    type: 'patch',
+                    data: data,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    beforeSend: function(){
+                        saveDriveForm.find('.text-danger').remove();
+                        saveDriveForm.find('button[type=submit]').attr('disabled',true).text('Saving...');
+                    }
+                }).done(function(response){
+                    console.log(response)
+                    if(response.success === true)
+                    {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: response.message,
+                            icon: "success"
+                        });
 
-                             setTimeout(function(){
-                                 window.location.reload();
-                             },1500)
-                         }
-                         else if(response.success === false)
-                         {
-                             Swal.fire({
-                                 title: response.message,
-                                 icon: "warning"
-                             });
-                         }
-                     }).fail(function(xhr, status, error){
-                        console.log(xhr)
-                         $.each(xhr.responseJSON.errors, function(key, value){
-                             saveDriveForm.find('.'+key).append('<p class="text-danger">'+value+'</p>');
-                         })
-                     }).always(function(){
-                         saveDriveForm.find('button[type=submit]').attr('disabled',false).text('Save Drive');
-                     })
-                 })
+                        setTimeout(function(){
+                            window.location.reload();
+                        },1500)
+                    }
+                    else if(response.success === false)
+                    {
+                        Swal.fire({
+                            title: response.message,
+                            icon: "warning"
+                        });
+                    }
+                }).fail(function(xhr, status, error){
+                    console.log(xhr)
+                    $.each(xhr.responseJSON.errors, function(key, value){
+                        saveDriveForm.find('.'+key).append('<p class="text-danger">'+value+'</p>');
+                    })
+                }).always(function(){
+                    saveDriveForm.find('button[type=submit]').attr('disabled',false).text('Save Drive');
+                })
+            })
+                @endif
+
             @endif
         </script>
     @endif
