@@ -152,11 +152,11 @@ class CommissionRequestService
             })
             ->addColumn('percentage_released', function($commissionRequest){
                 $voucher = CommissionVoucher::where('commission_request_id',$commissionRequest->id);
-                return $voucher->count() > 0 ? '<span class="text-bold text-primary">'.$voucher->first()->percentage_released.'%</span>' : '';
+                return $voucher->count() > 0 && $commissionRequest->status === 'completed' ? '<span class="text-bold text-primary">'.$voucher->first()->percentage_released.'%</span>' : '';
             })
             ->addColumn('amount_released', function($commissionRequest){
                 $voucher = CommissionVoucher::where('commission_request_id',$commissionRequest->id);
-                return $voucher->count() > 0 ? '<span class="text-bold text-primary">'.number_format($voucher->first()->net_commission_less_deductions,2).'</span>' : '';
+                return $voucher->count() > 0 && $commissionRequest->status === 'completed' ? '<span class="text-bold text-primary">'.number_format($voucher->first()->net_commission_less_deductions,2).'</span>' : '';
             })
             ->addColumn('action',function($commissionRequest){
                 $action = '';
@@ -169,7 +169,7 @@ class CommissionRequestService
             })
             ->rawColumns(['requestNo','action','status','percentage_released','amount_released','rate','rateRequested'])
             ->with([
-                'total_amount_released' => number_format(CommissionVoucher::whereIn('commission_request_id',collect($request)->pluck('id'))->sum('net_commission_less_deductions'),2),
+                'total_amount_released' => number_format(CommissionVoucher::whereIn('commission_request_id',collect($request)->where('status','completed')->pluck('id'))->sum('net_commission_less_deductions'),2),
             ])
             ->make(true);
     }
