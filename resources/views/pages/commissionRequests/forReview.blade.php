@@ -18,7 +18,7 @@
 @stop
 
 @section('content')
-    <div class="card">
+    <div class="card table-responsive">
         <div class="card-body">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-10 order-2 order-md-1">
@@ -100,26 +100,30 @@
                         </div>
                     </div>
 
-                    <table class="table table-bordered" id="request-overview">
-                        <tr>
-                            <th>Request Status</th>
-                            <th>Date Requested</th>
-                            <th>Rate Requested</th>
-                            <th>Estimated Amount</th>
-                            <th>% Released</th>
-                            <th>Released Amount</th>
-                        </tr>
-                        <tr id="request-data">
-                            <td>{{ucfirst($commissionRequest->status)}}</td>
-                            <td>{{$commissionRequest->created_at->format('F-d-Y')}} </td>
-                            <td><span class="dhg-hidden">{{$askingRate}}%</span></td>
-                            <td>{{number_format($estimatedAmount,2)}} </td>
-                            <td>@if($commissionVoucher->count() > 0) <span class="dhg-hidden">{{$commissionVoucher->first()->percentage_released}}%</span> @endif </td>
-                            <td>@if($commissionVoucher->count() > 0) {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}} @endif</td>
-                        </tr>
-                    </table>
+                    <div class="row table-responsive">
+                        <div class="col-lg-12">
+                            <table class="table table-bordered" id="request-overview">
+                                <tr>
+                                    <th>Request Status</th>
+                                    <th>Date Requested</th>
+                                    <th>Rate Requested</th>
+                                    <th>Estimated Amount</th>
+                                    <th>% Released</th>
+                                    <th>Released Amount</th>
+                                </tr>
+                                <tr id="request-data">
+                                    <td>{{ucfirst($commissionRequest->status)}}</td>
+                                    <td>{{$commissionRequest->created_at->format('F-d-Y')}} </td>
+                                    <td><span class="dhg-hidden">{{$askingRate}}%</span></td>
+                                    <td>{{number_format($estimatedAmount,2)}} </td>
+                                    <td>@if($commissionVoucher->count() > 0) <span class="dhg-hidden">{{$commissionVoucher->first()->percentage_released}}%</span> @endif </td>
+                                    <td>@if($commissionVoucher->count() > 0) {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}} @endif</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
 
-                    <div class="row">
+                    <div class="row table-responsive">
                         <div class="col-12">
                             <div class="post">
                                 <h5>Sales Details</h5>
