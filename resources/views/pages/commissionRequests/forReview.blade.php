@@ -292,7 +292,7 @@
 
                         <table class="table table-bordered table-hover">
                             <tbody><tr>
-                                <th class="text-center" colspan="4">Dream Home Guide Realty Comm Voucher</th>
+                                <th class="text-center" colspan="4"><img class="rounded img-thumbnail img-fluid img-size-64" src="{{asset('vendor/adminlte/dist/img/dhg_logo_mini.png')}}" alt="dhg logo"> <h4>Dream Home Guide Realty Comm Voucher</h4></th>
                             </tr>
                             <tr>
                                 <th id="project-name" colspan="4" class="text-center"></th>
