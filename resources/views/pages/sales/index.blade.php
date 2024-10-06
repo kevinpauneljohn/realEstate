@@ -498,7 +498,7 @@
                                     </div>
                                     <div class="form-group edit_dp_terms">
                                         <label for="edit_dp_terms">Equity / Down Payment Terms</label>
-                                        <input type="text" name="edit_dp_terms" id="edit_dp_terms" class="form-control">
+{{--                                        <input type="text" name="edit_dp_terms" id="edit_dp_terms" class="form-control">--}}
 
                                         <select name="edit_dp_terms" id="edit_dp_terms" class="form-control">
                                             <option value=""> -- Select Terms -- </option>
