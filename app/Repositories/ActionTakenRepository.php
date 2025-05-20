@@ -90,24 +90,27 @@ class ActionTakenRepository implements ActionTakenInterface
             })
             ->addColumn('button',function($action){
                 $get_task = $this->getTask($action->task_checklist_id);
-    
+
                 $buttons = "";
                 $date_today = date('Y-m-d H:i:s');
                 $due_date = date('Y-m-d H:i:s', strtotime($get_task['updated_at']. '+ 3 days'));
 
                 if ($date_today <= $due_date) {
                     if (
-                        auth()->user()->id == $get_task['assigned_to'] || 
+                        auth()->user()->id == $get_task['assigned_to'] ||
                         auth()->user()->id == $get_task['creator'] ||
                         auth()->user()->hasRole(["super admin"])
                     ) {
-                        $buttons .= '<button type="button" class="btn btn-xs btn-primary edit-action-btn" title="Edit" id="'.$action->id.'" data-action="'.$action->action.'"><i class="fas fa-edit"></i></button>';
+//                        $buttons .= '<button type="button" class="btn btn-xs btn-primary edit-action-btn" title="Edit" id="'.$action->id.'" data-action="'.$action->action.'"><i class="fas fa-edit"></i></button>';
+                        $buttons .= '<button type="button" class="btn btn-xs btn-primary edit-action-btn" title="Edit" id="'.$action->id.'" ><i class="fas fa-edit"></i></button>';
                     }
                 } else {
                     if (auth()->user()->hasRole(["super admin"])) {
-                        $buttons .= '<button type="button" class="btn btn-xs btn-primary edit-action-btn" title="Edit" id="'.$action->id.'" data-action="'.$action->action.'"><i class="fas fa-edit"></i></button>';
+//                        $buttons .= '<button type="button" class="btn btn-xs btn-primary edit-action-btn" title="Edit" id="'.$action->id.'" data-action="'.$action->action.'"><i class="fas fa-edit"></i></button>';
+                        $buttons .= '<button type="button" class="btn btn-xs btn-primary edit-action-btn" title="Edit" id="'.$action->id.'"><i class="fas fa-edit"></i></button>';
                     } else {
-                        $buttons .= '<button type="button" class="btn btn-xs btn-primary" title="Unable to Edit. Please Contact the System Administrator" id="'.$action->id.'" data-action="'.$action->action.'" disabled><i class="fas fa-edit"></i></button>';
+//                        $buttons .= '<button type="button" class="btn btn-xs btn-primary" title="Unable to Edit. Please Contact the System Administrator" id="'.$action->id.'" data-action="'.$action->action.'" disabled><i class="fas fa-edit"></i></button>';
+                        $buttons .= '<button type="button" class="btn btn-xs btn-primary" title="Unable to Edit. Please Contact the System Administrator" id="'.$action->id.'" disabled><i class="fas fa-edit"></i></button>';
                     }
                 }
 

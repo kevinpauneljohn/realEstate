@@ -916,7 +916,15 @@
 
         $(document).on('click','.edit-action-btn',function(){
             let id = this.id;
-            let action = $(this).attr("data-action")
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).html();
+            }).get();
+
+            let action = data[0];
+
             actionModal.find('.modal-title').text("Edit Action Taken");
             actionModal.find('form').attr('id','edit-action-form').prepend('<input type="hidden" name="action_taken_id" value="'+id+'">');
             $('.actionTaken').summernote('code', action);

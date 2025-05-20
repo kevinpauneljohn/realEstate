@@ -33,7 +33,7 @@ class ScrumController extends Controller
     )
     {
         $this->task = $task;
-        $this->agents = ['admin','account manager','online warrior','super admin','agent'];
+        $this->agents = ['admin','account manager','online warrior','super admin','agent','dhg_ojt'];
     }
     public function index()
     {
@@ -46,7 +46,7 @@ class ScrumController extends Controller
                 $roles = Role::select('name')->where('name', '<>', 'dhg_ojt')->get()->toArray();
             }
         }
-        
+
         $priorities = Priority::all();
         //$users = User::all();
         $agents = $this->task->getAgents($roles);
@@ -88,7 +88,7 @@ class ScrumController extends Controller
                 $users = User::where('id', $request->input('assign_to'))->whereHas("roles", function($q) {
                     $q->whereIn("name", ["dhg_ojt"]);
                 })->get();
-        
+
                 if(count($users) >= 1) {
                     $task_role = 'ojt';
                 }
@@ -134,11 +134,11 @@ class ScrumController extends Controller
                     'type' => 'new_ticket',
                     'view_ticket' => 'review the ticket.',
                 ];
-                
+
                 if (!empty($taskCreated->user->email)) {
                     SendEmailJob::dispatch($new_emails);
                 }
-                
+
                 foreach ($watchers as $watcher) {
                     $watcher_data = [
                         'user_id' => $watcher,
@@ -262,7 +262,7 @@ class ScrumController extends Controller
     public function myWatchedList()
     {
         $watcher = $this->task->getWatchedIds(auth()->user()->id);
-        
+
         $data = [];
         foreach ($watcher as $watchers) {
             $data [] = $watchers['task_id'];
@@ -294,13 +294,13 @@ class ScrumController extends Controller
     }
 
     /**
-     * @since June 18, 2020
+     * @param int $id
+     * @return array
+     * *@since June 18, 2020
      * @author john kevin paunel
      * fetch the tasks data
-     * @param int $id
-     * @return object
-     * */
-    public function show($id)
+     */
+    public function show($id): array
     {
         $data = [
             'task' => $this->task->getTask($id),
@@ -414,7 +414,7 @@ class ScrumController extends Controller
                         SendEmailJob::dispatch($old_assigned_user);
                     }
                 }
-                
+
                 if ($get_priority_id != $request->input('priority')) {
                     $update_emails = [
                         'email' => $user_email,
@@ -444,7 +444,7 @@ class ScrumController extends Controller
                         'request_status' => 'completed'
                     ];
                     Watcher::create($watcher_data);
-                    
+
                     if ($get_priority_id != $request->input('priority')) {
                         $watchers_data = User::where('id', $watcher)->get();
                         foreach ($watchers_data as $watcher_data) {
@@ -696,7 +696,7 @@ class ScrumController extends Controller
 
         $find_watcher = $watchers = Watcher::where('task_id', $id)
             ->where('user_id', auth()->user()->id)->first();
-            
+
         $users_watcher = User::whereIn('id', $data)->get();
         $users_data = [];
         $watcher_id = [];
@@ -731,7 +731,7 @@ class ScrumController extends Controller
                     ],compact('users', 'watcher_id', 'count_request', 'action_taken'));
                 } else if (!auth()->user()->hasRole('dhg_ojt')) {
                     if (
-                        $task->created_by == auth()->user()->id || 
+                        $task->created_by == auth()->user()->id ||
                         !empty($task->assigned_to) == auth()->user()->id ||
                         !empty($find_watcher->user_id) == auth()->user()->id ||
                         auth()->user()->hasPermissionTo('add ojt task')
@@ -748,16 +748,23 @@ class ScrumController extends Controller
                     return abort(404);
                 }
             } else {
+                ///privacy not on
                 if (!auth()->user()->hasRole('dhg_ojt')) {
-                    if ($task->task_role != 'ojt' || auth()->user()->hasPermissionTo('add ojt task')) {
-                        return view('pages.scrum.index',[
-                            'task'  => $this->task->getTask($id),
-                            'agents' => $this->task->getAgents($this->agents),
-                            'watchers' => $users_data
-                        ],compact('users', 'watcher_id', 'count_request', 'action_taken'));
-                    } else {
-                        return abort(404);
-                    }
+//                    if ($task->task_role != 'ojt' || auth()->user()->hasPermissionTo('add ojt task')) {
+//                        return view('pages.scrum.index',[
+//                            'task'  => $this->task->getTask($id),
+//                            'agents' => $this->task->getAgents($this->agents),
+//                            'watchers' => $users_data
+//                        ],compact('users', 'watcher_id', 'count_request', 'action_taken'));
+//                    }
+                    return view('pages.scrum.index',[
+                        'task'  => $this->task->getTask($id),
+                        'agents' => $this->task->getAgents($this->agents),
+                        'watchers' => $users_data
+                    ],compact('users', 'watcher_id', 'count_request', 'action_taken'));
+//                    else {
+//                        return abort(404);
+//                    }
                 } else if (auth()->user()->hasRole('dhg_ojt')) {
                     if ($task->task_role == 'ojt') {
                         return view('pages.scrum.index',[
@@ -794,7 +801,7 @@ class ScrumController extends Controller
             $user_name = '';
             if (!empty($users_data['email'])) {
                 $user_email = $users_data['email'];
-                $user_name = $users_data['username'];    
+                $user_name = $users_data['username'];
             }
 
             $deleted_emails = [
@@ -989,7 +996,7 @@ class ScrumController extends Controller
                 $roles = Role::select('name')->where('name', '<>', 'dhg_ojt')->get()->toArray();
             }
         }
-        
+
         $priorities = Priority::all();
         //$users = User::all();
         $agents = $this->task->getAgents($roles);
@@ -1030,12 +1037,12 @@ class ScrumController extends Controller
         foreach ($task_checklist as $checklist_ids){
             $checklist_id [] = $this->getAction($checklist_ids->id);
         }
-        
+
         $action_status = 'complete';
         if (in_array(false, $checklist_id)) {
             $action_status = 'incomplete';
         }
-        
+
         $task = $this->task->getTask($id);
         if($task->assigned_to === auth()->user()->id)
         {
@@ -1053,7 +1060,7 @@ class ScrumController extends Controller
                         'ticket' => str_pad($task->id, 5, '0', STR_PAD_LEFT),
                         'action' => 'task updated'
                     ]));
-    
+
                     $status_log =
                     [
                         'task_id' => "$task->id",
@@ -1062,12 +1069,12 @@ class ScrumController extends Controller
                         'created_at' => now(),
                         'updated_at' => now(),
                     ];
-    
+
                     activity('task')
                         ->causedBy(auth()->user()->id)
                         ->performedOn($task)
                         ->withProperties($status_log)->log('<span class="text-info">'.auth()->user()->fullname.'</span> updated the task status to '.$task->status);
-    
+
                     if ($task->status == 'completed') {
                         foreach ($users_data as $user_data){
                             $complete_emails = [
@@ -1087,7 +1094,7 @@ class ScrumController extends Controller
                             ];
                             //SendEmailJob::dispatch($complete_emails);
                         }
-    
+
                         if (!empty($task_ticket['watcher'])) {
                             foreach ($task_ticket['watcher'] as $watcher) {
                                 $watcher_data = User::where('id', $watcher['user_id'])->get();
@@ -1096,7 +1103,7 @@ class ScrumController extends Controller
                                     $watchers_username = $watcher_data['username'];
                                     $watchers_email = $watcher_data['email'];
                                 }
-            
+
                                 $watcher_emails = [
                                     'email' => $watchers_email,
                                     'username' => $watchers_username,
@@ -1116,7 +1123,7 @@ class ScrumController extends Controller
                             }
                         }
                     }
-    
+
                     return response([
                         'success' => true,
                         'message' => 'Task ' . $this->setStatus($task->status),
@@ -1180,7 +1187,7 @@ class ScrumController extends Controller
             if($this->task->reopen($request->input('task_id'),$request->input('remarks')))
             {
                 $task_assignee = $this->task->getTask($request->input('task_id'));
-                
+
                 $creator = 'no';
                 if ($task_assignee->created_by == auth()->user()->id) {
                     $creator = 'yes';
@@ -1196,7 +1203,7 @@ class ScrumController extends Controller
                             $watchers_username = $watcher_data['username'];
                             $watchers_email = $watcher_data['email'];
                         }
-    
+
                         $watcher_emails = [
                             'email' => $watchers_email,
                             'username' => $watchers_username,
@@ -1212,7 +1219,7 @@ class ScrumController extends Controller
                             'type' => 'watched',
                             'view_ticket' => 'view the ticket.',
                         ];
-    
+
                         SendEmailJob::dispatch($watcher_emails);
                     }
                 }
@@ -1260,7 +1267,7 @@ class ScrumController extends Controller
                     'description' => $task->user->username. ' Re-open the task ticket',
                     'status' => $task->status,
                     'created_at' => now(),
-                    'updated_at' 
+                    'updated_at'
                     => now(),
                 ];
 
@@ -1413,7 +1420,7 @@ class ScrumController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ];
-        
+
         activity('task')
         ->causedBy(auth()->user()->id)
         ->performedOn(Task::find($task_id))
