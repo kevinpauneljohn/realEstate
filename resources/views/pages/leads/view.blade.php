@@ -1426,7 +1426,7 @@
             });
 
 
-            let schedule, amount, editAmountBtn = "";
+            let schedule, amount, clearPaymentBtn, editAmountBtn = "";
             $(document).on('click','.view-payments',function(){
                 // let id = this.id;
                 salesId = this.id;
@@ -1449,14 +1449,16 @@
                             schedule = result[0].schedule;
                             amount = result[0].amount;
                             editAmountBtn = '<button type="button" class="btn btn-xs btn-default edit-amount due-amount-action-btn">Edit Amount</button>';
+                            clearPaymentBtn = '<button type="button" class="btn btn-xs btn-default clear-amount clear-payment-btn">Clear Payment Schedule</button>';
                         }else{
                             schedule = "";
                             amount = "";
                             editAmountBtn = "";
+                            clearPaymentBtn = "";
                         }
                         $('#payment_date').datepicker("setDate", schedule).val(schedule);
                         $('#view-payments').find('#payment_amount').val(amount);
-                        $('.save-payment-date').find('.payment_amount').after(editAmountBtn+'<table class="due-dates table table-bordered"></table>');
+                        $('.save-payment-date').find('.payment_amount').after(editAmountBtn+clearPaymentBtn+'<table class="due-dates table table-bordered"></table>');
                         $.each(result, function(key, value){
                             let date = new Date(value.schedule);
                             key++;
@@ -1466,6 +1468,45 @@
                         });
                     },error: function(xhr, status, error){
                         console.log(xhr);
+                    }
+                });
+            });
+
+            $(document).on('click','.clear-payment-btn', function(){
+                Swal.fire({
+                    title: 'Clear payment schedule?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, clear it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/remove-payment-reminder/sales/'+salesId,
+                            'type' : 'DELETE',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            beforeSend: function(){
+
+                            },success: function(output){
+                                if(output.success === true){
+                                    $('.due-dates, .clear-payment-btn, .due-amount-action-btn').fadeOut();
+                                    let table = $('#sales-list').DataTable();
+                                    table.ajax.reload();
+
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Payment reminder has been cleared!',
+                                        'success'
+                                    );
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
                     }
                 });
             });
@@ -1490,7 +1531,8 @@
                         {
                             customMessage('success',result.message);
 
-                            $('.save-payment-date').find('.payment_amount').after('<button type="button" class="btn btn-xs btn-default edit-amount due-amount-action-btn">Edit Amount</button><table class="due-dates table table-bordered"></table>');
+                            $('.save-payment-date').find('.payment_amount').after('<button type="button" class="btn btn-xs btn-default edit-amount due-amount-action-btn">Edit Amount</button>' +
+                                '<button type="button" class="btn btn-xs btn-default clear-amount clear-payment-btn">Clear Payment Schedule</button><table class="due-dates table table-bordered"></table>');
                             $.each(result.payment, function(key, value){
                                 let date = new Date(value.schedule);
                                 key++;

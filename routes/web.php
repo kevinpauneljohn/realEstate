@@ -17,14 +17,15 @@
 
 //Auth::routes();
 
-use App\Events\NotificationEvent;
-use App\Mail\MyTestMail;
-use App\PaymentReminder;
-use App\User;
-use App\UserRankPoint;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
+//use App\Events\NotificationEvent;
+//use App\Mail\MyTestMail;
+//use App\PaymentReminder;
+//use App\User;
+//use App\UserRankPoint;
+//use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/web/user.php';
 require __DIR__ . '/web/contest.php';
@@ -168,7 +169,8 @@ Route::get('/sales-edit/{sale}',[\App\Http\Controllers\SalesController::class,'e
 Route::put('/sales-edit-amount',[\App\Http\Controllers\SalesController::class,'updateDueAmount'])->name('sales.edit.amount')->middleware(['auth','permission:view sales|edit sales']);
 Route::get('/payment-schedule',[\App\Http\Controllers\SalesController::class,'paymentSchedule'])->name('sales.payment.schedule')->middleware(['auth','permission:view sales']);
 Route::get('/payment-schedule-this-month',[\App\Http\Controllers\SalesController::class,'paymentThisMonth'])->name('sales.payment.this.month')->middleware(['auth','permission:view sales']);
-Route::put('/sales-delete-request/{sale}','SalesController@delRequest')->name('sales.request.delete')->middleware(['auth','permission:delete sales','checkCommission']);
+Route::delete('/remove-payment-reminder/sales/{sales_id}',[\App\Http\Controllers\SalesController::class,'removePaymentSchedule'])->name('remove-payment-reminder');
+
 /*commissions*/
 Route::get('/commissions/{user}','CommissionController@index')->name('commissions.index')->middleware(['auth','permission:add commissions']);
 Route::post('/commissions','CommissionController@store')->name('commissions.store')->middleware(['auth','permission:add commissions']);

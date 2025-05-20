@@ -873,11 +873,20 @@ class SalesController extends Controller
         return response()->json(['success' => true,'message' => 'Delete Sales Request successfully submitted<br/><strong>Please wait for the admin approval</strong>']);
     }
 
-    public function importSales()
-    {
-        Excel::import(new SalesImport,request()->file('file'));
+//    public function importSales()
+//    {
+//        Excel::import(new SalesImport,request()->file('file'));
+//
+//        return back();
+//    }
 
-        return back();
+    public function removePaymentSchedule($sales_id): \Illuminate\Http\JsonResponse
+    {
+         if($this->paymentReminder->viewSalesReminder($sales_id)->delete())
+         {
+             return response()->json(['success' => true,'message' => 'Payment reminder successfully removed!']);
+         }
+         return response()->json(['success' => false,'message' => 'Payment reminder not removed!']);
     }
 
     public function hideSaleRate(Request $request): void
