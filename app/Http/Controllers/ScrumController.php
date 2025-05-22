@@ -33,7 +33,7 @@ class ScrumController extends Controller
     )
     {
         $this->task = $task;
-        $this->agents = ['admin','account manager','online warrior','super admin','vide editor','dhg_ojt','Finance Admin','programmer'];
+        $this->agents = ['admin','account manager','online warrior','super admin','vide editor','dhg_ojt','Finance Admin','programmer','dhg_staff'];
     }
     public function index()
     {
