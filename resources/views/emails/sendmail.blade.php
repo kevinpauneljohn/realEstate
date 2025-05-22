@@ -27,7 +27,7 @@
                                                         <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td align="center"><img src="http://portal.dream-homeseller.com/images/DHG_logo.png" width="100" height="100"/></td>
+                                                                    <td align="center"><img src="https://crm.dreamhomeguide.net/images/DHG_logo.png" width="100" height="100"/></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -96,7 +96,7 @@
                                                                                                 <li><b>Priority:</b> {{ $emails['priority'] }}</li>
                                                                                                 <li><b>Description:</b> {{ $emails['message'] }}</li>
                                                                                             </ul>
-                                                                                            <p>Click <a href="http://portal.dream-homeseller.com/tasks/overview/{{$emails['id']}}" target="_BLANK">here</a> to {{ $emails['view_ticket'] }}.</p>
+                                                                                            <p>Click <a href="https://crm.dreamhomeguide.net/tasks/overview/{{$emails['id']}}" target="_BLANK">here</a> to {{ $emails['view_ticket'] }}.</p>
                                                                                         @else
                                                                                             <p><b>{{ $emails['submit_message'] }}</b></p>
                                                                                         @endif
@@ -147,7 +147,7 @@
 
                                                                     <tbody><tr>
                                                                         <td align="center">
-                                                                            <?php echo date('Y'); ?> &copy; by <a href="http://portal.dream-homeseller.com/login" target="_blank">Dream Home Guide</a> <br>
+                                                                            <?php echo date('Y'); ?> &copy; by <a href="https://crm.dreamhomeguide.net/login" target="_blank">Dream Home Guide</a> <br>
                                                                         </td>
                                                                     </tr>
 <!-- end tr -->
