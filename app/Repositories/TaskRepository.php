@@ -474,9 +474,8 @@ class TaskRepository implements TaskInterface
                 $key => [
                     'id' => $item['id'],
                     'title' => $item['title'],
-                    'start' => Carbon::parse($item['due_date']),
+                    'start' => Carbon::parse($item['due_date'].' '.$item['time'])->toDateTimeString(),
                     'allDay' => false,
-//                    'color' => '#ff2f25',
                     'color' => $item['status'] == "completed" ? '#28a745' : '#ff2f25',
                     'category' => collect($item)->has('sales_id') ? 'completed' : 'upcoming',
                 ]

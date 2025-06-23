@@ -36,92 +36,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7ad6541-05c0-4c08-9cc0-09057acd5670" name="Default Changelist" comment="leads controller api for openhouseseller.com">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ScrumController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/RepositoryInterface/TaskInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/TaskRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/TaskRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/RoleSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/RoleSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales-all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales-all.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales-all.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales-all.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/af.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/af.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-dz.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-dz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-kw.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-kw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-ly.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-ly.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-ma.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-ma.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-sa.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-sa.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-tn.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar-tn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/az.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/az.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/bg.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/bg.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/bs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/bs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ca.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ca.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/cs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/cs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/da.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/da.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/de.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/de.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/el.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/el.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/en-au.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/en-au.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/en-gb.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/en-gb.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/en-nz.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/en-nz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/es-us.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/es-us.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/es.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/es.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/et.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/et.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/eu.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/eu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fa.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fi.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fr-ca.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fr-ca.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fr-ch.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fr-ch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fr.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/fr.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/gl.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/gl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/he.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/he.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/hi.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/hi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/hr.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/hr.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/hu.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/hu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/id.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/id.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/is.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/is.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/it.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/it.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ja.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ja.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ka.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ka.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/kk.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/kk.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ko.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ko.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/lb.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/lb.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/lt.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/lt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/lv.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/lv.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/mk.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/mk.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ms.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ms.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/nb.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/nb.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/nl.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/nl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/nn.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/nn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/pl.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/pl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/pt-br.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/pt-br.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/pt.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/pt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ro.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ro.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ru.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ru.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sk.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sk.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sl.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sq.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sq.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sr-cyrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sr-cyrl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sr.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sr.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sv.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/sv.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/th.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/th.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/tr.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/tr.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ug.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/ug.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/uk.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/uk.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/uz.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/uz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/vi.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/vi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/zh-cn.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/zh-cn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/zh-tw.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/locales/zh-tw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/main.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/main.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/main.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/main.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/scrum/task.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -867,7 +783,7 @@
       <workItem from="1747883600715" duration="322000" />
       <workItem from="1747884164515" duration="826000" />
       <workItem from="1749972590744" duration="6946000" />
-      <workItem from="1750699172151" duration="1670000" />
+      <workItem from="1750699172151" duration="2573000" />
     </task>
     <task id="LOCAL-00805" summary="setup the payment reminder">
       <created>1627136957909</created>
