@@ -93,4 +93,6 @@ interface TaskInterface
     public function getPriority($title);
 
     public function getAllTaskExcept(array $status);
+
+    public function getAllTasks();
 }

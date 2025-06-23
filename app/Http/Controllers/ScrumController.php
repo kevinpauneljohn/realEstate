@@ -34,6 +34,7 @@ class ScrumController extends Controller
     {
         $this->task = $task;
         $this->agents = ['admin','account manager','online warrior','super admin','vide editor','dhg_ojt','Finance Admin','programmer','task manager'];
+        $this->middleware('permission:view task calendar')->only(['viewTaskCalendar']);
     }
     public function index()
     {
@@ -1454,5 +1455,15 @@ class ScrumController extends Controller
         }
 
         return response(['success' => true, 'data' => $id]);
+    }
+
+    public function viewTaskCalendar()
+    {
+        return view('pages.scrum.calendar');
+    }
+
+    public function taskCalendarApi()
+    {
+        return $this->task->getAllTasks();
     }
 }

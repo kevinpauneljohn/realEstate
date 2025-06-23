@@ -30,6 +30,7 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'dhg_ojt']);
         Role::create(['name' => 'dhg_staff']);
         Role::create(['name' => 'team leader']);
+        Role::create(['name' => 'task manager']);
 
         Permission::create(['name' => 'add role']);
         Permission::create(['name' => 'view role']);

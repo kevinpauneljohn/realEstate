@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
              RoleSeeder::class,
              UserSeeder::class,
              PrioritiesSeeder::class,
-             RankSeeder::class
+             RankSeeder::class,
+             TaskCalendarSeeder::class
          ]);
     }
 }

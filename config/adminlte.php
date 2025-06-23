@@ -405,6 +405,11 @@ return [
                     'text'    => 'My Tasks',
                     'can'     => 'view task',
                     'route'   => 'task.mine',
+                ],
+                [
+                    'text'    => 'Calendar',
+                    'can'     => 'view task calendar',
+                    'route'   => 'task.calendar',
                 ]
             ]
         ],
@@ -640,6 +645,21 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/daterangepicker/daterangepicker.js',
+                ],
+            ],
+        ],
+        'Fullcalendar' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/main.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/main.min.js',
                 ],
             ],
         ],

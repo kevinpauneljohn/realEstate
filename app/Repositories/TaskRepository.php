@@ -466,4 +466,21 @@ class TaskRepository implements TaskInterface
             ->whereJsonContains('properties', ['task_id' => $task_id])
             ->orderBy('id', 'desc');
     }
+
+    public function getAllTasks(): \Illuminate\Support\Collection
+    {
+        return collect(Task::where('privacy',null)->get())->mapWithKeys(function($item, $key){
+            return [
+                $key => [
+                    'id' => $item['id'],
+                    'title' => $item['title'],
+                    'start' => Carbon::parse($item['due_date']),
+                    'allDay' => false,
+//                    'color' => '#ff2f25',
+                    'color' => $item['status'] == "completed" ? '#28a745' : '#ff2f25',
+                    'category' => collect($item)->has('sales_id') ? 'completed' : 'upcoming',
+                ]
+            ];
+        });
+    }
 }

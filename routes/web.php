@@ -35,6 +35,7 @@ require __DIR__ . '/web/sales.php';
 require __DIR__ . '/web/commission_requests.php';
 require __DIR__ . '/web/settings.php';
 require __DIR__ . '/web/findings.php';
+require __DIR__ . '/web/task.php';
 
 Route::get('/','LandingPageController');
 Route::get('/home', function (){
@@ -295,27 +296,6 @@ Route::post('/rank/{id}','RankController@getRank')->name('rank.get')->middleware
 Route::put('/rank/{id}','RankController@update')->name('rank.update')->middleware(['auth','permission:edit rank']);
 Route::delete('/rank/{id}','RankController@destroy')->name('rank.destroy')->middleware(['auth','permission:delete rank']);
 
-Route::post('/display-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayTask'])->name('display.task.change')->middleware(['auth','permission:view task']);
-Route::post('/display-my-task-change',[\App\Http\Controllers\ScrumController::class,'changeDisplayMyTask'])->name('display.my.task.change')->middleware(['auth','permission:view task']);
-Route::put('/tasks/agent','ScrumController@updateAgent')->name('tasks.update.agent')->middleware(['auth','permission:view task|edit task']);
-Route::put('/tasks/watcher','ScrumController@updateWatcher')->name('tasks.update.watcher')->middleware(['auth','permission:view task|edit task']);
-Route::get('/tasks','ScrumController@index')->name('tasks.index')->middleware(['auth','permission:view task']);
-Route::post('/tasks','ScrumController@store')->name('tasks.store')->middleware(['auth','permission:add task']);
-Route::get('/tasks-list','ScrumController@task_list')->name('tasks.list')->middleware(['auth','permission:view task']);
-Route::get('/my-tasks-list','ScrumController@myTaskList')->name('my.tasks.list')->middleware(['auth','permission:view task']);
-Route::get('/my-watched-list','ScrumController@myWatchedList')->name('my.watched.list')->middleware(['auth','permission:view task']);
-Route::get('/tasks/{id}','ScrumController@show')->name('tasks.show')->middleware(['auth','permission:view task']);
-Route::put('/tasks/{id}','ScrumController@update')->name('tasks.update')->middleware(['auth','permission:view task|edit task']);
-Route::get('/tasks/overview/{id}','ScrumController@overview')->name('tasks.overview')->middleware(['auth','permission:view task']);
-Route::get('/my-tasks',[\App\Http\Controllers\ScrumController::class,'myTasks'])->name('task.mine')->middleware(['auth','permission:view task']);
-Route::put('/start-tasks/{task}',[\App\Http\Controllers\ScrumController::class,'changeTaskStatus'])->name('task.start')->middleware(['auth','permission:view task']);
-Route::post('/reopen-task',[\App\Http\Controllers\ScrumController::class,'reopenTask'])->name('task.reopen')->middleware(['auth','permission:view task']);
-Route::get('/display-remarks/{task_id}',[\App\Http\Controllers\ScrumController::class,'displayRemarks'])->name('remarks.display')->middleware(['auth','permission:view task']);
-Route::delete('/tasks/{task_id}',[\App\Http\Controllers\ScrumController::class,'destroy'])->name('tasks.destroy')->middleware(['auth','permission:delete task']);
-Route::get('/task-status/update',[\App\Http\Controllers\ScrumController::class,'taskStatus']);
-
-Route::post('/child-tasks','ChildTaskController@store')->name('child.task.store')->middleware(['auth','permission:add task']);
-Route::get('/child-tasks/{id}','ChildTaskController@show')->name('child.task.show')->middleware(['auth','permission:view task']);
 
 // Route::get('send', 'MailSendController@email');
 //Route::put('/clients/update-role/{client}','ClientController@updateRole')->name('client.update.role')->middleware(['auth','permission:edit client']);

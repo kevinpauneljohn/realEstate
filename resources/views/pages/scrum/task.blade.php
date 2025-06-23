@@ -280,6 +280,7 @@
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['height', ['height']],
+                    ['insert', ['link']],
                     ['view', ['fullscreen']],
                 ],
                 lineHeights: ['1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
