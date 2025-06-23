@@ -29,7 +29,7 @@
               </span>
 
                 <span>
-                    <i class="fas fa-square" style="color: #ff2f25"></i> Upcoming
+                    <i class="fas fa-square" style="color: #ff2f25"></i> Pending
                 </span>
             </div>
         </div>
