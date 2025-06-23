@@ -18,7 +18,24 @@
 
 @section('content')
     <div class="card">
-        <x-task.calendar />
+        <div class="card-header">
+            <div class="d-flex flex-row justify-content-end">
+              <span class="mr-2">
+                <i class="fas fa-square text-success"></i> Completed
+              </span>
+
+                <span class="mr-2">
+                <i class="fas fa-square text-primary"></i> On-going
+              </span>
+
+                <span>
+                    <i class="fas fa-square" style="color: #ff2f25"></i> Upcoming
+                </span>
+            </div>
+        </div>
+        <div class="card-body">
+            <x-task.calendar />
+        </div>
     </div>
 
 @stop
