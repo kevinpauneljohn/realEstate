@@ -365,7 +365,9 @@
         }).datepicker("setDate", new Date());
 
         //Initialize Select2 Elements
-        $('.select2').select2();
+        $('#assign_to').select2({
+            dropdownParent: $("#add-task-modal")
+        });
         @can('view task')
             $(document).on('click','.add-new-task',function(){
                 $('#add-task-modal').find('.modal-title').text("Add New Task");
