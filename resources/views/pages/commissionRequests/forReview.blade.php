@@ -104,12 +104,16 @@
                         <div class="col-lg-12">
                             <table class="table table-bordered" id="request-overview">
                                 <tr>
+                                    <th>Request ID</th>
                                     <th>Request Status</th>
                                     <th>Date Requested</th>
                                     <th>Rate Requested</th>
                                     <th>Estimated Amount</th>
                                     <th>% Released</th>
                                     <th>Released Amount</th>
+                                    @if(auth()->user()->can('void voucher') && $commissionVoucher->count() > 0)
+                                        <th>Void</th>
+                                    @endif
                                 </tr>
                                 <tr id="request-data">
                                     <td>{{ucfirst($commissionRequest->status)}}</td>
@@ -118,6 +122,11 @@
                                     <td>{{number_format($estimatedAmount,2)}} </td>
                                     <td>@if($commissionVoucher->count() > 0) <span class="dhg-hidden">{{$commissionVoucher->first()->percentage_released}}%</span> @endif </td>
                                     <td>@if($commissionVoucher->count() > 0) {{number_format($commissionVoucher->first()->net_commission_less_deductions,2)}} @endif</td>
+                                    @if(auth()->user()->can('void voucher') && $commissionVoucher->count() > 0)
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-xs void-voucher-btn" id="{{$commissionVoucher->first()->id}}">Void</button>
+                                        </td>
+                                    @endif
                                 </tr>
                             </table>
                         </div>
@@ -807,6 +816,49 @@
                             'type' : 'post',
                             'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             'data' : {'status':value},
+                            beforeSend: function(){
+
+                            },success: function(response){
+                                console.log(response)
+                                if(response.success === true)
+                                {
+                                    Swal.fire({
+                                        title: "Good job!",
+                                        text: response.message,
+                                        type: "success"
+                                    });
+
+                                    window.location.reload();
+                                }
+                            },error: function(xhr, status, error){
+                                console.log(xhr);
+                            }
+                        });
+
+                    }else{
+                        $(this).val(request_status)
+                    }
+                });
+            });
+
+            $(document).on('click','.void-voucher-btn',function(){
+                let voucherId = this.id
+
+                Swal.fire({
+                    title: 'Void Voucher?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, void voucher!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            'url' : '/remove-voucher/'+voucherId,
+                            'type' : 'delete',
+                            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             beforeSend: function(){
 
                             },success: function(response){

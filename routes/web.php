@@ -25,6 +25,7 @@
 //use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\DB;
 //use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\CommissionRequestController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/web/user.php';
