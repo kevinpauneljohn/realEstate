@@ -104,7 +104,6 @@
                         <div class="col-lg-12">
                             <table class="table table-bordered" id="request-overview">
                                 <tr>
-                                    <th>Request ID</th>
                                     <th>Request Status</th>
                                     <th>Date Requested</th>
                                     <th>Rate Requested</th>
