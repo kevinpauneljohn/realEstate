@@ -250,14 +250,14 @@ class CommissionController extends Controller
 
         if($user->hasRole('super admin'))
         {
-            /*if the user is a a super admin*/
+            /*if the user is a super admin*/
             $project = Project::find($project_id);
 
             /*commission will be based on project rate*/
             if($project->commission_rate > 4)
             {
                 /*the maximum commission rate for down lines is only 4%*/
-                $commission = 4;
+                $commission = 5;
             }else{
                 $commission = $project->commission_rate - 0.5;
             }

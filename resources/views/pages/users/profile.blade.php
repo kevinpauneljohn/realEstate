@@ -441,6 +441,7 @@
                                 </div>
                                 <div class="form-group commission_rate"><span class="required">*</span>
                                     <label for="commission_rate">Commission Rate</label>
+                                    {{auth()->user()->hasRole('super admin')}}
                                     <select class="form-control" name="commission_rate" id="commission_rate">
                                         <option value=""> -- Select -- </option>
                                         @for($ctr = 1; $ctr <= $rate_limit; $ctr++)
