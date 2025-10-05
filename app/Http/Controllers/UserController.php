@@ -424,7 +424,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $onlineWarriorLeads = Lead::where('online_warrior_id',$id);
 
-        $rate_limit = 4;/* 4% is the user's max commission rate which is only the super admin can give*/
+        $rate_limit = 5;/* 4% is the user's max commission rate which is only the super admin can give*/
         /*if the use is not a super admin the commission rate that can be given will be based on the up line max rate*/
         if(!User::find($user->upline_id)->hasRole('super admin'))
         {
