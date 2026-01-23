@@ -171,6 +171,7 @@
                 <table id="sales-list" class="table table-bordered table-hover" role="grid">
                     <thead>
                     <tr role="row">
+                        <th width="5%">Date Input</th>
                         <th width="5%">Date Reserved</th>
                         <th>Full Name</th>
                         <th>Project</th>
@@ -741,6 +742,7 @@
                 serverSide: true,
                 ajax: '{!! route('sales.list') !!}',
                 columns: [
+                    { data: 'created_at', name: 'created_at'},
                     { data: 'reservation_date', name: 'reservation_date'},
                     { data: 'full_name', name: 'full_name'},
                     { data: 'project', name: 'project'},

@@ -227,6 +227,9 @@ class SalesController extends Controller
         }
 
         return DataTables::of($sales)
+            ->editColumn('created_at',function($sale){
+                return $sale->created_at->format('Y-m-d');
+            })
             ->editColumn('reservation_date',function($sale){
                 return $sale->reservation_date;
             })
