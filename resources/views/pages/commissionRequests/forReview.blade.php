@@ -510,31 +510,31 @@
                             <div class="row reference_amount_field_row" style="display: none;">
                                 <div class="col-lg-5 mt-3 percentage_released_reference_amount">
                                     <label for="percentage_released_reference_amount">% Released ref</label>
-                                    <input type="number" step="any" class="form-control" name="percentage_released_reference_amount" id="percentage_released_reference_amount" placeholder="remaining" max="100" min="0" required="" disabled="disabled">
+                                    <input type="number" step="0.01" class="form-control" name="percentage_released_reference_amount" id="percentage_released_reference_amount" placeholder="remaining" max="100" min="0" required="" disabled="disabled">
                                 </div>
                                 <div class="col-lg-7 mt-3 sub_total_reference_amount">
                                     <label for="sub_total_reference_amount">Sub Total ref</label>
-                                    <input type="number" step="any" class="form-control" name="sub_total_reference_amount" id="sub_total_reference_amount" max="5000000" min="0" value="0" required="" disabled="disabled">
+                                    <input type="number" step="0.01" class="form-control" name="sub_total_reference_amount" id="sub_total_reference_amount" max="5000000" min="0" value="0" required="" disabled="disabled">
                                 </div>
                             </div>
                             <div class="row tcp_basis">
                                 <div class="col-lg-5 mt-3 percentage_released">
                                     <label for="percentage_released">% Released</label>
-                                    <input type="number" step="any" class="form-control" name="percentage_released" id="percentage_released" placeholder="{{$remaining_request}}% remaining" max="{{$remaining_request}}" min="0" required="">
+                                    <input type="number" step="0.01" class="form-control" name="percentage_released" id="percentage_released" placeholder="{{$remaining_request}}% remaining" max="{{$remaining_request}}" min="0" required="">
                                 </div>
                                 <div class="col-lg-7 mt-3 sub_total">
                                     <label for="sub_total">Sub Total</label>
-                                    <input type="number" step=".01" class="form-control" name="sub_total" id="sub_total" max="{{$commissionRequest->sales->total_contract_price * ($commissionRequest->commission / 100)}}" min="0" value="0">
+                                    <input type="number" step="0.01" class="form-control" name="sub_total" id="sub_total" max="{{$commissionRequest->sales->total_contract_price * ($commissionRequest->commission / 100)}}" min="0" value="0">
                                 </div>
                             </div>
                             <div class="row tax">
                                 <div class="col-lg-6 mt-3 wht">
                                     <label for="wht">WHT Tax</label>
-                                    <input type="number" name="wht" step="any" class="form-control" id="wht" min="0" value="0" readonly>
+                                    <input type="number" name="wht" step="0.01" class="form-control" id="wht" min="0" value="0" readonly>
                                 </div>
                                 <div class="col-lg-6 mt-3 vat">
                                     <label for="vat">VAT</label>
-                                    <input type="number" name="vat" step="any" class="form-control" id="vat" min="0" max="12" value="0" readonly>
+                                    <input type="number" name="vat" step="0.01" class="form-control" id="vat" min="0" max="12" value="0" readonly>
                                 </div>
                             </div>
                             <div class="row deductions">
@@ -953,7 +953,7 @@
             let calculateVoucher = $('.calculate-voucher');
             $(document).on('click','#add-deduction-btn',function(){
                 calculateVoucher.find('.deductions').append('<div class="deduction-row col-lg-12"><div class="row"><div class="col-5 mt-2"><input type="text" class="form-control" name="deductions_remarks[]" placeholder="Deduction"></div>' +
-                    '<div class="col-5 mt-2"><input type="number" step="0.1" class="form-control" name="deductions[]" placeholder="amount"></div><div class="col-2"><button type="button" class="btn btn-xs btn-danger mt-3 remove-deduction"><i class="fa fa-minus"></i></button></div></div></div>');
+                    '<div class="col-5 mt-2"><input type="number" step="0.01" class="form-control" name="deductions[]" placeholder="amount"></div><div class="col-2"><button type="button" class="btn btn-xs btn-danger mt-3 remove-deduction"><i class="fa fa-minus"></i></button></div></div></div>');
             });
 
             $(document).on('click','.remove-deduction',function(){
