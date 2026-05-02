@@ -1,0 +1,222 @@
+/* =========================================================
+   GLOBAL CRM LOOK
+========================================================= */
+body {
+    background-color: #f8fafc !important;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.content-wrapper {
+    background-color: #f8fafc !important;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.content-header h1 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.breadcrumb {
+    background: transparent !important;
+    font-size: 0.85rem;
+}
+
+/* =========================================================
+   INFO BOX → CRM STAT CARD
+========================================================= */
+.info-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 18px;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,.05);
+    transition: all .2s ease;
+}
+
+.info-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 35px rgba(0,0,0,.08);
+}
+
+.info-box-icon {
+    border-radius: 12px !important;
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 18px;
+}
+
+.info-box-content {
+    padding-left: 12px;
+}
+
+.info-box-text {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.info-box-number {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #111827;
+}
+
+/* Custom colors */
+.bg-orange { background:#fb923c !important; color:#fff; }
+.bg-purple { background:#8b5cf6 !important; color:#fff; }
+.bg-pink   { background:#ec4899 !important; color:#fff; }
+
+/* =========================================================
+   CARD
+========================================================= */
+.card {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,.05);
+}
+
+.card-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+}
+
+.card-body {
+    background: #ffffff;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+/* =========================================================
+   DATATABLE
+========================================================= */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb !important;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #6b7280;
+}
+
+.table tbody tr {
+    transition: background .15s ease;
+}
+
+.table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.table td {
+    vertical-align: middle;
+    font-size: .875rem;
+    color: #111827;
+}
+
+/* =========================================================
+   BADGES (STATUS)
+========================================================= */
+.badge {
+    border-radius: 999px;
+    padding: .35em .7em;
+    font-size: .7rem;
+    font-weight: 600;
+}
+
+.badge-primary {
+    background: #2563eb;
+}
+
+.badge-success {
+    background: #16a34a;
+}
+
+.badge-warning {
+    background: #f59e0b;
+}
+
+.badge-info {
+    background: #0ea5e9;
+}
+
+.badge-danger {
+    background: #ef4444;
+}
+
+/* =========================================================
+   ASSIGNED TO SELECT
+========================================================= */
+.assigned_to {
+    border-radius: 8px;
+    font-size: .8rem;
+    padding: 6px 8px;
+}
+
+/* =========================================================
+   MODALS
+========================================================= */
+.modal-content {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 20px 50px rgba(0,0,0,.15);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-footer {
+    border-top: 1px solid #e5e7eb;
+}
+
+/* =========================================================
+   DATATABLE PAGINATION
+========================================================= */
+.dataTables_wrapper .pagination .page-item .page-link {
+    border-radius: 8px;
+    margin: 0 2px;
+    color: #2563eb;
+}
+
+.dataTables_wrapper .pagination .active .page-link {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+/* =========================================================
+   SEARCH INPUT
+========================================================= */
+.dataTables_filter input {
+    border-radius: 10px;
+    padding: 6px 10px;
+}
+
+/* =========================================================
+   RIGHT SIDEBAR BUTTON
+========================================================= */
+.control-sidebar {
+    box-shadow: -10px 0 30px rgba(0,0,0,.08);
+}

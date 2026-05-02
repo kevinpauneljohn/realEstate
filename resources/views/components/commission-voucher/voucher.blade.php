@@ -3,7 +3,13 @@
         <th class="text-center" colspan="4"><img class="rounded img-thumbnail img-fluid img-size-64" src="{{asset('vendor/adminlte/dist/img/dhg_logo_mini.png')}}" alt="dhg logo"> <h4>Dream Home Guide Realty Comm Voucher</h4></th>
     </tr>
     <tr>
-        <th id="project-name" colspan="4" class="text-center"></th>
+        <th id="project-name" colspan="4" class="text-center">
+            {{$commissionRequest->sales->project->name}}
+        </th>
+    </tr>
+    <tr>
+        <td>Date Issued: </td>
+        <td colspan="3">@if($commissionVoucher->count() > 0) {{\Carbon\Carbon::parse($commissionVoucher->first()->updated_at)->format('M-d-Y')}} @endif</td>
     </tr>
     <tr>
         <td>Payee</td>

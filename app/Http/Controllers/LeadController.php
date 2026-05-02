@@ -14,6 +14,7 @@ use App\Repositories\RepositoryInterface\ClientRequirementInterface;
 use App\Repositories\RepositoryInterface\LeadInterface;
 use App\Repositories\RepositoryInterface\SalesInterface;
 use App\Services\AccountManagerService;
+use App\Services\LeadService;
 use App\Services\RandomCodeGenerator;
 use App\Template;
 use App\User;
@@ -35,7 +36,8 @@ class LeadController extends Controller
         LeadInterface $lead,
         SalesInterface $sales,
         AccountManagerService $accountManagerService,
-        ClientRequirementInterface $clientRequirement
+        ClientRequirementInterface $clientRequirement,
+        public LeadService $leadService
     )
     {
         $this->leadRepository = $leadRepository;
@@ -76,7 +78,8 @@ class LeadController extends Controller
     public function lead_list()
     {
         $leads = Lead::where('user_id',$this->accountManagement->checkIfUserIsAccountManager()->id)->get();
-        return $this->leads->leadsTable($leads,['action','lead_status','fullname','important','email','mobileNo','assigned_to']);
+//        return $this->leads->leadsTable($leads,['action','lead_status','fullname','important','email','mobileNo','assigned_to']);
+        return $this->leadService->datatable($leads);
     }
 
     public function assignedLeadList()
@@ -297,7 +300,7 @@ class LeadController extends Controller
             $birthday = $request->birthday;
         }
         $lead->birthday = $birthday;
-        
+
         if($lead->isDirty())
         {
             if($lead->save())
